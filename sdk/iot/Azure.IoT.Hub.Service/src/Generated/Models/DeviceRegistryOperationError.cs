@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The device registry operation error details. </summary>
     public partial class DeviceRegistryOperationError
     {
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationError"/>. </summary>
         internal DeviceRegistryOperationError()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationError"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorStatus"> The details of the error. </param>
         /// <param name="moduleId"> The unique identifier of the module, if applicable. </param>
         /// <param name="operation"> The type of the operation that failed. </param>
-        internal DeviceRegistryOperationError(string deviceId, DeviceRegistryOperationErrorCode? errorCode, string errorStatus, string moduleId, string operation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryOperationError(string deviceId, DeviceRegistryOperationErrorCode? errorCode, string errorStatus, string moduleId, string operation, Dictionary<string, BinaryData> rawData)
         {
             DeviceId = deviceId;
             ErrorCode = errorCode;
             ErrorStatus = errorStatus;
             ModuleId = moduleId;
             Operation = operation;
+            _rawData = rawData;
         }
 
         /// <summary> The unique identifier of the device. </summary>

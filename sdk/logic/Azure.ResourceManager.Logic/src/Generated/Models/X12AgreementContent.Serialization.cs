@@ -5,31 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12AgreementContent : IUtf8JsonSerializable
+    public partial class X12AgreementContent : IUtf8JsonSerializable, IModelJsonSerializable<X12AgreementContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12AgreementContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12AgreementContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue(ReceiveAgreement);
+            if (ReceiveAgreement is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12OneWayAgreement>)ReceiveAgreement).Serialize(writer, options);
+            }
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue(SendAgreement);
+            if (SendAgreement is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12OneWayAgreement>)SendAgreement).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12AgreementContent DeserializeX12AgreementContent(JsonElement element)
+        internal static X12AgreementContent DeserializeX12AgreementContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             X12OneWayAgreement receiveAgreement = default;
             X12OneWayAgreement sendAgreement = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("receiveAgreement"u8))
@@ -42,8 +79,61 @@ namespace Azure.ResourceManager.Logic.Models
                     sendAgreement = X12OneWayAgreement.DeserializeX12OneWayAgreement(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12AgreementContent(receiveAgreement, sendAgreement);
+            return new X12AgreementContent(receiveAgreement, sendAgreement, rawData);
+        }
+
+        X12AgreementContent IModelJsonSerializable<X12AgreementContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12AgreementContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12AgreementContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12AgreementContent IModelSerializable<X12AgreementContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12AgreementContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12AgreementContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12AgreementContent"/> to convert. </param>
+        public static implicit operator RequestContent(X12AgreementContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12AgreementContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12AgreementContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12AgreementContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesSourceControlConfigurationSourceControlConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new KubernetesSourceControlConfigurationResource(Client, KubernetesSourceControlConfigurationData.DeserializeKubernetesSourceControlConfigurationData(e)), _kubernetesSourceControlConfigurationSourceControlConfigurationsClientDiagnostics, Pipeline, "KubernetesSourceControlConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointKeyRegenerateContent : IUtf8JsonSerializable
+    public partial class MachineLearningEndpointKeyRegenerateContent : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEndpointKeyRegenerateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEndpointKeyRegenerateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEndpointKeyRegenerateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
@@ -29,7 +37,104 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keyValue");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MachineLearningEndpointKeyRegenerateContent DeserializeMachineLearningEndpointKeyRegenerateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MachineLearningKeyType keyType = default;
+            Optional<string> keyValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("keyType"u8))
+                {
+                    keyType = new MachineLearningKeyType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("keyValue"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        keyValue = null;
+                        continue;
+                    }
+                    keyValue = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MachineLearningEndpointKeyRegenerateContent(keyType, keyValue.Value, rawData);
+        }
+
+        MachineLearningEndpointKeyRegenerateContent IModelJsonSerializable<MachineLearningEndpointKeyRegenerateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEndpointKeyRegenerateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEndpointKeyRegenerateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEndpointKeyRegenerateContent IModelSerializable<MachineLearningEndpointKeyRegenerateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEndpointKeyRegenerateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningEndpointKeyRegenerateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningEndpointKeyRegenerateContent"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningEndpointKeyRegenerateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningEndpointKeyRegenerateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningEndpointKeyRegenerateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningEndpointKeyRegenerateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

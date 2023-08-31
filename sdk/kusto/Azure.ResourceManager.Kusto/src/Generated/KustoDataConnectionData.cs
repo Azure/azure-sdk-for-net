@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
@@ -19,22 +21,26 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoDataConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoDataConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionData"/>. </summary>
         public KustoDataConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoDataConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        internal KustoDataConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoDataConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Resource location. </summary>

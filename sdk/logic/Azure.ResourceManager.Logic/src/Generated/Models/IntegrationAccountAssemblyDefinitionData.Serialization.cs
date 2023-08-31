@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountAssemblyDefinitionData : IUtf8JsonSerializable
+    public partial class IntegrationAccountAssemblyDefinitionData : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountAssemblyDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountAssemblyDefinitionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountAssemblyDefinitionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountAssemblyProperties>)Properties).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -33,11 +47,25 @@ namespace Azure.ResourceManager.Logic
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountAssemblyDefinitionData DeserializeIntegrationAccountAssemblyDefinitionData(JsonElement element)
+        internal static IntegrationAccountAssemblyDefinitionData DeserializeIntegrationAccountAssemblyDefinitionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +77,7 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -99,8 +128,61 @@ namespace Azure.ResourceManager.Logic
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountAssemblyDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties);
+            return new IntegrationAccountAssemblyDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties, rawData);
+        }
+
+        IntegrationAccountAssemblyDefinitionData IModelJsonSerializable<IntegrationAccountAssemblyDefinitionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountAssemblyDefinitionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountAssemblyDefinitionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountAssemblyDefinitionData IModelSerializable<IntegrationAccountAssemblyDefinitionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountAssemblyDefinitionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountAssemblyDefinitionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountAssemblyDefinitionData"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountAssemblyDefinitionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountAssemblyDefinitionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountAssemblyDefinitionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountAssemblyDefinitionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

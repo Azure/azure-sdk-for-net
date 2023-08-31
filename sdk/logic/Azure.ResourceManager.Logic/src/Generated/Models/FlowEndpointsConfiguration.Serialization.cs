@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowEndpointsConfiguration : IUtf8JsonSerializable
+    public partial class FlowEndpointsConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<FlowEndpointsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FlowEndpointsConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FlowEndpointsConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow);
+                if (Workflow is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FlowEndpoints>)Workflow).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
-                writer.WriteObjectValue(Connector);
+                if (Connector is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FlowEndpoints>)Connector).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static FlowEndpointsConfiguration DeserializeFlowEndpointsConfiguration(JsonElement element)
+        internal static FlowEndpointsConfiguration DeserializeFlowEndpointsConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<FlowEndpoints> workflow = default;
             Optional<FlowEndpoints> connector = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workflow"u8))
@@ -56,8 +93,61 @@ namespace Azure.ResourceManager.Logic.Models
                     connector = FlowEndpoints.DeserializeFlowEndpoints(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FlowEndpointsConfiguration(workflow.Value, connector.Value);
+            return new FlowEndpointsConfiguration(workflow.Value, connector.Value, rawData);
+        }
+
+        FlowEndpointsConfiguration IModelJsonSerializable<FlowEndpointsConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowEndpointsConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FlowEndpointsConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FlowEndpointsConfiguration IModelSerializable<FlowEndpointsConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFlowEndpointsConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FlowEndpointsConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FlowEndpointsConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(FlowEndpointsConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FlowEndpointsConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FlowEndpointsConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFlowEndpointsConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,16 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ValidateConfigurationResult
+    public partial class ValidateConfigurationResult : IUtf8JsonSerializable, IModelJsonSerializable<ValidateConfigurationResult>
     {
-        internal static ValidateConfigurationResult DeserializeValidateConfigurationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ValidateConfigurationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ValidateConfigurationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ValidateConfigurationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ValidateConfigurationResult DeserializeValidateConfigurationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<Uri> url = default;
             Optional<ResponseError> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationState"u8))
@@ -52,8 +89,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ValidateConfigurationResult(error.Value, Optional.ToNullable(configurationState), url.Value);
+            return new ValidateConfigurationResult(error.Value, Optional.ToNullable(configurationState), url.Value, rawData);
+        }
+
+        ValidateConfigurationResult IModelJsonSerializable<ValidateConfigurationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ValidateConfigurationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidateConfigurationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ValidateConfigurationResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ValidateConfigurationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ValidateConfigurationResult IModelSerializable<ValidateConfigurationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ValidateConfigurationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeValidateConfigurationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ValidateConfigurationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ValidateConfigurationResult"/> to convert. </param>
+        public static implicit operator RequestContent(ValidateConfigurationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ValidateConfigurationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ValidateConfigurationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeValidateConfigurationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

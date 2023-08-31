@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Azure Lab Services resource SKUs. </summary>
     public partial class AvailableLabServicesSku
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSku"/>. </summary>
         internal AvailableLabServicesSku()
         {
             Capabilities = new ChangeTrackingList<AvailableLabServicesSkuCapability>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Restrictions = new ChangeTrackingList<AvailableLabServicesSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSku"/>. </summary>
         /// <param name="resourceType"> The lab services resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <param name="locations"> List of locations that are available for a size. </param>
         /// <param name="costs"> Metadata for retrieving price info of a lab services SKUs. </param>
         /// <param name="restrictions"> Restrictions of a lab services SKUs. </param>
-        internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapability> capabilities, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableLabServicesSku(string resourceType, string name, AvailableLabServicesSkuTier? tier, string size, string family, AvailableLabServicesSkuCapacity capacity, IReadOnlyList<AvailableLabServicesSkuCapability> capabilities, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvailableLabServicesSkuCost> costs, IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Locations = locations;
             Costs = costs;
             Restrictions = restrictions;
+            _rawData = rawData;
         }
 
         /// <summary> The lab services resource type. </summary>

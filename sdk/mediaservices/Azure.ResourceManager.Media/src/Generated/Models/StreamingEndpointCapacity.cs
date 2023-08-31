@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The streaming endpoint sku capacity. </summary>
     public partial class StreamingEndpointCapacity
     {
-        /// <summary> Initializes a new instance of StreamingEndpointCapacity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointCapacity"/>. </summary>
         internal StreamingEndpointCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointCapacity"/>. </summary>
         /// <param name="scaleType"></param>
         /// <param name="default"> The streaming endpoint default capacity. </param>
         /// <param name="minimum"> The streaming endpoint minimum capacity. </param>
         /// <param name="maximum"> The streaming endpoint maximum capacity. </param>
-        internal StreamingEndpointCapacity(string scaleType, int? @default, int? minimum, int? maximum)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointCapacity(string scaleType, int? @default, int? minimum, int? maximum, Dictionary<string, BinaryData> rawData)
         {
             ScaleType = scaleType;
             Default = @default;
             Minimum = minimum;
             Maximum = maximum;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the scale type. </summary>

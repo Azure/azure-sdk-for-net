@@ -5,15 +5,110 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class HelmReleaseProperties
+    public partial class HelmReleaseProperties : IUtf8JsonSerializable, IModelJsonSerializable<HelmReleaseProperties>
     {
-        internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HelmReleaseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HelmReleaseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LastRevisionApplied))
+            {
+                if (LastRevisionApplied != null)
+                {
+                    writer.WritePropertyName("lastRevisionApplied"u8);
+                    writer.WriteNumberValue(LastRevisionApplied.Value);
+                }
+                else
+                {
+                    writer.WriteNull("lastRevisionApplied");
+                }
+            }
+            if (Optional.IsDefined(HelmChartRef))
+            {
+                if (HelmChartRef != null)
+                {
+                    writer.WritePropertyName("helmChartRef"u8);
+                    if (HelmChartRef is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesObjectReference>)HelmChartRef).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("helmChartRef");
+                }
+            }
+            if (Optional.IsDefined(FailureCount))
+            {
+                if (FailureCount != null)
+                {
+                    writer.WritePropertyName("failureCount"u8);
+                    writer.WriteNumberValue(FailureCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("failureCount");
+                }
+            }
+            if (Optional.IsDefined(InstallFailureCount))
+            {
+                if (InstallFailureCount != null)
+                {
+                    writer.WritePropertyName("installFailureCount"u8);
+                    writer.WriteNumberValue(InstallFailureCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("installFailureCount");
+                }
+            }
+            if (Optional.IsDefined(UpgradeFailureCount))
+            {
+                if (UpgradeFailureCount != null)
+                {
+                    writer.WritePropertyName("upgradeFailureCount"u8);
+                    writer.WriteNumberValue(UpgradeFailureCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("upgradeFailureCount");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +118,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<long?> failureCount = default;
             Optional<long?> installFailureCount = default;
             Optional<long?> upgradeFailureCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRevisionApplied"u8))
@@ -75,8 +171,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     upgradeFailureCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount));
+            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount), rawData);
+        }
+
+        HelmReleaseProperties IModelJsonSerializable<HelmReleaseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHelmReleaseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HelmReleaseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HelmReleaseProperties IModelSerializable<HelmReleaseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHelmReleaseProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HelmReleaseProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HelmReleaseProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HelmReleaseProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HelmReleaseProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HelmReleaseProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHelmReleaseProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

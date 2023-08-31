@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     public partial class KubernetesSourceControlConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesSourceControlConfigurationData"/>. </summary>
         public KubernetesSourceControlConfigurationData()
         {
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesSourceControlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +45,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="helmOperatorProperties"> Properties for Helm operator. </param>
         /// <param name="provisioningState"> The provisioning state of the resource provider. </param>
         /// <param name="complianceStatus"> Compliance Status of the Configuration. </param>
-        internal KubernetesSourceControlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string operatorNamespace, string operatorInstanceName, KubernetesOperator? operatorType, string operatorParams, IDictionary<string, string> configurationProtectedSettings, KubernetesOperatorScope? operatorScope, string repositoryPublicKey, string sshKnownHostsContents, bool? isHelmOperatorEnabled, HelmOperatorProperties helmOperatorProperties, KubernetesConfigurationProvisioningStateType? provisioningState, KubernetesConfigurationComplianceStatus complianceStatus) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesSourceControlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string operatorNamespace, string operatorInstanceName, KubernetesOperator? operatorType, string operatorParams, IDictionary<string, string> configurationProtectedSettings, KubernetesOperatorScope? operatorScope, string repositoryPublicKey, string sshKnownHostsContents, bool? isHelmOperatorEnabled, HelmOperatorProperties helmOperatorProperties, KubernetesConfigurationProvisioningStateType? provisioningState, KubernetesConfigurationComplianceStatus complianceStatus, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             RepositoryUri = repositoryUri;
             OperatorNamespace = operatorNamespace;
@@ -58,6 +61,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             HelmOperatorProperties = helmOperatorProperties;
             ProvisioningState = provisioningState;
             ComplianceStatus = complianceStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Url of the SourceControl Repository. </summary>

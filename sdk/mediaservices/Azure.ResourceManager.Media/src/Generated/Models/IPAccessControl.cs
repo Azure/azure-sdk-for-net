@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP access control. </summary>
     internal partial class IPAccessControl
     {
-        /// <summary> Initializes a new instance of IPAccessControl. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPAccessControl"/>. </summary>
         public IPAccessControl()
         {
             AllowedIPs = new ChangeTrackingList<IPRange>();
         }
 
-        /// <summary> Initializes a new instance of IPAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAccessControl"/>. </summary>
         /// <param name="allowedIPs"> The IP allow list. </param>
-        internal IPAccessControl(IList<IPRange> allowedIPs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPAccessControl(IList<IPRange> allowedIPs, Dictionary<string, BinaryData> rawData)
         {
             AllowedIPs = allowedIPs;
+            _rawData = rawData;
         }
 
         /// <summary> The IP allow list. </summary>

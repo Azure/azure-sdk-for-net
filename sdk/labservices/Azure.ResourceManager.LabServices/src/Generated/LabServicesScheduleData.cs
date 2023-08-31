@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.LabServices
     /// </summary>
     public partial class LabServicesScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesScheduleData"/>. </summary>
         public LabServicesScheduleData()
         {
         }
 
-        /// <summary> Initializes a new instance of LabServicesScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="timeZoneId"> The IANA timezone id for the schedule. </param>
         /// <param name="notes"> Notes for this schedule. </param>
         /// <param name="provisioningState"> Current provisioning state of the schedule. </param>
-        internal LabServicesScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? stopOn, LabServicesRecurrencePattern recurrencePattern, string timeZoneId, BinaryData notes, LabServicesProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabServicesScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? stopOn, LabServicesRecurrencePattern recurrencePattern, string timeZoneId, BinaryData notes, LabServicesProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             StopOn = stopOn;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.LabServices
             TimeZoneId = timeZoneId;
             Notes = notes;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>

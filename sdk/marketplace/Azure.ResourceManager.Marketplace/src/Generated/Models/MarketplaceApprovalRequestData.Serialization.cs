@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class MarketplaceApprovalRequestData : IUtf8JsonSerializable
+    public partial class MarketplaceApprovalRequestData : IUtf8JsonSerializable, IModelJsonSerializable<MarketplaceApprovalRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MarketplaceApprovalRequestData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MarketplaceApprovalRequestData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -36,7 +43,14 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in PlansDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PrivateStorePlanDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -46,11 +60,25 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteNumberValue(MessageCode.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MarketplaceApprovalRequestData DeserializeMarketplaceApprovalRequestData(JsonElement element)
+        internal static MarketplaceApprovalRequestData DeserializeMarketplaceApprovalRequestData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +93,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<IList<PrivateStorePlanDetails>> plansDetails = default;
             Optional<bool> isClosed = default;
             Optional<long> messageCode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,8 +179,61 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MarketplaceApprovalRequestData(id, name, type, systemData.Value, offerId.Value, offerDisplayName.Value, publisherId.Value, Optional.ToList(plansDetails), Optional.ToNullable(isClosed), Optional.ToNullable(messageCode));
+            return new MarketplaceApprovalRequestData(id, name, type, systemData.Value, offerId.Value, offerDisplayName.Value, publisherId.Value, Optional.ToList(plansDetails), Optional.ToNullable(isClosed), Optional.ToNullable(messageCode), rawData);
+        }
+
+        MarketplaceApprovalRequestData IModelJsonSerializable<MarketplaceApprovalRequestData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMarketplaceApprovalRequestData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MarketplaceApprovalRequestData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MarketplaceApprovalRequestData IModelSerializable<MarketplaceApprovalRequestData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMarketplaceApprovalRequestData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MarketplaceApprovalRequestData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MarketplaceApprovalRequestData"/> to convert. </param>
+        public static implicit operator RequestContent(MarketplaceApprovalRequestData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MarketplaceApprovalRequestData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MarketplaceApprovalRequestData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMarketplaceApprovalRequestData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

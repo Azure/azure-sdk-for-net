@@ -6,26 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class StorageAccountAttributes : IUtf8JsonSerializable
+    public partial class StorageAccountAttributes : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountAttributes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountAttributes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountAttributes DeserializeStorageAccountAttributes(JsonElement element)
+        internal static StorageAccountAttributes DeserializeStorageAccountAttributes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +56,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<DateTimeOffset> updated = default;
             Optional<int> recoverableDays = default;
             Optional<DeletionRecoveryLevel> recoveryLevel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -82,8 +104,61 @@ namespace Azure.Security.KeyVault.Storage.Models
                     recoveryLevel = new DeletionRecoveryLevel(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountAttributes(Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated), Optional.ToNullable(recoverableDays), Optional.ToNullable(recoveryLevel));
+            return new StorageAccountAttributes(Optional.ToNullable(enabled), Optional.ToNullable(created), Optional.ToNullable(updated), Optional.ToNullable(recoverableDays), Optional.ToNullable(recoveryLevel), rawData);
+        }
+
+        StorageAccountAttributes IModelJsonSerializable<StorageAccountAttributes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountAttributes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountAttributes>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountAttributes IModelSerializable<StorageAccountAttributes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountAttributes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountAttributes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountAttributes"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountAttributes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountAttributes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountAttributes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountAttributes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

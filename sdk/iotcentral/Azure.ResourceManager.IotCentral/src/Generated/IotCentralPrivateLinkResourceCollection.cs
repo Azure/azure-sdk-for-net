@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.IotCentral
         public virtual AsyncPageable<IotCentralPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateLinkResourcePrivateLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotCentralPrivateLinkResource(Client, IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e)), _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new IotCentralPrivateLinkResource(Client, IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e)), _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.IotCentral
         public virtual Pageable<IotCentralPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateLinkResourcePrivateLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotCentralPrivateLinkResource(Client, IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e)), _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new IotCentralPrivateLinkResource(Client, IotCentralPrivateLinkResourceData.DeserializeIotCentralPrivateLinkResourceData(e)), _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics, Pipeline, "IotCentralPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

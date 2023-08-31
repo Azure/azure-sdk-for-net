@@ -5,17 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultPrivateEndpointConnectionItemData
+    public partial class KeyVaultPrivateEndpointConnectionItemData : IUtf8JsonSerializable, IModelJsonSerializable<KeyVaultPrivateEndpointConnectionItemData>
     {
-        internal static KeyVaultPrivateEndpointConnectionItemData DeserializeKeyVaultPrivateEndpointConnectionItemData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeyVaultPrivateEndpointConnectionItemData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeyVaultPrivateEndpointConnectionItemData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                writer.WritePropertyName("privateEndpoint"u8);
+                JsonSerializer.Serialize(writer, PrivateEndpoint);
+            }
+            if (Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                if (ConnectionState is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KeyVaultPrivateLinkServiceConnectionState>)ConnectionState).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KeyVaultPrivateEndpointConnectionItemData DeserializeKeyVaultPrivateEndpointConnectionItemData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +82,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<SubResource> privateEndpoint = default;
             Optional<KeyVaultPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<KeyVaultPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,8 +138,61 @@ namespace Azure.ResourceManager.KeyVault.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeyVaultPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new KeyVaultPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        KeyVaultPrivateEndpointConnectionItemData IModelJsonSerializable<KeyVaultPrivateEndpointConnectionItemData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultPrivateEndpointConnectionItemData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeyVaultPrivateEndpointConnectionItemData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeyVaultPrivateEndpointConnectionItemData IModelSerializable<KeyVaultPrivateEndpointConnectionItemData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeyVaultPrivateEndpointConnectionItemData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeyVaultPrivateEndpointConnectionItemData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyVaultPrivateEndpointConnectionItemData"/> to convert. </param>
+        public static implicit operator RequestContent(KeyVaultPrivateEndpointConnectionItemData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyVaultPrivateEndpointConnectionItemData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyVaultPrivateEndpointConnectionItemData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeyVaultPrivateEndpointConnectionItemData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

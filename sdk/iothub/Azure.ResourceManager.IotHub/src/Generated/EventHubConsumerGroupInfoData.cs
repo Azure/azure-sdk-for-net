@@ -19,23 +19,27 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     public partial class EventHubConsumerGroupInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoData"/>. </summary>
         internal EventHubConsumerGroupInfoData()
         {
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConsumerGroupInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The tags. </param>
         /// <param name="etag"> The etag. </param>
-        internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubConsumerGroupInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyDictionary<string, BinaryData> properties, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary>

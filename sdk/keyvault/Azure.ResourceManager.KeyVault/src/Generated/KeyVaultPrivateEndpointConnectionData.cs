@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -20,13 +21,15 @@ namespace Azure.ResourceManager.KeyVault
     /// </summary>
     public partial class KeyVaultPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionData"/>. </summary>
         public KeyVaultPrivateEndpointConnectionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        internal KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, SubResource privateEndpoint, KeyVaultPrivateLinkServiceConnectionState connectionState, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.KeyVault
             ProvisioningState = provisioningState;
             Location = location;
             Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>

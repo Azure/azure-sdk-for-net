@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    public partial class FederatedIdentityCredentialData : IUtf8JsonSerializable
+    public partial class FederatedIdentityCredentialData : IUtf8JsonSerializable, IModelJsonSerializable<FederatedIdentityCredentialData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FederatedIdentityCredentialData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FederatedIdentityCredentialData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -41,11 +47,25 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FederatedIdentityCredentialData DeserializeFederatedIdentityCredentialData(JsonElement element)
+        internal static FederatedIdentityCredentialData DeserializeFederatedIdentityCredentialData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +77,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             Optional<Uri> issuer = default;
             Optional<string> subject = default;
             Optional<IList<string>> audiences = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,8 +144,61 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FederatedIdentityCredentialData(id, name, type, systemData.Value, issuer.Value, subject.Value, Optional.ToList(audiences));
+            return new FederatedIdentityCredentialData(id, name, type, systemData.Value, issuer.Value, subject.Value, Optional.ToList(audiences), rawData);
+        }
+
+        FederatedIdentityCredentialData IModelJsonSerializable<FederatedIdentityCredentialData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFederatedIdentityCredentialData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FederatedIdentityCredentialData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FederatedIdentityCredentialData IModelSerializable<FederatedIdentityCredentialData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFederatedIdentityCredentialData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FederatedIdentityCredentialData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FederatedIdentityCredentialData"/> to convert. </param>
+        public static implicit operator RequestContent(FederatedIdentityCredentialData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FederatedIdentityCredentialData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FederatedIdentityCredentialData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFederatedIdentityCredentialData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

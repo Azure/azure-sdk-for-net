@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationServiceEnvironmentAccessEndpoint : IUtf8JsonSerializable
+    internal partial class IntegrationServiceEnvironmentAccessEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationServiceEnvironmentAccessEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationServiceEnvironmentAccessEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationServiceEnvironmentAccessEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceEnvironmentAccessEndpoint DeserializeIntegrationServiceEnvironmentAccessEndpoint(JsonElement element)
+        internal static IntegrationServiceEnvironmentAccessEndpoint DeserializeIntegrationServiceEnvironmentAccessEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IntegrationServiceEnvironmentAccessEndpointType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.Logic.Models
                     type = new IntegrationServiceEnvironmentAccessEndpointType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationServiceEnvironmentAccessEndpoint(Optional.ToNullable(type));
+            return new IntegrationServiceEnvironmentAccessEndpoint(Optional.ToNullable(type), rawData);
+        }
+
+        IntegrationServiceEnvironmentAccessEndpoint IModelJsonSerializable<IntegrationServiceEnvironmentAccessEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentAccessEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationServiceEnvironmentAccessEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationServiceEnvironmentAccessEndpoint IModelSerializable<IntegrationServiceEnvironmentAccessEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmentAccessEndpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationServiceEnvironmentAccessEndpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationServiceEnvironmentAccessEndpoint"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationServiceEnvironmentAccessEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationServiceEnvironmentAccessEndpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationServiceEnvironmentAccessEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationServiceEnvironmentAccessEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

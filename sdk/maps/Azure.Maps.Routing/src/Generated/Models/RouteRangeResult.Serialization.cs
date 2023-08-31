@@ -5,15 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteRangeResult
+    public partial class RouteRangeResult : IUtf8JsonSerializable, IModelJsonSerializable<RouteRangeResult>
     {
-        internal static RouteRangeResult DeserializeRouteRangeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteRangeResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteRangeResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReachableRange))
+            {
+                writer.WritePropertyName("reachableRange"u8);
+                if (ReachableRange is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RouteRange>)ReachableRange).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Report))
+            {
+                writer.WritePropertyName("report"u8);
+                if (Report is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RouteReport>)Report).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteRangeResult DeserializeRouteRangeResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +73,7 @@ namespace Azure.Maps.Routing.Models
             Optional<string> formatVersion = default;
             Optional<RouteRange> reachableRange = default;
             Optional<RouteReport> report = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -46,8 +99,61 @@ namespace Azure.Maps.Routing.Models
                     report = RouteReport.DeserializeRouteReport(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteRangeResult(formatVersion.Value, reachableRange.Value, report.Value);
+            return new RouteRangeResult(formatVersion.Value, reachableRange.Value, report.Value, rawData);
+        }
+
+        RouteRangeResult IModelJsonSerializable<RouteRangeResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteRangeResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteRangeResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteRangeResult IModelSerializable<RouteRangeResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteRangeResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteRangeResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteRangeResult"/> to convert. </param>
+        public static implicit operator RequestContent(RouteRangeResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteRangeResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteRangeResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteRangeResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

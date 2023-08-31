@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeProperties : IUtf8JsonSerializable
+    public partial class AmlComputeProperties : IUtf8JsonSerializable, IModelJsonSerializable<AmlComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmlComputeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmlComputeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OSType))
             {
@@ -37,7 +43,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (VirtualMachineImage != null)
                 {
                     writer.WritePropertyName("virtualMachineImage"u8);
-                    writer.WriteObjectValue(VirtualMachineImage);
+                    if (VirtualMachineImage is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualMachineImage>)VirtualMachineImage).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -52,14 +65,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                if (ScaleSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AmlComputeScaleSettings>)ScaleSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
                     writer.WritePropertyName("userAccountCredentials"u8);
-                    writer.WriteObjectValue(UserAccountCredentials);
+                    if (UserAccountCredentials is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningUserAccountCredentials>)UserAccountCredentials).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -71,7 +98,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue(Subnet);
+                    if (Subnet is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceId>)Subnet).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -111,11 +145,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("propertyBag");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element)
+        internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -137,6 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
             Optional<bool?> enableNodePublicIP = default;
             Optional<BinaryData> propertyBag = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -302,8 +351,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     propertyBag = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value);
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value, rawData);
+        }
+
+        AmlComputeProperties IModelJsonSerializable<AmlComputeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlComputeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmlComputeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmlComputeProperties IModelSerializable<AmlComputeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmlComputeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmlComputeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmlComputeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AmlComputeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmlComputeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmlComputeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmlComputeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

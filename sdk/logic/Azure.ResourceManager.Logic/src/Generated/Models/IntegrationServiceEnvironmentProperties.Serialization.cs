@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmentProperties : IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmentProperties : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationServiceEnvironmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationServiceEnvironmentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationServiceEnvironmentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -33,23 +41,58 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                if (EndpointsConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FlowEndpointsConfiguration>)EndpointsConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                if (NetworkConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationServiceNetworkConfiguration>)NetworkConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
-                writer.WriteObjectValue(EncryptionConfiguration);
+                if (EncryptionConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IntegrationServiceEnvironmenEncryptionConfiguration>)EncryptionConfiguration).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element)
+        internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
             Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
             Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -112,8 +156,61 @@ namespace Azure.ResourceManager.Logic.Models
                     encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value);
+            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value, rawData);
+        }
+
+        IntegrationServiceEnvironmentProperties IModelJsonSerializable<IntegrationServiceEnvironmentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationServiceEnvironmentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationServiceEnvironmentProperties IModelSerializable<IntegrationServiceEnvironmentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmentProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationServiceEnvironmentProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationServiceEnvironmentProperties"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationServiceEnvironmentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationServiceEnvironmentProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationServiceEnvironmentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationServiceEnvironmentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

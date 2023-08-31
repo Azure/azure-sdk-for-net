@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricIPExtendedCommunityData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IPExtendedCommunityRules = ipExtendedCommunityRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricIPExtendedCommunityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,13 +45,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             IPExtendedCommunityRules = ipExtendedCommunityRules;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityData"/> for deserialization. </summary>
+        internal NetworkFabricIPExtendedCommunityData()
+        {
         }
 
         /// <summary> Switch configuration description. </summary>

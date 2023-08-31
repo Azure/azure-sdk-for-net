@@ -5,33 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobOutput : IUtf8JsonSerializable
+    public partial class MediaJobOutput : IUtf8JsonSerializable, IModelJsonSerializable<MediaJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaJobOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaJobOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(PresetOverride))
             {
                 writer.WritePropertyName("presetOverride"u8);
-                writer.WriteObjectValue(PresetOverride);
+                if (PresetOverride is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MediaTransformPreset>)PresetOverride).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element)
+        internal static MediaJobOutput DeserializeMediaJobOutput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,7 +72,140 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
                 }
             }
-            return UnknownJobOutput.DeserializeUnknownJobOutput(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string odataType = default;
+            Optional<MediaJobError> error = default;
+            Optional<MediaTransformPreset> presetOverride = default;
+            Optional<MediaJobState> state = default;
+            Optional<int> progress = default;
+            Optional<string> label = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("presetOverride"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new MediaJobState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("progress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    progress = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("label"u8))
+                {
+                    label = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("startTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        startTime = null;
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endTime = null;
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownJobOutput(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), rawData);
+        }
+
+        MediaJobOutput IModelJsonSerializable<MediaJobOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaJobOutput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaJobOutput IModelSerializable<MediaJobOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaJobOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaJobOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaJobOutput"/> to convert. </param>
+        public static implicit operator RequestContent(MediaJobOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaJobOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaJobOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaJobOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

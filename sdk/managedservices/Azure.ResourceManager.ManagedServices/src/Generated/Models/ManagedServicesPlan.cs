@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The details for the Managed Services offer’s plan in Azure Marketplace. </summary>
     public partial class ManagedServicesPlan
     {
-        /// <summary> Initializes a new instance of ManagedServicesPlan. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
         /// <param name="name"> Azure Marketplace plan name. </param>
         /// <param name="publisher"> Azure Marketplace publisher ID. </param>
         /// <param name="product"> Azure Marketplace product code. </param>
@@ -30,6 +33,26 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Publisher = publisher;
             Product = product;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
+        /// <param name="name"> Azure Marketplace plan name. </param>
+        /// <param name="publisher"> Azure Marketplace publisher ID. </param>
+        /// <param name="product"> Azure Marketplace product code. </param>
+        /// <param name="version"> Azure Marketplace plan's version. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesPlan(string name, string publisher, string product, string version, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Publisher = publisher;
+            Product = product;
+            Version = version;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/> for deserialization. </summary>
+        internal ManagedServicesPlan()
+        {
         }
 
         /// <summary> Azure Marketplace plan name. </summary>

@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> SKU capacity information. </summary>
     public partial class MachineLearningSkuCapacity
     {
-        /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuCapacity"/>. </summary>
         internal MachineLearningSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSkuCapacity"/>. </summary>
         /// <param name="default"> Gets or sets the default capacity. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         /// <param name="scaleType"> Gets or sets the type of the scale. </param>
-        internal MachineLearningSkuCapacity(int? @default, int? maximum, int? minimum, MachineLearningSkuScaleType? scaleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSkuCapacity(int? @default, int? maximum, int? minimum, MachineLearningSkuScaleType? scaleType, Dictionary<string, BinaryData> rawData)
         {
             Default = @default;
             Maximum = maximum;
             Minimum = minimum;
             ScaleType = scaleType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the default capacity. </summary>

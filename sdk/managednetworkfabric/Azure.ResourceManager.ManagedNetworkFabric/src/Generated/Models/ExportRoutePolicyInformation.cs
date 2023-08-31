@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Export Route Policy Configuration. </summary>
     public partial class ExportRoutePolicyInformation
     {
-        /// <summary> Initializes a new instance of ExportRoutePolicyInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportRoutePolicyInformation"/>. </summary>
         public ExportRoutePolicyInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportRoutePolicyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRoutePolicyInformation"/>. </summary>
         /// <param name="exportIPv4RoutePolicyId"> Export IPv4 Route Policy Id. </param>
         /// <param name="exportIPv6RoutePolicyId"> Export IPv6 Route Policy Id. </param>
-        internal ExportRoutePolicyInformation(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportRoutePolicyInformation(ResourceIdentifier exportIPv4RoutePolicyId, ResourceIdentifier exportIPv6RoutePolicyId, Dictionary<string, BinaryData> rawData)
         {
             ExportIPv4RoutePolicyId = exportIPv4RoutePolicyId;
             ExportIPv6RoutePolicyId = exportIPv6RoutePolicyId;
+            _rawData = rawData;
         }
 
         /// <summary> Export IPv4 Route Policy Id. </summary>

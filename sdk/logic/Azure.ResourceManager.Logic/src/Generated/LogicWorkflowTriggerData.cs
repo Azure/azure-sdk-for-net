@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerData"/>. </summary>
         internal LogicWorkflowTriggerData()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="nextExecutionOn"> Gets the next execution time. </param>
         /// <param name="recurrence"> Gets the workflow trigger recurrence. </param>
         /// <param name="workflow"> Gets the reference to workflow. </param>
-        internal LogicWorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LogicWorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, LogicWorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, LogicWorkflowTriggerRecurrence recurrence, LogicResourceReference workflow) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LogicWorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, LogicWorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, LogicWorkflowTriggerRecurrence recurrence, LogicResourceReference workflow, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.Logic
             NextExecutionOn = nextExecutionOn;
             Recurrence = recurrence;
             Workflow = workflow;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>

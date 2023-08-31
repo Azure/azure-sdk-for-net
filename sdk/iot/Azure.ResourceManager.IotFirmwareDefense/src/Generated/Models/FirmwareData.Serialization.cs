@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    public partial class FirmwareData : IUtf8JsonSerializable
+    public partial class FirmwareData : IUtf8JsonSerializable, IModelJsonSerializable<FirmwareData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirmwareData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirmwareData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -83,11 +89,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirmwareData DeserializeFirmwareData(JsonElement element)
+        internal static FirmwareData DeserializeFirmwareData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +125,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Optional<Status> status = default;
             Optional<IList<BinaryData>> statusMessages = default;
             Optional<ProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -217,8 +238,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirmwareData(id, name, type, systemData.Value, fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), Optional.ToList(statusMessages), Optional.ToNullable(provisioningState));
+            return new FirmwareData(id, name, type, systemData.Value, fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), Optional.ToList(statusMessages), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        FirmwareData IModelJsonSerializable<FirmwareData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirmwareData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirmwareData IModelSerializable<FirmwareData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirmwareData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirmwareData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirmwareData"/> to convert. </param>
+        public static implicit operator RequestContent(FirmwareData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirmwareData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirmwareData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirmwareData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

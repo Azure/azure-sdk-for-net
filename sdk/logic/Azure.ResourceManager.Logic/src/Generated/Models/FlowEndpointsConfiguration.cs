@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The endpoints configuration. </summary>
     public partial class FlowEndpointsConfiguration
     {
-        /// <summary> Initializes a new instance of FlowEndpointsConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointsConfiguration"/>. </summary>
         public FlowEndpointsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowEndpointsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointsConfiguration"/>. </summary>
         /// <param name="workflow"> The workflow endpoints. </param>
         /// <param name="connector"> The connector endpoints. </param>
-        internal FlowEndpointsConfiguration(FlowEndpoints workflow, FlowEndpoints connector)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowEndpointsConfiguration(FlowEndpoints workflow, FlowEndpoints connector, Dictionary<string, BinaryData> rawData)
         {
             Workflow = workflow;
             Connector = connector;
+            _rawData = rawData;
         }
 
         /// <summary> The workflow endpoints. </summary>

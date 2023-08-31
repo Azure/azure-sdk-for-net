@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Job execution constraints. </summary>
     public partial class TableVerticalLimitSettings
     {
-        /// <summary> Initializes a new instance of TableVerticalLimitSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
         public TableVerticalLimitSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TableVerticalLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
         /// <param name="enableEarlyTermination"> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </param>
         /// <param name="exitScore"> Exit score for the AutoML job. </param>
         /// <param name="maxConcurrentTrials"> Maximum Concurrent iterations. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="maxTrials"> Number of iterations. </param>
         /// <param name="timeout"> AutoML job timeout. </param>
         /// <param name="trialTimeout"> Iteration timeout. </param>
-        internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxTrials, TimeSpan? timeout, TimeSpan? trialTimeout)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxTrials, TimeSpan? timeout, TimeSpan? trialTimeout, Dictionary<string, BinaryData> rawData)
         {
             EnableEarlyTermination = enableEarlyTermination;
             ExitScore = exitScore;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MaxTrials = maxTrials;
             Timeout = timeout;
             TrialTimeout = trialTimeout;
+            _rawData = rawData;
         }
 
         /// <summary> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </summary>

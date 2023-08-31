@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The virtualNetworks resource patch definition. </summary>
     public partial class HybridContainerServiceVirtualNetworkPatch
     {
-        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkPatch"/>. </summary>
         public HybridContainerServiceVirtualNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceVirtualNetworkPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputePrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable
+    public partial class HybridComputePrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable, IModelJsonSerializable<HybridComputePrivateLinkServiceConnectionStateProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridComputePrivateLinkServiceConnectionStateProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridComputePrivateLinkServiceConnectionStateProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputePrivateLinkServiceConnectionStateProperty DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(JsonElement element)
+        internal static HybridComputePrivateLinkServiceConnectionStateProperty DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string status = default;
             string description = default;
             Optional<string> actionsRequired = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired.Value);
+            return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired.Value, rawData);
+        }
+
+        HybridComputePrivateLinkServiceConnectionStateProperty IModelJsonSerializable<HybridComputePrivateLinkServiceConnectionStateProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridComputePrivateLinkServiceConnectionStateProperty>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridComputePrivateLinkServiceConnectionStateProperty IModelSerializable<HybridComputePrivateLinkServiceConnectionStateProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HybridComputePrivateLinkServiceConnectionStateProperty"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HybridComputePrivateLinkServiceConnectionStateProperty"/> to convert. </param>
+        public static implicit operator RequestContent(HybridComputePrivateLinkServiceConnectionStateProperty model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HybridComputePrivateLinkServiceConnectionStateProperty"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HybridComputePrivateLinkServiceConnectionStateProperty(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

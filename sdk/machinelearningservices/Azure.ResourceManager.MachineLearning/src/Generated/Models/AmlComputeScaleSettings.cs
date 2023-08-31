@@ -6,28 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> scale settings for AML Compute. </summary>
     public partial class AmlComputeScaleSettings
     {
-        /// <summary> Initializes a new instance of AmlComputeScaleSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlComputeScaleSettings"/>. </summary>
         /// <param name="maxNodeCount"> Max number of nodes to use. </param>
         public AmlComputeScaleSettings(int maxNodeCount)
         {
             MaxNodeCount = maxNodeCount;
         }
 
-        /// <summary> Initializes a new instance of AmlComputeScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeScaleSettings"/>. </summary>
         /// <param name="maxNodeCount"> Max number of nodes to use. </param>
         /// <param name="minNodeCount"> Min number of nodes to use. </param>
         /// <param name="nodeIdleTimeBeforeScaleDown"> Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format. </param>
-        internal AmlComputeScaleSettings(int maxNodeCount, int? minNodeCount, TimeSpan? nodeIdleTimeBeforeScaleDown)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlComputeScaleSettings(int maxNodeCount, int? minNodeCount, TimeSpan? nodeIdleTimeBeforeScaleDown, Dictionary<string, BinaryData> rawData)
         {
             MaxNodeCount = maxNodeCount;
             MinNodeCount = minNodeCount;
             NodeIdleTimeBeforeScaleDown = nodeIdleTimeBeforeScaleDown;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmlComputeScaleSettings"/> for deserialization. </summary>
+        internal AmlComputeScaleSettings()
+        {
         }
 
         /// <summary> Max number of nodes to use. </summary>

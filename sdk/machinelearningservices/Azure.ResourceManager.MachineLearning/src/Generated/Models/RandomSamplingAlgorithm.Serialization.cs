@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class RandomSamplingAlgorithm : IUtf8JsonSerializable
+    public partial class RandomSamplingAlgorithm : IUtf8JsonSerializable, IModelJsonSerializable<RandomSamplingAlgorithm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RandomSamplingAlgorithm>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RandomSamplingAlgorithm>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RandomSamplingAlgorithm>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Rule))
             {
@@ -34,11 +42,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("samplingAlgorithmType"u8);
             writer.WriteStringValue(SamplingAlgorithmType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RandomSamplingAlgorithm DeserializeRandomSamplingAlgorithm(JsonElement element)
+        internal static RandomSamplingAlgorithm DeserializeRandomSamplingAlgorithm(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<RandomSamplingAlgorithmRule> rule = default;
             Optional<int?> seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rule"u8))
@@ -72,8 +95,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     samplingAlgorithmType = new SamplingAlgorithmType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, Optional.ToNullable(rule), Optional.ToNullable(seed));
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, Optional.ToNullable(rule), Optional.ToNullable(seed), rawData);
+        }
+
+        RandomSamplingAlgorithm IModelJsonSerializable<RandomSamplingAlgorithm>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RandomSamplingAlgorithm>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRandomSamplingAlgorithm(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RandomSamplingAlgorithm>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RandomSamplingAlgorithm>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RandomSamplingAlgorithm IModelSerializable<RandomSamplingAlgorithm>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RandomSamplingAlgorithm>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRandomSamplingAlgorithm(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RandomSamplingAlgorithm"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RandomSamplingAlgorithm"/> to convert. </param>
+        public static implicit operator RequestContent(RandomSamplingAlgorithm model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RandomSamplingAlgorithm"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RandomSamplingAlgorithm(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRandomSamplingAlgorithm(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

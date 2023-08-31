@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H265VideoLayer : IUtf8JsonSerializable
+    public partial class H265VideoLayer : IUtf8JsonSerializable, IModelJsonSerializable<H265VideoLayer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<H265VideoLayer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<H265VideoLayer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<H265VideoLayer>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
@@ -57,11 +65,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static H265VideoLayer DeserializeH265VideoLayer(JsonElement element)
+        internal static H265VideoLayer DeserializeH265VideoLayer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +97,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> width = default;
             Optional<string> height = default;
             Optional<string> label = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitrate"u8))
@@ -138,8 +161,61 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new H265VideoLayer(width.Value, height.Value, label.Value, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame));
+            return new H265VideoLayer(width.Value, height.Value, label.Value, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), rawData);
+        }
+
+        H265VideoLayer IModelJsonSerializable<H265VideoLayer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<H265VideoLayer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeH265VideoLayer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<H265VideoLayer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<H265VideoLayer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        H265VideoLayer IModelSerializable<H265VideoLayer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<H265VideoLayer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeH265VideoLayer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="H265VideoLayer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="H265VideoLayer"/> to convert. </param>
+        public static implicit operator RequestContent(H265VideoLayer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="H265VideoLayer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator H265VideoLayer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeH265VideoLayer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

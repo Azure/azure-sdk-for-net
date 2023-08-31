@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The key vault error exception. </summary>
     internal partial class KeyVaultError
     {
-        /// <summary> Initializes a new instance of KeyVaultError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultError"/>. </summary>
         internal KeyVaultError()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultError. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultError"/>. </summary>
         /// <param name="error"> The key vault server error. </param>
-        internal KeyVaultError(Error error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultError(Error error, Dictionary<string, BinaryData> rawData)
         {
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> The key vault server error. </summary>

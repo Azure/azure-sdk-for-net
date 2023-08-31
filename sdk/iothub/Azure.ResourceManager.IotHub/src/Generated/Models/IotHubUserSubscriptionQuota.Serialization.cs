@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubUserSubscriptionQuota
+    public partial class IotHubUserSubscriptionQuota : IUtf8JsonSerializable, IModelJsonSerializable<IotHubUserSubscriptionQuota>
     {
-        internal static IotHubUserSubscriptionQuota DeserializeIotHubUserSubscriptionQuota(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubUserSubscriptionQuota>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubUserSubscriptionQuota>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IotHubTypeId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(IotHubTypeId);
+            }
+            if (Optional.IsDefined(UserSubscriptionQuotaType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(UserSubscriptionQuotaType);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
+            }
+            if (Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                if (Name is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IotHubTypeName>)Name).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IotHubUserSubscriptionQuota DeserializeIotHubUserSubscriptionQuota(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<int> currentValue = default;
             Optional<int> limit = default;
             Optional<IotHubTypeName> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -68,8 +134,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     name = IotHubTypeName.DeserializeIotHubTypeName(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubUserSubscriptionQuota(id.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new IotHubUserSubscriptionQuota(id.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, rawData);
+        }
+
+        IotHubUserSubscriptionQuota IModelJsonSerializable<IotHubUserSubscriptionQuota>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubUserSubscriptionQuota(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubUserSubscriptionQuota>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubUserSubscriptionQuota IModelSerializable<IotHubUserSubscriptionQuota>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubUserSubscriptionQuota(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubUserSubscriptionQuota"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubUserSubscriptionQuota"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubUserSubscriptionQuota model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubUserSubscriptionQuota"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubUserSubscriptionQuota(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubUserSubscriptionQuota(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

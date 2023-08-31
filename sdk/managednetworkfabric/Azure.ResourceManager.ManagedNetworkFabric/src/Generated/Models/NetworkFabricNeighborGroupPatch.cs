@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Neighbor Group Patch definition. </summary>
     public partial class NetworkFabricNeighborGroupPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricNeighborGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
         public NetworkFabricNeighborGroupPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, string annotation, NeighborGroupDestination destination, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
+        {
+            Annotation = annotation;
+            Destination = destination;
         }
 
         /// <summary> Switch configuration description. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class StorageAccountUpdateParameters : IUtf8JsonSerializable
+    internal partial class StorageAccountUpdateParameters : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountUpdateParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountUpdateParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountUpdateParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveKeyName))
             {
@@ -33,7 +41,14 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(StorageAccountAttributes);
+                if (StorageAccountAttributes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageAccountAttributes>)StorageAccountAttributes).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -46,7 +61,134 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StorageAccountUpdateParameters DeserializeStorageAccountUpdateParameters(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> activeKeyName = default;
+            Optional<bool> autoRegenerateKey = default;
+            Optional<string> regenerationPeriod = default;
+            Optional<StorageAccountAttributes> attributes = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("activeKeyName"u8))
+                {
+                    activeKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoRegenerateKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoRegenerateKey = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("regenerationPeriod"u8))
+                {
+                    regenerationPeriod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("attributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StorageAccountUpdateParameters(activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), rawData);
+        }
+
+        StorageAccountUpdateParameters IModelJsonSerializable<StorageAccountUpdateParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountUpdateParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountUpdateParameters>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountUpdateParameters IModelSerializable<StorageAccountUpdateParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountUpdateParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountUpdateParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountUpdateParameters"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountUpdateParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountUpdateParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountUpdateParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountUpdateParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class CloudProviderProfileInfraNetworkProfile : IUtf8JsonSerializable
+    internal partial class CloudProviderProfileInfraNetworkProfile : IUtf8JsonSerializable, IModelJsonSerializable<CloudProviderProfileInfraNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudProviderProfileInfraNetworkProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudProviderProfileInfraNetworkProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VnetSubnetIds))
             {
@@ -26,16 +33,31 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudProviderProfileInfraNetworkProfile DeserializeCloudProviderProfileInfraNetworkProfile(JsonElement element)
+        internal static CloudProviderProfileInfraNetworkProfile DeserializeCloudProviderProfileInfraNetworkProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> vnetSubnetIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetSubnetIds"u8))
@@ -52,8 +74,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vnetSubnetIds = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudProviderProfileInfraNetworkProfile(Optional.ToList(vnetSubnetIds));
+            return new CloudProviderProfileInfraNetworkProfile(Optional.ToList(vnetSubnetIds), rawData);
+        }
+
+        CloudProviderProfileInfraNetworkProfile IModelJsonSerializable<CloudProviderProfileInfraNetworkProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudProviderProfileInfraNetworkProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudProviderProfileInfraNetworkProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudProviderProfileInfraNetworkProfile IModelSerializable<CloudProviderProfileInfraNetworkProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudProviderProfileInfraNetworkProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CloudProviderProfileInfraNetworkProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CloudProviderProfileInfraNetworkProfile"/> to convert. </param>
+        public static implicit operator RequestContent(CloudProviderProfileInfraNetworkProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CloudProviderProfileInfraNetworkProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CloudProviderProfileInfraNetworkProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudProviderProfileInfraNetworkProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

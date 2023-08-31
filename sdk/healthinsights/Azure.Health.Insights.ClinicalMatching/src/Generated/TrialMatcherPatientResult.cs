@@ -15,6 +15,8 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The results of the model's work for a single patient. </summary>
     public partial class TrialMatcherPatientResult
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TrialMatcherPatientResult. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
@@ -33,11 +35,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="neededClinicalInfo"> Clinical information which is needed to provide better trial matching results for the patient. </param>
-        internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Inferences = inferences;
             NeededClinicalInfo = neededClinicalInfo;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/> for deserialization. </summary>
+        internal TrialMatcherPatientResult()
+        {
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>

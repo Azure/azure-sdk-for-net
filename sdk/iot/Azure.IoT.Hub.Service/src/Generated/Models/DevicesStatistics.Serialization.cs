@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DevicesStatistics
+    public partial class DevicesStatistics : IUtf8JsonSerializable, IModelJsonSerializable<DevicesStatistics>
     {
-        internal static DevicesStatistics DeserializeDevicesStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevicesStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevicesStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TotalDeviceCount))
+            {
+                writer.WritePropertyName("totalDeviceCount"u8);
+                writer.WriteNumberValue(TotalDeviceCount.Value);
+            }
+            if (Optional.IsDefined(EnabledDeviceCount))
+            {
+                writer.WritePropertyName("enabledDeviceCount"u8);
+                writer.WriteNumberValue(EnabledDeviceCount.Value);
+            }
+            if (Optional.IsDefined(DisabledDeviceCount))
+            {
+                writer.WritePropertyName("disabledDeviceCount"u8);
+                writer.WriteNumberValue(DisabledDeviceCount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DevicesStatistics DeserializeDevicesStatistics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<long> totalDeviceCount = default;
             Optional<long> enabledDeviceCount = default;
             Optional<long> disabledDeviceCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalDeviceCount"u8))
@@ -50,8 +94,61 @@ namespace Azure.IoT.Hub.Service.Models
                     disabledDeviceCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevicesStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
+            return new DevicesStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount), rawData);
+        }
+
+        DevicesStatistics IModelJsonSerializable<DevicesStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevicesStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevicesStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevicesStatistics IModelSerializable<DevicesStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevicesStatistics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevicesStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevicesStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(DevicesStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevicesStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevicesStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevicesStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

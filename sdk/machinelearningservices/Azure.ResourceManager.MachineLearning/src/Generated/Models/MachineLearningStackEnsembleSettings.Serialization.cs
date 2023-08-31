@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningStackEnsembleSettings : IUtf8JsonSerializable
+    public partial class MachineLearningStackEnsembleSettings : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningStackEnsembleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningStackEnsembleSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningStackEnsembleSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StackMetaLearnerKWargs))
             {
@@ -42,11 +49,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("stackMetaLearnerType"u8);
                 writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningStackEnsembleSettings DeserializeMachineLearningStackEnsembleSettings(JsonElement element)
+        internal static MachineLearningStackEnsembleSettings DeserializeMachineLearningStackEnsembleSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<BinaryData> stackMetaLearnerKWargs = default;
             Optional<double> stackMetaLearnerTrainPercentage = default;
             Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stackMetaLearnerKWargs"u8))
@@ -84,8 +106,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackMetaLearnerType = new MachineLearningStackMetaLearnerType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs.Value, Optional.ToNullable(stackMetaLearnerTrainPercentage), Optional.ToNullable(stackMetaLearnerType));
+            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs.Value, Optional.ToNullable(stackMetaLearnerTrainPercentage), Optional.ToNullable(stackMetaLearnerType), rawData);
+        }
+
+        MachineLearningStackEnsembleSettings IModelJsonSerializable<MachineLearningStackEnsembleSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningStackEnsembleSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningStackEnsembleSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningStackEnsembleSettings IModelSerializable<MachineLearningStackEnsembleSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningStackEnsembleSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningStackEnsembleSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningStackEnsembleSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningStackEnsembleSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningStackEnsembleSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningStackEnsembleSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

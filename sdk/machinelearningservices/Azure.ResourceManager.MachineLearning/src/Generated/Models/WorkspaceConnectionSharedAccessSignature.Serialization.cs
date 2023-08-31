@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class WorkspaceConnectionSharedAccessSignature : IUtf8JsonSerializable
+    internal partial class WorkspaceConnectionSharedAccessSignature : IUtf8JsonSerializable, IModelJsonSerializable<WorkspaceConnectionSharedAccessSignature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkspaceConnectionSharedAccessSignature>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkspaceConnectionSharedAccessSignature>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sas))
             {
                 writer.WritePropertyName("sas"u8);
                 writer.WriteStringValue(Sas);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceConnectionSharedAccessSignature DeserializeWorkspaceConnectionSharedAccessSignature(JsonElement element)
+        internal static WorkspaceConnectionSharedAccessSignature DeserializeWorkspaceConnectionSharedAccessSignature(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> sas = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sas"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sas = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkspaceConnectionSharedAccessSignature(sas.Value);
+            return new WorkspaceConnectionSharedAccessSignature(sas.Value, rawData);
+        }
+
+        WorkspaceConnectionSharedAccessSignature IModelJsonSerializable<WorkspaceConnectionSharedAccessSignature>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkspaceConnectionSharedAccessSignature(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkspaceConnectionSharedAccessSignature>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkspaceConnectionSharedAccessSignature IModelSerializable<WorkspaceConnectionSharedAccessSignature>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkspaceConnectionSharedAccessSignature(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WorkspaceConnectionSharedAccessSignature"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WorkspaceConnectionSharedAccessSignature"/> to convert. </param>
+        public static implicit operator RequestContent(WorkspaceConnectionSharedAccessSignature model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WorkspaceConnectionSharedAccessSignature"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WorkspaceConnectionSharedAccessSignature(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkspaceConnectionSharedAccessSignature(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

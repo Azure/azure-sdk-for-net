@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Properties for Helm operator. </summary>
     public partial class HelmOperatorProperties
     {
-        /// <summary> Initializes a new instance of HelmOperatorProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HelmOperatorProperties"/>. </summary>
         public HelmOperatorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmOperatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmOperatorProperties"/>. </summary>
         /// <param name="chartVersion"> Version of the operator Helm chart. </param>
         /// <param name="chartValues"> Values override for the operator Helm chart. </param>
-        internal HelmOperatorProperties(string chartVersion, string chartValues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HelmOperatorProperties(string chartVersion, string chartValues, Dictionary<string, BinaryData> rawData)
         {
             ChartVersion = chartVersion;
             ChartValues = chartValues;
+            _rawData = rawData;
         }
 
         /// <summary> Version of the operator Helm chart. </summary>

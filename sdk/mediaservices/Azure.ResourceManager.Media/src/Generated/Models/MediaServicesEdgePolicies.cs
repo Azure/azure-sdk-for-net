@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The MediaServicesEdgePolicies. </summary>
     public partial class MediaServicesEdgePolicies
     {
-        /// <summary> Initializes a new instance of MediaServicesEdgePolicies. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesEdgePolicies"/>. </summary>
         internal MediaServicesEdgePolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaServicesEdgePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesEdgePolicies"/>. </summary>
         /// <param name="usageDataCollectionPolicy"></param>
-        internal MediaServicesEdgePolicies(EdgeUsageDataCollectionPolicy usageDataCollectionPolicy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaServicesEdgePolicies(EdgeUsageDataCollectionPolicy usageDataCollectionPolicy, Dictionary<string, BinaryData> rawData)
         {
             UsageDataCollectionPolicy = usageDataCollectionPolicy;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the usage data collection policy. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the condition that can be filtered using the selected IPs. </summary>
     public partial class IPMatchCondition
     {
-        /// <summary> Initializes a new instance of IPMatchCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
         public IPMatchCondition()
         {
             IPPrefixValues = new ChangeTrackingList<string>();
             IPGroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IPMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
         /// <param name="sourceDestinationType"> IP Address type. </param>
         /// <param name="prefixType"> IP Prefix Type. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes. </param>
         /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
-        internal IPMatchCondition(SourceDestinationType? sourceDestinationType, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPMatchCondition(SourceDestinationType? sourceDestinationType, IPMatchConditionPrefixType? prefixType, IList<string> ipPrefixValues, IList<string> ipGroupNames, Dictionary<string, BinaryData> rawData)
         {
             SourceDestinationType = sourceDestinationType;
             PrefixType = prefixType;
             IPPrefixValues = ipPrefixValues;
             IPGroupNames = ipGroupNames;
+            _rawData = rawData;
         }
 
         /// <summary> IP Address type. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12ProcessingSettings : IUtf8JsonSerializable
+    public partial class X12ProcessingSettings : IUtf8JsonSerializable, IModelJsonSerializable<X12ProcessingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12ProcessingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12ProcessingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("maskSecurityInfo"u8);
             writer.WriteBooleanValue(MaskSecurityInfo);
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CreateEmptyXmlTagsForTrailingSeparators);
             writer.WritePropertyName("useDotAsDecimalSeparator"u8);
             writer.WriteBooleanValue(UseDotAsDecimalSeparator);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12ProcessingSettings DeserializeX12ProcessingSettings(JsonElement element)
+        internal static X12ProcessingSettings DeserializeX12ProcessingSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool suspendInterchangeOnError = default;
             bool createEmptyXmlTagsForTrailingSeparators = default;
             bool useDotAsDecimalSeparator = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maskSecurityInfo"u8))
@@ -74,8 +97,61 @@ namespace Azure.ResourceManager.Logic.Models
                     useDotAsDecimalSeparator = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12ProcessingSettings(maskSecurityInfo, convertImpliedDecimal, preserveInterchange, suspendInterchangeOnError, createEmptyXmlTagsForTrailingSeparators, useDotAsDecimalSeparator);
+            return new X12ProcessingSettings(maskSecurityInfo, convertImpliedDecimal, preserveInterchange, suspendInterchangeOnError, createEmptyXmlTagsForTrailingSeparators, useDotAsDecimalSeparator, rawData);
+        }
+
+        X12ProcessingSettings IModelJsonSerializable<X12ProcessingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12ProcessingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12ProcessingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12ProcessingSettings IModelSerializable<X12ProcessingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12ProcessingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12ProcessingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12ProcessingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(X12ProcessingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12ProcessingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12ProcessingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12ProcessingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceGetKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetKeysResult"/>. </summary>
         /// <param name="userStorageKey"></param>
         /// <param name="userStorageResourceId"></param>
         /// <param name="appInsightsInstrumentationKey"></param>
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
-        internal MachineLearningWorkspaceGetKeysResult(string userStorageKey, string userStorageResourceId, string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceGetKeysResult(string userStorageKey, string userStorageResourceId, string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, Dictionary<string, BinaryData> rawData)
         {
             UserStorageKey = userStorageKey;
             UserStorageResourceId = userStorageResourceId;
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
             ContainerRegistryCredentials = containerRegistryCredentials;
             NotebookAccessKeys = notebookAccessKeys;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the user storage key. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExportRoutePolicyInformation : IUtf8JsonSerializable
+    public partial class ExportRoutePolicyInformation : IUtf8JsonSerializable, IModelJsonSerializable<ExportRoutePolicyInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportRoutePolicyInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportRoutePolicyInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExportIPv4RoutePolicyId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("exportIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv6RoutePolicyId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExportRoutePolicyInformation DeserializeExportRoutePolicyInformation(JsonElement element)
+        internal static ExportRoutePolicyInformation DeserializeExportRoutePolicyInformation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> exportIPv4RoutePolicyId = default;
             Optional<ResourceIdentifier> exportIPv6RoutePolicyId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exportIpv4RoutePolicyId"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     exportIPv6RoutePolicyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExportRoutePolicyInformation(exportIPv4RoutePolicyId.Value, exportIPv6RoutePolicyId.Value);
+            return new ExportRoutePolicyInformation(exportIPv4RoutePolicyId.Value, exportIPv6RoutePolicyId.Value, rawData);
+        }
+
+        ExportRoutePolicyInformation IModelJsonSerializable<ExportRoutePolicyInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportRoutePolicyInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportRoutePolicyInformation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportRoutePolicyInformation IModelSerializable<ExportRoutePolicyInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportRoutePolicyInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExportRoutePolicyInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExportRoutePolicyInformation"/> to convert. </param>
+        public static implicit operator RequestContent(ExportRoutePolicyInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExportRoutePolicyInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExportRoutePolicyInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportRoutePolicyInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

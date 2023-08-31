@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Compliance Status details. </summary>
     public partial class KubernetesConfigurationComplianceStatus
     {
-        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationComplianceStatus"/>. </summary>
         internal KubernetesConfigurationComplianceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationComplianceStatus"/>. </summary>
         /// <param name="complianceState"> The compliance state of the configuration. </param>
         /// <param name="lastConfigAppliedOn"> Datetime the configuration was last applied. </param>
         /// <param name="message"> Message from when the configuration was applied. </param>
         /// <param name="messageLevel"> Level of the message. </param>
-        internal KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState, DateTimeOffset? lastConfigAppliedOn, string message, KubernetesConfigurationMesageLevel? messageLevel)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState, DateTimeOffset? lastConfigAppliedOn, string message, KubernetesConfigurationMesageLevel? messageLevel, Dictionary<string, BinaryData> rawData)
         {
             ComplianceState = complianceState;
             LastConfigAppliedOn = lastConfigAppliedOn;
             Message = message;
             MessageLevel = messageLevel;
+            _rawData = rawData;
         }
 
         /// <summary> The compliance state of the configuration. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAzureBlobDatastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureBlobDatastore : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningAzureBlobDatastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningAzureBlobDatastore>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningAzureBlobDatastore>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureBlobDatastore>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
@@ -70,7 +77,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            if (Credentials is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningDatastoreCredentials>)Credentials).Serialize(writer, options);
+            }
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(Description))
@@ -121,11 +135,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAzureBlobDatastore DeserializeMachineLearningAzureBlobDatastore(JsonElement element)
+        internal static MachineLearningAzureBlobDatastore DeserializeMachineLearningAzureBlobDatastore(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,6 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -251,8 +280,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningAzureBlobDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName.Value, containerName.Value, endpoint.Value, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new MachineLearningAzureBlobDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName.Value, containerName.Value, endpoint.Value, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity), rawData);
+        }
+
+        MachineLearningAzureBlobDatastore IModelJsonSerializable<MachineLearningAzureBlobDatastore>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureBlobDatastore>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAzureBlobDatastore(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningAzureBlobDatastore>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureBlobDatastore>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningAzureBlobDatastore IModelSerializable<MachineLearningAzureBlobDatastore>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureBlobDatastore>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningAzureBlobDatastore(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningAzureBlobDatastore"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningAzureBlobDatastore"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningAzureBlobDatastore model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningAzureBlobDatastore"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningAzureBlobDatastore(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningAzureBlobDatastore(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

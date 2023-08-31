@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Infra network profile for the NetworkCloud platform. </summary>
     internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileNetworkCloud. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileNetworkCloud"/>. </summary>
         public VirtualNetworksPropertiesInfraVnetProfileNetworkCloud()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileNetworkCloud. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileNetworkCloud"/>. </summary>
         /// <param name="networkId"> The ARM ID of Network Cloud Network Resource to Associate with this VirtualNetwork. </param>
-        internal VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(string networkId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(string networkId, Dictionary<string, BinaryData> rawData)
         {
             NetworkId = networkId;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM ID of Network Cloud Network Resource to Associate with this VirtualNetwork. </summary>

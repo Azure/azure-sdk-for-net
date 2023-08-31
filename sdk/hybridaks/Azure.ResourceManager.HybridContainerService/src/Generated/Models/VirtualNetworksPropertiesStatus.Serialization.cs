@@ -5,20 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VirtualNetworksPropertiesStatus
+    internal partial class VirtualNetworksPropertiesStatus : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworksPropertiesStatus>
     {
-        internal static VirtualNetworksPropertiesStatus DeserializeVirtualNetworksPropertiesStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworksPropertiesStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworksPropertiesStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProvisioningStatus))
+            {
+                writer.WritePropertyName("provisioningStatus"u8);
+                if (ProvisioningStatus is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualNetworksPropertiesStatusProvisioningStatus>)ProvisioningStatus).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualNetworksPropertiesStatus DeserializeVirtualNetworksPropertiesStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<VirtualNetworksPropertiesStatusProvisioningStatus> provisioningStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatus"u8))
@@ -30,8 +71,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     provisioningStatus = VirtualNetworksPropertiesStatusProvisioningStatus.DeserializeVirtualNetworksPropertiesStatusProvisioningStatus(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworksPropertiesStatus(provisioningStatus.Value);
+            return new VirtualNetworksPropertiesStatus(provisioningStatus.Value, rawData);
+        }
+
+        VirtualNetworksPropertiesStatus IModelJsonSerializable<VirtualNetworksPropertiesStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworksPropertiesStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworksPropertiesStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworksPropertiesStatus IModelSerializable<VirtualNetworksPropertiesStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworksPropertiesStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualNetworksPropertiesStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualNetworksPropertiesStatus"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualNetworksPropertiesStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualNetworksPropertiesStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualNetworksPropertiesStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworksPropertiesStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

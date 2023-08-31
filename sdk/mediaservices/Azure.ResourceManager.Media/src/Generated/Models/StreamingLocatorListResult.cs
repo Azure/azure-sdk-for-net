@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of StreamingLocator items. </summary>
     internal partial class StreamingLocatorListResult
     {
-        /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorListResult"/>. </summary>
         internal StreamingLocatorListResult()
         {
             Value = new ChangeTrackingList<StreamingLocatorData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorListResult"/>. </summary>
         /// <param name="value"> A collection of StreamingLocator items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
-        internal StreamingLocatorListResult(IReadOnlyList<StreamingLocatorData> value, string odataNextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingLocatorListResult(IReadOnlyList<StreamingLocatorData> value, string odataNextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             OdataNextLink = odataNextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A collection of StreamingLocator items. </summary>

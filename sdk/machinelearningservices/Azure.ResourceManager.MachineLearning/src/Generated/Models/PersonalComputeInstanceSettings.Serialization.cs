@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class PersonalComputeInstanceSettings : IUtf8JsonSerializable
+    internal partial class PersonalComputeInstanceSettings : IUtf8JsonSerializable, IModelJsonSerializable<PersonalComputeInstanceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PersonalComputeInstanceSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PersonalComputeInstanceSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
-                writer.WriteObjectValue(AssignedUser);
+                if (AssignedUser is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningComputeInstanceAssignedUser>)AssignedUser).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element)
+        internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignedUser"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     assignedUser = MachineLearningComputeInstanceAssignedUser.DeserializeMachineLearningComputeInstanceAssignedUser(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PersonalComputeInstanceSettings(assignedUser.Value);
+            return new PersonalComputeInstanceSettings(assignedUser.Value, rawData);
+        }
+
+        PersonalComputeInstanceSettings IModelJsonSerializable<PersonalComputeInstanceSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePersonalComputeInstanceSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PersonalComputeInstanceSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PersonalComputeInstanceSettings IModelSerializable<PersonalComputeInstanceSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePersonalComputeInstanceSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PersonalComputeInstanceSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PersonalComputeInstanceSettings"/> to convert. </param>
+        public static implicit operator RequestContent(PersonalComputeInstanceSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PersonalComputeInstanceSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PersonalComputeInstanceSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePersonalComputeInstanceSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

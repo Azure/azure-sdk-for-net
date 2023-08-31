@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class NlpVerticalFeaturizationSettings : IUtf8JsonSerializable
+    internal partial class NlpVerticalFeaturizationSettings : IUtf8JsonSerializable, IModelJsonSerializable<NlpVerticalFeaturizationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NlpVerticalFeaturizationSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NlpVerticalFeaturizationSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<NlpVerticalFeaturizationSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DatasetLanguage))
             {
@@ -27,16 +35,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("datasetLanguage");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NlpVerticalFeaturizationSettings DeserializeNlpVerticalFeaturizationSettings(JsonElement element)
+        internal static NlpVerticalFeaturizationSettings DeserializeNlpVerticalFeaturizationSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> datasetLanguage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasetLanguage"u8))
@@ -49,8 +72,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     datasetLanguage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NlpVerticalFeaturizationSettings(datasetLanguage.Value);
+            return new NlpVerticalFeaturizationSettings(datasetLanguage.Value, rawData);
+        }
+
+        NlpVerticalFeaturizationSettings IModelJsonSerializable<NlpVerticalFeaturizationSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NlpVerticalFeaturizationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNlpVerticalFeaturizationSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NlpVerticalFeaturizationSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NlpVerticalFeaturizationSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NlpVerticalFeaturizationSettings IModelSerializable<NlpVerticalFeaturizationSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NlpVerticalFeaturizationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNlpVerticalFeaturizationSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NlpVerticalFeaturizationSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NlpVerticalFeaturizationSettings"/> to convert. </param>
+        public static implicit operator RequestContent(NlpVerticalFeaturizationSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NlpVerticalFeaturizationSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NlpVerticalFeaturizationSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNlpVerticalFeaturizationSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

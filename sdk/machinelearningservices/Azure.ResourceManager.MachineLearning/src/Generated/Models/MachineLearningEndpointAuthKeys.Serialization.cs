@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointAuthKeys : IUtf8JsonSerializable
+    public partial class MachineLearningEndpointAuthKeys : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEndpointAuthKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEndpointAuthKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEndpointAuthKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKey))
             {
@@ -39,17 +47,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secondaryKey");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningEndpointAuthKeys DeserializeMachineLearningEndpointAuthKeys(JsonElement element)
+        internal static MachineLearningEndpointAuthKeys DeserializeMachineLearningEndpointAuthKeys(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -72,8 +95,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningEndpointAuthKeys(primaryKey.Value, secondaryKey.Value);
+            return new MachineLearningEndpointAuthKeys(primaryKey.Value, secondaryKey.Value, rawData);
+        }
+
+        MachineLearningEndpointAuthKeys IModelJsonSerializable<MachineLearningEndpointAuthKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEndpointAuthKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEndpointAuthKeys>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEndpointAuthKeys IModelSerializable<MachineLearningEndpointAuthKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEndpointAuthKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningEndpointAuthKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningEndpointAuthKeys"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningEndpointAuthKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningEndpointAuthKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningEndpointAuthKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningEndpointAuthKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

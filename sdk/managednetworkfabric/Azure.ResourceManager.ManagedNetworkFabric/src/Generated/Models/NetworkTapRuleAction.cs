@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,24 +14,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Action that need to performed. </summary>
     public partial class NetworkTapRuleAction
     {
-        /// <summary> Initializes a new instance of NetworkTapRuleAction. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleAction"/>. </summary>
         public NetworkTapRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkTapRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleAction"/>. </summary>
         /// <param name="tapRuleActionType"> Type of actions that can be performed. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>
         /// <param name="destinationId"> Destination Id. The ARM resource Id may be either Network To Network Interconnect or NeighborGroup. </param>
         /// <param name="matchConfigurationName"> The name of the match configuration. This is used when Goto type is provided. If Goto type is selected and no match configuration name is provided. It goes to next configuration. </param>
-        internal NetworkTapRuleAction(TapRuleActionType? tapRuleActionType, string truncate, NetworkFabricBooleanValue? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTapRuleAction(TapRuleActionType? tapRuleActionType, string truncate, NetworkFabricBooleanValue? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName, Dictionary<string, BinaryData> rawData)
         {
             TapRuleActionType = tapRuleActionType;
             Truncate = truncate;
             IsTimestampEnabled = isTimestampEnabled;
             DestinationId = destinationId;
             MatchConfigurationName = matchConfigurationName;
+            _rawData = rawData;
         }
 
         /// <summary> Type of actions that can be performed. </summary>

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> A track selection condition. This property is reserved for future use, any value set on this property will be ignored. </summary>
     public partial class LiveEventInputTrackSelection
     {
-        /// <summary> Initializes a new instance of LiveEventInputTrackSelection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventInputTrackSelection"/>. </summary>
         public LiveEventInputTrackSelection()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveEventInputTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventInputTrackSelection"/>. </summary>
         /// <param name="property"> Property name to select. This property is reserved for future use, any value set on this property will be ignored. </param>
         /// <param name="operation"> Comparing operation. This property is reserved for future use, any value set on this property will be ignored. </param>
         /// <param name="value"> Property value to select. This property is reserved for future use, any value set on this property will be ignored. </param>
-        internal LiveEventInputTrackSelection(string property, string operation, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventInputTrackSelection(string property, string operation, string value, Dictionary<string, BinaryData> rawData)
         {
             Property = property;
             Operation = operation;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Property name to select. This property is reserved for future use, any value set on this property will be ignored. </summary>

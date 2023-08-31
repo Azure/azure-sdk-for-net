@@ -6,15 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Twin reference input parameter. This is an optional parameter. </summary>
     public partial class RoutingTwin
     {
-        /// <summary> Initializes a new instance of RoutingTwin. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingTwin"/>. </summary>
         public RoutingTwin()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingTwin"/>. </summary>
+        /// <param name="tags"> Twin Tags. </param>
+        /// <param name="properties"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingTwin(BinaryData tags, RoutingTwinProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary>

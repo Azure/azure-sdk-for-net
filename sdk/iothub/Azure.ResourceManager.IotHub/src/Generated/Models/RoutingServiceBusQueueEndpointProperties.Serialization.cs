@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingServiceBusQueueEndpointProperties : IUtf8JsonSerializable
+    public partial class RoutingServiceBusQueueEndpointProperties : IUtf8JsonSerializable, IModelJsonSerializable<RoutingServiceBusQueueEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoutingServiceBusQueueEndpointProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoutingServiceBusQueueEndpointProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -44,7 +51,14 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                if (Identity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedIdentity>)Identity).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -58,11 +72,25 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutingServiceBusQueueEndpointProperties DeserializeRoutingServiceBusQueueEndpointProperties(JsonElement element)
+        internal static RoutingServiceBusQueueEndpointProperties DeserializeRoutingServiceBusQueueEndpointProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +104,7 @@ namespace Azure.ResourceManager.IotHub.Models
             string name = default;
             Optional<string> subscriptionId = default;
             Optional<string> resourceGroup = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,8 +164,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoutingServiceBusQueueEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
+            return new RoutingServiceBusQueueEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, rawData);
+        }
+
+        RoutingServiceBusQueueEndpointProperties IModelJsonSerializable<RoutingServiceBusQueueEndpointProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingServiceBusQueueEndpointProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoutingServiceBusQueueEndpointProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoutingServiceBusQueueEndpointProperties IModelSerializable<RoutingServiceBusQueueEndpointProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoutingServiceBusQueueEndpointProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoutingServiceBusQueueEndpointProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoutingServiceBusQueueEndpointProperties"/> to convert. </param>
+        public static implicit operator RequestContent(RoutingServiceBusQueueEndpointProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoutingServiceBusQueueEndpointProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoutingServiceBusQueueEndpointProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoutingServiceBusQueueEndpointProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

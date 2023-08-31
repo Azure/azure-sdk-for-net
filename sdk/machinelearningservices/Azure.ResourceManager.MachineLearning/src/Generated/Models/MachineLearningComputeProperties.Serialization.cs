@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeProperties : IUtf8JsonSerializable
+    public partial class MachineLearningComputeProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningComputeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningComputeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
@@ -51,11 +59,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element)
+        internal static MachineLearningComputeProperties DeserializeMachineLearningComputeProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,7 +98,166 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "VirtualMachine": return MachineLearningVirtualMachineCompute.DeserializeMachineLearningVirtualMachineCompute(element);
                 }
             }
-            return UnknownCompute.DeserializeUnknownCompute(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            ComputeType computeType = default;
+            Optional<string> computeLocation = default;
+            Optional<MachineLearningProvisioningState> provisioningState = default;
+            Optional<string> description = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> modifiedOn = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
+            Optional<bool> isAttachedCompute = default;
+            Optional<bool> disableLocalAuth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("computeType"u8))
+                {
+                    computeType = new ComputeType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("computeLocation"u8))
+                {
+                    computeLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new MachineLearningProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("modifiedOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedOn = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceId = null;
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningErrors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        provisioningErrors = null;
+                        continue;
+                    }
+                    List<MachineLearningError> array = new List<MachineLearningError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                    }
+                    provisioningErrors = array;
+                    continue;
+                }
+                if (property.NameEquals("isAttachedCompute"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAttachedCompute = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("disableLocalAuth"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disableLocalAuth = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), rawData);
+        }
+
+        MachineLearningComputeProperties IModelJsonSerializable<MachineLearningComputeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningComputeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningComputeProperties IModelSerializable<MachineLearningComputeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningComputeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningComputeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningComputeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningComputeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningComputeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningComputeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

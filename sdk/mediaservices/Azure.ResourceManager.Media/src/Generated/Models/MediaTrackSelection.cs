@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to select a track. </summary>
     public partial class MediaTrackSelection
     {
-        /// <summary> Initializes a new instance of MediaTrackSelection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaTrackSelection"/>. </summary>
         public MediaTrackSelection()
         {
             TrackSelections = new ChangeTrackingList<TrackPropertyCondition>();
         }
 
-        /// <summary> Initializes a new instance of MediaTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaTrackSelection"/>. </summary>
         /// <param name="trackSelections"> TrackSelections is a track property condition list which can specify track(s). </param>
-        internal MediaTrackSelection(IList<TrackPropertyCondition> trackSelections)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaTrackSelection(IList<TrackPropertyCondition> trackSelections, Dictionary<string, BinaryData> rawData)
         {
             TrackSelections = trackSelections;
+            _rawData = rawData;
         }
 
         /// <summary> TrackSelections is a track property condition list which can specify track(s). </summary>

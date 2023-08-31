@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningServicePrincipalDatastoreCredentials : IUtf8JsonSerializable
+    public partial class MachineLearningServicePrincipalDatastoreCredentials : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningServicePrincipalDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningServicePrincipalDatastoreCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningServicePrincipalDatastoreCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningServicePrincipalDatastoreCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorityUri))
             {
@@ -43,16 +50,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            if (Secrets is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningServicePrincipalDatastoreSecrets>)Secrets).Serialize(writer, options);
+            }
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningServicePrincipalDatastoreCredentials DeserializeMachineLearningServicePrincipalDatastoreCredentials(JsonElement element)
+        internal static MachineLearningServicePrincipalDatastoreCredentials DeserializeMachineLearningServicePrincipalDatastoreCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningServicePrincipalDatastoreSecrets secrets = default;
             Guid tenantId = default;
             CredentialsType credentialsType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorityUrl"u8))
@@ -105,8 +134,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     credentialsType = new CredentialsType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningServicePrincipalDatastoreCredentials(credentialsType, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId);
+            return new MachineLearningServicePrincipalDatastoreCredentials(credentialsType, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId, rawData);
+        }
+
+        MachineLearningServicePrincipalDatastoreCredentials IModelJsonSerializable<MachineLearningServicePrincipalDatastoreCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningServicePrincipalDatastoreCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServicePrincipalDatastoreCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningServicePrincipalDatastoreCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningServicePrincipalDatastoreCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningServicePrincipalDatastoreCredentials IModelSerializable<MachineLearningServicePrincipalDatastoreCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningServicePrincipalDatastoreCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningServicePrincipalDatastoreCredentials(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningServicePrincipalDatastoreCredentials"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningServicePrincipalDatastoreCredentials"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningServicePrincipalDatastoreCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningServicePrincipalDatastoreCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningServicePrincipalDatastoreCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

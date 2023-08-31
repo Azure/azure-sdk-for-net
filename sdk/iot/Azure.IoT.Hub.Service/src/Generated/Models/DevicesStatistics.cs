@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The RegistryStatistics. </summary>
     public partial class DevicesStatistics
     {
-        /// <summary> Initializes a new instance of DevicesStatistics. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevicesStatistics"/>. </summary>
         internal DevicesStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of DevicesStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevicesStatistics"/>. </summary>
         /// <param name="totalDeviceCount"> The total number of devices registered for the IoT Hub. </param>
         /// <param name="enabledDeviceCount"> The number of currently enabled devices. </param>
         /// <param name="disabledDeviceCount"> The number of currently disabled devices. </param>
-        internal DevicesStatistics(long? totalDeviceCount, long? enabledDeviceCount, long? disabledDeviceCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevicesStatistics(long? totalDeviceCount, long? enabledDeviceCount, long? disabledDeviceCount, Dictionary<string, BinaryData> rawData)
         {
             TotalDeviceCount = totalDeviceCount;
             EnabledDeviceCount = enabledDeviceCount;
             DisabledDeviceCount = disabledDeviceCount;
+            _rawData = rawData;
         }
 
         /// <summary> The total number of devices registered for the IoT Hub. </summary>

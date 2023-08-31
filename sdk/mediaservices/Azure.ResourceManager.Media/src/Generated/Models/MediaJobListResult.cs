@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of Job items. </summary>
     internal partial class MediaJobListResult
     {
-        /// <summary> Initializes a new instance of MediaJobListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobListResult"/>. </summary>
         internal MediaJobListResult()
         {
             Value = new ChangeTrackingList<MediaJobData>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobListResult"/>. </summary>
         /// <param name="value"> A collection of Job items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
-        internal MediaJobListResult(IReadOnlyList<MediaJobData> value, string odataNextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobListResult(IReadOnlyList<MediaJobData> value, string odataNextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             OdataNextLink = odataNextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A collection of Job items. </summary>

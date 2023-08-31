@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable, IModelJsonSerializable<SwaggerCustomDynamicTreeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SwaggerCustomDynamicTreeSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SwaggerCustomDynamicTreeSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CanSelectParentNodes))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("CanSelectLeafNodes"u8);
                 writer.WriteBooleanValue(CanSelectLeafNodes.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerCustomDynamicTreeSettings DeserializeSwaggerCustomDynamicTreeSettings(JsonElement element)
+        internal static SwaggerCustomDynamicTreeSettings DeserializeSwaggerCustomDynamicTreeSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> canSelectParentNodes = default;
             Optional<bool> canSelectLeafNodes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("CanSelectParentNodes"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Logic.Models
                     canSelectLeafNodes = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes));
+            return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes), rawData);
+        }
+
+        SwaggerCustomDynamicTreeSettings IModelJsonSerializable<SwaggerCustomDynamicTreeSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerCustomDynamicTreeSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SwaggerCustomDynamicTreeSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SwaggerCustomDynamicTreeSettings IModelSerializable<SwaggerCustomDynamicTreeSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSwaggerCustomDynamicTreeSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SwaggerCustomDynamicTreeSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SwaggerCustomDynamicTreeSettings"/> to convert. </param>
+        public static implicit operator RequestContent(SwaggerCustomDynamicTreeSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SwaggerCustomDynamicTreeSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SwaggerCustomDynamicTreeSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSwaggerCustomDynamicTreeSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

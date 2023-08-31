@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The expression traces. </summary>
     internal partial class ExpressionTraces
     {
-        /// <summary> Initializes a new instance of ExpressionTraces. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
         internal ExpressionTraces()
         {
             Inputs = new ChangeTrackingList<LogicExpressionRoot>();
         }
 
-        /// <summary> Initializes a new instance of ExpressionTraces. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
         /// <param name="inputs"></param>
-        internal ExpressionTraces(IReadOnlyList<LogicExpressionRoot> inputs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressionTraces(IReadOnlyList<LogicExpressionRoot> inputs, Dictionary<string, BinaryData> rawData)
         {
             Inputs = inputs;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the inputs. </summary>

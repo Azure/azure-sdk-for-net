@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapDestinationProperties : IUtf8JsonSerializable
+    public partial class NetworkTapDestinationProperties : IUtf8JsonSerializable, IModelJsonSerializable<NetworkTapDestinationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkTapDestinationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkTapDestinationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -33,18 +41,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties);
+                if (IsolationDomainProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IsolationDomainProperties>)IsolationDomainProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DestinationTapRuleId))
             {
                 writer.WritePropertyName("destinationTapRuleId"u8);
                 writer.WriteStringValue(DestinationTapRuleId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkTapDestinationProperties DeserializeNetworkTapDestinationProperties(JsonElement element)
+        internal static NetworkTapDestinationProperties DeserializeNetworkTapDestinationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<ResourceIdentifier> destinationId = default;
             Optional<IsolationDomainProperties> isolationDomainProperties = default;
             Optional<ResourceIdentifier> destinationTapRuleId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,8 +127,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     destinationTapRuleId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkTapDestinationProperties(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value);
+            return new NetworkTapDestinationProperties(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value, rawData);
+        }
+
+        NetworkTapDestinationProperties IModelJsonSerializable<NetworkTapDestinationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkTapDestinationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkTapDestinationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkTapDestinationProperties IModelSerializable<NetworkTapDestinationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkTapDestinationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkTapDestinationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkTapDestinationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkTapDestinationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkTapDestinationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkTapDestinationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkTapDestinationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

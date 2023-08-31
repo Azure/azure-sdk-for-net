@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningResourceQuota
+    public partial class MachineLearningResourceQuota : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningResourceQuota>
     {
-        internal static MachineLearningResourceQuota DeserializeMachineLearningResourceQuota(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningResourceQuota>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningResourceQuota>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningResourceQuota DeserializeMachineLearningResourceQuota(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningResourceName> name = default;
             Optional<long> limit = default;
             Optional<MachineLearningQuotaUnit> unit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -68,8 +97,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     unit = new MachineLearningQuotaUnit(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit));
+            return new MachineLearningResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), rawData);
+        }
+
+        MachineLearningResourceQuota IModelJsonSerializable<MachineLearningResourceQuota>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningResourceQuota(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningResourceQuota>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningResourceQuota IModelSerializable<MachineLearningResourceQuota>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningResourceQuota(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningResourceQuota"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningResourceQuota"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningResourceQuota model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningResourceQuota"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningResourceQuota(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningResourceQuota(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

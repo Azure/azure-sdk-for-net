@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Rendering
 {
     /// <summary> This object is returned from a successful copyright call. </summary>
     public partial class CopyrightCaption
     {
-        /// <summary> Initializes a new instance of CopyrightCaption. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyrightCaption"/>. </summary>
         internal CopyrightCaption()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyrightCaption"/>. </summary>
+        /// <param name="formatVersion"> Format Version property. </param>
+        /// <param name="copyright"> Copyrights Caption property. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyrightCaption(string formatVersion, string copyright, Dictionary<string, BinaryData> rawData)
+        {
+            FormatVersion = formatVersion;
+            Copyright = copyright;
+            _rawData = rawData;
         }
 
         /// <summary> Format Version property. </summary>

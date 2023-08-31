@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlIPAddressRange : IUtf8JsonSerializable
+    public partial class FlowAccessControlIPAddressRange : IUtf8JsonSerializable, IModelJsonSerializable<FlowAccessControlIPAddressRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FlowAccessControlIPAddressRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FlowAccessControlIPAddressRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressRange))
             {
                 writer.WritePropertyName("addressRange"u8);
                 writer.WriteStringValue(AddressRange);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FlowAccessControlIPAddressRange DeserializeFlowAccessControlIPAddressRange(JsonElement element)
+        internal static FlowAccessControlIPAddressRange DeserializeFlowAccessControlIPAddressRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> addressRange = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressRange"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.Logic.Models
                     addressRange = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FlowAccessControlIPAddressRange(addressRange.Value);
+            return new FlowAccessControlIPAddressRange(addressRange.Value, rawData);
+        }
+
+        FlowAccessControlIPAddressRange IModelJsonSerializable<FlowAccessControlIPAddressRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowAccessControlIPAddressRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FlowAccessControlIPAddressRange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FlowAccessControlIPAddressRange IModelSerializable<FlowAccessControlIPAddressRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFlowAccessControlIPAddressRange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FlowAccessControlIPAddressRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FlowAccessControlIPAddressRange"/> to convert. </param>
+        public static implicit operator RequestContent(FlowAccessControlIPAddressRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FlowAccessControlIPAddressRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FlowAccessControlIPAddressRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFlowAccessControlIPAddressRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

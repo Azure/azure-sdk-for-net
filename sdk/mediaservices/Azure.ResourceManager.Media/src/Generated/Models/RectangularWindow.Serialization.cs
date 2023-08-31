@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class RectangularWindow : IUtf8JsonSerializable
+    public partial class RectangularWindow : IUtf8JsonSerializable, IModelJsonSerializable<RectangularWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RectangularWindow>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RectangularWindow>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Left))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RectangularWindow DeserializeRectangularWindow(JsonElement element)
+        internal static RectangularWindow DeserializeRectangularWindow(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> top = default;
             Optional<string> width = default;
             Optional<string> height = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("left"u8))
@@ -70,8 +93,61 @@ namespace Azure.ResourceManager.Media.Models
                     height = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RectangularWindow(left.Value, top.Value, width.Value, height.Value);
+            return new RectangularWindow(left.Value, top.Value, width.Value, height.Value, rawData);
+        }
+
+        RectangularWindow IModelJsonSerializable<RectangularWindow>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRectangularWindow(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RectangularWindow>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RectangularWindow IModelSerializable<RectangularWindow>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRectangularWindow(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RectangularWindow"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RectangularWindow"/> to convert. </param>
+        public static implicit operator RequestContent(RectangularWindow model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RectangularWindow"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RectangularWindow(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRectangularWindow(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

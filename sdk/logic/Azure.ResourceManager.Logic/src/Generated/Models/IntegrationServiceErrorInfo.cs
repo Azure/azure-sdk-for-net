@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The extended error info. </summary>
     public partial class IntegrationServiceErrorInfo
     {
-        /// <summary> Initializes a new instance of IntegrationServiceErrorInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -27,17 +29,24 @@ namespace Azure.ResourceManager.Logic.Models
             Details = new ChangeTrackingList<IntegrationServiceErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error message details. </param>
         /// <param name="innerError"> The inner error. </param>
-        internal IntegrationServiceErrorInfo(IntegrationServiceErrorCode code, string message, IReadOnlyList<IntegrationServiceErrorInfo> details, BinaryData innerError)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceErrorInfo(IntegrationServiceErrorCode code, string message, IReadOnlyList<IntegrationServiceErrorInfo> details, BinaryData innerError, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
             InnerError = innerError;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceErrorInfo"/> for deserialization. </summary>
+        internal IntegrationServiceErrorInfo()
+        {
         }
 
         /// <summary> The error code. </summary>

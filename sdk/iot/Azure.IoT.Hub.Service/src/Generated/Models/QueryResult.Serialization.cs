@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class QueryResult
+    public partial class QueryResult : IUtf8JsonSerializable, IModelJsonSerializable<QueryResult>
     {
-        internal static QueryResult DeserializeQueryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Items))
+            {
+                writer.WritePropertyName("items"u8);
+                writer.WriteStartArray();
+                foreach (var item in Items)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ContinuationToken))
+            {
+                writer.WritePropertyName("continuationToken"u8);
+                writer.WriteStringValue(ContinuationToken);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QueryResult DeserializeQueryResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +74,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<QueryResultType> type = default;
             Optional<IReadOnlyList<object>> items = default;
             Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -59,8 +112,61 @@ namespace Azure.IoT.Hub.Service.Models
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueryResult(Optional.ToNullable(type), Optional.ToList(items), continuationToken.Value);
+            return new QueryResult(Optional.ToNullable(type), Optional.ToList(items), continuationToken.Value, rawData);
+        }
+
+        QueryResult IModelJsonSerializable<QueryResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryResult IModelSerializable<QueryResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QueryResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryResult"/> to convert. </param>
+        public static implicit operator RequestContent(QueryResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

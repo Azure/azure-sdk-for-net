@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> AKS properties. </summary>
     public partial class MachineLearningAksComputeProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAksComputeProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeProperties"/>. </summary>
         public MachineLearningAksComputeProperties()
         {
             SystemServices = new ChangeTrackingList<MachineLearningComputeSystemService>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksComputeProperties"/>. </summary>
         /// <param name="clusterFqdn"> Cluster full qualified domain name. </param>
         /// <param name="systemServices"> System services. </param>
         /// <param name="agentCount"> Number of agents. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="aksNetworkingConfiguration"> AKS networking configuration for vnet. </param>
         /// <param name="loadBalancerType"> Load Balancer Type. </param>
         /// <param name="loadBalancerSubnet"> Load Balancer Subnet. </param>
-        internal MachineLearningAksComputeProperties(string clusterFqdn, IReadOnlyList<MachineLearningComputeSystemService> systemServices, int? agentCount, string agentVmSize, MachineLearningClusterPurpose? clusterPurpose, MachineLearningSslConfiguration sslConfiguration, MachineLearningAksNetworkingConfiguration aksNetworkingConfiguration, MachineLearningLoadBalancerType? loadBalancerType, string loadBalancerSubnet)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAksComputeProperties(string clusterFqdn, IReadOnlyList<MachineLearningComputeSystemService> systemServices, int? agentCount, string agentVmSize, MachineLearningClusterPurpose? clusterPurpose, MachineLearningSslConfiguration sslConfiguration, MachineLearningAksNetworkingConfiguration aksNetworkingConfiguration, MachineLearningLoadBalancerType? loadBalancerType, string loadBalancerSubnet, Dictionary<string, BinaryData> rawData)
         {
             ClusterFqdn = clusterFqdn;
             SystemServices = systemServices;
@@ -40,6 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             AksNetworkingConfiguration = aksNetworkingConfiguration;
             LoadBalancerType = loadBalancerType;
             LoadBalancerSubnet = loadBalancerSubnet;
+            _rawData = rawData;
         }
 
         /// <summary> Cluster full qualified domain name. </summary>

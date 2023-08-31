@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Environment information. </summary>
     public partial class MachineLearningComputeInstanceEnvironmentInfo
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceEnvironmentInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceEnvironmentInfo"/>. </summary>
         internal MachineLearningComputeInstanceEnvironmentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceEnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceEnvironmentInfo"/>. </summary>
         /// <param name="name"> name of environment. </param>
         /// <param name="version"> version of environment. </param>
-        internal MachineLearningComputeInstanceEnvironmentInfo(string name, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceEnvironmentInfo(string name, string version, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> name of environment. </summary>

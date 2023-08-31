@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoReadWriteDatabase : IUtf8JsonSerializable
+    public partial class KustoReadWriteDatabase : IUtf8JsonSerializable, IModelJsonSerializable<KustoReadWriteDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoReadWriteDatabase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoReadWriteDatabase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<KustoReadWriteDatabase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -39,14 +46,35 @@ namespace Azure.ResourceManager.Kusto.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                if (KeyVaultProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KustoKeyVaultProperties>)KeyVaultProperties).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoReadWriteDatabase DeserializeKustoReadWriteDatabase(JsonElement element)
+        internal static KustoReadWriteDatabase DeserializeKustoReadWriteDatabase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +92,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<bool> isFollowed = default;
             Optional<KustoKeyVaultProperties> keyVaultProperties = default;
             Optional<SuspensionDetails> suspensionDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -179,8 +208,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value);
+            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value, rawData);
+        }
+
+        KustoReadWriteDatabase IModelJsonSerializable<KustoReadWriteDatabase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoReadWriteDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoReadWriteDatabase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoReadWriteDatabase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoReadWriteDatabase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoReadWriteDatabase IModelSerializable<KustoReadWriteDatabase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoReadWriteDatabase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoReadWriteDatabase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoReadWriteDatabase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoReadWriteDatabase"/> to convert. </param>
+        public static implicit operator RequestContent(KustoReadWriteDatabase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoReadWriteDatabase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoReadWriteDatabase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoReadWriteDatabase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

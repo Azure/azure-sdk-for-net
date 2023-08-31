@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareWorkspaceResource(Client, FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(e)), FirmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirmwareWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FirmwareWorkspaceResource(Client, FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(e)), FirmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirmwareWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirmwareWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareWorkspaceResource(Client, FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(e)), FirmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirmwareWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FirmwareWorkspaceResource(Client, FirmwareWorkspaceData.DeserializeFirmwareWorkspaceData(e)), FirmwareWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirmwareWorkspaces", "value", "nextLink", cancellationToken);
         }
     }
 }

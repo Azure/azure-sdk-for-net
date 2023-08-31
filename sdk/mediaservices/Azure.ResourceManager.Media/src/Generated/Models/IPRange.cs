@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP address range in the CIDR scheme. </summary>
     public partial class IPRange
     {
-        /// <summary> Initializes a new instance of IPRange. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPRange"/>. </summary>
         public IPRange()
         {
         }
 
-        /// <summary> Initializes a new instance of IPRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPRange"/>. </summary>
         /// <param name="name"> The friendly name for the IP address range. </param>
         /// <param name="address"> The IP address. </param>
         /// <param name="subnetPrefixLength"> The subnet mask prefix length (see CIDR notation). </param>
-        internal IPRange(string name, IPAddress address, int? subnetPrefixLength)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPRange(string name, IPAddress address, int? subnetPrefixLength, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Address = address;
             SubnetPrefixLength = subnetPrefixLength;
+            _rawData = rawData;
         }
 
         /// <summary> The friendly name for the IP address range. </summary>

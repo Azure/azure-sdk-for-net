@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,19 +13,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Container for environment specification versions. </summary>
     public partial class MachineLearningEnvironmentContainerProperties : MachineLearningAssetContainer
     {
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentContainerProperties"/>. </summary>
         public MachineLearningEnvironmentContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        internal MachineLearningEnvironmentContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, isArchived, latestVersion, nextVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEnvironmentContainerProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isArchived, string latestVersion, string nextVersion, Dictionary<string, BinaryData> rawData) : base(description, properties, tags, isArchived, latestVersion, nextVersion, rawData)
         {
         }
     }

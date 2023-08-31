@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmentSkuCapacity
+    public partial class IntegrationServiceEnvironmentSkuCapacity : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationServiceEnvironmentSkuCapacity>
     {
-        internal static IntegrationServiceEnvironmentSkuCapacity DeserializeIntegrationServiceEnvironmentSkuCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationServiceEnvironmentSkuCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationServiceEnvironmentSkuCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Minimum))
+            {
+                writer.WritePropertyName("minimum"u8);
+                writer.WriteNumberValue(Minimum.Value);
+            }
+            if (Optional.IsDefined(Maximum))
+            {
+                writer.WritePropertyName("maximum"u8);
+                writer.WriteNumberValue(Maximum.Value);
+            }
+            if (Optional.IsDefined(Default))
+            {
+                writer.WritePropertyName("default"u8);
+                writer.WriteNumberValue(Default.Value);
+            }
+            if (Optional.IsDefined(ScaleType))
+            {
+                writer.WritePropertyName("scaleType"u8);
+                writer.WriteStringValue(ScaleType.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IntegrationServiceEnvironmentSkuCapacity DeserializeIntegrationServiceEnvironmentSkuCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<int> maximum = default;
             Optional<int> @default = default;
             Optional<IntegrationServiceEnvironmentSkuScaleType> scaleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -60,8 +109,61 @@ namespace Azure.ResourceManager.Logic.Models
                     scaleType = new IntegrationServiceEnvironmentSkuScaleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationServiceEnvironmentSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
+            return new IntegrationServiceEnvironmentSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), rawData);
+        }
+
+        IntegrationServiceEnvironmentSkuCapacity IModelJsonSerializable<IntegrationServiceEnvironmentSkuCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentSkuCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationServiceEnvironmentSkuCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationServiceEnvironmentSkuCapacity IModelSerializable<IntegrationServiceEnvironmentSkuCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmentSkuCapacity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationServiceEnvironmentSkuCapacity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationServiceEnvironmentSkuCapacity"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationServiceEnvironmentSkuCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationServiceEnvironmentSkuCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationServiceEnvironmentSkuCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

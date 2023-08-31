@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> IoT Central Application Template Locations. </summary>
     public partial class IotCentralAppTemplateLocation
     {
-        /// <summary> Initializes a new instance of IotCentralAppTemplateLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplateLocation"/>. </summary>
         internal IotCentralAppTemplateLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplateLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplateLocation"/>. </summary>
         /// <param name="location"> The ID of the location. </param>
         /// <param name="displayName"> The display name of the location. </param>
-        internal IotCentralAppTemplateLocation(AzureLocation? location, string displayName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppTemplateLocation(AzureLocation? location, string displayName, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             DisplayName = displayName;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of the location. </summary>

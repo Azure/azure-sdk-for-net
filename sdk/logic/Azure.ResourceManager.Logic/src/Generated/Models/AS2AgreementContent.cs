@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account AS2 agreement content. </summary>
     public partial class AS2AgreementContent
     {
-        /// <summary> Initializes a new instance of AS2AgreementContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2AgreementContent"/>. </summary>
         /// <param name="receiveAgreement"> The AS2 one-way receive agreement. </param>
         /// <param name="sendAgreement"> The AS2 one-way send agreement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.Logic.Models
 
             ReceiveAgreement = receiveAgreement;
             SendAgreement = sendAgreement;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2AgreementContent"/>. </summary>
+        /// <param name="receiveAgreement"> The AS2 one-way receive agreement. </param>
+        /// <param name="sendAgreement"> The AS2 one-way send agreement. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2AgreementContent(AS2OneWayAgreement receiveAgreement, AS2OneWayAgreement sendAgreement, Dictionary<string, BinaryData> rawData)
+        {
+            ReceiveAgreement = receiveAgreement;
+            SendAgreement = sendAgreement;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2AgreementContent"/> for deserialization. </summary>
+        internal AS2AgreementContent()
+        {
         }
 
         /// <summary> The AS2 one-way receive agreement. </summary>

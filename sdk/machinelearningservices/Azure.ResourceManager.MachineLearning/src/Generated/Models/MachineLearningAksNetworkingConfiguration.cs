@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,22 +14,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Advance configuration for AKS networking. </summary>
     public partial class MachineLearningAksNetworkingConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningAksNetworkingConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksNetworkingConfiguration"/>. </summary>
         public MachineLearningAksNetworkingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAksNetworkingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAksNetworkingConfiguration"/>. </summary>
         /// <param name="subnetId"> Virtual network subnet resource ID the compute nodes belong to. </param>
         /// <param name="serviceCidr"> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
         /// <param name="dnsServiceIP"> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>
         /// <param name="dockerBridgeCidr"> A CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the Kubernetes service address range. </param>
-        internal MachineLearningAksNetworkingConfiguration(ResourceIdentifier subnetId, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAksNetworkingConfiguration(ResourceIdentifier subnetId, string serviceCidr, string dnsServiceIP, string dockerBridgeCidr, Dictionary<string, BinaryData> rawData)
         {
             SubnetId = subnetId;
             ServiceCidr = serviceCidr;
             DnsServiceIP = dnsServiceIP;
             DockerBridgeCidr = dockerBridgeCidr;
+            _rawData = rawData;
         }
 
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
@@ -12,9 +14,22 @@ namespace Azure.Maps.Routing
     /// <summary> An object with a matrix of coordinates. </summary>
     public partial class RouteMatrixQuery
     {
-        /// <summary> Initializes a new instance of RouteMatrixQuery. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
         public RouteMatrixQuery()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixQuery"/>. </summary>
+        /// <param name="geoJsonMultiPointOrigins"> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </param>
+        /// <param name="geoJsonMultiPointDestinations"> A valid `GeoJSON MultiPoint` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.3) for details. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMatrixQuery(GeoJsonMultiPoint geoJsonMultiPointOrigins, GeoJsonMultiPoint geoJsonMultiPointDestinations, Dictionary<string, BinaryData> rawData)
+        {
+            GeoJsonMultiPointOrigins = geoJsonMultiPointOrigins;
+            GeoJsonMultiPointDestinations = geoJsonMultiPointDestinations;
+            _rawData = rawData;
         }
     }
 }

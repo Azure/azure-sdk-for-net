@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteInstructionGroup
+    public partial class RouteInstructionGroup : IUtf8JsonSerializable, IModelJsonSerializable<RouteInstructionGroup>
     {
-        internal static RouteInstructionGroup DeserializeRouteInstructionGroup(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteInstructionGroup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteInstructionGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteInstructionGroup DeserializeRouteInstructionGroup(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.Maps.Routing.Models
             Optional<int> lastInstructionIndex = default;
             Optional<int> groupLengthInMeters = default;
             Optional<string> groupMessage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstInstructionIndex"u8))
@@ -56,8 +85,61 @@ namespace Azure.Maps.Routing.Models
                     groupMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteInstructionGroup(Optional.ToNullable(firstInstructionIndex), Optional.ToNullable(lastInstructionIndex), Optional.ToNullable(groupLengthInMeters), groupMessage.Value);
+            return new RouteInstructionGroup(Optional.ToNullable(firstInstructionIndex), Optional.ToNullable(lastInstructionIndex), Optional.ToNullable(groupLengthInMeters), groupMessage.Value, rawData);
+        }
+
+        RouteInstructionGroup IModelJsonSerializable<RouteInstructionGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteInstructionGroup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteInstructionGroup>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteInstructionGroup IModelSerializable<RouteInstructionGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteInstructionGroup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteInstructionGroup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteInstructionGroup"/> to convert. </param>
+        public static implicit operator RequestContent(RouteInstructionGroup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteInstructionGroup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteInstructionGroup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteInstructionGroup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

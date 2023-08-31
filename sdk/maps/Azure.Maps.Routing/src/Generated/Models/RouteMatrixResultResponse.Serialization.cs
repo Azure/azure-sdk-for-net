@@ -5,20 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    internal partial class RouteMatrixResultResponse
+    internal partial class RouteMatrixResultResponse : IUtf8JsonSerializable, IModelJsonSerializable<RouteMatrixResultResponse>
     {
-        internal static RouteMatrixResultResponse DeserializeRouteMatrixResultResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteMatrixResultResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteMatrixResultResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteMatrixResultResponse DeserializeRouteMatrixResultResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RouteLegSummary> routeSummary = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routeSummary"u8))
@@ -30,8 +59,61 @@ namespace Azure.Maps.Routing.Models
                     routeSummary = RouteLegSummary.DeserializeRouteLegSummary(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteMatrixResultResponse(routeSummary.Value);
+            return new RouteMatrixResultResponse(routeSummary.Value, rawData);
+        }
+
+        RouteMatrixResultResponse IModelJsonSerializable<RouteMatrixResultResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteMatrixResultResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteMatrixResultResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteMatrixResultResponse IModelSerializable<RouteMatrixResultResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteMatrixResultResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteMatrixResultResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteMatrixResultResponse"/> to convert. </param>
+        public static implicit operator RequestContent(RouteMatrixResultResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteMatrixResultResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteMatrixResultResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteMatrixResultResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

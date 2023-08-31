@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Plan with requesters details. </summary>
     public partial class PlanRequesterDetails
     {
-        /// <summary> Initializes a new instance of PlanRequesterDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlanRequesterDetails"/>. </summary>
         internal PlanRequesterDetails()
         {
             Requesters = new ChangeTrackingList<PlanRequesterInfo>();
         }
 
-        /// <summary> Initializes a new instance of PlanRequesterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanRequesterDetails"/>. </summary>
         /// <param name="planId"> Gets the plan id. </param>
         /// <param name="planDisplayName"> Gets the plan display name. </param>
         /// <param name="requesters"> Gets requesters details list. </param>
-        internal PlanRequesterDetails(string planId, string planDisplayName, IReadOnlyList<PlanRequesterInfo> requesters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlanRequesterDetails(string planId, string planDisplayName, IReadOnlyList<PlanRequesterInfo> requesters, Dictionary<string, BinaryData> rawData)
         {
             PlanId = planId;
             PlanDisplayName = planDisplayName;
             Requesters = requesters;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the plan id. </summary>

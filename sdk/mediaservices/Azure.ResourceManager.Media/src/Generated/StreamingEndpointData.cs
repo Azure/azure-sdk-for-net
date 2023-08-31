@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class StreamingEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StreamingEndpointData(AzureLocation location) : base(location)
         {
             CustomHostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="freeTrialEndOn"> The free trial expiration time. </param>
         /// <param name="createdOn"> The exact time the streaming endpoint was created. </param>
         /// <param name="lastModifiedOn"> The exact time the streaming endpoint was last modified. </param>
-        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StreamingEndpointCurrentSku sku, string description, int? scaleUnits, string availabilitySetName, StreamingEndpointAccessControl accessControl, long? maxCacheAge, IList<string> customHostNames, string hostName, bool? isCdnEnabled, string cdnProvider, string cdnProfile, string provisioningState, StreamingEndpointResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, DateTimeOffset? freeTrialEndOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Description = description;
@@ -69,6 +72,12 @@ namespace Azure.ResourceManager.Media
             FreeTrialEndOn = freeTrialEndOn;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointData"/> for deserialization. </summary>
+        internal StreamingEndpointData()
+        {
         }
 
         /// <summary> The streaming endpoint sku. </summary>

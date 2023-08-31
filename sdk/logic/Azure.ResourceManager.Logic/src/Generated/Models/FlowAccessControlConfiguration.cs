@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The access control configuration. </summary>
     public partial class FlowAccessControlConfiguration
     {
-        /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         public FlowAccessControlConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         /// <param name="triggers"> The access control configuration for invoking workflow triggers. </param>
         /// <param name="contents"> The access control configuration for accessing workflow run contents. </param>
         /// <param name="actions"> The access control configuration for workflow actions. </param>
         /// <param name="workflowManagement"> The access control configuration for workflow management. </param>
-        internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement, Dictionary<string, BinaryData> rawData)
         {
             Triggers = triggers;
             Contents = contents;
             Actions = actions;
             WorkflowManagement = workflowManagement;
+            _rawData = rawData;
         }
 
         /// <summary> The access control configuration for invoking workflow triggers. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Effective parameter or data used when calling this Route API. </summary>
     public partial class EffectiveSetting
     {
-        /// <summary> Initializes a new instance of EffectiveSetting. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveSetting"/>. </summary>
         internal EffectiveSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of EffectiveSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveSetting"/>. </summary>
         /// <param name="key"> Name of the parameter used. </param>
         /// <param name="value"> Value of the parameter used. </param>
-        internal EffectiveSetting(string key, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveSetting(string key, string value, Dictionary<string, BinaryData> rawData)
         {
             Key = key;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the parameter used. </summary>

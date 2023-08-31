@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Geolocation
 {
     /// <summary> The resource management error additional info. </summary>
     internal partial class ErrorAdditionalInfo
     {
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
         internal ErrorAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
-        internal ErrorAdditionalInfo(string type, object info)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorAdditionalInfo(string type, object info, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             Info = info;
+            _rawData = rawData;
         }
 
         /// <summary> The additional info type. </summary>

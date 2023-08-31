@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Input values. </summary>
     public partial class IotHubNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of IotHubNameAvailabilityContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name of the IoT hub to check. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotHubNameAvailabilityContent(string name)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.IotHub.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the IoT hub to check. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubNameAvailabilityContent(string name, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNameAvailabilityContent"/> for deserialization. </summary>
+        internal IotHubNameAvailabilityContent()
+        {
         }
 
         /// <summary> The name of the IoT hub to check. </summary>

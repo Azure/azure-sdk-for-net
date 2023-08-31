@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class SasDefinitionCreateParameters : IUtf8JsonSerializable
+    internal partial class SasDefinitionCreateParameters : IUtf8JsonSerializable, IModelJsonSerializable<SasDefinitionCreateParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SasDefinitionCreateParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SasDefinitionCreateParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("templateUri"u8);
             writer.WriteStringValue(TemplateUri);
@@ -24,7 +32,14 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(SasDefinitionAttributes);
+                if (SasDefinitionAttributes is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SasDefinitionAttributes>)SasDefinitionAttributes).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -37,7 +52,130 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SasDefinitionCreateParameters DeserializeSasDefinitionCreateParameters(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string templateUri = default;
+            SasTokenType sasType = default;
+            string validityPeriod = default;
+            Optional<SasDefinitionAttributes> attributes = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("templateUri"u8))
+                {
+                    templateUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sasType"u8))
+                {
+                    sasType = new SasTokenType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("validityPeriod"u8))
+                {
+                    validityPeriod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("attributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attributes = SasDefinitionAttributes.DeserializeSasDefinitionAttributes(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SasDefinitionCreateParameters(templateUri, sasType, validityPeriod, attributes.Value, Optional.ToDictionary(tags), rawData);
+        }
+
+        SasDefinitionCreateParameters IModelJsonSerializable<SasDefinitionCreateParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSasDefinitionCreateParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SasDefinitionCreateParameters>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SasDefinitionCreateParameters IModelSerializable<SasDefinitionCreateParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSasDefinitionCreateParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SasDefinitionCreateParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SasDefinitionCreateParameters"/> to convert. </param>
+        public static implicit operator RequestContent(SasDefinitionCreateParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SasDefinitionCreateParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SasDefinitionCreateParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSasDefinitionCreateParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

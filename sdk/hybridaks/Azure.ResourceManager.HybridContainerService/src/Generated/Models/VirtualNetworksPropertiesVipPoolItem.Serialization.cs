@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksPropertiesVipPoolItem : IUtf8JsonSerializable
+    public partial class VirtualNetworksPropertiesVipPoolItem : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworksPropertiesVipPoolItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworksPropertiesVipPoolItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworksPropertiesVipPoolItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndIP))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworksPropertiesVipPoolItem DeserializeVirtualNetworksPropertiesVipPoolItem(JsonElement element)
+        internal static VirtualNetworksPropertiesVipPoolItem DeserializeVirtualNetworksPropertiesVipPoolItem(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> endIP = default;
             Optional<string> startIP = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endIP"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     startIP = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworksPropertiesVipPoolItem(endIP.Value, startIP.Value);
+            return new VirtualNetworksPropertiesVipPoolItem(endIP.Value, startIP.Value, rawData);
+        }
+
+        VirtualNetworksPropertiesVipPoolItem IModelJsonSerializable<VirtualNetworksPropertiesVipPoolItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworksPropertiesVipPoolItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworksPropertiesVipPoolItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworksPropertiesVipPoolItem IModelSerializable<VirtualNetworksPropertiesVipPoolItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworksPropertiesVipPoolItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualNetworksPropertiesVipPoolItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualNetworksPropertiesVipPoolItem"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualNetworksPropertiesVipPoolItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualNetworksPropertiesVipPoolItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualNetworksPropertiesVipPoolItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworksPropertiesVipPoolItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

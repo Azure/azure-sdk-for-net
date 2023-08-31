@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Update administrative state on list of resources. </summary>
     public partial class UpdateAdministrativeStateOnResources
     {
-        /// <summary> Initializes a new instance of UpdateAdministrativeStateOnResources. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateOnResources"/>. </summary>
         public UpdateAdministrativeStateOnResources()
         {
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateOnResources"/>. </summary>
+        /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateAdministrativeStateOnResources(IList<ResourceIdentifier> resourceIds, Dictionary<string, BinaryData> rawData)
+        {
+            ResourceIds = resourceIds;
+            _rawData = rawData;
         }
 
         /// <summary> Network Fabrics or Network Rack resource Id. </summary>

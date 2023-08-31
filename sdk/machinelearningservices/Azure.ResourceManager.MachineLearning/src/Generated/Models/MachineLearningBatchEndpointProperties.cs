@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Batch endpoint configuration. </summary>
     public partial class MachineLearningBatchEndpointProperties : MachineLearningEndpointProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         public MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
@@ -31,10 +31,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
         /// <param name="defaults"> Default values for Batch Endpoint. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
-        internal MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, BatchEndpointDefaults defaults, MachineLearningEndpointProvisioningState? provisioningState) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, BatchEndpointDefaults defaults, MachineLearningEndpointProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(authMode, description, keys, properties, scoringUri, swaggerUri, rawData)
         {
             Defaults = defaults;
             ProvisioningState = provisioningState;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchEndpointProperties"/> for deserialization. </summary>
+        internal MachineLearningBatchEndpointProperties()
+        {
         }
 
         /// <summary> Default values for Batch Endpoint. </summary>

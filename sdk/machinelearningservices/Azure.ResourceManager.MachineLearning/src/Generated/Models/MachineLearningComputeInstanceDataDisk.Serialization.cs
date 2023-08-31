@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceDataDisk
+    public partial class MachineLearningComputeInstanceDataDisk : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningComputeInstanceDataDisk>
     {
-        internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningComputeInstanceDataDisk>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningComputeInstanceDataDisk>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Caching))
+            {
+                writer.WritePropertyName("caching"u8);
+                writer.WriteStringValue(Caching.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                writer.WritePropertyName("diskSizeGB"u8);
+                writer.WriteNumberValue(DiskSizeGB.Value);
+            }
+            if (Optional.IsDefined(Lun))
+            {
+                writer.WritePropertyName("lun"u8);
+                writer.WriteNumberValue(Lun.Value);
+            }
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningComputeInstanceDataDisk DeserializeMachineLearningComputeInstanceDataDisk(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> diskSizeGB = default;
             Optional<int> lun = default;
             Optional<MachineLearningStorageAccountType> storageAccountType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("caching"u8))
@@ -60,8 +109,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountType = new MachineLearningStorageAccountType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningComputeInstanceDataDisk(Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(lun), Optional.ToNullable(storageAccountType));
+            return new MachineLearningComputeInstanceDataDisk(Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(lun), Optional.ToNullable(storageAccountType), rawData);
+        }
+
+        MachineLearningComputeInstanceDataDisk IModelJsonSerializable<MachineLearningComputeInstanceDataDisk>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceDataDisk(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningComputeInstanceDataDisk>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningComputeInstanceDataDisk IModelSerializable<MachineLearningComputeInstanceDataDisk>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeInstanceDataDisk(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningComputeInstanceDataDisk"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningComputeInstanceDataDisk"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningComputeInstanceDataDisk model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningComputeInstanceDataDisk"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningComputeInstanceDataDisk(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningComputeInstanceDataDisk(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

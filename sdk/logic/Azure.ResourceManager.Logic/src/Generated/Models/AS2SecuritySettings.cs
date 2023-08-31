@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The AS2 agreement security settings. </summary>
     public partial class AS2SecuritySettings
     {
-        /// <summary> Initializes a new instance of AS2SecuritySettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2SecuritySettings"/>. </summary>
         /// <param name="overrideGroupSigningCertificate"> The value indicating whether to send or request a MDN. </param>
         /// <param name="enableNrrForInboundEncodedMessages"> The value indicating whether to enable NRR for inbound encoded messages. </param>
         /// <param name="enableNrrForInboundDecodedMessages"> The value indicating whether to enable NRR for inbound decoded messages. </param>
@@ -29,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
             EnableNrrForInboundMdn = enableNrrForInboundMdn;
         }
 
-        /// <summary> Initializes a new instance of AS2SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2SecuritySettings"/>. </summary>
         /// <param name="overrideGroupSigningCertificate"> The value indicating whether to send or request a MDN. </param>
         /// <param name="signingCertificateName"> The name of the signing certificate. </param>
         /// <param name="encryptionCertificateName"> The name of the encryption certificate. </param>
@@ -40,7 +45,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="enableNrrForOutboundDecodedMessages"> The value indicating whether to enable NRR for outbound decoded messages. </param>
         /// <param name="enableNrrForInboundMdn"> The value indicating whether to enable NRR for inbound MDN. </param>
         /// <param name="sha2AlgorithmFormat"> The Sha2 algorithm format. Valid values are Sha2, ShaHashSize, ShaHyphenHashSize, Sha2UnderscoreHashSize. </param>
-        internal AS2SecuritySettings(bool overrideGroupSigningCertificate, string signingCertificateName, string encryptionCertificateName, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn, string sha2AlgorithmFormat)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2SecuritySettings(bool overrideGroupSigningCertificate, string signingCertificateName, string encryptionCertificateName, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn, string sha2AlgorithmFormat, Dictionary<string, BinaryData> rawData)
         {
             OverrideGroupSigningCertificate = overrideGroupSigningCertificate;
             SigningCertificateName = signingCertificateName;
@@ -52,6 +58,12 @@ namespace Azure.ResourceManager.Logic.Models
             EnableNrrForOutboundDecodedMessages = enableNrrForOutboundDecodedMessages;
             EnableNrrForInboundMdn = enableNrrForInboundMdn;
             Sha2AlgorithmFormat = sha2AlgorithmFormat;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2SecuritySettings"/> for deserialization. </summary>
+        internal AS2SecuritySettings()
+        {
         }
 
         /// <summary> The value indicating whether to send or request a MDN. </summary>

@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class DatabaseInviteFollowerResult
+    public partial class DatabaseInviteFollowerResult : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseInviteFollowerResult>
     {
-        internal static DatabaseInviteFollowerResult DeserializeDatabaseInviteFollowerResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseInviteFollowerResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseInviteFollowerResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(GeneratedInvitation))
+            {
+                writer.WritePropertyName("generatedInvitation"u8);
+                writer.WriteStringValue(GeneratedInvitation);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DatabaseInviteFollowerResult DeserializeDatabaseInviteFollowerResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> generatedInvitation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedInvitation"u8))
@@ -26,8 +60,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     generatedInvitation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatabaseInviteFollowerResult(generatedInvitation.Value);
+            return new DatabaseInviteFollowerResult(generatedInvitation.Value, rawData);
+        }
+
+        DatabaseInviteFollowerResult IModelJsonSerializable<DatabaseInviteFollowerResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseInviteFollowerResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseInviteFollowerResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseInviteFollowerResult IModelSerializable<DatabaseInviteFollowerResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseInviteFollowerResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatabaseInviteFollowerResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatabaseInviteFollowerResult"/> to convert. </param>
+        public static implicit operator RequestContent(DatabaseInviteFollowerResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatabaseInviteFollowerResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatabaseInviteFollowerResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseInviteFollowerResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

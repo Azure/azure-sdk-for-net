@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Plan notification details. </summary>
     public partial class PlanNotificationDetails
     {
-        /// <summary> Initializes a new instance of PlanNotificationDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlanNotificationDetails"/>. </summary>
         internal PlanNotificationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PlanNotificationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanNotificationDetails"/>. </summary>
         /// <param name="planId"> Gets or sets the plan id. </param>
         /// <param name="planDisplayName"> Gets or sets the plan display name. </param>
-        internal PlanNotificationDetails(string planId, string planDisplayName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlanNotificationDetails(string planId, string planDisplayName, Dictionary<string, BinaryData> rawData)
         {
             PlanId = planId;
             PlanDisplayName = planDisplayName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the plan id. </summary>

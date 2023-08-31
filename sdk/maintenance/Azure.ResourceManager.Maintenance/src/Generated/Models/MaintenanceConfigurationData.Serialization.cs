@@ -8,16 +8,122 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<MaintenanceConfigurationData>
     {
-        internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
+        void IModelJsonSerializable<MaintenanceConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsCollectionDefined(ExtensionProperties))
+            {
+                writer.WritePropertyName("extensionProperties"u8);
+                writer.WriteStartObject();
+                foreach (var item in ExtensionProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(MaintenanceScope))
+            {
+                writer.WritePropertyName("maintenanceScope"u8);
+                writer.WriteStringValue(MaintenanceScope.Value.ToString());
+            }
+            if (Optional.IsDefined(Visibility))
+            {
+                writer.WritePropertyName("visibility"u8);
+                writer.WriteStringValue(Visibility.Value.ToString());
+            }
+            if (Optional.IsDefined(InstallPatches))
+            {
+                writer.WritePropertyName("installPatches"u8);
+                if (InstallPatches is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MaintenancePatchConfiguration>)InstallPatches).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("maintenanceWindow"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expirationDateTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(Duration))
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteStringValue(Duration.Value, "c");
+            }
+            if (Optional.IsDefined(TimeZone))
+            {
+                writer.WritePropertyName("timeZone"u8);
+                writer.WriteStringValue(TimeZone);
+            }
+            if (Optional.IsDefined(RecurEvery))
+            {
+                writer.WritePropertyName("recurEvery"u8);
+                writer.WriteStringValue(RecurEvery);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +144,7 @@ namespace Azure.ResourceManager.Maintenance
             Optional<TimeSpan> duration = default;
             Optional<string> timeZone = default;
             Optional<string> recurEvery = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -190,8 +297,61 @@ namespace Azure.ResourceManager.Maintenance
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
+            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value, rawData);
+        }
+
+        MaintenanceConfigurationData IModelJsonSerializable<MaintenanceConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenanceConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenanceConfigurationData IModelSerializable<MaintenanceConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenanceConfigurationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MaintenanceConfigurationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MaintenanceConfigurationData"/> to convert. </param>
+        public static implicit operator RequestContent(MaintenanceConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MaintenanceConfigurationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MaintenanceConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenanceConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

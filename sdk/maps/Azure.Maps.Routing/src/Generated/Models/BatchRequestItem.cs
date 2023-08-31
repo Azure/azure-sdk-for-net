@@ -5,11 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Batch request object. </summary>
     internal partial class BatchRequestItem
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequestItem"/>. </summary>
+        /// <param name="query"> This parameter contains a query string used to perform an unstructured geocoding operation. The query string will be passed verbatim to the search API for processing. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchRequestItem(string query, Dictionary<string, BinaryData> rawData)
+        {
+            Query = query;
+            _rawData = rawData;
+        }
+
         /// <summary> This parameter contains a query string used to perform an unstructured geocoding operation. The query string will be passed verbatim to the search API for processing. </summary>
         public string Query { get; set; }
     }

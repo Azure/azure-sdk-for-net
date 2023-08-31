@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Edifact agreement protocol settings. </summary>
     public partial class EdifactProcessingSettings
     {
-        /// <summary> Initializes a new instance of EdifactProcessingSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactProcessingSettings"/>. </summary>
         /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
         /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
         /// <param name="suspendInterchangeOnError"> The value indicating whether to suspend interchange on error. </param>
@@ -23,6 +28,28 @@ namespace Azure.ResourceManager.Logic.Models
             SuspendInterchangeOnError = suspendInterchangeOnError;
             CreateEmptyXmlTagsForTrailingSeparators = createEmptyXmlTagsForTrailingSeparators;
             UseDotAsDecimalSeparator = useDotAsDecimalSeparator;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactProcessingSettings"/>. </summary>
+        /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
+        /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
+        /// <param name="suspendInterchangeOnError"> The value indicating whether to suspend interchange on error. </param>
+        /// <param name="createEmptyXmlTagsForTrailingSeparators"> The value indicating whether to create empty xml tags for trailing separators. </param>
+        /// <param name="useDotAsDecimalSeparator"> The value indicating whether to use dot as decimal separator. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactProcessingSettings(bool maskSecurityInfo, bool preserveInterchange, bool suspendInterchangeOnError, bool createEmptyXmlTagsForTrailingSeparators, bool useDotAsDecimalSeparator, Dictionary<string, BinaryData> rawData)
+        {
+            MaskSecurityInfo = maskSecurityInfo;
+            PreserveInterchange = preserveInterchange;
+            SuspendInterchangeOnError = suspendInterchangeOnError;
+            CreateEmptyXmlTagsForTrailingSeparators = createEmptyXmlTagsForTrailingSeparators;
+            UseDotAsDecimalSeparator = useDotAsDecimalSeparator;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactProcessingSettings"/> for deserialization. </summary>
+        internal EdifactProcessingSettings()
+        {
         }
 
         /// <summary> The value indicating whether to mask security information. </summary>

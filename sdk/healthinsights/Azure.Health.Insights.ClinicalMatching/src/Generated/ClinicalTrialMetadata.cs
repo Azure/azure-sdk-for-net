@@ -15,6 +15,8 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Trial data which is of interest to the potential participant. </summary>
     public partial class ClinicalTrialMetadata
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ClinicalTrialMetadata. </summary>
         /// <param name="conditions"> Medical conditions and their synonyms which are relevant for the clinical trial, given as strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conditions"/> is null. </exception>
@@ -40,7 +42,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="sponsors"> Sponsors/collaborators involved with the trial. </param>
         /// <param name="contacts"> Contact details of the trial administrators, for patients that want to participate in the trial. </param>
         /// <param name="facilities"> Research facilities where the clinical trial is conducted. </param>
-        internal ClinicalTrialMetadata(IList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IList<string> conditions, IList<string> sponsors, IList<ContactDetails> contacts, IList<ClinicalTrialResearchFacility> facilities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialMetadata(IList<ClinicalTrialPhase> phases, ClinicalTrialStudyType? studyType, ClinicalTrialRecruitmentStatus? recruitmentStatus, IList<string> conditions, IList<string> sponsors, IList<ContactDetails> contacts, IList<ClinicalTrialResearchFacility> facilities, Dictionary<string, BinaryData> rawData)
         {
             Phases = phases;
             StudyType = studyType;
@@ -49,6 +52,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             Sponsors = sponsors;
             Contacts = contacts;
             Facilities = facilities;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalTrialMetadata"/> for deserialization. </summary>
+        internal ClinicalTrialMetadata()
+        {
         }
 
         /// <summary>

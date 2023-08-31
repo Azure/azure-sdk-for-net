@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreCollectionInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         public PrivateStoreCollectionInfoData()
         {
             SubscriptionsList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
         /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
         /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
-        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             CollectionId = collectionId;
             CollectionName = collectionName;
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.Marketplace
             SubscriptionsList = subscriptionsList;
             IsEnabled = isEnabled;
             NumberOfOffers = numberOfOffers;
+            _rawData = rawData;
         }
 
         /// <summary> Gets collection Id. </summary>

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
     internal partial class SetupScripts
     {
-        /// <summary> Initializes a new instance of SetupScripts. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SetupScripts"/>. </summary>
         public SetupScripts()
         {
         }
 
-        /// <summary> Initializes a new instance of SetupScripts. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetupScripts"/>. </summary>
         /// <param name="scripts"> Customized setup scripts. </param>
-        internal SetupScripts(MachineLearningScriptsToExecute scripts)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SetupScripts(MachineLearningScriptsToExecute scripts, Dictionary<string, BinaryData> rawData)
         {
             Scripts = scripts;
+            _rawData = rawData;
         }
 
         /// <summary> Customized setup scripts. </summary>

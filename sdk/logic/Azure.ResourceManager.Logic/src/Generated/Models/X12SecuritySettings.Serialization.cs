@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12SecuritySettings : IUtf8JsonSerializable
+    public partial class X12SecuritySettings : IUtf8JsonSerializable, IModelJsonSerializable<X12SecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12SecuritySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12SecuritySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationQualifier"u8);
             writer.WriteStringValue(AuthorizationQualifier);
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("passwordValue"u8);
                 writer.WriteStringValue(PasswordValue);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12SecuritySettings DeserializeX12SecuritySettings(JsonElement element)
+        internal static X12SecuritySettings DeserializeX12SecuritySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> authorizationValue = default;
             string securityQualifier = default;
             Optional<string> passwordValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationQualifier"u8))
@@ -64,8 +87,61 @@ namespace Azure.ResourceManager.Logic.Models
                     passwordValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12SecuritySettings(authorizationQualifier, authorizationValue.Value, securityQualifier, passwordValue.Value);
+            return new X12SecuritySettings(authorizationQualifier, authorizationValue.Value, securityQualifier, passwordValue.Value, rawData);
+        }
+
+        X12SecuritySettings IModelJsonSerializable<X12SecuritySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12SecuritySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12SecuritySettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12SecuritySettings IModelSerializable<X12SecuritySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12SecuritySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12SecuritySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12SecuritySettings"/> to convert. </param>
+        public static implicit operator RequestContent(X12SecuritySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12SecuritySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12SecuritySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12SecuritySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

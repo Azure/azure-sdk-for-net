@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The B2B partner content. </summary>
     internal partial class B2BPartnerContent
     {
-        /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="B2BPartnerContent"/>. </summary>
         public B2BPartnerContent()
         {
             BusinessIdentities = new ChangeTrackingList<IntegrationAccountBusinessIdentity>();
         }
 
-        /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="B2BPartnerContent"/>. </summary>
         /// <param name="businessIdentities"> The list of partner business identities. </param>
-        internal B2BPartnerContent(IList<IntegrationAccountBusinessIdentity> businessIdentities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal B2BPartnerContent(IList<IntegrationAccountBusinessIdentity> businessIdentities, Dictionary<string, BinaryData> rawData)
         {
             BusinessIdentities = businessIdentities;
+            _rawData = rawData;
         }
 
         /// <summary> The list of partner business identities. </summary>

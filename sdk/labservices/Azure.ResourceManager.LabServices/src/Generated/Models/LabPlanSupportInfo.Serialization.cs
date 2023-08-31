@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabPlanSupportInfo : IUtf8JsonSerializable
+    public partial class LabPlanSupportInfo : IUtf8JsonSerializable, IModelJsonSerializable<LabPlanSupportInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabPlanSupportInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabPlanSupportInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabPlanSupportInfo DeserializeLabPlanSupportInfo(JsonElement element)
+        internal static LabPlanSupportInfo DeserializeLabPlanSupportInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<string> email = default;
             Optional<string> phone = default;
             Optional<string> instructions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -75,8 +97,61 @@ namespace Azure.ResourceManager.LabServices.Models
                     instructions = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabPlanSupportInfo(url.Value, email.Value, phone.Value, instructions.Value);
+            return new LabPlanSupportInfo(url.Value, email.Value, phone.Value, instructions.Value, rawData);
+        }
+
+        LabPlanSupportInfo IModelJsonSerializable<LabPlanSupportInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabPlanSupportInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabPlanSupportInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabPlanSupportInfo IModelSerializable<LabPlanSupportInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabPlanSupportInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LabPlanSupportInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LabPlanSupportInfo"/> to convert. </param>
+        public static implicit operator RequestContent(LabPlanSupportInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LabPlanSupportInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LabPlanSupportInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabPlanSupportInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,72 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubEndpointHealthInfo
+    public partial class IotHubEndpointHealthInfo : IUtf8JsonSerializable, IModelJsonSerializable<IotHubEndpointHealthInfo>
     {
-        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubEndpointHealthInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubEndpointHealthInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EndpointId))
+            {
+                writer.WritePropertyName("endpointId"u8);
+                writer.WriteStringValue(EndpointId);
+            }
+            if (Optional.IsDefined(HealthStatus))
+            {
+                writer.WritePropertyName("healthStatus"u8);
+                writer.WriteStringValue(HealthStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(LastKnownError))
+            {
+                writer.WritePropertyName("lastKnownError"u8);
+                writer.WriteStringValue(LastKnownError);
+            }
+            if (Optional.IsDefined(LastKnownErrorOn))
+            {
+                writer.WritePropertyName("lastKnownErrorTime"u8);
+                writer.WriteStringValue(LastKnownErrorOn.Value, "R");
+            }
+            if (Optional.IsDefined(LastSuccessfulSendAttemptOn))
+            {
+                writer.WritePropertyName("lastSuccessfulSendAttemptTime"u8);
+                writer.WriteStringValue(LastSuccessfulSendAttemptOn.Value, "R");
+            }
+            if (Optional.IsDefined(LastSendAttemptOn))
+            {
+                writer.WritePropertyName("lastSendAttemptTime"u8);
+                writer.WriteStringValue(LastSendAttemptOn.Value, "R");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +82,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<DateTimeOffset> lastKnownErrorTime = default;
             Optional<DateTimeOffset> lastSuccessfulSendAttemptTime = default;
             Optional<DateTimeOffset> lastSendAttemptTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointId"u8))
@@ -73,8 +131,61 @@ namespace Azure.ResourceManager.IotHub.Models
                     lastSendAttemptTime = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime));
+            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime), rawData);
+        }
+
+        IotHubEndpointHealthInfo IModelJsonSerializable<IotHubEndpointHealthInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubEndpointHealthInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubEndpointHealthInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubEndpointHealthInfo IModelSerializable<IotHubEndpointHealthInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubEndpointHealthInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubEndpointHealthInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubEndpointHealthInfo"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubEndpointHealthInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubEndpointHealthInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubEndpointHealthInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubEndpointHealthInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

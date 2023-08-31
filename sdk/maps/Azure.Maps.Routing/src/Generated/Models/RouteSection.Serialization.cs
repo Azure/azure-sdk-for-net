@@ -5,15 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteSection
+    public partial class RouteSection : IUtf8JsonSerializable, IModelJsonSerializable<RouteSection>
     {
-        internal static RouteSection DeserializeRouteSection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteSection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteSection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Tec))
+            {
+                writer.WritePropertyName("tec"u8);
+                if (Tec is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RouteSectionTec>)Tec).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteSection DeserializeRouteSection(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +67,7 @@ namespace Azure.Maps.Routing.Models
             Optional<int> delayInSeconds = default;
             Optional<DelayMagnitude> magnitudeOfDelay = default;
             Optional<RouteSectionTec> tec = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startPointIndex"u8))
@@ -110,8 +151,61 @@ namespace Azure.Maps.Routing.Models
                     tec = RouteSectionTec.DeserializeRouteSectionTec(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value);
+            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value, rawData);
+        }
+
+        RouteSection IModelJsonSerializable<RouteSection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteSection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteSection>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteSection IModelSerializable<RouteSection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteSection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteSection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteSection"/> to convert. </param>
+        public static implicit operator RequestContent(RouteSection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteSection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteSection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteSection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

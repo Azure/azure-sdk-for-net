@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Version of computeInstance. </summary>
     internal partial class ComputeInstanceVersion
     {
-        /// <summary> Initializes a new instance of ComputeInstanceVersion. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceVersion"/>. </summary>
         internal ComputeInstanceVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeInstanceVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceVersion"/>. </summary>
         /// <param name="runtime"> Runtime of compute instance. </param>
-        internal ComputeInstanceVersion(string runtime)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeInstanceVersion(string runtime, Dictionary<string, BinaryData> rawData)
         {
             Runtime = runtime;
+            _rawData = rawData;
         }
 
         /// <summary> Runtime of compute instance. </summary>

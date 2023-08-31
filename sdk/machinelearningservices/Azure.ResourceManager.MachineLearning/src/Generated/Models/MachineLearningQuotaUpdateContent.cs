@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Quota update parameters. </summary>
     public partial class MachineLearningQuotaUpdateContent
     {
-        /// <summary> Initializes a new instance of MachineLearningQuotaUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningQuotaUpdateContent"/>. </summary>
         public MachineLearningQuotaUpdateContent()
         {
             Value = new ChangeTrackingList<MachineLearningQuotaProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningQuotaUpdateContent"/>. </summary>
+        /// <param name="value"> The list for update quota. </param>
+        /// <param name="location"> Region of workspace quota to be updated. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningQuotaUpdateContent(IList<MachineLearningQuotaProperties> value, AzureLocation? location, Dictionary<string, BinaryData> rawData)
+        {
+            Value = value;
+            Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The list for update quota. </summary>

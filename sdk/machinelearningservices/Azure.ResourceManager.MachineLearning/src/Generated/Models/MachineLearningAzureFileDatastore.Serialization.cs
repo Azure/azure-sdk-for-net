@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAzureFileDatastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureFileDatastore : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningAzureFileDatastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningAzureFileDatastore>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningAzureFileDatastore>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureFileDatastore>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
@@ -50,7 +57,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            if (Credentials is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningDatastoreCredentials>)Credentials).Serialize(writer, options);
+            }
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(Description))
@@ -101,11 +115,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAzureFileDatastore DeserializeMachineLearningAzureFileDatastore(JsonElement element)
+        internal static MachineLearningAzureFileDatastore DeserializeMachineLearningAzureFileDatastore(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -121,6 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -221,8 +250,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningAzureFileDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName, endpoint.Value, fileShareName, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new MachineLearningAzureFileDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName, endpoint.Value, fileShareName, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity), rawData);
+        }
+
+        MachineLearningAzureFileDatastore IModelJsonSerializable<MachineLearningAzureFileDatastore>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureFileDatastore>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAzureFileDatastore(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningAzureFileDatastore>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureFileDatastore>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningAzureFileDatastore IModelSerializable<MachineLearningAzureFileDatastore>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAzureFileDatastore>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningAzureFileDatastore(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningAzureFileDatastore"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningAzureFileDatastore"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningAzureFileDatastore model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningAzureFileDatastore"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningAzureFileDatastore(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningAzureFileDatastore(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyX509CertificateTokenKey : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyX509CertificateTokenKey : IUtf8JsonSerializable, IModelJsonSerializable<ContentKeyPolicyX509CertificateTokenKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContentKeyPolicyX509CertificateTokenKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContentKeyPolicyX509CertificateTokenKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyX509CertificateTokenKey>(this, options.Format);
+
             writer.WriteStartObject();
             if (RawBody != null)
             {
@@ -27,17 +34,32 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element)
+        internal static ContentKeyPolicyX509CertificateTokenKey DeserializeContentKeyPolicyX509CertificateTokenKey(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             byte[] rawBody = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawBody"u8))
@@ -55,8 +77,61 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContentKeyPolicyX509CertificateTokenKey(odataType, rawBody);
+            return new ContentKeyPolicyX509CertificateTokenKey(odataType, rawBody, rawData);
+        }
+
+        ContentKeyPolicyX509CertificateTokenKey IModelJsonSerializable<ContentKeyPolicyX509CertificateTokenKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyX509CertificateTokenKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyX509CertificateTokenKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContentKeyPolicyX509CertificateTokenKey>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyX509CertificateTokenKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContentKeyPolicyX509CertificateTokenKey IModelSerializable<ContentKeyPolicyX509CertificateTokenKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyX509CertificateTokenKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyX509CertificateTokenKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContentKeyPolicyX509CertificateTokenKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContentKeyPolicyX509CertificateTokenKey"/> to convert. </param>
+        public static implicit operator RequestContent(ContentKeyPolicyX509CertificateTokenKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContentKeyPolicyX509CertificateTokenKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContentKeyPolicyX509CertificateTokenKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContentKeyPolicyX509CertificateTokenKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

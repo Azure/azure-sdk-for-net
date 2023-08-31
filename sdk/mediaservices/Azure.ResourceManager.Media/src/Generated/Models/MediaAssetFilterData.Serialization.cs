@@ -5,30 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaAssetFilterData : IUtf8JsonSerializable
+    public partial class MediaAssetFilterData : IUtf8JsonSerializable, IModelJsonSerializable<MediaAssetFilterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaAssetFilterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaAssetFilterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
-                writer.WriteObjectValue(PresentationTimeRange);
+                if (PresentationTimeRange is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PresentationTimeRange>)PresentationTimeRange).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
-                writer.WriteObjectValue(FirstQuality);
+                if (FirstQuality is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FirstQuality>)FirstQuality).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
@@ -36,16 +57,37 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FilterTrackSelection>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaAssetFilterData DeserializeMediaAssetFilterData(JsonElement element)
+        internal static MediaAssetFilterData DeserializeMediaAssetFilterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +99,7 @@ namespace Azure.ResourceManager.Media
             Optional<PresentationTimeRange> presentationTimeRange = default;
             Optional<FirstQuality> firstQuality = default;
             Optional<IList<FilterTrackSelection>> tracks = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,8 +170,61 @@ namespace Azure.ResourceManager.Media
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaAssetFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks));
+            return new MediaAssetFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks), rawData);
+        }
+
+        MediaAssetFilterData IModelJsonSerializable<MediaAssetFilterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaAssetFilterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaAssetFilterData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaAssetFilterData IModelSerializable<MediaAssetFilterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaAssetFilterData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaAssetFilterData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaAssetFilterData"/> to convert. </param>
+        public static implicit operator RequestContent(MediaAssetFilterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaAssetFilterData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaAssetFilterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaAssetFilterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

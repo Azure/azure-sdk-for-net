@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Tables that will be included and excluded in the follower database. </summary>
     public partial class KustoDatabaseTableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseTableLevelSharingProperties"/>. </summary>
         public KustoDatabaseTableLevelSharingProperties()
         {
             TablesToInclude = new ChangeTrackingList<string>();
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
             FunctionsToExclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseTableLevelSharingProperties"/>. </summary>
         /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
         /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
         /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="materializedViewsToExclude"> List of materialized views to exclude from the follower database. </param>
         /// <param name="functionsToInclude"> List of functions to include in the follower database. </param>
         /// <param name="functionsToExclude"> List of functions to exclude from the follower database. </param>
-        internal KustoDatabaseTableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude, IList<string> functionsToInclude, IList<string> functionsToExclude)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoDatabaseTableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude, IList<string> functionsToInclude, IList<string> functionsToExclude, Dictionary<string, BinaryData> rawData)
         {
             TablesToInclude = tablesToInclude;
             TablesToExclude = tablesToExclude;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.Kusto.Models
             MaterializedViewsToExclude = materializedViewsToExclude;
             FunctionsToInclude = functionsToInclude;
             FunctionsToExclude = functionsToExclude;
+            _rawData = rawData;
         }
 
         /// <summary> List of tables to include in the follower database. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TensorFlowDistributionConfiguration : IUtf8JsonSerializable
+    public partial class TensorFlowDistributionConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<TensorFlowDistributionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TensorFlowDistributionConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TensorFlowDistributionConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TensorFlowDistributionConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParameterServerCount))
             {
@@ -34,11 +42,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TensorFlowDistributionConfiguration DeserializeTensorFlowDistributionConfiguration(JsonElement element)
+        internal static TensorFlowDistributionConfiguration DeserializeTensorFlowDistributionConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> parameterServerCount = default;
             Optional<int?> workerCount = default;
             DistributionType distributionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameterServerCount"u8))
@@ -72,8 +95,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     distributionType = new DistributionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TensorFlowDistributionConfiguration(distributionType, Optional.ToNullable(parameterServerCount), Optional.ToNullable(workerCount));
+            return new TensorFlowDistributionConfiguration(distributionType, Optional.ToNullable(parameterServerCount), Optional.ToNullable(workerCount), rawData);
+        }
+
+        TensorFlowDistributionConfiguration IModelJsonSerializable<TensorFlowDistributionConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TensorFlowDistributionConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTensorFlowDistributionConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TensorFlowDistributionConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TensorFlowDistributionConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TensorFlowDistributionConfiguration IModelSerializable<TensorFlowDistributionConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TensorFlowDistributionConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTensorFlowDistributionConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TensorFlowDistributionConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TensorFlowDistributionConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(TensorFlowDistributionConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TensorFlowDistributionConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TensorFlowDistributionConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTensorFlowDistributionConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

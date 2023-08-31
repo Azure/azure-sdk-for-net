@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The array of capabilities of a lab services SKU. </summary>
     public partial class AvailableLabServicesSkuCapability
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCapability"/>. </summary>
         internal AvailableLabServicesSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCapability"/>. </summary>
         /// <param name="name"> The name of the capability for a SKU. </param>
         /// <param name="value"> The value of the capability for a SKU. </param>
-        internal AvailableLabServicesSkuCapability(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableLabServicesSkuCapability(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the capability for a SKU. </summary>

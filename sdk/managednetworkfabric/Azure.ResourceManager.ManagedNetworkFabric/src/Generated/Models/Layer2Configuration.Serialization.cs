@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class Layer2Configuration : IUtf8JsonSerializable
+    public partial class Layer2Configuration : IUtf8JsonSerializable, IModelJsonSerializable<Layer2Configuration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Layer2Configuration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Layer2Configuration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mtu))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Layer2Configuration DeserializeLayer2Configuration(JsonElement element)
+        internal static Layer2Configuration DeserializeLayer2Configuration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> mtu = default;
             Optional<IList<ResourceIdentifier>> interfaces = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     interfaces = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Layer2Configuration(Optional.ToNullable(mtu), Optional.ToList(interfaces));
+            return new Layer2Configuration(Optional.ToNullable(mtu), Optional.ToList(interfaces), rawData);
+        }
+
+        Layer2Configuration IModelJsonSerializable<Layer2Configuration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLayer2Configuration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Layer2Configuration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Layer2Configuration IModelSerializable<Layer2Configuration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLayer2Configuration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Layer2Configuration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Layer2Configuration"/> to convert. </param>
+        public static implicit operator RequestContent(Layer2Configuration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Layer2Configuration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Layer2Configuration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLayer2Configuration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

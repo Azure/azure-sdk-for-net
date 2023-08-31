@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow run actions. </summary>
     internal partial class LogicWorkflowRunActionListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionListResult"/>. </summary>
         internal LogicWorkflowRunActionListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowRunActionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionListResult"/>. </summary>
         /// <param name="value"> A list of workflow run actions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LogicWorkflowRunActionListResult(IReadOnlyList<LogicWorkflowRunActionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunActionListResult(IReadOnlyList<LogicWorkflowRunActionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of workflow run actions. </summary>

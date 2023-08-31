@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute
 {
-    public partial class OperationalizationClusterData : IUtf8JsonSerializable
+    public partial class OperationalizationClusterData : IUtf8JsonSerializable, IModelJsonSerializable<OperationalizationClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalizationClusterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalizationClusterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,34 +53,83 @@ namespace Azure.ResourceManager.MachineLearningCompute
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount);
+                if (StorageAccount is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageAccountProperties>)StorageAccount).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue(ContainerRegistry);
+                if (ContainerRegistry is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerRegistryProperties>)ContainerRegistry).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue(ContainerService);
+                if (ContainerService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AcsClusterProperties>)ContainerService).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue(AppInsights);
+                if (AppInsights is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppInsightsProperties>)AppInsights).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(GlobalServiceConfiguration))
             {
                 writer.WritePropertyName("globalServiceConfiguration"u8);
-                writer.WriteObjectValue(GlobalServiceConfiguration);
+                if (GlobalServiceConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GlobalServiceConfiguration>)GlobalServiceConfiguration).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalizationClusterData DeserializeOperationalizationClusterData(JsonElement element)
+        internal static OperationalizationClusterData DeserializeOperationalizationClusterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,6 +151,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
             Optional<AcsClusterProperties> containerService = default;
             Optional<AppInsightsProperties> appInsights = default;
             Optional<GlobalServiceConfiguration> globalServiceConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -253,8 +309,61 @@ namespace Azure.ResourceManager.MachineLearningCompute
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalizationClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), Optional.ToNullable(provisioningState), Optional.ToList(provisioningErrors), Optional.ToNullable(clusterType), storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, globalServiceConfiguration.Value);
+            return new OperationalizationClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), Optional.ToNullable(provisioningState), Optional.ToList(provisioningErrors), Optional.ToNullable(clusterType), storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, globalServiceConfiguration.Value, rawData);
+        }
+
+        OperationalizationClusterData IModelJsonSerializable<OperationalizationClusterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalizationClusterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalizationClusterData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalizationClusterData IModelSerializable<OperationalizationClusterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalizationClusterData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalizationClusterData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalizationClusterData"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalizationClusterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalizationClusterData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalizationClusterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalizationClusterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

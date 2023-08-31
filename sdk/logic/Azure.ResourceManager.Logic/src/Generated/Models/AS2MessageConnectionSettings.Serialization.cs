@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2MessageConnectionSettings : IUtf8JsonSerializable
+    public partial class AS2MessageConnectionSettings : IUtf8JsonSerializable, IModelJsonSerializable<AS2MessageConnectionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AS2MessageConnectionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AS2MessageConnectionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ignoreCertificateNameMismatch"u8);
             writer.WriteBooleanValue(IgnoreCertificateNameMismatch);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(KeepHttpConnectionAlive);
             writer.WritePropertyName("unfoldHttpHeaders"u8);
             writer.WriteBooleanValue(UnfoldHttpHeaders);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AS2MessageConnectionSettings DeserializeAS2MessageConnectionSettings(JsonElement element)
+        internal static AS2MessageConnectionSettings DeserializeAS2MessageConnectionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool supportHttpStatusCodeContinue = default;
             bool keepHttpConnectionAlive = default;
             bool unfoldHttpHeaders = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ignoreCertificateNameMismatch"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.Logic.Models
                     unfoldHttpHeaders = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AS2MessageConnectionSettings(ignoreCertificateNameMismatch, supportHttpStatusCodeContinue, keepHttpConnectionAlive, unfoldHttpHeaders);
+            return new AS2MessageConnectionSettings(ignoreCertificateNameMismatch, supportHttpStatusCodeContinue, keepHttpConnectionAlive, unfoldHttpHeaders, rawData);
+        }
+
+        AS2MessageConnectionSettings IModelJsonSerializable<AS2MessageConnectionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2MessageConnectionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AS2MessageConnectionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AS2MessageConnectionSettings IModelSerializable<AS2MessageConnectionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAS2MessageConnectionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AS2MessageConnectionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AS2MessageConnectionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(AS2MessageConnectionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AS2MessageConnectionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AS2MessageConnectionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAS2MessageConnectionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

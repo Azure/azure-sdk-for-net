@@ -5,22 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricControllerServices
+    public partial class NetworkFabricControllerServices : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricControllerServices>
     {
-        internal static NetworkFabricControllerServices DeserializeNetworkFabricControllerServices(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricControllerServices>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricControllerServices>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(IPv4AddressSpaces))
+            {
+                writer.WritePropertyName("ipv4AddressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPv4AddressSpaces)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IPv6AddressSpaces))
+            {
+                writer.WritePropertyName("ipv6AddressSpaces"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPv6AddressSpaces)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NetworkFabricControllerServices DeserializeNetworkFabricControllerServices(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<string>> ipv4AddressSpaces = default;
             Optional<IReadOnlyList<string>> ipv6AddressSpaces = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4AddressSpaces"u8))
@@ -51,8 +99,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6AddressSpaces = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkFabricControllerServices(Optional.ToList(ipv4AddressSpaces), Optional.ToList(ipv6AddressSpaces));
+            return new NetworkFabricControllerServices(Optional.ToList(ipv4AddressSpaces), Optional.ToList(ipv6AddressSpaces), rawData);
+        }
+
+        NetworkFabricControllerServices IModelJsonSerializable<NetworkFabricControllerServices>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricControllerServices(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricControllerServices>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricControllerServices IModelSerializable<NetworkFabricControllerServices>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricControllerServices(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkFabricControllerServices"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkFabricControllerServices"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkFabricControllerServices model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkFabricControllerServices"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkFabricControllerServices(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricControllerServices(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

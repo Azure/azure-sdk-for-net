@@ -8,14 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class DeletedStorageBundle
+    public partial class DeletedStorageBundle : IUtf8JsonSerializable, IModelJsonSerializable<DeletedStorageBundle>
     {
-        internal static DeletedStorageBundle DeserializeDeletedStorageBundle(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeletedStorageBundle>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeletedStorageBundle>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DeletedStorageBundle>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryId))
+            {
+                writer.WritePropertyName("recoveryId"u8);
+                writer.WriteStringValue(RecoveryId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeletedStorageBundle DeserializeDeletedStorageBundle(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +61,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<string> regenerationPeriod = default;
             Optional<StorageAccountAttributes> attributes = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -107,8 +139,61 @@ namespace Azure.Security.KeyVault.Storage.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeletedStorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate), rawData);
+        }
+
+        DeletedStorageBundle IModelJsonSerializable<DeletedStorageBundle>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DeletedStorageBundle>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedStorageBundle(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeletedStorageBundle>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DeletedStorageBundle>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeletedStorageBundle IModelSerializable<DeletedStorageBundle>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DeletedStorageBundle>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeletedStorageBundle(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeletedStorageBundle"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeletedStorageBundle"/> to convert. </param>
+        public static implicit operator RequestContent(DeletedStorageBundle model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeletedStorageBundle"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeletedStorageBundle(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeletedStorageBundle(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

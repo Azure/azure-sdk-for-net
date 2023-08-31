@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The bounding box of the location. </summary>
     internal partial class BoundingBoxCompassNotation
     {
-        /// <summary> Initializes a new instance of BoundingBoxCompassNotation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BoundingBoxCompassNotation"/>. </summary>
         internal BoundingBoxCompassNotation()
         {
         }
 
-        /// <summary> Initializes a new instance of BoundingBoxCompassNotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BoundingBoxCompassNotation"/>. </summary>
         /// <param name="northEast"> North-east latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="southWest"> South-west latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
         /// <param name="entity"> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </param>
-        internal BoundingBoxCompassNotation(string northEast, string southWest, MapsEntityType? entity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BoundingBoxCompassNotation(string northEast, string southWest, MapsEntityType? entity, Dictionary<string, BinaryData> rawData)
         {
             NorthEast = northEast;
             SouthWest = southWest;
             Entity = entity;
+            _rawData = rawData;
         }
 
         /// <summary> North-east latitude,longitude coordinate of the bounding box as comma-separated floats. </summary>

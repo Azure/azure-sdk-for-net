@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class NoEncryption : IUtf8JsonSerializable
+    internal partial class NoEncryption : IUtf8JsonSerializable, IModelJsonSerializable<NoEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NoEncryption>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NoEncryption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                if (EnabledProtocols is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MediaEnabledProtocols>)EnabledProtocols).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NoEncryption DeserializeNoEncryption(JsonElement element)
+        internal static NoEncryption DeserializeNoEncryption(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.Media.Models
                     enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NoEncryption(enabledProtocols.Value);
+            return new NoEncryption(enabledProtocols.Value, rawData);
+        }
+
+        NoEncryption IModelJsonSerializable<NoEncryption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNoEncryption(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NoEncryption>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NoEncryption IModelSerializable<NoEncryption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNoEncryption(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NoEncryption"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NoEncryption"/> to convert. </param>
+        public static implicit operator RequestContent(NoEncryption model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NoEncryption"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NoEncryption(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNoEncryption(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

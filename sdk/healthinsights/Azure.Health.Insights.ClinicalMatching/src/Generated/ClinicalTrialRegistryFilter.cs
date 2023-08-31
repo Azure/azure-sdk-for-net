@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,8 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> A filter defining a subset of clinical trials from a given clinical trial registry (e.g. clinicaltrials.gov). </summary>
     public partial class ClinicalTrialRegistryFilter
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ClinicalTrialRegistryFilter. </summary>
         public ClinicalTrialRegistryFilter()
         {
@@ -74,7 +77,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// Trials with any of the given facility area boundaries will be included in the selection (provided that other limitations are satisfied).
         /// Leaving this list empty will not limit the trial facility area boundaries.
         /// </param>
-        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClinicalTrialRegistryFilter(IList<string> conditions, IList<ClinicalTrialStudyType> studyTypes, IList<ClinicalTrialRecruitmentStatus> recruitmentStatuses, IList<string> sponsors, IList<ClinicalTrialPhase> phases, IList<ClinicalTrialPurpose> purposes, IList<string> ids, IList<ClinicalTrialSource> sources, IList<string> facilityNames, IList<GeographicLocation> facilityLocations, IList<GeographicArea> facilityAreas, Dictionary<string, BinaryData> rawData)
         {
             Conditions = conditions;
             StudyTypes = studyTypes;
@@ -87,6 +91,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             FacilityNames = facilityNames;
             FacilityLocations = facilityLocations;
             FacilityAreas = facilityAreas;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
@@ -13,19 +14,22 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Maintenance update on a resource. </summary>
     public partial class MaintenanceUpdate
     {
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         internal MaintenanceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
         /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
         /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
         /// <param name="resourceId"> The resourceId. </param>
-        internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, ResourceIdentifier resourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, ResourceIdentifier resourceId, Dictionary<string, BinaryData> rawData)
         {
             MaintenanceScope = maintenanceScope;
             ImpactType = impactType;
@@ -33,6 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             ImpactDurationInSec = impactDurationInSec;
             NotBefore = notBefore;
             ResourceId = resourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The impact area. </summary>

@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownIdentityConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownIdentityConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningIdentityConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningIdentityConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningIdentityConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("identityType"u8);
             writer.WriteStringValue(IdentityType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownIdentityConfiguration DeserializeUnknownIdentityConfiguration(JsonElement element)
+        internal static MachineLearningIdentityConfiguration DeserializeUnknownIdentityConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningIdentityConfiguration(element, options);
+
+        MachineLearningIdentityConfiguration IModelJsonSerializable<MachineLearningIdentityConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            IdentityConfigurationType identityType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("identityType"u8))
-                {
-                    identityType = new IdentityConfigurationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownIdentityConfiguration(identityType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownIdentityConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningIdentityConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningIdentityConfiguration IModelSerializable<MachineLearningIdentityConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningIdentityConfiguration(doc.RootElement, options);
         }
     }
 }

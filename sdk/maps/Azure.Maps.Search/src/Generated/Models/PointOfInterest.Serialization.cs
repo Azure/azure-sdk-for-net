@@ -5,16 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class PointOfInterest
+    public partial class PointOfInterest : IUtf8JsonSerializable, IModelJsonSerializable<PointOfInterest>
     {
-        internal static PointOfInterest DeserializePointOfInterest(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PointOfInterest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PointOfInterest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OperatingHours))
+            {
+                writer.WritePropertyName("openingHours"u8);
+                if (OperatingHours is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<OperatingHours>)OperatingHours).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PointOfInterest DeserializePointOfInterest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +66,7 @@ namespace Azure.Maps.Search.Models
             Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
             Optional<IReadOnlyList<BrandName>> brands = default;
             Optional<OperatingHours> openingHours = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -109,8 +149,61 @@ namespace Azure.Maps.Search.Models
                     openingHours = OperatingHours.DeserializeOperatingHours(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
+            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value, rawData);
+        }
+
+        PointOfInterest IModelJsonSerializable<PointOfInterest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePointOfInterest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PointOfInterest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PointOfInterest IModelSerializable<PointOfInterest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePointOfInterest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PointOfInterest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PointOfInterest"/> to convert. </param>
+        public static implicit operator RequestContent(PointOfInterest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PointOfInterest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PointOfInterest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePointOfInterest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUriFolderJobInput : IUtf8JsonSerializable
+    public partial class MachineLearningUriFolderJobInput : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningUriFolderJobInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningUriFolderJobInput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningUriFolderJobInput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUriFolderJobInput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -37,11 +44,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobInputType"u8);
             writer.WriteStringValue(JobInputType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningUriFolderJobInput DeserializeMachineLearningUriFolderJobInput(JsonElement element)
+        internal static MachineLearningUriFolderJobInput DeserializeMachineLearningUriFolderJobInput(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Uri uri = default;
             Optional<string> description = default;
             JobInputType jobInputType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -81,8 +103,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobInputType = new JobInputType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningUriFolderJobInput(description.Value, jobInputType, Optional.ToNullable(mode), uri);
+            return new MachineLearningUriFolderJobInput(description.Value, jobInputType, Optional.ToNullable(mode), uri, rawData);
+        }
+
+        MachineLearningUriFolderJobInput IModelJsonSerializable<MachineLearningUriFolderJobInput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUriFolderJobInput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningUriFolderJobInput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningUriFolderJobInput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUriFolderJobInput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningUriFolderJobInput IModelSerializable<MachineLearningUriFolderJobInput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningUriFolderJobInput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningUriFolderJobInput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningUriFolderJobInput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningUriFolderJobInput"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningUriFolderJobInput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningUriFolderJobInput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningUriFolderJobInput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningUriFolderJobInput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

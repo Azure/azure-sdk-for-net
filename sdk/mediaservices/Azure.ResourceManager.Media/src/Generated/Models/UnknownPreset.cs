@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownPreset. </summary>
     internal partial class UnknownPreset : MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of UnknownPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPreset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownPreset(string odataType) : base(odataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPreset(string odataType, Dictionary<string, BinaryData> rawData) : base(odataType, rawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownPreset"/> for deserialization. </summary>
+        internal UnknownPreset()
+        {
         }
     }
 }

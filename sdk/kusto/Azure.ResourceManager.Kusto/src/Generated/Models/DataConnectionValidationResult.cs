@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The result returned from a data connection validation request. </summary>
     public partial class DataConnectionValidationResult
     {
-        /// <summary> Initializes a new instance of DataConnectionValidationResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResult"/>. </summary>
         internal DataConnectionValidationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectionValidationResult"/>. </summary>
         /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
-        internal DataConnectionValidationResult(string errorMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataConnectionValidationResult(string errorMessage, Dictionary<string, BinaryData> rawData)
         {
             ErrorMessage = errorMessage;
+            _rawData = rawData;
         }
 
         /// <summary> A message which indicates a problem in data connection validation. </summary>

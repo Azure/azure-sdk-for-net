@@ -14,10 +14,23 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Bulk collections action properties. </summary>
     public partial class BulkCollectionsActionContent
     {
-        /// <summary> Initializes a new instance of BulkCollectionsActionContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
         public BulkCollectionsActionContent()
         {
             CollectionIds = new ChangeTrackingList<Guid>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionContent"/>. </summary>
+        /// <param name="collectionIds"> collection ids list that the action is performed on. </param>
+        /// <param name="action"> Action to perform (For example: EnableCollections, DisableCollections). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BulkCollectionsActionContent(IList<Guid> collectionIds, string action, Dictionary<string, BinaryData> rawData)
+        {
+            CollectionIds = collectionIds;
+            Action = action;
+            _rawData = rawData;
         }
 
         /// <summary> collection ids list that the action is performed on. </summary>

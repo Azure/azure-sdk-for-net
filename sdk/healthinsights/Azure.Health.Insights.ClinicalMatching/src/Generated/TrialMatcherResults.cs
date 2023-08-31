@@ -15,6 +15,8 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The inference results for the Trial Matcher request. </summary>
     public partial class TrialMatcherResults
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TrialMatcherResults. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
@@ -32,11 +34,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <param name="knowledgeGraphLastUpdateDate"> The date when the clinical trials knowledge graph was last updated. </param>
-        internal TrialMatcherResults(IReadOnlyList<TrialMatcherPatientResult> patients, string modelVersion, DateTimeOffset? knowledgeGraphLastUpdateDate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherResults(IReadOnlyList<TrialMatcherPatientResult> patients, string modelVersion, DateTimeOffset? knowledgeGraphLastUpdateDate, Dictionary<string, BinaryData> rawData)
         {
             Patients = patients;
             ModelVersion = modelVersion;
             KnowledgeGraphLastUpdateDate = knowledgeGraphLastUpdateDate;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResults"/> for deserialization. </summary>
+        internal TrialMatcherResults()
+        {
         }
 
         /// <summary> Results for the patients given in the request. </summary>

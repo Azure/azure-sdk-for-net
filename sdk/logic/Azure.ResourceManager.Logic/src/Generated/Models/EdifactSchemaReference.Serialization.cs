@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactSchemaReference : IUtf8JsonSerializable
+    public partial class EdifactSchemaReference : IUtf8JsonSerializable, IModelJsonSerializable<EdifactSchemaReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdifactSchemaReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdifactSchemaReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
@@ -38,11 +46,25 @@ namespace Azure.ResourceManager.Logic.Models
             }
             writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactSchemaReference DeserializeEdifactSchemaReference(JsonElement element)
+        internal static EdifactSchemaReference DeserializeEdifactSchemaReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> senderApplicationQualifier = default;
             Optional<string> associationAssignedCode = default;
             string schemaName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -91,8 +114,61 @@ namespace Azure.ResourceManager.Logic.Models
                     schemaName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdifactSchemaReference(messageId, messageVersion, messageRelease, senderApplicationId.Value, senderApplicationQualifier.Value, associationAssignedCode.Value, schemaName);
+            return new EdifactSchemaReference(messageId, messageVersion, messageRelease, senderApplicationId.Value, senderApplicationQualifier.Value, associationAssignedCode.Value, schemaName, rawData);
+        }
+
+        EdifactSchemaReference IModelJsonSerializable<EdifactSchemaReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactSchemaReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdifactSchemaReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdifactSchemaReference IModelSerializable<EdifactSchemaReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdifactSchemaReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdifactSchemaReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdifactSchemaReference"/> to convert. </param>
+        public static implicit operator RequestContent(EdifactSchemaReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdifactSchemaReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdifactSchemaReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdifactSchemaReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

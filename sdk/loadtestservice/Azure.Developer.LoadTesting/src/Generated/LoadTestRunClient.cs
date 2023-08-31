@@ -885,7 +885,7 @@ namespace Azure.Developer.LoadTesting
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace Azure.Developer.LoadTesting
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricDimensionValuesRequest(testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricDimensionValuesNextPageRequest(nextLink, testRunId, name, metricName, metricNamespace, timeInterval, interval, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateOrUpdateTestRunRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)

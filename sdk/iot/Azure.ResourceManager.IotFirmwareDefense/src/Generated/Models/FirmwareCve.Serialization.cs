@@ -8,14 +8,155 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCve
+    public partial class FirmwareCve : IUtf8JsonSerializable, IModelJsonSerializable<FirmwareCve>
     {
-        internal static FirmwareCve DeserializeFirmwareCve(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirmwareCve>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirmwareCve>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CveId))
+            {
+                if (CveId != null)
+                {
+                    writer.WritePropertyName("cveId"u8);
+                    writer.WriteStringValue(CveId);
+                }
+                else
+                {
+                    writer.WriteNull("cveId");
+                }
+            }
+            if (Optional.IsDefined(Component))
+            {
+                writer.WritePropertyName("component"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Component);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Component.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(Severity))
+            {
+                if (Severity != null)
+                {
+                    writer.WritePropertyName("severity"u8);
+                    writer.WriteStringValue(Severity);
+                }
+                else
+                {
+                    writer.WriteNull("severity");
+                }
+            }
+            if (Optional.IsDefined(Name))
+            {
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name");
+                }
+            }
+            if (Optional.IsDefined(CvssScore))
+            {
+                if (CvssScore != null)
+                {
+                    writer.WritePropertyName("cvssScore"u8);
+                    writer.WriteStringValue(CvssScore);
+                }
+                else
+                {
+                    writer.WriteNull("cvssScore");
+                }
+            }
+            if (Optional.IsDefined(CvssVersion))
+            {
+                if (CvssVersion != null)
+                {
+                    writer.WritePropertyName("cvssVersion"u8);
+                    writer.WriteStringValue(CvssVersion);
+                }
+                else
+                {
+                    writer.WriteNull("cvssVersion");
+                }
+            }
+            if (Optional.IsDefined(CvssV2Score))
+            {
+                if (CvssV2Score != null)
+                {
+                    writer.WritePropertyName("cvssV2Score"u8);
+                    writer.WriteStringValue(CvssV2Score);
+                }
+                else
+                {
+                    writer.WriteNull("cvssV2Score");
+                }
+            }
+            if (Optional.IsDefined(CvssV3Score))
+            {
+                if (CvssV3Score != null)
+                {
+                    writer.WritePropertyName("cvssV3Score"u8);
+                    writer.WriteStringValue(CvssV3Score);
+                }
+                else
+                {
+                    writer.WriteNull("cvssV3Score");
+                }
+            }
+            if (Optional.IsDefined(PublishOn))
+            {
+                writer.WritePropertyName("publishDate"u8);
+                writer.WriteStringValue(PublishOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedDate"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Description))
+            {
+                if (Description != null)
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+                else
+                {
+                    writer.WriteNull("description");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FirmwareCve DeserializeFirmwareCve(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +173,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<DateTimeOffset> updatedDate = default;
             Optional<IReadOnlyList<CveLink>> links = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cveId"u8))
@@ -155,8 +297,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirmwareCve(cveId.Value, component.Value, severity.Value, name.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Optional.ToNullable(publishDate), Optional.ToNullable(updatedDate), Optional.ToList(links), description.Value);
+            return new FirmwareCve(cveId.Value, component.Value, severity.Value, name.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Optional.ToNullable(publishDate), Optional.ToNullable(updatedDate), Optional.ToList(links), description.Value, rawData);
+        }
+
+        FirmwareCve IModelJsonSerializable<FirmwareCve>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareCve(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirmwareCve>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirmwareCve IModelSerializable<FirmwareCve>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirmwareCve(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirmwareCve"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirmwareCve"/> to convert. </param>
+        public static implicit operator RequestContent(FirmwareCve model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirmwareCve"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirmwareCve(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirmwareCve(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

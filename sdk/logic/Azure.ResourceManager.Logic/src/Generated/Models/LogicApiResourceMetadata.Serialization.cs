@@ -5,16 +5,113 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiResourceMetadata
+    public partial class LogicApiResourceMetadata : IUtf8JsonSerializable, IModelJsonSerializable<LogicApiResourceMetadata>
     {
-        internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicApiResourceMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicApiResourceMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(BrandColor))
+            {
+                writer.WritePropertyName("brandColor"u8);
+                writer.WriteStringValue(BrandColor);
+            }
+            if (Optional.IsDefined(HideKey))
+            {
+                writer.WritePropertyName("hideKey"u8);
+                writer.WriteStringValue(HideKey);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ApiType))
+            {
+                writer.WritePropertyName("ApiType"u8);
+                writer.WriteStringValue(ApiType.Value.ToString());
+            }
+            if (Optional.IsDefined(WsdlService))
+            {
+                writer.WritePropertyName("wsdlService"u8);
+                if (WsdlService is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicWsdlService>)WsdlService).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(WsdlImportMethod))
+            {
+                writer.WritePropertyName("wsdlImportMethod"u8);
+                writer.WriteStringValue(WsdlImportMethod.Value.ToString());
+            }
+            if (Optional.IsDefined(ConnectionType))
+            {
+                writer.WritePropertyName("connectionType"u8);
+                writer.WriteStringValue(ConnectionType);
+            }
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(DeploymentParameters))
+            {
+                writer.WritePropertyName("deploymentParameters"u8);
+                if (DeploymentParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogicApiDeploymentParameterMetadataSet>)DeploymentParameters).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicApiResourceMetadata DeserializeLogicApiResourceMetadata(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> connectionType = default;
             Optional<LogicWorkflowProvisioningState> provisioningState = default;
             Optional<LogicApiDeploymentParameterMetadataSet> deploymentParameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -110,8 +208,61 @@ namespace Azure.ResourceManager.Logic.Models
                     deploymentParameters = LogicApiDeploymentParameterMetadataSet.DeserializeLogicApiDeploymentParameterMetadataSet(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Optional.ToDictionary(tags), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value);
+            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Optional.ToDictionary(tags), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value, rawData);
+        }
+
+        LogicApiResourceMetadata IModelJsonSerializable<LogicApiResourceMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiResourceMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicApiResourceMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicApiResourceMetadata IModelSerializable<LogicApiResourceMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicApiResourceMetadata(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicApiResourceMetadata"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicApiResourceMetadata"/> to convert. </param>
+        public static implicit operator RequestContent(LogicApiResourceMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicApiResourceMetadata"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicApiResourceMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicApiResourceMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

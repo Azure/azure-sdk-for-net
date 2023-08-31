@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountPartnerData : IUtf8JsonSerializable
+    public partial class IntegrationAccountPartnerData : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountPartnerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountPartnerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountPartnerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -46,13 +52,34 @@ namespace Azure.ResourceManager.Logic
 #endif
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountPartnerContent>)Content).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountPartnerData DeserializeIntegrationAccountPartnerData(JsonElement element)
+        internal static IntegrationAccountPartnerData DeserializeIntegrationAccountPartnerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +95,7 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
             IntegrationAccountPartnerContent content = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -162,8 +190,61 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountPartnerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, partnerType, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content);
+            return new IntegrationAccountPartnerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, partnerType, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content, rawData);
+        }
+
+        IntegrationAccountPartnerData IModelJsonSerializable<IntegrationAccountPartnerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountPartnerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountPartnerData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountPartnerData IModelSerializable<IntegrationAccountPartnerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountPartnerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IntegrationAccountPartnerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IntegrationAccountPartnerData"/> to convert. </param>
+        public static implicit operator RequestContent(IntegrationAccountPartnerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IntegrationAccountPartnerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IntegrationAccountPartnerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountPartnerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

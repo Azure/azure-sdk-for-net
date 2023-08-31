@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ForecastingSettings : IUtf8JsonSerializable
+    public partial class ForecastingSettings : IUtf8JsonSerializable, IModelJsonSerializable<ForecastingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ForecastingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ForecastingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CountryOrRegionForHolidays))
             {
@@ -48,7 +55,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
-                writer.WriteObjectValue(ForecastHorizon);
+                if (ForecastHorizon is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ForecastHorizon>)ForecastHorizon).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -65,7 +79,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Seasonality))
             {
                 writer.WritePropertyName("seasonality"u8);
-                writer.WriteObjectValue(Seasonality);
+                if (Seasonality is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ForecastingSeasonality>)Seasonality).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
@@ -82,7 +103,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TargetLags != null)
                 {
                     writer.WritePropertyName("targetLags"u8);
-                    writer.WriteObjectValue(TargetLags);
+                    if (TargetLags is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TargetLags>)TargetLags).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -94,7 +122,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TargetRollingWindowSize != null)
                 {
                     writer.WritePropertyName("targetRollingWindowSize"u8);
-                    writer.WriteObjectValue(TargetRollingWindowSize);
+                    if (TargetRollingWindowSize is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TargetRollingWindowSize>)TargetRollingWindowSize).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -135,11 +170,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("useStl"u8);
                 writer.WriteStringValue(UseStl.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
+        internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> timeColumnName = default;
             Optional<IList<string>> timeSeriesIdColumnNames = default;
             Optional<MachineLearningUseStl> useStl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryOrRegionForHolidays"u8))
@@ -288,8 +338,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     useStl = new MachineLearningUseStl(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl));
+            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl), rawData);
+        }
+
+        ForecastingSettings IModelJsonSerializable<ForecastingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeForecastingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ForecastingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ForecastingSettings IModelSerializable<ForecastingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeForecastingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ForecastingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ForecastingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(ForecastingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ForecastingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ForecastingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeForecastingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,11 +14,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Access Control Lists patch resource definition. </summary>
     public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricAccessControlListPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         public NetworkFabricAccessControlListPatch()
         {
             MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
             DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, NetworkFabricConfigurationType? configurationType, Uri aclsUri, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string annotation, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
+        {
+            ConfigurationType = configurationType;
+            AclsUri = aclsUri;
+            MatchConfigurations = matchConfigurations;
+            DynamicMatchConfigurations = dynamicMatchConfigurations;
+            Annotation = annotation;
         }
 
         /// <summary> Input method to configure Access Control List. </summary>

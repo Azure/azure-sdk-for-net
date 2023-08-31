@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEnvironmentVersionProperties : IUtf8JsonSerializable
+    public partial class MachineLearningEnvironmentVersionProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEnvironmentVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEnvironmentVersionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEnvironmentVersionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningEnvironmentVersionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoRebuild))
             {
@@ -24,7 +31,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Build))
             {
                 writer.WritePropertyName("build"u8);
-                writer.WriteObjectValue(Build);
+                if (Build is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningBuildContext>)Build).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CondaFile))
             {
@@ -39,7 +53,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
-                writer.WriteObjectValue(InferenceConfig);
+                if (InferenceConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningInferenceContainerProperties>)InferenceConfig).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OSType))
             {
@@ -104,11 +125,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningEnvironmentVersionProperties DeserializeMachineLearningEnvironmentVersionProperties(JsonElement element)
+        internal static MachineLearningEnvironmentVersionProperties DeserializeMachineLearningEnvironmentVersionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoRebuild"u8))
@@ -240,8 +276,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningEnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType));
+            return new MachineLearningEnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType), rawData);
+        }
+
+        MachineLearningEnvironmentVersionProperties IModelJsonSerializable<MachineLearningEnvironmentVersionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningEnvironmentVersionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEnvironmentVersionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEnvironmentVersionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningEnvironmentVersionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEnvironmentVersionProperties IModelSerializable<MachineLearningEnvironmentVersionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningEnvironmentVersionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEnvironmentVersionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningEnvironmentVersionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningEnvironmentVersionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningEnvironmentVersionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningEnvironmentVersionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningEnvironmentVersionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

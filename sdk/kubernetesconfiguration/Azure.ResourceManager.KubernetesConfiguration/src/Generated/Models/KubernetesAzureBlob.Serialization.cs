@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesAzureBlob : IUtf8JsonSerializable
+    public partial class KubernetesAzureBlob : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesAzureBlob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesAzureBlob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesAzureBlob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ServicePrincipal != null)
                 {
                     writer.WritePropertyName("servicePrincipal"u8);
-                    writer.WriteObjectValue(ServicePrincipal);
+                    if (ServicePrincipal is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesServicePrincipal>)ServicePrincipal).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -105,7 +119,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ManagedIdentity != null)
                 {
                     writer.WritePropertyName("managedIdentity"u8);
-                    writer.WriteObjectValue(ManagedIdentity);
+                    if (ManagedIdentity is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesAzureBlobManagedIdentity>)ManagedIdentity).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -124,11 +145,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesAzureBlob DeserializeKubernetesAzureBlob(JsonElement element)
+        internal static KubernetesAzureBlob DeserializeKubernetesAzureBlob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -142,6 +177,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> sasToken = default;
             Optional<KubernetesAzureBlobManagedIdentity> managedIdentity = default;
             Optional<string> localAuthRef = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -234,8 +270,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     localAuthRef = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesAzureBlob(url.Value, containerName.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), servicePrincipal.Value, accountKey.Value, sasToken.Value, managedIdentity.Value, localAuthRef.Value);
+            return new KubernetesAzureBlob(url.Value, containerName.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), servicePrincipal.Value, accountKey.Value, sasToken.Value, managedIdentity.Value, localAuthRef.Value, rawData);
+        }
+
+        KubernetesAzureBlob IModelJsonSerializable<KubernetesAzureBlob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesAzureBlob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesAzureBlob>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesAzureBlob IModelSerializable<KubernetesAzureBlob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesAzureBlob(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesAzureBlob"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesAzureBlob"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesAzureBlob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesAzureBlob"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesAzureBlob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesAzureBlob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

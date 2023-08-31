@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPExtendedCommunityAddOperationProperties : IUtf8JsonSerializable
+    public partial class IPExtendedCommunityAddOperationProperties : IUtf8JsonSerializable, IModelJsonSerializable<IPExtendedCommunityAddOperationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPExtendedCommunityAddOperationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPExtendedCommunityAddOperationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                if (Add is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IPExtendedCommunityIdList>)Add).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IPExtendedCommunityAddOperationProperties DeserializeIPExtendedCommunityAddOperationProperties(JsonElement element)
+        internal static IPExtendedCommunityAddOperationProperties DeserializeIPExtendedCommunityAddOperationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IPExtendedCommunityIdList> @add = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("add"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     @add = IPExtendedCommunityIdList.DeserializeIPExtendedCommunityIdList(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPExtendedCommunityAddOperationProperties(@add.Value);
+            return new IPExtendedCommunityAddOperationProperties(@add.Value, rawData);
+        }
+
+        IPExtendedCommunityAddOperationProperties IModelJsonSerializable<IPExtendedCommunityAddOperationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPExtendedCommunityAddOperationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPExtendedCommunityAddOperationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPExtendedCommunityAddOperationProperties IModelSerializable<IPExtendedCommunityAddOperationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPExtendedCommunityAddOperationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPExtendedCommunityAddOperationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPExtendedCommunityAddOperationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(IPExtendedCommunityAddOperationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPExtendedCommunityAddOperationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPExtendedCommunityAddOperationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> HybridAKSNetworkSpec defines the desired state of HybridAKSNetwork. </summary>
     public partial class VirtualNetworksProperties
     {
-        /// <summary> Initializes a new instance of VirtualNetworksProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksProperties"/>. </summary>
         public VirtualNetworksProperties()
         {
             VipPool = new ChangeTrackingList<VirtualNetworksPropertiesVipPoolItem>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksProperties"/>. </summary>
         /// <param name="infraVnetProfile"></param>
         /// <param name="vipPool"> Virtual IP Pool for Kubernetes. </param>
         /// <param name="vmipPool"> IP Pool for Virtual Machines. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="vlanId"> VLAN Id used by the network. </param>
         /// <param name="provisioningState"></param>
         /// <param name="status"> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </param>
-        internal VirtualNetworksProperties(VirtualNetworksPropertiesInfraVnetProfile infraVnetProfile, IList<VirtualNetworksPropertiesVipPoolItem> vipPool, IList<VirtualNetworksPropertiesVmipPoolItem> vmipPool, IReadOnlyList<string> dhcpServers, IList<string> dnsServers, string gateway, string ipAddressPrefix, string vlanId, ProvisioningState? provisioningState, VirtualNetworksPropertiesStatus status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksProperties(VirtualNetworksPropertiesInfraVnetProfile infraVnetProfile, IList<VirtualNetworksPropertiesVipPoolItem> vipPool, IList<VirtualNetworksPropertiesVmipPoolItem> vmipPool, IReadOnlyList<string> dhcpServers, IList<string> dnsServers, string gateway, string ipAddressPrefix, string vlanId, ProvisioningState? provisioningState, VirtualNetworksPropertiesStatus status, Dictionary<string, BinaryData> rawData)
         {
             InfraVnetProfile = infraVnetProfile;
             VipPool = vipPool;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             VlanId = vlanId;
             ProvisioningState = provisioningState;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the infra vnet profile. </summary>

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBatchRetrySettings : IUtf8JsonSerializable
+    public partial class MachineLearningBatchRetrySettings : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningBatchRetrySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningBatchRetrySettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningBatchRetrySettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxRetries))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningBatchRetrySettings DeserializeMachineLearningBatchRetrySettings(JsonElement element)
+        internal static MachineLearningBatchRetrySettings DeserializeMachineLearningBatchRetrySettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> maxRetries = default;
             Optional<TimeSpan> timeout = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRetries"u8))
@@ -57,8 +79,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningBatchRetrySettings(Optional.ToNullable(maxRetries), Optional.ToNullable(timeout));
+            return new MachineLearningBatchRetrySettings(Optional.ToNullable(maxRetries), Optional.ToNullable(timeout), rawData);
+        }
+
+        MachineLearningBatchRetrySettings IModelJsonSerializable<MachineLearningBatchRetrySettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningBatchRetrySettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningBatchRetrySettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningBatchRetrySettings IModelSerializable<MachineLearningBatchRetrySettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningBatchRetrySettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningBatchRetrySettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningBatchRetrySettings"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningBatchRetrySettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningBatchRetrySettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningBatchRetrySettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningBatchRetrySettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

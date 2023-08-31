@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Auto scale properties. </summary>
     public partial class MachineLearningAutoScaleProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAutoScaleProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoScaleProperties"/>. </summary>
         public MachineLearningAutoScaleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAutoScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoScaleProperties"/>. </summary>
         /// <param name="minNodeCount"></param>
         /// <param name="isEnabled"></param>
         /// <param name="maxNodeCount"></param>
-        internal MachineLearningAutoScaleProperties(int? minNodeCount, bool? isEnabled, int? maxNodeCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAutoScaleProperties(int? minNodeCount, bool? isEnabled, int? maxNodeCount, Dictionary<string, BinaryData> rawData)
         {
             MinNodeCount = minNodeCount;
             IsEnabled = isEnabled;
             MaxNodeCount = maxNodeCount;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the min node count. </summary>

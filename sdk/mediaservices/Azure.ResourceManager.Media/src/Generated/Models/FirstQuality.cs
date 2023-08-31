@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Filter First Quality. </summary>
     internal partial class FirstQuality
     {
-        /// <summary> Initializes a new instance of FirstQuality. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirstQuality"/>. </summary>
         /// <param name="bitrate"> The first quality bitrate. </param>
         public FirstQuality(int bitrate)
         {
             Bitrate = bitrate;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirstQuality"/>. </summary>
+        /// <param name="bitrate"> The first quality bitrate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirstQuality(int bitrate, Dictionary<string, BinaryData> rawData)
+        {
+            Bitrate = bitrate;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirstQuality"/> for deserialization. </summary>
+        internal FirstQuality()
+        {
         }
 
         /// <summary> The first quality bitrate. </summary>

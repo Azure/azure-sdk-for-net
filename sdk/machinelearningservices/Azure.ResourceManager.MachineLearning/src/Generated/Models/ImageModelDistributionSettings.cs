@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -25,12 +28,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettings. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettings"/>. </summary>
         public ImageModelDistributionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettings"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
@@ -78,7 +83,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
-        internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageModelDistributionSettings(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, Dictionary<string, BinaryData> rawData)
         {
             AmsGradient = amsGradient;
             Augmentations = augmentations;
@@ -108,6 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WarmupCosineLRCycles = warmupCosineLRCycles;
             WarmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
             WeightDecay = weightDecay;
+            _rawData = rawData;
         }
 
         /// <summary> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </summary>

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Represents an accepted audience trusted by the cluster. </summary>
     public partial class AcceptedAudience
     {
-        /// <summary> Initializes a new instance of AcceptedAudience. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptedAudience"/>. </summary>
         public AcceptedAudience()
         {
         }
 
-        /// <summary> Initializes a new instance of AcceptedAudience. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptedAudience"/>. </summary>
         /// <param name="value"> GUID or valid URL representing an accepted audience. </param>
-        internal AcceptedAudience(string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptedAudience(string value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> GUID or valid URL representing an accepted audience. </summary>

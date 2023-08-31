@@ -14,14 +14,16 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of stop sell offers and plans notifications. </summary>
     public partial class StopSellOffersPlansNotificationsResult
     {
-        /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsResult"/>. </summary>
         internal StopSellOffersPlansNotificationsResult()
         {
             Plans = new ChangeTrackingList<PlanNotificationDetails>();
             SubscriptionsIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopSellOffersPlansNotificationsResult"/>. </summary>
         /// <param name="offerId"> The offer id. </param>
         /// <param name="displayName"> The offer display name. </param>
         /// <param name="isEntireInStopSell"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="plans"> The list of removed plans notifications. </param>
         /// <param name="hasPublicContext"> True if the offer has public plans. </param>
         /// <param name="subscriptionsIds"> The subscriptions related to private plans. </param>
-        internal StopSellOffersPlansNotificationsResult(string offerId, string displayName, bool? isEntireInStopSell, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans, bool? hasPublicContext, IReadOnlyList<string> subscriptionsIds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StopSellOffersPlansNotificationsResult(string offerId, string displayName, bool? isEntireInStopSell, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans, bool? hasPublicContext, IReadOnlyList<string> subscriptionsIds, Dictionary<string, BinaryData> rawData)
         {
             OfferId = offerId;
             DisplayName = displayName;
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = plans;
             HasPublicContext = hasPublicContext;
             SubscriptionsIds = subscriptionsIds;
+            _rawData = rawData;
         }
 
         /// <summary> The offer id. </summary>

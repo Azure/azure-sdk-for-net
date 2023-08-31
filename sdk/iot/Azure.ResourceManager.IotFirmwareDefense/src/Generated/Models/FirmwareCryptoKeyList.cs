@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Crypto keys list. </summary>
     internal partial class FirmwareCryptoKeyList
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoKeyList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeyList"/>. </summary>
         internal FirmwareCryptoKeyList()
         {
             Value = new ChangeTrackingList<FirmwareCryptoKey>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKeyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeyList"/>. </summary>
         /// <param name="value"> Crypto keys list. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal FirmwareCryptoKeyList(IReadOnlyList<FirmwareCryptoKey> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCryptoKeyList(IReadOnlyList<FirmwareCryptoKey> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Crypto keys list. </summary>

@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class KubernetesFluxConfigurationData : IUtf8JsonSerializable
+    public partial class KubernetesFluxConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesFluxConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesFluxConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesFluxConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,7 +52,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue(GitRepository);
+                    if (GitRepository is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesGitRepository>)GitRepository).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -58,7 +71,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue(Bucket);
+                    if (Bucket is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesBucket>)Bucket).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -70,7 +90,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue(AzureBlob);
+                    if (AzureBlob is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesAzureBlob>)AzureBlob).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -86,7 +113,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<Kustomization>)item.Value).Serialize(writer, options);
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -114,11 +148,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesFluxConfigurationData DeserializeKubernetesFluxConfigurationData(JsonElement element)
+        internal static KubernetesFluxConfigurationData DeserializeKubernetesFluxConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -144,6 +192,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Optional<KubernetesFluxComplianceState> complianceState = default;
             Optional<KubernetesConfigurationProvisioningState> provisioningState = default;
             Optional<string> errorMessage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -357,8 +406,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value);
+            return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value, rawData);
+        }
+
+        KubernetesFluxConfigurationData IModelJsonSerializable<KubernetesFluxConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesFluxConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesFluxConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesFluxConfigurationData IModelSerializable<KubernetesFluxConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesFluxConfigurationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesFluxConfigurationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesFluxConfigurationData"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesFluxConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesFluxConfigurationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesFluxConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesFluxConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

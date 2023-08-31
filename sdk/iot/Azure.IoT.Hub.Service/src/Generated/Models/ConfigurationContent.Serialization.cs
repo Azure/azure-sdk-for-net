@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ConfigurationContent : IUtf8JsonSerializable
+    public partial class ConfigurationContent : IUtf8JsonSerializable, IModelJsonSerializable<ConfigurationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConfigurationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConfigurationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DeviceContent))
             {
@@ -75,11 +82,25 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationContent DeserializeConfigurationContent(JsonElement element)
+        internal static ConfigurationContent DeserializeConfigurationContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +108,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<IDictionary<string, object>> deviceContent = default;
             Optional<IDictionary<string, IDictionary<string, object>>> modulesContent = default;
             Optional<IDictionary<string, object>> moduleContent = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceContent"u8))
@@ -164,8 +186,61 @@ namespace Azure.IoT.Hub.Service.Models
                     moduleContent = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConfigurationContent(Optional.ToDictionary(deviceContent), Optional.ToDictionary(modulesContent), Optional.ToDictionary(moduleContent));
+            return new ConfigurationContent(Optional.ToDictionary(deviceContent), Optional.ToDictionary(modulesContent), Optional.ToDictionary(moduleContent), rawData);
+        }
+
+        ConfigurationContent IModelJsonSerializable<ConfigurationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConfigurationContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConfigurationContent IModelSerializable<ConfigurationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConfigurationContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConfigurationContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConfigurationContent"/> to convert. </param>
+        public static implicit operator RequestContent(ConfigurationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConfigurationContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConfigurationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConfigurationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

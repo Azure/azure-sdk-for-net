@@ -8,14 +8,88 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesMarketplaceRegistrationProperties
+    public partial class ManagedServicesMarketplaceRegistrationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServicesMarketplaceRegistrationProperties>
     {
-        internal static ManagedServicesMarketplaceRegistrationProperties DeserializeManagedServicesMarketplaceRegistrationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServicesMarketplaceRegistrationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServicesMarketplaceRegistrationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("managedByTenantId"u8);
+            writer.WriteStringValue(ManagedByTenantId);
+            writer.WritePropertyName("authorizations"u8);
+            writer.WriteStartArray();
+            foreach (var item in Authorizations)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedServicesAuthorization>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(EligibleAuthorizations))
+            {
+                writer.WritePropertyName("eligibleAuthorizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in EligibleAuthorizations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ManagedServicesEligibleAuthorization>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(OfferDisplayName))
+            {
+                writer.WritePropertyName("offerDisplayName"u8);
+                writer.WriteStringValue(OfferDisplayName);
+            }
+            if (Optional.IsDefined(PublisherDisplayName))
+            {
+                writer.WritePropertyName("publisherDisplayName"u8);
+                writer.WriteStringValue(PublisherDisplayName);
+            }
+            if (Optional.IsDefined(PlanDisplayName))
+            {
+                writer.WritePropertyName("planDisplayName"u8);
+                writer.WriteStringValue(PlanDisplayName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedServicesMarketplaceRegistrationProperties DeserializeManagedServicesMarketplaceRegistrationProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +100,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> offerDisplayName = default;
             Optional<string> publisherDisplayName = default;
             Optional<string> planDisplayName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedByTenantId"u8))
@@ -72,8 +147,61 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     planDisplayName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value);
+            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value, rawData);
+        }
+
+        ManagedServicesMarketplaceRegistrationProperties IModelJsonSerializable<ManagedServicesMarketplaceRegistrationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesMarketplaceRegistrationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServicesMarketplaceRegistrationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServicesMarketplaceRegistrationProperties IModelSerializable<ManagedServicesMarketplaceRegistrationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServicesMarketplaceRegistrationProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedServicesMarketplaceRegistrationProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedServicesMarketplaceRegistrationProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedServicesMarketplaceRegistrationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedServicesMarketplaceRegistrationProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedServicesMarketplaceRegistrationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServicesMarketplaceRegistrationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

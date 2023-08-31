@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningManagedOnlineDeployment : IUtf8JsonSerializable
+    public partial class MachineLearningManagedOnlineDeployment : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningManagedOnlineDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningManagedOnlineDeployment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningManagedOnlineDeployment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningManagedOnlineDeployment>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppInsightsEnabled))
             {
@@ -45,7 +52,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessProbe != null)
                 {
                     writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe);
+                    if (LivenessProbe is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningProbeSettings>)LivenessProbe).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -81,7 +95,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessProbe != null)
                 {
                     writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe);
+                    if (ReadinessProbe is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningProbeSettings>)ReadinessProbe).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -93,7 +114,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestSettings != null)
                 {
                     writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings);
+                    if (RequestSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningOnlineRequestSettings>)RequestSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -105,7 +133,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScaleSettings != null)
                 {
                     writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings);
+                    if (ScaleSettings is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningOnlineScaleSettings>)ScaleSettings).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -117,7 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    if (CodeConfiguration is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MachineLearningCodeConfiguration>)CodeConfiguration).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -184,11 +226,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningManagedOnlineDeployment DeserializeMachineLearningManagedOnlineDeployment(JsonElement element)
+        internal static MachineLearningManagedOnlineDeployment DeserializeMachineLearningManagedOnlineDeployment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -209,6 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appInsightsEnabled"u8))
@@ -373,8 +430,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningManagedOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
+            return new MachineLearningManagedOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, rawData);
+        }
+
+        MachineLearningManagedOnlineDeployment IModelJsonSerializable<MachineLearningManagedOnlineDeployment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningManagedOnlineDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningManagedOnlineDeployment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningManagedOnlineDeployment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningManagedOnlineDeployment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningManagedOnlineDeployment IModelSerializable<MachineLearningManagedOnlineDeployment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningManagedOnlineDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningManagedOnlineDeployment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningManagedOnlineDeployment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningManagedOnlineDeployment"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningManagedOnlineDeployment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningManagedOnlineDeployment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningManagedOnlineDeployment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningManagedOnlineDeployment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

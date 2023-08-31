@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The query result. </summary>
     public partial class QueryResult
     {
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         internal QueryResult()
         {
             Items = new ChangeTrackingList<object>();
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>
-        internal QueryResult(QueryResultType? type, IReadOnlyList<object> items, string continuationToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryResult(QueryResultType? type, IReadOnlyList<object> items, string continuationToken, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
             Items = items;
             ContinuationToken = continuationToken;
+            _rawData = rawData;
         }
 
         /// <summary> The query result type. </summary>

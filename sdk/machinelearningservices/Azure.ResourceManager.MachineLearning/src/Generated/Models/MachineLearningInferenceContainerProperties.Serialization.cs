@@ -5,36 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningInferenceContainerProperties : IUtf8JsonSerializable
+    public partial class MachineLearningInferenceContainerProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningInferenceContainerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningInferenceContainerProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningInferenceContainerProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LivenessRoute))
             {
                 writer.WritePropertyName("livenessRoute"u8);
-                writer.WriteObjectValue(LivenessRoute);
+                if (LivenessRoute is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningInferenceContainerRoute>)LivenessRoute).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ReadinessRoute))
             {
                 writer.WritePropertyName("readinessRoute"u8);
-                writer.WriteObjectValue(ReadinessRoute);
+                if (ReadinessRoute is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningInferenceContainerRoute>)ReadinessRoute).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ScoringRoute))
             {
                 writer.WritePropertyName("scoringRoute"u8);
-                writer.WriteObjectValue(ScoringRoute);
+                if (ScoringRoute is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningInferenceContainerRoute>)ScoringRoute).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element)
+        internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livenessRoute"u8))
@@ -71,8 +115,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningInferenceContainerProperties(livenessRoute.Value, readinessRoute.Value, scoringRoute.Value);
+            return new MachineLearningInferenceContainerProperties(livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, rawData);
+        }
+
+        MachineLearningInferenceContainerProperties IModelJsonSerializable<MachineLearningInferenceContainerProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningInferenceContainerProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningInferenceContainerProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningInferenceContainerProperties IModelSerializable<MachineLearningInferenceContainerProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningInferenceContainerProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningInferenceContainerProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningInferenceContainerProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningInferenceContainerProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningInferenceContainerProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningInferenceContainerProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningInferenceContainerProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

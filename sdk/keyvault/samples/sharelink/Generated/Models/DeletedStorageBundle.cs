@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when it will be purged. </summary>
     public partial class DeletedStorageBundle : StorageBundle
     {
-        /// <summary> Initializes a new instance of DeletedStorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageBundle"/>. </summary>
         internal DeletedStorageBundle()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedStorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageBundle"/>. </summary>
         /// <param name="id"> The storage account id. </param>
         /// <param name="resourceId"> The storage account resource id. </param>
         /// <param name="activeKeyName"> The current active storage account key name. </param>
@@ -29,7 +29,8 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="recoveryId"> The url of the recovery object, used to identify and recover the deleted storage account. </param>
         /// <param name="scheduledPurgeDate"> The time when the storage account is scheduled to be purged, in UTC. </param>
         /// <param name="deletedDate"> The time when the storage account was deleted, in UTC. </param>
-        internal DeletedStorageBundle(string id, string resourceId, string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate) : base(id, resourceId, activeKeyName, autoRegenerateKey, regenerationPeriod, attributes, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedStorageBundle(string id, string resourceId, string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate, Dictionary<string, BinaryData> rawData) : base(id, resourceId, activeKeyName, autoRegenerateKey, regenerationPeriod, attributes, tags, rawData)
         {
             RecoveryId = recoveryId;
             ScheduledPurgeDate = scheduledPurgeDate;

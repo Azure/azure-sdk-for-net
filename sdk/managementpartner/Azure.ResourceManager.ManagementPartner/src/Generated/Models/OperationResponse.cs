@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
     /// <summary> this is the management partner operations response. </summary>
     public partial class OperationResponse
     {
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         internal OperationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         /// <param name="name"> this is the operation response name. </param>
         /// <param name="display"> this is the operation display. </param>
         /// <param name="origin"> the is operation response origin information. </param>
-        internal OperationResponse(string name, OperationDisplay display, string origin)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationResponse(string name, OperationDisplay display, string origin, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Display = display;
             Origin = origin;
+            _rawData = rawData;
         }
 
         /// <summary> this is the operation response name. </summary>

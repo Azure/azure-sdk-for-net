@@ -5,20 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    public partial class ManagedNetworkGroupData : IUtf8JsonSerializable
+    public partial class ManagedNetworkGroupData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedNetworkGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedNetworkGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedNetworkGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -73,11 +79,25 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedNetworkGroupData DeserializeManagedNetworkGroupData(JsonElement element)
+        internal static ManagedNetworkGroupData DeserializeManagedNetworkGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +114,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             Optional<IList<WritableSubResource>> subscriptions = default;
             Optional<IList<WritableSubResource>> virtualNetworks = default;
             Optional<IList<WritableSubResource>> subnets = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -224,8 +245,61 @@ namespace Azure.ResourceManager.ManagedNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedNetworkGroupData(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), Optional.ToNullable(etag), Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets), Optional.ToNullable(location));
+            return new ManagedNetworkGroupData(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), Optional.ToNullable(etag), Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets), Optional.ToNullable(location), rawData);
+        }
+
+        ManagedNetworkGroupData IModelJsonSerializable<ManagedNetworkGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedNetworkGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedNetworkGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedNetworkGroupData IModelSerializable<ManagedNetworkGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedNetworkGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedNetworkGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedNetworkGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedNetworkGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedNetworkGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedNetworkGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedNetworkGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

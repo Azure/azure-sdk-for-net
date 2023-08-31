@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable, IModelJsonSerializable<ContentKeyPolicyPlayReadyPlayRight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContentKeyPolicyPlayReadyPlayRight>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContentKeyPolicyPlayReadyPlayRight>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstPlayExpiration))
             {
@@ -34,7 +41,14 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
                 writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
-                writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
+                if (ExplicitAnalogTelevisionOutputRestriction is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>)ExplicitAnalogTelevisionOutputRestriction).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("digitalVideoOnlyContentRestriction"u8);
             writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);
@@ -69,11 +83,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("uncompressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyPlayReadyPlayRight DeserializeContentKeyPolicyPlayReadyPlayRight(JsonElement element)
+        internal static ContentKeyPolicyPlayReadyPlayRight DeserializeContentKeyPolicyPlayReadyPlayRight(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +119,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> analogVideoOpl = default;
             Optional<int> compressedDigitalAudioOpl = default;
             Optional<int> uncompressedDigitalAudioOpl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstPlayExpiration"u8))
@@ -194,8 +223,61 @@ namespace Azure.ResourceManager.Media.Models
                     uncompressedDigitalAudioOpl = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl));
+            return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl), rawData);
+        }
+
+        ContentKeyPolicyPlayReadyPlayRight IModelJsonSerializable<ContentKeyPolicyPlayReadyPlayRight>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyPlayReadyPlayRight(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContentKeyPolicyPlayReadyPlayRight>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContentKeyPolicyPlayReadyPlayRight IModelSerializable<ContentKeyPolicyPlayReadyPlayRight>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyPlayReadyPlayRight(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContentKeyPolicyPlayReadyPlayRight"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContentKeyPolicyPlayReadyPlayRight"/> to convert. </param>
+        public static implicit operator RequestContent(ContentKeyPolicyPlayReadyPlayRight model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContentKeyPolicyPlayReadyPlayRight"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContentKeyPolicyPlayReadyPlayRight(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContentKeyPolicyPlayReadyPlayRight(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

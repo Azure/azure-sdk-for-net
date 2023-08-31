@@ -5,10 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Geolocation
 {
     /// <summary> The object containing the country/region information. </summary>
     internal partial class CountryRegion
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CountryRegion"/>. </summary>
+        /// <param name="isoCode"> The IP Address's 2-character code [(ISO 3166-1)](https://www.iso.org/iso-3166-country-codes.html) of the country or region. Please note, IP address in ranges reserved for special purpose will return Null for country/region. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CountryRegion(string isoCode, Dictionary<string, BinaryData> rawData)
+        {
+            IsoCode = isoCode;
+            _rawData = rawData;
+        }
     }
 }

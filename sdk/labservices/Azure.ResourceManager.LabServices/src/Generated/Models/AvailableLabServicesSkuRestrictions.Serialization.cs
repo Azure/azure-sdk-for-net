@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class AvailableLabServicesSkuRestrictions
+    public partial class AvailableLabServicesSkuRestrictions : IUtf8JsonSerializable, IModelJsonSerializable<AvailableLabServicesSkuRestrictions>
     {
-        internal static AvailableLabServicesSkuRestrictions DeserializeAvailableLabServicesSkuRestrictions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailableLabServicesSkuRestrictions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AvailableLabServicesSkuRestrictions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AvailableLabServicesSkuRestrictions DeserializeAvailableLabServicesSkuRestrictions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<LabServicesSkuRestrictionType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -56,8 +84,61 @@ namespace Azure.ResourceManager.LabServices.Models
                     reasonCode = new LabServicesSkuRestrictionReasonCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AvailableLabServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), Optional.ToNullable(reasonCode));
+            return new AvailableLabServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), Optional.ToNullable(reasonCode), rawData);
+        }
+
+        AvailableLabServicesSkuRestrictions IModelJsonSerializable<AvailableLabServicesSkuRestrictions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailableLabServicesSkuRestrictions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AvailableLabServicesSkuRestrictions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AvailableLabServicesSkuRestrictions IModelSerializable<AvailableLabServicesSkuRestrictions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAvailableLabServicesSkuRestrictions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AvailableLabServicesSkuRestrictions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AvailableLabServicesSkuRestrictions"/> to convert. </param>
+        public static implicit operator RequestContent(AvailableLabServicesSkuRestrictions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AvailableLabServicesSkuRestrictions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAvailableLabServicesSkuRestrictions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

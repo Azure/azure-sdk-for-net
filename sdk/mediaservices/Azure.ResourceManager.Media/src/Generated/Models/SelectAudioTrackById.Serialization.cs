@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectAudioTrackById : IUtf8JsonSerializable
+    public partial class SelectAudioTrackById : IUtf8JsonSerializable, IModelJsonSerializable<SelectAudioTrackById>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SelectAudioTrackById>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SelectAudioTrackById>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SelectAudioTrackById>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("trackId"u8);
             writer.WriteNumberValue(TrackId);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SelectAudioTrackById DeserializeSelectAudioTrackById(JsonElement element)
+        internal static SelectAudioTrackById DeserializeSelectAudioTrackById(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             long trackId = default;
             Optional<ChannelMapping> channelMapping = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackId"u8))
@@ -57,8 +80,61 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SelectAudioTrackById(odataType, Optional.ToNullable(channelMapping), trackId);
+            return new SelectAudioTrackById(odataType, Optional.ToNullable(channelMapping), trackId, rawData);
+        }
+
+        SelectAudioTrackById IModelJsonSerializable<SelectAudioTrackById>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelectAudioTrackById>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelectAudioTrackById(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SelectAudioTrackById>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelectAudioTrackById>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SelectAudioTrackById IModelSerializable<SelectAudioTrackById>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SelectAudioTrackById>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSelectAudioTrackById(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SelectAudioTrackById"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SelectAudioTrackById"/> to convert. </param>
+        public static implicit operator RequestContent(SelectAudioTrackById model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SelectAudioTrackById"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SelectAudioTrackById(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSelectAudioTrackById(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

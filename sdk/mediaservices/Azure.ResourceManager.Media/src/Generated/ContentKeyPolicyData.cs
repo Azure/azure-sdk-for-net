@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class ContentKeyPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyData"/>. </summary>
         public ContentKeyPolicyData()
         {
             Options = new ChangeTrackingList<ContentKeyPolicyOption>();
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +37,15 @@ namespace Azure.ResourceManager.Media
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
         /// <param name="options"> The Key Policy options. </param>
-        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyOption> options) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyOption> options, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
             Options = options;
+            _rawData = rawData;
         }
 
         /// <summary> The legacy Policy ID. </summary>

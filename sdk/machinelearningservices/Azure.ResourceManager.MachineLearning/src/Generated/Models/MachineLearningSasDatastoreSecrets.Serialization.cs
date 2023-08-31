@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSasDatastoreSecrets : IUtf8JsonSerializable
+    public partial class MachineLearningSasDatastoreSecrets : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSasDatastoreSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSasDatastoreSecrets>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSasDatastoreSecrets>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreSecrets>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SasToken))
             {
@@ -29,17 +37,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("secretsType"u8);
             writer.WriteStringValue(SecretsType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSasDatastoreSecrets DeserializeMachineLearningSasDatastoreSecrets(JsonElement element)
+        internal static MachineLearningSasDatastoreSecrets DeserializeMachineLearningSasDatastoreSecrets(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> sasToken = default;
             SecretsType secretsType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasToken"u8))
@@ -57,8 +80,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     secretsType = new SecretsType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningSasDatastoreSecrets(secretsType, sasToken.Value);
+            return new MachineLearningSasDatastoreSecrets(secretsType, sasToken.Value, rawData);
+        }
+
+        MachineLearningSasDatastoreSecrets IModelJsonSerializable<MachineLearningSasDatastoreSecrets>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreSecrets>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSasDatastoreSecrets(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSasDatastoreSecrets>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreSecrets>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSasDatastoreSecrets IModelSerializable<MachineLearningSasDatastoreSecrets>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningSasDatastoreSecrets>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSasDatastoreSecrets(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningSasDatastoreSecrets"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningSasDatastoreSecrets"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningSasDatastoreSecrets model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningSasDatastoreSecrets(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSasDatastoreSecrets(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

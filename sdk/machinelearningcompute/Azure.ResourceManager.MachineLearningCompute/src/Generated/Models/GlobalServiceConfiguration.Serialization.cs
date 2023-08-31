@@ -10,13 +10,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class GlobalServiceConfiguration : IUtf8JsonSerializable
+    public partial class GlobalServiceConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<GlobalServiceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GlobalServiceConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GlobalServiceConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -26,17 +31,38 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
-                writer.WriteObjectValue(Ssl);
+                if (Ssl is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SslConfiguration>)Ssl).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ServiceAuth))
             {
                 writer.WritePropertyName("serviceAuth"u8);
-                writer.WriteObjectValue(ServiceAuth);
+                if (ServiceAuth is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServiceAuthConfiguration>)ServiceAuth).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                if (AutoScale is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutoScaleConfiguration>)AutoScale).Serialize(writer, options);
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -50,8 +76,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteEndObject();
         }
 
-        internal static GlobalServiceConfiguration DeserializeGlobalServiceConfiguration(JsonElement element)
+        internal static GlobalServiceConfiguration DeserializeGlobalServiceConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,6 +132,54 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new GlobalServiceConfiguration(Optional.ToNullable(etag), ssl.Value, serviceAuth.Value, autoScale.Value, additionalProperties);
+        }
+
+        GlobalServiceConfiguration IModelJsonSerializable<GlobalServiceConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalServiceConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GlobalServiceConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GlobalServiceConfiguration IModelSerializable<GlobalServiceConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGlobalServiceConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GlobalServiceConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GlobalServiceConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(GlobalServiceConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GlobalServiceConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GlobalServiceConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGlobalServiceConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

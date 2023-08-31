@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify which protocols are enabled. </summary>
     public partial class MediaEnabledProtocols
     {
-        /// <summary> Initializes a new instance of MediaEnabledProtocols. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
         /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
         /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
         /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
@@ -21,6 +26,26 @@ namespace Azure.ResourceManager.Media.Models
             IsDashEnabled = isDashEnabled;
             IsHlsEnabled = isHlsEnabled;
             IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
+        /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
+        /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
+        /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
+        /// <param name="isSmoothStreamingEnabled"> Enable SmoothStreaming protocol or not. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHlsEnabled, bool isSmoothStreamingEnabled, Dictionary<string, BinaryData> rawData)
+        {
+            IsDownloadEnabled = isDownloadEnabled;
+            IsDashEnabled = isDashEnabled;
+            IsHlsEnabled = isHlsEnabled;
+            IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/> for deserialization. </summary>
+        internal MediaEnabledProtocols()
+        {
         }
 
         /// <summary> Enable Download protocol or not. </summary>

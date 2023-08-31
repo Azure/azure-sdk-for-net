@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionPatch : IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionPatch : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesClusterExtensionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesClusterExtensionPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesClusterExtensionPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -76,7 +84,158 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KubernetesClusterExtensionPatch DeserializeKubernetesClusterExtensionPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<string> releaseTrain = default;
+            Optional<string> version = default;
+            Optional<IDictionary<string, string>> configurationSettings = default;
+            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("autoUpgradeMinorVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoUpgradeMinorVersion = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("releaseTrain"u8))
+                        {
+                            releaseTrain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                version = null;
+                                continue;
+                            }
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                configurationSettings = null;
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            configurationSettings = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationProtectedSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                configurationProtectedSettings = null;
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            configurationProtectedSettings = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new KubernetesClusterExtensionPatch(Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, Optional.ToDictionary(configurationSettings), Optional.ToDictionary(configurationProtectedSettings), rawData);
+        }
+
+        KubernetesClusterExtensionPatch IModelJsonSerializable<KubernetesClusterExtensionPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterExtensionPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesClusterExtensionPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesClusterExtensionPatch IModelSerializable<KubernetesClusterExtensionPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterExtensionPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesClusterExtensionPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesClusterExtensionPatch"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesClusterExtensionPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesClusterExtensionPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesClusterExtensionPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesClusterExtensionPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

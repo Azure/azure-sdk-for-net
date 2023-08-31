@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningComputeSecrets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningAksComputeSecrets"/>, <see cref="MachineLearningDatabricksComputeSecrets"/> and <see cref="MachineLearningVirtualMachineSecrets"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownComputeSecrets))]
     public abstract partial class MachineLearningComputeSecrets
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeSecrets. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSecrets"/>. </summary>
         protected MachineLearningComputeSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
-        internal MachineLearningComputeSecrets(ComputeType computeType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeSecrets(ComputeType computeType, Dictionary<string, BinaryData> rawData)
         {
             ComputeType = computeType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of compute. </summary>

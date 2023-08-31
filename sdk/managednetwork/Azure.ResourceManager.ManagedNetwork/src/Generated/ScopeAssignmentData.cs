@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -18,12 +20,14 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// </summary>
     public partial class ScopeAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopeAssignmentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentData"/>. </summary>
         public ScopeAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +36,14 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="assignedManagedNetwork"> The managed network ID with scope will be assigned to. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ScopeAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, ETag? etag, string assignedManagedNetwork, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, ETag? etag, string assignedManagedNetwork, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ETag = etag;
             AssignedManagedNetwork = assignedManagedNetwork;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state of the ManagedNetwork resource. </summary>

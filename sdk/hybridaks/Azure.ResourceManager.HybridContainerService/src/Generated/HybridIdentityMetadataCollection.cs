@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridIdentityMetadataResource(Client, HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e)), _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HybridIdentityMetadataResource(Client, HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e)), _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridIdentityMetadataResource(Client, HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e)), _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HybridIdentityMetadataResource(Client, HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(e)), _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, "HybridIdentityMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricInternetGatewayRuleResource(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(e)), _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics, Pipeline, "NetworkFabricInternetGatewayRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
