@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peering service countries. </summary>
     internal partial class PeeringServiceCountryListResult
     {
-        /// <summary> Initializes a new instance of PeeringServiceCountryListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceCountryListResult"/>. </summary>
         internal PeeringServiceCountryListResult()
         {
             Value = new ChangeTrackingList<PeeringServiceCountry>();
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceCountryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceCountryListResult"/>. </summary>
         /// <param name="value"> The list of peering service countries. </param>
         /// <param name="nextLink"> The link to fetch the next page of peering service countries. </param>
-        internal PeeringServiceCountryListResult(IReadOnlyList<PeeringServiceCountry> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServiceCountryListResult(IReadOnlyList<PeeringServiceCountry> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of peering service countries. </summary>

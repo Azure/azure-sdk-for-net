@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Network properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerNetwork
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNetwork. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNetwork"/>. </summary>
         public PostgreSqlFlexibleServerNetwork()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNetwork"/>. </summary>
         /// <param name="publicNetworkAccess"> public network access is enabled or not. </param>
         /// <param name="delegatedSubnetResourceId"> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
         /// <param name="privateDnsZoneArmResourceId"> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
-        internal PostgreSqlFlexibleServerNetwork(PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneArmResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerNetwork(PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess, ResourceIdentifier delegatedSubnetResourceId, ResourceIdentifier privateDnsZoneArmResourceId, Dictionary<string, BinaryData> rawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
             DelegatedSubnetResourceId = delegatedSubnetResourceId;
             PrivateDnsZoneArmResourceId = privateDnsZoneArmResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> public network access is enabled or not. </summary>

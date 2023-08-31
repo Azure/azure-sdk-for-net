@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Customer retrieves list of Available Contacts for a spacecraft resource. Later, one of the available contact can be selected to create a contact. </summary>
     public partial class OrbitalAvailableContact
     {
-        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContact"/>. </summary>
         internal OrbitalAvailableContact()
         {
         }
 
-        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContact"/>. </summary>
         /// <param name="spacecraft"> The reference to the spacecraft resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="maximumElevationDegrees"> Maximum elevation of the antenna during the contact in decimal degrees. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <param name="endAzimuthDegrees"> Azimuth of the antenna at the end of the contact in decimal degrees. </param>
         /// <param name="startElevationDegrees"> Spacecraft elevation above the horizon at contact start. </param>
         /// <param name="endElevationDegrees"> Spacecraft elevation above the horizon at contact end. </param>
-        internal OrbitalAvailableContact(WritableSubResource spacecraft, string groundStationName, float? maximumElevationDegrees, DateTimeOffset? txStartOn, DateTimeOffset? txEndOn, DateTimeOffset? rxStartOn, DateTimeOffset? rxEndOn, float? startAzimuthDegrees, float? endAzimuthDegrees, float? startElevationDegrees, float? endElevationDegrees)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalAvailableContact(WritableSubResource spacecraft, string groundStationName, float? maximumElevationDegrees, DateTimeOffset? txStartOn, DateTimeOffset? txEndOn, DateTimeOffset? rxStartOn, DateTimeOffset? rxEndOn, float? startAzimuthDegrees, float? endAzimuthDegrees, float? startElevationDegrees, float? endElevationDegrees, Dictionary<string, BinaryData> rawData)
         {
             Spacecraft = spacecraft;
             GroundStationName = groundStationName;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.Orbital.Models
             EndAzimuthDegrees = endAzimuthDegrees;
             StartElevationDegrees = startElevationDegrees;
             EndElevationDegrees = endElevationDegrees;
+            _rawData = rawData;
         }
 
         /// <summary> The reference to the spacecraft resource. </summary>

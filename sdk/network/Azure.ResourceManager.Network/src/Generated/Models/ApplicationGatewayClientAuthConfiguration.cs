@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application gateway client authentication configuration. </summary>
     public partial class ApplicationGatewayClientAuthConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         public ApplicationGatewayClientAuthConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         /// <param name="verifyClientCertIssuerDN"> Verify client certificate issuer name on the application gateway. </param>
         /// <param name="verifyClientRevocation"> Verify client certificate revocation status. </param>
-        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN, ApplicationGatewayClientRevocationOption? verifyClientRevocation, Dictionary<string, BinaryData> rawData)
         {
             VerifyClientCertIssuerDN = verifyClientCertIssuerDN;
             VerifyClientRevocation = verifyClientRevocation;
+            _rawData = rawData;
         }
 
         /// <summary> Verify client certificate issuer name on the application gateway. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Information about a Log Analytics Workspace. </summary>
     public partial class DataContainerWorkspace
     {
-        /// <summary> Initializes a new instance of DataContainerWorkspace. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataContainerWorkspace"/>. </summary>
         /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
         /// <param name="location"> Location of the Log Analytics workspace. </param>
         /// <param name="customerId"> Log Analytics workspace identifier. </param>
@@ -26,6 +29,24 @@ namespace Azure.ResourceManager.Monitor.Models
             Id = id;
             Location = location;
             CustomerId = customerId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataContainerWorkspace"/>. </summary>
+        /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
+        /// <param name="location"> Location of the Log Analytics workspace. </param>
+        /// <param name="customerId"> Log Analytics workspace identifier. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            Location = location;
+            CustomerId = customerId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataContainerWorkspace"/> for deserialization. </summary>
+        internal DataContainerWorkspace()
+        {
         }
 
         /// <summary> Azure Resource Manager identifier of the Log Analytics Workspace. </summary>

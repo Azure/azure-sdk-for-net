@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Provides region specific information. </summary>
     public partial class NetAppRegionInfo
     {
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
         internal NetAppRegionInfo()
         {
             AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMapping>();
         }
 
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
-        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings, Dictionary<string, BinaryData> rawData)
         {
             StorageToNetworkProximity = storageToNetworkProximity;
             AvailabilityZoneMappings = availabilityZoneMappings;
+            _rawData = rawData;
         }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>

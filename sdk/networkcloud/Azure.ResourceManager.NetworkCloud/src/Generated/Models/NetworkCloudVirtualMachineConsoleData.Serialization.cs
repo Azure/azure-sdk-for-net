@@ -8,19 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVirtualMachineConsoleData : IUtf8JsonSerializable
+    public partial class NetworkCloudVirtualMachineConsoleData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudVirtualMachineConsoleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudVirtualMachineConsoleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudVirtualMachineConsoleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            if (ExtendedLocation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -44,13 +57,34 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey);
+            if (SshPublicKey is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<NetworkCloudSshPublicKey>)SshPublicKey).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudVirtualMachineConsoleData DeserializeNetworkCloudVirtualMachineConsoleData(JsonElement element)
+        internal static NetworkCloudVirtualMachineConsoleData DeserializeNetworkCloudVirtualMachineConsoleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<ConsoleProvisioningState> provisioningState = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             Optional<Guid> virtualMachineAccessId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -192,8 +227,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId));
+            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId), rawData);
+        }
+
+        NetworkCloudVirtualMachineConsoleData IModelJsonSerializable<NetworkCloudVirtualMachineConsoleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudVirtualMachineConsoleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudVirtualMachineConsoleData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudVirtualMachineConsoleData IModelSerializable<NetworkCloudVirtualMachineConsoleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudVirtualMachineConsoleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudVirtualMachineConsoleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudVirtualMachineConsoleData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudVirtualMachineConsoleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudVirtualMachineConsoleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudVirtualMachineConsoleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudVirtualMachineConsoleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

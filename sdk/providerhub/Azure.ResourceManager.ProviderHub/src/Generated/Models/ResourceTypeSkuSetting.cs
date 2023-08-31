@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeSkuSetting. </summary>
     public partial class ResourceTypeSkuSetting
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceTypeSkuSetting(string name)
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
         /// <param name="name"></param>
         /// <param name="tier"></param>
         /// <param name="size"></param>
@@ -43,7 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="capacity"></param>
         /// <param name="costs"></param>
         /// <param name="capabilities"></param>
-        internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
@@ -57,6 +60,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Capacity = capacity;
             Costs = costs;
             Capabilities = capabilities;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/> for deserialization. </summary>
+        internal ResourceTypeSkuSetting()
+        {
         }
 
         /// <summary> Gets or sets the name. </summary>

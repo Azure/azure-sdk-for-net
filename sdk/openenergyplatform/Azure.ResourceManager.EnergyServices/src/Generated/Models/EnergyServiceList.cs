@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EnergyServices;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> The list of oep resources. </summary>
     internal partial class EnergyServiceList
     {
-        /// <summary> Initializes a new instance of EnergyServiceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceList"/>. </summary>
         internal EnergyServiceList()
         {
             Value = new ChangeTrackingList<EnergyServiceData>();
         }
 
-        /// <summary> Initializes a new instance of EnergyServiceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnergyServiceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of oep resources list. </param>
         /// <param name="value"> The list of oep resources. </param>
-        internal EnergyServiceList(string nextLink, IReadOnlyList<EnergyServiceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnergyServiceList(string nextLink, IReadOnlyList<EnergyServiceData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of oep resources list. </summary>

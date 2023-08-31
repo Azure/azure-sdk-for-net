@@ -5,22 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringLogAnalyticsWorkspaceProperties : IUtf8JsonSerializable
+    public partial class PeeringLogAnalyticsWorkspaceProperties : IUtf8JsonSerializable, IModelJsonSerializable<PeeringLogAnalyticsWorkspaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeeringLogAnalyticsWorkspaceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeeringLogAnalyticsWorkspaceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringLogAnalyticsWorkspaceProperties DeserializePeeringLogAnalyticsWorkspaceProperties(JsonElement element)
+        internal static PeeringLogAnalyticsWorkspaceProperties DeserializePeeringLogAnalyticsWorkspaceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +49,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> workspaceId = default;
             Optional<string> key = default;
             Optional<IReadOnlyList<string>> connectedAgents = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceID"u8))
@@ -54,8 +76,61 @@ namespace Azure.ResourceManager.Peering.Models
                     connectedAgents = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, Optional.ToList(connectedAgents));
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId.Value, key.Value, Optional.ToList(connectedAgents), rawData);
+        }
+
+        PeeringLogAnalyticsWorkspaceProperties IModelJsonSerializable<PeeringLogAnalyticsWorkspaceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringLogAnalyticsWorkspaceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeeringLogAnalyticsWorkspaceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeeringLogAnalyticsWorkspaceProperties IModelSerializable<PeeringLogAnalyticsWorkspaceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeeringLogAnalyticsWorkspaceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PeeringLogAnalyticsWorkspaceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PeeringLogAnalyticsWorkspaceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PeeringLogAnalyticsWorkspaceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PeeringLogAnalyticsWorkspaceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeeringLogAnalyticsWorkspaceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

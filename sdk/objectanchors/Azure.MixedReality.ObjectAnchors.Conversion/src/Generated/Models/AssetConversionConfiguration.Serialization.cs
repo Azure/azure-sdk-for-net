@@ -5,24 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    public partial class AssetConversionConfiguration : IUtf8JsonSerializable
+    public partial class AssetConversionConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<AssetConversionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AssetConversionConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AssetConversionConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AssetDimensionsWrapper))
             {
                 if (AssetDimensionsWrapper != null)
                 {
                     writer.WritePropertyName("dimensions"u8);
-                    writer.WriteObjectValue(AssetDimensionsWrapper);
+                    if (AssetDimensionsWrapper is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<Vector3>)AssetDimensionsWrapper).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -34,7 +48,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (BoundingBoxCenterWrapper != null)
                 {
                     writer.WritePropertyName("boundingBoxCenter"u8);
-                    writer.WriteObjectValue(BoundingBoxCenterWrapper);
+                    if (BoundingBoxCenterWrapper is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<Vector3>)BoundingBoxCenterWrapper).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -42,7 +63,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
             }
             writer.WritePropertyName("gravity"u8);
-            writer.WriteObjectValue(GravityWrapper);
+            if (GravityWrapper is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<Vector3>)GravityWrapper).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 if (KeyFrameIndexes != null)
@@ -66,7 +94,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WriteStartArray();
                 foreach (var item in GroundTruthTrajectoryCameraPoses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TrajectoryPose>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +110,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (PrincipalAxisWrapper != null)
                 {
                     writer.WritePropertyName("principalAxis"u8);
-                    writer.WriteObjectValue(PrincipalAxisWrapper);
+                    if (PrincipalAxisWrapper is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<Quaternion>)PrincipalAxisWrapper).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -94,7 +136,14 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 if (SupportingPlaneWrapper != null)
                 {
                     writer.WritePropertyName("supportingPlane"u8);
-                    writer.WriteObjectValue(SupportingPlaneWrapper);
+                    if (SupportingPlaneWrapper is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<Vector4>)SupportingPlaneWrapper).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -107,15 +156,36 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WriteStartArray();
                 foreach (var item in TestTrajectoryCameraPoses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TrajectoryPose>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AssetConversionConfiguration DeserializeAssetConversionConfiguration(JsonElement element)
+        internal static AssetConversionConfiguration DeserializeAssetConversionConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,6 +200,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<bool> disableDetectScaleUnits = default;
             Optional<Vector4> supportingPlane = default;
             Optional<IReadOnlyList<TrajectoryPose>> testTrajectory = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensions"u8))
@@ -233,8 +304,61 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     testTrajectory = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, Optional.ToList(testTrajectory));
+            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, Optional.ToList(testTrajectory), rawData);
+        }
+
+        AssetConversionConfiguration IModelJsonSerializable<AssetConversionConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssetConversionConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AssetConversionConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AssetConversionConfiguration IModelSerializable<AssetConversionConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAssetConversionConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AssetConversionConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AssetConversionConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(AssetConversionConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AssetConversionConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AssetConversionConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAssetConversionConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

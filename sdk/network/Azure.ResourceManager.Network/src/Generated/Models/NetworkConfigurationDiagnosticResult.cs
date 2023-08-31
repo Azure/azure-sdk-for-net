@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network configuration diagnostic result corresponded to provided traffic query. </summary>
     public partial class NetworkConfigurationDiagnosticResult
     {
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticResult"/>. </summary>
         internal NetworkConfigurationDiagnosticResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfigurationDiagnosticResult"/>. </summary>
         /// <param name="profile"> Network configuration diagnostic profile. </param>
         /// <param name="networkSecurityGroupResult"> Network security group result. </param>
-        internal NetworkConfigurationDiagnosticResult(NetworkConfigurationDiagnosticProfile profile, NetworkSecurityGroupResult networkSecurityGroupResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkConfigurationDiagnosticResult(NetworkConfigurationDiagnosticProfile profile, NetworkSecurityGroupResult networkSecurityGroupResult, Dictionary<string, BinaryData> rawData)
         {
             Profile = profile;
             NetworkSecurityGroupResult = networkSecurityGroupResult;
+            _rawData = rawData;
         }
 
         /// <summary> Network configuration diagnostic profile. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteCriterion : IUtf8JsonSerializable
+    public partial class RouteCriterion : IUtf8JsonSerializable, IModelJsonSerializable<RouteCriterion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteCriterion>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteCriterion>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RoutePrefix))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("matchCondition"u8);
                 writer.WriteStringValue(MatchCondition.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RouteCriterion DeserializeRouteCriterion(JsonElement element)
+        internal static RouteCriterion DeserializeRouteCriterion(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> community = default;
             Optional<IList<string>> asPath = default;
             Optional<RouteMapMatchCondition> matchCondition = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routePrefix"u8))
@@ -117,8 +139,61 @@ namespace Azure.ResourceManager.Network.Models
                     matchCondition = new RouteMapMatchCondition(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteCriterion(Optional.ToList(routePrefix), Optional.ToList(community), Optional.ToList(asPath), Optional.ToNullable(matchCondition));
+            return new RouteCriterion(Optional.ToList(routePrefix), Optional.ToList(community), Optional.ToList(asPath), Optional.ToNullable(matchCondition), rawData);
+        }
+
+        RouteCriterion IModelJsonSerializable<RouteCriterion>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteCriterion(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteCriterion>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteCriterion IModelSerializable<RouteCriterion>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteCriterion(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouteCriterion"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouteCriterion"/> to convert. </param>
+        public static implicit operator RequestContent(RouteCriterion model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouteCriterion"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouteCriterion(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteCriterion(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

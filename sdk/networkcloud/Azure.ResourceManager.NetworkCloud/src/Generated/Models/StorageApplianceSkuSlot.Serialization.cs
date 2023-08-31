@@ -5,15 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class StorageApplianceSkuSlot
+    public partial class StorageApplianceSkuSlot : IUtf8JsonSerializable, IModelJsonSerializable<StorageApplianceSkuSlot>
     {
-        internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageApplianceSkuSlot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageApplianceSkuSlot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageApplianceSkuSlot DeserializeStorageApplianceSkuSlot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<long> rackSlot = default;
             Optional<long> capacityGB = default;
             Optional<string> model = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -58,8 +90,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageApplianceSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(capacityGB), model.Value);
+            return new StorageApplianceSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(capacityGB), model.Value, rawData);
+        }
+
+        StorageApplianceSkuSlot IModelJsonSerializable<StorageApplianceSkuSlot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageApplianceSkuSlot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageApplianceSkuSlot>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageApplianceSkuSlot IModelSerializable<StorageApplianceSkuSlot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageApplianceSkuSlot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageApplianceSkuSlot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageApplianceSkuSlot"/> to convert. </param>
+        public static implicit operator RequestContent(StorageApplianceSkuSlot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageApplianceSkuSlot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageApplianceSkuSlot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageApplianceSkuSlot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

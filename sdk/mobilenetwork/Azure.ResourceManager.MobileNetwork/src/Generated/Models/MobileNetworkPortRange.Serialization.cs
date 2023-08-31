@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPortRange : IUtf8JsonSerializable
+    public partial class MobileNetworkPortRange : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkPortRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkPortRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkPortRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MinPort))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("maxPort"u8);
                 writer.WriteNumberValue(MaxPort.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkPortRange DeserializeMobileNetworkPortRange(JsonElement element)
+        internal static MobileNetworkPortRange DeserializeMobileNetworkPortRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> minPort = default;
             Optional<int> maxPort = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minPort"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     maxPort = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkPortRange(Optional.ToNullable(minPort), Optional.ToNullable(maxPort));
+            return new MobileNetworkPortRange(Optional.ToNullable(minPort), Optional.ToNullable(maxPort), rawData);
+        }
+
+        MobileNetworkPortRange IModelJsonSerializable<MobileNetworkPortRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkPortRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkPortRange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkPortRange IModelSerializable<MobileNetworkPortRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkPortRange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MobileNetworkPortRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MobileNetworkPortRange"/> to convert. </param>
+        public static implicit operator RequestContent(MobileNetworkPortRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MobileNetworkPortRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MobileNetworkPortRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkPortRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

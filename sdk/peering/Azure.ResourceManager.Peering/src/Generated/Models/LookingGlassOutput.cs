@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> Looking glass output model. </summary>
     public partial class LookingGlassOutput
     {
-        /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LookingGlassOutput"/>. </summary>
         internal LookingGlassOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LookingGlassOutput"/>. </summary>
         /// <param name="command"> Invoked command. </param>
         /// <param name="output"> Output of the command. </param>
-        internal LookingGlassOutput(LookingGlassCommand? command, string output)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LookingGlassOutput(LookingGlassCommand? command, string output, Dictionary<string, BinaryData> rawData)
         {
             Command = command;
             Output = output;
+            _rawData = rawData;
         }
 
         /// <summary> Invoked command. </summary>

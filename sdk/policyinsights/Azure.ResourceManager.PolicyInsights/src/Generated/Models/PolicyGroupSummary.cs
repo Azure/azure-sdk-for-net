@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Policy definition group summary. </summary>
     public partial class PolicyGroupSummary
     {
-        /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyGroupSummary"/>. </summary>
         internal PolicyGroupSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyGroupSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyGroupSummary"/>. </summary>
         /// <param name="policyGroupName"> Policy group name. </param>
         /// <param name="results"> Compliance summary for the policy definition group. </param>
-        internal PolicyGroupSummary(string policyGroupName, PolicySummaryResults results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyGroupSummary(string policyGroupName, PolicySummaryResults results, Dictionary<string, BinaryData> rawData)
         {
             PolicyGroupName = policyGroupName;
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> Policy group name. </summary>

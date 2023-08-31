@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDimensionQuery. </summary>
     internal partial class AnomalyDimensionQuery
     {
-        /// <summary> Initializes a new instance of AnomalyDimensionQuery. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         /// <param name="dimensionName"> dimension to query. </param>
@@ -25,6 +28,26 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             DimensionName = dimensionName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionQuery"/>. </summary>
+        /// <param name="startTime"> start time. </param>
+        /// <param name="endTime"> end time. </param>
+        /// <param name="dimensionName"> dimension to query. </param>
+        /// <param name="dimensionFilter"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyDimensionQuery(DateTimeOffset startTime, DateTimeOffset endTime, string dimensionName, DimensionKey dimensionFilter, Dictionary<string, BinaryData> rawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            DimensionName = dimensionName;
+            DimensionFilter = dimensionFilter;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDimensionQuery"/> for deserialization. </summary>
+        internal AnomalyDimensionQuery()
+        {
         }
 
         /// <summary> start time. </summary>

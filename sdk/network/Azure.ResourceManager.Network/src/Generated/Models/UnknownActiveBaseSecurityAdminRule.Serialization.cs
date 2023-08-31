@@ -6,94 +6,120 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownActiveBaseSecurityAdminRule
+    internal partial class UnknownActiveBaseSecurityAdminRule : IUtf8JsonSerializable, IModelJsonSerializable<ActiveBaseSecurityAdminRule>
     {
-        internal static UnknownActiveBaseSecurityAdminRule DeserializeUnknownActiveBaseSecurityAdminRule(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActiveBaseSecurityAdminRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActiveBaseSecurityAdminRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
             {
-                return null;
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<string> region = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
-            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
-            EffectiveAdminRuleKind kind = "Unknown";
-            foreach (var property in element.EnumerateObject())
+            if (Optional.IsDefined(CommitOn))
             {
-                if (property.NameEquals("id"u8))
+                writer.WritePropertyName("commitTime"u8);
+                writer.WriteStringValue(CommitOn.Value, "O");
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (Optional.IsDefined(ConfigurationDescription))
+            {
+                writer.WritePropertyName("configurationDescription"u8);
+                writer.WriteStringValue(ConfigurationDescription);
+            }
+            if (Optional.IsDefined(RuleCollectionDescription))
+            {
+                writer.WritePropertyName("ruleCollectionDescription"u8);
+                writer.WriteStringValue(RuleCollectionDescription);
+            }
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            {
+                writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleCollectionAppliesToGroups)
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("commitTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (item is null)
                     {
-                        continue;
+                        writer.WriteNullValue();
                     }
-                    commitTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("region"u8))
-                {
-                    region = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("configurationDescription"u8))
-                {
-                    configurationDescription = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleCollectionDescription"u8))
-                {
-                    ruleCollectionDescription = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleCollectionAppliesToGroups"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    else
                     {
-                        continue;
+                        ((IModelJsonSerializable<NetworkManagerSecurityGroupItem>)item).Serialize(writer, options);
                     }
-                    List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
-                    }
-                    ruleCollectionAppliesToGroups = array;
-                    continue;
                 }
-                if (property.NameEquals("ruleGroups"u8))
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RuleGroups))
+            {
+                writer.WritePropertyName("ruleGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleGroups)
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (item is null)
                     {
-                        continue;
+                        writer.WriteNullValue();
                     }
-                    List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    else
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        ((IModelJsonSerializable<NetworkConfigurationGroup>)item).Serialize(writer, options);
                     }
-                    ruleGroups = array;
-                    continue;
                 }
-                if (property.NameEquals("kind"u8))
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
                 {
-                    kind = new EffectiveAdminRuleKind(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownActiveBaseSecurityAdminRule(id.Value, Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind);
+            writer.WriteEndObject();
+        }
+
+        internal static ActiveBaseSecurityAdminRule DeserializeUnknownActiveBaseSecurityAdminRule(JsonElement element, ModelSerializerOptions options = default) => DeserializeActiveBaseSecurityAdminRule(element, options);
+
+        ActiveBaseSecurityAdminRule IModelJsonSerializable<ActiveBaseSecurityAdminRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownActiveBaseSecurityAdminRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActiveBaseSecurityAdminRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActiveBaseSecurityAdminRule IModelSerializable<ActiveBaseSecurityAdminRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActiveBaseSecurityAdminRule(doc.RootElement, options);
         }
     }
 }

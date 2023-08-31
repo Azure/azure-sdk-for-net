@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlServerAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerAdministratorData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerAdministratorData"/>. </summary>
         public PostgreSqlServerAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +35,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="loginAccountName"> The server administrator login account name. </param>
         /// <param name="secureId"> The server administrator Sid (Secure ID). </param>
         /// <param name="tenantId"> The server Active Directory Administrator tenant id. </param>
-        internal PostgreSqlServerAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlAdministratorType? administratorType, string loginAccountName, Guid? secureId, Guid? tenantId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlAdministratorType? administratorType, string loginAccountName, Guid? secureId, Guid? tenantId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
             LoginAccountName = loginAccountName;
             SecureId = secureId;
             TenantId = tenantId;
+            _rawData = rawData;
         }
 
         /// <summary> The type of administrator. </summary>

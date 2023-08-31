@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
@@ -17,7 +18,33 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// Please note <see cref="NotificationHook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="EmailNotificationHook"/> and <see cref="WebNotificationHook"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownHookInfo))]
     public abstract partial class NotificationHook
     {
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHook"/>. </summary>
+        /// <param name="hookKind"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="internalExternalLink"> hook external link. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHook(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators, Dictionary<string, BinaryData> rawData)
+        {
+            HookKind = hookKind;
+            Id = id;
+            Name = name;
+            Description = description;
+            InternalExternalLink = internalExternalLink;
+            Administrators = administrators;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHook"/> for deserialization. </summary>
+        internal NotificationHook()
+        {
+        }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network manager security group item. </summary>
     public partial class NetworkManagerSecurityGroupItem
     {
-        /// <summary> Initializes a new instance of NetworkManagerSecurityGroupItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network manager group Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
         public NetworkManagerSecurityGroupItem(ResourceIdentifier networkGroupId)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(networkGroupId, nameof(networkGroupId));
 
             NetworkGroupId = networkGroupId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityGroupItem"/>. </summary>
+        /// <param name="networkGroupId"> Network manager group Id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerSecurityGroupItem(ResourceIdentifier networkGroupId, Dictionary<string, BinaryData> rawData)
+        {
+            NetworkGroupId = networkGroupId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityGroupItem"/> for deserialization. </summary>
+        internal NetworkManagerSecurityGroupItem()
+        {
         }
 
         /// <summary> Network manager group Id. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An arm role receiver. </summary>
     public partial class MonitorArmRoleReceiver
     {
-        /// <summary> Initializes a new instance of MonitorArmRoleReceiver. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorArmRoleReceiver"/>. </summary>
         /// <param name="name"> The name of the arm role receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="roleId"> The arm role id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="roleId"/> is null. </exception>
@@ -26,15 +29,22 @@ namespace Azure.ResourceManager.Monitor.Models
             RoleId = roleId;
         }
 
-        /// <summary> Initializes a new instance of MonitorArmRoleReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorArmRoleReceiver"/>. </summary>
         /// <param name="name"> The name of the arm role receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="roleId"> The arm role id. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal MonitorArmRoleReceiver(string name, string roleId, bool? useCommonAlertSchema)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorArmRoleReceiver(string name, string roleId, bool? useCommonAlertSchema, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             RoleId = roleId;
             UseCommonAlertSchema = useCommonAlertSchema;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorArmRoleReceiver"/> for deserialization. </summary>
+        internal MonitorArmRoleReceiver()
+        {
         }
 
         /// <summary> The name of the arm role receiver. Names must be unique across all receivers within an action group. </summary>

@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of Vpn-Sites. </summary>
     public partial class GetVpnSitesConfigurationContent
     {
-        /// <summary> Initializes a new instance of GetVpnSitesConfigurationContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/>. </summary>
         /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUri"/> is null. </exception>
         public GetVpnSitesConfigurationContent(Uri outputBlobSasUri)
@@ -23,6 +25,22 @@ namespace Azure.ResourceManager.Network.Models
 
             VpnSites = new ChangeTrackingList<string>();
             OutputBlobSasUri = outputBlobSasUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/>. </summary>
+        /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
+        /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetVpnSitesConfigurationContent(IList<string> vpnSites, Uri outputBlobSasUri, Dictionary<string, BinaryData> rawData)
+        {
+            VpnSites = vpnSites;
+            OutputBlobSasUri = outputBlobSasUri;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetVpnSitesConfigurationContent"/> for deserialization. </summary>
+        internal GetVpnSitesConfigurationContent()
+        {
         }
 
         /// <summary> List of resource-ids of the vpn-sites for which config is to be downloaded. </summary>

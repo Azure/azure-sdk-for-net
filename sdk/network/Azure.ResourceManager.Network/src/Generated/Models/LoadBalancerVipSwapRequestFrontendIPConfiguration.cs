@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VIP swap request's frontend IP configuration object. </summary>
     public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration
     {
-        /// <summary> Initializes a new instance of LoadBalancerVipSwapRequestFrontendIPConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
         public LoadBalancerVipSwapRequestFrontendIPConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
+        /// <param name="id"> The ID of frontend IP configuration resource. </param>
+        /// <param name="publicIPAddress"> A reference to public IP address resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerVipSwapRequestFrontendIPConfiguration(string id, WritableSubResource publicIPAddress, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            PublicIPAddress = publicIPAddress;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of frontend IP configuration resource. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,13 +18,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
         public ExpressRoutePortsLocationData()
         {
             AvailableBandwidths = new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="contact"> Contact details of peering locations. </param>
         /// <param name="availableBandwidths"> The inventory of available ExpressRoutePort bandwidths. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port location resource. </param>
-        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             Address = address;
             Contact = contact;

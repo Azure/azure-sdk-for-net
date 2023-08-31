@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Start packet capture parameters. </summary>
     public partial class VpnGatewayPacketCaptureStartContent
     {
-        /// <summary> Initializes a new instance of VpnGatewayPacketCaptureStartContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStartContent"/>. </summary>
         public VpnGatewayPacketCaptureStartContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayPacketCaptureStartContent"/>. </summary>
+        /// <param name="filterData"> Start Packet capture parameters on vpn gateway. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnGatewayPacketCaptureStartContent(string filterData, Dictionary<string, BinaryData> rawData)
+        {
+            FilterData = filterData;
+            _rawData = rawData;
         }
 
         /// <summary> Start Packet capture parameters on vpn gateway. </summary>

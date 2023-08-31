@@ -5,14 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The WholeMetricConfigurationPatch. </summary>
     internal partial class WholeMetricConfigurationPatch
     {
-        /// <summary> Initializes a new instance of WholeMetricConfigurationPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WholeMetricConfigurationPatch"/>. </summary>
         public WholeMetricConfigurationPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WholeMetricConfigurationPatch"/>. </summary>
+        /// <param name="conditionOperator">
+        /// condition operator
+        ///
+        /// should be specified when combining multiple detection conditions
+        /// </param>
+        /// <param name="smartDetectionCondition"></param>
+        /// <param name="hardThresholdCondition"></param>
+        /// <param name="changeThresholdCondition"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WholeMetricConfigurationPatch(DetectionConditionOperator? conditionOperator, SmartDetectionConditionPatch smartDetectionCondition, HardThresholdConditionPatch hardThresholdCondition, ChangeThresholdConditionPatch changeThresholdCondition, Dictionary<string, BinaryData> rawData)
+        {
+            ConditionOperator = conditionOperator;
+            SmartDetectionCondition = smartDetectionCondition;
+            HardThresholdCondition = hardThresholdCondition;
+            ChangeThresholdCondition = changeThresholdCondition;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListFirewallPolicies API service call. </summary>
     internal partial class FirewallPolicyListResult
     {
-        /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyListResult"/>. </summary>
         internal FirewallPolicyListResult()
         {
             Value = new ChangeTrackingList<FirewallPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyListResult"/>. </summary>
         /// <param name="value"> List of Firewall Policies in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal FirewallPolicyListResult(IReadOnlyList<FirewallPolicyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyListResult(IReadOnlyList<FirewallPolicyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Firewall Policies in a resource group. </summary>

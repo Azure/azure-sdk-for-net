@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of received routes for the peering. </summary>
     internal partial class PeeringReceivedRouteListResult
     {
-        /// <summary> Initializes a new instance of PeeringReceivedRouteListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringReceivedRouteListResult"/>. </summary>
         internal PeeringReceivedRouteListResult()
         {
             Value = new ChangeTrackingList<PeeringReceivedRoute>();
         }
 
-        /// <summary> Initializes a new instance of PeeringReceivedRouteListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringReceivedRouteListResult"/>. </summary>
         /// <param name="value"> The list of received routes for the peering. </param>
         /// <param name="nextLink"> The link to fetch the next page of received routes for the peering. </param>
-        internal PeeringReceivedRouteListResult(IReadOnlyList<PeeringReceivedRoute> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringReceivedRouteListResult(IReadOnlyList<PeeringReceivedRoute> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of received routes for the peering. </summary>

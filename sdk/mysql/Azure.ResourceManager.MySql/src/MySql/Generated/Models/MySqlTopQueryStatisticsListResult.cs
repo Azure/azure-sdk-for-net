@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of query statistics. </summary>
     internal partial class MySqlTopQueryStatisticsListResult
     {
-        /// <summary> Initializes a new instance of MySqlTopQueryStatisticsListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsListResult"/>. </summary>
         internal MySqlTopQueryStatisticsListResult()
         {
             Value = new ChangeTrackingList<MySqlQueryStatisticData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlTopQueryStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsListResult"/>. </summary>
         /// <param name="value"> The list of top query statistics. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MySqlTopQueryStatisticsListResult(IReadOnlyList<MySqlQueryStatisticData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlTopQueryStatisticsListResult(IReadOnlyList<MySqlQueryStatisticData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of top query statistics. </summary>

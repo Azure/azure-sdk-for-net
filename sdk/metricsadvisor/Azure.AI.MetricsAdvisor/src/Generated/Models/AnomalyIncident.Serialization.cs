@@ -6,15 +6,66 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class AnomalyIncident
+    public partial class AnomalyIncident : IUtf8JsonSerializable, IModelJsonSerializable<AnomalyIncident>
     {
-        internal static AnomalyIncident DeserializeAnomalyIncident(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnomalyIncident>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnomalyIncident>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("incidentId"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("startTime"u8);
+            writer.WriteStringValue(StartedOn, "O");
+            writer.WritePropertyName("lastTime"u8);
+            writer.WriteStringValue(LastDetectedOn, "O");
+            writer.WritePropertyName("rootNode"u8);
+            if (RootNode is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SeriesIdentity>)RootNode).Serialize(writer, options);
+            }
+            writer.WritePropertyName("property"u8);
+            if (Property is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IncidentProperty>)Property).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnomalyIncident DeserializeAnomalyIncident(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +78,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DateTimeOffset lastTime = default;
             SeriesIdentity rootNode = default;
             IncidentProperty property = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("dataFeedId"u8))
@@ -69,8 +121,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     property = IncidentProperty.DeserializeIncidentProperty(property0.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnomalyIncident(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property);
+            return new AnomalyIncident(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property, rawData);
+        }
+
+        AnomalyIncident IModelJsonSerializable<AnomalyIncident>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyIncident(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnomalyIncident>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnomalyIncident IModelSerializable<AnomalyIncident>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnomalyIncident(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnomalyIncident"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnomalyIncident"/> to convert. </param>
+        public static implicit operator RequestContent(AnomalyIncident model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnomalyIncident"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnomalyIncident(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnomalyIncident(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

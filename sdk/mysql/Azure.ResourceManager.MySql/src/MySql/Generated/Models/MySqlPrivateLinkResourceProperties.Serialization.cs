@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlPrivateLinkResourceProperties
+    public partial class MySqlPrivateLinkResourceProperties : IUtf8JsonSerializable, IModelJsonSerializable<MySqlPrivateLinkResourceProperties>
     {
-        internal static MySqlPrivateLinkResourceProperties DeserializeMySqlPrivateLinkResourceProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlPrivateLinkResourceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlPrivateLinkResourceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MySqlPrivateLinkResourceProperties DeserializeMySqlPrivateLinkResourceProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -42,8 +70,61 @@ namespace Azure.ResourceManager.MySql.Models
                     requiredMembers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers));
+            return new MySqlPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), rawData);
+        }
+
+        MySqlPrivateLinkResourceProperties IModelJsonSerializable<MySqlPrivateLinkResourceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlPrivateLinkResourceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlPrivateLinkResourceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlPrivateLinkResourceProperties IModelSerializable<MySqlPrivateLinkResourceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlPrivateLinkResourceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlPrivateLinkResourceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlPrivateLinkResourceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlPrivateLinkResourceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlPrivateLinkResourceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlPrivateLinkResourceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

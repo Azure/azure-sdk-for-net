@@ -6,16 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class UnknownMultiMetricCriteria : IUtf8JsonSerializable
+    internal partial class UnknownMultiMetricCriteria : IUtf8JsonSerializable, IModelJsonSerializable<MultiMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MultiMetricCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MultiMetricCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("criterionType"u8);
             writer.WriteStringValue(CriterionType.ToString());
@@ -36,7 +40,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricDimension>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,75 +68,29 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownMultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element)
+        internal static MultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element, ModelSerializerOptions options = default) => DeserializeMultiMetricCriteria(element, options);
+
+        MultiMetricCriteria IModelJsonSerializable<MultiMetricCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            CriterionType criterionType = "Unknown";
-            string name = default;
-            string metricName = default;
-            Optional<string> metricNamespace = default;
-            MetricCriteriaTimeAggregationType timeAggregation = default;
-            Optional<IList<MetricDimension>> dimensions = default;
-            Optional<bool> skipMetricValidation = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("criterionType"u8))
-                {
-                    criterionType = new CriterionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricName"u8))
-                {
-                    metricName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("metricNamespace"u8))
-                {
-                    metricNamespace = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timeAggregation"u8))
-                {
-                    timeAggregation = new MetricCriteriaTimeAggregationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dimensions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<MetricDimension> array = new List<MetricDimension>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
-                    }
-                    dimensions = array;
-                    continue;
-                }
-                if (property.NameEquals("skipMetricValidation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    skipMetricValidation = property.Value.GetBoolean();
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownMultiMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, Optional.ToList(dimensions), Optional.ToNullable(skipMetricValidation), additionalProperties);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMultiMetricCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MultiMetricCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MultiMetricCriteria IModelSerializable<MultiMetricCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMultiMetricCriteria(doc.RootElement, options);
         }
     }
 }

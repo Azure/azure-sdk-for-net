@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Input to get wait statistics. </summary>
     public partial class MySqlWaitStatisticsInput
     {
-        /// <summary> Initializes a new instance of MySqlWaitStatisticsInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/>. </summary>
         /// <param name="observationStartOn"> Observation start time. </param>
         /// <param name="observationEndOn"> Observation end time. </param>
         /// <param name="aggregationWindow"> Aggregation interval type in ISO 8601 format. </param>
@@ -25,6 +28,24 @@ namespace Azure.ResourceManager.MySql.Models
             ObservationStartOn = observationStartOn;
             ObservationEndOn = observationEndOn;
             AggregationWindow = aggregationWindow;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/>. </summary>
+        /// <param name="observationStartOn"> Observation start time. </param>
+        /// <param name="observationEndOn"> Observation end time. </param>
+        /// <param name="aggregationWindow"> Aggregation interval type in ISO 8601 format. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlWaitStatisticsInput(DateTimeOffset observationStartOn, DateTimeOffset observationEndOn, string aggregationWindow, Dictionary<string, BinaryData> rawData)
+        {
+            ObservationStartOn = observationStartOn;
+            ObservationEndOn = observationEndOn;
+            AggregationWindow = aggregationWindow;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticsInput"/> for deserialization. </summary>
+        internal MySqlWaitStatisticsInput()
+        {
         }
 
         /// <summary> Observation start time. </summary>

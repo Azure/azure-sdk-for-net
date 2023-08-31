@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application Gateway global configuration. </summary>
     public partial class ApplicationGatewayGlobalConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayGlobalConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayGlobalConfiguration"/>. </summary>
         public ApplicationGatewayGlobalConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayGlobalConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayGlobalConfiguration"/>. </summary>
         /// <param name="enableRequestBuffering"> Enable request buffering. </param>
         /// <param name="enableResponseBuffering"> Enable response buffering. </param>
-        internal ApplicationGatewayGlobalConfiguration(bool? enableRequestBuffering, bool? enableResponseBuffering)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayGlobalConfiguration(bool? enableRequestBuffering, bool? enableResponseBuffering, Dictionary<string, BinaryData> rawData)
         {
             EnableRequestBuffering = enableRequestBuffering;
             EnableResponseBuffering = enableResponseBuffering;
+            _rawData = rawData;
         }
 
         /// <summary> Enable request buffering. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureReachabilityReportLocation : IUtf8JsonSerializable
+    public partial class AzureReachabilityReportLocation : IUtf8JsonSerializable, IModelJsonSerializable<AzureReachabilityReportLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureReachabilityReportLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureReachabilityReportLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureReachabilityReportLocation DeserializeAzureReachabilityReportLocation(JsonElement element)
+        internal static AzureReachabilityReportLocation DeserializeAzureReachabilityReportLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             string country = default;
             Optional<string> state = default;
             Optional<string> city = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("country"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Network.Models
                     city = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureReachabilityReportLocation(country, state.Value, city.Value);
+            return new AzureReachabilityReportLocation(country, state.Value, city.Value, rawData);
+        }
+
+        AzureReachabilityReportLocation IModelJsonSerializable<AzureReachabilityReportLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureReachabilityReportLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureReachabilityReportLocation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureReachabilityReportLocation IModelSerializable<AzureReachabilityReportLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureReachabilityReportLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureReachabilityReportLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureReachabilityReportLocation"/> to convert. </param>
+        public static implicit operator RequestContent(AzureReachabilityReportLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureReachabilityReportLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureReachabilityReportLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureReachabilityReportLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

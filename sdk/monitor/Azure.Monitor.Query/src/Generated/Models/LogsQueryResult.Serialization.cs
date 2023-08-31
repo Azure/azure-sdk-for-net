@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class LogsQueryResult
+    public partial class LogsQueryResult : IUtf8JsonSerializable, IModelJsonSerializable<LogsQueryResult>
     {
-        internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogsQueryResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogsQueryResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("tables"u8);
+            writer.WriteStartArray();
+            foreach (var item in AllTables)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogsTable>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(_statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                _statistics.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_visualization))
+            {
+                writer.WritePropertyName("render"u8);
+                _visualization.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_error))
+            {
+                writer.WritePropertyName("error"u8);
+                _error.WriteTo(writer);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +79,7 @@ namespace Azure.Monitor.Query.Models
             Optional<JsonElement> statistics = default;
             Optional<JsonElement> render = default;
             Optional<JsonElement> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))
@@ -50,8 +107,61 @@ namespace Azure.Monitor.Query.Models
                     error = property.Value.Clone();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogsQueryResult(tables, statistics, render, error);
+            return new LogsQueryResult(tables, statistics, render, error, rawData);
+        }
+
+        LogsQueryResult IModelJsonSerializable<LogsQueryResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogsQueryResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogsQueryResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogsQueryResult IModelSerializable<LogsQueryResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogsQueryResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogsQueryResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogsQueryResult"/> to convert. </param>
+        public static implicit operator RequestContent(LogsQueryResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogsQueryResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogsQueryResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogsQueryResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

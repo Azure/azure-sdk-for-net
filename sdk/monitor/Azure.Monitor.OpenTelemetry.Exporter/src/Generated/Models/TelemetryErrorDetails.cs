@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     /// <summary> The error details. </summary>
     internal partial class TelemetryErrorDetails
     {
-        /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
         internal TelemetryErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TelemetryErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelemetryErrorDetails"/>. </summary>
         /// <param name="index"> The index in the original payload of the item. </param>
         /// <param name="statusCode"> The item specific [HTTP Response status code](#Response Status Codes). </param>
         /// <param name="message"> The error message. </param>
-        internal TelemetryErrorDetails(int? index, int? statusCode, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TelemetryErrorDetails(int? index, int? statusCode, string message, Dictionary<string, BinaryData> rawData)
         {
             Index = index;
             StatusCode = statusCode;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> The index in the original payload of the item. </summary>

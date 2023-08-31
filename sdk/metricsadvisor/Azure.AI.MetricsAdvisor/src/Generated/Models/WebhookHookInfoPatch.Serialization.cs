@@ -5,12 +5,191 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class WebhookHookInfoPatch : IUtf8JsonSerializable
+    internal partial class WebhookHookInfoPatch : IUtf8JsonSerializable, IModelJsonSerializable<WebhookHookInfoPatch>
     {
+        void IModelJsonSerializable<WebhookHookInfoPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebhookHookInfoPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(HookParameter))
+            {
+                writer.WritePropertyName("hookParameter"u8);
+                if (HookParameter is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebhookHookParameterPatch>)HookParameter).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("hookType"u8);
+            writer.WriteStringValue(HookType.ToString());
+            if (Optional.IsDefined(HookName))
+            {
+                writer.WritePropertyName("hookName"u8);
+                writer.WriteStringValue(HookName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ExternalLink))
+            {
+                writer.WritePropertyName("externalLink"u8);
+                writer.WriteStringValue(ExternalLink);
+            }
+            if (Optional.IsCollectionDefined(Admins))
+            {
+                writer.WritePropertyName("admins"u8);
+                writer.WriteStartArray();
+                foreach (var item in Admins)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WebhookHookInfoPatch DeserializeWebhookHookInfoPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<WebhookHookParameterPatch> hookParameter = default;
+            NotificationHookKind hookType = default;
+            Optional<string> hookName = default;
+            Optional<string> description = default;
+            Optional<string> externalLink = default;
+            Optional<IList<string>> admins = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hookParameter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hookParameter = WebhookHookParameterPatch.DeserializeWebhookHookParameterPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("hookType"u8))
+                {
+                    hookType = new NotificationHookKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("hookName"u8))
+                {
+                    hookName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("externalLink"u8))
+                {
+                    externalLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("admins"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    admins = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new WebhookHookInfoPatch(hookType, hookName.Value, description.Value, externalLink.Value, Optional.ToList(admins), hookParameter.Value, rawData);
+        }
+
+        WebhookHookInfoPatch IModelJsonSerializable<WebhookHookInfoPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebhookHookInfoPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebhookHookInfoPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebhookHookInfoPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebhookHookInfoPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebhookHookInfoPatch IModelSerializable<WebhookHookInfoPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebhookHookInfoPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebhookHookInfoPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebhookHookInfoPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebhookHookInfoPatch"/> to convert. </param>
+        public static implicit operator RequestContent(WebhookHookInfoPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebhookHookInfoPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebhookHookInfoPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebhookHookInfoPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

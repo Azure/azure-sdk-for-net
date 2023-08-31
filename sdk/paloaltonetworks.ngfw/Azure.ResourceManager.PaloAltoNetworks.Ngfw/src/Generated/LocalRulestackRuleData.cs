@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of LocalRulestackRuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackRuleData"/>. </summary>
         /// <param name="ruleName"> rule name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public LocalRulestackRuleData(string ruleName)
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Tags = new ChangeTrackingList<RulestackTagInfo>();
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +60,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal LocalRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             RuleName = ruleName;
@@ -80,6 +83,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             DecryptionRuleType = decryptionRuleType;
             Tags = tags;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackRuleData"/> for deserialization. </summary>
+        internal LocalRulestackRuleData()
+        {
         }
 
         /// <summary> etag info. </summary>

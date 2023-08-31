@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.MixedReality.Authentication
 {
     /// <summary> Parameter group. </summary>
     internal partial class MixedRealityTokenRequestOptions
     {
-        /// <summary> Initializes a new instance of MixedRealityTokenRequestOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityTokenRequestOptions"/>. </summary>
         public MixedRealityTokenRequestOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MixedRealityTokenRequestOptions"/>. </summary>
+        /// <param name="clientRequestId"> The client request correlation vector, which should be set to a new value for each request. Useful when debugging with Microsoft. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MixedRealityTokenRequestOptions(string clientRequestId, Dictionary<string, BinaryData> rawData)
+        {
+            ClientRequestId = clientRequestId;
+            _rawData = rawData;
         }
 
         /// <summary> The client request correlation vector, which should be set to a new value for each request. Useful when debugging with Microsoft. </summary>

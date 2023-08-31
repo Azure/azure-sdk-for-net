@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> The PostgreSqlServerPrivateLinkServiceConnectionStateProperty. </summary>
     public partial class PostgreSqlServerPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateLinkServiceConnectionStateProperty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal PostgreSqlServerPrivateLinkServiceConnectionStateProperty(PostgreSqlPrivateLinkServiceConnectionStateStatus status, string description, PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerPrivateLinkServiceConnectionStateProperty(PostgreSqlPrivateLinkServiceConnectionStateStatus status, string description, PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPrivateLinkServiceConnectionStateProperty"/> for deserialization. </summary>
+        internal PostgreSqlServerPrivateLinkServiceConnectionStateProperty()
+        {
         }
 
         /// <summary> The private link service connection status. </summary>

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorLogicAppReceiver : IUtf8JsonSerializable
+    public partial class MonitorLogicAppReceiver : IUtf8JsonSerializable, IModelJsonSerializable<MonitorLogicAppReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorLogicAppReceiver>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorLogicAppReceiver>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -27,11 +34,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorLogicAppReceiver DeserializeMonitorLogicAppReceiver(JsonElement element)
+        internal static MonitorLogicAppReceiver DeserializeMonitorLogicAppReceiver(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier resourceId = default;
             Uri callbackUrl = default;
             Optional<bool> useCommonAlertSchema = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -66,8 +88,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     useCommonAlertSchema = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorLogicAppReceiver(name, resourceId, callbackUrl, Optional.ToNullable(useCommonAlertSchema));
+            return new MonitorLogicAppReceiver(name, resourceId, callbackUrl, Optional.ToNullable(useCommonAlertSchema), rawData);
+        }
+
+        MonitorLogicAppReceiver IModelJsonSerializable<MonitorLogicAppReceiver>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorLogicAppReceiver(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorLogicAppReceiver>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorLogicAppReceiver IModelSerializable<MonitorLogicAppReceiver>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorLogicAppReceiver(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorLogicAppReceiver"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorLogicAppReceiver"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorLogicAppReceiver model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorLogicAppReceiver"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorLogicAppReceiver(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorLogicAppReceiver(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

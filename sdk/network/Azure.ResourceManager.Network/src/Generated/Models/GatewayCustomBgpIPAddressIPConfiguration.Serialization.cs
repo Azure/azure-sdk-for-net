@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayCustomBgpIPAddressIPConfiguration : IUtf8JsonSerializable
+    public partial class GatewayCustomBgpIPAddressIPConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<GatewayCustomBgpIPAddressIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GatewayCustomBgpIPAddressIPConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GatewayCustomBgpIPAddressIPConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ipConfigurationId"u8);
             writer.WriteStringValue(IPConfigurationId);
             writer.WritePropertyName("customBgpIpAddress"u8);
             writer.WriteStringValue(CustomBgpIPAddress);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GatewayCustomBgpIPAddressIPConfiguration DeserializeGatewayCustomBgpIPAddressIPConfiguration(JsonElement element)
+        internal static GatewayCustomBgpIPAddressIPConfiguration DeserializeGatewayCustomBgpIPAddressIPConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ipConfigurationId = default;
             string customBgpIPAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipConfigurationId"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.Network.Models
                     customBgpIPAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIPAddress);
+            return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIPAddress, rawData);
+        }
+
+        GatewayCustomBgpIPAddressIPConfiguration IModelJsonSerializable<GatewayCustomBgpIPAddressIPConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGatewayCustomBgpIPAddressIPConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GatewayCustomBgpIPAddressIPConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GatewayCustomBgpIPAddressIPConfiguration IModelSerializable<GatewayCustomBgpIPAddressIPConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGatewayCustomBgpIPAddressIPConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GatewayCustomBgpIPAddressIPConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GatewayCustomBgpIPAddressIPConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(GatewayCustomBgpIPAddressIPConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GatewayCustomBgpIPAddressIPConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGatewayCustomBgpIPAddressIPConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

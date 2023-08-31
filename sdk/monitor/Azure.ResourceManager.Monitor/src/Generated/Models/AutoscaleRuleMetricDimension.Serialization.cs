@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AutoscaleRuleMetricDimension : IUtf8JsonSerializable
+    public partial class AutoscaleRuleMetricDimension : IUtf8JsonSerializable, IModelJsonSerializable<AutoscaleRuleMetricDimension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoscaleRuleMetricDimension>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoscaleRuleMetricDimension>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("DimensionName"u8);
             writer.WriteStringValue(DimensionName);
@@ -27,11 +34,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutoscaleRuleMetricDimension DeserializeAutoscaleRuleMetricDimension(JsonElement element)
+        internal static AutoscaleRuleMetricDimension DeserializeAutoscaleRuleMetricDimension(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string dimensionName = default;
             ScaleRuleMetricDimensionOperationType @operator = default;
             IList<string> values = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("DimensionName"u8))
@@ -61,8 +83,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutoscaleRuleMetricDimension(dimensionName, @operator, values);
+            return new AutoscaleRuleMetricDimension(dimensionName, @operator, values, rawData);
+        }
+
+        AutoscaleRuleMetricDimension IModelJsonSerializable<AutoscaleRuleMetricDimension>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoscaleRuleMetricDimension(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoscaleRuleMetricDimension>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoscaleRuleMetricDimension IModelSerializable<AutoscaleRuleMetricDimension>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoscaleRuleMetricDimension(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutoscaleRuleMetricDimension"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutoscaleRuleMetricDimension"/> to convert. </param>
+        public static implicit operator RequestContent(AutoscaleRuleMetricDimension model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutoscaleRuleMetricDimension"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutoscaleRuleMetricDimension(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutoscaleRuleMetricDimension(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListServiceEndpointPolicies API service call. </summary>
     internal partial class ServiceEndpointPolicyListResult
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyListResult"/>. </summary>
         internal ServiceEndpointPolicyListResult()
         {
             Value = new ChangeTrackingList<ServiceEndpointPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyListResult"/>. </summary>
         /// <param name="value"> A list of ServiceEndpointPolicy resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ServiceEndpointPolicyListResult(IReadOnlyList<ServiceEndpointPolicyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceEndpointPolicyListResult(IReadOnlyList<ServiceEndpointPolicyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of ServiceEndpointPolicy resources. </summary>

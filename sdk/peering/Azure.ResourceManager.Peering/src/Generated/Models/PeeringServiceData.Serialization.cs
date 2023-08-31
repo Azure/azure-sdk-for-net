@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringServiceData : IUtf8JsonSerializable
+    public partial class PeeringServiceData : IUtf8JsonSerializable, IModelJsonSerializable<PeeringServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeeringServiceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeeringServiceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PeeringServiceSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,14 +75,35 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
-                writer.WriteObjectValue(LogAnalyticsWorkspaceProperties);
+                if (LogAnalyticsWorkspaceProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PeeringLogAnalyticsWorkspaceProperties>)LogAnalyticsWorkspaceProperties).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringServiceData DeserializePeeringServiceData(JsonElement element)
+        internal static PeeringServiceData DeserializePeeringServiceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +121,7 @@ namespace Azure.ResourceManager.Peering
             Optional<string> providerPrimaryPeeringLocation = default;
             Optional<string> providerBackupPeeringLocation = default;
             Optional<PeeringLogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -190,8 +226,61 @@ namespace Azure.ResourceManager.Peering
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeeringServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, peeringServiceLocation.Value, peeringServiceProvider.Value, Optional.ToNullable(provisioningState), providerPrimaryPeeringLocation.Value, providerBackupPeeringLocation.Value, logAnalyticsWorkspaceProperties.Value);
+            return new PeeringServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, peeringServiceLocation.Value, peeringServiceProvider.Value, Optional.ToNullable(provisioningState), providerPrimaryPeeringLocation.Value, providerBackupPeeringLocation.Value, logAnalyticsWorkspaceProperties.Value, rawData);
+        }
+
+        PeeringServiceData IModelJsonSerializable<PeeringServiceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringServiceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeeringServiceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeeringServiceData IModelSerializable<PeeringServiceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeeringServiceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PeeringServiceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PeeringServiceData"/> to convert. </param>
+        public static implicit operator RequestContent(PeeringServiceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PeeringServiceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PeeringServiceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeeringServiceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineReplaceContent : IUtf8JsonSerializable
+    public partial class BareMetalMachineReplaceContent : IUtf8JsonSerializable, IModelJsonSerializable<BareMetalMachineReplaceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BareMetalMachineReplaceContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BareMetalMachineReplaceContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BmcCredentials))
             {
                 writer.WritePropertyName("bmcCredentials"u8);
-                writer.WriteObjectValue(BmcCredentials);
+                if (BmcCredentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AdministrativeCredentials>)BmcCredentials).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BmcMacAddress))
             {
@@ -40,7 +55,121 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static BareMetalMachineReplaceContent DeserializeBareMetalMachineReplaceContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AdministrativeCredentials> bmcCredentials = default;
+            Optional<string> bmcMacAddress = default;
+            Optional<string> bootMacAddress = default;
+            Optional<string> machineName = default;
+            Optional<string> serialNumber = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("bmcCredentials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("bmcMacAddress"u8))
+                {
+                    bmcMacAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("bootMacAddress"u8))
+                {
+                    bootMacAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("machineName"u8))
+                {
+                    machineName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serialNumber"u8))
+                {
+                    serialNumber = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new BareMetalMachineReplaceContent(bmcCredentials.Value, bmcMacAddress.Value, bootMacAddress.Value, machineName.Value, serialNumber.Value, rawData);
+        }
+
+        BareMetalMachineReplaceContent IModelJsonSerializable<BareMetalMachineReplaceContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBareMetalMachineReplaceContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BareMetalMachineReplaceContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BareMetalMachineReplaceContent IModelSerializable<BareMetalMachineReplaceContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBareMetalMachineReplaceContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BareMetalMachineReplaceContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BareMetalMachineReplaceContent"/> to convert. </param>
+        public static implicit operator RequestContent(BareMetalMachineReplaceContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BareMetalMachineReplaceContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BareMetalMachineReplaceContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBareMetalMachineReplaceContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

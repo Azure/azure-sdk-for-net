@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkVirtualApplianceSkus API service call. </summary>
     internal partial class NetworkVirtualApplianceSkuListResult
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuListResult"/>. </summary>
         internal NetworkVirtualApplianceSkuListResult()
         {
             Value = new ChangeTrackingList<NetworkVirtualApplianceSkuData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuListResult"/>. </summary>
         /// <param name="value"> List of Network Virtual Appliance Skus that are available. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal NetworkVirtualApplianceSkuListResult(IReadOnlyList<NetworkVirtualApplianceSkuData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkVirtualApplianceSkuListResult(IReadOnlyList<NetworkVirtualApplianceSkuData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Network Virtual Appliance Skus that are available. </summary>

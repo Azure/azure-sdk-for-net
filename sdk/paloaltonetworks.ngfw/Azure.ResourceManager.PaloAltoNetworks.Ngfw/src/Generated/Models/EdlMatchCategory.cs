@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> URL/EDL to match. </summary>
     public partial class EdlMatchCategory
     {
-        /// <summary> Initializes a new instance of EdlMatchCategory. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdlMatchCategory"/>. </summary>
         /// <param name="urlCustom"> custom URL. </param>
         /// <param name="feeds"> feed list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="urlCustom"/> or <paramref name="feeds"/> is null. </exception>
@@ -28,13 +30,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Feeds = feeds.ToList();
         }
 
-        /// <summary> Initializes a new instance of EdlMatchCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdlMatchCategory"/>. </summary>
         /// <param name="urlCustom"> custom URL. </param>
         /// <param name="feeds"> feed list. </param>
-        internal EdlMatchCategory(IList<string> urlCustom, IList<string> feeds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdlMatchCategory(IList<string> urlCustom, IList<string> feeds, Dictionary<string, BinaryData> rawData)
         {
             UrlCustom = urlCustom;
             Feeds = feeds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdlMatchCategory"/> for deserialization. </summary>
+        internal EdlMatchCategory()
+        {
         }
 
         /// <summary> custom URL. </summary>

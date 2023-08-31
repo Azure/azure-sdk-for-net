@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Information about filtered content severity level and if it has been filtered or not. </summary>
     public partial class ContentFilterResult
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ContentFilterResult. </summary>
         /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
@@ -17,6 +22,22 @@ namespace Azure.AI.OpenAI
         {
             Severity = severity;
             Filtered = filtered;
+        }
+
+        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentFilterResult(ContentFilterSeverity severity, bool filtered, Dictionary<string, BinaryData> rawData)
+        {
+            Severity = severity;
+            Filtered = filtered;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/> for deserialization. </summary>
+        internal ContentFilterResult()
+        {
         }
 
         /// <summary> Ratings for the intensity and risk level of filtered content. </summary>

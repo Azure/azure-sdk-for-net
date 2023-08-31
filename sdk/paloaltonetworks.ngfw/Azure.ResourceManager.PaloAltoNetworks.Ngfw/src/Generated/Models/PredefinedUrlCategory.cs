@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Predefined URL category object. </summary>
     public partial class PredefinedUrlCategory
     {
-        /// <summary> Initializes a new instance of PredefinedUrlCategory. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="name"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
             Action = action;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
+        /// <param name="action"></param>
+        /// <param name="name"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredefinedUrlCategory(string action, string name, Dictionary<string, BinaryData> rawData)
+        {
+            Action = action;
+            Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/> for deserialization. </summary>
+        internal PredefinedUrlCategory()
+        {
         }
 
         /// <summary> Gets the action. </summary>

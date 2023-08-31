@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The RulestackAppIdListResult. </summary>
     internal partial class RulestackAppIdListResult
     {
-        /// <summary> Initializes a new instance of RulestackAppIdListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/>. </summary>
         /// <param name="value"> List of AppIds. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackAppIdListResult(IEnumerable<string> value)
@@ -25,13 +27,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackAppIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/>. </summary>
         /// <param name="value"> List of AppIds. </param>
         /// <param name="nextLink"> next Link. </param>
-        internal RulestackAppIdListResult(IReadOnlyList<string> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackAppIdListResult(IReadOnlyList<string> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackAppIdListResult"/> for deserialization. </summary>
+        internal RulestackAppIdListResult()
+        {
         }
 
         /// <summary> List of AppIds. </summary>

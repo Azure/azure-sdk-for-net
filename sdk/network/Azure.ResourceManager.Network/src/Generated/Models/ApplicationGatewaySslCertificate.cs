@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,12 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SSL certificates of an application gateway. </summary>
     public partial class ApplicationGatewaySslCertificate : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCertificate"/>. </summary>
         public ApplicationGatewaySslCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string password, BinaryData publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string password, BinaryData publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Data = data;

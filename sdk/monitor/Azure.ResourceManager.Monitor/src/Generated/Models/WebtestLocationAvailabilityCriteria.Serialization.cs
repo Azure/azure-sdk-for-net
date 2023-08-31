@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable
+    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable, IModelJsonSerializable<WebtestLocationAvailabilityCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebtestLocationAvailabilityCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebtestLocationAvailabilityCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WebtestLocationAvailabilityCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("webTestId"u8);
             writer.WriteStringValue(WebTestId);
@@ -37,8 +43,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element)
+        internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +83,54 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new WebtestLocationAvailabilityCriteria(odataType, additionalProperties, webTestId, componentId, failedLocationCount);
+        }
+
+        WebtestLocationAvailabilityCriteria IModelJsonSerializable<WebtestLocationAvailabilityCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebtestLocationAvailabilityCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebtestLocationAvailabilityCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebtestLocationAvailabilityCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebtestLocationAvailabilityCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebtestLocationAvailabilityCriteria IModelSerializable<WebtestLocationAvailabilityCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WebtestLocationAvailabilityCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebtestLocationAvailabilityCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebtestLocationAvailabilityCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebtestLocationAvailabilityCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(WebtestLocationAvailabilityCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebtestLocationAvailabilityCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebtestLocationAvailabilityCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebtestLocationAvailabilityCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

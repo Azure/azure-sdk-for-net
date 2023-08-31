@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KeySetUserStatus
+    public partial class KeySetUserStatus : IUtf8JsonSerializable, IModelJsonSerializable<KeySetUserStatus>
     {
-        internal static KeySetUserStatus DeserializeKeySetUserStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KeySetUserStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KeySetUserStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KeySetUserStatus DeserializeKeySetUserStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> azureUserName = default;
             Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
             Optional<string> statusMessage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureUserName"u8))
@@ -42,8 +71,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     statusMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value);
+            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value, rawData);
+        }
+
+        KeySetUserStatus IModelJsonSerializable<KeySetUserStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeySetUserStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KeySetUserStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KeySetUserStatus IModelSerializable<KeySetUserStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKeySetUserStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KeySetUserStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeySetUserStatus"/> to convert. </param>
+        public static implicit operator RequestContent(KeySetUserStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeySetUserStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeySetUserStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKeySetUserStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

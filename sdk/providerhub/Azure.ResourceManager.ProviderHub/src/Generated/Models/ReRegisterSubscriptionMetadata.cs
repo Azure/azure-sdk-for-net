@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ReRegisterSubscriptionMetadata. </summary>
     public partial class ReRegisterSubscriptionMetadata
     {
-        /// <summary> Initializes a new instance of ReRegisterSubscriptionMetadata. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReRegisterSubscriptionMetadata"/>. </summary>
         /// <param name="isEnabled"></param>
         internal ReRegisterSubscriptionMetadata(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of ReRegisterSubscriptionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReRegisterSubscriptionMetadata"/>. </summary>
         /// <param name="isEnabled"></param>
         /// <param name="concurrencyLimit"></param>
-        internal ReRegisterSubscriptionMetadata(bool isEnabled, int? concurrencyLimit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReRegisterSubscriptionMetadata(bool isEnabled, int? concurrencyLimit, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             ConcurrencyLimit = concurrencyLimit;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReRegisterSubscriptionMetadata"/> for deserialization. </summary>
+        internal ReRegisterSubscriptionMetadata()
+        {
         }
 
         /// <summary> Gets the is enabled. </summary>

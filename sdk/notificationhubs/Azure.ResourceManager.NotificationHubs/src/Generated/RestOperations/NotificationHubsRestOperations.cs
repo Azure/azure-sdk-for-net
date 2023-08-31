@@ -55,9 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -143,9 +141,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -237,9 +233,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             _userAgent.Apply(message);
             return message;
         }
@@ -590,9 +584,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1119,9 +1111,7 @@ namespace Azure.ResourceManager.NotificationHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(notificationHubPolicyKey);
-            request.Content = content;
+            request.Content = notificationHubPolicyKey;
             _userAgent.Apply(message);
             return message;
         }

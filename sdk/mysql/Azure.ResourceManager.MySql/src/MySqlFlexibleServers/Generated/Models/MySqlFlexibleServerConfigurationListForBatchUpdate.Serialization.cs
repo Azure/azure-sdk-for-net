@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerConfigurationListForBatchUpdate : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerConfigurationListForBatchUpdate : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerConfigurationListForBatchUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerConfigurationListForBatchUpdate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerConfigurationListForBatchUpdate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
@@ -21,7 +29,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MySqlFlexibleServerConfigurationForBatchUpdate>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -30,7 +45,112 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("resetAllToDefault"u8);
                 writer.WriteStringValue(ResetAllToDefault.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MySqlFlexibleServerConfigurationListForBatchUpdate DeserializeMySqlFlexibleServerConfigurationListForBatchUpdate(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<MySqlFlexibleServerConfigurationForBatchUpdate>> value = default;
+            Optional<MySqlFlexibleServerConfigurationResetAllToDefault> resetAllToDefault = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MySqlFlexibleServerConfigurationForBatchUpdate> array = new List<MySqlFlexibleServerConfigurationForBatchUpdate>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MySqlFlexibleServerConfigurationForBatchUpdate.DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(item));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("resetAllToDefault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resetAllToDefault = new MySqlFlexibleServerConfigurationResetAllToDefault(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MySqlFlexibleServerConfigurationListForBatchUpdate(Optional.ToList(value), Optional.ToNullable(resetAllToDefault), rawData);
+        }
+
+        MySqlFlexibleServerConfigurationListForBatchUpdate IModelJsonSerializable<MySqlFlexibleServerConfigurationListForBatchUpdate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerConfigurationListForBatchUpdate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerConfigurationListForBatchUpdate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerConfigurationListForBatchUpdate IModelSerializable<MySqlFlexibleServerConfigurationListForBatchUpdate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerConfigurationListForBatchUpdate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlFlexibleServerConfigurationListForBatchUpdate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlFlexibleServerConfigurationListForBatchUpdate"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlFlexibleServerConfigurationListForBatchUpdate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlFlexibleServerConfigurationListForBatchUpdate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlFlexibleServerConfigurationListForBatchUpdate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerConfigurationListForBatchUpdate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

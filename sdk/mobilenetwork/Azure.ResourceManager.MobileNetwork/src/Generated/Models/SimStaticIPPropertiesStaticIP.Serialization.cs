@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    internal partial class SimStaticIPPropertiesStaticIP : IUtf8JsonSerializable
+    internal partial class SimStaticIPPropertiesStaticIP : IUtf8JsonSerializable, IModelJsonSerializable<SimStaticIPPropertiesStaticIP>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SimStaticIPPropertiesStaticIP>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SimStaticIPPropertiesStaticIP>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SimStaticIPPropertiesStaticIP DeserializeSimStaticIPPropertiesStaticIP(JsonElement element)
+        internal static SimStaticIPPropertiesStaticIP DeserializeSimStaticIPPropertiesStaticIP(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ipv4Address = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     ipv4Address = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SimStaticIPPropertiesStaticIP(ipv4Address.Value);
+            return new SimStaticIPPropertiesStaticIP(ipv4Address.Value, rawData);
+        }
+
+        SimStaticIPPropertiesStaticIP IModelJsonSerializable<SimStaticIPPropertiesStaticIP>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimStaticIPPropertiesStaticIP(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SimStaticIPPropertiesStaticIP>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SimStaticIPPropertiesStaticIP IModelSerializable<SimStaticIPPropertiesStaticIP>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSimStaticIPPropertiesStaticIP(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SimStaticIPPropertiesStaticIP"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SimStaticIPPropertiesStaticIP"/> to convert. </param>
+        public static implicit operator RequestContent(SimStaticIPPropertiesStaticIP model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SimStaticIPPropertiesStaticIP"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SimStaticIPPropertiesStaticIP(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSimStaticIPPropertiesStaticIP(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

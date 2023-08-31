@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the source of connection monitor. </summary>
     public partial class ConnectionMonitorSource
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSource"/>. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ConnectionMonitorSource(ResourceIdentifier resourceId)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.Network.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSource"/>. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
         /// <param name="port"> The source port used by connection monitor. </param>
-        internal ConnectionMonitorSource(ResourceIdentifier resourceId, int? port)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorSource(ResourceIdentifier resourceId, int? port, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             Port = port;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSource"/> for deserialization. </summary>
+        internal ConnectionMonitorSource()
+        {
         }
 
         /// <summary> The ID of the resource used as the source by connection monitor. </summary>

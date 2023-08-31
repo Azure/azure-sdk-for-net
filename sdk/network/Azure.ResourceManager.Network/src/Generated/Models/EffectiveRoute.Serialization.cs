@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveRoute
+    public partial class EffectiveRoute : IUtf8JsonSerializable, IModelJsonSerializable<EffectiveRoute>
     {
-        internal static EffectiveRoute DeserializeEffectiveRoute(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EffectiveRoute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EffectiveRoute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DisableBgpRoutePropagation))
+            {
+                writer.WritePropertyName("disableBgpRoutePropagation"u8);
+                writer.WriteBooleanValue(DisableBgpRoutePropagation.Value);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source.Value.ToString());
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(AddressPrefix))
+            {
+                writer.WritePropertyName("addressPrefix"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressPrefix)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NextHopIPAddress))
+            {
+                writer.WritePropertyName("nextHopIpAddress"u8);
+                writer.WriteStartArray();
+                foreach (var item in NextHopIPAddress)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextHopType))
+            {
+                writer.WritePropertyName("nextHopType"u8);
+                writer.WriteStringValue(NextHopType.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EffectiveRoute DeserializeEffectiveRoute(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> addressPrefix = default;
             Optional<IReadOnlyList<string>> nextHopIPAddress = default;
             Optional<RouteNextHopType> nextHopType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,8 +170,61 @@ namespace Azure.ResourceManager.Network.Models
                     nextHopType = new RouteNextHopType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType));
+            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType), rawData);
+        }
+
+        EffectiveRoute IModelJsonSerializable<EffectiveRoute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveRoute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EffectiveRoute>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EffectiveRoute IModelSerializable<EffectiveRoute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEffectiveRoute(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EffectiveRoute"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EffectiveRoute"/> to convert. </param>
+        public static implicit operator RequestContent(EffectiveRoute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EffectiveRoute"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EffectiveRoute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEffectiveRoute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

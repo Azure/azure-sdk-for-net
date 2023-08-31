@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list linked storage accounts service operation response. </summary>
     internal partial class LinkedStorageAccountsListResult
     {
-        /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedStorageAccountsListResult"/>. </summary>
         internal LinkedStorageAccountsListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsLinkedStorageAccountsData>();
         }
 
-        /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedStorageAccountsListResult"/>. </summary>
         /// <param name="value"> A list of linked storage accounts instances. </param>
-        internal LinkedStorageAccountsListResult(IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedStorageAccountsListResult(IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A list of linked storage accounts instances. </summary>

@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundNatRulePortMapping
+    public partial class InboundNatRulePortMapping : IUtf8JsonSerializable, IModelJsonSerializable<InboundNatRulePortMapping>
     {
-        internal static InboundNatRulePortMapping DeserializeInboundNatRulePortMapping(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InboundNatRulePortMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InboundNatRulePortMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InboundNatRulePortMapping DeserializeInboundNatRulePortMapping(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<LoadBalancingTransportProtocol> protocol = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRuleName"u8))
@@ -56,8 +85,61 @@ namespace Azure.ResourceManager.Network.Models
                     backendPort = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort));
+            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), rawData);
+        }
+
+        InboundNatRulePortMapping IModelJsonSerializable<InboundNatRulePortMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInboundNatRulePortMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InboundNatRulePortMapping>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InboundNatRulePortMapping IModelSerializable<InboundNatRulePortMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInboundNatRulePortMapping(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InboundNatRulePortMapping"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InboundNatRulePortMapping"/> to convert. </param>
+        public static implicit operator RequestContent(InboundNatRulePortMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InboundNatRulePortMapping"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InboundNatRulePortMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInboundNatRulePortMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> TrunkedNetworkAttachmentConfiguration represents the configuration of the attachment of a trunked network. </summary>
     public partial class TrunkedNetworkAttachmentConfiguration
     {
-        /// <summary> Initializes a new instance of TrunkedNetworkAttachmentConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrunkedNetworkAttachmentConfiguration"/>. </summary>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         public TrunkedNetworkAttachmentConfiguration(ResourceIdentifier networkId)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             NetworkId = networkId;
         }
 
-        /// <summary> Initializes a new instance of TrunkedNetworkAttachmentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrunkedNetworkAttachmentConfiguration"/>. </summary>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <param name="pluginType"> The indicator of how this network will be utilized by the Kubernetes cluster. </param>
-        internal TrunkedNetworkAttachmentConfiguration(ResourceIdentifier networkId, KubernetesPluginType? pluginType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrunkedNetworkAttachmentConfiguration(ResourceIdentifier networkId, KubernetesPluginType? pluginType, Dictionary<string, BinaryData> rawData)
         {
             NetworkId = networkId;
             PluginType = pluginType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrunkedNetworkAttachmentConfiguration"/> for deserialization. </summary>
+        internal TrunkedNetworkAttachmentConfiguration()
+        {
         }
 
         /// <summary> The resource ID of the network that is being configured for attachment. </summary>

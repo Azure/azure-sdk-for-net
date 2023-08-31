@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnServerConfigurationPolicyGroupData : IUtf8JsonSerializable
+    public partial class VpnServerConfigurationPolicyGroupData : IUtf8JsonSerializable, IModelJsonSerializable<VpnServerConfigurationPolicyGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnServerConfigurationPolicyGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnServerConfigurationPolicyGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VpnServerConfigurationPolicyGroupData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -47,16 +53,37 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PolicyMembers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VpnServerConfigurationPolicyGroupMember>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnServerConfigurationPolicyGroupData DeserializeVpnServerConfigurationPolicyGroupData(JsonElement element)
+        internal static VpnServerConfigurationPolicyGroupData DeserializeVpnServerConfigurationPolicyGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +97,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<VpnServerConfigurationPolicyGroupMember>> policyMembers = default;
             Optional<IReadOnlyList<WritableSubResource>> p2sConnectionConfigurations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -171,8 +199,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VpnServerConfigurationPolicyGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(isDefault), Optional.ToNullable(priority), Optional.ToList(policyMembers), Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState));
+            return new VpnServerConfigurationPolicyGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(isDefault), Optional.ToNullable(priority), Optional.ToList(policyMembers), Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        VpnServerConfigurationPolicyGroupData IModelJsonSerializable<VpnServerConfigurationPolicyGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VpnServerConfigurationPolicyGroupData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnServerConfigurationPolicyGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnServerConfigurationPolicyGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VpnServerConfigurationPolicyGroupData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnServerConfigurationPolicyGroupData IModelSerializable<VpnServerConfigurationPolicyGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VpnServerConfigurationPolicyGroupData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnServerConfigurationPolicyGroupData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VpnServerConfigurationPolicyGroupData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VpnServerConfigurationPolicyGroupData"/> to convert. </param>
+        public static implicit operator RequestContent(VpnServerConfigurationPolicyGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VpnServerConfigurationPolicyGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnServerConfigurationPolicyGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

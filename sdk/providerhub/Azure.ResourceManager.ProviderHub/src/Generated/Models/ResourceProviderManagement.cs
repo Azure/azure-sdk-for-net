@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderManagement. </summary>
     public partial class ResourceProviderManagement
     {
-        /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
         public ResourceProviderManagement()
         {
             SchemaOwners = new ChangeTrackingList<string>();
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceAccessRoles = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderManagement"/>. </summary>
         /// <param name="schemaOwners"></param>
         /// <param name="manifestOwners"></param>
         /// <param name="incidentRoutingService"></param>
@@ -32,7 +34,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="serviceTreeInfos"></param>
         /// <param name="resourceAccessPolicy"></param>
         /// <param name="resourceAccessRoles"></param>
-        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderManagement(IList<string> schemaOwners, IList<string> manifestOwners, string incidentRoutingService, string incidentRoutingTeam, string incidentContactEmail, IList<ServiceTreeInfo> serviceTreeInfos, ResourceAccessPolicy? resourceAccessPolicy, IList<BinaryData> resourceAccessRoles, Dictionary<string, BinaryData> rawData)
         {
             SchemaOwners = schemaOwners;
             ManifestOwners = manifestOwners;
@@ -42,6 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ServiceTreeInfos = serviceTreeInfos;
             ResourceAccessPolicy = resourceAccessPolicy;
             ResourceAccessRoles = resourceAccessRoles;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the schema owners. </summary>

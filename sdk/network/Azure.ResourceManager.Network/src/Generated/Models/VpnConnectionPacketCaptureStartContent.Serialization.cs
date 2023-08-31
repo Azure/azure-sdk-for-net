@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnConnectionPacketCaptureStartContent : IUtf8JsonSerializable
+    public partial class VpnConnectionPacketCaptureStartContent : IUtf8JsonSerializable, IModelJsonSerializable<VpnConnectionPacketCaptureStartContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnConnectionPacketCaptureStartContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnConnectionPacketCaptureStartContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FilterData))
             {
@@ -30,7 +38,108 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VpnConnectionPacketCaptureStartContent DeserializeVpnConnectionPacketCaptureStartContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> filterData = default;
+            Optional<IList<string>> linkConnectionNames = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filterData"u8))
+                {
+                    filterData = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("linkConnectionNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    linkConnectionNames = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VpnConnectionPacketCaptureStartContent(filterData.Value, Optional.ToList(linkConnectionNames), rawData);
+        }
+
+        VpnConnectionPacketCaptureStartContent IModelJsonSerializable<VpnConnectionPacketCaptureStartContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnConnectionPacketCaptureStartContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnConnectionPacketCaptureStartContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnConnectionPacketCaptureStartContent IModelSerializable<VpnConnectionPacketCaptureStartContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnConnectionPacketCaptureStartContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VpnConnectionPacketCaptureStartContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VpnConnectionPacketCaptureStartContent"/> to convert. </param>
+        public static implicit operator RequestContent(VpnConnectionPacketCaptureStartContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VpnConnectionPacketCaptureStartContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VpnConnectionPacketCaptureStartContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnConnectionPacketCaptureStartContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

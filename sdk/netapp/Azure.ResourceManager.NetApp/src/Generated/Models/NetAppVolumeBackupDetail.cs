@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Volume details using the backup policy. </summary>
     public partial class NetAppVolumeBackupDetail
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBackupDetail. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
         internal NetAppVolumeBackupDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeBackupDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="backupsCount"> Total count of backups for volume. </param>
         /// <param name="isPolicyEnabled"> Policy enabled. </param>
-        internal NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled, Dictionary<string, BinaryData> rawData)
         {
             VolumeName = volumeName;
             BackupsCount = backupsCount;
             IsPolicyEnabled = isPolicyEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Volume name. </summary>

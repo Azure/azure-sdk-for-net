@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Routing rule of an application gateway. </summary>
     public partial class ApplicationGatewayRoutingRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRoutingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRoutingRule"/>. </summary>
         public ApplicationGatewayRoutingRule()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRoutingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRoutingRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendSettings"> Backend settings resource of the application gateway. </param>
         /// <param name="listener"> Listener resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendSettings, WritableSubResource listener, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendSettings, WritableSubResource listener, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             RuleType = ruleType;

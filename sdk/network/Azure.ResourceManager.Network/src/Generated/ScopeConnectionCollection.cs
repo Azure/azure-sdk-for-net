@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeConnectionResource(Client, ScopeConnectionData.DeserializeScopeConnectionData(e)), _scopeConnectionClientDiagnostics, Pipeline, "ScopeConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScopeConnectionResource(Client, ScopeConnectionData.DeserializeScopeConnectionData(e)), _scopeConnectionClientDiagnostics, Pipeline, "ScopeConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeConnectionResource(Client, ScopeConnectionData.DeserializeScopeConnectionData(e)), _scopeConnectionClientDiagnostics, Pipeline, "ScopeConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScopeConnectionResource(Client, ScopeConnectionData.DeserializeScopeConnectionData(e)), _scopeConnectionClientDiagnostics, Pipeline, "ScopeConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

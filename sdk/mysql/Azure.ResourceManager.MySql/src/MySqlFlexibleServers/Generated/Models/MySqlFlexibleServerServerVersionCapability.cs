@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Server version capabilities. </summary>
     public partial class MySqlFlexibleServerServerVersionCapability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerServerVersionCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerServerVersionCapability"/>. </summary>
         internal MySqlFlexibleServerServerVersionCapability()
         {
             SupportedSkus = new ChangeTrackingList<MySqlFlexibleServerSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerServerVersionCapability"/>. </summary>
         /// <param name="name"> server version. </param>
         /// <param name="supportedSkus"> A list of supported Skus. </param>
-        internal MySqlFlexibleServerServerVersionCapability(string name, IReadOnlyList<MySqlFlexibleServerSkuCapability> supportedSkus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerServerVersionCapability(string name, IReadOnlyList<MySqlFlexibleServerSkuCapability> supportedSkus, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             SupportedSkus = supportedSkus;
+            _rawData = rawData;
         }
 
         /// <summary> server version. </summary>

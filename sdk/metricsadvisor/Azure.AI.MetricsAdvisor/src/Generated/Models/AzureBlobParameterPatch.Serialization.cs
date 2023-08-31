@@ -5,12 +5,136 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureBlobParameterPatch : IUtf8JsonSerializable
+    internal partial class AzureBlobParameterPatch : IUtf8JsonSerializable, IModelJsonSerializable<AzureBlobParameterPatch>
     {
+        void IModelJsonSerializable<AzureBlobParameterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
+            if (Optional.IsDefined(Container))
+            {
+                writer.WritePropertyName("container"u8);
+                writer.WriteStringValue(Container);
+            }
+            if (Optional.IsDefined(BlobTemplate))
+            {
+                writer.WritePropertyName("blobTemplate"u8);
+                writer.WriteStringValue(BlobTemplate);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AzureBlobParameterPatch DeserializeAzureBlobParameterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> connectionString = default;
+            Optional<string> container = default;
+            Optional<string> blobTemplate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("connectionString"u8))
+                {
+                    connectionString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("container"u8))
+                {
+                    container = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("blobTemplate"u8))
+                {
+                    blobTemplate = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AzureBlobParameterPatch(connectionString.Value, container.Value, blobTemplate.Value, rawData);
+        }
+
+        AzureBlobParameterPatch IModelJsonSerializable<AzureBlobParameterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlobParameterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureBlobParameterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureBlobParameterPatch IModelSerializable<AzureBlobParameterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureBlobParameterPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureBlobParameterPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureBlobParameterPatch"/> to convert. </param>
+        public static implicit operator RequestContent(AzureBlobParameterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureBlobParameterPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureBlobParameterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureBlobParameterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupData"/>. </summary>
         public NetAppVolumeGroupData()
         {
             Volumes = new ChangeTrackingList<NetAppVolumeGroupVolume>();
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +36,14 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="volumes"> List of volumes from group. </param>
-        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupVolume> volumes) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<NetAppVolumeGroupVolume> volumes, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
             GroupMetaData = groupMetaData;
             Volumes = volumes;
+            _rawData = rawData;
         }
 
         /// <summary> Resource location. </summary>

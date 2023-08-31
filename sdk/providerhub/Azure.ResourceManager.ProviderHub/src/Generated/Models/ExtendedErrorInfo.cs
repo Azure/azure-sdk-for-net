@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ExtendedErrorInfo. </summary>
     public partial class ExtendedErrorInfo
     {
-        /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedErrorInfo"/>. </summary>
         public ExtendedErrorInfo()
         {
             Details = new ChangeTrackingList<ExtendedErrorInfo>();
             AdditionalInfo = new ChangeTrackingList<TypedErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedErrorInfo"/>. </summary>
         /// <param name="code"></param>
         /// <param name="target"></param>
         /// <param name="message"></param>
         /// <param name="details"></param>
         /// <param name="additionalInfo"></param>
-        internal ExtendedErrorInfo(string code, string target, string message, IList<ExtendedErrorInfo> details, IList<TypedErrorInfo> additionalInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedErrorInfo(string code, string target, string message, IList<ExtendedErrorInfo> details, IList<TypedErrorInfo> additionalInfo, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Target = target;
             Message = message;
             Details = details;
             AdditionalInfo = additionalInfo;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the code. </summary>

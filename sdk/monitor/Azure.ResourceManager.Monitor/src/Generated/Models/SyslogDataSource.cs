@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class SyslogDataSource
     {
-        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyslogDataSource"/>. </summary>
         public SyslogDataSource()
         {
             Streams = new ChangeTrackingList<SyslogDataSourceStream>();
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             LogLevels = new ChangeTrackingList<SyslogDataSourceLogLevel>();
         }
 
-        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyslogDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
@@ -35,12 +38,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name, Dictionary<string, BinaryData> rawData)
         {
             Streams = streams;
             FacilityNames = facilityNames;
             LogLevels = logLevels;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary>

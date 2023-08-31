@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBreakFileLocksContent : IUtf8JsonSerializable
+    public partial class NetAppVolumeBreakFileLocksContent : IUtf8JsonSerializable, IModelJsonSerializable<NetAppVolumeBreakFileLocksContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppVolumeBreakFileLocksContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppVolumeBreakFileLocksContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientIP))
             {
@@ -25,7 +34,107 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("confirmRunningDisruptiveOperation"u8);
                 writer.WriteBooleanValue(ConfirmRunningDisruptiveOperation.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NetAppVolumeBreakFileLocksContent DeserializeNetAppVolumeBreakFileLocksContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IPAddress> clientIP = default;
+            Optional<bool> confirmRunningDisruptiveOperation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("clientIp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientIP = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("confirmRunningDisruptiveOperation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confirmRunningDisruptiveOperation = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NetAppVolumeBreakFileLocksContent(clientIP.Value, Optional.ToNullable(confirmRunningDisruptiveOperation), rawData);
+        }
+
+        NetAppVolumeBreakFileLocksContent IModelJsonSerializable<NetAppVolumeBreakFileLocksContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeBreakFileLocksContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppVolumeBreakFileLocksContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppVolumeBreakFileLocksContent IModelSerializable<NetAppVolumeBreakFileLocksContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumeBreakFileLocksContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetAppVolumeBreakFileLocksContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetAppVolumeBreakFileLocksContent"/> to convert. </param>
+        public static implicit operator RequestContent(NetAppVolumeBreakFileLocksContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetAppVolumeBreakFileLocksContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetAppVolumeBreakFileLocksContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppVolumeBreakFileLocksContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

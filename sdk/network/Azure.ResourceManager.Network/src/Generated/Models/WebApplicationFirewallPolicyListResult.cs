@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next set of results. </summary>
     internal partial class WebApplicationFirewallPolicyListResult
     {
-        /// <summary> Initializes a new instance of WebApplicationFirewallPolicyListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyListResult"/>. </summary>
         internal WebApplicationFirewallPolicyListResult()
         {
             Value = new ChangeTrackingList<WebApplicationFirewallPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyListResult"/>. </summary>
         /// <param name="value"> List of WebApplicationFirewallPolicies within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </param>
-        internal WebApplicationFirewallPolicyListResult(IReadOnlyList<WebApplicationFirewallPolicyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationFirewallPolicyListResult(IReadOnlyList<WebApplicationFirewallPolicyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of WebApplicationFirewallPolicies within a resource group. </summary>

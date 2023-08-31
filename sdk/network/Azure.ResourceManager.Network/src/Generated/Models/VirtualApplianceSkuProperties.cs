@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Virtual Appliance Sku Properties. </summary>
     public partial class VirtualApplianceSkuProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceSkuProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSkuProperties"/>. </summary>
         public VirtualApplianceSkuProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSkuProperties"/>. </summary>
         /// <param name="vendor"> Virtual Appliance Vendor. </param>
         /// <param name="bundledScaleUnit"> Virtual Appliance Scale Unit. </param>
         /// <param name="marketPlaceVersion"> Virtual Appliance Version. </param>
-        internal VirtualApplianceSkuProperties(string vendor, string bundledScaleUnit, string marketPlaceVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceSkuProperties(string vendor, string bundledScaleUnit, string marketPlaceVersion, Dictionary<string, BinaryData> rawData)
         {
             Vendor = vendor;
             BundledScaleUnit = bundledScaleUnit;
             MarketPlaceVersion = marketPlaceVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Virtual Appliance Vendor. </summary>

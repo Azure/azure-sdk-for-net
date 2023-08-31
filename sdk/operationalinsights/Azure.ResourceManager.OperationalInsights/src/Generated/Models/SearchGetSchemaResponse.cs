@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The get schema operation response. </summary>
     internal partial class SearchGetSchemaResponse
     {
-        /// <summary> Initializes a new instance of SearchGetSchemaResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchGetSchemaResponse"/>. </summary>
         internal SearchGetSchemaResponse()
         {
             Value = new ChangeTrackingList<OperationalInsightsSearchSchemaValue>();
         }
 
-        /// <summary> Initializes a new instance of SearchGetSchemaResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchGetSchemaResponse"/>. </summary>
         /// <param name="metadata"> The metadata from search results. </param>
         /// <param name="value"> The array of result values. </param>
-        internal SearchGetSchemaResponse(SearchMetadata metadata, IReadOnlyList<OperationalInsightsSearchSchemaValue> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchGetSchemaResponse(SearchMetadata metadata, IReadOnlyList<OperationalInsightsSearchSchemaValue> value, Dictionary<string, BinaryData> rawData)
         {
             Metadata = metadata;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The metadata from search results. </summary>

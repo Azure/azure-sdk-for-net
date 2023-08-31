@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryExceptionDetails : IUtf8JsonSerializable
+    internal partial class TelemetryExceptionDetails : IUtf8JsonSerializable, IModelJsonSerializable<TelemetryExceptionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TelemetryExceptionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TelemetryExceptionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -48,11 +56,161 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteStartArray();
                 foreach (var item in ParsedStack)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StackFrame>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static TelemetryExceptionDetails DeserializeTelemetryExceptionDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> id = default;
+            Optional<int> outerId = default;
+            Optional<string> typeName = default;
+            string message = default;
+            Optional<bool> hasFullStack = default;
+            Optional<string> stack = default;
+            Optional<IList<StackFrame>> parsedStack = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("outerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outerId = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("message"u8))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("hasFullStack"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hasFullStack = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stack"u8))
+                {
+                    stack = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("parsedStack"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<StackFrame> array = new List<StackFrame>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(StackFrame.DeserializeStackFrame(item));
+                    }
+                    parsedStack = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new TelemetryExceptionDetails(Optional.ToNullable(id), Optional.ToNullable(outerId), typeName.Value, message, Optional.ToNullable(hasFullStack), stack.Value, Optional.ToList(parsedStack), rawData);
+        }
+
+        TelemetryExceptionDetails IModelJsonSerializable<TelemetryExceptionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelemetryExceptionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TelemetryExceptionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TelemetryExceptionDetails IModelSerializable<TelemetryExceptionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTelemetryExceptionDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TelemetryExceptionDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TelemetryExceptionDetails"/> to convert. </param>
+        public static implicit operator RequestContent(TelemetryExceptionDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TelemetryExceptionDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TelemetryExceptionDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTelemetryExceptionDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

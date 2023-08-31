@@ -5,21 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualWanSecurityProviders
+    public partial class VirtualWanSecurityProviders : IUtf8JsonSerializable, IModelJsonSerializable<VirtualWanSecurityProviders>
     {
-        internal static VirtualWanSecurityProviders DeserializeVirtualWanSecurityProviders(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualWanSecurityProviders>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualWanSecurityProviders>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(SupportedProviders))
+            {
+                writer.WritePropertyName("supportedProviders"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedProviders)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualWanSecurityProvider>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualWanSecurityProviders DeserializeVirtualWanSecurityProviders(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProviders"u8))
@@ -36,8 +81,61 @@ namespace Azure.ResourceManager.Network.Models
                     supportedProviders = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualWanSecurityProviders(Optional.ToList(supportedProviders));
+            return new VirtualWanSecurityProviders(Optional.ToList(supportedProviders), rawData);
+        }
+
+        VirtualWanSecurityProviders IModelJsonSerializable<VirtualWanSecurityProviders>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualWanSecurityProviders(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualWanSecurityProviders>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualWanSecurityProviders IModelSerializable<VirtualWanSecurityProviders>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualWanSecurityProviders(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualWanSecurityProviders"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualWanSecurityProviders"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualWanSecurityProviders model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualWanSecurityProviders"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualWanSecurityProviders(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualWanSecurityProviders(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

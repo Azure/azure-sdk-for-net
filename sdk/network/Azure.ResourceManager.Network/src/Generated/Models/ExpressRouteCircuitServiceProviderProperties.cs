@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains ServiceProviderProperties in an ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitServiceProviderProperties
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
         public ExpressRouteCircuitServiceProviderProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
         /// <param name="serviceProviderName"> The serviceProviderName. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="bandwidthInMbps"> The BandwidthInMbps. </param>
-        internal ExpressRouteCircuitServiceProviderProperties(string serviceProviderName, string peeringLocation, int? bandwidthInMbps)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitServiceProviderProperties(string serviceProviderName, string peeringLocation, int? bandwidthInMbps, Dictionary<string, BinaryData> rawData)
         {
             ServiceProviderName = serviceProviderName;
             PeeringLocation = peeringLocation;
             BandwidthInMbps = bandwidthInMbps;
+            _rawData = rawData;
         }
 
         /// <summary> The serviceProviderName. </summary>

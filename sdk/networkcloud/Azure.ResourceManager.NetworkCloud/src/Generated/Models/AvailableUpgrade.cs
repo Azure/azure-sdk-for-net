@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AvailableUpgrade represents an upgrade available for a Kubernetes cluster. </summary>
     public partial class AvailableUpgrade
     {
-        /// <summary> Initializes a new instance of AvailableUpgrade. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableUpgrade"/>. </summary>
         internal AvailableUpgrade()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableUpgrade"/>. </summary>
         /// <param name="availabilityLifecycle"> The version lifecycle indicator. </param>
         /// <param name="version"> The version available for upgrading. </param>
-        internal AvailableUpgrade(AvailabilityLifecycle? availabilityLifecycle, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableUpgrade(AvailabilityLifecycle? availabilityLifecycle, string version, Dictionary<string, BinaryData> rawData)
         {
             AvailabilityLifecycle = availabilityLifecycle;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> The version lifecycle indicator. </summary>

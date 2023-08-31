@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleManagementEventDataSource : IUtf8JsonSerializable
+    public partial class RuleManagementEventDataSource : IUtf8JsonSerializable, IModelJsonSerializable<RuleManagementEventDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleManagementEventDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleManagementEventDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RuleManagementEventDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventName))
             {
@@ -58,7 +66,14 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
-                writer.WriteObjectValue(Claims);
+                if (Claims is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RuleManagementEventClaimsDataSource>)Claims).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -82,11 +97,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleManagementEventDataSource DeserializeRuleManagementEventDataSource(JsonElement element)
+        internal static RuleManagementEventDataSource DeserializeRuleManagementEventDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<ResourceIdentifier> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventName"u8))
@@ -189,8 +219,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
+            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value, rawData);
+        }
+
+        RuleManagementEventDataSource IModelJsonSerializable<RuleManagementEventDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuleManagementEventDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleManagementEventDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleManagementEventDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuleManagementEventDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleManagementEventDataSource IModelSerializable<RuleManagementEventDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuleManagementEventDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleManagementEventDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RuleManagementEventDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RuleManagementEventDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(RuleManagementEventDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RuleManagementEventDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RuleManagementEventDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleManagementEventDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

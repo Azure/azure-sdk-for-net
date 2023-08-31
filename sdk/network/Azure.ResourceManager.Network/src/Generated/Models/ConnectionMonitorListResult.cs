@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of connection monitors. </summary>
     internal partial class ConnectionMonitorListResult
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorListResult"/>. </summary>
         internal ConnectionMonitorListResult()
         {
             Value = new ChangeTrackingList<ConnectionMonitorData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorListResult"/>. </summary>
         /// <param name="value"> Information about connection monitors. </param>
-        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Information about connection monitors. </summary>

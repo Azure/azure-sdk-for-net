@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Radius Server Settings. </summary>
     public partial class RadiusServer
     {
-        /// <summary> Initializes a new instance of RadiusServer. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RadiusServer"/>. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="radiusServerAddress"/> is null. </exception>
         public RadiusServer(string radiusServerAddress)
@@ -23,15 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             RadiusServerAddress = radiusServerAddress;
         }
 
-        /// <summary> Initializes a new instance of RadiusServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RadiusServer"/>. </summary>
         /// <param name="radiusServerAddress"> The address of this radius server. </param>
         /// <param name="radiusServerScore"> The initial score assigned to this radius server. </param>
         /// <param name="radiusServerSecret"> The secret used for this radius server. </param>
-        internal RadiusServer(string radiusServerAddress, long? radiusServerScore, string radiusServerSecret)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RadiusServer(string radiusServerAddress, long? radiusServerScore, string radiusServerSecret, Dictionary<string, BinaryData> rawData)
         {
             RadiusServerAddress = radiusServerAddress;
             RadiusServerScore = radiusServerScore;
             RadiusServerSecret = radiusServerSecret;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiusServer"/> for deserialization. </summary>
+        internal RadiusServer()
+        {
         }
 
         /// <summary> The address of this radius server. </summary>

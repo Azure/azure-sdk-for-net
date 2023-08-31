@@ -222,9 +222,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -384,9 +382,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simUploadList);
-            request.Content = content;
+            request.Content = simUploadList;
             _userAgent.Apply(message);
             return message;
         }
@@ -463,9 +459,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simDeleteList);
-            request.Content = content;
+            request.Content = simDeleteList;
             _userAgent.Apply(message);
             return message;
         }
@@ -544,9 +538,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(encryptedSimUploadList);
-            request.Content = content;
+            request.Content = encryptedSimUploadList;
             _userAgent.Apply(message);
             return message;
         }

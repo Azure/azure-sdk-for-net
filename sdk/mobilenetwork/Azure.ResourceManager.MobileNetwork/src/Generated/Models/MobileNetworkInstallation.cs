@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,25 +15,29 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The installation state of the packet core. </summary>
     public partial class MobileNetworkInstallation
     {
-        /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInstallation"/>. </summary>
         public MobileNetworkInstallation()
         {
             Reasons = new ChangeTrackingList<MobileNetworkInstallationReason>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkInstallation"/>. </summary>
         /// <param name="desiredState"> The desired installation state. </param>
         /// <param name="state"> Installation state. </param>
         /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>
         /// <param name="reasons"> Reason(s) for the current installation state of the packet core. </param>
         /// <param name="operation"> A reference to an in-progress installation operation. </param>
-        internal MobileNetworkInstallation(DesiredInstallationState? desiredState, MobileNetworkInstallationState? state, MobileNetworkReinstallRequired? reinstallRequired, IReadOnlyList<MobileNetworkInstallationReason> reasons, SubResource operation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkInstallation(DesiredInstallationState? desiredState, MobileNetworkInstallationState? state, MobileNetworkReinstallRequired? reinstallRequired, IReadOnlyList<MobileNetworkInstallationReason> reasons, SubResource operation, Dictionary<string, BinaryData> rawData)
         {
             DesiredState = desiredState;
             State = state;
             ReinstallRequired = reinstallRequired;
             Reasons = reasons;
             Operation = operation;
+            _rawData = rawData;
         }
 
         /// <summary> The desired installation state. </summary>

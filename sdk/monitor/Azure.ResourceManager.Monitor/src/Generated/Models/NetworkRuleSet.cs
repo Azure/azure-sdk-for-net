@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of the network rules. </summary>
     internal partial class NetworkRuleSet
     {
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         public NetworkRuleSet()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
-        internal NetworkRuleSet(MonitorPublicNetworkAccess? publicNetworkAccess)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkRuleSet(MonitorPublicNetworkAccess? publicNetworkAccess, Dictionary<string, BinaryData> rawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
+            _rawData = rawData;
         }
 
         /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SwapResource List with single entry to represent slot type on the specified cloud service. </summary>
     internal partial class CloudServiceSwapListResult
     {
-        /// <summary> Initializes a new instance of CloudServiceSwapListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapListResult"/>. </summary>
         internal CloudServiceSwapListResult()
         {
             Value = new ChangeTrackingList<CloudServiceSwapData>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceSwapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapListResult"/>. </summary>
         /// <param name="value"></param>
-        internal CloudServiceSwapListResult(IReadOnlyList<CloudServiceSwapData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceSwapListResult(IReadOnlyList<CloudServiceSwapData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

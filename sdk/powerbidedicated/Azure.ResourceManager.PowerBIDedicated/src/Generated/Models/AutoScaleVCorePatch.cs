@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,25 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> Update request specification. </summary>
     public partial class AutoScaleVCorePatch
     {
-        /// <summary> Initializes a new instance of AutoScaleVCorePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCorePatch"/>. </summary>
         public AutoScaleVCorePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCorePatch"/>. </summary>
+        /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
+        /// <param name="tags"> Key-value pairs of additional provisioning properties. </param>
+        /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoScaleVCorePatch(AutoScaleVCoreSku sku, IDictionary<string, string> tags, int? capacityLimit, Dictionary<string, BinaryData> rawData)
+        {
+            Sku = sku;
+            Tags = tags;
+            CapacityLimit = capacityLimit;
+            _rawData = rawData;
         }
 
         /// <summary> The SKU of the auto scale v-core resource. </summary>

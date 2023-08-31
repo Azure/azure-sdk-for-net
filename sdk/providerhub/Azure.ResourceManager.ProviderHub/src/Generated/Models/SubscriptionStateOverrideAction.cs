@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The SubscriptionStateOverrideAction. </summary>
     public partial class SubscriptionStateOverrideAction
     {
-        /// <summary> Initializes a new instance of SubscriptionStateOverrideAction. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionStateOverrideAction"/>. </summary>
         /// <param name="state"></param>
         /// <param name="action"></param>
         public SubscriptionStateOverrideAction(SubscriptionTransitioningState state, SubscriptionNotificationOperation action)
         {
             State = state;
             Action = action;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionStateOverrideAction"/>. </summary>
+        /// <param name="state"></param>
+        /// <param name="action"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionStateOverrideAction(SubscriptionTransitioningState state, SubscriptionNotificationOperation action, Dictionary<string, BinaryData> rawData)
+        {
+            State = state;
+            Action = action;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionStateOverrideAction"/> for deserialization. </summary>
+        internal SubscriptionStateOverrideAction()
+        {
         }
 
         /// <summary> Gets or sets the state. </summary>

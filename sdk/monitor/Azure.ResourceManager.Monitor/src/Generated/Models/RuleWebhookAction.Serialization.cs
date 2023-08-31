@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleWebhookAction : IUtf8JsonSerializable
+    public partial class RuleWebhookAction : IUtf8JsonSerializable, IModelJsonSerializable<RuleWebhookAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleWebhookAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleWebhookAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RuleWebhookAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceUri))
             {
@@ -35,11 +41,25 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleWebhookAction DeserializeRuleWebhookAction(JsonElement element)
+        internal static RuleWebhookAction DeserializeRuleWebhookAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<Uri> serviceUri = default;
             Optional<IDictionary<string, string>> properties = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUri"u8))
@@ -77,8 +98,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuleWebhookAction(odataType, serviceUri.Value, Optional.ToDictionary(properties));
+            return new RuleWebhookAction(odataType, serviceUri.Value, Optional.ToDictionary(properties), rawData);
+        }
+
+        RuleWebhookAction IModelJsonSerializable<RuleWebhookAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuleWebhookAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleWebhookAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleWebhookAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuleWebhookAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleWebhookAction IModelSerializable<RuleWebhookAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuleWebhookAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleWebhookAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RuleWebhookAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RuleWebhookAction"/> to convert. </param>
+        public static implicit operator RequestContent(RuleWebhookAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RuleWebhookAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RuleWebhookAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleWebhookAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

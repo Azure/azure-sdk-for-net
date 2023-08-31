@@ -14,22 +14,26 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Cross tenant scopes. </summary>
     public partial class CrossTenantScopes
     {
-        /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CrossTenantScopes"/>. </summary>
         internal CrossTenantScopes()
         {
             ManagementGroups = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossTenantScopes"/>. </summary>
         /// <param name="tenantId"> Tenant ID. </param>
         /// <param name="managementGroups"> List of management groups. </param>
         /// <param name="subscriptions"> List of subscriptions. </param>
-        internal CrossTenantScopes(Guid? tenantId, IReadOnlyList<string> managementGroups, IReadOnlyList<string> subscriptions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CrossTenantScopes(Guid? tenantId, IReadOnlyList<string> managementGroups, IReadOnlyList<string> subscriptions, Dictionary<string, BinaryData> rawData)
         {
             TenantId = tenantId;
             ManagementGroups = managementGroups;
             Subscriptions = subscriptions;
+            _rawData = rawData;
         }
 
         /// <summary> Tenant ID. </summary>

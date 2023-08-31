@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the list of all possible values for a specific filter value. </summary>
     public partial class SignatureOverridesFilterValuesResult
     {
-        /// <summary> Initializes a new instance of SignatureOverridesFilterValuesResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesResult"/>. </summary>
         internal SignatureOverridesFilterValuesResult()
         {
             FilterValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SignatureOverridesFilterValuesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesResult"/>. </summary>
         /// <param name="filterValues"> Describes the possible values. </param>
-        internal SignatureOverridesFilterValuesResult(IReadOnlyList<string> filterValues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignatureOverridesFilterValuesResult(IReadOnlyList<string> filterValues, Dictionary<string, BinaryData> rawData)
         {
             FilterValues = filterValues;
+            _rawData = rawData;
         }
 
         /// <summary> Describes the possible values. </summary>

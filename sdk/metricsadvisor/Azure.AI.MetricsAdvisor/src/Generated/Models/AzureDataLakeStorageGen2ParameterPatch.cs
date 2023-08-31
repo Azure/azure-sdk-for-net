@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureDataLakeStorageGen2ParameterPatch. </summary>
     internal partial class AzureDataLakeStorageGen2ParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2ParameterPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2ParameterPatch"/>. </summary>
         public AzureDataLakeStorageGen2ParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2ParameterPatch"/>. </summary>
+        /// <param name="accountName"> The account name of this Azure Data Lake. </param>
+        /// <param name="accountKey"> The account key that can access this Azure Data Lake. </param>
+        /// <param name="fileSystemName"> The file system (container) name in this Azure Data Lake. </param>
+        /// <param name="directoryTemplate"> The directory template under this file system. </param>
+        /// <param name="fileTemplate"> The file template. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDataLakeStorageGen2ParameterPatch(string accountName, string accountKey, string fileSystemName, string directoryTemplate, string fileTemplate, Dictionary<string, BinaryData> rawData)
+        {
+            AccountName = accountName;
+            AccountKey = accountKey;
+            FileSystemName = fileSystemName;
+            DirectoryTemplate = directoryTemplate;
+            FileTemplate = fileTemplate;
+            _rawData = rawData;
         }
 
         /// <summary> The account name of this Azure Data Lake. </summary>

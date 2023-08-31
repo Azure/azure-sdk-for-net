@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Response containing operationId for a specific purge action. </summary>
     public partial class OperationalInsightsWorkspacePurgeResult
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeResult"/>. </summary>
         /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
         internal OperationalInsightsWorkspacePurgeResult(Guid operationId)
         {
             OperationId = operationId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeResult"/>. </summary>
+        /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsWorkspacePurgeResult(Guid operationId, Dictionary<string, BinaryData> rawData)
+        {
+            OperationId = operationId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeResult"/> for deserialization. </summary>
+        internal OperationalInsightsWorkspacePurgeResult()
+        {
         }
 
         /// <summary> Id to use when querying for status for a particular purge operation. </summary>

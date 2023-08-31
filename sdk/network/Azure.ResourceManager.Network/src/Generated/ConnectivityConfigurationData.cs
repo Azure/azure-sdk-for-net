@@ -20,14 +20,16 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ConnectivityConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationData"/>. </summary>
         public ConnectivityConfigurationData()
         {
             Hubs = new ChangeTrackingList<ConnectivityHub>();
             AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ConnectivityTopology = connectivityTopology;
@@ -52,6 +55,7 @@ namespace Azure.ResourceManager.Network
             DeleteExistingPeering = deleteExistingPeering;
             ResourceGuid = resourceGuid;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> A description of the connectivity configuration. </summary>

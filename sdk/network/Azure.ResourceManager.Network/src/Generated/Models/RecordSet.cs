@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A collective group of information about the record set information. </summary>
     public partial class RecordSet
     {
-        /// <summary> Initializes a new instance of RecordSet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecordSet"/>. </summary>
         internal RecordSet()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecordSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordSet"/>. </summary>
         /// <param name="recordType"> Resource record type. </param>
         /// <param name="recordSetName"> Recordset name. </param>
         /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
         /// <param name="provisioningState"> The provisioning state of the recordset. </param>
         /// <param name="ttl"> Recordset time to live. </param>
         /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
-        internal RecordSet(string recordType, string recordSetName, string fqdn, NetworkProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecordSet(string recordType, string recordSetName, string fqdn, NetworkProvisioningState? provisioningState, int? ttl, IReadOnlyList<string> ipAddresses, Dictionary<string, BinaryData> rawData)
         {
             RecordType = recordType;
             RecordSetName = recordSetName;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
             Ttl = ttl;
             IPAddresses = ipAddresses;
+            _rawData = rawData;
         }
 
         /// <summary> Resource record type. </summary>

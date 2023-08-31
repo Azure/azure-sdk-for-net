@@ -19,6 +19,8 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class EmbeddingsOptions
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="input">
         /// Input texts to get embeddings for, encoded as a an array of strings.
@@ -52,11 +54,13 @@ namespace Azure.AI.OpenAI
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
-        internal EmbeddingsOptions(string user, string internalNonAzureModelName, IList<string> input)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingsOptions(string user, string internalNonAzureModelName, IList<string> input, Dictionary<string, BinaryData> rawData)
         {
             User = user;
             InternalNonAzureModelName = internalNonAzureModelName;
             Input = input;
+            _rawData = rawData;
         }
 
         /// <summary>

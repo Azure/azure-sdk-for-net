@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,6 +14,8 @@ namespace Azure.AI.OpenAI
     /// <summary> Represents the request data used to generate images. </summary>
     public partial class ImageGenerationOptions
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
         /// <param name="prompt"> A description of the desired images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompt"/> is null. </exception>
@@ -32,13 +35,15 @@ namespace Azure.AI.OpenAI
         ///   Azure OpenAI only supports URL response items.
         /// </param>
         /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
-        internal ImageGenerationOptions(string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, string user)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageGenerationOptions(string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, string user, Dictionary<string, BinaryData> rawData)
         {
             Prompt = prompt;
             ImageCount = imageCount;
             Size = size;
             ResponseFormat = responseFormat;
             User = user;
+            _rawData = rawData;
         }
         /// <summary> The number of images to generate (defaults to 1). </summary>
         public int? ImageCount { get; set; }

@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringRegisteredPrefixData : IUtf8JsonSerializable
+    public partial class PeeringRegisteredPrefixData : IUtf8JsonSerializable, IModelJsonSerializable<PeeringRegisteredPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeeringRegisteredPrefixData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeeringRegisteredPrefixData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.Peering
                 writer.WriteStringValue(Prefix);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringRegisteredPrefixData DeserializePeeringRegisteredPrefixData(JsonElement element)
+        internal static PeeringRegisteredPrefixData DeserializePeeringRegisteredPrefixData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +65,7 @@ namespace Azure.ResourceManager.Peering
             Optional<string> peeringServicePrefixKey = default;
             Optional<string> errorMessage = default;
             Optional<PeeringProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,8 +137,61 @@ namespace Azure.ResourceManager.Peering
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Optional.ToNullable(provisioningState));
+            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        PeeringRegisteredPrefixData IModelJsonSerializable<PeeringRegisteredPrefixData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringRegisteredPrefixData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeeringRegisteredPrefixData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeeringRegisteredPrefixData IModelSerializable<PeeringRegisteredPrefixData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeeringRegisteredPrefixData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PeeringRegisteredPrefixData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PeeringRegisteredPrefixData"/> to convert. </param>
+        public static implicit operator RequestContent(PeeringRegisteredPrefixData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PeeringRegisteredPrefixData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PeeringRegisteredPrefixData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeeringRegisteredPrefixData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

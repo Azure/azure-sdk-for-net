@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    internal partial class DedicatedCapacityAdministrators : IUtf8JsonSerializable
+    internal partial class DedicatedCapacityAdministrators : IUtf8JsonSerializable, IModelJsonSerializable<DedicatedCapacityAdministrators>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DedicatedCapacityAdministrators>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DedicatedCapacityAdministrators>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Members))
             {
@@ -26,16 +33,31 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DedicatedCapacityAdministrators DeserializeDedicatedCapacityAdministrators(JsonElement element)
+        internal static DedicatedCapacityAdministrators DeserializeDedicatedCapacityAdministrators(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> members = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("members"u8))
@@ -52,8 +74,61 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     members = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DedicatedCapacityAdministrators(Optional.ToList(members));
+            return new DedicatedCapacityAdministrators(Optional.ToList(members), rawData);
+        }
+
+        DedicatedCapacityAdministrators IModelJsonSerializable<DedicatedCapacityAdministrators>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedCapacityAdministrators(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DedicatedCapacityAdministrators>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DedicatedCapacityAdministrators IModelSerializable<DedicatedCapacityAdministrators>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDedicatedCapacityAdministrators(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DedicatedCapacityAdministrators"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DedicatedCapacityAdministrators"/> to convert. </param>
+        public static implicit operator RequestContent(DedicatedCapacityAdministrators model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DedicatedCapacityAdministrators"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DedicatedCapacityAdministrators(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDedicatedCapacityAdministrators(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

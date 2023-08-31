@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ServiceTreeInfo. </summary>
     public partial class ServiceTreeInfo
     {
-        /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceTreeInfo"/>. </summary>
         public ServiceTreeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTreeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTreeInfo"/>. </summary>
         /// <param name="serviceId"></param>
         /// <param name="componentId"></param>
-        internal ServiceTreeInfo(string serviceId, string componentId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTreeInfo(string serviceId, string componentId, Dictionary<string, BinaryData> rawData)
         {
             ServiceId = serviceId;
             ComponentId = componentId;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the service id. </summary>

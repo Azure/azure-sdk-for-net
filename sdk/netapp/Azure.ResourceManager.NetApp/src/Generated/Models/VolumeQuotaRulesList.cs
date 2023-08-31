@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Volume Quota Rules. </summary>
     internal partial class VolumeQuotaRulesList
     {
-        /// <summary> Initializes a new instance of VolumeQuotaRulesList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/>. </summary>
         internal VolumeQuotaRulesList()
         {
             Value = new ChangeTrackingList<NetAppVolumeQuotaRuleData>();
         }
 
-        /// <summary> Initializes a new instance of VolumeQuotaRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/>. </summary>
         /// <param name="value"> A list of Volume Quota Rules. </param>
-        internal VolumeQuotaRulesList(IReadOnlyList<NetAppVolumeQuotaRuleData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VolumeQuotaRulesList(IReadOnlyList<NetAppVolumeQuotaRuleData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A list of Volume Quota Rules. </summary>

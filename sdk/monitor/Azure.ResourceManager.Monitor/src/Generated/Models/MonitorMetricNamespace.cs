@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,26 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
     public partial class MonitorMetricNamespace : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorMetricNamespace. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
         internal MonitorMetricNamespace()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorMetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="properties"> Properties which include the fully qualified namespace name. </param>
-        internal MonitorMetricNamespace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorNamespaceClassification? classification, MetricNamespaceName properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorMetricNamespace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorNamespaceClassification? classification, MetricNamespaceName properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Classification = classification;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Kind of namespace. </summary>

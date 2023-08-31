@@ -8,14 +8,75 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureQueryStatusResult
+    public partial class PacketCaptureQueryStatusResult : IUtf8JsonSerializable, IModelJsonSerializable<PacketCaptureQueryStatusResult>
     {
-        internal static PacketCaptureQueryStatusResult DeserializePacketCaptureQueryStatusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PacketCaptureQueryStatusResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PacketCaptureQueryStatusResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(CaptureStartOn))
+            {
+                writer.WritePropertyName("captureStartTime"u8);
+                writer.WriteStringValue(CaptureStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(PacketCaptureStatus))
+            {
+                writer.WritePropertyName("packetCaptureStatus"u8);
+                writer.WriteStringValue(PacketCaptureStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(StopReason))
+            {
+                writer.WritePropertyName("stopReason"u8);
+                writer.WriteStringValue(StopReason);
+            }
+            if (Optional.IsCollectionDefined(PacketCaptureError))
+            {
+                writer.WritePropertyName("packetCaptureError"u8);
+                writer.WriteStartArray();
+                foreach (var item in PacketCaptureError)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PacketCaptureQueryStatusResult DeserializePacketCaptureQueryStatusResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<PcStatus> packetCaptureStatus = default;
             Optional<string> stopReason = default;
             Optional<IReadOnlyList<PcError>> packetCaptureError = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,8 +137,61 @@ namespace Azure.ResourceManager.Network.Models
                     packetCaptureError = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError));
+            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError), rawData);
+        }
+
+        PacketCaptureQueryStatusResult IModelJsonSerializable<PacketCaptureQueryStatusResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePacketCaptureQueryStatusResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PacketCaptureQueryStatusResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PacketCaptureQueryStatusResult IModelSerializable<PacketCaptureQueryStatusResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePacketCaptureQueryStatusResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PacketCaptureQueryStatusResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PacketCaptureQueryStatusResult"/> to convert. </param>
+        public static implicit operator RequestContent(PacketCaptureQueryStatusResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PacketCaptureQueryStatusResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PacketCaptureQueryStatusResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePacketCaptureQueryStatusResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

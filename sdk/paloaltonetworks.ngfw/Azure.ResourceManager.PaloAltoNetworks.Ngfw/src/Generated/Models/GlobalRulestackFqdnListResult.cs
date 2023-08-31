@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a FqdnListGlobalRulestackResource list operation. </summary>
     internal partial class GlobalRulestackFqdnListResult
     {
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GlobalRulestackFqdnListResult(IEnumerable<GlobalRulestackFqdnData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackFqdnListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal GlobalRulestackFqdnListResult(IReadOnlyList<GlobalRulestackFqdnData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalRulestackFqdnListResult(IReadOnlyList<GlobalRulestackFqdnData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackFqdnListResult"/> for deserialization. </summary>
+        internal GlobalRulestackFqdnListResult()
+        {
         }
 
         /// <summary> The items on this page. </summary>

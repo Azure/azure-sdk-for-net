@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The result data of a query. </summary>
     public partial class MonitorMetric
     {
-        /// <summary> Initializes a new instance of MonitorMetric. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorMetric"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="metricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Timeseries = timeseries.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetric"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="metricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -45,7 +47,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
-        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             MetricType = metricType;
@@ -55,6 +58,12 @@ namespace Azure.ResourceManager.Monitor.Models
             ErrorMessage = errorMessage;
             Unit = unit;
             Timeseries = timeseries;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorMetric"/> for deserialization. </summary>
+        internal MonitorMetric()
+        {
         }
 
         /// <summary> the metric Id. </summary>

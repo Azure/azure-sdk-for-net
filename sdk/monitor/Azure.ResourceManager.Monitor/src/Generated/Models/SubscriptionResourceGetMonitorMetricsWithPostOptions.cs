@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Region = region;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetMonitorMetricsWithPostOptions()
+        {
+        }
+
         /// <summary> The region where the metrics you want reside. </summary>
         public string Region { get; }
         /// <summary> Parameters serialized in the body. </summary>

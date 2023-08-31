@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The list usages operation response. </summary>
     internal partial class NetworkUsagesListResult
     {
-        /// <summary> Initializes a new instance of NetworkUsagesListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkUsagesListResult"/>. </summary>
         internal NetworkUsagesListResult()
         {
             Value = new ChangeTrackingList<NetworkUsage>();
         }
 
-        /// <summary> Initializes a new instance of NetworkUsagesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsagesListResult"/>. </summary>
         /// <param name="value"> The list network resource usages. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal NetworkUsagesListResult(IReadOnlyList<NetworkUsage> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkUsagesListResult(IReadOnlyList<NetworkUsage> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list network resource usages. </summary>

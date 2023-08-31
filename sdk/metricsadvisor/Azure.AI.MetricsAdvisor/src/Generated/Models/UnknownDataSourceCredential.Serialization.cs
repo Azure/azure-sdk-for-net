@@ -5,15 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Administration;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UnknownDataSourceCredential : IUtf8JsonSerializable
+    internal partial class UnknownDataSourceCredential : IUtf8JsonSerializable, IModelJsonSerializable<DataSourceCredentialEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataSourceCredentialEntity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataSourceCredentialEntity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
@@ -24,43 +31,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDataSourceCredential DeserializeUnknownDataSourceCredential(JsonElement element)
+        internal static DataSourceCredentialEntity DeserializeUnknownDataSourceCredential(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataSourceCredentialEntity(element, options);
+
+        DataSourceCredentialEntity IModelJsonSerializable<DataSourceCredentialEntity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DataSourceCredentialKind dataSourceCredentialType = "Unknown";
-            Optional<string> dataSourceCredentialId = default;
-            string dataSourceCredentialName = default;
-            Optional<string> dataSourceCredentialDescription = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("dataSourceCredentialType"u8))
-                {
-                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dataSourceCredentialId"u8))
-                {
-                    dataSourceCredentialId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSourceCredentialName"u8))
-                {
-                    dataSourceCredentialName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dataSourceCredentialDescription"u8))
-                {
-                    dataSourceCredentialDescription = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownDataSourceCredential(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDataSourceCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataSourceCredentialEntity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataSourceCredentialEntity IModelSerializable<DataSourceCredentialEntity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataSourceCredentialEntity(doc.RootElement, options);
         }
     }
 }

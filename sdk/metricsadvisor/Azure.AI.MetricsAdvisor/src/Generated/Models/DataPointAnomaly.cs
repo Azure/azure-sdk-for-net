@@ -14,5 +14,54 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResult. </summary>
     public partial class DataPointAnomaly
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataPointAnomaly"/>. </summary>
+        /// <param name="dataFeedId">
+        /// data feed unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="metricId">
+        /// metric unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="detectionConfigurationId">
+        /// anomaly detection configuration unique id
+        ///
+        /// only return for alerting anomaly result
+        /// </param>
+        /// <param name="timestamp"> anomaly time. </param>
+        /// <param name="createdOn">
+        /// created time
+        ///
+        /// only return for alerting result
+        /// </param>
+        /// <param name="lastModified">
+        /// modified time
+        ///
+        /// only return for alerting result
+        /// </param>
+        /// <param name="dimension"> dimension specified for series. </param>
+        /// <param name="property"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataPointAnomaly(string dataFeedId, string metricId, string detectionConfigurationId, DateTimeOffset timestamp, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyDictionary<string, string> dimension, AnomalyProperty property, Dictionary<string, BinaryData> rawData)
+        {
+            DataFeedId = dataFeedId;
+            MetricId = metricId;
+            DetectionConfigurationId = detectionConfigurationId;
+            Timestamp = timestamp;
+            CreatedOn = createdOn;
+            LastModified = lastModified;
+            Dimension = dimension;
+            Property = property;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataPointAnomaly"/> for deserialization. </summary>
+        internal DataPointAnomaly()
+        {
+        }
     }
 }

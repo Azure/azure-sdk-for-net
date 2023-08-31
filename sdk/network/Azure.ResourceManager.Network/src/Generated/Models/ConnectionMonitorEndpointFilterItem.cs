@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the connection monitor endpoint filter item. </summary>
     public partial class ConnectionMonitorEndpointFilterItem
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilterItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilterItem"/>. </summary>
         public ConnectionMonitorEndpointFilterItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilterItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilterItem"/>. </summary>
         /// <param name="itemType"> The type of item included in the filter. Currently only 'AgentAddress' is supported. </param>
         /// <param name="address"> The address of the filter item. </param>
-        internal ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? itemType, string address)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorEndpointFilterItem(ConnectionMonitorEndpointFilterItemType? itemType, string address, Dictionary<string, BinaryData> rawData)
         {
             ItemType = itemType;
             Address = address;
+            _rawData = rawData;
         }
 
         /// <summary> The type of item included in the filter. Currently only 'AgentAddress' is supported. </summary>

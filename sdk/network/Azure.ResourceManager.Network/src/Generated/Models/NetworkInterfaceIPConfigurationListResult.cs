@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for list ip configurations API service call. </summary>
     internal partial class NetworkInterfaceIPConfigurationListResult
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationListResult"/>. </summary>
         internal NetworkInterfaceIPConfigurationListResult()
         {
             Value = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationListResult"/>. </summary>
         /// <param name="value"> A list of ip configurations. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NetworkInterfaceIPConfigurationListResult(IReadOnlyList<NetworkInterfaceIPConfigurationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterfaceIPConfigurationListResult(IReadOnlyList<NetworkInterfaceIPConfigurationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of ip configurations. </summary>

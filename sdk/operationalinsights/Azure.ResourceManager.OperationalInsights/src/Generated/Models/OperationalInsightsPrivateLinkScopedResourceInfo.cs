@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The private link scope resource reference. </summary>
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo
     {
-        /// <summary> Initializes a new instance of OperationalInsightsPrivateLinkScopedResourceInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsPrivateLinkScopedResourceInfo"/>. </summary>
         internal OperationalInsightsPrivateLinkScopedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsPrivateLinkScopedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsPrivateLinkScopedResourceInfo"/>. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
-        internal OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId, string scopeId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsPrivateLinkScopedResourceInfo(ResourceIdentifier resourceId, string scopeId, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             ScopeId = scopeId;
+            _rawData = rawData;
         }
 
         /// <summary> The full resource Id of the private link scope resource. </summary>

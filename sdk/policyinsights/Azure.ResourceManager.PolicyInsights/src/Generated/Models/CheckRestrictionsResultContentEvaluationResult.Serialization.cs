@@ -5,21 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class CheckRestrictionsResultContentEvaluationResult
+    internal partial class CheckRestrictionsResultContentEvaluationResult : IUtf8JsonSerializable, IModelJsonSerializable<CheckRestrictionsResultContentEvaluationResult>
     {
-        internal static CheckRestrictionsResultContentEvaluationResult DeserializeCheckRestrictionsResultContentEvaluationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CheckRestrictionsResultContentEvaluationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CheckRestrictionsResultContentEvaluationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(PolicyEvaluations))
+            {
+                writer.WritePropertyName("policyEvaluations"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyEvaluations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PolicyEvaluationResult>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CheckRestrictionsResultContentEvaluationResult DeserializeCheckRestrictionsResultContentEvaluationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<PolicyEvaluationResult>> policyEvaluations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyEvaluations"u8))
@@ -36,8 +81,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyEvaluations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CheckRestrictionsResultContentEvaluationResult(Optional.ToList(policyEvaluations));
+            return new CheckRestrictionsResultContentEvaluationResult(Optional.ToList(policyEvaluations), rawData);
+        }
+
+        CheckRestrictionsResultContentEvaluationResult IModelJsonSerializable<CheckRestrictionsResultContentEvaluationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCheckRestrictionsResultContentEvaluationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CheckRestrictionsResultContentEvaluationResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CheckRestrictionsResultContentEvaluationResult IModelSerializable<CheckRestrictionsResultContentEvaluationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCheckRestrictionsResultContentEvaluationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CheckRestrictionsResultContentEvaluationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CheckRestrictionsResultContentEvaluationResult"/> to convert. </param>
+        public static implicit operator RequestContent(CheckRestrictionsResultContentEvaluationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CheckRestrictionsResultContentEvaluationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CheckRestrictionsResultContentEvaluationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCheckRestrictionsResultContentEvaluationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

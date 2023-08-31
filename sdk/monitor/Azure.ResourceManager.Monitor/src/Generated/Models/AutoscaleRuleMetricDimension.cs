@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies an auto scale rule metric dimension. </summary>
     public partial class AutoscaleRuleMetricDimension
     {
-        /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRuleMetricDimension"/>. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </param>
         /// <param name="values"> list of dimension values. For example: ["App1","App2"]. </param>
@@ -30,15 +32,22 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleRuleMetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRuleMetricDimension"/>. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only 'Equals' and 'NotEquals' are supported. 'Equals' being equal to any of the values. 'NotEquals' being not equal to all of the values. </param>
         /// <param name="values"> list of dimension values. For example: ["App1","App2"]. </param>
-        internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleRuleMetricDimension(string dimensionName, ScaleRuleMetricDimensionOperationType @operator, IList<string> values, Dictionary<string, BinaryData> rawData)
         {
             DimensionName = dimensionName;
             Operator = @operator;
             Values = values;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRuleMetricDimension"/> for deserialization. </summary>
+        internal AutoscaleRuleMetricDimension()
+        {
         }
 
         /// <summary> Name of the dimension. </summary>
