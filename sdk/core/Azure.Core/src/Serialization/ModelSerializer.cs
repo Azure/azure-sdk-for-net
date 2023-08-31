@@ -188,7 +188,7 @@ namespace Azure.Core.Serialization
                 AbstractTypeDeserializerAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(AbstractTypeDeserializerAttribute)) as AbstractTypeDeserializerAttribute;
                 if (attribute is null)
                 {
-                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(AbstractTypeDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
+                    throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(AbstractTypeDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
                 }
                 typeToActivate = attribute.DeserializationProxy;
             }
