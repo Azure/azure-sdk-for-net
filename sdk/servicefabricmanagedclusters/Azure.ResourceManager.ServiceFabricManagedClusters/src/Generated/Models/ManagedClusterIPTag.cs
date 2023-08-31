@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> IPTag associated with the object. </summary>
     public partial class ManagedClusterIPTag
     {
-        /// <summary> Initializes a new instance of ManagedClusterIPTag. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
         /// <param name="ipTagType"> The IP tag type. </param>
         /// <param name="tag"> The value of the IP tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             IPTagType = ipTagType;
             Tag = tag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/>. </summary>
+        /// <param name="ipTagType"> The IP tag type. </param>
+        /// <param name="tag"> The value of the IP tag. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterIPTag(string ipTagType, string tag, Dictionary<string, BinaryData> rawData)
+        {
+            IPTagType = ipTagType;
+            Tag = tag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterIPTag"/> for deserialization. </summary>
+        internal ManagedClusterIPTag()
+        {
         }
 
         /// <summary> The IP tag type. </summary>

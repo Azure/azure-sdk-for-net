@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageDiskExclusionContent : IUtf8JsonSerializable
+    public partial class InMageDiskExclusionContent : IUtf8JsonSerializable, IModelJsonSerializable<InMageDiskExclusionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageDiskExclusionContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageDiskExclusionContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VolumeOptions))
             {
@@ -35,7 +43,113 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InMageDiskExclusionContent DeserializeInMageDiskExclusionContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<InMageVolumeExclusionOptions>> volumeOptions = default;
+            Optional<IList<InMageDiskSignatureExclusionOptions>> diskSignatureOptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("volumeOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InMageVolumeExclusionOptions> array = new List<InMageVolumeExclusionOptions>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InMageVolumeExclusionOptions.DeserializeInMageVolumeExclusionOptions(item));
+                    }
+                    volumeOptions = array;
+                    continue;
+                }
+                if (property.NameEquals("diskSignatureOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InMageDiskSignatureExclusionOptions> array = new List<InMageDiskSignatureExclusionOptions>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InMageDiskSignatureExclusionOptions.DeserializeInMageDiskSignatureExclusionOptions(item));
+                    }
+                    diskSignatureOptions = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InMageDiskExclusionContent(Optional.ToList(volumeOptions), Optional.ToList(diskSignatureOptions), rawData);
+        }
+
+        InMageDiskExclusionContent IModelJsonSerializable<InMageDiskExclusionContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageDiskExclusionContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageDiskExclusionContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageDiskExclusionContent IModelSerializable<InMageDiskExclusionContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageDiskExclusionContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InMageDiskExclusionContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InMageDiskExclusionContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageDiskExclusionContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

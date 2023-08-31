@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The IotSecuritySolutionPatch. </summary>
     public partial class IotSecuritySolutionPatch : SecurityCenterTagsResourceInfo
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionPatch"/>. </summary>
         public IotSecuritySolutionPatch()
         {
             RecommendationsConfiguration = new ChangeTrackingList<RecommendationConfigurationProperties>();
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
-        internal IotSecuritySolutionPatch(IDictionary<string, string> tags, UserDefinedResourcesProperties userDefinedResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration) : base(tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionPatch(IDictionary<string, string> tags, UserDefinedResourcesProperties userDefinedResources, IList<RecommendationConfigurationProperties> recommendationsConfiguration, Dictionary<string, BinaryData> rawData) : base(tags, rawData)
         {
             UserDefinedResources = userDefinedResources;
             RecommendationsConfiguration = recommendationsConfiguration;

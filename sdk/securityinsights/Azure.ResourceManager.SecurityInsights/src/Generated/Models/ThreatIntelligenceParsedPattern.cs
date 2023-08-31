@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes parsed pattern entity. </summary>
     public partial class ThreatIntelligenceParsedPattern
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceParsedPattern. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceParsedPattern"/>. </summary>
         public ThreatIntelligenceParsedPattern()
         {
             PatternTypeValues = new ChangeTrackingList<ThreatIntelligenceParsedPatternTypeValue>();
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceParsedPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceParsedPattern"/>. </summary>
         /// <param name="patternTypeKey"> Pattern type key. </param>
         /// <param name="patternTypeValues"> Pattern type keys. </param>
-        internal ThreatIntelligenceParsedPattern(string patternTypeKey, IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceParsedPattern(string patternTypeKey, IList<ThreatIntelligenceParsedPatternTypeValue> patternTypeValues, Dictionary<string, BinaryData> rawData)
         {
             PatternTypeKey = patternTypeKey;
             PatternTypeValues = patternTypeValues;
+            _rawData = rawData;
         }
 
         /// <summary> Pattern type key. </summary>

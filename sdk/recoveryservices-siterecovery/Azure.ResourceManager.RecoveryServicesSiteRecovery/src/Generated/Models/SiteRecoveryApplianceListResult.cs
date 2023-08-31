@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of appliance details. </summary>
     internal partial class SiteRecoveryApplianceListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryApplianceListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplianceListResult"/>. </summary>
         internal SiteRecoveryApplianceListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryReplicationAppliance>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplianceListResult"/>. </summary>
         /// <param name="value"> The appliance details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryApplianceListResult(IReadOnlyList<SiteRecoveryReplicationAppliance> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryApplianceListResult(IReadOnlyList<SiteRecoveryReplicationAppliance> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The appliance details. </summary>

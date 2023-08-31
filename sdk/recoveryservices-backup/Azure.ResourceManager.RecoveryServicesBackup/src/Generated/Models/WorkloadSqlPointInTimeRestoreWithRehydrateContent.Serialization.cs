@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlPointInTimeRestoreWithRehydrateContent : IUtf8JsonSerializable
+    public partial class WorkloadSqlPointInTimeRestoreWithRehydrateContent : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadSqlPointInTimeRestoreWithRehydrateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadSqlPointInTimeRestoreWithRehydrateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadSqlPointInTimeRestoreWithRehydrateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRestoreWithRehydrateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
@@ -85,11 +91,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSqlPointInTimeRestoreWithRehydrateContent DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(JsonElement element)
+        internal static WorkloadSqlPointInTimeRestoreWithRehydrateContent DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryMode> recoveryMode = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointRehydrationInfo"u8))
@@ -222,8 +243,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadSqlPointInTimeRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), Optional.ToNullable(pointInTime), recoveryPointRehydrationInfo.Value);
+            return new WorkloadSqlPointInTimeRestoreWithRehydrateContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), Optional.ToList(alternateDirectoryPaths), Optional.ToNullable(pointInTime), recoveryPointRehydrationInfo.Value, rawData);
+        }
+
+        WorkloadSqlPointInTimeRestoreWithRehydrateContent IModelJsonSerializable<WorkloadSqlPointInTimeRestoreWithRehydrateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRestoreWithRehydrateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadSqlPointInTimeRestoreWithRehydrateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRestoreWithRehydrateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadSqlPointInTimeRestoreWithRehydrateContent IModelSerializable<WorkloadSqlPointInTimeRestoreWithRehydrateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRestoreWithRehydrateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadSqlPointInTimeRestoreWithRehydrateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadSqlPointInTimeRestoreWithRehydrateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

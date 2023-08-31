@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Hyper-V host details. </summary>
     public partial class HyperVHostDetails
     {
-        /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HyperVHostDetails"/>. </summary>
         internal HyperVHostDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVHostDetails"/>. </summary>
         /// <param name="id"> The Hyper-V host Id. </param>
         /// <param name="name"> The Hyper-V host name. </param>
         /// <param name="marsAgentVersion"> The Mars agent version. </param>
-        internal HyperVHostDetails(string id, string name, string marsAgentVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVHostDetails(string id, string name, string marsAgentVersion, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             MarsAgentVersion = marsAgentVersion;
+            _rawData = rawData;
         }
 
         /// <summary> The Hyper-V host Id. </summary>

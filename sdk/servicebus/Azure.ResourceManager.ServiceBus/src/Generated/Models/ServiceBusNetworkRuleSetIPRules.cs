@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
     public partial class ServiceBusNetworkRuleSetIPRules
     {
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetIPRules. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetIPRules"/>. </summary>
         public ServiceBusNetworkRuleSetIPRules()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetIPRules"/>. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
-        internal ServiceBusNetworkRuleSetIPRules(string ipMask, ServiceBusNetworkRuleIPAction? action)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusNetworkRuleSetIPRules(string ipMask, ServiceBusNetworkRuleIPAction? action, Dictionary<string, BinaryData> rawData)
         {
             IPMask = ipMask;
             Action = action;
+            _rawData = rawData;
         }
 
         /// <summary> IP Mask. </summary>

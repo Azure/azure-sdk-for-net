@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class SignalRLiveTraceCategory
     {
-        /// <summary> Initializes a new instance of SignalRLiveTraceCategory. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRLiveTraceCategory"/>. </summary>
         public SignalRLiveTraceCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRLiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRLiveTraceCategory"/>. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -26,10 +31,12 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        internal SignalRLiveTraceCategory(string name, string enabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRLiveTraceCategory(string name, string enabled, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Enabled = enabled;
+            _rawData = rawData;
         }
 
         /// <summary>

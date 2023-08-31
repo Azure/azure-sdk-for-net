@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload specific backup copy. </summary>
     public partial class IaasVmRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
         public IaasVmRecoveryPoint()
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "IaasVMRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="securityType"> Security Type of the Disk. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
         /// <param name="isPrivateAccessEnabledOnAnyDisk"> This flag denotes if any of the disks in the VM are using Private access network setting. </param>
-        internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk) : base(objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, Dictionary<string, BinaryData> rawData) : base(objectType, rawData)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;

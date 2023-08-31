@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable
+    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable, IModelJsonSerializable<SimpleSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SimpleSchedulePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SimpleSchedulePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SimpleSchedulePolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleRunFrequency))
             {
@@ -54,11 +60,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element)
+        internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupHourlySchedule> hourlySchedule = default;
             Optional<int> scheduleWeeklyFrequency = default;
             string schedulePolicyType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleRunFrequency"u8))
@@ -131,8 +152,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     schedulePolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SimpleSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
+            return new SimpleSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency), rawData);
+        }
+
+        SimpleSchedulePolicy IModelJsonSerializable<SimpleSchedulePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SimpleSchedulePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimpleSchedulePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SimpleSchedulePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SimpleSchedulePolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SimpleSchedulePolicy IModelSerializable<SimpleSchedulePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SimpleSchedulePolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSimpleSchedulePolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SimpleSchedulePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SimpleSchedulePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSimpleSchedulePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

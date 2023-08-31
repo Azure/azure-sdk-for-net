@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -12,12 +14,18 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownVectorSearchAlgorithmConfiguration. </summary>
     internal partial class UnknownVectorSearchAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownVectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. Only `hnsw` is supported in the current preview. </param>
-        internal UnknownVectorSearchAlgorithmConfiguration(string name, string kind) : base(name, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownVectorSearchAlgorithmConfiguration(string name, string kind, Dictionary<string, BinaryData> rawData) : base(name, kind, rawData)
         {
             Kind = kind ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchAlgorithmConfiguration"/> for deserialization. </summary>
+        internal UnknownVectorSearchAlgorithmConfiguration()
+        {
         }
     }
 }

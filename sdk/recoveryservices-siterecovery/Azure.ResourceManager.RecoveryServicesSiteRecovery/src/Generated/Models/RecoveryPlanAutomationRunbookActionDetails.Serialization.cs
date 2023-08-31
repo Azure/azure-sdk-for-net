@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable
+    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryPlanAutomationRunbookActionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryPlanAutomationRunbookActionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryPlanAutomationRunbookActionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanAutomationRunbookActionDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RunbookId))
             {
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(FabricLocation.ToString());
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element)
+        internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runbookId"u8))
@@ -68,8 +91,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, runbookId.Value, timeout.Value, fabricLocation);
+            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, runbookId.Value, timeout.Value, fabricLocation, rawData);
+        }
+
+        RecoveryPlanAutomationRunbookActionDetails IModelJsonSerializable<RecoveryPlanAutomationRunbookActionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanAutomationRunbookActionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanAutomationRunbookActionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryPlanAutomationRunbookActionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanAutomationRunbookActionDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryPlanAutomationRunbookActionDetails IModelSerializable<RecoveryPlanAutomationRunbookActionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanAutomationRunbookActionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanAutomationRunbookActionDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecoveryPlanAutomationRunbookActionDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecoveryPlanAutomationRunbookActionDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryPlanAutomationRunbookActionDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

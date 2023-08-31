@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of recovery point details. </summary>
     internal partial class SiteRecoveryPointListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPointListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointListResult"/>. </summary>
         internal SiteRecoveryPointListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryPointData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointListResult"/>. </summary>
         /// <param name="value"> The recovery point details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryPointListResult(IReadOnlyList<SiteRecoveryPointData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryPointListResult(IReadOnlyList<SiteRecoveryPointData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The recovery point details. </summary>

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSapHanaRecoveryPoint : IUtf8JsonSerializable
+    public partial class WorkloadSapHanaRecoveryPoint : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadSapHanaRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadSapHanaRecoveryPoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadSapHanaRecoveryPoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadSapHanaRecoveryPoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointCreatedOn))
             {
@@ -55,11 +61,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSapHanaRecoveryPoint DeserializeWorkloadSapHanaRecoveryPoint(JsonElement element)
+        internal static WorkloadSapHanaRecoveryPoint DeserializeWorkloadSapHanaRecoveryPoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
             Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointTimeInUTC"u8))
@@ -132,8 +153,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadSapHanaRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value);
+            return new WorkloadSapHanaRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, rawData);
+        }
+
+        WorkloadSapHanaRecoveryPoint IModelJsonSerializable<WorkloadSapHanaRecoveryPoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSapHanaRecoveryPoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSapHanaRecoveryPoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadSapHanaRecoveryPoint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSapHanaRecoveryPoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadSapHanaRecoveryPoint IModelSerializable<WorkloadSapHanaRecoveryPoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSapHanaRecoveryPoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadSapHanaRecoveryPoint(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadSapHanaRecoveryPoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadSapHanaRecoveryPoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadSapHanaRecoveryPoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

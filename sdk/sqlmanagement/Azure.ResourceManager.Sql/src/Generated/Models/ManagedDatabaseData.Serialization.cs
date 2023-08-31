@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedDatabaseData : IUtf8JsonSerializable
+    public partial class ManagedDatabaseData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedDatabaseData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedDatabaseData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -120,11 +126,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedDatabaseData DeserializeManagedDatabaseData(JsonElement element)
+        internal static ManagedDatabaseData DeserializeManagedDatabaseData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +177,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> lastBackupName = default;
             Optional<ResourceIdentifier> crossSubscriptionTargetManagedInstanceId = default;
             Optional<bool> isLedgerOn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -396,8 +417,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value, Optional.ToNullable(isLedgerOn));
+            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, crossSubscriptionSourceDatabaseId.Value, restorableDroppedDatabaseId.Value, crossSubscriptionRestorableDroppedDatabaseId.Value, storageContainerIdentity.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value, crossSubscriptionTargetManagedInstanceId.Value, Optional.ToNullable(isLedgerOn), rawData);
+        }
+
+        ManagedDatabaseData IModelJsonSerializable<ManagedDatabaseData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDatabaseData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedDatabaseData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedDatabaseData IModelSerializable<ManagedDatabaseData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedDatabaseData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedDatabaseData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedDatabaseData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedDatabaseData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

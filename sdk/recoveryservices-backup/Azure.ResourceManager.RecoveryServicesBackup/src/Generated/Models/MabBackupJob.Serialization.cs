@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabBackupJob : IUtf8JsonSerializable
+    public partial class MabBackupJob : IUtf8JsonSerializable, IModelJsonSerializable<MabBackupJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MabBackupJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MabBackupJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MabBackupJob>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Duration))
             {
@@ -99,11 +105,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MabBackupJob DeserializeMabBackupJob(JsonElement element)
+        internal static MabBackupJob DeserializeMabBackupJob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> activityId = default;
             string jobType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))
@@ -246,8 +267,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), Optional.ToList(actionsInfo), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new MabBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), Optional.ToList(actionsInfo), mabServerName.Value, Optional.ToNullable(mabServerType), Optional.ToNullable(workloadType), Optional.ToList(errorDetails), extendedInfo.Value, rawData);
+        }
+
+        MabBackupJob IModelJsonSerializable<MabBackupJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MabBackupJob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMabBackupJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MabBackupJob>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MabBackupJob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MabBackupJob IModelSerializable<MabBackupJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MabBackupJob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMabBackupJob(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MabBackupJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MabBackupJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMabBackupJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

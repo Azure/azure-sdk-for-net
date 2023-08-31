@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadAutoProtectionIntent : IUtf8JsonSerializable
+    public partial class WorkloadAutoProtectionIntent : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadAutoProtectionIntent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadAutoProtectionIntent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadAutoProtectionIntent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadAutoProtectionIntent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
@@ -42,11 +50,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadAutoProtectionIntent DeserializeWorkloadAutoProtectionIntent(JsonElement element)
+        internal static WorkloadAutoProtectionIntent DeserializeWorkloadAutoProtectionIntent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,12 +80,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLAutoProtectionIntent": return WorkloadSqlAutoProtectionIntent.DeserializeWorkloadSqlAutoProtectionIntent(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             ProtectionIntentItemType protectionIntentItemType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<ResourceIdentifier> itemId = default;
             Optional<ResourceIdentifier> policyId = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionIntentItemType"u8))
@@ -116,8 +141,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState));
+            return new WorkloadAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), rawData);
+        }
+
+        WorkloadAutoProtectionIntent IModelJsonSerializable<WorkloadAutoProtectionIntent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadAutoProtectionIntent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadAutoProtectionIntent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadAutoProtectionIntent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadAutoProtectionIntent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadAutoProtectionIntent IModelSerializable<WorkloadAutoProtectionIntent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadAutoProtectionIntent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadAutoProtectionIntent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadAutoProtectionIntent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadAutoProtectionIntent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadAutoProtectionIntent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

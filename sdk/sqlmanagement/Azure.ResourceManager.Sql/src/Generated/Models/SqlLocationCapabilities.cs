@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,30 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The location capability. </summary>
     public partial class SqlLocationCapabilities
     {
-        /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlLocationCapabilities"/>. </summary>
         internal SqlLocationCapabilities()
         {
             SupportedServerVersions = new ChangeTrackingList<SqlServerVersionCapability>();
             SupportedManagedInstanceVersions = new ChangeTrackingList<ManagedInstanceVersionCapability>();
         }
 
-        /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlLocationCapabilities"/>. </summary>
         /// <param name="name"> The location name. </param>
         /// <param name="supportedServerVersions"> The list of supported server versions. </param>
         /// <param name="supportedManagedInstanceVersions"> The list of supported managed instance versions. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal SqlLocationCapabilities(string name, IReadOnlyList<SqlServerVersionCapability> supportedServerVersions, IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions, SqlCapabilityStatus? status, string reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlLocationCapabilities(string name, IReadOnlyList<SqlServerVersionCapability> supportedServerVersions, IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions, SqlCapabilityStatus? status, string reason, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             SupportedServerVersions = supportedServerVersions;
             SupportedManagedInstanceVersions = supportedManagedInstanceVersions;
             Status = status;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> The location name. </summary>

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> TLS settings for the resource. </summary>
     internal partial class SignalRTlsSettings
     {
-        /// <summary> Initializes a new instance of SignalRTlsSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRTlsSettings"/>. </summary>
         public SignalRTlsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRTlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRTlsSettings"/>. </summary>
         /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. </param>
-        internal SignalRTlsSettings(bool? isClientCertEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRTlsSettings(bool? isClientCertEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsClientCertEnabled = isClientCertEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>

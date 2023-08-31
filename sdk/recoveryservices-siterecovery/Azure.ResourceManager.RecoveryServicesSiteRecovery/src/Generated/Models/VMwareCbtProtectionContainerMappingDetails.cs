@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt provider specific container mapping details. </summary>
     public partial class VMwareCbtProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectionContainerMappingDetails"/>. </summary>
         internal VMwareCbtProtectionContainerMappingDetails()
         {
             RoleSizeToNicCountMap = new ChangeTrackingDictionary<string, int>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectionContainerMappingDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="keyVaultId"> The target key vault ARM Id. </param>
         /// <param name="keyVaultUri"> The target key vault URI. </param>
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetLocation"> The target location. </param>
         /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
         /// <param name="excludedSkus"> The SKUs to be excluded. </param>
-        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IReadOnlyList<string> excludedSkus) : base(instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IReadOnlyList<string> excludedSkus, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;

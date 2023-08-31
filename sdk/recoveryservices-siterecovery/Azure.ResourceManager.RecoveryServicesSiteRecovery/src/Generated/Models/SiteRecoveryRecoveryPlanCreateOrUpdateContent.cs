@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create recovery plan input class. </summary>
     public partial class SiteRecoveryRecoveryPlanCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Recovery plan creation properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryRecoveryPlanCreateOrUpdateContent(SiteRecoveryCreateRecoveryPlanProperties properties)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Recovery plan creation properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryRecoveryPlanCreateOrUpdateContent(SiteRecoveryCreateRecoveryPlanProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanCreateOrUpdateContent"/> for deserialization. </summary>
+        internal SiteRecoveryRecoveryPlanCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Recovery plan creation properties. </summary>

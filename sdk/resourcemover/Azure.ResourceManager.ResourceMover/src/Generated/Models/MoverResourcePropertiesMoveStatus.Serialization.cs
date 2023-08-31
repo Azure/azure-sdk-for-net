@@ -5,15 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourcePropertiesMoveStatus
+    public partial class MoverResourcePropertiesMoveStatus : IUtf8JsonSerializable, IModelJsonSerializable<MoverResourcePropertiesMoveStatus>
     {
-        internal static MoverResourcePropertiesMoveStatus DeserializeMoverResourcePropertiesMoveStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MoverResourcePropertiesMoveStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MoverResourcePropertiesMoveStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MoverResourcePropertiesMoveStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobStatus))
+            {
+                if (JobStatus != null)
+                {
+                    writer.WritePropertyName("jobStatus"u8);
+                    writer.WriteObjectValue(JobStatus);
+                }
+                else
+                {
+                    writer.WriteNull("jobStatus");
+                }
+            }
+            if (Optional.IsDefined(Errors))
+            {
+                if (Errors != null)
+                {
+                    writer.WritePropertyName("errors"u8);
+                    writer.WriteObjectValue(Errors);
+                }
+                else
+                {
+                    writer.WriteNull("errors");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MoverResourcePropertiesMoveStatus DeserializeMoverResourcePropertiesMoveStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +73,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoverResourceMoveState> moveState = default;
             Optional<MoverResourceJobStatus> jobStatus = default;
             Optional<MoveResourceError> errors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("moveState"u8))
@@ -52,8 +105,57 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     errors = MoveResourceError.DeserializeMoveResourceError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MoverResourcePropertiesMoveStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value);
+            return new MoverResourcePropertiesMoveStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, rawData);
+        }
+
+        MoverResourcePropertiesMoveStatus IModelJsonSerializable<MoverResourcePropertiesMoveStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MoverResourcePropertiesMoveStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverResourcePropertiesMoveStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MoverResourcePropertiesMoveStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MoverResourcePropertiesMoveStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MoverResourcePropertiesMoveStatus IModelSerializable<MoverResourcePropertiesMoveStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MoverResourcePropertiesMoveStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMoverResourcePropertiesMoveStatus(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MoverResourcePropertiesMoveStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MoverResourcePropertiesMoveStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMoverResourcePropertiesMoveStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

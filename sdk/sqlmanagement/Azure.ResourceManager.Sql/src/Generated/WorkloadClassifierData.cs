@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,14 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class WorkloadClassifierData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadClassifierData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadClassifierData"/>. </summary>
         public WorkloadClassifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadClassifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="startTime"> The workload classifier start time for classification. </param>
         /// <param name="endTime"> The workload classifier end time for classification. </param>
         /// <param name="importance"> The workload classifier importance. </param>
-        internal WorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             MemberName = memberName;
             Label = label;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.Sql
             StartTime = startTime;
             EndTime = endTime;
             Importance = importance;
+            _rawData = rawData;
         }
 
         /// <summary> The workload classifier member name. </summary>

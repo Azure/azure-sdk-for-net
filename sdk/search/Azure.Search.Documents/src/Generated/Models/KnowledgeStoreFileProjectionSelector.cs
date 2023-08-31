@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Projection definition for what data to store in Azure Files. </summary>
     public partial class KnowledgeStoreFileProjectionSelector : KnowledgeStoreStorageProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreFileProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreFileProjectionSelector"/>. </summary>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainer"/> is null. </exception>
         public KnowledgeStoreFileProjectionSelector(string storageContainer) : base(storageContainer)
@@ -22,14 +22,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(storageContainer, nameof(storageContainer));
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreFileProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreFileProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
-        internal KnowledgeStoreFileProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, storageContainer)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeStoreFileProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer, Dictionary<string, BinaryData> rawData) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, storageContainer, rawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreFileProjectionSelector"/> for deserialization. </summary>
+        internal KnowledgeStoreFileProjectionSelector()
         {
         }
     }

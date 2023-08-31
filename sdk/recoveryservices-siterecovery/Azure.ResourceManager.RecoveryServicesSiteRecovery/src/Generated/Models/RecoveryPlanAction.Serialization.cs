@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanAction : IUtf8JsonSerializable
+    public partial class RecoveryPlanAction : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryPlanAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryPlanAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryPlanAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("actionName"u8);
             writer.WriteStringValue(ActionName);
@@ -34,11 +41,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteEndArray();
             writer.WritePropertyName("customDetails"u8);
             writer.WriteObjectValue(CustomDetails);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryPlanAction DeserializeRecoveryPlanAction(JsonElement element)
+        internal static RecoveryPlanAction DeserializeRecoveryPlanAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<ReplicationProtectedItemOperation> failoverTypes = default;
             IList<PossibleOperationsDirection> failoverDirections = default;
             RecoveryPlanActionDetails customDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionName"u8))
@@ -79,8 +101,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customDetails = RecoveryPlanActionDetails.DeserializeRecoveryPlanActionDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecoveryPlanAction(actionName, failoverTypes, failoverDirections, customDetails);
+            return new RecoveryPlanAction(actionName, failoverTypes, failoverDirections, customDetails, rawData);
+        }
+
+        RecoveryPlanAction IModelJsonSerializable<RecoveryPlanAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryPlanAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryPlanAction IModelSerializable<RecoveryPlanAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanAction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecoveryPlanAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecoveryPlanAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryPlanAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

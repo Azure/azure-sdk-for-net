@@ -5,22 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class RemoveProtectionContainerMappingProperties : IUtf8JsonSerializable
+    internal partial class RemoveProtectionContainerMappingProperties : IUtf8JsonSerializable, IModelJsonSerializable<RemoveProtectionContainerMappingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemoveProtectionContainerMappingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemoveProtectionContainerMappingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProviderSpecificContent))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteObjectValue(ProviderSpecificContent);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RemoveProtectionContainerMappingProperties DeserializeRemoveProtectionContainerMappingProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ReplicationProviderContainerUnmappingContent> providerSpecificContent = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("providerSpecificInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    providerSpecificContent = ReplicationProviderContainerUnmappingContent.DeserializeReplicationProviderContainerUnmappingContent(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RemoveProtectionContainerMappingProperties(providerSpecificContent.Value, rawData);
+        }
+
+        RemoveProtectionContainerMappingProperties IModelJsonSerializable<RemoveProtectionContainerMappingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoveProtectionContainerMappingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemoveProtectionContainerMappingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemoveProtectionContainerMappingProperties IModelSerializable<RemoveProtectionContainerMappingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemoveProtectionContainerMappingProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RemoveProtectionContainerMappingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RemoveProtectionContainerMappingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemoveProtectionContainerMappingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

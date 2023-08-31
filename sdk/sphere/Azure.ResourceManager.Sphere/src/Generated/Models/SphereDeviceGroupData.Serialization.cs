@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereDeviceGroupData : IUtf8JsonSerializable
+    public partial class SphereDeviceGroupData : IUtf8JsonSerializable, IModelJsonSerializable<SphereDeviceGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SphereDeviceGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SphereDeviceGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.Sphere
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SphereDeviceGroupData DeserializeSphereDeviceGroupData(JsonElement element)
+        internal static SphereDeviceGroupData DeserializeSphereDeviceGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +87,7 @@ namespace Azure.ResourceManager.Sphere
             Optional<RegionalDataBoundary> regionalDataBoundary = default;
             Optional<bool> hasDeployment = default;
             Optional<SphereProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -162,8 +185,57 @@ namespace Azure.ResourceManager.Sphere
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SphereDeviceGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), Optional.ToNullable(hasDeployment), Optional.ToNullable(provisioningState));
+            return new SphereDeviceGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), Optional.ToNullable(hasDeployment), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        SphereDeviceGroupData IModelJsonSerializable<SphereDeviceGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSphereDeviceGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SphereDeviceGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SphereDeviceGroupData IModelSerializable<SphereDeviceGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSphereDeviceGroupData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SphereDeviceGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SphereDeviceGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSphereDeviceGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

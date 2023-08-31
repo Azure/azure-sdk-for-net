@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents
 {
-    public partial class SuggestOptions : IUtf8JsonSerializable
+    public partial class SuggestOptions : IUtf8JsonSerializable, IModelJsonSerializable<SuggestOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SuggestOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SuggestOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Filter))
             {
@@ -64,7 +72,161 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SuggestOptions DeserializeSuggestOptions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> filter = default;
+            Optional<bool> fuzzy = default;
+            Optional<string> highlightPostTag = default;
+            Optional<string> highlightPreTag = default;
+            Optional<double> minimumCoverage = default;
+            Optional<string> orderby = default;
+            string search = default;
+            Optional<string> searchFields = default;
+            Optional<string> select = default;
+            string suggesterName = default;
+            Optional<int> top = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filter"u8))
+                {
+                    filter = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fuzzy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fuzzy = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("highlightPostTag"u8))
+                {
+                    highlightPostTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("highlightPreTag"u8))
+                {
+                    highlightPreTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("minimumCoverage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimumCoverage = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("orderby"u8))
+                {
+                    orderby = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("search"u8))
+                {
+                    search = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("searchFields"u8))
+                {
+                    searchFields = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("select"u8))
+                {
+                    select = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("suggesterName"u8))
+                {
+                    suggesterName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("top"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    top = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SuggestOptions(filter.Value, Optional.ToNullable(fuzzy), highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, search, searchFields.Value, select.Value, suggesterName, Optional.ToNullable(top), rawData);
+        }
+
+        SuggestOptions IModelJsonSerializable<SuggestOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSuggestOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SuggestOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SuggestOptions IModelSerializable<SuggestOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSuggestOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SuggestOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SuggestOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSuggestOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

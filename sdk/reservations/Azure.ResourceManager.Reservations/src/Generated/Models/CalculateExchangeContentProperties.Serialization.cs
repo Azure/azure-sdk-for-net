@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateExchangeContentProperties : IUtf8JsonSerializable
+    public partial class CalculateExchangeContentProperties : IUtf8JsonSerializable, IModelJsonSerializable<CalculateExchangeContentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CalculateExchangeContentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CalculateExchangeContentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ReservationsToPurchase))
             {
@@ -45,7 +53,128 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CalculateExchangeContentProperties DeserializeCalculateExchangeContentProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<ReservationPurchaseContent>> reservationsToPurchase = default;
+            Optional<IList<SavingsPlanPurchase>> savingsPlansToPurchase = default;
+            Optional<IList<ReservationToReturn>> reservationsToExchange = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("reservationsToPurchase"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ReservationPurchaseContent> array = new List<ReservationPurchaseContent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item));
+                    }
+                    reservationsToPurchase = array;
+                    continue;
+                }
+                if (property.NameEquals("savingsPlansToPurchase"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SavingsPlanPurchase> array = new List<SavingsPlanPurchase>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item));
+                    }
+                    savingsPlansToPurchase = array;
+                    continue;
+                }
+                if (property.NameEquals("reservationsToExchange"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ReservationToReturn> array = new List<ReservationToReturn>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item));
+                    }
+                    reservationsToExchange = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CalculateExchangeContentProperties(Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), rawData);
+        }
+
+        CalculateExchangeContentProperties IModelJsonSerializable<CalculateExchangeContentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCalculateExchangeContentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CalculateExchangeContentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CalculateExchangeContentProperties IModelSerializable<CalculateExchangeContentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCalculateExchangeContentProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CalculateExchangeContentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CalculateExchangeContentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCalculateExchangeContentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

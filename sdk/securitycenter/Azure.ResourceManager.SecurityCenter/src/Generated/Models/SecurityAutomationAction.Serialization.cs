@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationAction : IUtf8JsonSerializable
+    public partial class SecurityAutomationAction : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAutomationAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAutomationAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAutomationAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAutomationAction DeserializeSecurityAutomationAction(JsonElement element)
+        internal static SecurityAutomationAction DeserializeSecurityAutomationAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,7 +57,68 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "Workspace": return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element);
                 }
             }
-            return UnknownAutomationAction.DeserializeUnknownAutomationAction(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            ActionType actionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("actionType"u8))
+                {
+                    actionType = new ActionType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownAutomationAction(actionType, rawData);
+        }
+
+        SecurityAutomationAction IModelJsonSerializable<SecurityAutomationAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAutomationAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAutomationAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAutomationAction IModelSerializable<SecurityAutomationAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAutomationAction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityAutomationAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityAutomationAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAutomationAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

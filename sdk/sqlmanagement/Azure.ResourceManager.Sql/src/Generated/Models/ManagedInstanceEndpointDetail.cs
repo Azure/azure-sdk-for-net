@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A domain name that the managed instance service needs to communicate with, along with additional details. </summary>
     public partial class ManagedInstanceEndpointDetail
     {
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDetail. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEndpointDetail"/>. </summary>
         internal ManagedInstanceEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
-        internal ManagedInstanceEndpointDetail(int? port)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceEndpointDetail(int? port, Dictionary<string, BinaryData> rawData)
         {
             Port = port;
+            _rawData = rawData;
         }
 
         /// <summary> The port an endpoint is connected to. </summary>

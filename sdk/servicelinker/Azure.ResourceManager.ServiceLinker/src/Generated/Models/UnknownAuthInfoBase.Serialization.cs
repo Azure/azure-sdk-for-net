@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    internal partial class UnknownAuthInfoBase : IUtf8JsonSerializable
+    internal partial class UnknownAuthInfoBase : IUtf8JsonSerializable, IModelJsonSerializable<AuthBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AuthBaseInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AuthBaseInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAuthInfoBase DeserializeUnknownAuthInfoBase(JsonElement element)
+        internal static AuthBaseInfo DeserializeUnknownAuthInfoBase(JsonElement element, ModelSerializerOptions options = default) => DeserializeAuthBaseInfo(element, options);
+
+        AuthBaseInfo IModelJsonSerializable<AuthBaseInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            LinkerAuthType authType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authType"u8))
-                {
-                    authType = new LinkerAuthType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownAuthInfoBase(authType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAuthInfoBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AuthBaseInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AuthBaseInfo IModelSerializable<AuthBaseInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthBaseInfo(doc.RootElement, options);
         }
     }
 }

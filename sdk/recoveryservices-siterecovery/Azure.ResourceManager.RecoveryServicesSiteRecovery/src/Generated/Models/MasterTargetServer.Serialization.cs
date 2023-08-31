@@ -9,14 +9,150 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class MasterTargetServer
+    public partial class MasterTargetServer : IUtf8JsonSerializable, IModelJsonSerializable<MasterTargetServer>
     {
-        internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MasterTargetServer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MasterTargetServer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(VersionStatus))
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (Optional.IsCollectionDefined(RetentionVolumes))
+            {
+                writer.WritePropertyName("retentionVolumes"u8);
+                writer.WriteStartArray();
+                foreach (var item in RetentionVolumes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DataStores))
+            {
+                writer.WritePropertyName("dataStores"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataStores)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValidationErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiskCount))
+            {
+                writer.WritePropertyName("diskCount"u8);
+                writer.WriteNumberValue(DiskCount.Value);
+            }
+            if (Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(MarsAgentVersion))
+            {
+                writer.WritePropertyName("marsAgentVersion"u8);
+                writer.WriteStringValue(MarsAgentVersion);
+            }
+            if (Optional.IsDefined(MarsAgentExpireOn))
+            {
+                writer.WritePropertyName("marsAgentExpiryDate"u8);
+                writer.WriteStringValue(MarsAgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                writer.WriteObjectValue(AgentVersionDetails);
+            }
+            if (Optional.IsDefined(MarsAgentVersionDetails))
+            {
+                writer.WritePropertyName("marsAgentVersionDetails"u8);
+                writer.WriteObjectValue(MarsAgentVersionDetails);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MasterTargetServer DeserializeMasterTargetServer(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> marsAgentExpireOn = default;
             Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
             Optional<SiteRecoveryVersionDetails> marsAgentVersionDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -195,8 +332,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     marsAgentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value);
+            return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, rawData);
+        }
+
+        MasterTargetServer IModelJsonSerializable<MasterTargetServer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMasterTargetServer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MasterTargetServer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MasterTargetServer IModelSerializable<MasterTargetServer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMasterTargetServer(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MasterTargetServer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MasterTargetServer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMasterTargetServer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

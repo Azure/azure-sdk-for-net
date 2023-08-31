@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm disk level sync details. </summary>
     public partial class InMageRcmSyncDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmSyncDetails"/>. </summary>
         internal InMageRcmSyncDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageRcmSyncDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmSyncDetails"/>. </summary>
         /// <param name="progressHealth"> The progress health. </param>
         /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to azure. </param>
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="staStartOn"> The start time. </param>
         /// <param name="lastRefreshedOn"> The last refresh time. </param>
         /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
-        internal InMageRcmSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, DateTimeOffset? staStartOn, DateTimeOffset? lastRefreshedOn, int? progressPercentage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, DateTimeOffset? staStartOn, DateTimeOffset? lastRefreshedOn, int? progressPercentage, Dictionary<string, BinaryData> rawData)
         {
             ProgressHealth = progressHealth;
             TransferredBytes = transferredBytes;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             StaStartOn = staStartOn;
             LastRefreshedOn = lastRefreshedOn;
             ProgressPercentage = progressPercentage;
+            _rawData = rawData;
         }
 
         /// <summary> The progress health. </summary>

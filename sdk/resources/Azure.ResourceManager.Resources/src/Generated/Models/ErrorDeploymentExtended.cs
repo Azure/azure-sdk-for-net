@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment on error behavior with additional details. </summary>
     public partial class ErrorDeploymentExtended
     {
-        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorDeploymentExtended"/>. </summary>
         internal ErrorDeploymentExtended()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDeploymentExtended"/>. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
         /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>
-        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? deploymentType, string deploymentName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorDeploymentExtended(string provisioningState, ErrorDeploymentType? deploymentType, string deploymentName, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             DeploymentType = deploymentType;
             DeploymentName = deploymentName;
+            _rawData = rawData;
         }
 
         /// <summary> The state of the provisioning for the on error deployment. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of instance failover groups. </summary>
     internal partial class InstanceFailoverGroupListResult
     {
-        /// <summary> Initializes a new instance of InstanceFailoverGroupListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupListResult"/>. </summary>
         internal InstanceFailoverGroupListResult()
         {
             Value = new ChangeTrackingList<InstanceFailoverGroupData>();
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal InstanceFailoverGroupListResult(IReadOnlyList<InstanceFailoverGroupData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceFailoverGroupListResult(IReadOnlyList<InstanceFailoverGroupData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

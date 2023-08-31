@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRestoreContent : IUtf8JsonSerializable
+    public partial class IaasVmRestoreContent : IUtf8JsonSerializable, IModelJsonSerializable<IaasVmRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IaasVmRestoreContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IaasVmRestoreContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<IaasVmRestoreContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointId))
             {
@@ -144,11 +151,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmRestoreContent DeserializeIaasVmRestoreContent(JsonElement element)
+        internal static IaasVmRestoreContent DeserializeIaasVmRestoreContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,6 +181,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<string> recoveryPointId = default;
             Optional<FileShareRecoveryType> recoveryType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
@@ -184,6 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<SecuredVmDetails> securedVmDetails = default;
             Optional<BackupTargetDiskNetworkAccessSettings> targetDiskNetworkAccessSettings = default;
             string objectType = "IaasVMRestoreRequest";
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointId"u8))
@@ -396,8 +420,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IaasVmRestoreContent(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value);
+            return new IaasVmRestoreContent(objectType, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value, rawData);
+        }
+
+        IaasVmRestoreContent IModelJsonSerializable<IaasVmRestoreContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<IaasVmRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmRestoreContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IaasVmRestoreContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<IaasVmRestoreContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IaasVmRestoreContent IModelSerializable<IaasVmRestoreContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<IaasVmRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIaasVmRestoreContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IaasVmRestoreContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IaasVmRestoreContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIaasVmRestoreContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The application client details to track the entity creating/updating the managed app resource. </summary>
     public partial class ArmApplicationDetails
     {
-        /// <summary> Initializes a new instance of ArmApplicationDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDetails"/>. </summary>
         internal ArmApplicationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDetails"/>. </summary>
         /// <param name="objectId"> The client Oid. </param>
         /// <param name="puid"> The client Puid. </param>
         /// <param name="applicationId"> The client application Id. </param>
-        internal ArmApplicationDetails(Guid? objectId, string puid, Guid? applicationId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationDetails(Guid? objectId, string puid, Guid? applicationId, Dictionary<string, BinaryData> rawData)
         {
             ObjectId = objectId;
             Puid = puid;
             ApplicationId = applicationId;
+            _rawData = rawData;
         }
 
         /// <summary> The client Oid. </summary>

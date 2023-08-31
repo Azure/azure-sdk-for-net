@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AReprotectContent : IUtf8JsonSerializable
+    public partial class A2AReprotectContent : IUtf8JsonSerializable, IModelJsonSerializable<A2AReprotectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2AReprotectContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2AReprotectContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<A2AReprotectContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryContainerId))
             {
@@ -52,7 +60,150 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static A2AReprotectContent DeserializeA2AReprotectContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> recoveryContainerId = default;
+            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
+            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
+            Optional<string> recoveryCloudServiceId = default;
+            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
+            Optional<ResourceIdentifier> policyId = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryContainerId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryContainerId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vmDisks"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<A2AVmDiskDetails> array = new List<A2AVmDiskDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item));
+                    }
+                    vmDisks = array;
+                    continue;
+                }
+                if (property.NameEquals("recoveryResourceGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryCloudServiceId"u8))
+                {
+                    recoveryCloudServiceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryAvailabilitySetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("policyId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new A2AReprotectContent(instanceType, recoveryContainerId.Value, Optional.ToList(vmDisks), recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, policyId.Value, rawData);
+        }
+
+        A2AReprotectContent IModelJsonSerializable<A2AReprotectContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2AReprotectContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2AReprotectContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2AReprotectContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2AReprotectContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2AReprotectContent IModelSerializable<A2AReprotectContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2AReprotectContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2AReprotectContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(A2AReprotectContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator A2AReprotectContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2AReprotectContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

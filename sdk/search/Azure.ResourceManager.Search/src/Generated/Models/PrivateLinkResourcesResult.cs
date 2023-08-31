@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing a list of supported Private Link Resources. </summary>
     internal partial class PrivateLinkResourcesResult
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourcesResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesResult"/>. </summary>
         internal PrivateLinkResourcesResult()
         {
             Value = new ChangeTrackingList<SearchPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesResult"/>. </summary>
         /// <param name="value"> The list of supported Private Link Resources. </param>
-        internal PrivateLinkResourcesResult(IReadOnlyList<SearchPrivateLinkResource> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkResourcesResult(IReadOnlyList<SearchPrivateLinkResource> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of supported Private Link Resources. </summary>

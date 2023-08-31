@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> List of quotas. </summary>
     public partial class QuantumJobQuotaList
     {
-        /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuantumJobQuotaList"/>. </summary>
         internal QuantumJobQuotaList()
         {
             Value = new ChangeTrackingList<QuantumJobQuota>();
         }
 
-        /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumJobQuotaList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuantumJobQuotaList(IReadOnlyList<QuantumJobQuota> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

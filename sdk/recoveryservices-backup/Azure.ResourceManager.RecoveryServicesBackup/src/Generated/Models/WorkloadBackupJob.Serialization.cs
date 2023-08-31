@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadBackupJob : IUtf8JsonSerializable
+    public partial class WorkloadBackupJob : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadBackupJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadBackupJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadBackupJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadBackupJob>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkloadType))
             {
@@ -89,11 +95,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadBackupJob DeserializeWorkloadBackupJob(JsonElement element)
+        internal static WorkloadBackupJob DeserializeWorkloadBackupJob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,6 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> activityId = default;
             string jobType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workloadType"u8))
@@ -216,8 +237,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, workloadType.Value, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new WorkloadBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, workloadType.Value, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value, rawData);
+        }
+
+        WorkloadBackupJob IModelJsonSerializable<WorkloadBackupJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadBackupJob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadBackupJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadBackupJob>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadBackupJob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadBackupJob IModelSerializable<WorkloadBackupJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadBackupJob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadBackupJob(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadBackupJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadBackupJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadBackupJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

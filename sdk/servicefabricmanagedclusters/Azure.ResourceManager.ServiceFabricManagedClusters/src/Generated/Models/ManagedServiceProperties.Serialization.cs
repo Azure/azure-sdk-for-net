@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceProperties : IUtf8JsonSerializable
+    public partial class ManagedServiceProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedServiceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedServiceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ManagedServiceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("serviceKind"u8);
             writer.WriteStringValue(ServiceKind.ToString());
@@ -82,11 +89,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServiceProperties DeserializeManagedServiceProperties(JsonElement element)
+        internal static ManagedServiceProperties DeserializeManagedServiceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,6 +120,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     case "Stateless": return StatelessServiceProperties.DeserializeStatelessServiceProperties(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<string> provisioningState = default;
             ServiceKind serviceKind = default;
             string serviceTypeName = default;
@@ -111,6 +134,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
             Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
             Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -217,8 +241,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     scalingPolicies = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value);
+            return new UnknownServiceResourceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, rawData);
+        }
+
+        ManagedServiceProperties IModelJsonSerializable<ManagedServiceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedServiceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServiceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedServiceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedServiceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedServiceProperties IModelSerializable<ManagedServiceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ManagedServiceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedServiceProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedServiceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedServiceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedServiceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

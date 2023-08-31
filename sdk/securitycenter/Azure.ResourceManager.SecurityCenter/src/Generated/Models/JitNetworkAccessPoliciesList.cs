@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The JitNetworkAccessPoliciesList. </summary>
     internal partial class JitNetworkAccessPoliciesList
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPoliciesList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPoliciesList"/>. </summary>
         internal JitNetworkAccessPoliciesList()
         {
             Value = new ChangeTrackingList<JitNetworkAccessPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPoliciesList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal JitNetworkAccessPoliciesList(IReadOnlyList<JitNetworkAccessPolicyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPoliciesList(IReadOnlyList<JitNetworkAccessPolicyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

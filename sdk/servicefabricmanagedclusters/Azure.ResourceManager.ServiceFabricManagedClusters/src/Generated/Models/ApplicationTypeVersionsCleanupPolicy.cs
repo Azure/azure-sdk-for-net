@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The policy used to clean up unused versions. When the policy is not specified explicitly, the default unused application versions to keep will be 3. </summary>
     internal partial class ApplicationTypeVersionsCleanupPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationTypeVersionsCleanupPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionsCleanupPolicy"/>. </summary>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
         public ApplicationTypeVersionsCleanupPolicy(int maxUnusedVersionsToKeep)
         {
             MaxUnusedVersionsToKeep = maxUnusedVersionsToKeep;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionsCleanupPolicy"/>. </summary>
+        /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationTypeVersionsCleanupPolicy(int maxUnusedVersionsToKeep, Dictionary<string, BinaryData> rawData)
+        {
+            MaxUnusedVersionsToKeep = maxUnusedVersionsToKeep;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionsCleanupPolicy"/> for deserialization. </summary>
+        internal ApplicationTypeVersionsCleanupPolicy()
+        {
         }
 
         /// <summary> Number of unused versions per application type to keep. </summary>

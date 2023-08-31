@@ -6,18 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsWatchlistItemData : IUtf8JsonSerializable
+    public partial class SecurityInsightsWatchlistItemData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsWatchlistItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsWatchlistItemData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsWatchlistItemData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -85,11 +91,25 @@ namespace Azure.ResourceManager.SecurityInsights
 #endif
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element)
+        internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<SecurityInsightsUserInfo> updatedBy = default;
             Optional<BinaryData> itemsKeyValue = default;
             Optional<BinaryData> entityMapping = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -238,8 +259,57 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        SecurityInsightsWatchlistItemData IModelJsonSerializable<SecurityInsightsWatchlistItemData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsWatchlistItemData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsWatchlistItemData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsWatchlistItemData IModelSerializable<SecurityInsightsWatchlistItemData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsWatchlistItemData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityInsightsWatchlistItemData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityInsightsWatchlistItemData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsWatchlistItemData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

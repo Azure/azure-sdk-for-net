@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of RecoveryPoint resources. </summary>
     internal partial class RecoveryPointResourceList
     {
-        /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointResourceList"/>. </summary>
         internal RecoveryPointResourceList()
         {
             Value = new ChangeTrackingList<BackupRecoveryPointData>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal RecoveryPointResourceList(IReadOnlyList<BackupRecoveryPointData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointResourceList(IReadOnlyList<BackupRecoveryPointData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of resources. </summary>

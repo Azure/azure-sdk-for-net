@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownReplicationProviderSpecificSettings))]
     public abstract partial class ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificSettings. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificSettings"/>. </summary>
         protected ReplicationProviderSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal ReplicationProviderSpecificSettings(string instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProviderSpecificSettings(string instanceType, Dictionary<string, BinaryData> rawData)
         {
             InstanceType = instanceType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the Instance type. </summary>

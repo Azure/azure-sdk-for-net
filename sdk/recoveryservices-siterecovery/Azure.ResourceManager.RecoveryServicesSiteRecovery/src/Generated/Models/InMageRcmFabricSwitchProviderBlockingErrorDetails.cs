@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFabric switch provider blocking error details. </summary>
     public partial class InMageRcmFabricSwitchProviderBlockingErrorDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSwitchProviderBlockingErrorDetails"/>. </summary>
         internal InMageRcmFabricSwitchProviderBlockingErrorDetails()
         {
             ErrorMessageParameters = new ChangeTrackingDictionary<string, string>();
             ErrorTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSwitchProviderBlockingErrorDetails"/>. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
         /// <param name="possibleCauses"> The possible causes. </param>
         /// <param name="recommendedAction"> The recommended action. </param>
         /// <param name="errorMessageParameters"> The error message parameters. </param>
         /// <param name="errorTags"> The error tags. </param>
-        internal InMageRcmFabricSwitchProviderBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmFabricSwitchProviderBlockingErrorDetails(string errorCode, string errorMessage, string possibleCauses, string recommendedAction, IReadOnlyDictionary<string, string> errorMessageParameters, IReadOnlyDictionary<string, string> errorTags, Dictionary<string, BinaryData> rawData)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecommendedAction = recommendedAction;
             ErrorMessageParameters = errorMessageParameters;
             ErrorTags = errorTags;
+            _rawData = rawData;
         }
 
         /// <summary> The error code. </summary>

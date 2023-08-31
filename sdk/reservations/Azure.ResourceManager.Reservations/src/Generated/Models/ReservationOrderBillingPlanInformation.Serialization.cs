@@ -8,14 +8,65 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationOrderBillingPlanInformation
+    public partial class ReservationOrderBillingPlanInformation : IUtf8JsonSerializable, IModelJsonSerializable<ReservationOrderBillingPlanInformation>
     {
-        internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationOrderBillingPlanInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationOrderBillingPlanInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartOn.Value, "D");
+            }
+            if (Optional.IsDefined(NextPaymentDueOn))
+            {
+                writer.WritePropertyName("nextPaymentDueDate"u8);
+                writer.WriteStringValue(NextPaymentDueOn.Value, "D");
+            }
+            if (Optional.IsCollectionDefined(Transactions))
+            {
+                writer.WritePropertyName("transactions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Transactions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +75,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
             Optional<IReadOnlyList<PaymentDetail>> transactions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -67,8 +119,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     transactions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions));
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), rawData);
+        }
+
+        ReservationOrderBillingPlanInformation IModelJsonSerializable<ReservationOrderBillingPlanInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationOrderBillingPlanInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationOrderBillingPlanInformation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationOrderBillingPlanInformation IModelSerializable<ReservationOrderBillingPlanInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationOrderBillingPlanInformation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReservationOrderBillingPlanInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReservationOrderBillingPlanInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationOrderBillingPlanInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

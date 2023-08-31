@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsBookmarkBookmarksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsBookmarkBookmarksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SecurityInsightsBookmarkResource(Client, SecurityInsightsBookmarkData.DeserializeSecurityInsightsBookmarkData(e)), _securityInsightsBookmarkBookmarksClientDiagnostics, Pipeline, "SecurityInsightsBookmarkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

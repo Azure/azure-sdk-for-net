@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> An option to store secret value in secure place. </summary>
     internal partial class LinkerSecretStore
     {
-        /// <summary> Initializes a new instance of LinkerSecretStore. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkerSecretStore"/>. </summary>
         public LinkerSecretStore()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkerSecretStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerSecretStore"/>. </summary>
         /// <param name="keyVaultId"> The key vault id to store secret. </param>
-        internal LinkerSecretStore(ResourceIdentifier keyVaultId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkerSecretStore(ResourceIdentifier keyVaultId, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultId = keyVaultId;
+            _rawData = rawData;
         }
 
         /// <summary> The key vault id to store secret. </summary>

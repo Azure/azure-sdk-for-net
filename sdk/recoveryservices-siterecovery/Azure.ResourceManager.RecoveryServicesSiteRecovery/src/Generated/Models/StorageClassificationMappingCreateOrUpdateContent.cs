@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Storage mapping input. </summary>
     public partial class StorageClassificationMappingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of StorageClassificationMappingCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingCreateOrUpdateContent"/>. </summary>
         public StorageClassificationMappingCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationMappingCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Storage mapping input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageClassificationMappingCreateOrUpdateContent(StorageMappingProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Storage mapping input properties. </summary>

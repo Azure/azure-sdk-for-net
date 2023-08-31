@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Service update request. </summary>
     public partial class ServiceFabricManagedServicePatch
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedServicePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedServicePatch"/>. </summary>
         public ServiceFabricManagedServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedServicePatch"/>. </summary>
+        /// <param name="tags"> Service update parameters. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedServicePatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Service update parameters. </summary>

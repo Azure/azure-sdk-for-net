@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
     public partial class ManagedInstancePrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
@@ -26,15 +29,22 @@ namespace Azure.ResourceManager.Sql.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The private link service connection description. </param>
-        internal ManagedInstancePrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkServiceConnectionStateProperty"/> for deserialization. </summary>
+        internal ManagedInstancePrivateLinkServiceConnectionStateProperty()
+        {
         }
 
         /// <summary> The private link service connection status. </summary>

@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricServiceData : IUtf8JsonSerializable
+    public partial class ServiceFabricServiceData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceFabricServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceFabricServiceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceFabricServiceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -100,11 +106,25 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStringValue(ServiceDnsName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricServiceData DeserializeServiceFabricServiceData(JsonElement element)
+        internal static ServiceFabricServiceData DeserializeServiceFabricServiceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -127,6 +147,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<PartitionSchemeDescription> partitionDescription = default;
             Optional<ArmServicePackageActivationMode> servicePackageActivationMode = default;
             Optional<string> serviceDnsName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -291,8 +312,57 @@ namespace Azure.ResourceManager.ServiceFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceFabricServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), provisioningState.Value, Optional.ToNullable(serviceKind), serviceTypeName.Value, partitionDescription.Value, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(etag));
+            return new ServiceFabricServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), provisioningState.Value, Optional.ToNullable(serviceKind), serviceTypeName.Value, partitionDescription.Value, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        ServiceFabricServiceData IModelJsonSerializable<ServiceFabricServiceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricServiceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceFabricServiceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceFabricServiceData IModelSerializable<ServiceFabricServiceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceFabricServiceData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceFabricServiceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceFabricServiceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceFabricServiceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

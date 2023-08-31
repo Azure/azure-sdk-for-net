@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Request containing information needed for calculating refund. </summary>
     public partial class ReservationCalculateRefundContent
     {
-        /// <summary> Initializes a new instance of ReservationCalculateRefundContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundContent"/>. </summary>
         public ReservationCalculateRefundContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReservationCalculateRefundContent"/>. </summary>
+        /// <param name="id"> Fully qualified identifier of the reservation order being returned. </param>
+        /// <param name="properties"> Properties needed for calculate refund including the scope and the reservation to be returned. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationCalculateRefundContent(string id, ReservationCalculateRefundRequestProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Fully qualified identifier of the reservation order being returned. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> Object received from the registry containing the list of schema versions and link to next batch page. </summary>
     internal partial class SchemaVersions
     {
-        /// <summary> Initializes a new instance of SchemaVersions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SchemaVersions"/>. </summary>
         internal SchemaVersions()
         {
             Versions = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SchemaVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaVersions"/>. </summary>
         /// <param name="versions"> Array of schema version integers. </param>
         /// <param name="nextLink"> URl to next batch of schema versions. </param>
-        internal SchemaVersions(IReadOnlyList<int> versions, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaVersions(IReadOnlyList<int> versions, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Versions = versions;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of schema version integers. </summary>

@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Version related details. </summary>
     public partial class SiteRecoveryVersionDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVersionDetails"/>. </summary>
         internal SiteRecoveryVersionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVersionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVersionDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="expireOn"> Version expiry date. </param>
         /// <param name="status"> A value indicating whether security update required. </param>
-        internal SiteRecoveryVersionDetails(string version, DateTimeOffset? expireOn, SiteRecoveryAgentVersionStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVersionDetails(string version, DateTimeOffset? expireOn, SiteRecoveryAgentVersionStatus? status, Dictionary<string, BinaryData> rawData)
         {
             Version = version;
             ExpireOn = expireOn;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> The agent version. </summary>

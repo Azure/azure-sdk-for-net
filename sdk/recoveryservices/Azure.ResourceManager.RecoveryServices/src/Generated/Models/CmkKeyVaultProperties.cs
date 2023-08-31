@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> The properties of the Key Vault which hosts CMK. </summary>
     internal partial class CmkKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of CmkKeyVaultProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CmkKeyVaultProperties"/>. </summary>
         public CmkKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CmkKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CmkKeyVaultProperties"/>. </summary>
         /// <param name="keyUri"> The key uri of the Customer Managed Key. </param>
-        internal CmkKeyVaultProperties(Uri keyUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CmkKeyVaultProperties(Uri keyUri, Dictionary<string, BinaryData> rawData)
         {
             KeyUri = keyUri;
+            _rawData = rawData;
         }
 
         /// <summary> The key uri of the Customer Managed Key. </summary>

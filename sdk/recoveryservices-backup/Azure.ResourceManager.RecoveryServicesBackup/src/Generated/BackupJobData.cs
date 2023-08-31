@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupJobData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BackupJobData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobData"/>. </summary>
         /// <param name="location"> The location. </param>
         public BackupJobData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of BackupJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,10 +41,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// The available derived classes include <see cref="IaasVmBackupJob"/>, <see cref="IaasVmBackupJobV2"/>, <see cref="StorageBackupJob"/>, <see cref="WorkloadBackupJob"/>, <see cref="DpmBackupJob"/>, <see cref="MabBackupJob"/> and <see cref="VaultBackupJob"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericJob properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericJob properties, ETag? eTag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobData"/> for deserialization. </summary>
+        internal BackupJobData()
+        {
         }
 
         /// <summary>

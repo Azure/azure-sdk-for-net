@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
     public partial class SignalRUpstreamAuthSettings
     {
-        /// <summary> Initializes a new instance of SignalRUpstreamAuthSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamAuthSettings"/>. </summary>
         public SignalRUpstreamAuthSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRUpstreamAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamAuthSettings"/>. </summary>
         /// <param name="authType"> Upstream auth type enum. </param>
         /// <param name="managedIdentity"> Managed identity settings for upstream. </param>
-        internal SignalRUpstreamAuthSettings(SignalRUpstreamAuthType? authType, ManagedIdentitySettings managedIdentity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRUpstreamAuthSettings(SignalRUpstreamAuthType? authType, ManagedIdentitySettings managedIdentity, Dictionary<string, BinaryData> rawData)
         {
             AuthType = authType;
             ManagedIdentity = managedIdentity;
+            _rawData = rawData;
         }
 
         /// <summary> Upstream auth type enum. </summary>

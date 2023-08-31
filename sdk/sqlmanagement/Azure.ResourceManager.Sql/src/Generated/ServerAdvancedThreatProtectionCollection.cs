@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ServerAdvancedThreatProtectionResource(Client, ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(e)), _serverAdvancedThreatProtectionServerAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

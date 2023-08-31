@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,12 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AFabricSpecificLocationDetails
     {
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         internal A2AFabricSpecificLocationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of A2AFabricSpecificLocationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         /// <param name="initialPrimaryZone"> The initial source zone info. </param>
         /// <param name="initialRecoveryZone"> The initial target zone info. </param>
         /// <param name="initialPrimaryExtendedLocation"> The initial primary ExtendedLocation. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
-        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, Dictionary<string, BinaryData> rawData)
         {
             InitialPrimaryZone = initialPrimaryZone;
             InitialRecoveryZone = initialRecoveryZone;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryExtendedLocation = recoveryExtendedLocation;
             PrimaryFabricLocation = primaryFabricLocation;
             RecoveryFabricLocation = recoveryFabricLocation;
+            _rawData = rawData;
         }
 
         /// <summary> The initial source zone info. </summary>

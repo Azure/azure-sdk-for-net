@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The BackupWeeklySchedule. </summary>
     public partial class BackupWeeklySchedule
     {
-        /// <summary> Initializes a new instance of BackupWeeklySchedule. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupWeeklySchedule"/>. </summary>
         public BackupWeeklySchedule()
         {
             ScheduleRunDays = new ChangeTrackingList<BackupDayOfWeek>();
             ScheduleRunTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
-        /// <summary> Initializes a new instance of BackupWeeklySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupWeeklySchedule"/>. </summary>
         /// <param name="scheduleRunDays"></param>
         /// <param name="scheduleRunTimes"> List of times of day this schedule has to be run. </param>
-        internal BackupWeeklySchedule(IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupWeeklySchedule(IList<BackupDayOfWeek> scheduleRunDays, IList<DateTimeOffset> scheduleRunTimes, Dictionary<string, BinaryData> rawData)
         {
             ScheduleRunDays = scheduleRunDays;
             ScheduleRunTimes = scheduleRunTimes;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the schedule run days. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSapHanaSystemProtectableItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSapHanaSystemProtectableItem : IUtf8JsonSerializable, IModelJsonSerializable<VmWorkloadSapHanaSystemProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmWorkloadSapHanaSystemProtectableItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmWorkloadSapHanaSystemProtectableItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadSapHanaSystemProtectableItem>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentName))
             {
@@ -77,11 +85,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadSapHanaSystemProtectableItem DeserializeVmWorkloadSapHanaSystemProtectableItem(JsonElement element)
+        internal static VmWorkloadSapHanaSystemProtectableItem DeserializeVmWorkloadSapHanaSystemProtectableItem(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,6 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectableItemType = default;
             Optional<string> friendlyName = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentName"u8))
@@ -190,8 +213,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmWorkloadSapHanaSystemProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value);
+            return new VmWorkloadSapHanaSystemProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, rawData);
+        }
+
+        VmWorkloadSapHanaSystemProtectableItem IModelJsonSerializable<VmWorkloadSapHanaSystemProtectableItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadSapHanaSystemProtectableItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadSapHanaSystemProtectableItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmWorkloadSapHanaSystemProtectableItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadSapHanaSystemProtectableItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmWorkloadSapHanaSystemProtectableItem IModelSerializable<VmWorkloadSapHanaSystemProtectableItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadSapHanaSystemProtectableItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmWorkloadSapHanaSystemProtectableItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VmWorkloadSapHanaSystemProtectableItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VmWorkloadSapHanaSystemProtectableItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmWorkloadSapHanaSystemProtectableItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

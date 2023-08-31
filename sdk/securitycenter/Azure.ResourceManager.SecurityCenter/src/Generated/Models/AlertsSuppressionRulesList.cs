@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Suppression rules list for subscription. </summary>
     internal partial class AlertsSuppressionRulesList
     {
-        /// <summary> Initializes a new instance of AlertsSuppressionRulesList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertsSuppressionRulesList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AlertsSuppressionRulesList(IEnumerable<SecurityAlertsSuppressionRuleData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AlertsSuppressionRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertsSuppressionRulesList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URI to fetch the next page. </param>
-        internal AlertsSuppressionRulesList(IReadOnlyList<SecurityAlertsSuppressionRuleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertsSuppressionRulesList(IReadOnlyList<SecurityAlertsSuppressionRuleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertsSuppressionRulesList"/> for deserialization. </summary>
+        internal AlertsSuppressionRulesList()
+        {
         }
 
         /// <summary> Gets the value. </summary>

@@ -5,15 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ReplicationUsage
+    public partial class ReplicationUsage : IUtf8JsonSerializable, IModelJsonSerializable<ReplicationUsage>
     {
-        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReplicationUsage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReplicationUsage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MonitoringSummary))
+            {
+                writer.WritePropertyName("monitoringSummary"u8);
+                writer.WriteObjectValue(MonitoringSummary);
+            }
+            if (Optional.IsDefined(JobsSummary))
+            {
+                writer.WritePropertyName("jobsSummary"u8);
+                writer.WriteObjectValue(JobsSummary);
+            }
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                writer.WritePropertyName("protectedItemCount"u8);
+                writer.WriteNumberValue(ProtectedItemCount.Value);
+            }
+            if (Optional.IsDefined(RecoveryPlanCount))
+            {
+                writer.WritePropertyName("recoveryPlanCount"u8);
+                writer.WriteNumberValue(RecoveryPlanCount.Value);
+            }
+            if (Optional.IsDefined(RegisteredServersCount))
+            {
+                writer.WritePropertyName("registeredServersCount"u8);
+                writer.WriteNumberValue(RegisteredServersCount.Value);
+            }
+            if (Optional.IsDefined(RecoveryServicesProviderAuthType))
+            {
+                writer.WritePropertyName("recoveryServicesProviderAuthType"u8);
+                writer.WriteNumberValue(RecoveryServicesProviderAuthType.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> recoveryPlanCount = default;
             Optional<int> registeredServersCount = default;
             Optional<int> recoveryServicesProviderAuthType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSummary"u8))
@@ -80,8 +139,57 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     recoveryServicesProviderAuthType = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType));
+            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType), rawData);
+        }
+
+        ReplicationUsage IModelJsonSerializable<ReplicationUsage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationUsage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReplicationUsage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReplicationUsage IModelSerializable<ReplicationUsage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReplicationUsage(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReplicationUsage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReplicationUsage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReplicationUsage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsEnvironment : IUtf8JsonSerializable
+    public partial class AwsEnvironment : IUtf8JsonSerializable, IModelJsonSerializable<AwsEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AwsEnvironment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AwsEnvironment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AwsEnvironment>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationalData))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element)
+        internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AwsOrganizationalInfo> organizationalData = default;
             EnvironmentType environmentType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationalData"u8))
@@ -49,8 +72,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AwsEnvironment(environmentType, organizationalData.Value);
+            return new AwsEnvironment(environmentType, organizationalData.Value, rawData);
+        }
+
+        AwsEnvironment IModelJsonSerializable<AwsEnvironment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AwsEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAwsEnvironment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AwsEnvironment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AwsEnvironment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AwsEnvironment IModelSerializable<AwsEnvironment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AwsEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAwsEnvironment(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AwsEnvironment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AwsEnvironment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAwsEnvironment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

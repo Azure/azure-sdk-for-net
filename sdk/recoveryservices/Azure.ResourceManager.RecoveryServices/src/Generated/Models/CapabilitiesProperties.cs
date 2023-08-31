@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Capabilities information. </summary>
     internal partial class CapabilitiesProperties
     {
-        /// <summary> Initializes a new instance of CapabilitiesProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesProperties"/>. </summary>
         public CapabilitiesProperties()
         {
             DnsZones = new ChangeTrackingList<DnsZone>();
         }
 
-        /// <summary> Initializes a new instance of CapabilitiesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesProperties"/>. </summary>
         /// <param name="dnsZones"></param>
-        internal CapabilitiesProperties(IList<DnsZone> dnsZones)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapabilitiesProperties(IList<DnsZone> dnsZones, Dictionary<string, BinaryData> rawData)
         {
             DnsZones = dnsZones;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the dns zones. </summary>

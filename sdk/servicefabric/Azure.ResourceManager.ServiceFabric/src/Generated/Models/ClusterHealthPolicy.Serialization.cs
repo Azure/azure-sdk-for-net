@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterHealthPolicy : IUtf8JsonSerializable
+    public partial class ClusterHealthPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ClusterHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterHealthPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterHealthPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentUnhealthyNodes))
             {
@@ -37,11 +44,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element)
+        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<int> maxPercentUnhealthyNodes = default;
             Optional<int> maxPercentUnhealthyApplications = default;
             Optional<IDictionary<string, ApplicationHealthPolicy>> applicationHealthPolicies = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyNodes"u8))
@@ -83,8 +105,57 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     applicationHealthPolicies = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), Optional.ToDictionary(applicationHealthPolicies));
+            return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), Optional.ToDictionary(applicationHealthPolicies), rawData);
+        }
+
+        ClusterHealthPolicy IModelJsonSerializable<ClusterHealthPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterHealthPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterHealthPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterHealthPolicy IModelSerializable<ClusterHealthPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterHealthPolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ClusterHealthPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ClusterHealthPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterHealthPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

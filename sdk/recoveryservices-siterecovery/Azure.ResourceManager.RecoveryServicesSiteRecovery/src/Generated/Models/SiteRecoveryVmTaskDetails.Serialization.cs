@@ -5,15 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVmTaskDetails
+    public partial class SiteRecoveryVmTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryVmTaskDetails>
     {
-        internal static SiteRecoveryVmTaskDetails DeserializeSiteRecoveryVmTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryVmTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryVmTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryVmTaskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SkippedReason))
+            {
+                writer.WritePropertyName("skippedReason"u8);
+                writer.WriteStringValue(SkippedReason);
+            }
+            if (Optional.IsDefined(SkippedReasonString))
+            {
+                writer.WritePropertyName("skippedReasonString"u8);
+                writer.WriteStringValue(SkippedReasonString);
+            }
+            if (Optional.IsDefined(JobTask))
+            {
+                writer.WritePropertyName("jobTask"u8);
+                writer.WriteObjectValue(JobTask);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryVmTaskDetails DeserializeSiteRecoveryVmTaskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> skippedReasonString = default;
             Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skippedReason"u8))
@@ -48,8 +94,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryVmTaskDetails(instanceType, jobTask.Value, skippedReason.Value, skippedReasonString.Value);
+            return new SiteRecoveryVmTaskDetails(instanceType, jobTask.Value, skippedReason.Value, skippedReasonString.Value, rawData);
+        }
+
+        SiteRecoveryVmTaskDetails IModelJsonSerializable<SiteRecoveryVmTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryVmTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryVmTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryVmTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryVmTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryVmTaskDetails IModelSerializable<SiteRecoveryVmTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SiteRecoveryVmTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryVmTaskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryVmTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryVmTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryVmTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

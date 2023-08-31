@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a summary of the alerts of the machine group. </summary>
     public partial class AdaptiveApplicationControlIssueSummary
     {
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlIssueSummary. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlIssueSummary"/>. </summary>
         internal AdaptiveApplicationControlIssueSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlIssueSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlIssueSummary"/>. </summary>
         /// <param name="issue"> An alert that machines within a group can have. </param>
         /// <param name="numberOfVms"> The number of machines in the group that have this alert. </param>
-        internal AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue, float? numberOfVms)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdaptiveApplicationControlIssueSummary(AdaptiveApplicationControlIssue? issue, float? numberOfVms, Dictionary<string, BinaryData> rawData)
         {
             Issue = issue;
             NumberOfVms = numberOfVms;
+            _rawData = rawData;
         }
 
         /// <summary> An alert that machines within a group can have. </summary>

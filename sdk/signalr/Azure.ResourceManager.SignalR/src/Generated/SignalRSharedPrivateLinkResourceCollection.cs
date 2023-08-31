@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRSharedPrivateLinkResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRSharedPrivateLinkResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRSharedPrivateLinkResource(Client, SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(e)), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, "SignalRSharedPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRSharedPrivateLinkResource(Client, SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(e)), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, "SignalRSharedPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRSharedPrivateLinkResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRSharedPrivateLinkResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRSharedPrivateLinkResource(Client, SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(e)), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, "SignalRSharedPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SignalRSharedPrivateLinkResource(Client, SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(e)), _signalRSharedPrivateLinkResourceClientDiagnostics, Pipeline, "SignalRSharedPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

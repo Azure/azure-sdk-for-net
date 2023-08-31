@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionData"/>. </summary>
         public ServiceBusSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +51,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             MessageCount = messageCount;
             CreatedOn = createdOn;
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.ServiceBus
             IsClientAffine = isClientAffine;
             ClientAffineProperties = clientAffineProperties;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> Number of messages. </summary>

@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerJobAgentData : IUtf8JsonSerializable
+    public partial class SqlServerJobAgentData : IUtf8JsonSerializable, IModelJsonSerializable<SqlServerJobAgentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlServerJobAgentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlServerJobAgentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -44,11 +51,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(DatabaseId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlServerJobAgentData DeserializeSqlServerJobAgentData(JsonElement element)
+        internal static SqlServerJobAgentData DeserializeSqlServerJobAgentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> databaseId = default;
             Optional<JobAgentState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -146,8 +168,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlServerJobAgentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseId.Value, Optional.ToNullable(state));
+            return new SqlServerJobAgentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseId.Value, Optional.ToNullable(state), rawData);
+        }
+
+        SqlServerJobAgentData IModelJsonSerializable<SqlServerJobAgentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerJobAgentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlServerJobAgentData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlServerJobAgentData IModelSerializable<SqlServerJobAgentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlServerJobAgentData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlServerJobAgentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlServerJobAgentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlServerJobAgentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

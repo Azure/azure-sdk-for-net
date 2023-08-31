@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ElasticPoolData : IUtf8JsonSerializable
+    public partial class ElasticPoolData : IUtf8JsonSerializable, IModelJsonSerializable<ElasticPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ElasticPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ElasticPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -85,11 +91,25 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element)
+        internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,6 +133,7 @@ namespace Azure.ResourceManager.Sql
             Optional<int> highAvailabilityReplicaCount = default;
             Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -283,8 +304,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone));
+            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), rawData);
+        }
+
+        ElasticPoolData IModelJsonSerializable<ElasticPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ElasticPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ElasticPoolData IModelSerializable<ElasticPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeElasticPoolData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ElasticPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ElasticPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeElasticPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,114 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderResourceType
+    public partial class ProviderResourceType : IUtf8JsonSerializable, IModelJsonSerializable<ProviderResourceType>
     {
-        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderResourceType>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProviderResourceType>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LocationMappings))
+            {
+                writer.WritePropertyName("locationMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocationMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Aliases))
+            {
+                writer.WritePropertyName("aliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Aliases)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApiVersions))
+            {
+                writer.WritePropertyName("apiVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApiVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ZoneMappings))
+            {
+                writer.WritePropertyName("zoneMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ZoneMappings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStringValue(Capabilities);
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +127,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
             Optional<string> capabilities = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -144,8 +243,57 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties), rawData);
+        }
+
+        ProviderResourceType IModelJsonSerializable<ProviderResourceType>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderResourceType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProviderResourceType>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProviderResourceType IModelSerializable<ProviderResourceType>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderResourceType(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProviderResourceType model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProviderResourceType(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProviderResourceType(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

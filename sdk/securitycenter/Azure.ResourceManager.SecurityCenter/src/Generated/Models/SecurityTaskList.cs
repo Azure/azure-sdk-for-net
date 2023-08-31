@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security task recommendations. </summary>
     internal partial class SecurityTaskList
     {
-        /// <summary> Initializes a new instance of SecurityTaskList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
         internal SecurityTaskList()
         {
             Value = new ChangeTrackingList<SecurityTaskData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityTaskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecurityTaskList(IReadOnlyList<SecurityTaskData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityTaskList(IReadOnlyList<SecurityTaskData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

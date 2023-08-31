@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPolicyInitiateContent : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyInitiateContent : IUtf8JsonSerializable, IModelJsonSerializable<JitNetworkAccessPolicyInitiateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JitNetworkAccessPolicyInitiateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JitNetworkAccessPolicyInitiateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("virtualMachines"u8);
             writer.WriteStartArray();
@@ -27,7 +35,100 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JitNetworkAccessPolicyInitiateContent DeserializeJitNetworkAccessPolicyInitiateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines = default;
+            Optional<string> justification = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("virtualMachines"u8))
+                {
+                    List<JitNetworkAccessPolicyInitiateVirtualMachine> array = new List<JitNetworkAccessPolicyInitiateVirtualMachine>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item));
+                    }
+                    virtualMachines = array;
+                    continue;
+                }
+                if (property.NameEquals("justification"u8))
+                {
+                    justification = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JitNetworkAccessPolicyInitiateContent(virtualMachines, justification.Value, rawData);
+        }
+
+        JitNetworkAccessPolicyInitiateContent IModelJsonSerializable<JitNetworkAccessPolicyInitiateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPolicyInitiateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JitNetworkAccessPolicyInitiateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JitNetworkAccessPolicyInitiateContent IModelSerializable<JitNetworkAccessPolicyInitiateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPolicyInitiateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(JitNetworkAccessPolicyInitiateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator JitNetworkAccessPolicyInitiateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJitNetworkAccessPolicyInitiateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

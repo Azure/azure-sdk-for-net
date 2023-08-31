@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProtectableItemProperties
+    public partial class SiteRecoveryProtectableItemProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryProtectableItemProperties>
     {
-        internal static SiteRecoveryProtectableItemProperties DeserializeSiteRecoveryProtectableItemProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryProtectableItemProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryProtectableItemProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(ProtectionStatus))
+            {
+                writer.WritePropertyName("protectionStatus"u8);
+                writer.WriteStringValue(ProtectionStatus);
+            }
+            if (Optional.IsDefined(ReplicationProtectedItemId))
+            {
+                writer.WritePropertyName("replicationProtectedItemId"u8);
+                writer.WriteStringValue(ReplicationProtectedItemId);
+            }
+            if (Optional.IsDefined(RecoveryServicesProviderId))
+            {
+                writer.WritePropertyName("recoveryServicesProviderId"u8);
+                writer.WriteStringValue(RecoveryServicesProviderId);
+            }
+            if (Optional.IsCollectionDefined(ProtectionReadinessErrors))
+            {
+                writer.WritePropertyName("protectionReadinessErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectionReadinessErrors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SupportedReplicationProviders))
+            {
+                writer.WritePropertyName("supportedReplicationProviders"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedReplicationProviders)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CustomDetails))
+            {
+                writer.WritePropertyName("customDetails"u8);
+                writer.WriteObjectValue(CustomDetails);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryProtectableItemProperties DeserializeSiteRecoveryProtectableItemProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
             Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
             Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -93,8 +166,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value);
+            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value, rawData);
+        }
+
+        SiteRecoveryProtectableItemProperties IModelJsonSerializable<SiteRecoveryProtectableItemProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryProtectableItemProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryProtectableItemProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryProtectableItemProperties IModelSerializable<SiteRecoveryProtectableItemProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryProtectableItemProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryProtectableItemProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryProtectableItemProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryProtectableItemProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

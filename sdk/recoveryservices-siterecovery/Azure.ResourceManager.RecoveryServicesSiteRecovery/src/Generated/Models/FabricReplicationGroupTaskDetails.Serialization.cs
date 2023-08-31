@@ -5,15 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FabricReplicationGroupTaskDetails
+    public partial class FabricReplicationGroupTaskDetails : IUtf8JsonSerializable, IModelJsonSerializable<FabricReplicationGroupTaskDetails>
     {
-        internal static FabricReplicationGroupTaskDetails DeserializeFabricReplicationGroupTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FabricReplicationGroupTaskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FabricReplicationGroupTaskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FabricReplicationGroupTaskDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SkippedReason))
+            {
+                writer.WritePropertyName("skippedReason"u8);
+                writer.WriteStringValue(SkippedReason);
+            }
+            if (Optional.IsDefined(SkippedReasonString))
+            {
+                writer.WritePropertyName("skippedReasonString"u8);
+                writer.WriteStringValue(SkippedReasonString);
+            }
+            if (Optional.IsDefined(JobTask))
+            {
+                writer.WritePropertyName("jobTask"u8);
+                writer.WriteObjectValue(JobTask);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FabricReplicationGroupTaskDetails DeserializeFabricReplicationGroupTaskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> skippedReasonString = default;
             Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skippedReason"u8))
@@ -48,8 +94,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FabricReplicationGroupTaskDetails(instanceType, jobTask.Value, skippedReason.Value, skippedReasonString.Value);
+            return new FabricReplicationGroupTaskDetails(instanceType, jobTask.Value, skippedReason.Value, skippedReasonString.Value, rawData);
+        }
+
+        FabricReplicationGroupTaskDetails IModelJsonSerializable<FabricReplicationGroupTaskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FabricReplicationGroupTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFabricReplicationGroupTaskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FabricReplicationGroupTaskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FabricReplicationGroupTaskDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FabricReplicationGroupTaskDetails IModelSerializable<FabricReplicationGroupTaskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FabricReplicationGroupTaskDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFabricReplicationGroupTaskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FabricReplicationGroupTaskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FabricReplicationGroupTaskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFabricReplicationGroupTaskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

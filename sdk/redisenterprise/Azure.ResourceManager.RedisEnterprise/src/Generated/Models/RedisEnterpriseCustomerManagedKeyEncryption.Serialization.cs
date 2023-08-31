@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseCustomerManagedKeyEncryption : IUtf8JsonSerializable
+    public partial class RedisEnterpriseCustomerManagedKeyEncryption : IUtf8JsonSerializable, IModelJsonSerializable<RedisEnterpriseCustomerManagedKeyEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedisEnterpriseCustomerManagedKeyEncryption>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedisEnterpriseCustomerManagedKeyEncryption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisEnterpriseCustomerManagedKeyEncryption DeserializeRedisEnterpriseCustomerManagedKeyEncryption(JsonElement element)
+        internal static RedisEnterpriseCustomerManagedKeyEncryption DeserializeRedisEnterpriseCustomerManagedKeyEncryption(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity> keyEncryptionKeyIdentity = default;
             Optional<Uri> keyEncryptionKeyUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKeyIdentity"u8))
@@ -57,8 +79,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     keyEncryptionKeyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value);
+            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value, rawData);
+        }
+
+        RedisEnterpriseCustomerManagedKeyEncryption IModelJsonSerializable<RedisEnterpriseCustomerManagedKeyEncryption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedisEnterpriseCustomerManagedKeyEncryption>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedisEnterpriseCustomerManagedKeyEncryption IModelSerializable<RedisEnterpriseCustomerManagedKeyEncryption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RedisEnterpriseCustomerManagedKeyEncryption model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RedisEnterpriseCustomerManagedKeyEncryption(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedisEnterpriseCustomerManagedKeyEncryption(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

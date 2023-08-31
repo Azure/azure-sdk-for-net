@@ -8,14 +8,111 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class ManagementGroupInfo
+    public partial class ManagementGroupInfo : IUtf8JsonSerializable, IModelJsonSerializable<ManagementGroupInfo>
     {
-        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementGroupInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagementGroupInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedTime"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(UpdatedBy))
+            {
+                writer.WritePropertyName("updatedBy"u8);
+                writer.WriteStringValue(UpdatedBy);
+            }
+            if (Optional.IsDefined(Parent))
+            {
+                writer.WritePropertyName("parent"u8);
+                writer.WriteObjectValue(Parent);
+            }
+            if (Optional.IsCollectionDefined(Path))
+            {
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Path)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsCollectionDefined(ManagementGroupAncestors))
+            {
+                if (ManagementGroupAncestors != null)
+                {
+                    writer.WritePropertyName("managementGroupAncestors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ManagementGroupAncestors)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("managementGroupAncestors");
+                }
+            }
+            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
+            {
+                if (ManagementGroupAncestorChain != null)
+                {
+                    writer.WritePropertyName("managementGroupAncestorsChain"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ManagementGroupAncestorChain)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("managementGroupAncestorsChain");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +124,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
             Optional<IReadOnlyList<string>> managementGroupAncestors = default;
             Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -106,8 +204,57 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     managementGroupAncestorsChain = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
+            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain), rawData);
+        }
+
+        ManagementGroupInfo IModelJsonSerializable<ManagementGroupInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementGroupInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagementGroupInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagementGroupInfo IModelSerializable<ManagementGroupInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagementGroupInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagementGroupInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagementGroupInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagementGroupInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

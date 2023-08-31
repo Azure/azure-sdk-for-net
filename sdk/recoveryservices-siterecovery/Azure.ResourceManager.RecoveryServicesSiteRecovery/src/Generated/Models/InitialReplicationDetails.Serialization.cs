@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InitialReplicationDetails
+    public partial class InitialReplicationDetails : IUtf8JsonSerializable, IModelJsonSerializable<InitialReplicationDetails>
     {
-        internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InitialReplicationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InitialReplicationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InitialReplicationType))
+            {
+                writer.WritePropertyName("initialReplicationType"u8);
+                writer.WriteStringValue(InitialReplicationType);
+            }
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
+            {
+                writer.WritePropertyName("initialReplicationProgressPercentage"u8);
+                writer.WriteStringValue(InitialReplicationProgressPercentage);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InitialReplicationDetails DeserializeInitialReplicationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> initialReplicationType = default;
             Optional<string> initialReplicationProgressPercentage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialReplicationType"u8))
@@ -32,8 +71,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     initialReplicationProgressPercentage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InitialReplicationDetails(initialReplicationType.Value, initialReplicationProgressPercentage.Value);
+            return new InitialReplicationDetails(initialReplicationType.Value, initialReplicationProgressPercentage.Value, rawData);
+        }
+
+        InitialReplicationDetails IModelJsonSerializable<InitialReplicationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInitialReplicationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InitialReplicationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InitialReplicationDetails IModelSerializable<InitialReplicationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInitialReplicationDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InitialReplicationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InitialReplicationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInitialReplicationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

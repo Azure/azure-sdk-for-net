@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseImportDefinition : IUtf8JsonSerializable
+    public partial class DatabaseImportDefinition : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseImportDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseImportDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseImportDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseName))
             {
@@ -55,7 +63,153 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DatabaseImportDefinition DeserializeDatabaseImportDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> databaseName = default;
+            Optional<string> edition = default;
+            Optional<string> serviceObjectiveName = default;
+            Optional<string> maxSizeBytes = default;
+            StorageKeyType storageKeyType = default;
+            string storageKey = default;
+            Uri storageUri = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            Optional<string> authenticationType = default;
+            Optional<NetworkIsolationSettings> networkIsolation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("databaseName"u8))
+                {
+                    databaseName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("edition"u8))
+                {
+                    edition = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serviceObjectiveName"u8))
+                {
+                    serviceObjectiveName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxSizeBytes"u8))
+                {
+                    maxSizeBytes = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageKeyType"u8))
+                {
+                    storageKeyType = new StorageKeyType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageKey"u8))
+                {
+                    storageKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageUri"u8))
+                {
+                    storageUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("administratorLogin"u8))
+                {
+                    administratorLogin = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("administratorLoginPassword"u8))
+                {
+                    administratorLoginPassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authenticationType"u8))
+                {
+                    authenticationType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("networkIsolation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DatabaseImportDefinition(databaseName.Value, edition.Value, serviceObjectiveName.Value, maxSizeBytes.Value, storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, rawData);
+        }
+
+        DatabaseImportDefinition IModelJsonSerializable<DatabaseImportDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseImportDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseImportDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseImportDefinition IModelSerializable<DatabaseImportDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseImportDefinition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DatabaseImportDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DatabaseImportDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseImportDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

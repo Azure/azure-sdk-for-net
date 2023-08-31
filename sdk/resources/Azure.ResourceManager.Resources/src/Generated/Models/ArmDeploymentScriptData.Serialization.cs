@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ArmDeploymentScriptData : IUtf8JsonSerializable
+    public partial class ArmDeploymentScriptData : IUtf8JsonSerializable, IModelJsonSerializable<ArmDeploymentScriptData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmDeploymentScriptData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmDeploymentScriptData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmDeploymentScriptData DeserializeArmDeploymentScriptData(JsonElement element)
+        internal static ArmDeploymentScriptData DeserializeArmDeploymentScriptData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,8 @@ namespace Azure.ResourceManager.Resources
                     case "AzurePowerShell": return AzurePowerShellScript.DeserializeAzurePowerShellScript(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -63,6 +86,7 @@ namespace Azure.ResourceManager.Resources
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -122,8 +146,57 @@ namespace Azure.ResourceManager.Resources
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmDeploymentScriptData(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind);
+            return new ArmDeploymentScriptData(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, rawData);
+        }
+
+        ArmDeploymentScriptData IModelJsonSerializable<ArmDeploymentScriptData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentScriptData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmDeploymentScriptData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmDeploymentScriptData IModelSerializable<ArmDeploymentScriptData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmDeploymentScriptData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ArmDeploymentScriptData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ArmDeploymentScriptData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmDeploymentScriptData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

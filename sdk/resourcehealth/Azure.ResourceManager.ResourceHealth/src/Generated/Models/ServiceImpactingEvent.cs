@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Lists the service impacting events that may be affecting the health of the resource. </summary>
     public partial class ServiceImpactingEvent
     {
-        /// <summary> Initializes a new instance of ServiceImpactingEvent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEvent"/>. </summary>
         internal ServiceImpactingEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceImpactingEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEvent"/>. </summary>
         /// <param name="eventStartOn"> Timestamp for when the event started. </param>
         /// <param name="eventStatusLastModifiedOn"> Timestamp for when event was submitted/detected. </param>
         /// <param name="correlationId"> Correlation id for the event. </param>
         /// <param name="status"> Status of the service impacting event. </param>
         /// <param name="incidentProperties"> Properties of the service impacting event. </param>
-        internal ServiceImpactingEvent(DateTimeOffset? eventStartOn, DateTimeOffset? eventStatusLastModifiedOn, string correlationId, ServiceImpactingEventStatus status, ServiceImpactingEventIncidentProperties incidentProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceImpactingEvent(DateTimeOffset? eventStartOn, DateTimeOffset? eventStatusLastModifiedOn, string correlationId, ServiceImpactingEventStatus status, ServiceImpactingEventIncidentProperties incidentProperties, Dictionary<string, BinaryData> rawData)
         {
             EventStartOn = eventStartOn;
             EventStatusLastModifiedOn = eventStatusLastModifiedOn;
             CorrelationId = correlationId;
             Status = status;
             IncidentProperties = incidentProperties;
+            _rawData = rawData;
         }
 
         /// <summary> Timestamp for when the event started. </summary>

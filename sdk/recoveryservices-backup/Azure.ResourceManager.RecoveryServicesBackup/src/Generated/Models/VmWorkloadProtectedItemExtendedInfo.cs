@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information on Azure Workload for SQL specific backup item. </summary>
     public partial class VmWorkloadProtectedItemExtendedInfo
     {
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItemExtendedInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemExtendedInfo"/>. </summary>
         public VmWorkloadProtectedItemExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
         /// <param name="oldestRecoveryPointInVault"> The oldest backup copy available for this backup item in vault tier. </param>
         /// <param name="oldestRecoveryPointInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="recoveryModel"> Indicates consistency of policy object and policy applied to this backup item. </param>
-        internal VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, string policyState, string recoveryModel)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoveryPointInVault, DateTimeOffset? oldestRecoveryPointInArchive, DateTimeOffset? newestRecoveryPointInArchive, int? recoveryPointCount, string policyState, string recoveryModel, Dictionary<string, BinaryData> rawData)
         {
             OldestRecoverOn = oldestRecoverOn;
             OldestRecoveryPointInVault = oldestRecoveryPointInVault;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
             RecoveryModel = recoveryModel;
+            _rawData = rawData;
         }
 
         /// <summary> The oldest backup copy available for this backup item across all tiers. </summary>

@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Port range details. </summary>
     public partial class EndpointRangeDescription
     {
-        /// <summary> Initializes a new instance of EndpointRangeDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointRangeDescription"/>. </summary>
         /// <param name="startPort"> Starting port of a range of ports. </param>
         /// <param name="endPort"> End port of a range of ports. </param>
         public EndpointRangeDescription(int startPort, int endPort)
         {
             StartPort = startPort;
             EndPort = endPort;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EndpointRangeDescription"/>. </summary>
+        /// <param name="startPort"> Starting port of a range of ports. </param>
+        /// <param name="endPort"> End port of a range of ports. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointRangeDescription(int startPort, int endPort, Dictionary<string, BinaryData> rawData)
+        {
+            StartPort = startPort;
+            EndPort = endPort;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EndpointRangeDescription"/> for deserialization. </summary>
+        internal EndpointRangeDescription()
+        {
         }
 
         /// <summary> Starting port of a range of ports. </summary>

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmProtectedItemExtendedInfo : IUtf8JsonSerializable
+    public partial class IaasVmProtectedItemExtendedInfo : IUtf8JsonSerializable, IModelJsonSerializable<IaasVmProtectedItemExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IaasVmProtectedItemExtendedInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IaasVmProtectedItemExtendedInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OldestRecoverOn))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyInconsistent"u8);
                 writer.WriteBooleanValue(IsPolicyInconsistent.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmProtectedItemExtendedInfo DeserializeIaasVmProtectedItemExtendedInfo(JsonElement element)
+        internal static IaasVmProtectedItemExtendedInfo DeserializeIaasVmProtectedItemExtendedInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
             Optional<int> recoveryPointCount = default;
             Optional<bool> policyInconsistent = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -117,8 +139,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyInconsistent = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IaasVmProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(policyInconsistent));
+            return new IaasVmProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(policyInconsistent), rawData);
+        }
+
+        IaasVmProtectedItemExtendedInfo IModelJsonSerializable<IaasVmProtectedItemExtendedInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmProtectedItemExtendedInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IaasVmProtectedItemExtendedInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IaasVmProtectedItemExtendedInfo IModelSerializable<IaasVmProtectedItemExtendedInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIaasVmProtectedItemExtendedInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IaasVmProtectedItemExtendedInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IaasVmProtectedItemExtendedInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIaasVmProtectedItemExtendedInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

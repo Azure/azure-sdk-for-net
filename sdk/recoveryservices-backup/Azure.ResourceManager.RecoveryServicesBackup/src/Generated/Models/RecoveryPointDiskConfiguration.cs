@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Disk configuration. </summary>
     public partial class RecoveryPointDiskConfiguration
     {
-        /// <summary> Initializes a new instance of RecoveryPointDiskConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDiskConfiguration"/>. </summary>
         public RecoveryPointDiskConfiguration()
         {
             IncludedDiskList = new ChangeTrackingList<DiskInformation>();
             ExcludedDiskList = new ChangeTrackingList<DiskInformation>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointDiskConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDiskConfiguration"/>. </summary>
         /// <param name="numberOfDisksIncludedInBackup"> Number of disks included in backup. </param>
         /// <param name="numberOfDisksAttachedToVm"> Number of disks attached to the VM. </param>
         /// <param name="includedDiskList"> Information of disks included in backup. </param>
         /// <param name="excludedDiskList"> Information of disks excluded from backup. </param>
-        internal RecoveryPointDiskConfiguration(int? numberOfDisksIncludedInBackup, int? numberOfDisksAttachedToVm, IList<DiskInformation> includedDiskList, IList<DiskInformation> excludedDiskList)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointDiskConfiguration(int? numberOfDisksIncludedInBackup, int? numberOfDisksAttachedToVm, IList<DiskInformation> includedDiskList, IList<DiskInformation> excludedDiskList, Dictionary<string, BinaryData> rawData)
         {
             NumberOfDisksIncludedInBackup = numberOfDisksIncludedInBackup;
             NumberOfDisksAttachedToVm = numberOfDisksAttachedToVm;
             IncludedDiskList = includedDiskList;
             ExcludedDiskList = excludedDiskList;
+            _rawData = rawData;
         }
 
         /// <summary> Number of disks included in backup. </summary>

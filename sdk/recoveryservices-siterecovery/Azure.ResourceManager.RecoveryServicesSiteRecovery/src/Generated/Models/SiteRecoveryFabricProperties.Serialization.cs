@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryFabricProperties
+    public partial class SiteRecoveryFabricProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryFabricProperties>
     {
-        internal static SiteRecoveryFabricProperties DeserializeSiteRecoveryFabricProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryFabricProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryFabricProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(EncryptionDetails))
+            {
+                writer.WritePropertyName("encryptionDetails"u8);
+                writer.WriteObjectValue(EncryptionDetails);
+            }
+            if (Optional.IsDefined(RolloverEncryptionDetails))
+            {
+                writer.WritePropertyName("rolloverEncryptionDetails"u8);
+                writer.WriteObjectValue(RolloverEncryptionDetails);
+            }
+            if (Optional.IsDefined(InternalIdentifier))
+            {
+                writer.WritePropertyName("internalIdentifier"u8);
+                writer.WriteStringValue(InternalIdentifier);
+            }
+            if (Optional.IsDefined(BcdrState))
+            {
+                writer.WritePropertyName("bcdrState"u8);
+                writer.WriteStringValue(BcdrState);
+            }
+            if (Optional.IsDefined(CustomDetails))
+            {
+                writer.WritePropertyName("customDetails"u8);
+                writer.WriteObjectValue(CustomDetails);
+            }
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                writer.WritePropertyName("healthErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrorDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Health))
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryFabricProperties DeserializeSiteRecoveryFabricProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<FabricSpecificDetails> customDetails = default;
             Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
             Optional<string> health = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -90,8 +163,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     health = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, Optional.ToList(healthErrorDetails), health.Value);
+            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, Optional.ToList(healthErrorDetails), health.Value, rawData);
+        }
+
+        SiteRecoveryFabricProperties IModelJsonSerializable<SiteRecoveryFabricProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryFabricProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryFabricProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryFabricProperties IModelSerializable<SiteRecoveryFabricProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryFabricProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryFabricProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryFabricProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryFabricProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

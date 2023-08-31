@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Refund policy result. </summary>
     internal partial class RefundPolicyResult
     {
-        /// <summary> Initializes a new instance of RefundPolicyResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RefundPolicyResult"/>. </summary>
         internal RefundPolicyResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RefundPolicyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RefundPolicyResult"/>. </summary>
         /// <param name="properties"> Refund policy result property. </param>
-        internal RefundPolicyResult(ReservationRefundPolicyResultProperty properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RefundPolicyResult(ReservationRefundPolicyResultProperty properties, Dictionary<string, BinaryData> rawData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Refund policy result property. </summary>

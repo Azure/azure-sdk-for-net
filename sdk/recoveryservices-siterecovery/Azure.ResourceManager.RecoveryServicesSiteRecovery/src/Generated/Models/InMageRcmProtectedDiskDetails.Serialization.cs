@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmProtectedDiskDetails
+    public partial class InMageRcmProtectedDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmProtectedDiskDetails>
     {
-        internal static InMageRcmProtectedDiskDetails DeserializeInMageRcmProtectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmProtectedDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmProtectedDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DiskType))
+            {
+                writer.WritePropertyName("diskType"u8);
+                writer.WriteStringValue(DiskType.Value.ToString());
+            }
+            if (Optional.IsDefined(IrDetails))
+            {
+                writer.WritePropertyName("irDetails"u8);
+                writer.WriteObjectValue(IrDetails);
+            }
+            if (Optional.IsDefined(ResyncDetails))
+            {
+                writer.WritePropertyName("resyncDetails"u8);
+                writer.WriteObjectValue(ResyncDetails);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmProtectedDiskDetails DeserializeInMageRcmProtectedDiskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> isInitialReplicationComplete = default;
             Optional<InMageRcmSyncDetails> irDetails = default;
             Optional<InMageRcmSyncDetails> resyncDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -147,8 +190,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Optional.ToNullable(diskType), Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value);
+            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Optional.ToNullable(diskType), Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, rawData);
+        }
+
+        InMageRcmProtectedDiskDetails IModelJsonSerializable<InMageRcmProtectedDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmProtectedDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmProtectedDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmProtectedDiskDetails IModelSerializable<InMageRcmProtectedDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmProtectedDiskDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InMageRcmProtectedDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InMageRcmProtectedDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmProtectedDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

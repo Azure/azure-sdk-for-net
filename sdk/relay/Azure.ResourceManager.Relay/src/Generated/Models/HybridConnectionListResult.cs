@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Relay;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> The response of the list hybrid connection operation. </summary>
     internal partial class HybridConnectionListResult
     {
-        /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
         internal HybridConnectionListResult()
         {
             Value = new ChangeTrackingList<RelayHybridConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
         /// <param name="value"> Result of the list hybrid connections. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if value contains incomplete list hybrid connection operation. </param>
-        internal HybridConnectionListResult(IReadOnlyList<RelayHybridConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridConnectionListResult(IReadOnlyList<RelayHybridConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Result of the list hybrid connections. </summary>

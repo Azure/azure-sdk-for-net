@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class GenerateCapabilityImageContent : IUtf8JsonSerializable
+    public partial class GenerateCapabilityImageContent : IUtf8JsonSerializable, IModelJsonSerializable<GenerateCapabilityImageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GenerateCapabilityImageContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GenerateCapabilityImageContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("capabilities"u8);
             writer.WriteStartArray();
@@ -22,7 +30,94 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static GenerateCapabilityImageContent DeserializeGenerateCapabilityImageContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<SphereCapabilityType> capabilities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("capabilities"u8))
+                {
+                    List<SphereCapabilityType> array = new List<SphereCapabilityType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new SphereCapabilityType(item.GetString()));
+                    }
+                    capabilities = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new GenerateCapabilityImageContent(capabilities, rawData);
+        }
+
+        GenerateCapabilityImageContent IModelJsonSerializable<GenerateCapabilityImageContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenerateCapabilityImageContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GenerateCapabilityImageContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GenerateCapabilityImageContent IModelSerializable<GenerateCapabilityImageContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGenerateCapabilityImageContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GenerateCapabilityImageContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GenerateCapabilityImageContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGenerateCapabilityImageContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

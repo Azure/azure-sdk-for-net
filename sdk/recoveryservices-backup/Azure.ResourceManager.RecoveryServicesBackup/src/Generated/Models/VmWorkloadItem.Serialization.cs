@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadItem : IUtf8JsonSerializable
+    public partial class VmWorkloadItem : IUtf8JsonSerializable, IModelJsonSerializable<VmWorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmWorkloadItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmWorkloadItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadItem>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentName))
             {
@@ -62,11 +70,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadItem DeserializeVmWorkloadItem(JsonElement element)
+        internal static VmWorkloadItem DeserializeVmWorkloadItem(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -83,6 +105,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "SQLInstance": return VmWorkloadSqlInstanceWorkloadItem.DeserializeVmWorkloadSqlInstanceWorkloadItem(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<string> parentName = default;
             Optional<string> serverName = default;
             Optional<bool> isAutoProtectable = default;
@@ -93,6 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string workloadItemType = "AzureVmWorkloadItem";
             Optional<string> friendlyName = default;
             Optional<BackupProtectionStatus> protectionState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentName"u8))
@@ -161,8 +186,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount));
+            return new VmWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount), rawData);
+        }
+
+        VmWorkloadItem IModelJsonSerializable<VmWorkloadItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmWorkloadItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmWorkloadItem IModelSerializable<VmWorkloadItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VmWorkloadItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmWorkloadItem(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VmWorkloadItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VmWorkloadItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmWorkloadItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtContainerMappingContent : IUtf8JsonSerializable
+    public partial class VMwareCbtContainerMappingContent : IUtf8JsonSerializable, IModelJsonSerializable<VMwareCbtContainerMappingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VMwareCbtContainerMappingContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VMwareCbtContainerMappingContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VMwareCbtContainerMappingContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultId))
             {
@@ -41,7 +49,133 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(TargetLocation);
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VMwareCbtContainerMappingContent DeserializeVMwareCbtContainerMappingContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> keyVaultId = default;
+            Optional<Uri> keyVaultUri = default;
+            ResourceIdentifier storageAccountId = default;
+            Optional<string> storageAccountSasSecretName = default;
+            Optional<string> serviceBusConnectionStringSecretName = default;
+            string targetLocation = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("keyVaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("keyVaultUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageAccountId"u8))
+                {
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageAccountSasSecretName"u8))
+                {
+                    storageAccountSasSecretName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serviceBusConnectionStringSecretName"u8))
+                {
+                    serviceBusConnectionStringSecretName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetLocation"u8))
+                {
+                    targetLocation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VMwareCbtContainerMappingContent(instanceType, keyVaultId.Value, keyVaultUri.Value, storageAccountId, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation, rawData);
+        }
+
+        VMwareCbtContainerMappingContent IModelJsonSerializable<VMwareCbtContainerMappingContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VMwareCbtContainerMappingContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtContainerMappingContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VMwareCbtContainerMappingContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VMwareCbtContainerMappingContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VMwareCbtContainerMappingContent IModelSerializable<VMwareCbtContainerMappingContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VMwareCbtContainerMappingContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVMwareCbtContainerMappingContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VMwareCbtContainerMappingContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VMwareCbtContainerMappingContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVMwareCbtContainerMappingContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Namespace operation. </summary>
     internal partial class SBAuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of SBAuthorizationRuleListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SBAuthorizationRuleListResult"/>. </summary>
         internal SBAuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<ServiceBusAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of SBAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBAuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> Result of the List Authorization Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Authorization Rules. </param>
-        internal SBAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SBAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Result of the List Authorization Rules operation. </summary>

@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Site details provided during the time of site creation. </summary>
     public partial class SiteRecoveryFabricCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryFabricCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Fabric creation input. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryFabricCreateOrUpdateContent(FabricCreationProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Fabric creation input. </summary>

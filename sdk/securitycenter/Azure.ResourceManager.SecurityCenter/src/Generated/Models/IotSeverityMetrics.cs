@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> IoT Security solution analytics severity metrics. </summary>
     public partial class IotSeverityMetrics
     {
-        /// <summary> Initializes a new instance of IotSeverityMetrics. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSeverityMetrics"/>. </summary>
         internal IotSeverityMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSeverityMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSeverityMetrics"/>. </summary>
         /// <param name="high"> Count of high severity alerts/recommendations. </param>
         /// <param name="medium"> Count of medium severity alerts/recommendations. </param>
         /// <param name="low"> Count of low severity alerts/recommendations. </param>
-        internal IotSeverityMetrics(long? high, long? medium, long? low)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSeverityMetrics(long? high, long? medium, long? low, Dictionary<string, BinaryData> rawData)
         {
             High = high;
             Medium = medium;
             Low = low;
+            _rawData = rawData;
         }
 
         /// <summary> Count of high severity alerts/recommendations. </summary>

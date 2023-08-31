@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application locking policy. </summary>
     public partial class ArmApplicationPackageLockingPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageLockingPolicy"/>. </summary>
         public ArmApplicationPackageLockingPolicy()
         {
             AllowedActions = new ChangeTrackingList<string>();
             AllowedDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPackageLockingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPackageLockingPolicy"/>. </summary>
         /// <param name="allowedActions"> The deny assignment excluded actions. </param>
         /// <param name="allowedDataActions"> The deny assignment excluded data actions. </param>
-        internal ArmApplicationPackageLockingPolicy(IList<string> allowedActions, IList<string> allowedDataActions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationPackageLockingPolicy(IList<string> allowedActions, IList<string> allowedDataActions, Dictionary<string, BinaryData> rawData)
         {
             AllowedActions = allowedActions;
             AllowedDataActions = allowedDataActions;
+            _rawData = rawData;
         }
 
         /// <summary> The deny assignment excluded actions. </summary>

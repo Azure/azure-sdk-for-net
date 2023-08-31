@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> Management group patch parameters. </summary>
     public partial class ManagementGroupPatch
     {
-        /// <summary> Initializes a new instance of ManagementGroupPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupPatch"/>. </summary>
         public ManagementGroupPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupPatch"/>. </summary>
+        /// <param name="displayName"> The friendly name of the management group. </param>
+        /// <param name="parentGroupId"> (Optional) The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroupPatch(string displayName, string parentGroupId, Dictionary<string, BinaryData> rawData)
+        {
+            DisplayName = displayName;
+            ParentGroupId = parentGroupId;
+            _rawData = rawData;
         }
 
         /// <summary> The friendly name of the management group. </summary>

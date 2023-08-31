@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable
+    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable, IModelJsonSerializable<DefaultPurviewAccountPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefaultPurviewAccountPayload>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefaultPurviewAccountPayload>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefaultPurviewAccountPayload DeserializeDefaultPurviewAccountPayload(JsonElement element)
+        internal static DefaultPurviewAccountPayload DeserializeDefaultPurviewAccountPayload(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +82,7 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<Guid> scopeTenantId = default;
             Optional<PurviewAccountScopeType> scopeType = default;
             Optional<string> subscriptionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -101,8 +123,57 @@ namespace Azure.ResourceManager.Purview.Models
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value);
+            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value, rawData);
+        }
+
+        DefaultPurviewAccountPayload IModelJsonSerializable<DefaultPurviewAccountPayload>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefaultPurviewAccountPayload(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefaultPurviewAccountPayload>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefaultPurviewAccountPayload IModelSerializable<DefaultPurviewAccountPayload>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefaultPurviewAccountPayload(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DefaultPurviewAccountPayload model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DefaultPurviewAccountPayload(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefaultPurviewAccountPayload(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

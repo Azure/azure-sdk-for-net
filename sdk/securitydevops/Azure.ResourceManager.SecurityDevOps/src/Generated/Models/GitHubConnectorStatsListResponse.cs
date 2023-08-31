@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The GitHubConnectorStatsListResponse. </summary>
     internal partial class GitHubConnectorStatsListResponse
     {
-        /// <summary> Initializes a new instance of GitHubConnectorStatsListResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsListResponse"/>. </summary>
         internal GitHubConnectorStatsListResponse()
         {
             Value = new ChangeTrackingList<GitHubConnectorStats>();
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStatsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
-        internal GitHubConnectorStatsListResponse(IReadOnlyList<GitHubConnectorStats> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubConnectorStatsListResponse(IReadOnlyList<GitHubConnectorStats> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets list of resources. </summary>

@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GithubScopeEnvironment : IUtf8JsonSerializable
+    public partial class GithubScopeEnvironment : IUtf8JsonSerializable, IModelJsonSerializable<GithubScopeEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GithubScopeEnvironment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GithubScopeEnvironment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GithubScopeEnvironment>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GithubScopeEnvironment DeserializeGithubScopeEnvironment(JsonElement element)
+        internal static GithubScopeEnvironment DeserializeGithubScopeEnvironment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EnvironmentType environmentType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentType"u8))
@@ -34,8 +57,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     environmentType = new EnvironmentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GithubScopeEnvironment(environmentType);
+            return new GithubScopeEnvironment(environmentType, rawData);
+        }
+
+        GithubScopeEnvironment IModelJsonSerializable<GithubScopeEnvironment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GithubScopeEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGithubScopeEnvironment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GithubScopeEnvironment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GithubScopeEnvironment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GithubScopeEnvironment IModelSerializable<GithubScopeEnvironment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GithubScopeEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGithubScopeEnvironment(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GithubScopeEnvironment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GithubScopeEnvironment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGithubScopeEnvironment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

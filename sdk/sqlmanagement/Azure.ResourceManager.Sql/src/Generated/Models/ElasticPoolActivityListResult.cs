@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents the response to a list elastic pool activity request. </summary>
     internal partial class ElasticPoolActivityListResult
     {
-        /// <summary> Initializes a new instance of ElasticPoolActivityListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolActivityListResult"/>. </summary>
         /// <param name="value"> The list of elastic pool activities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ElasticPoolActivityListResult(IEnumerable<ElasticPoolActivity> value)
@@ -25,11 +27,18 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolActivityListResult"/>. </summary>
         /// <param name="value"> The list of elastic pool activities. </param>
-        internal ElasticPoolActivityListResult(IReadOnlyList<ElasticPoolActivity> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolActivityListResult(IReadOnlyList<ElasticPoolActivity> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolActivityListResult"/> for deserialization. </summary>
+        internal ElasticPoolActivityListResult()
+        {
         }
 
         /// <summary> The list of elastic pool activities. </summary>

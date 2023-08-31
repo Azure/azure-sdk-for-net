@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsIncidentRelationData : IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentRelationData : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsIncidentRelationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsIncidentRelationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsIncidentRelationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStringValue(RelatedResourceId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsIncidentRelationData DeserializeSecurityInsightsIncidentRelationData(JsonElement element)
+        internal static SecurityInsightsIncidentRelationData DeserializeSecurityInsightsIncidentRelationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<string> relatedResourceName = default;
             Optional<ResourceType> relatedResourceType = default;
             Optional<string> relatedResourceKind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -123,8 +145,57 @@ namespace Azure.ResourceManager.SecurityInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        SecurityInsightsIncidentRelationData IModelJsonSerializable<SecurityInsightsIncidentRelationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsIncidentRelationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsIncidentRelationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsIncidentRelationData IModelSerializable<SecurityInsightsIncidentRelationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsIncidentRelationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityInsightsIncidentRelationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityInsightsIncidentRelationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsIncidentRelationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

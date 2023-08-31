@@ -8,14 +8,120 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryHealthError
+    public partial class SiteRecoveryHealthError : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryHealthError>
     {
-        internal static SiteRecoveryHealthError DeserializeSiteRecoveryHealthError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryHealthError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryHealthError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(InnerHealthErrors))
+            {
+                writer.WritePropertyName("innerHealthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in InnerHealthErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ErrorSource))
+            {
+                writer.WritePropertyName("errorSource"u8);
+                writer.WriteStringValue(ErrorSource);
+            }
+            if (Optional.IsDefined(ErrorType))
+            {
+                writer.WritePropertyName("errorType"u8);
+                writer.WriteStringValue(ErrorType);
+            }
+            if (Optional.IsDefined(ErrorLevel))
+            {
+                writer.WritePropertyName("errorLevel"u8);
+                writer.WriteStringValue(ErrorLevel);
+            }
+            if (Optional.IsDefined(ErrorCategory))
+            {
+                writer.WritePropertyName("errorCategory"u8);
+                writer.WriteStringValue(ErrorCategory);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(SummaryMessage))
+            {
+                writer.WritePropertyName("summaryMessage"u8);
+                writer.WriteStringValue(SummaryMessage);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(PossibleCauses))
+            {
+                writer.WritePropertyName("possibleCauses"u8);
+                writer.WriteStringValue(PossibleCauses);
+            }
+            if (Optional.IsDefined(RecommendedAction))
+            {
+                writer.WritePropertyName("recommendedAction"u8);
+                writer.WriteStringValue(RecommendedAction);
+            }
+            if (Optional.IsDefined(CreationTimeUtc))
+            {
+                writer.WritePropertyName("creationTimeUtc"u8);
+                writer.WriteStringValue(CreationTimeUtc.Value, "O");
+            }
+            if (Optional.IsDefined(RecoveryProviderErrorMessage))
+            {
+                writer.WritePropertyName("recoveryProviderErrorMessage"u8);
+                writer.WriteStringValue(RecoveryProviderErrorMessage);
+            }
+            if (Optional.IsDefined(EntityId))
+            {
+                writer.WritePropertyName("entityId"u8);
+                writer.WriteStringValue(EntityId);
+            }
+            if (Optional.IsDefined(ErrorId))
+            {
+                writer.WritePropertyName("errorId"u8);
+                writer.WriteStringValue(ErrorId);
+            }
+            if (Optional.IsDefined(CustomerResolvability))
+            {
+                writer.WritePropertyName("customerResolvability"u8);
+                writer.WriteStringValue(CustomerResolvability.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryHealthError DeserializeSiteRecoveryHealthError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> entityId = default;
             Optional<string> errorId = default;
             Optional<HealthErrorCustomerResolvability> customerResolvability = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("innerHealthErrors"u8))
@@ -129,8 +236,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     customerResolvability = new HealthErrorCustomerResolvability(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryHealthError(Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability));
+            return new SiteRecoveryHealthError(Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability), rawData);
+        }
+
+        SiteRecoveryHealthError IModelJsonSerializable<SiteRecoveryHealthError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryHealthError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryHealthError>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryHealthError IModelSerializable<SiteRecoveryHealthError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryHealthError(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryHealthError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryHealthError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryHealthError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

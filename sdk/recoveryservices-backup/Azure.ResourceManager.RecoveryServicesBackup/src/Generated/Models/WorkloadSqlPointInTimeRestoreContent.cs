@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadSqlPointInTimeRestoreContent : WorkloadSqlRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         public WorkloadSqlPointInTimeRestoreContent()
         {
             ObjectType = "AzureWorkloadSQLPointInTimeRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isNonRecoverable"> SQL specific property where user can chose to set no-recovery when restore operation is tried. </param>
         /// <param name="alternateDirectoryPaths"> Data directory details. </param>
         /// <param name="pointInTime"> PointInTime value. </param>
-        internal WorkloadSqlPointInTimeRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSqlPointInTimeRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, bool? shouldUseAlternateTargetLocation, bool? isNonRecoverable, IList<SqlDataDirectoryMapping> alternateDirectoryPaths, DateTimeOffset? pointInTime, Dictionary<string, BinaryData> rawData) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, shouldUseAlternateTargetLocation, isNonRecoverable, alternateDirectoryPaths, rawData)
         {
             PointInTime = pointInTime;
             ObjectType = objectType ?? "AzureWorkloadSQLPointInTimeRestoreRequest";

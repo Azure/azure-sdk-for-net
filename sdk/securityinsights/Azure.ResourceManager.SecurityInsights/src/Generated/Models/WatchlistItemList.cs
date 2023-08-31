@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the watchlist items. </summary>
     internal partial class WatchlistItemList
     {
-        /// <summary> Initializes a new instance of WatchlistItemList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
         /// <param name="value"> Array of watchlist items. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WatchlistItemList(IEnumerable<SecurityInsightsWatchlistItemData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of WatchlistItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of watchlist items. </param>
         /// <param name="value"> Array of watchlist items. </param>
-        internal WatchlistItemList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistItemData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WatchlistItemList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistItemData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/> for deserialization. </summary>
+        internal WatchlistItemList()
+        {
         }
 
         /// <summary> URL to fetch the next set of watchlist items. </summary>

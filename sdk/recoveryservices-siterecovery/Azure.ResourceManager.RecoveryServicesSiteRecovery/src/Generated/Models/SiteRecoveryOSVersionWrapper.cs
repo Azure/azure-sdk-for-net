@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Wrapper model for OSVersion to include version and service pack info. </summary>
     public partial class SiteRecoveryOSVersionWrapper
     {
-        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSVersionWrapper"/>. </summary>
         internal SiteRecoveryOSVersionWrapper()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryOSVersionWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryOSVersionWrapper"/>. </summary>
         /// <param name="version"> The version. </param>
         /// <param name="servicePack"> The service pack. </param>
-        internal SiteRecoveryOSVersionWrapper(string version, string servicePack)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryOSVersionWrapper(string version, string servicePack, Dictionary<string, BinaryData> rawData)
         {
             Version = version;
             ServicePack = servicePack;
+            _rawData = rawData;
         }
 
         /// <summary> The version. </summary>

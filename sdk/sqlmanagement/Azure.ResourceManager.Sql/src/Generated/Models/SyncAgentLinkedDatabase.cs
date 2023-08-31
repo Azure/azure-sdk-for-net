@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An Azure SQL Database sync agent linked database. </summary>
     public partial class SyncAgentLinkedDatabase : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncAgentLinkedDatabase"/>. </summary>
         public SyncAgentLinkedDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentLinkedDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> Server name of the sync agent linked database. </param>
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
-        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, Guid? databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, Guid? databaseId, string description, string serverName, string databaseName, string userName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             DatabaseId = databaseId;
@@ -38,6 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
             ServerName = serverName;
             DatabaseName = databaseName;
             UserName = userName;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the sync agent linked database. </summary>

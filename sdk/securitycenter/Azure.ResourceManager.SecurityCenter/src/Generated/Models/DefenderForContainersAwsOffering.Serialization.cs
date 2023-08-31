@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderForContainersAwsOffering : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForContainersAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForContainersAwsOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForContainersAwsOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DefenderForContainersAwsOffering>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KubernetesService))
             {
@@ -67,11 +75,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element)
+        internal static DefenderForContainersAwsOffering DeserializeDefenderForContainersAwsOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> scubaExternalId = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesService"u8))
@@ -186,8 +209,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value);
+            return new DefenderForContainersAwsOffering(offeringType, description.Value, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value, rawData);
+        }
+
+        DefenderForContainersAwsOffering IModelJsonSerializable<DefenderForContainersAwsOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DefenderForContainersAwsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForContainersAwsOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForContainersAwsOffering>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DefenderForContainersAwsOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForContainersAwsOffering IModelSerializable<DefenderForContainersAwsOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DefenderForContainersAwsOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForContainersAwsOffering(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DefenderForContainersAwsOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DefenderForContainersAwsOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForContainersAwsOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

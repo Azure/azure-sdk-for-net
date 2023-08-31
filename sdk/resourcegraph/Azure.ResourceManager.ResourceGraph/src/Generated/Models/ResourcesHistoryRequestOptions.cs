@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> The options for history request evaluation. </summary>
     public partial class ResourcesHistoryRequestOptions
     {
-        /// <summary> Initializes a new instance of ResourcesHistoryRequestOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryRequestOptions"/>. </summary>
         public ResourcesHistoryRequestOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesHistoryRequestOptions"/>. </summary>
+        /// <param name="interval"> The time interval used to fetch history. </param>
+        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
+        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        /// <param name="resultFormat"> Defines in which format query result returned. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesHistoryRequestOptions(DateTimeInterval interval, int? top, int? skip, string skipToken, ResultFormat? resultFormat, Dictionary<string, BinaryData> rawData)
+        {
+            Interval = interval;
+            Top = top;
+            Skip = skip;
+            SkipToken = skipToken;
+            ResultFormat = resultFormat;
+            _rawData = rawData;
         }
 
         /// <summary> The time interval used to fetch history. </summary>

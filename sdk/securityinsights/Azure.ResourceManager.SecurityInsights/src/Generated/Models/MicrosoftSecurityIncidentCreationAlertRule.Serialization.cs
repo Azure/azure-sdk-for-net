@@ -10,14 +10,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class MicrosoftSecurityIncidentCreationAlertRule : IUtf8JsonSerializable
+    public partial class MicrosoftSecurityIncidentCreationAlertRule : IUtf8JsonSerializable, IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -84,11 +89,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftSecurityIncidentCreationAlertRule DeserializeMicrosoftSecurityIncidentCreationAlertRule(JsonElement element)
+        internal static MicrosoftSecurityIncidentCreationAlertRule DeserializeMicrosoftSecurityIncidentCreationAlertRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,6 +127,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> displayName = default;
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -244,8 +264,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc));
+            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), rawData);
+        }
+
+        MicrosoftSecurityIncidentCreationAlertRule IModelJsonSerializable<MicrosoftSecurityIncidentCreationAlertRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftSecurityIncidentCreationAlertRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MicrosoftSecurityIncidentCreationAlertRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MicrosoftSecurityIncidentCreationAlertRule IModelSerializable<MicrosoftSecurityIncidentCreationAlertRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MicrosoftSecurityIncidentCreationAlertRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMicrosoftSecurityIncidentCreationAlertRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MicrosoftSecurityIncidentCreationAlertRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MicrosoftSecurityIncidentCreationAlertRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMicrosoftSecurityIncidentCreationAlertRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

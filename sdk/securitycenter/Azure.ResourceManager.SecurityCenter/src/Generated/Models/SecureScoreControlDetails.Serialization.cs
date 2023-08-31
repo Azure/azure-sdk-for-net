@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecureScoreControlDetails : IUtf8JsonSerializable
+    public partial class SecureScoreControlDetails : IUtf8JsonSerializable, IModelJsonSerializable<SecureScoreControlDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecureScoreControlDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecureScoreControlDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecureScoreControlDetails DeserializeSecureScoreControlDetails(JsonElement element)
+        internal static SecureScoreControlDetails DeserializeSecureScoreControlDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<int> max = default;
             Optional<double> current = default;
             Optional<double> percentage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -176,8 +199,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(healthyResourceCount), Optional.ToNullable(unhealthyResourceCount), Optional.ToNullable(notApplicableResourceCount), Optional.ToNullable(weight), definition.Value, Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage));
+            return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(healthyResourceCount), Optional.ToNullable(unhealthyResourceCount), Optional.ToNullable(notApplicableResourceCount), Optional.ToNullable(weight), definition.Value, Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), rawData);
+        }
+
+        SecureScoreControlDetails IModelJsonSerializable<SecureScoreControlDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecureScoreControlDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecureScoreControlDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecureScoreControlDetails IModelSerializable<SecureScoreControlDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecureScoreControlDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecureScoreControlDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecureScoreControlDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecureScoreControlDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

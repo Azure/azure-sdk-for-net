@@ -6,15 +6,108 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ResourceCertificateAndAadDetails
+    public partial class ResourceCertificateAndAadDetails : IUtf8JsonSerializable, IModelJsonSerializable<ResourceCertificateAndAadDetails>
     {
-        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceCertificateAndAadDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceCertificateAndAadDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ResourceCertificateAndAadDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("aadAuthority"u8);
+            writer.WriteStringValue(AadAuthority);
+            writer.WritePropertyName("aadTenantId"u8);
+            writer.WriteStringValue(AadTenantId);
+            writer.WritePropertyName("servicePrincipalClientId"u8);
+            writer.WriteStringValue(ServicePrincipalClientId);
+            writer.WritePropertyName("servicePrincipalObjectId"u8);
+            writer.WriteStringValue(ServicePrincipalObjectId);
+            writer.WritePropertyName("azureManagementEndpointAudience"u8);
+            writer.WriteStringValue(AzureManagementEndpointAudience);
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                writer.WritePropertyName("serviceResourceId"u8);
+                writer.WriteStringValue(ServiceResourceId);
+            }
+            if (Optional.IsDefined(AadAudience))
+            {
+                writer.WritePropertyName("aadAudience"u8);
+                writer.WriteStringValue(AadAudience);
+            }
+            writer.WritePropertyName("authType"u8);
+            writer.WriteStringValue(AuthType);
+            if (Optional.IsDefined(Certificate))
+            {
+                writer.WritePropertyName("certificate"u8);
+                writer.WriteBase64StringValue(Certificate, "D");
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(Issuer))
+            {
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteStringValue(Issuer);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteNumberValue(ResourceId.Value);
+            }
+            if (Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (Optional.IsDefined(Thumbprint))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(ValidStartOn))
+            {
+                writer.WritePropertyName("validFrom"u8);
+                writer.WriteStringValue(ValidStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(ValidEndOn))
+            {
+                writer.WritePropertyName("validTo"u8);
+                writer.WriteStringValue(ValidEndOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceCertificateAndAadDetails DeserializeResourceCertificateAndAadDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +128,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<BinaryData> thumbprint = default;
             Optional<DateTimeOffset> validFrom = default;
             Optional<DateTimeOffset> validTo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadAuthority"u8))
@@ -141,8 +235,57 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     validTo = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
+            return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value, rawData);
+        }
+
+        ResourceCertificateAndAadDetails IModelJsonSerializable<ResourceCertificateAndAadDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ResourceCertificateAndAadDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceCertificateAndAadDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceCertificateAndAadDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ResourceCertificateAndAadDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceCertificateAndAadDetails IModelSerializable<ResourceCertificateAndAadDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ResourceCertificateAndAadDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceCertificateAndAadDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceCertificateAndAadDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceCertificateAndAadDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceCertificateAndAadDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

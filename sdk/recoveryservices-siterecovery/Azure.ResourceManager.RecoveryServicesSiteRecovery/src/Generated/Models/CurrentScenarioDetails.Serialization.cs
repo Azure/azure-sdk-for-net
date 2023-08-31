@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class CurrentScenarioDetails
+    public partial class CurrentScenarioDetails : IUtf8JsonSerializable, IModelJsonSerializable<CurrentScenarioDetails>
     {
-        internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CurrentScenarioDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CurrentScenarioDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScenarioName))
+            {
+                writer.WritePropertyName("scenarioName"u8);
+                writer.WriteStringValue(ScenarioName);
+            }
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> scenarioName = default;
             Optional<ResourceIdentifier> jobId = default;
             Optional<DateTimeOffset> startTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scenarioName"u8))
@@ -47,8 +90,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CurrentScenarioDetails(scenarioName.Value, jobId.Value, Optional.ToNullable(startTime));
+            return new CurrentScenarioDetails(scenarioName.Value, jobId.Value, Optional.ToNullable(startTime), rawData);
+        }
+
+        CurrentScenarioDetails IModelJsonSerializable<CurrentScenarioDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCurrentScenarioDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CurrentScenarioDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CurrentScenarioDetails IModelSerializable<CurrentScenarioDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCurrentScenarioDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CurrentScenarioDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CurrentScenarioDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCurrentScenarioDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

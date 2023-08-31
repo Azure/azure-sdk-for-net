@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
     public partial class SignalRRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of SignalRRegenerateKeyContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRRegenerateKeyContent"/>. </summary>
         public SignalRRegenerateKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRRegenerateKeyContent"/>. </summary>
+        /// <param name="keyType"> The type of access key. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRRegenerateKeyContent(SignalRKeyType? keyType, Dictionary<string, BinaryData> rawData)
+        {
+            KeyType = keyType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of access key. </summary>

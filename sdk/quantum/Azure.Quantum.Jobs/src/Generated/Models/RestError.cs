@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Error information returned by the API. </summary>
     internal partial class RestError
     {
-        /// <summary> Initializes a new instance of RestError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestError"/>. </summary>
         internal RestError()
         {
         }
 
-        /// <summary> Initializes a new instance of RestError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestError"/>. </summary>
         /// <param name="error"> An error response from Azure. </param>
-        internal RestError(ErrorData error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestError(ErrorData error, Dictionary<string, BinaryData> rawData)
         {
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> An error response from Azure. </summary>

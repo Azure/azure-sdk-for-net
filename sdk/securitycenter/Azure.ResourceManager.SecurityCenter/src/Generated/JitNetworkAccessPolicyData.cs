@@ -17,7 +17,9 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class representing the JitNetworkAccessPolicy data model. </summary>
     public partial class JitNetworkAccessPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/>. </summary>
         /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyData(IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines)
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Requests = new ChangeTrackingList<JitNetworkAccessRequestInfo>();
         }
 
-        /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,13 +40,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequestInfo> requests, string provisioningState, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequestInfo> requests, string provisioningState, string kind, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             VirtualMachines = virtualMachines;
             Requests = requests;
             ProvisioningState = provisioningState;
             Kind = kind;
             Location = location;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/> for deserialization. </summary>
+        internal JitNetworkAccessPolicyData()
+        {
         }
 
         /// <summary> Configurations for Microsoft.Compute/virtualMachines resource type. </summary>

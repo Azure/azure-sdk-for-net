@@ -6,15 +6,56 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class FacetResult
+    public partial class FacetResult : IUtf8JsonSerializable, IModelJsonSerializable<FacetResult>
     {
-        internal static FacetResult DeserializeFacetResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FacetResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FacetResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FacetResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("totalRecords"u8);
+            writer.WriteNumberValue(TotalRecords);
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
+            writer.WritePropertyName("data"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Data);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+#endif
+            writer.WritePropertyName("expression"u8);
+            writer.WriteStringValue(Expression);
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FacetResult DeserializeFacetResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +65,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             BinaryData data = default;
             string expression = default;
             string resultType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalRecords"u8))
@@ -51,8 +93,57 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FacetResult(expression, resultType, totalRecords, count, data);
+            return new FacetResult(expression, resultType, totalRecords, count, data, rawData);
+        }
+
+        FacetResult IModelJsonSerializable<FacetResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FacetResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFacetResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FacetResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FacetResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FacetResult IModelSerializable<FacetResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FacetResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFacetResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FacetResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FacetResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFacetResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,45 +5,73 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownJobDetails
+    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryJobDetails>
     {
-        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryJobDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryJobDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
-                return null;
+                writer.WritePropertyName("affectedObjectDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in AffectedObjectDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            string instanceType = "Unknown";
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
-            foreach (var property in element.EnumerateObject())
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                if (property.NameEquals("instanceType"u8))
+                foreach (var property in _rawData)
                 {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("affectedObjectDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    affectedObjectDetails = dictionary;
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails));
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeSiteRecoveryJobDetails(element, options);
+
+        SiteRecoveryJobDetails IModelJsonSerializable<SiteRecoveryJobDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownJobDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryJobDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryJobDetails IModelSerializable<SiteRecoveryJobDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryJobDetails(doc.RootElement, options);
         }
     }
 }

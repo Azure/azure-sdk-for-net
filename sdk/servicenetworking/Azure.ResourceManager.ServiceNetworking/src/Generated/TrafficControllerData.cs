@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,7 +20,9 @@ namespace Azure.ResourceManager.ServiceNetworking
     /// </summary>
     public partial class TrafficControllerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TrafficControllerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public TrafficControllerData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             Associations = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of TrafficControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,12 +42,19 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="frontends"> Frontends References List. </param>
         /// <param name="associations"> Associations References List. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<string> configurationEndpoints, IReadOnlyList<SubResource> frontends, IReadOnlyList<SubResource> associations, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<string> configurationEndpoints, IReadOnlyList<SubResource> frontends, IReadOnlyList<SubResource> associations, ProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ConfigurationEndpoints = configurationEndpoints;
             Frontends = frontends;
             Associations = associations;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrafficControllerData"/> for deserialization. </summary>
+        internal TrafficControllerData()
+        {
         }
 
         /// <summary> Configuration Endpoints. </summary>

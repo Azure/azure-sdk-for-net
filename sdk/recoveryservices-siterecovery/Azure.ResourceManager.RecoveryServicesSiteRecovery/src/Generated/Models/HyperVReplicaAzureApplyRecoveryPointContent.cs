@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> ApplyRecoveryPoint input specific to HyperVReplicaAzure provider. </summary>
     public partial class HyperVReplicaAzureApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureApplyRecoveryPointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
         public HyperVReplicaAzureApplyRecoveryPointContent()
         {
             InstanceType = "HyperVReplicaAzure";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureApplyRecoveryPointContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="primaryKekCertificatePfx"> The primary kek certificate pfx. </param>
+        /// <param name="secondaryKekCertificatePfx"> The secondary kek certificate pfx. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVReplicaAzureApplyRecoveryPointContent(string instanceType, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
+        {
+            PrimaryKekCertificatePfx = primaryKekCertificatePfx;
+            SecondaryKekCertificatePfx = secondaryKekCertificatePfx;
+            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> The primary kek certificate pfx. </summary>

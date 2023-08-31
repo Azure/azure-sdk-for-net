@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRUpstreamTemplate : IUtf8JsonSerializable
+    public partial class SignalRUpstreamTemplate : IUtf8JsonSerializable, IModelJsonSerializable<SignalRUpstreamTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SignalRUpstreamTemplate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SignalRUpstreamTemplate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HubPattern))
             {
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element)
+        internal static SignalRUpstreamTemplate DeserializeSignalRUpstreamTemplate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +73,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Optional<string> categoryPattern = default;
             string urlTemplate = default;
             Optional<SignalRUpstreamAuthSettings> auth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hubPattern"u8))
@@ -82,8 +105,57 @@ namespace Azure.ResourceManager.SignalR.Models
                     auth = SignalRUpstreamAuthSettings.DeserializeSignalRUpstreamAuthSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SignalRUpstreamTemplate(hubPattern.Value, eventPattern.Value, categoryPattern.Value, urlTemplate, auth.Value);
+            return new SignalRUpstreamTemplate(hubPattern.Value, eventPattern.Value, categoryPattern.Value, urlTemplate, auth.Value, rawData);
+        }
+
+        SignalRUpstreamTemplate IModelJsonSerializable<SignalRUpstreamTemplate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRUpstreamTemplate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SignalRUpstreamTemplate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SignalRUpstreamTemplate IModelSerializable<SignalRUpstreamTemplate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSignalRUpstreamTemplate(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SignalRUpstreamTemplate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SignalRUpstreamTemplate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSignalRUpstreamTemplate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

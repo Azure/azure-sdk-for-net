@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    internal partial class UnknownApplianceSpecificDetails
+    internal partial class UnknownApplianceSpecificDetails : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryApplianceSpecificDetails>
     {
-        internal static UnknownApplianceSpecificDetails DeserializeUnknownApplianceSpecificDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryApplianceSpecificDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryApplianceSpecificDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            string instanceType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"u8))
+                foreach (var property in _rawData)
                 {
-                    instanceType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownApplianceSpecificDetails(instanceType);
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryApplianceSpecificDetails DeserializeUnknownApplianceSpecificDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeSiteRecoveryApplianceSpecificDetails(element, options);
+
+        SiteRecoveryApplianceSpecificDetails IModelJsonSerializable<SiteRecoveryApplianceSpecificDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownApplianceSpecificDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryApplianceSpecificDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryApplianceSpecificDetails IModelSerializable<SiteRecoveryApplianceSpecificDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryApplianceSpecificDetails(doc.RootElement, options);
         }
     }
 }

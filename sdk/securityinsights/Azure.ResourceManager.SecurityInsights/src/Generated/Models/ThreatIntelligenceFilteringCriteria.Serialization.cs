@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceFilteringCriteria : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceFilteringCriteria : IUtf8JsonSerializable, IModelJsonSerializable<ThreatIntelligenceFilteringCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreatIntelligenceFilteringCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreatIntelligenceFilteringCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PageSize))
             {
@@ -110,7 +118,239 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ThreatIntelligenceFilteringCriteria DeserializeThreatIntelligenceFilteringCriteria(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> pageSize = default;
+            Optional<int> minConfidence = default;
+            Optional<int> maxConfidence = default;
+            Optional<DateTimeOffset> minValidUntil = default;
+            Optional<DateTimeOffset> maxValidUntil = default;
+            Optional<bool> includeDisabled = default;
+            Optional<IList<ThreatIntelligenceSortingCriteria>> sortBy = default;
+            Optional<IList<string>> sources = default;
+            Optional<IList<string>> patternTypes = default;
+            Optional<IList<string>> threatTypes = default;
+            Optional<IList<string>> ids = default;
+            Optional<IList<string>> keywords = default;
+            Optional<string> skipToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("pageSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pageSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minConfidence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minConfidence = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxConfidence"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxConfidence = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("minValidUntil"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minValidUntil = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("maxValidUntil"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxValidUntil = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("includeDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeDisabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("sortBy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ThreatIntelligenceSortingCriteria> array = new List<ThreatIntelligenceSortingCriteria>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ThreatIntelligenceSortingCriteria.DeserializeThreatIntelligenceSortingCriteria(item));
+                    }
+                    sortBy = array;
+                    continue;
+                }
+                if (property.NameEquals("sources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    sources = array;
+                    continue;
+                }
+                if (property.NameEquals("patternTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    patternTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("threatTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    threatTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("ids"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    ids = array;
+                    continue;
+                }
+                if (property.NameEquals("keywords"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    keywords = array;
+                    continue;
+                }
+                if (property.NameEquals("skipToken"u8))
+                {
+                    skipToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ThreatIntelligenceFilteringCriteria(Optional.ToNullable(pageSize), Optional.ToNullable(minConfidence), Optional.ToNullable(maxConfidence), Optional.ToNullable(minValidUntil), Optional.ToNullable(maxValidUntil), Optional.ToNullable(includeDisabled), Optional.ToList(sortBy), Optional.ToList(sources), Optional.ToList(patternTypes), Optional.ToList(threatTypes), Optional.ToList(ids), Optional.ToList(keywords), skipToken.Value, rawData);
+        }
+
+        ThreatIntelligenceFilteringCriteria IModelJsonSerializable<ThreatIntelligenceFilteringCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceFilteringCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreatIntelligenceFilteringCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreatIntelligenceFilteringCriteria IModelSerializable<ThreatIntelligenceFilteringCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreatIntelligenceFilteringCriteria(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ThreatIntelligenceFilteringCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ThreatIntelligenceFilteringCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeThreatIntelligenceFilteringCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

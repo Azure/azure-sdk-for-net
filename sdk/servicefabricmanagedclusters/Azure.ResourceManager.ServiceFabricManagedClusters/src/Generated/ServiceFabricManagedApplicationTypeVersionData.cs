@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// </summary>
     public partial class ServiceFabricManagedApplicationTypeVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypeVersionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypeVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricManagedApplicationTypeVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypeVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypeVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +35,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="appPackageUri"> The URL to the application package. </param>
-        internal ServiceFabricManagedApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AppPackageUri = appPackageUri;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypeVersionData"/> for deserialization. </summary>
+        internal ServiceFabricManagedApplicationTypeVersionData()
+        {
         }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>

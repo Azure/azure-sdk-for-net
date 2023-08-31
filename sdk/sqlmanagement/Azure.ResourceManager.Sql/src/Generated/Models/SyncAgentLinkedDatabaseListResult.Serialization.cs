@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class SyncAgentLinkedDatabaseListResult
+    internal partial class SyncAgentLinkedDatabaseListResult : IUtf8JsonSerializable, IModelJsonSerializable<SyncAgentLinkedDatabaseListResult>
     {
-        internal static SyncAgentLinkedDatabaseListResult DeserializeSyncAgentLinkedDatabaseListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SyncAgentLinkedDatabaseListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SyncAgentLinkedDatabaseListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SyncAgentLinkedDatabaseListResult DeserializeSyncAgentLinkedDatabaseListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SyncAgentLinkedDatabase>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +70,57 @@ namespace Azure.ResourceManager.Sql.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SyncAgentLinkedDatabaseListResult(Optional.ToList(value), nextLink.Value);
+            return new SyncAgentLinkedDatabaseListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        SyncAgentLinkedDatabaseListResult IModelJsonSerializable<SyncAgentLinkedDatabaseListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyncAgentLinkedDatabaseListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SyncAgentLinkedDatabaseListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SyncAgentLinkedDatabaseListResult IModelSerializable<SyncAgentLinkedDatabaseListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSyncAgentLinkedDatabaseListResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SyncAgentLinkedDatabaseListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SyncAgentLinkedDatabaseListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSyncAgentLinkedDatabaseListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class SentimentSkillV3 : IUtf8JsonSerializable
+    internal partial class SentimentSkillV3 : IUtf8JsonSerializable, IModelJsonSerializable<SentimentSkillV3>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SentimentSkillV3>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SentimentSkillV3>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SentimentSkillV3>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
@@ -76,11 +83,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SentimentSkillV3 DeserializeSentimentSkillV3(JsonElement element)
+        internal static SentimentSkillV3 DeserializeSentimentSkillV3(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +115,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"u8))
@@ -165,8 +187,57 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SentimentSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(includeOpinionMining), modelVersion.Value);
+            return new SentimentSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(includeOpinionMining), modelVersion.Value, rawData);
+        }
+
+        SentimentSkillV3 IModelJsonSerializable<SentimentSkillV3>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SentimentSkillV3>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSentimentSkillV3(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SentimentSkillV3>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SentimentSkillV3>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SentimentSkillV3 IModelSerializable<SentimentSkillV3>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SentimentSkillV3>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSentimentSkillV3(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SentimentSkillV3 model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SentimentSkillV3(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSentimentSkillV3(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

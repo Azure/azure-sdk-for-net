@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move resource properties. </summary>
     public partial class MoverResourceProperties
     {
-        /// <summary> Initializes a new instance of MoverResourceProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceProperties"/>. </summary>
         /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
         public MoverResourceProperties(ResourceIdentifier sourceId)
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             DependsOnOverrides = new ChangeTrackingList<MoverResourceDependencyOverride>();
         }
 
-        /// <summary> Initializes a new instance of MoverResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
         /// <param name="targetId"> Gets or sets the Target ARM Id of the resource. </param>
@@ -47,7 +49,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="dependsOnOverrides"> Gets or sets the move resource dependencies overrides. </param>
         /// <param name="isResolveRequired"> Gets a value indicating whether the resolve action is required over the move collection. </param>
         /// <param name="errors"> Defines the move resource errors. </param>
-        internal MoverResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, ResourceIdentifier targetId, ResourceIdentifier existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoverResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoverResourceDependency> dependsOn, IList<MoverResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceProperties(MoverProvisioningState? provisioningState, ResourceIdentifier sourceId, ResourceIdentifier targetId, ResourceIdentifier existingTargetId, MoverResourceSettings resourceSettings, MoverResourceSettings sourceResourceSettings, MoverResourcePropertiesMoveStatus moveStatus, IReadOnlyList<MoverResourceDependency> dependsOn, IList<MoverResourceDependencyOverride> dependsOnOverrides, bool? isResolveRequired, MoveResourcePropertiesErrors errors, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             SourceId = sourceId;
@@ -60,6 +63,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             DependsOnOverrides = dependsOnOverrides;
             IsResolveRequired = isResolveRequired;
             Errors = errors;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceProperties"/> for deserialization. </summary>
+        internal MoverResourceProperties()
+        {
         }
 
         /// <summary> Defines the provisioning states. </summary>

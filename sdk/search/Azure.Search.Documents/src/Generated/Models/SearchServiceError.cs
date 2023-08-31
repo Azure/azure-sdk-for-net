@@ -14,7 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Describes an error condition for the Azure Cognitive Search API. </summary>
     internal partial class SearchServiceError
     {
-        /// <summary> Initializes a new instance of SearchServiceError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceError"/>. </summary>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal SearchServiceError(string message)
@@ -25,15 +27,22 @@ namespace Azure.Search.Documents.Indexes.Models
             Details = new ChangeTrackingList<SearchServiceError>();
         }
 
-        /// <summary> Initializes a new instance of SearchServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        internal SearchServiceError(string code, string message, IReadOnlyList<SearchServiceError> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceError(string code, string message, IReadOnlyList<SearchServiceError> details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceError"/> for deserialization. </summary>
+        internal SearchServiceError()
+        {
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>

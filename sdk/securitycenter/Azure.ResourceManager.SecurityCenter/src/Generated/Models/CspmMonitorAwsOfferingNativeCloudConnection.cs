@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
     internal partial class CspmMonitorAwsOfferingNativeCloudConnection
     {
-        /// <summary> Initializes a new instance of CspmMonitorAwsOfferingNativeCloudConnection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOfferingNativeCloudConnection"/>. </summary>
         public CspmMonitorAwsOfferingNativeCloudConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorAwsOfferingNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAwsOfferingNativeCloudConnection"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal CspmMonitorAwsOfferingNativeCloudConnection(string cloudRoleArn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CspmMonitorAwsOfferingNativeCloudConnection(string cloudRoleArn, Dictionary<string, BinaryData> rawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _rawData = rawData;
         }
 
         /// <summary> The cloud role ARN in AWS for this feature. </summary>

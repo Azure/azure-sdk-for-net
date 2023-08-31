@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -17,20 +19,24 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class AutoProvisioningSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutoProvisioningSettingData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingData"/>. </summary>
         public AutoProvisioningSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoProvisioningSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
-        internal AutoProvisioningSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutoProvisionState? autoProvision) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoProvisioningSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutoProvisionState? autoProvision, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AutoProvision = autoProvision;
+            _rawData = rawData;
         }
 
         /// <summary> Describes what kind of security agent provisioning action to take. </summary>

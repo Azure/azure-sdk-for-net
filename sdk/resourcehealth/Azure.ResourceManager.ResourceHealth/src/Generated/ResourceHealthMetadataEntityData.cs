@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,9 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthMetadataEntityData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthMetadataEntityData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataEntityData"/>. </summary>
         internal ResourceHealthMetadataEntityData()
         {
             DependsOn = new ChangeTrackingList<string>();
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth
             SupportedValues = new ChangeTrackingList<MetadataSupportedValueDetail>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthMetadataEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +38,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="dependsOn"> The list of keys on which this entity depends on. </param>
         /// <param name="applicableScenarios"> The list of scenarios applicable to this metadata entity. </param>
         /// <param name="supportedValues"> The list of supported values. </param>
-        internal ResourceHealthMetadataEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> dependsOn, IReadOnlyList<MetadataEntityScenario> applicableScenarios, IReadOnlyList<MetadataSupportedValueDetail> supportedValues) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthMetadataEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> dependsOn, IReadOnlyList<MetadataEntityScenario> applicableScenarios, IReadOnlyList<MetadataSupportedValueDetail> supportedValues, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             DependsOn = dependsOn;
             ApplicableScenarios = applicableScenarios;
             SupportedValues = supportedValues;
+            _rawData = rawData;
         }
 
         /// <summary> The display name. </summary>

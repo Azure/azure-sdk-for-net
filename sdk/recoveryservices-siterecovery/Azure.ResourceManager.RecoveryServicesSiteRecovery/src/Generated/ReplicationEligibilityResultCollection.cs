@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual AsyncPageable<ReplicationEligibilityResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         public virtual Pageable<ReplicationEligibilityResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _replicationEligibilityResultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _virtualMachineName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ReplicationEligibilityResultResource(Client, ReplicationEligibilityResultData.DeserializeReplicationEligibilityResultData(e)), _replicationEligibilityResultClientDiagnostics, Pipeline, "ReplicationEligibilityResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

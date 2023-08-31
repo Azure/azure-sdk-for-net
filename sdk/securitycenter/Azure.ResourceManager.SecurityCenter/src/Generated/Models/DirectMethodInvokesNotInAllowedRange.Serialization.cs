@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DirectMethodInvokesNotInAllowedRange : IUtf8JsonSerializable
+    public partial class DirectMethodInvokesNotInAllowedRange : IUtf8JsonSerializable, IModelJsonSerializable<DirectMethodInvokesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DirectMethodInvokesNotInAllowedRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DirectMethodInvokesNotInAllowedRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DirectMethodInvokesNotInAllowedRange>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DirectMethodInvokesNotInAllowedRange DeserializeDirectMethodInvokesNotInAllowedRange(JsonElement element)
+        internal static DirectMethodInvokesNotInAllowedRange DeserializeDirectMethodInvokesNotInAllowedRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -79,8 +101,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DirectMethodInvokesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            return new DirectMethodInvokesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize, rawData);
+        }
+
+        DirectMethodInvokesNotInAllowedRange IModelJsonSerializable<DirectMethodInvokesNotInAllowedRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DirectMethodInvokesNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDirectMethodInvokesNotInAllowedRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DirectMethodInvokesNotInAllowedRange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DirectMethodInvokesNotInAllowedRange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DirectMethodInvokesNotInAllowedRange IModelSerializable<DirectMethodInvokesNotInAllowedRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DirectMethodInvokesNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDirectMethodInvokesNotInAllowedRange(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DirectMethodInvokesNotInAllowedRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DirectMethodInvokesNotInAllowedRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDirectMethodInvokesNotInAllowedRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

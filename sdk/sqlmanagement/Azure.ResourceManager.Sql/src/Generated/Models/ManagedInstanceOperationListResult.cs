@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list managed instance operations request. </summary>
     internal partial class ManagedInstanceOperationListResult
     {
-        /// <summary> Initializes a new instance of ManagedInstanceOperationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationListResult"/>. </summary>
         internal ManagedInstanceOperationListResult()
         {
             Value = new ChangeTrackingList<ManagedInstanceOperationData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstanceOperationListResult(IReadOnlyList<ManagedInstanceOperationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceOperationListResult(IReadOnlyList<ManagedInstanceOperationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

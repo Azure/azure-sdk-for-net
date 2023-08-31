@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ResourceQueryRequestOptions : IUtf8JsonSerializable
+    public partial class ResourceQueryRequestOptions : IUtf8JsonSerializable, IModelJsonSerializable<ResourceQueryRequestOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceQueryRequestOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceQueryRequestOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SkipToken))
             {
@@ -45,7 +53,139 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WritePropertyName("authorizationScopeFilter"u8);
                 writer.WriteStringValue(AuthorizationScopeFilter.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ResourceQueryRequestOptions DeserializeResourceQueryRequestOptions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> skipToken = default;
+            Optional<int> top = default;
+            Optional<int> skip = default;
+            Optional<ResultFormat> resultFormat = default;
+            Optional<bool> allowPartialScopes = default;
+            Optional<AuthorizationScopeFilter> authorizationScopeFilter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("$skipToken"u8))
+                {
+                    skipToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("$top"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    top = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("$skip"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skip = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("resultFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultFormat = property.Value.GetString().ToResultFormat();
+                    continue;
+                }
+                if (property.NameEquals("allowPartialScopes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowPartialScopes = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("authorizationScopeFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authorizationScopeFilter = property.Value.GetString().ToAuthorizationScopeFilter();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ResourceQueryRequestOptions(skipToken.Value, Optional.ToNullable(top), Optional.ToNullable(skip), Optional.ToNullable(resultFormat), Optional.ToNullable(allowPartialScopes), Optional.ToNullable(authorizationScopeFilter), rawData);
+        }
+
+        ResourceQueryRequestOptions IModelJsonSerializable<ResourceQueryRequestOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceQueryRequestOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceQueryRequestOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceQueryRequestOptions IModelSerializable<ResourceQueryRequestOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceQueryRequestOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceQueryRequestOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceQueryRequestOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceQueryRequestOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

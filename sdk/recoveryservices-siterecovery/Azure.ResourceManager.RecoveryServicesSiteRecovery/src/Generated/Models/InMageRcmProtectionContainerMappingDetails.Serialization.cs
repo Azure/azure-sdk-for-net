@@ -5,21 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmProtectionContainerMappingDetails
+    public partial class InMageRcmProtectionContainerMappingDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmProtectionContainerMappingDetails>
     {
-        internal static InMageRcmProtectionContainerMappingDetails DeserializeInMageRcmProtectionContainerMappingDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmProtectionContainerMappingDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmProtectionContainerMappingDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InMageRcmProtectionContainerMappingDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageRcmProtectionContainerMappingDetails DeserializeInMageRcmProtectionContainerMappingDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> enableAgentAutoUpgrade = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAgentAutoUpgrade"u8))
@@ -32,8 +63,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageRcmProtectionContainerMappingDetails(instanceType, enableAgentAutoUpgrade.Value);
+            return new InMageRcmProtectionContainerMappingDetails(instanceType, enableAgentAutoUpgrade.Value, rawData);
+        }
+
+        InMageRcmProtectionContainerMappingDetails IModelJsonSerializable<InMageRcmProtectionContainerMappingDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageRcmProtectionContainerMappingDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmProtectionContainerMappingDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmProtectionContainerMappingDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageRcmProtectionContainerMappingDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmProtectionContainerMappingDetails IModelSerializable<InMageRcmProtectionContainerMappingDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageRcmProtectionContainerMappingDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmProtectionContainerMappingDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InMageRcmProtectionContainerMappingDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InMageRcmProtectionContainerMappingDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmProtectionContainerMappingDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

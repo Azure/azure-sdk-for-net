@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedTransparentDataEncryptionResource(Client, ManagedTransparentDataEncryptionData.DeserializeManagedTransparentDataEncryptionData(e)), _managedTransparentDataEncryptionManagedDatabaseTransparentDataEncryptionClientDiagnostics, Pipeline, "ManagedTransparentDataEncryptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

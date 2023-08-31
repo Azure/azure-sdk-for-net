@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a freshness scoring function. </summary>
     public partial class FreshnessScoringParameters
     {
-        /// <summary> Initializes a new instance of FreshnessScoringParameters. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FreshnessScoringParameters"/>. </summary>
         /// <param name="boostingDuration"> The expiration period after which boosting will stop for a particular document. </param>
         public FreshnessScoringParameters(TimeSpan boostingDuration)
         {
             BoostingDuration = boostingDuration;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FreshnessScoringParameters"/>. </summary>
+        /// <param name="boostingDuration"> The expiration period after which boosting will stop for a particular document. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FreshnessScoringParameters(TimeSpan boostingDuration, Dictionary<string, BinaryData> rawData)
+        {
+            BoostingDuration = boostingDuration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FreshnessScoringParameters"/> for deserialization. </summary>
+        internal FreshnessScoringParameters()
+        {
         }
 
         /// <summary> The expiration period after which boosting will stop for a particular document. </summary>

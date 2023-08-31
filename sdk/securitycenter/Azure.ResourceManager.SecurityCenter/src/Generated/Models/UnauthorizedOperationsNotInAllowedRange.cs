@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Number of unauthorized operations is not in allowed range. </summary>
     public partial class UnauthorizedOperationsNotInAllowedRange : TimeWindowCustomAlertRule
     {
-        /// <summary> Initializes a new instance of UnauthorizedOperationsNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnauthorizedOperationsNotInAllowedRange"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "UnauthorizedOperationsNotInAllowedRange";
         }
 
-        /// <summary> Initializes a new instance of UnauthorizedOperationsNotInAllowedRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnauthorizedOperationsNotInAllowedRange"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
@@ -30,9 +31,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
         /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
-        internal UnauthorizedOperationsNotInAllowedRange(string displayName, string description, bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnauthorizedOperationsNotInAllowedRange(string displayName, string description, bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize, Dictionary<string, BinaryData> rawData) : base(displayName, description, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize, rawData)
         {
             RuleType = ruleType ?? "UnauthorizedOperationsNotInAllowedRange";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnauthorizedOperationsNotInAllowedRange"/> for deserialization. </summary>
+        internal UnauthorizedOperationsNotInAllowedRange()
+        {
         }
     }
 }

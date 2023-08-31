@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupLogProperties
+    public partial class SyncGroupLogProperties : IUtf8JsonSerializable, IModelJsonSerializable<SyncGroupLogProperties>
     {
-        internal static SyncGroupLogProperties DeserializeSyncGroupLogProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SyncGroupLogProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SyncGroupLogProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SyncGroupLogProperties DeserializeSyncGroupLogProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> details = default;
             Optional<Guid> tracingId = default;
             Optional<string> operationStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -69,8 +97,57 @@ namespace Azure.ResourceManager.Sql.Models
                     operationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SyncGroupLogProperties(Optional.ToNullable(timestamp), Optional.ToNullable(type), source.Value, details.Value, Optional.ToNullable(tracingId), operationStatus.Value);
+            return new SyncGroupLogProperties(Optional.ToNullable(timestamp), Optional.ToNullable(type), source.Value, details.Value, Optional.ToNullable(tracingId), operationStatus.Value, rawData);
+        }
+
+        SyncGroupLogProperties IModelJsonSerializable<SyncGroupLogProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyncGroupLogProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SyncGroupLogProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SyncGroupLogProperties IModelSerializable<SyncGroupLogProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSyncGroupLogProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SyncGroupLogProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SyncGroupLogProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSyncGroupLogProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

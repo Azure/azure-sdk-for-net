@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertConfidenceReason
+    public partial class SecurityInsightsAlertConfidenceReason : IUtf8JsonSerializable, IModelJsonSerializable<SecurityInsightsAlertConfidenceReason>
     {
-        internal static SecurityInsightsAlertConfidenceReason DeserializeSecurityInsightsAlertConfidenceReason(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityInsightsAlertConfidenceReason>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityInsightsAlertConfidenceReason>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SecurityInsightsAlertConfidenceReason DeserializeSecurityInsightsAlertConfidenceReason(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> reason = default;
             Optional<string> reasonType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reason"u8))
@@ -32,8 +61,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     reasonType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityInsightsAlertConfidenceReason(reason.Value, reasonType.Value);
+            return new SecurityInsightsAlertConfidenceReason(reason.Value, reasonType.Value, rawData);
+        }
+
+        SecurityInsightsAlertConfidenceReason IModelJsonSerializable<SecurityInsightsAlertConfidenceReason>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAlertConfidenceReason(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityInsightsAlertConfidenceReason>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityInsightsAlertConfidenceReason IModelSerializable<SecurityInsightsAlertConfidenceReason>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityInsightsAlertConfidenceReason(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityInsightsAlertConfidenceReason model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityInsightsAlertConfidenceReason(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityInsightsAlertConfidenceReason(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

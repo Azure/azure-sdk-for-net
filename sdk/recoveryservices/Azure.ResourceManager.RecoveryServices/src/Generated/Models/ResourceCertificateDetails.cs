@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,14 +16,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// Please note <see cref="ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ResourceCertificateAndAcsDetails"/> and <see cref="ResourceCertificateAndAadDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownResourceCertificateDetails))]
     public abstract partial class ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         protected ResourceCertificateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
@@ -31,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
-        internal ResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, Dictionary<string, BinaryData> rawData)
         {
             AuthType = authType;
             Certificate = certificate;
@@ -42,6 +48,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Thumbprint = thumbprint;
             ValidStartOn = validStartOn;
             ValidEndOn = validEndOn;
+            _rawData = rawData;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>

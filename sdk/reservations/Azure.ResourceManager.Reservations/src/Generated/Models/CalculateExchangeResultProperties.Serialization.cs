@@ -8,14 +8,95 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateExchangeResultProperties
+    public partial class CalculateExchangeResultProperties : IUtf8JsonSerializable, IModelJsonSerializable<CalculateExchangeResultProperties>
     {
-        internal static CalculateExchangeResultProperties DeserializeCalculateExchangeResultProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CalculateExchangeResultProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CalculateExchangeResultProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId.Value);
+            }
+            if (Optional.IsDefined(NetPayable))
+            {
+                writer.WritePropertyName("netPayable"u8);
+                writer.WriteObjectValue(NetPayable);
+            }
+            if (Optional.IsDefined(RefundsTotal))
+            {
+                writer.WritePropertyName("refundsTotal"u8);
+                writer.WriteObjectValue(RefundsTotal);
+            }
+            if (Optional.IsDefined(PurchasesTotal))
+            {
+                writer.WritePropertyName("purchasesTotal"u8);
+                writer.WriteObjectValue(PurchasesTotal);
+            }
+            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            {
+                writer.WritePropertyName("reservationsToPurchase"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReservationsToPurchase)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            {
+                writer.WritePropertyName("savingsPlansToPurchase"u8);
+                writer.WriteStartArray();
+                foreach (var item in SavingsPlansToPurchase)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            {
+                writer.WritePropertyName("reservationsToExchange"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReservationsToExchange)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PolicyResult))
+            {
+                writer.WritePropertyName("policyResult"u8);
+                writer.WriteObjectValue(PolicyResult);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CalculateExchangeResultProperties DeserializeCalculateExchangeResultProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +109,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<IReadOnlyList<SavingsPlanToPurchaseCalculateExchange>> savingsPlansToPurchase = default;
             Optional<IReadOnlyList<ReservationToExchange>> reservationsToExchange = default;
             Optional<ExchangePolicyErrors> policyResult = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -117,8 +199,57 @@ namespace Azure.ResourceManager.Reservations.Models
                     policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value);
+            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value, rawData);
+        }
+
+        CalculateExchangeResultProperties IModelJsonSerializable<CalculateExchangeResultProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCalculateExchangeResultProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CalculateExchangeResultProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CalculateExchangeResultProperties IModelSerializable<CalculateExchangeResultProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCalculateExchangeResultProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CalculateExchangeResultProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CalculateExchangeResultProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCalculateExchangeResultProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

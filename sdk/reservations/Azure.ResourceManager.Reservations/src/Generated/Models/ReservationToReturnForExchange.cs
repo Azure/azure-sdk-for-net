@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -12,24 +14,28 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation refund details. </summary>
     public partial class ReservationToReturnForExchange
     {
-        /// <summary> Initializes a new instance of ReservationToReturnForExchange. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationToReturnForExchange"/>. </summary>
         internal ReservationToReturnForExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationToReturnForExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToReturnForExchange"/>. </summary>
         /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingInformation"> billing information. </param>
         /// <param name="status"> Status of the individual operation. </param>
-        internal ReservationToReturnForExchange(ResourceIdentifier reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation, ReservationOperationStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationToReturnForExchange(ResourceIdentifier reservationId, int? quantity, PurchasePrice billingRefundAmount, BillingInformation billingInformation, ReservationOperationStatus? status, Dictionary<string, BinaryData> rawData)
         {
             ReservationId = reservationId;
             Quantity = quantity;
             BillingRefundAmount = billingRefundAmount;
             BillingInformation = billingInformation;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Fully qualified id of the reservation being returned. </summary>

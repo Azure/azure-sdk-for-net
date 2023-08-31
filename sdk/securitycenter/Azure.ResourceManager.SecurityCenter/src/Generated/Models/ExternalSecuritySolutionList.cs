@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The ExternalSecuritySolutionList. </summary>
     internal partial class ExternalSecuritySolutionList
     {
-        /// <summary> Initializes a new instance of ExternalSecuritySolutionList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionList"/>. </summary>
         internal ExternalSecuritySolutionList()
         {
             Value = new ChangeTrackingList<ExternalSecuritySolution>();
         }
 
-        /// <summary> Initializes a new instance of ExternalSecuritySolutionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionList"/>. </summary>
         /// <param name="value">
         /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
         /// </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ExternalSecuritySolutionList(IReadOnlyList<ExternalSecuritySolution> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExternalSecuritySolutionList(IReadOnlyList<ExternalSecuritySolution> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for servers connection configuration. </summary>
     internal partial class AwsDefenderForServersInfo
     {
-        /// <summary> Initializes a new instance of AwsDefenderForServersInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AwsDefenderForServersInfo"/>. </summary>
         public AwsDefenderForServersInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsDefenderForServersInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsDefenderForServersInfo"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal AwsDefenderForServersInfo(string cloudRoleArn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AwsDefenderForServersInfo(string cloudRoleArn, Dictionary<string, BinaryData> rawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _rawData = rawData;
         }
 
         /// <summary> The cloud role ARN in AWS for this feature. </summary>

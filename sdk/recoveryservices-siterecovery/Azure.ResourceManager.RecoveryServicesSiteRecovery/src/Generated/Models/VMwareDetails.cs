@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Store the fabric details specific to the VMware fabric. </summary>
     public partial class VMwareDetails : FabricSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         internal VMwareDetails()
         {
             ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServer>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMware";
         }
 
-        /// <summary> Initializes a new instance of VMwareDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
         /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>
@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentExpireOn"> Agent expiry date. </param>
         /// <param name="agentVersionDetails"> The agent version details. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
-        internal VMwareDetails(string instanceType, IReadOnlyList<SiteRecoveryProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, IPAddress ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareDetails(string instanceType, IReadOnlyList<SiteRecoveryProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, IPAddress ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, Dictionary<string, BinaryData> rawData) : base(instanceType, rawData)
         {
             ProcessServers = processServers;
             MasterTargetServers = masterTargetServers;

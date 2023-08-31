@@ -8,14 +8,95 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class EmergingIssueActiveEventType
+    public partial class EmergingIssueActiveEventType : IUtf8JsonSerializable, IModelJsonSerializable<EmergingIssueActiveEventType>
     {
-        internal static EmergingIssueActiveEventType DeserializeEmergingIssueActiveEventType(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EmergingIssueActiveEventType>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EmergingIssueActiveEventType>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(TrackingId))
+            {
+                writer.WritePropertyName("trackingId"u8);
+                writer.WriteStringValue(TrackingId);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(Cloud))
+            {
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud);
+            }
+            if (Optional.IsDefined(Severity))
+            {
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity.Value.ToString());
+            }
+            if (Optional.IsDefined(Stage))
+            {
+                writer.WritePropertyName("stage"u8);
+                writer.WriteStringValue(Stage.Value.ToString());
+            }
+            if (Optional.IsDefined(IsPublished))
+            {
+                writer.WritePropertyName("published"u8);
+                writer.WriteBooleanValue(IsPublished.Value);
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Impacts))
+            {
+                writer.WritePropertyName("impacts"u8);
+                writer.WriteStartArray();
+                foreach (var item in Impacts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EmergingIssueActiveEventType DeserializeEmergingIssueActiveEventType(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +111,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<bool> published = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -111,8 +193,57 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     impacts = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts));
+            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts), rawData);
+        }
+
+        EmergingIssueActiveEventType IModelJsonSerializable<EmergingIssueActiveEventType>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmergingIssueActiveEventType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EmergingIssueActiveEventType>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EmergingIssueActiveEventType IModelSerializable<EmergingIssueActiveEventType>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEmergingIssueActiveEventType(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EmergingIssueActiveEventType model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EmergingIssueActiveEventType(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEmergingIssueActiveEventType(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

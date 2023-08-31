@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the virtual network subnets resource settings. </summary>
     public partial class SubnetResourceSettings
     {
-        /// <summary> Initializes a new instance of SubnetResourceSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubnetResourceSettings"/>. </summary>
         public SubnetResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SubnetResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the Subnet name. </param>
         /// <param name="addressPrefix"> Gets or sets address prefix for the subnet. </param>
         /// <param name="networkSecurityGroup"> Defines reference to NSG. </param>
-        internal SubnetResourceSettings(string name, string addressPrefix, NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubnetResourceSettings(string name, string addressPrefix, NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             AddressPrefix = addressPrefix;
             NetworkSecurityGroup = networkSecurityGroup;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the Subnet name. </summary>

@@ -15,7 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents an index alias, which describes a mapping from the alias name to an index. The alias name can be used in place of the index name for supported operations. </summary>
     public partial class SearchAlias
     {
-        /// <summary> Initializes a new instance of SearchAlias. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchAlias"/>. </summary>
         /// <param name="name"> The name of the alias. </param>
         /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="indexes"/> is null. </exception>
@@ -28,15 +30,22 @@ namespace Azure.Search.Documents.Indexes.Models
             Indexes = indexes.ToList();
         }
 
-        /// <summary> Initializes a new instance of SearchAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAlias"/>. </summary>
         /// <param name="name"> The name of the alias. </param>
         /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
         /// <param name="etag"> The ETag of the alias. </param>
-        internal SearchAlias(string name, IList<string> indexes, string etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAlias(string name, IList<string> indexes, string etag, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Indexes = indexes;
             _etag = etag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchAlias"/> for deserialization. </summary>
+        internal SearchAlias()
+        {
         }
 
         /// <summary> The name of the alias. </summary>

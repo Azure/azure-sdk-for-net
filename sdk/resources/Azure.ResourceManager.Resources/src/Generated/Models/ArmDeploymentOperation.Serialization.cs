@@ -5,15 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentOperation
+    public partial class ArmDeploymentOperation : IUtf8JsonSerializable, IModelJsonSerializable<ArmDeploymentOperation>
     {
-        internal static ArmDeploymentOperation DeserializeArmDeploymentOperation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ArmDeploymentOperation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ArmDeploymentOperation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ArmDeploymentOperation DeserializeArmDeploymentOperation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> id = default;
             Optional<string> operationId = default;
             Optional<ArmDeploymentOperationProperties> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -42,8 +76,57 @@ namespace Azure.ResourceManager.Resources.Models
                     properties = ArmDeploymentOperationProperties.DeserializeArmDeploymentOperationProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ArmDeploymentOperation(id.Value, operationId.Value, properties.Value);
+            return new ArmDeploymentOperation(id.Value, operationId.Value, properties.Value, rawData);
+        }
+
+        ArmDeploymentOperation IModelJsonSerializable<ArmDeploymentOperation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmDeploymentOperation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ArmDeploymentOperation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ArmDeploymentOperation IModelSerializable<ArmDeploymentOperation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeArmDeploymentOperation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ArmDeploymentOperation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ArmDeploymentOperation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeArmDeploymentOperation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

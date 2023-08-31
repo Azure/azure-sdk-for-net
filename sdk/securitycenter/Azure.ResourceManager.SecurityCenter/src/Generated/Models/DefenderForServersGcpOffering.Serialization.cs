@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderForServersGcpOffering : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForServersGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForServersGcpOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForServersGcpOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DefenderForServersGcpOffering>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefenderForServers))
             {
@@ -42,11 +50,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element)
+        internal static DefenderForServersGcpOffering DeserializeDefenderForServersGcpOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<DefenderForServersGcpOfferingSubPlan> subPlan = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defenderForServers"u8))
@@ -115,8 +138,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForServersGcpOffering(offeringType, description.Value, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value);
+            return new DefenderForServersGcpOffering(offeringType, description.Value, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value, rawData);
+        }
+
+        DefenderForServersGcpOffering IModelJsonSerializable<DefenderForServersGcpOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DefenderForServersGcpOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersGcpOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForServersGcpOffering>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DefenderForServersGcpOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForServersGcpOffering IModelSerializable<DefenderForServersGcpOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DefenderForServersGcpOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForServersGcpOffering(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DefenderForServersGcpOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DefenderForServersGcpOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForServersGcpOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

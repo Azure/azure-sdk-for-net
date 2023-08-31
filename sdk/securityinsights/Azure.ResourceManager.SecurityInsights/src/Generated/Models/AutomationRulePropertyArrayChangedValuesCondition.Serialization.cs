@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRulePropertyArrayChangedValuesCondition : IUtf8JsonSerializable
+    public partial class AutomationRulePropertyArrayChangedValuesCondition : IUtf8JsonSerializable, IModelJsonSerializable<AutomationRulePropertyArrayChangedValuesCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationRulePropertyArrayChangedValuesCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationRulePropertyArrayChangedValuesCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArrayType))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRulePropertyArrayChangedValuesCondition DeserializeAutomationRulePropertyArrayChangedValuesCondition(JsonElement element)
+        internal static AutomationRulePropertyArrayChangedValuesCondition DeserializeAutomationRulePropertyArrayChangedValuesCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
             Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arrayType"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     changeType = new AutomationRulePropertyArrayChangedConditionSupportedChangeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationRulePropertyArrayChangedValuesCondition(Optional.ToNullable(arrayType), Optional.ToNullable(changeType));
+            return new AutomationRulePropertyArrayChangedValuesCondition(Optional.ToNullable(arrayType), Optional.ToNullable(changeType), rawData);
+        }
+
+        AutomationRulePropertyArrayChangedValuesCondition IModelJsonSerializable<AutomationRulePropertyArrayChangedValuesCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRulePropertyArrayChangedValuesCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationRulePropertyArrayChangedValuesCondition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationRulePropertyArrayChangedValuesCondition IModelSerializable<AutomationRulePropertyArrayChangedValuesCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationRulePropertyArrayChangedValuesCondition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AutomationRulePropertyArrayChangedValuesCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AutomationRulePropertyArrayChangedValuesCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationRulePropertyArrayChangedValuesCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlPointInTimeRecoveryPoint : IUtf8JsonSerializable
+    public partial class WorkloadSqlPointInTimeRecoveryPoint : IUtf8JsonSerializable, IModelJsonSerializable<WorkloadSqlPointInTimeRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WorkloadSqlPointInTimeRecoveryPoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WorkloadSqlPointInTimeRecoveryPoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRecoveryPoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TimeRanges))
             {
@@ -70,11 +76,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadSqlPointInTimeRecoveryPoint DeserializeWorkloadSqlPointInTimeRecoveryPoint(JsonElement element)
+        internal static WorkloadSqlPointInTimeRecoveryPoint DeserializeWorkloadSqlPointInTimeRecoveryPoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
             Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeRanges"u8))
@@ -172,8 +193,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WorkloadSqlPointInTimeRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, extendedInfo.Value, Optional.ToList(timeRanges));
+            return new WorkloadSqlPointInTimeRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, extendedInfo.Value, Optional.ToList(timeRanges), rawData);
+        }
+
+        WorkloadSqlPointInTimeRecoveryPoint IModelJsonSerializable<WorkloadSqlPointInTimeRecoveryPoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRecoveryPoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadSqlPointInTimeRecoveryPoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WorkloadSqlPointInTimeRecoveryPoint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRecoveryPoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WorkloadSqlPointInTimeRecoveryPoint IModelSerializable<WorkloadSqlPointInTimeRecoveryPoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<WorkloadSqlPointInTimeRecoveryPoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWorkloadSqlPointInTimeRecoveryPoint(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WorkloadSqlPointInTimeRecoveryPoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WorkloadSqlPointInTimeRecoveryPoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWorkloadSqlPointInTimeRecoveryPoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryRetentionVolume
+    public partial class SiteRecoveryRetentionVolume : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryRetentionVolume>
     {
-        internal static SiteRecoveryRetentionVolume DeserializeSiteRecoveryRetentionVolume(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryRetentionVolume>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryRetentionVolume>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VolumeName))
+            {
+                writer.WritePropertyName("volumeName"u8);
+                writer.WriteStringValue(VolumeName);
+            }
+            if (Optional.IsDefined(CapacityInBytes))
+            {
+                writer.WritePropertyName("capacityInBytes"u8);
+                writer.WriteNumberValue(CapacityInBytes.Value);
+            }
+            if (Optional.IsDefined(FreeSpaceInBytes))
+            {
+                writer.WritePropertyName("freeSpaceInBytes"u8);
+                writer.WriteNumberValue(FreeSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(ThresholdPercentage))
+            {
+                writer.WritePropertyName("thresholdPercentage"u8);
+                writer.WriteNumberValue(ThresholdPercentage.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryRetentionVolume DeserializeSiteRecoveryRetentionVolume(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> capacityInBytes = default;
             Optional<long> freeSpaceInBytes = default;
             Optional<int> thresholdPercentage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeName"u8))
@@ -56,8 +105,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     thresholdPercentage = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryRetentionVolume(volumeName.Value, Optional.ToNullable(capacityInBytes), Optional.ToNullable(freeSpaceInBytes), Optional.ToNullable(thresholdPercentage));
+            return new SiteRecoveryRetentionVolume(volumeName.Value, Optional.ToNullable(capacityInBytes), Optional.ToNullable(freeSpaceInBytes), Optional.ToNullable(thresholdPercentage), rawData);
+        }
+
+        SiteRecoveryRetentionVolume IModelJsonSerializable<SiteRecoveryRetentionVolume>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryRetentionVolume(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryRetentionVolume>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryRetentionVolume IModelSerializable<SiteRecoveryRetentionVolume>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryRetentionVolume(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SiteRecoveryRetentionVolume model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SiteRecoveryRetentionVolume(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryRetentionVolume(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

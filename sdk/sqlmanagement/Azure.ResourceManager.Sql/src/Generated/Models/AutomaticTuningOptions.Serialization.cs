@@ -5,26 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AutomaticTuningOptions : IUtf8JsonSerializable
+    public partial class AutomaticTuningOptions : IUtf8JsonSerializable, IModelJsonSerializable<AutomaticTuningOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomaticTuningOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomaticTuningOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomaticTuningOptions DeserializeAutomaticTuningOptions(JsonElement element)
+        internal static AutomaticTuningOptions DeserializeAutomaticTuningOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<AutomaticTuningOptionModeActual> actualState = default;
             Optional<int> reasonCode = default;
             Optional<AutomaticTuningDisabledReason> reasonDesc = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -71,8 +94,57 @@ namespace Azure.ResourceManager.Sql.Models
                     reasonDesc = property.Value.GetString().ToAutomaticTuningDisabledReason();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomaticTuningOptions(Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToNullable(reasonCode), Optional.ToNullable(reasonDesc));
+            return new AutomaticTuningOptions(Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToNullable(reasonCode), Optional.ToNullable(reasonDesc), rawData);
+        }
+
+        AutomaticTuningOptions IModelJsonSerializable<AutomaticTuningOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomaticTuningOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomaticTuningOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomaticTuningOptions IModelSerializable<AutomaticTuningOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomaticTuningOptions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AutomaticTuningOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AutomaticTuningOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomaticTuningOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

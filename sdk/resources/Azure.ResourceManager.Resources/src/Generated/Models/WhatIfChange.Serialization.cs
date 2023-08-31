@@ -8,14 +8,77 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class WhatIfChange
+    public partial class WhatIfChange : IUtf8JsonSerializable, IModelJsonSerializable<WhatIfChange>
     {
-        internal static WhatIfChange DeserializeWhatIfChange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WhatIfChange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WhatIfChange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
+            writer.WritePropertyName("changeType"u8);
+            writer.WriteStringValue(ChangeType.ToSerialString());
+            if (Optional.IsDefined(UnsupportedReason))
+            {
+                writer.WritePropertyName("unsupportedReason"u8);
+                writer.WriteStringValue(UnsupportedReason);
+            }
+            if (Optional.IsDefined(Before))
+            {
+                writer.WritePropertyName("before"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Before);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Before.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(After))
+            {
+                writer.WritePropertyName("after"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(After);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(After.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsCollectionDefined(Delta))
+            {
+                writer.WritePropertyName("delta"u8);
+                writer.WriteStartArray();
+                foreach (var item in Delta)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WhatIfChange DeserializeWhatIfChange(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<BinaryData> before = default;
             Optional<BinaryData> after = default;
             Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -75,8 +139,57 @@ namespace Azure.ResourceManager.Resources.Models
                     delta = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta));
+            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta), rawData);
+        }
+
+        WhatIfChange IModelJsonSerializable<WhatIfChange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWhatIfChange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WhatIfChange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WhatIfChange IModelSerializable<WhatIfChange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWhatIfChange(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(WhatIfChange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator WhatIfChange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWhatIfChange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

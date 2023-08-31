@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The list of locks. </summary>
     internal partial class ManagementLockListResult
     {
-        /// <summary> Initializes a new instance of ManagementLockListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementLockListResult"/>. </summary>
         internal ManagementLockListResult()
         {
             Value = new ChangeTrackingList<ManagementLockData>();
         }
 
-        /// <summary> Initializes a new instance of ManagementLockListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockListResult"/>. </summary>
         /// <param name="value"> The list of locks. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ManagementLockListResult(IReadOnlyList<ManagementLockData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementLockListResult(IReadOnlyList<ManagementLockData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of locks. </summary>

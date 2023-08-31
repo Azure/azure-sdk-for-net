@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

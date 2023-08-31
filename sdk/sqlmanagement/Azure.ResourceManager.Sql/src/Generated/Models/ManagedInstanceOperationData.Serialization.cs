@@ -6,26 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstanceOperationData : IUtf8JsonSerializable
+    public partial class ManagedInstanceOperationData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedInstanceOperationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedInstanceOperationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedInstanceOperationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstanceOperationData DeserializeManagedInstanceOperationData(JsonElement element)
+        internal static ManagedInstanceOperationData DeserializeManagedInstanceOperationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isCancellable = default;
             Optional<ManagedInstanceOperationParametersPair> operationParameters = default;
             Optional<ManagedInstanceOperationSteps> operationSteps = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -202,8 +224,57 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value);
+            return new ManagedInstanceOperationData(id, name, type, systemData.Value, managedInstanceName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), operationParameters.Value, operationSteps.Value, rawData);
+        }
+
+        ManagedInstanceOperationData IModelJsonSerializable<ManagedInstanceOperationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceOperationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedInstanceOperationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedInstanceOperationData IModelSerializable<ManagedInstanceOperationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedInstanceOperationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedInstanceOperationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedInstanceOperationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedInstanceOperationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

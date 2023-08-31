@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents scheduled alert rule. </summary>
     public partial class SecurityInsightsScheduledAlertRule : SecurityInsightsAlertRuleData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsScheduledAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
         public SecurityInsightsScheduledAlertRule()
         {
             CustomDetails = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = AlertRuleKind.Scheduled;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsScheduledAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsScheduledAlertRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tactics"> The tactics of the alert rule. </param>
         /// <param name="techniques"> The techniques of the alert rule. </param>
         /// <param name="incidentConfiguration"> The settings of the incidents that created from alerts triggered by this analytics rule. </param>
-        internal SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, TimeSpan? suppressionDuration, bool? isSuppressionEnabled, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, SecurityInsightsIncidentConfiguration incidentConfiguration) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsScheduledAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, TimeSpan? suppressionDuration, bool? isSuppressionEnabled, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, SecurityInsightsIncidentConfiguration incidentConfiguration, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, etag, rawData)
         {
             Query = query;
             QueryFrequency = queryFrequency;

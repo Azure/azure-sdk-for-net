@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
     public partial class VmWorkloadProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of VmWorkloadProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectionPolicy"/>. </summary>
         public VmWorkloadProtectionPolicy()
         {
             SubProtectionPolicy = new ChangeTrackingList<SubProtectionPolicy>();
             BackupManagementType = "AzureWorkload";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="settings"> Common settings for the backup management. </param>
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
         /// <param name="doesMakePolicyConsistent"> Fix the policy inconsistency. </param>
-        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent, Dictionary<string, BinaryData> rawData) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, rawData)
         {
             WorkLoadType = workLoadType;
             Settings = settings;

@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application Jit access policy. </summary>
     public partial class ArmApplicationJitAccessPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationJitAccessPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationJitAccessPolicy"/>. </summary>
         /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
         public ArmApplicationJitAccessPolicy(bool jitAccessEnabled)
         {
@@ -22,17 +24,24 @@ namespace Azure.ResourceManager.Resources.Models
             JitApprovers = new ChangeTrackingList<JitApprover>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationJitAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationJitAccessPolicy"/>. </summary>
         /// <param name="jitAccessEnabled"> Whether the JIT access is enabled. </param>
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>
         /// <param name="maximumJitAccessDuration"> The maximum duration JIT access is granted. This is an ISO8601 time period value. </param>
-        internal ArmApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, TimeSpan? maximumJitAccessDuration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, TimeSpan? maximumJitAccessDuration, Dictionary<string, BinaryData> rawData)
         {
             JitAccessEnabled = jitAccessEnabled;
             JitApprovalMode = jitApprovalMode;
             JitApprovers = jitApprovers;
             MaximumJitAccessDuration = maximumJitAccessDuration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationJitAccessPolicy"/> for deserialization. </summary>
+        internal ArmApplicationJitAccessPolicy()
+        {
         }
 
         /// <summary> Whether the JIT access is enabled. </summary>

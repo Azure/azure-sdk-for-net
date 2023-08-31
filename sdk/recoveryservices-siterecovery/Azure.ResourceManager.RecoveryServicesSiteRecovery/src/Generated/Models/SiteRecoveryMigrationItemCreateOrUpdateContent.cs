@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Enable migration input. </summary>
     public partial class SiteRecoveryMigrationItemCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Enable migration input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryMigrationItemCreateOrUpdateContent(EnableMigrationProperties properties)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Enable migration input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryMigrationItemCreateOrUpdateContent(EnableMigrationProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemCreateOrUpdateContent"/> for deserialization. </summary>
+        internal SiteRecoveryMigrationItemCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Enable migration input properties. </summary>

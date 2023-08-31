@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input definition for planned failover. </summary>
     public partial class PlannedFailoverContent
     {
-        /// <summary> Initializes a new instance of PlannedFailoverContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverContent"/>. </summary>
         public PlannedFailoverContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlannedFailoverContent"/>. </summary>
+        /// <param name="properties"> Planned failover input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlannedFailoverContent(PlannedFailoverProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Planned failover input properties. </summary>

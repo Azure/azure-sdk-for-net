@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Summary of the replication monitoring data for this vault. </summary>
     public partial class VaultMonitoringSummary
     {
-        /// <summary> Initializes a new instance of VaultMonitoringSummary. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultMonitoringSummary"/>. </summary>
         internal VaultMonitoringSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultMonitoringSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultMonitoringSummary"/>. </summary>
         /// <param name="unHealthyVmCount"> Count of unhealthy VMs. </param>
         /// <param name="unHealthyProviderCount"> Count of unhealthy replication providers. </param>
         /// <param name="eventsCount"> Count of all critical warnings. </param>
         /// <param name="deprecatedProviderCount"> Count of all deprecated recovery service providers. </param>
         /// <param name="supportedProviderCount"> Count of all the supported recovery service providers. </param>
         /// <param name="unsupportedProviderCount"> Count of all the unsupported recovery service providers. </param>
-        internal VaultMonitoringSummary(int? unHealthyVmCount, int? unHealthyProviderCount, int? eventsCount, int? deprecatedProviderCount, int? supportedProviderCount, int? unsupportedProviderCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultMonitoringSummary(int? unHealthyVmCount, int? unHealthyProviderCount, int? eventsCount, int? deprecatedProviderCount, int? supportedProviderCount, int? unsupportedProviderCount, Dictionary<string, BinaryData> rawData)
         {
             UnHealthyVmCount = unHealthyVmCount;
             UnHealthyProviderCount = unHealthyProviderCount;
@@ -30,6 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             DeprecatedProviderCount = deprecatedProviderCount;
             SupportedProviderCount = supportedProviderCount;
             UnsupportedProviderCount = unsupportedProviderCount;
+            _rawData = rawData;
         }
 
         /// <summary> Count of unhealthy VMs. </summary>

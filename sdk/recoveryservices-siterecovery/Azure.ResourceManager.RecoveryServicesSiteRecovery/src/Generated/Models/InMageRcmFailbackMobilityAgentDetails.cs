@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback mobility agent details. </summary>
     public partial class InMageRcmFailbackMobilityAgentDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackMobilityAgentDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackMobilityAgentDetails"/>. </summary>
         internal InMageRcmFailbackMobilityAgentDetails()
         {
             ReasonsBlockingUpgrade = new ChangeTrackingList<AgentUpgradeBlockedReason>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackMobilityAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackMobilityAgentDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="driverVersion"> The driver version. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
-        internal InMageRcmFailbackMobilityAgentDetails(string version, string latestVersion, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmFailbackMobilityAgentDetails(string version, string latestVersion, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, Dictionary<string, BinaryData> rawData)
         {
             Version = version;
             LatestVersion = latestVersion;
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ReasonsBlockingUpgrade = reasonsBlockingUpgrade;
             IsUpgradeable = isUpgradeable;
+            _rawData = rawData;
         }
 
         /// <summary> The agent version. </summary>

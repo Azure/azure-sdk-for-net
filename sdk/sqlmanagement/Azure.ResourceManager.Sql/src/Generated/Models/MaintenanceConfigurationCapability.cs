@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The maintenance configuration capability. </summary>
     public partial class MaintenanceConfigurationCapability
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCapability"/>. </summary>
         internal MaintenanceConfigurationCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the maintenance configuration. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal MaintenanceConfigurationCapability(string name, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceConfigurationCapability(string name, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             IsZoneRedundant = isZoneRedundant;
             Status = status;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> Maintenance configuration name. </summary>

@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The AML skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model. Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment. </summary>
     public partial class AzureMachineLearningSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of AzureMachineLearningSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -27,7 +27,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
         /// <param name="rawLocation"> (Optional for token authentication). The region the AML service is deployed in. </param>
         /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
-        internal AzureMachineLearningSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey, string rawResourceId, TimeSpan? timeout, string rawLocation, int? degreeOfParallelism) : base(oDataType, name, description, context, inputs, outputs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMachineLearningSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, Uri scoringUri, string authenticationKey, string rawResourceId, TimeSpan? timeout, string rawLocation, int? degreeOfParallelism, Dictionary<string, BinaryData> rawData) : base(oDataType, name, description, context, inputs, outputs, rawData)
         {
             ScoringUri = scoringUri;
             AuthenticationKey = authenticationKey;
@@ -36,6 +37,11 @@ namespace Azure.Search.Documents.Indexes.Models
             RawLocation = rawLocation;
             DegreeOfParallelism = degreeOfParallelism;
             ODataType = oDataType ?? "#Microsoft.Skills.Custom.AmlSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/> for deserialization. </summary>
+        internal AzureMachineLearningSkill()
+        {
         }
         /// <summary> (Optional) When specified, indicates the timeout for the http client making the API call. </summary>
         public TimeSpan? Timeout { get; set; }

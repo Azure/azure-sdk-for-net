@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> AzureDevOps Repo properties. </summary>
     public partial class AzureDevOpsRepoProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsRepoProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepoProperties"/>. </summary>
         public AzureDevOpsRepoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepoProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="repoId"> Gets or sets Azure DevOps repo id. </param>
         /// <param name="repoUri"> Gets or sets AzureDevOps repo url. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <param name="projectName"> Gets or sets AzureDevOps Project Name. </param>
         /// <param name="visibility"> Gets or sets AzureDevOps repo visibility, whether it is public or private etc. </param>
         /// <param name="actionableRemediation"></param>
-        internal AzureDevOpsRepoProperties(ProvisioningState? provisioningState, string repoId, Uri repoUri, string orgName, string projectName, string visibility, ActionableRemediation actionableRemediation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsRepoProperties(ProvisioningState? provisioningState, string repoId, Uri repoUri, string orgName, string projectName, string visibility, ActionableRemediation actionableRemediation, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             RepoId = repoId;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             ProjectName = projectName;
             Visibility = visibility;
             ActionableRemediation = actionableRemediation;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

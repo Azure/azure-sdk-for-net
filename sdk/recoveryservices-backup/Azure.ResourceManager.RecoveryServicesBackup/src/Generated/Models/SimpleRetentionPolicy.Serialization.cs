@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleRetentionPolicy : IUtf8JsonSerializable
+    public partial class SimpleRetentionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<SimpleRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SimpleRetentionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SimpleRetentionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SimpleRetentionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionDuration))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SimpleRetentionPolicy DeserializeSimpleRetentionPolicy(JsonElement element)
+        internal static SimpleRetentionPolicy DeserializeSimpleRetentionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RetentionDuration> retentionDuration = default;
             string retentionPolicyType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionDuration"u8))
@@ -49,8 +72,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionPolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SimpleRetentionPolicy(retentionPolicyType, retentionDuration.Value);
+            return new SimpleRetentionPolicy(retentionPolicyType, retentionDuration.Value, rawData);
+        }
+
+        SimpleRetentionPolicy IModelJsonSerializable<SimpleRetentionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SimpleRetentionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimpleRetentionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SimpleRetentionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SimpleRetentionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SimpleRetentionPolicy IModelSerializable<SimpleRetentionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SimpleRetentionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSimpleRetentionPolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SimpleRetentionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SimpleRetentionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSimpleRetentionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

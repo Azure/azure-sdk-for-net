@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,24 +14,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 Managed disk details. </summary>
     public partial class InMageAzureV2ManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ManagedDiskDetails"/>. </summary>
         internal InMageAzureV2ManagedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2ManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk id. </param>
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="targetDiskName"> The target disk name. </param>
-        internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId, string targetDiskName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId, string targetDiskName, Dictionary<string, BinaryData> rawData)
         {
             DiskId = diskId;
             SeedManagedDiskId = seedManagedDiskId;
             ReplicaDiskType = replicaDiskType;
             DiskEncryptionSetId = diskEncryptionSetId;
             TargetDiskName = targetDiskName;
+            _rawData = rawData;
         }
 
         /// <summary> The disk id. </summary>

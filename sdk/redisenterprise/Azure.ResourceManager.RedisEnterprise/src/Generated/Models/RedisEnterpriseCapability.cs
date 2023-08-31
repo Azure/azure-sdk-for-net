@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Information about the features the location supports. </summary>
     public partial class RedisEnterpriseCapability
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseCapability"/>. </summary>
         internal RedisEnterpriseCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseCapability"/>. </summary>
         /// <param name="name"> Feature name. </param>
         /// <param name="value"> Indicates whether feature is supported or not. </param>
-        internal RedisEnterpriseCapability(string name, bool? value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseCapability(string name, bool? value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Feature name. </summary>

@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The value of a parameter. </summary>
     public partial class ArmPolicyParameterValue
     {
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
         public ArmPolicyParameterValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameterValue"/>. </summary>
         /// <param name="value"> The value of the parameter. </param>
-        internal ArmPolicyParameterValue(BinaryData value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmPolicyParameterValue(BinaryData value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary>

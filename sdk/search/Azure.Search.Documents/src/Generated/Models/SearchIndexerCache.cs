@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The SearchIndexerCache. </summary>
     public partial class SearchIndexerCache
     {
-        /// <summary> Initializes a new instance of SearchIndexerCache. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         public SearchIndexerCache()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerCache. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account where the cache data will be persisted. </param>
         /// <param name="enableReprocessing"> Specifies whether incremental reprocessing is enabled. </param>
         /// <param name="identity">
@@ -23,11 +28,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
-        internal SearchIndexerCache(string storageConnectionString, bool? enableReprocessing, SearchIndexerDataIdentity identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerCache(string storageConnectionString, bool? enableReprocessing, SearchIndexerDataIdentity identity, Dictionary<string, BinaryData> rawData)
         {
             StorageConnectionString = storageConnectionString;
             EnableReprocessing = enableReprocessing;
             Identity = identity;
+            _rawData = rawData;
         }
         /// <summary> Specifies whether incremental reprocessing is enabled. </summary>
         public bool? EnableReprocessing { get; set; }

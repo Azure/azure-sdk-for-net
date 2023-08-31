@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationActionEventHub : IUtf8JsonSerializable
+    public partial class SecurityAutomationActionEventHub : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAutomationActionEventHub>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAutomationActionEventHub>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAutomationActionEventHub>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SecurityAutomationActionEventHub>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventHubResourceId))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAutomationActionEventHub DeserializeSecurityAutomationActionEventHub(JsonElement element)
+        internal static SecurityAutomationActionEventHub DeserializeSecurityAutomationActionEventHub(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> sasPolicyName = default;
             Optional<string> connectionString = default;
             ActionType actionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubResourceId"u8))
@@ -66,8 +89,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     actionType = new ActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityAutomationActionEventHub(actionType, eventHubResourceId.Value, sasPolicyName.Value, connectionString.Value);
+            return new SecurityAutomationActionEventHub(actionType, eventHubResourceId.Value, sasPolicyName.Value, connectionString.Value, rawData);
+        }
+
+        SecurityAutomationActionEventHub IModelJsonSerializable<SecurityAutomationActionEventHub>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityAutomationActionEventHub>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAutomationActionEventHub(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAutomationActionEventHub>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityAutomationActionEventHub>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAutomationActionEventHub IModelSerializable<SecurityAutomationActionEventHub>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecurityAutomationActionEventHub>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAutomationActionEventHub(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecurityAutomationActionEventHub model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecurityAutomationActionEventHub(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAutomationActionEventHub(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

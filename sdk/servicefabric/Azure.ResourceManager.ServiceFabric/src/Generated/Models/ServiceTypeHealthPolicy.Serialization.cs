@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceTypeHealthPolicy : IUtf8JsonSerializable
+    public partial class ServiceTypeHealthPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ServiceTypeHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceTypeHealthPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceTypeHealthPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceTypeHealthPolicy DeserializeServiceTypeHealthPolicy(JsonElement element)
+        internal static ServiceTypeHealthPolicy DeserializeServiceTypeHealthPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> maxPercentUnhealthyServices = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyServices"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     maxPercentUnhealthyServices = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices));
+            return new ServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), rawData);
+        }
+
+        ServiceTypeHealthPolicy IModelJsonSerializable<ServiceTypeHealthPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTypeHealthPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceTypeHealthPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceTypeHealthPolicy IModelSerializable<ServiceTypeHealthPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceTypeHealthPolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceTypeHealthPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceTypeHealthPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceTypeHealthPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

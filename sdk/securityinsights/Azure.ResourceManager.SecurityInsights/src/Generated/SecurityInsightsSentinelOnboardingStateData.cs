@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,26 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsSentinelOnboardingStateData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSentinelOnboardingStateData"/>. </summary>
         public SecurityInsightsSentinelOnboardingStateData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsSentinelOnboardingStateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSentinelOnboardingStateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isCustomerManagedKeySet"> Flag that indicates the status of the CMK setting. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsSentinelOnboardingStateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isCustomerManagedKeySet, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsSentinelOnboardingStateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isCustomerManagedKeySet, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             IsCustomerManagedKeySet = isCustomerManagedKeySet;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> Flag that indicates the status of the CMK setting. </summary>

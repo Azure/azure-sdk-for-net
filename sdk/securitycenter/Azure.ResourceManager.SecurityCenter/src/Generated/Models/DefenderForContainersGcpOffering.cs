@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The containers GCP offering. </summary>
     public partial class DefenderForContainersGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOffering"/>. </summary>
         public DefenderForContainersGcpOffering()
         {
             OfferingType = OfferingType.DefenderForContainersGcp;
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isAuditLogsAutoProvisioningEnabled"> Is audit logs data collection enabled. </param>
         /// <param name="isDefenderAgentAutoProvisioningEnabled"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
         /// <param name="isPolicyAgentAutoProvisioningEnabled"> Is Policy Kubernetes agent auto provisioning enabled. </param>
-        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? isAuditLogsAutoProvisioningEnabled, bool? isDefenderAgentAutoProvisioningEnabled, bool? isPolicyAgentAutoProvisioningEnabled) : base(offeringType, description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? isAuditLogsAutoProvisioningEnabled, bool? isDefenderAgentAutoProvisioningEnabled, bool? isPolicyAgentAutoProvisioningEnabled, Dictionary<string, BinaryData> rawData) : base(offeringType, description, rawData)
         {
             NativeCloudConnection = nativeCloudConnection;
             DataPipelineNativeCloudConnection = dataPipelineNativeCloudConnection;

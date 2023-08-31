@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection container mapping properties. </summary>
     public partial class ProtectionContainerMappingProperties
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProperties"/>. </summary>
         internal ProtectionContainerMappingProperties()
         {
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingProperties"/>. </summary>
         /// <param name="targetProtectionContainerId"> Paired protection container ARM ID. </param>
         /// <param name="targetProtectionContainerFriendlyName"> Friendly name of paired container. </param>
         /// <param name="providerSpecificDetails">
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sourceFabricFriendlyName"> Friendly name of source fabric. </param>
         /// <param name="targetFabricFriendlyName"> Friendly name of target fabric. </param>
         /// <param name="policyFriendlyName"> Friendly name of replication policy. </param>
-        internal ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, ResourceIdentifier policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, ResourceIdentifier policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName, Dictionary<string, BinaryData> rawData)
         {
             TargetProtectionContainerId = targetProtectionContainerId;
             TargetProtectionContainerFriendlyName = targetProtectionContainerFriendlyName;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SourceFabricFriendlyName = sourceFabricFriendlyName;
             TargetFabricFriendlyName = targetFabricFriendlyName;
             PolicyFriendlyName = policyFriendlyName;
+            _rawData = rawData;
         }
 
         /// <summary> Paired protection container ARM ID. </summary>

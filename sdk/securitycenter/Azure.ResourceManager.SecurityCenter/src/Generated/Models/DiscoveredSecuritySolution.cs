@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The DiscoveredSecuritySolution. </summary>
     public partial class DiscoveredSecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/>. </summary>
         /// <param name="securityFamily"> The security family of the discovered solution. </param>
         /// <param name="offer"> The security solutions' image offer. </param>
         /// <param name="publisher"> The security solutions' image publisher. </param>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,13 +45,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="publisher"> The security solutions' image publisher. </param>
         /// <param name="sku"> The security solutions' image sku. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal DiscoveredSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily securityFamily, string offer, string publisher, string sku, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoveredSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily securityFamily, string offer, string publisher, string sku, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             SecurityFamily = securityFamily;
             Offer = offer;
             Publisher = publisher;
             Sku = sku;
             Location = location;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/> for deserialization. </summary>
+        internal DiscoveredSecuritySolution()
+        {
         }
 
         /// <summary> The security family of the discovered solution. </summary>

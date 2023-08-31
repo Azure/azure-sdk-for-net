@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterUpgradePolicy : IUtf8JsonSerializable
+    public partial class ClusterUpgradePolicy : IUtf8JsonSerializable, IModelJsonSerializable<ClusterUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterUpgradePolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterUpgradePolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceRestart))
             {
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("deltaHealthPolicy"u8);
                 writer.WriteObjectValue(DeltaHealthPolicy);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element)
+        internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             TimeSpan upgradeDomainTimeout = default;
             ClusterHealthPolicy healthPolicy = default;
             Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forceRestart"u8))
@@ -113,8 +135,57 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value);
+            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value, rawData);
+        }
+
+        ClusterUpgradePolicy IModelJsonSerializable<ClusterUpgradePolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterUpgradePolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterUpgradePolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterUpgradePolicy IModelSerializable<ClusterUpgradePolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterUpgradePolicy(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ClusterUpgradePolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ClusterUpgradePolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterUpgradePolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
