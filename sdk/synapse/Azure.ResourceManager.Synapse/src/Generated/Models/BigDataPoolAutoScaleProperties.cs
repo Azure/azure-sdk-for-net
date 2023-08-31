@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Auto-scaling properties of a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolAutoScaleProperties
     {
-        /// <summary> Initializes a new instance of BigDataPoolAutoScaleProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolAutoScaleProperties"/>. </summary>
         public BigDataPoolAutoScaleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolAutoScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolAutoScaleProperties"/>. </summary>
         /// <param name="minNodeCount"> The minimum number of nodes the Big Data pool can support. </param>
         /// <param name="isEnabled"> Whether automatic scaling is enabled for the Big Data pool. </param>
         /// <param name="maxNodeCount"> The maximum number of nodes the Big Data pool can support. </param>
-        internal BigDataPoolAutoScaleProperties(int? minNodeCount, bool? isEnabled, int? maxNodeCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BigDataPoolAutoScaleProperties(int? minNodeCount, bool? isEnabled, int? maxNodeCount, Dictionary<string, BinaryData> rawData)
         {
             MinNodeCount = minNodeCount;
             IsEnabled = isEnabled;
             MaxNodeCount = maxNodeCount;
+            _rawData = rawData;
         }
 
         /// <summary> The minimum number of nodes the Big Data pool can support. </summary>

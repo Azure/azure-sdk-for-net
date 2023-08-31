@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StreamAnalytics;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A stream analytics output. </summary>
     public partial class StreamAnalyticsTestOutput
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsTestOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/>. </summary>
         /// <param name="output"> The stream analytics output to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="output"/> is null. </exception>
         public StreamAnalyticsTestOutput(StreamingJobOutputData output)
@@ -22,6 +25,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Argument.AssertNotNull(output, nameof(output));
 
             Output = output;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/>. </summary>
+        /// <param name="output"> The stream analytics output to test. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsTestOutput(StreamingJobOutputData output, Dictionary<string, BinaryData> rawData)
+        {
+            Output = output;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestOutput"/> for deserialization. </summary>
+        internal StreamAnalyticsTestOutput()
+        {
         }
 
         /// <summary> The stream analytics output to test. </summary>

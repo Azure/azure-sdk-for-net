@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureStorageSmbFileShareEndpointUpdateProperties : IUtf8JsonSerializable
+    public partial class AzureStorageSmbFileShareEndpointUpdateProperties : IUtf8JsonSerializable, IModelJsonSerializable<AzureStorageSmbFileShareEndpointUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureStorageSmbFileShareEndpointUpdateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureStorageSmbFileShareEndpointUpdateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzureStorageSmbFileShareEndpointUpdateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -22,7 +30,99 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AzureStorageSmbFileShareEndpointUpdateProperties DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            EndpointType endpointType = default;
+            Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("endpointType"u8))
+                {
+                    endpointType = new EndpointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AzureStorageSmbFileShareEndpointUpdateProperties(endpointType, description.Value, rawData);
+        }
+
+        AzureStorageSmbFileShareEndpointUpdateProperties IModelJsonSerializable<AzureStorageSmbFileShareEndpointUpdateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureStorageSmbFileShareEndpointUpdateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureStorageSmbFileShareEndpointUpdateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureStorageSmbFileShareEndpointUpdateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureStorageSmbFileShareEndpointUpdateProperties IModelSerializable<AzureStorageSmbFileShareEndpointUpdateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureStorageSmbFileShareEndpointUpdateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AzureStorageSmbFileShareEndpointUpdateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureStorageSmbFileShareEndpointUpdateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

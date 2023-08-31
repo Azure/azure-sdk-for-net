@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ScheduleTriggerConverter))]
-    public partial class ScheduleTrigger : IUtf8JsonSerializable
+    public partial class ScheduleTrigger : IUtf8JsonSerializable, IModelJsonSerializable<ScheduleTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScheduleTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScheduleTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ScheduleTrigger>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
             {
@@ -25,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TriggerPipelineReference>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +67,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("recurrence"u8);
-            writer.WriteObjectValue(Recurrence);
+            if (Recurrence is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ScheduleTriggerRecurrence>)Recurrence).Serialize(writer, options);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -64,8 +84,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ScheduleTrigger DeserializeScheduleTrigger(JsonElement element)
+        internal static ScheduleTrigger DeserializeScheduleTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +177,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ScheduleTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), recurrence);
+        }
+
+        ScheduleTrigger IModelJsonSerializable<ScheduleTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduleTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduleTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScheduleTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduleTrigger>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScheduleTrigger IModelSerializable<ScheduleTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduleTrigger>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScheduleTrigger(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScheduleTrigger"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScheduleTrigger"/> to convert. </param>
+        public static implicit operator RequestContent(ScheduleTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScheduleTrigger"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScheduleTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScheduleTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ScheduleTriggerConverter : JsonConverter<ScheduleTrigger>

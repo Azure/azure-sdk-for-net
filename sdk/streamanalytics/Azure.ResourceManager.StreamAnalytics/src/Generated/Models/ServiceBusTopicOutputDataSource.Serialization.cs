@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ServiceBusTopicOutputDataSource : IUtf8JsonSerializable
+    public partial class ServiceBusTopicOutputDataSource : IUtf8JsonSerializable, IModelJsonSerializable<ServiceBusTopicOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceBusTopicOutputDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceBusTopicOutputDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ServiceBusTopicOutputDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
@@ -67,11 +74,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusTopicOutputDataSource DeserializeServiceBusTopicOutputDataSource(JsonElement element)
+        internal static ServiceBusTopicOutputDataSource DeserializeServiceBusTopicOutputDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> topicName = default;
             Optional<IList<string>> propertyColumns = default;
             Optional<IDictionary<string, string>> systemPropertyColumns = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -160,8 +182,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceBusTopicOutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), topicName.Value, Optional.ToList(propertyColumns), Optional.ToDictionary(systemPropertyColumns));
+            return new ServiceBusTopicOutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), topicName.Value, Optional.ToList(propertyColumns), Optional.ToDictionary(systemPropertyColumns), rawData);
+        }
+
+        ServiceBusTopicOutputDataSource IModelJsonSerializable<ServiceBusTopicOutputDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServiceBusTopicOutputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusTopicOutputDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceBusTopicOutputDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServiceBusTopicOutputDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceBusTopicOutputDataSource IModelSerializable<ServiceBusTopicOutputDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServiceBusTopicOutputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceBusTopicOutputDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceBusTopicOutputDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceBusTopicOutputDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceBusTopicOutputDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceBusTopicOutputDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceBusTopicOutputDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceBusTopicOutputDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

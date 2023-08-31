@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
@@ -13,7 +14,9 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned in the QueueMessageList array when calling Put Message on a Queue. </summary>
     public partial class SendReceipt
     {
-        /// <summary> Initializes a new instance of SendReceipt. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
         /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
@@ -30,6 +33,23 @@ namespace Azure.Storage.Queues.Models
             ExpirationTime = expirationTime;
             PopReceipt = popReceipt;
             TimeNextVisible = timeNextVisible;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendReceipt"/>. </summary>
+        /// <param name="messageId"> The Id of the Message. </param>
+        /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
+        /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
+        /// <param name="popReceipt"> This value is required to delete the Message. If deletion fails using this popreceipt then the message has been dequeued by another client. </param>
+        /// <param name="timeNextVisible"> The time that the message will again become visible in the Queue. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendReceipt(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, Dictionary<string, BinaryData> rawData)
+        {
+            MessageId = messageId;
+            InsertionTime = insertionTime;
+            ExpirationTime = expirationTime;
+            PopReceipt = popReceipt;
+            TimeNextVisible = timeNextVisible;
+            _rawData = rawData;
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class SubscriptionAliasCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class SubscriptionAliasCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionAliasCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionAliasCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionAliasCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -45,10 +53,153 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteObjectValue(AdditionalProperties);
+                if (AdditionalProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SubscriptionAliasAdditionalProperties>)AdditionalProperties).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SubscriptionAliasCreateOrUpdateContent DeserializeSubscriptionAliasCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> displayName = default;
+            Optional<SubscriptionWorkload> workload = default;
+            Optional<string> billingScope = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> resellerId = default;
+            Optional<SubscriptionAliasAdditionalProperties> additionalProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("workload"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            workload = new SubscriptionWorkload(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("billingScope"u8))
+                        {
+                            billingScope = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("subscriptionId"u8))
+                        {
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resellerId"u8))
+                        {
+                            resellerId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            additionalProperties = SubscriptionAliasAdditionalProperties.DeserializeSubscriptionAliasAdditionalProperties(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SubscriptionAliasCreateOrUpdateContent(displayName.Value, Optional.ToNullable(workload), billingScope.Value, subscriptionId.Value, resellerId.Value, additionalProperties.Value, rawData);
+        }
+
+        SubscriptionAliasCreateOrUpdateContent IModelJsonSerializable<SubscriptionAliasCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionAliasCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionAliasCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionAliasCreateOrUpdateContent IModelSerializable<SubscriptionAliasCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionAliasCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubscriptionAliasCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubscriptionAliasCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(SubscriptionAliasCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubscriptionAliasCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubscriptionAliasCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionAliasCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

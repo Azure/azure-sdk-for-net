@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.Workloads.Models
     /// Please note <see cref="ProviderSpecificProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DB2ProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="HanaDBProviderInstanceProperties"/> and <see cref="SapNetWeaverProviderInstanceProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownProviderSpecificProperties))]
     public abstract partial class ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/>. </summary>
         protected ProviderSpecificProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
-        internal ProviderSpecificProperties(string providerType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderSpecificProperties(string providerType, Dictionary<string, BinaryData> rawData)
         {
             ProviderType = providerType;
+            _rawData = rawData;
         }
 
         /// <summary> The provider type. For example, the value can be SapHana. </summary>

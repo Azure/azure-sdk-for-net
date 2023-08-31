@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisOperationBase : IUtf8JsonSerializable
+    public partial class SpatialAnalysisOperationBase : IUtf8JsonSerializable, IModelJsonSerializable<SpatialAnalysisOperationBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SpatialAnalysisOperationBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SpatialAnalysisOperationBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisOperationBase DeserializeSpatialAnalysisOperationBase(JsonElement element)
+        internal static SpatialAnalysisOperationBase DeserializeSpatialAnalysisOperationBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,7 +60,72 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "SpatialAnalysisTypedOperationBase": return SpatialAnalysisTypedOperationBase.DeserializeSpatialAnalysisTypedOperationBase(element);
                 }
             }
-            return UnknownSpatialAnalysisOperationBase.DeserializeUnknownSpatialAnalysisOperationBase(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownSpatialAnalysisOperationBase(type, rawData);
+        }
+
+        SpatialAnalysisOperationBase IModelJsonSerializable<SpatialAnalysisOperationBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisOperationBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SpatialAnalysisOperationBase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SpatialAnalysisOperationBase IModelSerializable<SpatialAnalysisOperationBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSpatialAnalysisOperationBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SpatialAnalysisOperationBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SpatialAnalysisOperationBase"/> to convert. </param>
+        public static implicit operator RequestContent(SpatialAnalysisOperationBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SpatialAnalysisOperationBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SpatialAnalysisOperationBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSpatialAnalysisOperationBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

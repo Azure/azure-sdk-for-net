@@ -15,7 +15,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An enumeration of containers. </summary>
     internal partial class ListContainersSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="containerItems"/> is null. </exception>
@@ -28,14 +30,15 @@ namespace Azure.Storage.Blobs.Models
             ContainerItems = containerItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>
         /// <param name="maxResults"></param>
         /// <param name="containerItems"></param>
         /// <param name="nextMarker"></param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ContainerItemInternal> containerItems, string nextMarker)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ContainerItemInternal> containerItems, string nextMarker, Dictionary<string, BinaryData> rawData)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -43,6 +46,12 @@ namespace Azure.Storage.Blobs.Models
             MaxResults = maxResults;
             ContainerItems = containerItems;
             NextMarker = nextMarker;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/> for deserialization. </summary>
+        internal ListContainersSegmentResponse()
+        {
         }
 
         /// <summary> Gets the service endpoint. </summary>

@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Subscription.Models
 {
     /// <summary> The new name of the subscription. </summary>
     public partial class SubscriptionName
     {
-        /// <summary> Initializes a new instance of SubscriptionName. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionName"/>. </summary>
         public SubscriptionName()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionName"/>. </summary>
+        /// <param name="subscriptionNameValue"> New subscription name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionName(string subscriptionNameValue, Dictionary<string, BinaryData> rawData)
+        {
+            SubscriptionNameValue = subscriptionNameValue;
+            _rawData = rawData;
         }
 
         /// <summary> New subscription name. </summary>

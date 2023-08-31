@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,25 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to perform a single operation on a batch of hierarchies. Exactly one of "get", "put" or "delete" must be set. </summary>
     internal partial class HierarchiesBatchRequest
     {
-        /// <summary> Initializes a new instance of HierarchiesBatchRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HierarchiesBatchRequest"/>. </summary>
         public HierarchiesBatchRequest()
         {
             Put = new ChangeTrackingList<TimeSeriesHierarchy>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HierarchiesBatchRequest"/>. </summary>
+        /// <param name="get"> "get" should be set while fetching specific hierarchies either by IDs or names. </param>
+        /// <param name="put"> "put" should be set while creating or updating hierarchies. </param>
+        /// <param name="delete"> "delete" should be set while fetching specific hierarchies either by IDs or names. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HierarchiesBatchRequest(HierarchiesRequestBatchGetDelete @get, IList<TimeSeriesHierarchy> put, HierarchiesRequestBatchGetDelete delete, Dictionary<string, BinaryData> rawData)
+        {
+            Get = @get;
+            Put = put;
+            Delete = delete;
+            _rawData = rawData;
         }
 
         /// <summary> "get" should be set while fetching specific hierarchies either by IDs or names. </summary>

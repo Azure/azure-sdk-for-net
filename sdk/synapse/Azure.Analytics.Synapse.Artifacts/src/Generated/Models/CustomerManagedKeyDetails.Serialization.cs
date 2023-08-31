@@ -6,34 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CustomerManagedKeyDetailsConverter))]
-    public partial class CustomerManagedKeyDetails : IUtf8JsonSerializable
+    public partial class CustomerManagedKeyDetails : IUtf8JsonSerializable, IModelJsonSerializable<CustomerManagedKeyDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomerManagedKeyDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomerManagedKeyDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                if (Key is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WorkspaceKeyDetails>)Key).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CustomerManagedKeyDetails DeserializeCustomerManagedKeyDetails(JsonElement element)
+        internal static CustomerManagedKeyDetails DeserializeCustomerManagedKeyDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> status = default;
             Optional<WorkspaceKeyDetails> key = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -50,8 +79,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     key = WorkspaceKeyDetails.DeserializeWorkspaceKeyDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomerManagedKeyDetails(status.Value, key.Value);
+            return new CustomerManagedKeyDetails(status.Value, key.Value, rawData);
+        }
+
+        CustomerManagedKeyDetails IModelJsonSerializable<CustomerManagedKeyDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerManagedKeyDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomerManagedKeyDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomerManagedKeyDetails IModelSerializable<CustomerManagedKeyDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomerManagedKeyDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomerManagedKeyDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomerManagedKeyDetails"/> to convert. </param>
+        public static implicit operator RequestContent(CustomerManagedKeyDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomerManagedKeyDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomerManagedKeyDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomerManagedKeyDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CustomerManagedKeyDetailsConverter : JsonConverter<CustomerManagedKeyDetails>

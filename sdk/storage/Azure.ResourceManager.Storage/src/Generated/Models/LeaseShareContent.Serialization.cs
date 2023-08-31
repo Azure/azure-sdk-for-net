@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LeaseShareContent : IUtf8JsonSerializable
+    public partial class LeaseShareContent : IUtf8JsonSerializable, IModelJsonSerializable<LeaseShareContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LeaseShareContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LeaseShareContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
@@ -37,7 +45,125 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static LeaseShareContent DeserializeLeaseShareContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            LeaseShareAction action = default;
+            Optional<string> leaseId = default;
+            Optional<int> breakPeriod = default;
+            Optional<int> leaseDuration = default;
+            Optional<string> proposedLeaseId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("action"u8))
+                {
+                    action = new LeaseShareAction(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("leaseId"u8))
+                {
+                    leaseId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("breakPeriod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    breakPeriod = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("leaseDuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    leaseDuration = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("proposedLeaseId"u8))
+                {
+                    proposedLeaseId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new LeaseShareContent(action, leaseId.Value, Optional.ToNullable(breakPeriod), Optional.ToNullable(leaseDuration), proposedLeaseId.Value, rawData);
+        }
+
+        LeaseShareContent IModelJsonSerializable<LeaseShareContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLeaseShareContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LeaseShareContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LeaseShareContent IModelSerializable<LeaseShareContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLeaseShareContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LeaseShareContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LeaseShareContent"/> to convert. </param>
+        public static implicit operator RequestContent(LeaseShareContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LeaseShareContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LeaseShareContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLeaseShareContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

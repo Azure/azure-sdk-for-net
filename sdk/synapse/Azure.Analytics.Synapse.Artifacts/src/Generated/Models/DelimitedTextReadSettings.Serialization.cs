@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DelimitedTextReadSettingsConverter))]
-    public partial class DelimitedTextReadSettings : IUtf8JsonSerializable
+    public partial class DelimitedTextReadSettings : IUtf8JsonSerializable, IModelJsonSerializable<DelimitedTextReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DelimitedTextReadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DelimitedTextReadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DelimitedTextReadSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SkipLineCount))
             {
@@ -27,7 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                if (CompressionProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CompressionReadSettings>)CompressionProperties).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -39,8 +52,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element)
+        internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +94,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DelimitedTextReadSettings(type, additionalProperties, skipLineCount.Value, compressionProperties.Value);
+        }
+
+        DelimitedTextReadSettings IModelJsonSerializable<DelimitedTextReadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DelimitedTextReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDelimitedTextReadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DelimitedTextReadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DelimitedTextReadSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DelimitedTextReadSettings IModelSerializable<DelimitedTextReadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DelimitedTextReadSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDelimitedTextReadSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DelimitedTextReadSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DelimitedTextReadSettings"/> to convert. </param>
+        public static implicit operator RequestContent(DelimitedTextReadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DelimitedTextReadSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DelimitedTextReadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDelimitedTextReadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DelimitedTextReadSettingsConverter : JsonConverter<DelimitedTextReadSettings>

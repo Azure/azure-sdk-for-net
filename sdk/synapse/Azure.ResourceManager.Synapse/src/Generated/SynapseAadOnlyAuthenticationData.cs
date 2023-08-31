@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseAadOnlyAuthenticationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseAadOnlyAuthenticationData"/>. </summary>
         public SynapseAadOnlyAuthenticationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseAadOnlyAuthenticationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +34,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="isAadOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
         /// <param name="state"> property configuration state. </param>
         /// <param name="createdOn"> property configuration date. </param>
-        internal SynapseAadOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAadOnlyAuthenticationEnabled, AadAuthenticationState? state, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseAadOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAadOnlyAuthenticationEnabled, AadAuthenticationState? state, DateTimeOffset? createdOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             IsAadOnlyAuthenticationEnabled = isAadOnlyAuthenticationEnabled;
             State = state;
             CreatedOn = createdOn;
+            _rawData = rawData;
         }
 
         /// <summary> Azure Active Directory only Authentication enabled. </summary>

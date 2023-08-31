@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The usage and limit (quota) for a resource. </summary>
     public partial class StorageCacheUsage
     {
-        /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsage"/>. </summary>
         internal StorageCacheUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsage"/>. </summary>
         /// <param name="limit"> The limit (quota) for this resource. </param>
         /// <param name="unit"> Unit that the limit and usages are expressed in, such as 'Count'. </param>
         /// <param name="currentValue"> The current usage of this resource. </param>
         /// <param name="name"> Naming information for this resource type. </param>
-        internal StorageCacheUsage(int? limit, string unit, int? currentValue, StorageCacheUsageName name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsage(int? limit, string unit, int? currentValue, StorageCacheUsageName name, Dictionary<string, BinaryData> rawData)
         {
             Limit = limit;
             Unit = unit;
             CurrentValue = currentValue;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The limit (quota) for this resource. </summary>

@@ -5,15 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileRange
+    internal partial class FileRange : IXmlSerializable, IModelSerializable<FileRange>
     {
-        internal static FileRange DeserializeFileRange(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "Range");
+            writer.WriteStartElement("Start");
+            writer.WriteValue(Start);
+            writer.WriteEndElement();
+            writer.WriteStartElement("End");
+            writer.WriteValue(End);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static FileRange DeserializeFileRange(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             long start = default;
             long end = default;
             if (element.Element("Start") is XElement startElement)
@@ -24,7 +44,57 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 end = (long)endElement;
             }
-            return new FileRange(start, end);
+            return new FileRange(start, end, default);
+        }
+
+        BinaryData IModelSerializable<FileRange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FileRange IModelSerializable<FileRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeFileRange(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="FileRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FileRange"/> to convert. </param>
+        public static implicit operator RequestContent(FileRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FileRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FileRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeFileRange(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

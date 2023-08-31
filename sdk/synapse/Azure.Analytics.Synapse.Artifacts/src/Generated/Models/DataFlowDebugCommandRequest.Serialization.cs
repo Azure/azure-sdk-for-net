@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugCommandRequestConverter))]
-    public partial class DataFlowDebugCommandRequest : IUtf8JsonSerializable
+    public partial class DataFlowDebugCommandRequest : IUtf8JsonSerializable, IModelJsonSerializable<DataFlowDebugCommandRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFlowDebugCommandRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFlowDebugCommandRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
@@ -31,9 +38,122 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
-                writer.WriteObjectValue(CommandPayload);
+                if (CommandPayload is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataFlowDebugCommandPayload>)CommandPayload).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static DataFlowDebugCommandRequest DeserializeDataFlowDebugCommandRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> sessionId = default;
+            Optional<DataFlowDebugCommandType> command = default;
+            Optional<DataFlowDebugCommandPayload> commandPayload = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sessionId"u8))
+                {
+                    sessionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("command"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    command = new DataFlowDebugCommandType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("commandPayload"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    commandPayload = DataFlowDebugCommandPayload.DeserializeDataFlowDebugCommandPayload(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataFlowDebugCommandRequest(sessionId.Value, Optional.ToNullable(command), commandPayload.Value, rawData);
+        }
+
+        DataFlowDebugCommandRequest IModelJsonSerializable<DataFlowDebugCommandRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugCommandRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFlowDebugCommandRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFlowDebugCommandRequest IModelSerializable<DataFlowDebugCommandRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFlowDebugCommandRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFlowDebugCommandRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFlowDebugCommandRequest"/> to convert. </param>
+        public static implicit operator RequestContent(DataFlowDebugCommandRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFlowDebugCommandRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFlowDebugCommandRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFlowDebugCommandRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DataFlowDebugCommandRequestConverter : JsonConverter<DataFlowDebugCommandRequest>
@@ -44,7 +164,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             public override DataFlowDebugCommandRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDataFlowDebugCommandRequest(document.RootElement);
             }
         }
     }

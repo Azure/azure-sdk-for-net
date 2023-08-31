@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class QueryFormat : IXmlSerializable
+    internal partial class QueryFormat : IXmlSerializable, IModelSerializable<QueryFormat>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "QueryFormat");
             writer.WriteStartElement("Type");
@@ -35,6 +40,89 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
             }
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueryFormat DeserializeQueryFormat(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            QueryFormatType type = default;
+            DelimitedTextConfigurationInternal delimitedTextConfiguration = default;
+            JsonTextConfigurationInternal jsonTextConfiguration = default;
+            ArrowTextConfigurationInternal arrowConfiguration = default;
+            object parquetTextConfiguration = default;
+            if (element.Element("Type") is XElement typeElement)
+            {
+                type = typeElement.Value.ToQueryFormatType();
+            }
+            if (element.Element("DelimitedTextConfiguration") is XElement delimitedTextConfigurationElement)
+            {
+                delimitedTextConfiguration = DelimitedTextConfigurationInternal.DeserializeDelimitedTextConfigurationInternal(delimitedTextConfigurationElement);
+            }
+            if (element.Element("JsonTextConfiguration") is XElement jsonTextConfigurationElement)
+            {
+                jsonTextConfiguration = JsonTextConfigurationInternal.DeserializeJsonTextConfigurationInternal(jsonTextConfigurationElement);
+            }
+            if (element.Element("ArrowConfiguration") is XElement arrowConfigurationElement)
+            {
+                arrowConfiguration = ArrowTextConfigurationInternal.DeserializeArrowTextConfigurationInternal(arrowConfigurationElement);
+            }
+            if (element.Element("ParquetTextConfiguration") is XElement parquetTextConfigurationElement)
+            {
+                parquetTextConfiguration = parquetTextConfigurationElement.GetObjectValue(null);
+            }
+            return new QueryFormat(type, delimitedTextConfiguration, jsonTextConfiguration, arrowConfiguration, parquetTextConfiguration, default);
+        }
+
+        BinaryData IModelSerializable<QueryFormat>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueryFormat IModelSerializable<QueryFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeQueryFormat(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="QueryFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryFormat"/> to convert. </param>
+        public static implicit operator RequestContent(QueryFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueryFormat(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

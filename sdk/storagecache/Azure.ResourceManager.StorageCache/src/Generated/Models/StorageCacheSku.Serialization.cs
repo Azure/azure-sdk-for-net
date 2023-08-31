@@ -5,16 +5,99 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheSku
+    public partial class StorageCacheSku : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheSku>
     {
-        internal static StorageCacheSku DeserializeStorageCacheSku(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StorageCacheSkuCapability>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LocationInfo))
+            {
+                writer.WritePropertyName("locationInfo"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocationInfo)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StorageCacheSkuLocationInfo>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(Restrictions))
+            {
+                writer.WritePropertyName("restrictions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Restrictions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StorageCacheRestriction>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageCacheSku DeserializeStorageCacheSku(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +108,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<IReadOnlyList<StorageCacheSkuLocationInfo>> locationInfo = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<StorageCacheRestriction>> restrictions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -93,8 +177,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     restrictions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheSku(resourceType.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(locationInfo), name.Value, Optional.ToList(restrictions));
+            return new StorageCacheSku(resourceType.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(locationInfo), name.Value, Optional.ToList(restrictions), rawData);
+        }
+
+        StorageCacheSku IModelJsonSerializable<StorageCacheSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheSku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheSku>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheSku IModelSerializable<StorageCacheSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheSku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheSku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheSku"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheSku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheSku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheSku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheSku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

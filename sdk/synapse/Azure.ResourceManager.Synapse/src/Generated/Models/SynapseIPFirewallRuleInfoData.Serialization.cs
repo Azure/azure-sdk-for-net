@@ -5,18 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseIPFirewallRuleInfoData : IUtf8JsonSerializable
+    public partial class SynapseIPFirewallRuleInfoData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIPFirewallRuleInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIPFirewallRuleInfoData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIPFirewallRuleInfoData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(StartIPAddress.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseIPFirewallRuleInfoData DeserializeSynapseIPFirewallRuleInfoData(JsonElement element)
+        internal static SynapseIPFirewallRuleInfoData DeserializeSynapseIPFirewallRuleInfoData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +69,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<IPAddress> endIPAddress = default;
             Optional<SynapseProvisioningState> provisioningState = default;
             Optional<IPAddress> startIPAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,8 +135,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseIPFirewallRuleInfoData(id, name, type, systemData.Value, endIPAddress.Value, Optional.ToNullable(provisioningState), startIPAddress.Value);
+            return new SynapseIPFirewallRuleInfoData(id, name, type, systemData.Value, endIPAddress.Value, Optional.ToNullable(provisioningState), startIPAddress.Value, rawData);
+        }
+
+        SynapseIPFirewallRuleInfoData IModelJsonSerializable<SynapseIPFirewallRuleInfoData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIPFirewallRuleInfoData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIPFirewallRuleInfoData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIPFirewallRuleInfoData IModelSerializable<SynapseIPFirewallRuleInfoData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIPFirewallRuleInfoData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseIPFirewallRuleInfoData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseIPFirewallRuleInfoData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseIPFirewallRuleInfoData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseIPFirewallRuleInfoData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseIPFirewallRuleInfoData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseIPFirewallRuleInfoData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

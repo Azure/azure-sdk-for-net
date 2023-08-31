@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownSapSizingRecommendationResult
+    internal partial class UnknownSapSizingRecommendationResult : IUtf8JsonSerializable, IModelJsonSerializable<SapSizingRecommendationResult>
     {
-        internal static UnknownSapSizingRecommendationResult DeserializeUnknownSapSizingRecommendationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapSizingRecommendationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapSizingRecommendationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("deploymentType"u8);
+            writer.WriteStringValue(DeploymentType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            SapDeploymentType deploymentType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("deploymentType"u8))
+                foreach (var property in _rawData)
                 {
-                    deploymentType = new SapDeploymentType(property.Value.GetString());
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownSapSizingRecommendationResult(deploymentType);
+            writer.WriteEndObject();
+        }
+
+        internal static SapSizingRecommendationResult DeserializeUnknownSapSizingRecommendationResult(JsonElement element, ModelSerializerOptions options = default) => DeserializeSapSizingRecommendationResult(element, options);
+
+        SapSizingRecommendationResult IModelJsonSerializable<SapSizingRecommendationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSapSizingRecommendationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapSizingRecommendationResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapSizingRecommendationResult IModelSerializable<SapSizingRecommendationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapSizingRecommendationResult(doc.RootElement, options);
         }
     }
 }

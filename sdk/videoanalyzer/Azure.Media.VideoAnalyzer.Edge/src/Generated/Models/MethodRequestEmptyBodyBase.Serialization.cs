@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class MethodRequestEmptyBodyBase : IUtf8JsonSerializable
+    public partial class MethodRequestEmptyBodyBase : IUtf8JsonSerializable, IModelJsonSerializable<MethodRequestEmptyBodyBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MethodRequestEmptyBodyBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MethodRequestEmptyBodyBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MethodRequestEmptyBodyBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -22,11 +30,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MethodRequestEmptyBodyBase DeserializeMethodRequestEmptyBodyBase(JsonElement element)
+        internal static MethodRequestEmptyBodyBase DeserializeMethodRequestEmptyBodyBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,9 +67,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "remoteDeviceAdapterGet": return RemoteDeviceAdapterGetRequest.DeserializeRemoteDeviceAdapterGetRequest(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             string name = default;
             string methodName = "MethodRequestEmptyBodyBase";
             Optional<string> apiVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,8 +90,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MethodRequestEmptyBodyBase(methodName, apiVersion.Value, name);
+            return new MethodRequestEmptyBodyBase(methodName, apiVersion.Value, name, rawData);
+        }
+
+        MethodRequestEmptyBodyBase IModelJsonSerializable<MethodRequestEmptyBodyBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MethodRequestEmptyBodyBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMethodRequestEmptyBodyBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MethodRequestEmptyBodyBase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MethodRequestEmptyBodyBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MethodRequestEmptyBodyBase IModelSerializable<MethodRequestEmptyBodyBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MethodRequestEmptyBodyBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMethodRequestEmptyBodyBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MethodRequestEmptyBodyBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MethodRequestEmptyBodyBase"/> to convert. </param>
+        public static implicit operator RequestContent(MethodRequestEmptyBodyBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MethodRequestEmptyBodyBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MethodRequestEmptyBodyBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMethodRequestEmptyBodyBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

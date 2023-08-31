@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,25 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> An AML file system update instance. </summary>
     public partial class AmlFileSystemPatch
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
         public AmlFileSystemPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="encryptionSettings"> Specifies encryption settings of the AML file system. </param>
+        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemPatch(IDictionary<string, string> tags, AmlFileSystemEncryptionSettings encryptionSettings, AmlFileSystemUpdatePropertiesMaintenanceWindow maintenanceWindow, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            EncryptionSettings = encryptionSettings;
+            MaintenanceWindow = maintenanceWindow;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

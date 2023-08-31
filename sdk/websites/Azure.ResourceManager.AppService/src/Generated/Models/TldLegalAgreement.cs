@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Legal agreement for a top level domain. </summary>
     public partial class TldLegalAgreement
     {
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
@@ -29,17 +32,24 @@ namespace Azure.ResourceManager.AppService.Models
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
         /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
-        internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TldLegalAgreement(string agreementKey, string title, string content, Uri uri, Dictionary<string, BinaryData> rawData)
         {
             AgreementKey = agreementKey;
             Title = title;
             Content = content;
             Uri = uri;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/> for deserialization. </summary>
+        internal TldLegalAgreement()
+        {
         }
 
         /// <summary> Unique identifier for the agreement. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Synapse;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> List of SQL pools. </summary>
     internal partial class SqlPoolInfoListResult
     {
-        /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolInfoListResult"/>. </summary>
         internal SqlPoolInfoListResult()
         {
             Value = new ChangeTrackingList<SynapseSqlPoolData>();
         }
 
-        /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of SQL pools. </param>
-        internal SqlPoolInfoListResult(string nextLink, IReadOnlyList<SynapseSqlPoolData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlPoolInfoListResult(string nextLink, IReadOnlyList<SynapseSqlPoolData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Link to the next page of results. </summary>

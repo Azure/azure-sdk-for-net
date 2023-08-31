@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RedirectIncompatibleRowSettingsConverter))]
-    public partial class RedirectIncompatibleRowSettings : IUtf8JsonSerializable
+    public partial class RedirectIncompatibleRowSettings : IUtf8JsonSerializable, IModelJsonSerializable<RedirectIncompatibleRowSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RedirectIncompatibleRowSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RedirectIncompatibleRowSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
@@ -34,8 +40,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static RedirectIncompatibleRowSettings DeserializeRedirectIncompatibleRowSettings(JsonElement element)
+        internal static RedirectIncompatibleRowSettings DeserializeRedirectIncompatibleRowSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +72,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new RedirectIncompatibleRowSettings(linkedServiceName, path.Value, additionalProperties);
+        }
+
+        RedirectIncompatibleRowSettings IModelJsonSerializable<RedirectIncompatibleRowSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedirectIncompatibleRowSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RedirectIncompatibleRowSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RedirectIncompatibleRowSettings IModelSerializable<RedirectIncompatibleRowSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRedirectIncompatibleRowSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RedirectIncompatibleRowSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RedirectIncompatibleRowSettings"/> to convert. </param>
+        public static implicit operator RequestContent(RedirectIncompatibleRowSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RedirectIncompatibleRowSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RedirectIncompatibleRowSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRedirectIncompatibleRowSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class RedirectIncompatibleRowSettingsConverter : JsonConverter<RedirectIncompatibleRowSettings>

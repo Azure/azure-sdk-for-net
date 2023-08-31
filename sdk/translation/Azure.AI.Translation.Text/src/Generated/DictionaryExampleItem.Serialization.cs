@@ -5,17 +5,61 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class DictionaryExampleItem
+    public partial class DictionaryExampleItem : IUtf8JsonSerializable, IModelJsonSerializable<DictionaryExampleItem>
     {
-        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DictionaryExampleItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DictionaryExampleItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("normalizedSource"u8);
+            writer.WriteStringValue(NormalizedSource);
+            writer.WritePropertyName("normalizedTarget"u8);
+            writer.WriteStringValue(NormalizedTarget);
+            writer.WritePropertyName("examples"u8);
+            writer.WriteStartArray();
+            foreach (var item in Examples)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DictionaryExample>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DictionaryExampleItem DeserializeDictionaryExampleItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +67,7 @@ namespace Azure.AI.Translation.Text
             string normalizedSource = default;
             string normalizedTarget = default;
             IReadOnlyList<DictionaryExample> examples = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("normalizedSource"u8))
@@ -45,16 +90,61 @@ namespace Azure.AI.Translation.Text
                     examples = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples);
+            return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DictionaryExampleItem FromResponse(Response response)
+        DictionaryExampleItem IModelJsonSerializable<DictionaryExampleItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDictionaryExampleItem(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDictionaryExampleItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DictionaryExampleItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DictionaryExampleItem IModelSerializable<DictionaryExampleItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDictionaryExampleItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DictionaryExampleItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DictionaryExampleItem"/> to convert. </param>
+        public static implicit operator RequestContent(DictionaryExampleItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DictionaryExampleItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DictionaryExampleItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDictionaryExampleItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

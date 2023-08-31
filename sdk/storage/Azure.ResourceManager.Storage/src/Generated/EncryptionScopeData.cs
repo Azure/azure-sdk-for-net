@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class EncryptionScopeData : ResourceData
     {
-        /// <summary> Initializes a new instance of EncryptionScopeData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
         public EncryptionScopeData()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="lastModifiedOn"> Gets the last modification date and time of the encryption scope in UTC. </param>
         /// <param name="keyVaultProperties"> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
-        internal EncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, EncryptionScopeKeyVaultProperties keyVaultProperties, bool? requireInfrastructureEncryption) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, EncryptionScopeKeyVaultProperties keyVaultProperties, bool? requireInfrastructureEncryption, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Source = source;
             State = state;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.Storage
             LastModifiedOn = lastModifiedOn;
             KeyVaultProperties = keyVaultProperties;
             RequireInfrastructureEncryption = requireInfrastructureEncryption;
+            _rawData = rawData;
         }
 
         /// <summary> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </summary>

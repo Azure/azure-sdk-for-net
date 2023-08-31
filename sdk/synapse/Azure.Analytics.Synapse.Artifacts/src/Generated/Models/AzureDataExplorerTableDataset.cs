@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Azure Data Explorer (Kusto) dataset. </summary>
     public partial class AzureDataExplorerTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AzureDataExplorerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureDataExplorerTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureDataExplorerTable";
         }
 
-        /// <summary> Initializes a new instance of AzureDataExplorerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -39,6 +39,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Table = table;
             Type = type ?? "AzureDataExplorerTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerTableDataset"/> for deserialization. </summary>
+        internal AzureDataExplorerTableDataset()
+        {
         }
 
         /// <summary> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </summary>

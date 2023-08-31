@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSsisEnvironmentReference
+    public partial class SynapseSsisEnvironmentReference : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSsisEnvironmentReference>
     {
-        internal static SynapseSsisEnvironmentReference DeserializeSynapseSsisEnvironmentReference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSsisEnvironmentReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSsisEnvironmentReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(EnvironmentFolderName))
+            {
+                writer.WritePropertyName("environmentFolderName"u8);
+                writer.WriteStringValue(EnvironmentFolderName);
+            }
+            if (Optional.IsDefined(EnvironmentName))
+            {
+                writer.WritePropertyName("environmentName"u8);
+                writer.WriteStringValue(EnvironmentName);
+            }
+            if (Optional.IsDefined(ReferenceType))
+            {
+                writer.WritePropertyName("referenceType"u8);
+                writer.WriteStringValue(ReferenceType);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseSsisEnvironmentReference DeserializeSynapseSsisEnvironmentReference(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> environmentFolderName = default;
             Optional<string> environmentName = default;
             Optional<string> referenceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,8 +97,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     referenceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseSsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value);
+            return new SynapseSsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value, rawData);
+        }
+
+        SynapseSsisEnvironmentReference IModelJsonSerializable<SynapseSsisEnvironmentReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSsisEnvironmentReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSsisEnvironmentReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSsisEnvironmentReference IModelSerializable<SynapseSsisEnvironmentReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSsisEnvironmentReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSsisEnvironmentReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSsisEnvironmentReference"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSsisEnvironmentReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSsisEnvironmentReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSsisEnvironmentReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSsisEnvironmentReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

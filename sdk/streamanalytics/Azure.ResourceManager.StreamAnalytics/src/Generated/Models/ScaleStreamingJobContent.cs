@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Parameters supplied to the Scale Streaming Job operation. </summary>
     public partial class ScaleStreamingJobContent
     {
-        /// <summary> Initializes a new instance of ScaleStreamingJobContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScaleStreamingJobContent"/>. </summary>
         public ScaleStreamingJobContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScaleStreamingJobContent"/>. </summary>
+        /// <param name="streamingUnits"> Specifies the number of streaming units that the streaming job will scale to. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScaleStreamingJobContent(int? streamingUnits, Dictionary<string, BinaryData> rawData)
+        {
+            StreamingUnits = streamingUnits;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the number of streaming units that the streaming job will scale to. </summary>

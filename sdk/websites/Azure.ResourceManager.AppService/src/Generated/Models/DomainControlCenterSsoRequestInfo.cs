@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Single sign-on request information for domain management. </summary>
     public partial class DomainControlCenterSsoRequestInfo
     {
-        /// <summary> Initializes a new instance of DomainControlCenterSsoRequestInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainControlCenterSsoRequestInfo"/>. </summary>
         internal DomainControlCenterSsoRequestInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainControlCenterSsoRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainControlCenterSsoRequestInfo"/>. </summary>
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
-        internal DomainControlCenterSsoRequestInfo(Uri uri, string postParameterKey, string postParameterValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainControlCenterSsoRequestInfo(Uri uri, string postParameterKey, string postParameterValue, Dictionary<string, BinaryData> rawData)
         {
             Uri = uri;
             PostParameterKey = postParameterKey;
             PostParameterValue = postParameterValue;
+            _rawData = rawData;
         }
 
         /// <summary> URL where the single sign-on request is to be made. </summary>

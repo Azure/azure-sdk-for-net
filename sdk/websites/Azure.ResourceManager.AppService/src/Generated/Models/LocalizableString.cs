@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Localizable string object containing the name and a localized value. </summary>
     public partial class LocalizableString
     {
-        /// <summary> Initializes a new instance of LocalizableString. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalizableString"/>. </summary>
         internal LocalizableString()
         {
         }
 
-        /// <summary> Initializes a new instance of LocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalizableString"/>. </summary>
         /// <param name="value"> Non-localized name. </param>
         /// <param name="localizedValue"> Localized name. </param>
-        internal LocalizableString(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalizableString(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> Non-localized name. </summary>

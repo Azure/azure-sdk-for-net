@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list of language extension objects. </summary>
     public partial class SynapseLanguageExtensionsList
     {
-        /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseLanguageExtensionsList"/>. </summary>
         public SynapseLanguageExtensionsList()
         {
             Value = new ChangeTrackingList<SynapseLanguageExtension>();
         }
 
-        /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseLanguageExtensionsList"/>. </summary>
         /// <param name="value"> The list of language extensions. </param>
-        internal SynapseLanguageExtensionsList(IList<SynapseLanguageExtension> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseLanguageExtensionsList(IList<SynapseLanguageExtension> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of language extensions. </summary>

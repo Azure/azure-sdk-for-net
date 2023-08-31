@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportTicketData : IUtf8JsonSerializable
+    public partial class SupportTicketData : IUtf8JsonSerializable, IModelJsonSerializable<SupportTicketData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SupportTicketData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SupportTicketData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,17 +55,38 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                if (ContactDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SupportContactProfile>)ContactDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue(ServiceLevelAgreement);
+                if (ServiceLevelAgreement is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SupportServiceLevelAgreement>)ServiceLevelAgreement).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue(SupportEngineer);
+                if (SupportEngineer is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SupportEngineer>)SupportEngineer).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Title))
             {
@@ -78,19 +106,47 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue(TechnicalTicketDetails);
+                if (TechnicalTicketDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TechnicalTicketDetails>)TechnicalTicketDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue(QuotaTicketDetails);
+                if (QuotaTicketDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QuotaTicketDetails>)QuotaTicketDetails).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SupportTicketData DeserializeSupportTicketData(JsonElement element)
+        internal static SupportTicketData DeserializeSupportTicketData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -119,6 +175,7 @@ namespace Azure.ResourceManager.Support
             Optional<DateTimeOffset> modifiedDate = default;
             Optional<TechnicalTicketDetails> technicalTicketDetails = default;
             Optional<QuotaTicketDetails> quotaTicketDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -297,8 +354,61 @@ namespace Azure.ResourceManager.Support
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), technicalTicketDetails.Value, quotaTicketDetails.Value);
+            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), technicalTicketDetails.Value, quotaTicketDetails.Value, rawData);
+        }
+
+        SupportTicketData IModelJsonSerializable<SupportTicketData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSupportTicketData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SupportTicketData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SupportTicketData IModelSerializable<SupportTicketData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSupportTicketData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SupportTicketData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SupportTicketData"/> to convert. </param>
+        public static implicit operator RequestContent(SupportTicketData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SupportTicketData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SupportTicketData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSupportTicketData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

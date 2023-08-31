@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesBatchRequest : IUtf8JsonSerializable
+    internal partial class HierarchiesBatchRequest : IUtf8JsonSerializable, IModelJsonSerializable<HierarchiesBatchRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HierarchiesBatchRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HierarchiesBatchRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
-                writer.WriteObjectValue(Get);
+                if (Get is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HierarchiesRequestBatchGetDelete>)Get).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Put))
             {
@@ -26,16 +41,145 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TimeSeriesHierarchy>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                if (Delete is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HierarchiesRequestBatchGetDelete>)Delete).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static HierarchiesBatchRequest DeserializeHierarchiesBatchRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<HierarchiesRequestBatchGetDelete> @get = default;
+            Optional<IList<TimeSeriesHierarchy>> put = default;
+            Optional<HierarchiesRequestBatchGetDelete> delete = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @get = HierarchiesRequestBatchGetDelete.DeserializeHierarchiesRequestBatchGetDelete(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesHierarchy> array = new List<TimeSeriesHierarchy>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesHierarchy.DeserializeTimeSeriesHierarchy(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delete = HierarchiesRequestBatchGetDelete.DeserializeHierarchiesRequestBatchGetDelete(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HierarchiesBatchRequest(@get.Value, Optional.ToList(put), delete.Value, rawData);
+        }
+
+        HierarchiesBatchRequest IModelJsonSerializable<HierarchiesBatchRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHierarchiesBatchRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HierarchiesBatchRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HierarchiesBatchRequest IModelSerializable<HierarchiesBatchRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHierarchiesBatchRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HierarchiesBatchRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HierarchiesBatchRequest"/> to convert. </param>
+        public static implicit operator RequestContent(HierarchiesBatchRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HierarchiesBatchRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HierarchiesBatchRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHierarchiesBatchRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The disk configuration required for the selected volume. </summary>
     public partial class DiskVolumeConfiguration
     {
-        /// <summary> Initializes a new instance of DiskVolumeConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskVolumeConfiguration"/>. </summary>
         public DiskVolumeConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskVolumeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskVolumeConfiguration"/>. </summary>
         /// <param name="count"> The total number of disks required for the concerned volume. </param>
         /// <param name="sizeInGB"> The disk size in GB. </param>
         /// <param name="sku"> The disk SKU details. </param>
-        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskVolumeConfiguration(long? count, long? sizeInGB, SapDiskSku sku, Dictionary<string, BinaryData> rawData)
         {
             Count = count;
             SizeInGB = sizeInGB;
             Sku = sku;
+            _rawData = rawData;
         }
 
         /// <summary> The total number of disks required for the concerned volume. </summary>

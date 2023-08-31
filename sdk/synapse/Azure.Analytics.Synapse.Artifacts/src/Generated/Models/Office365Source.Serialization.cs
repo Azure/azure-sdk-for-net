@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(Office365SourceConverter))]
-    public partial class Office365Source : IUtf8JsonSerializable
+    public partial class Office365Source : IUtf8JsonSerializable, IModelJsonSerializable<Office365Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Office365Source>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Office365Source>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<Office365Source>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowedGroups))
             {
@@ -74,8 +80,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static Office365Source DeserializeOffice365Source(JsonElement element)
+        internal static Office365Source DeserializeOffice365Source(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -184,6 +192,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+        }
+
+        Office365Source IModelJsonSerializable<Office365Source>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<Office365Source>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOffice365Source(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Office365Source>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<Office365Source>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Office365Source IModelSerializable<Office365Source>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<Office365Source>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOffice365Source(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Office365Source"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Office365Source"/> to convert. </param>
+        public static implicit operator RequestContent(Office365Source model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Office365Source"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Office365Source(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOffice365Source(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class Office365SourceConverter : JsonConverter<Office365Source>

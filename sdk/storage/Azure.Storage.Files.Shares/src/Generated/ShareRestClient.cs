@@ -715,9 +715,7 @@ namespace Azure.Storage.Files.Shares
             }
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sharePermission);
-            request.Content = content;
+            request.Content = sharePermission;
             return message;
         }
 

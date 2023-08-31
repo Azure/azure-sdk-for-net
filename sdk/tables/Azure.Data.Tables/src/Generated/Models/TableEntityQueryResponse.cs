@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Data.Tables.Models
     /// <summary> The properties for the table entity query response. </summary>
     internal partial class TableEntityQueryResponse
     {
-        /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableEntityQueryResponse"/>. </summary>
         internal TableEntityQueryResponse()
         {
             Value = new ChangeTrackingList<IDictionary<string, object>>();
         }
 
-        /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableEntityQueryResponse"/>. </summary>
         /// <param name="odataMetadata"> The metadata response of the table. </param>
         /// <param name="value"> List of table entities. </param>
-        internal TableEntityQueryResponse(string odataMetadata, IReadOnlyList<IDictionary<string, object>> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableEntityQueryResponse(string odataMetadata, IReadOnlyList<IDictionary<string, object>> value, Dictionary<string, BinaryData> rawData)
         {
             OdataMetadata = odataMetadata;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The metadata response of the table. </summary>

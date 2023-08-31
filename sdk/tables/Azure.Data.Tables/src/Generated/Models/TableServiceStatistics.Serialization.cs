@@ -5,21 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableServiceStatistics
+    public partial class TableServiceStatistics : IXmlSerializable, IModelSerializable<TableServiceStatistics>
     {
-        internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "StorageServiceStats");
+            if (Optional.IsDefined(GeoReplication))
+            {
+                writer.WriteObjectValue(GeoReplication, "GeoReplication");
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static TableServiceStatistics DeserializeTableServiceStatistics(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             TableGeoReplicationInfo geoReplication = default;
             if (element.Element("GeoReplication") is XElement geoReplicationElement)
             {
                 geoReplication = TableGeoReplicationInfo.DeserializeTableGeoReplicationInfo(geoReplicationElement);
             }
-            return new TableServiceStatistics(geoReplication);
+            return new TableServiceStatistics(geoReplication, default);
+        }
+
+        BinaryData IModelSerializable<TableServiceStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableServiceStatistics IModelSerializable<TableServiceStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeTableServiceStatistics(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="TableServiceStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableServiceStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(TableServiceStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableServiceStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableServiceStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeTableServiceStatistics(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

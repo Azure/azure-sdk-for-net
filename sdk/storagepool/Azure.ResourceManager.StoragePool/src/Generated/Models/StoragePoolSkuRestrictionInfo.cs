@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class StoragePoolSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictionInfo"/>. </summary>
         internal StoragePoolSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
-        internal StoragePoolSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, Dictionary<string, BinaryData> rawData)
         {
             Locations = locations;
             Zones = zones;
+            _rawData = rawData;
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>

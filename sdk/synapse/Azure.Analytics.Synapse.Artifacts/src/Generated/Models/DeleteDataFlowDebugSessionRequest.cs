@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for deleting data flow debug session. </summary>
     public partial class DeleteDataFlowDebugSessionRequest
     {
-        /// <summary> Initializes a new instance of DeleteDataFlowDebugSessionRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionRequest"/>. </summary>
         public DeleteDataFlowDebugSessionRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionRequest"/>. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeleteDataFlowDebugSessionRequest(string sessionId, string dataFlowName, Dictionary<string, BinaryData> rawData)
+        {
+            SessionId = sessionId;
+            DataFlowName = dataFlowName;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

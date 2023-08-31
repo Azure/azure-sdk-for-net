@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobRetentionPolicy : IXmlSerializable
+    public partial class BlobRetentionPolicy : IXmlSerializable, IModelSerializable<BlobRetentionPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
@@ -34,8 +38,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobRetentionPolicy DeserializeBlobRetentionPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobRetentionPolicy DeserializeBlobRetentionPolicy(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             bool enabled = default;
             int? days = default;
             bool? allowPermanentDelete = default;
@@ -51,7 +58,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 allowPermanentDelete = (bool?)allowPermanentDeleteElement;
             }
-            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete, default);
+        }
+
+        BinaryData IModelSerializable<BlobRetentionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobRetentionPolicy IModelSerializable<BlobRetentionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeBlobRetentionPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobRetentionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobRetentionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(BlobRetentionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobRetentionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobRetentionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobRetentionPolicy(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

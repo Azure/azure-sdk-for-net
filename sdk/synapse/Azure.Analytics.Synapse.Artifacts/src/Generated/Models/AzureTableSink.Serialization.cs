@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureTableSinkConverter))]
-    public partial class AzureTableSink : IUtf8JsonSerializable
+    public partial class AzureTableSink : IUtf8JsonSerializable, IModelJsonSerializable<AzureTableSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureTableSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureTableSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzureTableSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
@@ -74,8 +80,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureTableSink DeserializeAzureTableSink(JsonElement element)
+        internal static AzureTableSink DeserializeAzureTableSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -184,6 +192,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, azureTableDefaultPartitionKeyValue.Value, azureTablePartitionKeyName.Value, azureTableRowKeyName.Value, azureTableInsertType.Value);
+        }
+
+        AzureTableSink IModelJsonSerializable<AzureTableSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureTableSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureTableSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureTableSink>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureTableSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureTableSink IModelSerializable<AzureTableSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureTableSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureTableSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureTableSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureTableSink"/> to convert. </param>
+        public static implicit operator RequestContent(AzureTableSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureTableSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureTableSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureTableSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AzureTableSinkConverter : JsonConverter<AzureTableSink>

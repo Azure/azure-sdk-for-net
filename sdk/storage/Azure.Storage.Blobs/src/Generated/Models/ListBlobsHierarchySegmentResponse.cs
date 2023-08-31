@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsHierarchySegmentResponse
     {
-        /// <summary> Initializes a new instance of ListBlobsHierarchySegmentResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="segment"></param>
@@ -29,7 +32,7 @@ namespace Azure.Storage.Blobs.Models
             Segment = segment;
         }
 
-        /// <summary> Initializes a new instance of ListBlobsHierarchySegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="prefix"></param>
@@ -38,7 +41,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="delimiter"></param>
         /// <param name="segment"></param>
         /// <param name="nextMarker"></param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, string delimiter, BlobHierarchyListSegment segment, string nextMarker)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, string delimiter, BlobHierarchyListSegment segment, string nextMarker, Dictionary<string, BinaryData> rawData)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
@@ -48,6 +52,12 @@ namespace Azure.Storage.Blobs.Models
             Delimiter = delimiter;
             Segment = segment;
             NextMarker = nextMarker;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/> for deserialization. </summary>
+        internal ListBlobsHierarchySegmentResponse()
+        {
         }
 
         /// <summary> Gets the service endpoint. </summary>

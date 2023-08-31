@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubData : IUtf8JsonSerializable
+    public partial class WebPubSubData : IUtf8JsonSerializable, IModelJsonSerializable<WebPubSubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebPubSubData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebPubSubData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BillingInfoSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Identity))
             {
@@ -46,22 +60,50 @@ namespace Azure.ResourceManager.WebPubSub
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                if (Tls is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebPubSubTlsSettings>)Tls).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
-                writer.WriteObjectValue(LiveTraceConfiguration);
+                if (LiveTraceConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LiveTraceConfiguration>)LiveTraceConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
-                writer.WriteObjectValue(ResourceLogConfiguration);
+                if (ResourceLogConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceLogConfiguration>)ResourceLogConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkACLs"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                if (NetworkAcls is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebPubSubNetworkAcls>)NetworkAcls).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -79,11 +121,25 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WriteBooleanValue(IsAadAuthDisabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
+        internal static WebPubSubData DeserializeWebPubSubData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,6 +168,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableAadAuth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -321,8 +378,61 @@ namespace Azure.ResourceManager.WebPubSub
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebPubSubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new WebPubSubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), rawData);
+        }
+
+        WebPubSubData IModelJsonSerializable<WebPubSubData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebPubSubData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebPubSubData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebPubSubData IModelSerializable<WebPubSubData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebPubSubData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebPubSubData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebPubSubData"/> to convert. </param>
+        public static implicit operator RequestContent(WebPubSubData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebPubSubData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebPubSubData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebPubSubData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

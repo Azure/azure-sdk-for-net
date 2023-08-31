@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubSkuCapacity
+    public partial class WebPubSubSkuCapacity : IUtf8JsonSerializable, IModelJsonSerializable<WebPubSubSkuCapacity>
     {
-        internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebPubSubSkuCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebPubSubSkuCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WebPubSubSkuCapacity DeserializeWebPubSubSkuCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<int> @default = default;
             Optional<IReadOnlyList<int>> allowedValues = default;
             Optional<WebPubSubScaleType> scaleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -76,8 +104,61 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     scaleType = new WebPubSubScaleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType));
+            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType), rawData);
+        }
+
+        WebPubSubSkuCapacity IModelJsonSerializable<WebPubSubSkuCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebPubSubSkuCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebPubSubSkuCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebPubSubSkuCapacity IModelSerializable<WebPubSubSkuCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebPubSubSkuCapacity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebPubSubSkuCapacity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebPubSubSkuCapacity"/> to convert. </param>
+        public static implicit operator RequestContent(WebPubSubSkuCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebPubSubSkuCapacity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebPubSubSkuCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebPubSubSkuCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

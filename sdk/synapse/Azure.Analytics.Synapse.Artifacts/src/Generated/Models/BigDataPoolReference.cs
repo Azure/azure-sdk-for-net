@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Big data pool reference. </summary>
     public partial class BigDataPoolReference
     {
-        /// <summary> Initializes a new instance of BigDataPoolReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolReference"/>. </summary>
         /// <param name="type"> Big data pool reference type. </param>
         /// <param name="referenceName"> Reference big data pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -23,6 +26,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolReference"/>. </summary>
+        /// <param name="type"> Big data pool reference type. </param>
+        /// <param name="referenceName"> Reference big data pool name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BigDataPoolReference(BigDataPoolReferenceType type, string referenceName, Dictionary<string, BinaryData> rawData)
+        {
+            Type = type;
+            ReferenceName = referenceName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolReference"/> for deserialization. </summary>
+        internal BigDataPoolReference()
+        {
         }
 
         /// <summary> Big data pool reference type. </summary>

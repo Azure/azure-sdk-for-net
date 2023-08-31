@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(BigDataPoolResourceInfoConverter))]
-    public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable
+    public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<BigDataPoolResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BigDataPoolResourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BigDataPoolResourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,7 +48,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                if (AutoScale is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutoScaleProperties>)AutoScale).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CreationDate))
             {
@@ -52,7 +65,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
-                writer.WriteObjectValue(AutoPause);
+                if (AutoPause is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutoPauseProperties>)AutoPause).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
@@ -72,7 +92,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
-                writer.WriteObjectValue(DynamicExecutorAllocation);
+                if (DynamicExecutorAllocation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DynamicExecutorAllocation>)DynamicExecutorAllocation).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
@@ -87,7 +114,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
-                writer.WriteObjectValue(LibraryRequirements);
+                if (LibraryRequirements is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LibraryRequirements>)LibraryRequirements).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
@@ -95,14 +129,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LibraryInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
-                writer.WriteObjectValue(SparkConfigProperties);
+                if (SparkConfigProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LibraryRequirements>)SparkConfigProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -125,11 +173,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BigDataPoolResourceInfo DeserializeBigDataPoolResourceInfo(JsonElement element)
+        internal static BigDataPoolResourceInfo DeserializeBigDataPoolResourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +219,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<NodeSize> nodeSize = default;
             Optional<NodeSizeFamily> nodeSizeFamily = default;
             Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -356,8 +419,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
+            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp), rawData);
+        }
+
+        BigDataPoolResourceInfo IModelJsonSerializable<BigDataPoolResourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBigDataPoolResourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BigDataPoolResourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BigDataPoolResourceInfo IModelSerializable<BigDataPoolResourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BigDataPoolResourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBigDataPoolResourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BigDataPoolResourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BigDataPoolResourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(BigDataPoolResourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BigDataPoolResourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BigDataPoolResourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBigDataPoolResourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>

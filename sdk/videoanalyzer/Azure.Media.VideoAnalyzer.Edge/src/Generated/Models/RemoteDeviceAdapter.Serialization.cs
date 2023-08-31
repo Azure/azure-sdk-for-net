@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RemoteDeviceAdapter : IUtf8JsonSerializable
+    public partial class RemoteDeviceAdapter : IUtf8JsonSerializable, IModelJsonSerializable<RemoteDeviceAdapter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemoteDeviceAdapter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemoteDeviceAdapter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                if (SystemData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SystemData>)SystemData).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RemoteDeviceAdapterProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static RemoteDeviceAdapter DeserializeRemoteDeviceAdapter(JsonElement element)
+        internal static RemoteDeviceAdapter DeserializeRemoteDeviceAdapter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +75,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string name = default;
             Optional<SystemData> systemData = default;
             Optional<RemoteDeviceAdapterProperties> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,8 +101,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     properties = RemoteDeviceAdapterProperties.DeserializeRemoteDeviceAdapterProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemoteDeviceAdapter(name, systemData.Value, properties.Value);
+            return new RemoteDeviceAdapter(name, systemData.Value, properties.Value, rawData);
+        }
+
+        RemoteDeviceAdapter IModelJsonSerializable<RemoteDeviceAdapter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoteDeviceAdapter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemoteDeviceAdapter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemoteDeviceAdapter IModelSerializable<RemoteDeviceAdapter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemoteDeviceAdapter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RemoteDeviceAdapter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RemoteDeviceAdapter"/> to convert. </param>
+        public static implicit operator RequestContent(RemoteDeviceAdapter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RemoteDeviceAdapter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RemoteDeviceAdapter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemoteDeviceAdapter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

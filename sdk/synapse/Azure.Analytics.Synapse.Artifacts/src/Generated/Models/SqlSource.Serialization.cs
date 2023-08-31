@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlSourceConverter))]
-    public partial class SqlSource : IUtf8JsonSerializable
+    public partial class SqlSource : IUtf8JsonSerializable, IModelJsonSerializable<SqlSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SqlSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlReaderQuery))
             {
@@ -36,7 +42,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in StoredProcedureParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StoredProcedureParameter>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -53,7 +66,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                if (PartitionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlPartitionSettings>)PartitionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -90,8 +110,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlSource DeserializeSqlSource(JsonElement element)
+        internal static SqlSource DeserializeSqlSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -225,6 +247,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, Optional.ToDictionary(storedProcedureParameters), isolationLevel.Value, partitionOption.Value, partitionSettings.Value);
+        }
+
+        SqlSource IModelJsonSerializable<SqlSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlSource IModelSerializable<SqlSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlSource"/> to convert. </param>
+        public static implicit operator RequestContent(SqlSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SqlSourceConverter : JsonConverter<SqlSource>

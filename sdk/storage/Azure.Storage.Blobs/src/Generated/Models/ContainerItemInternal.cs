@@ -14,7 +14,9 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage container. </summary>
     internal partial class ContainerItemInternal
     {
-        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
@@ -28,19 +30,26 @@ namespace Azure.Storage.Blobs.Models
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="version"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Deleted = deleted;
             Version = version;
             Properties = properties;
             Metadata = metadata;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/> for deserialization. </summary>
+        internal ContainerItemInternal()
+        {
         }
 
         /// <summary> Gets the name. </summary>

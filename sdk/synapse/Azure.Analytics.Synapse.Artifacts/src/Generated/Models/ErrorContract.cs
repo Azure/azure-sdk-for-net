@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Contains details when the response code indicates an error. </summary>
     internal partial class ErrorContract
     {
-        /// <summary> Initializes a new instance of ErrorContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorContract"/>. </summary>
         internal ErrorContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorContract"/>. </summary>
         /// <param name="error"> The error details. </param>
-        internal ErrorContract(ErrorResponse error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorContract(ErrorResponse error, Dictionary<string, BinaryData> rawData)
         {
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> The error details. </summary>

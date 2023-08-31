@@ -284,9 +284,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -444,9 +442,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -618,9 +614,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request.Content = content;
+            request.Content = slotSwapEntity;
             _userAgent.Apply(message);
             return message;
         }
@@ -695,9 +689,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -1025,9 +1017,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -1118,9 +1108,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -1363,9 +1351,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -1533,9 +1519,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -1699,9 +1683,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request.Content = content;
+            request.Content = appSettings;
             _userAgent.Apply(message);
             return message;
         }
@@ -1865,9 +1847,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteAuthSettings);
-            request.Content = content;
+            request.Content = siteAuthSettings;
             _userAgent.Apply(message);
             return message;
         }
@@ -2031,9 +2011,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
-            request.Content = content;
+            request.Content = siteAuthSettingsV2;
             _userAgent.Apply(message);
             return message;
         }
@@ -2197,9 +2175,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(azureStorageAccounts);
-            request.Content = content;
+            request.Content = azureStorageAccounts;
             _userAgent.Apply(message);
             return message;
         }
@@ -2363,9 +2339,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -2932,9 +2906,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionStrings);
-            request.Content = content;
+            request.Content = connectionStrings;
             _userAgent.Apply(message);
             return message;
         }
@@ -3181,9 +3153,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -3268,9 +3238,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(metadata);
-            request.Content = content;
+            request.Content = metadata;
             _userAgent.Apply(message);
             return message;
         }
@@ -3503,9 +3471,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pushSettings);
-            request.Content = content;
+            request.Content = pushSettings;
             _userAgent.Apply(message);
             return message;
         }
@@ -3752,9 +3718,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -3922,9 +3886,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -4009,9 +3971,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -5057,9 +5017,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -5309,9 +5267,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -5564,9 +5520,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -5732,9 +5686,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -5906,9 +5858,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msDeploy);
-            request.Content = content;
+            request.Content = msDeploy;
             _userAgent.Apply(message);
             return message;
         }
@@ -6309,9 +6259,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -6467,9 +6415,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -7034,9 +6980,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -7379,9 +7323,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -7643,9 +7585,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -7821,9 +7761,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -8163,9 +8101,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -8329,9 +8265,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -8678,9 +8612,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msDeploy);
-            request.Content = content;
+            request.Content = msDeploy;
             _userAgent.Apply(message);
             return message;
         }
@@ -9710,9 +9642,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -9791,9 +9721,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -10030,9 +9958,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -10192,9 +10118,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -11409,9 +11333,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -11575,9 +11497,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(premierAddOn);
-            request.Content = content;
+            request.Content = premierAddOn;
             _userAgent.Apply(message);
             return message;
         }
@@ -11749,9 +11669,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -12004,9 +11922,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -12998,9 +12914,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -13165,9 +13079,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(publishingProfileOptions);
-            request.Content = content;
+            request.Content = publishingProfileOptions;
             _userAgent.Apply(message);
             return message;
         }
@@ -13398,9 +13310,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -13477,9 +13387,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -13556,9 +13464,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequest);
-            request.Content = content;
+            request.Content = restoreRequest;
             _userAgent.Apply(message);
             return message;
         }
@@ -14120,9 +14026,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -14292,9 +14196,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -14478,9 +14380,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request.Content = content;
+            request.Content = slotSwapEntity;
             _userAgent.Apply(message);
             return message;
         }
@@ -14561,9 +14461,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -14915,9 +14813,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -15014,9 +14910,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -15277,9 +15171,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -15459,9 +15351,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -15637,9 +15527,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(appSettings);
-            request.Content = content;
+            request.Content = appSettings;
             _userAgent.Apply(message);
             return message;
         }
@@ -15815,9 +15703,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteAuthSettings);
-            request.Content = content;
+            request.Content = siteAuthSettings;
             _userAgent.Apply(message);
             return message;
         }
@@ -15993,9 +15879,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
-            request.Content = content;
+            request.Content = siteAuthSettingsV2;
             _userAgent.Apply(message);
             return message;
         }
@@ -16171,9 +16055,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(azureStorageAccounts);
-            request.Content = content;
+            request.Content = azureStorageAccounts;
             _userAgent.Apply(message);
             return message;
         }
@@ -16349,9 +16231,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -16960,9 +16840,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionStrings);
-            request.Content = content;
+            request.Content = connectionStrings;
             _userAgent.Apply(message);
             return message;
         }
@@ -17227,9 +17105,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -17320,9 +17196,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(metadata);
-            request.Content = content;
+            request.Content = metadata;
             _userAgent.Apply(message);
             return message;
         }
@@ -17573,9 +17447,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pushSettings);
-            request.Content = content;
+            request.Content = pushSettings;
             _userAgent.Apply(message);
             return message;
         }
@@ -17840,9 +17712,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -17933,9 +17803,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -19059,9 +18927,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -19329,9 +19195,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -19602,9 +19466,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -19782,9 +19644,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -19968,9 +19828,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msDeploy);
-            request.Content = content;
+            request.Content = msDeploy;
             _userAgent.Apply(message);
             return message;
         }
@@ -20401,9 +20259,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -20571,9 +20427,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -21180,9 +21034,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -21549,9 +21401,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -21831,9 +21681,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -22021,9 +21869,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -22387,9 +22233,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -22565,9 +22409,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -22938,9 +22780,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(msDeploy);
-            request.Content = content;
+            request.Content = msDeploy;
             _userAgent.Apply(message);
             return message;
         }
@@ -24219,9 +24059,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -24393,9 +24231,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -25698,9 +25534,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -25876,9 +25710,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(premierAddOn);
-            request.Content = content;
+            request.Content = premierAddOn;
             _userAgent.Apply(message);
             return message;
         }
@@ -26062,9 +25894,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -26335,9 +26165,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -27401,9 +27229,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -27580,9 +27406,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(publishingProfileOptions);
-            request.Content = content;
+            request.Content = publishingProfileOptions;
             _userAgent.Apply(message);
             return message;
         }
@@ -27831,9 +27655,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
-            request.Content = content;
+            request.Content = info;
             _userAgent.Apply(message);
             return message;
         }
@@ -27916,9 +27738,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -28001,9 +27821,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(restoreRequest);
-            request.Content = content;
+            request.Content = restoreRequest;
             _userAgent.Apply(message);
             return message;
         }
@@ -28427,9 +28245,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request.Content = content;
+            request.Content = slotSwapEntity;
             _userAgent.Apply(message);
             return message;
         }
@@ -28520,9 +28336,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request.Content = content;
+            request.Content = slotSwapEntity;
             _userAgent.Apply(message);
             return message;
         }
@@ -28868,9 +28682,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -29038,9 +28850,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -30421,9 +30231,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -30599,9 +30407,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -30799,9 +30605,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -30903,9 +30707,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -31181,9 +30983,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request.Content = content;
+            request.Content = slotSwapEntity;
             _userAgent.Apply(message);
             return message;
         }
@@ -31268,9 +31068,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request.Content = content;
+            request.Content = slotSwapEntity;
             _userAgent.Apply(message);
             return message;
         }
@@ -31592,9 +31390,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -31750,9 +31546,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -33037,9 +32831,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -33203,9 +32995,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -33391,9 +33181,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }
@@ -33489,9 +33277,7 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            request.Content = content;
+            request.Content = data;
             _userAgent.Apply(message);
             return message;
         }

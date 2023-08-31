@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DynamicsCrmSinkConverter))]
-    public partial class DynamicsCrmSink : IUtf8JsonSerializable
+    public partial class DynamicsCrmSink : IUtf8JsonSerializable, IModelJsonSerializable<DynamicsCrmSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynamicsCrmSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynamicsCrmSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DynamicsCrmSink>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
@@ -66,8 +72,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DynamicsCrmSink DeserializeDynamicsCrmSink(JsonElement element)
+        internal static DynamicsCrmSink DeserializeDynamicsCrmSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -162,6 +170,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsCrmSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior, ignoreNullValues.Value, alternateKeyName.Value);
+        }
+
+        DynamicsCrmSink IModelJsonSerializable<DynamicsCrmSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicsCrmSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicsCrmSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynamicsCrmSink>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicsCrmSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynamicsCrmSink IModelSerializable<DynamicsCrmSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicsCrmSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynamicsCrmSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynamicsCrmSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynamicsCrmSink"/> to convert. </param>
+        public static implicit operator RequestContent(DynamicsCrmSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynamicsCrmSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynamicsCrmSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynamicsCrmSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DynamicsCrmSinkConverter : JsonConverter<DynamicsCrmSink>

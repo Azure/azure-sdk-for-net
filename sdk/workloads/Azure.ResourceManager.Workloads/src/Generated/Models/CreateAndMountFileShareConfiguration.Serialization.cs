@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class CreateAndMountFileShareConfiguration : IUtf8JsonSerializable
+    public partial class CreateAndMountFileShareConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<CreateAndMountFileShareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CreateAndMountFileShareConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CreateAndMountFileShareConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CreateAndMountFileShareConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGroup))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CreateAndMountFileShareConfiguration DeserializeCreateAndMountFileShareConfiguration(JsonElement element)
+        internal static CreateAndMountFileShareConfiguration DeserializeCreateAndMountFileShareConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> resourceGroup = default;
             Optional<string> storageAccountName = default;
             ConfigurationType configurationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroup"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     configurationType = new ConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CreateAndMountFileShareConfiguration(configurationType, resourceGroup.Value, storageAccountName.Value);
+            return new CreateAndMountFileShareConfiguration(configurationType, resourceGroup.Value, storageAccountName.Value, rawData);
+        }
+
+        CreateAndMountFileShareConfiguration IModelJsonSerializable<CreateAndMountFileShareConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CreateAndMountFileShareConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateAndMountFileShareConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CreateAndMountFileShareConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CreateAndMountFileShareConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CreateAndMountFileShareConfiguration IModelSerializable<CreateAndMountFileShareConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CreateAndMountFileShareConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCreateAndMountFileShareConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CreateAndMountFileShareConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CreateAndMountFileShareConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(CreateAndMountFileShareConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CreateAndMountFileShareConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CreateAndMountFileShareConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCreateAndMountFileShareConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

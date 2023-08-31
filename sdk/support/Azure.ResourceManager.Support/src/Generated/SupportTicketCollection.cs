@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _supportTicketClientDiagnostics, Pipeline, "SupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

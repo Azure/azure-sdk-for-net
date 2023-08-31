@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Active Directory admin credentials used to join the HPC Cache to a domain. </summary>
     public partial class StorageCacheActiveDirectorySettingsCredentials
     {
-        /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettingsCredentials. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheActiveDirectorySettingsCredentials"/>. </summary>
         /// <param name="username"> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public StorageCacheActiveDirectorySettingsCredentials(string username)
@@ -21,6 +24,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             Argument.AssertNotNull(username, nameof(username));
 
             Username = username;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheActiveDirectorySettingsCredentials"/>. </summary>
+        /// <param name="username"> Username of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
+        /// <param name="password"> Plain text password of the Active Directory domain administrator. This value is stored encrypted and not returned on response. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheActiveDirectorySettingsCredentials(string username, string password, Dictionary<string, BinaryData> rawData)
+        {
+            Username = username;
+            Password = password;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheActiveDirectorySettingsCredentials"/> for deserialization. </summary>
+        internal StorageCacheActiveDirectorySettingsCredentials()
+        {
         }
     }
 }

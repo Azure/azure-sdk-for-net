@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Usage of the quota resource. </summary>
     public partial class AppServiceUsage : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceUsage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
         public AppServiceUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="computeMode"> Compute mode used for this usage. </param>
         /// <param name="siteMode"> Site mode used for this usage. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceName = resourceName;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             ComputeMode = computeMode;
             SiteMode = siteMode;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Friendly name shown in the UI. </summary>

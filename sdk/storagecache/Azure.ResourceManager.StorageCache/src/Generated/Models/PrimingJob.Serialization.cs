@@ -6,25 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class PrimingJob : IUtf8JsonSerializable
+    public partial class PrimingJob : IUtf8JsonSerializable, IModelJsonSerializable<PrimingJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrimingJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrimingJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("primingJobName"u8);
             writer.WriteStringValue(PrimingJobName);
             writer.WritePropertyName("primingManifestUrl"u8);
             writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrimingJob DeserializePrimingJob(JsonElement element)
+        internal static PrimingJob DeserializePrimingJob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> primingJobStatus = default;
             Optional<string> primingJobDetails = default;
             Optional<double> primingJobPercentComplete = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primingJobName"u8))
@@ -81,8 +103,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     primingJobPercentComplete = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Optional.ToNullable(primingJobPercentComplete));
+            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Optional.ToNullable(primingJobPercentComplete), rawData);
+        }
+
+        PrimingJob IModelJsonSerializable<PrimingJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrimingJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrimingJob>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrimingJob IModelSerializable<PrimingJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrimingJob(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrimingJob"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrimingJob"/> to convert. </param>
+        public static implicit operator RequestContent(PrimingJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrimingJob"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrimingJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrimingJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The StorageError. </summary>
     internal partial class StorageError
     {
-        /// <summary> Initializes a new instance of StorageError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         internal StorageError()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         /// <param name="message"></param>
-        internal StorageError(string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageError(string message, Dictionary<string, BinaryData> rawData)
         {
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the message. </summary>

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs configuration. </summary>
     public partial class ApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationLogsConfig"/>. </summary>
         public ApplicationLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationLogsConfig"/>. </summary>
         /// <param name="fileSystem"> Application logs to file system configuration. </param>
         /// <param name="azureTableStorage"> Application logs to azure table storage configuration. </param>
         /// <param name="azureBlobStorage"> Application logs to blob storage configuration. </param>
-        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AppServiceTableStorageApplicationLogsConfig azureTableStorage, AppServiceBlobStorageApplicationLogsConfig azureBlobStorage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AppServiceTableStorageApplicationLogsConfig azureTableStorage, AppServiceBlobStorageApplicationLogsConfig azureBlobStorage, Dictionary<string, BinaryData> rawData)
         {
             FileSystem = fileSystem;
             AzureTableStorage = azureTableStorage;
             AzureBlobStorage = azureBlobStorage;
+            _rawData = rawData;
         }
 
         /// <summary> Application logs to file system configuration. </summary>

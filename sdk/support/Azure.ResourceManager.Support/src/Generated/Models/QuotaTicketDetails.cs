@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Additional set of information required for quota increase support ticket for certain quota types, e.g.: Virtual machine cores. Get complete details about Quota payload support request along with examples at [Support quota request](https://aka.ms/supportrpquotarequestpayload). </summary>
     public partial class QuotaTicketDetails
     {
-        /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaTicketDetails"/>. </summary>
         public QuotaTicketDetails()
         {
             QuotaChangeRequests = new ChangeTrackingList<SupportQuotaChangeContent>();
         }
 
-        /// <summary> Initializes a new instance of QuotaTicketDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTicketDetails"/>. </summary>
         /// <param name="quotaChangeRequestSubType"> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </param>
         /// <param name="quotaChangeRequestVersion"> Quota change request version. </param>
         /// <param name="quotaChangeRequests"> This property is required for providing the region and new quota limits. </param>
-        internal QuotaTicketDetails(string quotaChangeRequestSubType, string quotaChangeRequestVersion, IList<SupportQuotaChangeContent> quotaChangeRequests)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaTicketDetails(string quotaChangeRequestSubType, string quotaChangeRequestVersion, IList<SupportQuotaChangeContent> quotaChangeRequests, Dictionary<string, BinaryData> rawData)
         {
             QuotaChangeRequestSubType = quotaChangeRequestSubType;
             QuotaChangeRequestVersion = quotaChangeRequestVersion;
             QuotaChangeRequests = quotaChangeRequests;
+            _rawData = rawData;
         }
 
         /// <summary> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </summary>

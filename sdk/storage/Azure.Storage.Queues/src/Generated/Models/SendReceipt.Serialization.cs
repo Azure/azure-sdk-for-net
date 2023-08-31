@@ -6,15 +6,43 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class SendReceipt
+    public partial class SendReceipt : IXmlSerializable, IModelSerializable<SendReceipt>
     {
-        internal static SendReceipt DeserializeSendReceipt(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "QueueMessage");
+            writer.WriteStartElement("MessageId");
+            writer.WriteValue(MessageId);
+            writer.WriteEndElement();
+            writer.WriteStartElement("InsertionTime");
+            writer.WriteValue(InsertionTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("ExpirationTime");
+            writer.WriteValue(ExpirationTime, "R");
+            writer.WriteEndElement();
+            writer.WriteStartElement("PopReceipt");
+            writer.WriteValue(PopReceipt);
+            writer.WriteEndElement();
+            writer.WriteStartElement("TimeNextVisible");
+            writer.WriteValue(TimeNextVisible, "R");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static SendReceipt DeserializeSendReceipt(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string messageId = default;
             DateTimeOffset insertionTime = default;
             DateTimeOffset expirationTime = default;
@@ -40,7 +68,57 @@ namespace Azure.Storage.Queues.Models
             {
                 timeNextVisible = timeNextVisibleElement.GetDateTimeOffsetValue("R");
             }
-            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible);
+            return new SendReceipt(messageId, insertionTime, expirationTime, popReceipt, timeNextVisible, default);
+        }
+
+        BinaryData IModelSerializable<SendReceipt>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        SendReceipt IModelSerializable<SendReceipt>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeSendReceipt(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="SendReceipt"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SendReceipt"/> to convert. </param>
+        public static implicit operator RequestContent(SendReceipt model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SendReceipt"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SendReceipt(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeSendReceipt(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

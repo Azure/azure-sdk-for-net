@@ -14,20 +14,23 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Diagnostic Metric information. </summary>
     public partial class DiagnosticMetricSet
     {
-        /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
         public DiagnosticMetricSet()
         {
             Values = new ChangeTrackingList<DiagnosticMetricSample>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="unit"> Metric's unit. </param>
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
         /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
-        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Unit = unit;
@@ -35,6 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
             EndOn = endOn;
             TimeGrain = timeGrain;
             Values = values;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the metric. </summary>

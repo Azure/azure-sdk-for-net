@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbMongoDbApiSinkConverter))]
-    public partial class CosmosDbMongoDbApiSink : IUtf8JsonSerializable
+    public partial class CosmosDbMongoDbApiSink : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDbMongoDbApiSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDbMongoDbApiSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDbMongoDbApiSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteBehavior))
             {
@@ -59,8 +65,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbMongoDbApiSink DeserializeCosmosDbMongoDbApiSink(JsonElement element)
+        internal static CosmosDbMongoDbApiSink DeserializeCosmosDbMongoDbApiSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +147,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior.Value);
+        }
+
+        CosmosDbMongoDbApiSink IModelJsonSerializable<CosmosDbMongoDbApiSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbMongoDbApiSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDbMongoDbApiSink>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDbMongoDbApiSink IModelSerializable<CosmosDbMongoDbApiSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDbMongoDbApiSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDbMongoDbApiSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDbMongoDbApiSink"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDbMongoDbApiSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDbMongoDbApiSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDbMongoDbApiSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDbMongoDbApiSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CosmosDbMongoDbApiSinkConverter : JsonConverter<CosmosDbMongoDbApiSink>

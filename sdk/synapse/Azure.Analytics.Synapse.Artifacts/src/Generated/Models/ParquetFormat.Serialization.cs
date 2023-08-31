@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ParquetFormatConverter))]
-    public partial class ParquetFormat : IUtf8JsonSerializable
+    public partial class ParquetFormat : IUtf8JsonSerializable, IModelJsonSerializable<ParquetFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ParquetFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ParquetFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ParquetFormat>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -39,8 +45,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ParquetFormat DeserializeParquetFormat(JsonElement element)
+        internal static ParquetFormat DeserializeParquetFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +87,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ParquetFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+        }
+
+        ParquetFormat IModelJsonSerializable<ParquetFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ParquetFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeParquetFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ParquetFormat>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ParquetFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ParquetFormat IModelSerializable<ParquetFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ParquetFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeParquetFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ParquetFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ParquetFormat"/> to convert. </param>
+        public static implicit operator RequestContent(ParquetFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ParquetFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ParquetFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeParquetFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ParquetFormatConverter : JsonConverter<ParquetFormat>

@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables
 {
-    public partial class TableRetentionPolicy : IXmlSerializable
+    public partial class TableRetentionPolicy : IXmlSerializable, IModelSerializable<TableRetentionPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
@@ -28,8 +32,11 @@ namespace Azure.Data.Tables
             writer.WriteEndElement();
         }
 
-        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             bool enabled = default;
             int? days = default;
             if (element.Element("Enabled") is XElement enabledElement)
@@ -40,7 +47,57 @@ namespace Azure.Data.Tables
             {
                 days = (int?)daysElement;
             }
-            return new TableRetentionPolicy(enabled, days);
+            return new TableRetentionPolicy(enabled, days, default);
+        }
+
+        BinaryData IModelSerializable<TableRetentionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableRetentionPolicy IModelSerializable<TableRetentionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeTableRetentionPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="TableRetentionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableRetentionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(TableRetentionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableRetentionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableRetentionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeTableRetentionPolicy(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

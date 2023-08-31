@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkJobDefinitionConverter))]
-    public partial class SparkJobDefinition : IUtf8JsonSerializable
+    public partial class SparkJobDefinition : IUtf8JsonSerializable, IModelJsonSerializable<SparkJobDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkJobDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkJobDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -25,11 +31,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool"u8);
-            writer.WriteObjectValue(TargetBigDataPool);
+            if (TargetBigDataPool is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<BigDataPoolReference>)TargetBigDataPool).Serialize(writer, options);
+            }
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                if (TargetSparkConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SparkConfigurationReference>)TargetSparkConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(RequiredSparkVersion))
             {
@@ -42,13 +62,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Language);
             }
             writer.WritePropertyName("jobProperties"u8);
-            writer.WriteObjectValue(JobProperties);
+            if (JobProperties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SparkJobProperties>)JobProperties).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    if (Folder is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SparkJobDefinitionFolder>)Folder).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -63,8 +97,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SparkJobDefinition DeserializeSparkJobDefinition(JsonElement element)
+        internal static SparkJobDefinition DeserializeSparkJobDefinition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -128,6 +164,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SparkJobDefinition(description.Value, targetBigDataPool, targetSparkConfiguration.Value, requiredSparkVersion.Value, language.Value, jobProperties, folder.Value, additionalProperties);
+        }
+
+        SparkJobDefinition IModelJsonSerializable<SparkJobDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkJobDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkJobDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkJobDefinition IModelSerializable<SparkJobDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkJobDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkJobDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkJobDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(SparkJobDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkJobDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkJobDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkJobDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SparkJobDefinitionConverter : JsonConverter<SparkJobDefinition>

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sitePublicCertificateWebAppsRestClient.CreateListPublicCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sitePublicCertificateWebAppsRestClient.CreateListPublicCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SitePublicCertificateResource(Client, PublicCertificateData.DeserializePublicCertificateData(e)), _sitePublicCertificateWebAppsClientDiagnostics, Pipeline, "SitePublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SitePublicCertificateResource(Client, PublicCertificateData.DeserializePublicCertificateData(e)), _sitePublicCertificateWebAppsClientDiagnostics, Pipeline, "SitePublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sitePublicCertificateWebAppsRestClient.CreateListPublicCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sitePublicCertificateWebAppsRestClient.CreateListPublicCertificatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SitePublicCertificateResource(Client, PublicCertificateData.DeserializePublicCertificateData(e)), _sitePublicCertificateWebAppsClientDiagnostics, Pipeline, "SitePublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SitePublicCertificateResource(Client, PublicCertificateData.DeserializePublicCertificateData(e)), _sitePublicCertificateWebAppsClientDiagnostics, Pipeline, "SitePublicCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

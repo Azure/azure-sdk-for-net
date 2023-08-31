@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class SynapseGetSsisObjectMetadataContent
     {
-        /// <summary> Initializes a new instance of SynapseGetSsisObjectMetadataContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseGetSsisObjectMetadataContent"/>. </summary>
         public SynapseGetSsisObjectMetadataContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseGetSsisObjectMetadataContent"/>. </summary>
+        /// <param name="metadataPath"> Metadata path. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseGetSsisObjectMetadataContent(string metadataPath, Dictionary<string, BinaryData> rawData)
+        {
+            MetadataPath = metadataPath;
+            _rawData = rawData;
         }
 
         /// <summary> Metadata path. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,24 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to get or delete time series types by IDs or type names. Exactly one of "typeIds" or "names" must be set. </summary>
     internal partial class TypesRequestBatchGetOrDelete
     {
-        /// <summary> Initializes a new instance of TypesRequestBatchGetOrDelete. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TypesRequestBatchGetOrDelete"/>. </summary>
         public TypesRequestBatchGetOrDelete()
         {
             TypeIds = new ChangeTrackingList<string>();
             Names = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TypesRequestBatchGetOrDelete"/>. </summary>
+        /// <param name="typeIds"> List of IDs of time series types to return or delete. </param>
+        /// <param name="names"> List of names of time series types to return or delete. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypesRequestBatchGetOrDelete(IList<string> typeIds, IList<string> names, Dictionary<string, BinaryData> rawData)
+        {
+            TypeIds = typeIds;
+            Names = names;
+            _rawData = rawData;
         }
 
         /// <summary> List of IDs of time series types to return or delete. </summary>

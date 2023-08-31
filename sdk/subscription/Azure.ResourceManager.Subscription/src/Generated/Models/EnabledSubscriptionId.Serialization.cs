@@ -5,20 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class EnabledSubscriptionId
+    public partial class EnabledSubscriptionId : IUtf8JsonSerializable, IModelJsonSerializable<EnabledSubscriptionId>
     {
-        internal static EnabledSubscriptionId DeserializeEnabledSubscriptionId(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EnabledSubscriptionId>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EnabledSubscriptionId>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EnabledSubscriptionId DeserializeEnabledSubscriptionId(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> subscriptionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -26,8 +55,61 @@ namespace Azure.ResourceManager.Subscription.Models
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EnabledSubscriptionId(subscriptionId.Value);
+            return new EnabledSubscriptionId(subscriptionId.Value, rawData);
+        }
+
+        EnabledSubscriptionId IModelJsonSerializable<EnabledSubscriptionId>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnabledSubscriptionId(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EnabledSubscriptionId>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EnabledSubscriptionId IModelSerializable<EnabledSubscriptionId>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEnabledSubscriptionId(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EnabledSubscriptionId"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EnabledSubscriptionId"/> to convert. </param>
+        public static implicit operator RequestContent(EnabledSubscriptionId model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EnabledSubscriptionId"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EnabledSubscriptionId(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEnabledSubscriptionId(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

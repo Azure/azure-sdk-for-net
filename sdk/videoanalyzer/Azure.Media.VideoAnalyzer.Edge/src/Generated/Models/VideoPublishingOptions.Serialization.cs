@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoPublishingOptions : IUtf8JsonSerializable
+    public partial class VideoPublishingOptions : IUtf8JsonSerializable, IModelJsonSerializable<VideoPublishingOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VideoPublishingOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VideoPublishingOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableVideoPreviewImage))
             {
                 writer.WritePropertyName("enableVideoPreviewImage"u8);
                 writer.WriteStringValue(EnableVideoPreviewImage);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VideoPublishingOptions DeserializeVideoPublishingOptions(JsonElement element)
+        internal static VideoPublishingOptions DeserializeVideoPublishingOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> enableVideoPreviewImage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableVideoPreviewImage"u8))
@@ -37,8 +60,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     enableVideoPreviewImage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VideoPublishingOptions(enableVideoPreviewImage.Value);
+            return new VideoPublishingOptions(enableVideoPreviewImage.Value, rawData);
+        }
+
+        VideoPublishingOptions IModelJsonSerializable<VideoPublishingOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoPublishingOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VideoPublishingOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VideoPublishingOptions IModelSerializable<VideoPublishingOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVideoPublishingOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VideoPublishingOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VideoPublishingOptions"/> to convert. </param>
+        public static implicit operator RequestContent(VideoPublishingOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VideoPublishingOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VideoPublishingOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVideoPublishingOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

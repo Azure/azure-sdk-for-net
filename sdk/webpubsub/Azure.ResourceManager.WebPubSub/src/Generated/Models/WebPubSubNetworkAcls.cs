@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Network ACLs for the resource. </summary>
     public partial class WebPubSubNetworkAcls
     {
-        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNetworkAcls"/>. </summary>
         public WebPubSubNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointAcl>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubNetworkAcls"/>. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        internal WebPubSubNetworkAcls(AclAction? defaultAction, PublicNetworkAcls publicNetwork, IList<PrivateEndpointAcl> privateEndpoints)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubNetworkAcls(AclAction? defaultAction, PublicNetworkAcls publicNetwork, IList<PrivateEndpointAcl> privateEndpoints, Dictionary<string, BinaryData> rawData)
         {
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
             PrivateEndpoints = privateEndpoints;
+            _rawData = rawData;
         }
 
         /// <summary> Azure Networking ACL Action. </summary>

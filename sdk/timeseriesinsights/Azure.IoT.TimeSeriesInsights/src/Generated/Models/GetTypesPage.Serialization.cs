@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class GetTypesPage
+    internal partial class GetTypesPage : IUtf8JsonSerializable, IModelJsonSerializable<GetTypesPage>
     {
-        internal static GetTypesPage DeserializeGetTypesPage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetTypesPage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetTypesPage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GetTypesPage>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GetTypesPage DeserializeGetTypesPage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<TimeSeriesType>> types = default;
             Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("types"u8))
@@ -42,8 +70,61 @@ namespace Azure.IoT.TimeSeriesInsights
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GetTypesPage(continuationToken.Value, Optional.ToList(types));
+            return new GetTypesPage(continuationToken.Value, Optional.ToList(types), rawData);
+        }
+
+        GetTypesPage IModelJsonSerializable<GetTypesPage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GetTypesPage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetTypesPage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetTypesPage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GetTypesPage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetTypesPage IModelSerializable<GetTypesPage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GetTypesPage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetTypesPage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetTypesPage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetTypesPage"/> to convert. </param>
+        public static implicit operator RequestContent(GetTypesPage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetTypesPage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetTypesPage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetTypesPage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

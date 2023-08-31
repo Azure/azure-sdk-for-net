@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class Nfs3Target : IUtf8JsonSerializable
+    public partial class Nfs3Target : IUtf8JsonSerializable, IModelJsonSerializable<Nfs3Target>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Nfs3Target>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Nfs3Target>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Target))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("writeBackTimer"u8);
                 writer.WriteNumberValue(WriteBackDelayInSeconds.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Nfs3Target DeserializeNfs3Target(JsonElement element)
+        internal static Nfs3Target DeserializeNfs3Target(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> usageModel = default;
             Optional<int> verificationTimer = default;
             Optional<int> writeBackTimer = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("target"u8))
@@ -78,8 +101,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     writeBackTimer = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Nfs3Target(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer));
+            return new Nfs3Target(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer), rawData);
+        }
+
+        Nfs3Target IModelJsonSerializable<Nfs3Target>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNfs3Target(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Nfs3Target>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Nfs3Target IModelSerializable<Nfs3Target>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNfs3Target(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Nfs3Target"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Nfs3Target"/> to convert. </param>
+        public static implicit operator RequestContent(Nfs3Target model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Nfs3Target"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Nfs3Target(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNfs3Target(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableMetrics : IXmlSerializable
+    public partial class TableMetrics : IXmlSerializable, IModelSerializable<TableMetrics>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Metrics");
             if (Optional.IsDefined(Version))
@@ -39,8 +43,11 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableMetrics DeserializeTableMetrics(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static TableMetrics DeserializeTableMetrics(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string version = default;
             bool enabled = default;
             bool? includeApis = default;
@@ -61,7 +68,57 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
             }
-            return new TableMetrics(version, enabled, includeApis, retentionPolicy);
+            return new TableMetrics(version, enabled, includeApis, retentionPolicy, default);
+        }
+
+        BinaryData IModelSerializable<TableMetrics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableMetrics IModelSerializable<TableMetrics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeTableMetrics(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="TableMetrics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableMetrics"/> to convert. </param>
+        public static implicit operator RequestContent(TableMetrics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableMetrics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableMetrics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeTableMetrics(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

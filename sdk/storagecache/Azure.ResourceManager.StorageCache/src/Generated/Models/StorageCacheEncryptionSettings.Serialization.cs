@@ -5,37 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheEncryptionSettings : IUtf8JsonSerializable
+    public partial class StorageCacheEncryptionSettings : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheEncryptionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheEncryptionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheEncryptionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                if (KeyEncryptionKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheEncryptionKeyVaultKeyReference>)KeyEncryptionKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element)
+        internal static StorageCacheEncryptionSettings DeserializeStorageCacheEncryptionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -56,8 +86,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     rotationToLatestKeyVersionEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled));
+            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), rawData);
+        }
+
+        StorageCacheEncryptionSettings IModelJsonSerializable<StorageCacheEncryptionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheEncryptionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheEncryptionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheEncryptionSettings IModelSerializable<StorageCacheEncryptionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheEncryptionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheEncryptionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheEncryptionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheEncryptionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheEncryptionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheEncryptionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheEncryptionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class GrpcExtensionDataTransfer : IUtf8JsonSerializable
+    public partial class GrpcExtensionDataTransfer : IUtf8JsonSerializable, IModelJsonSerializable<GrpcExtensionDataTransfer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GrpcExtensionDataTransfer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GrpcExtensionDataTransfer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SharedMemorySizeMiB))
             {
@@ -22,17 +30,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GrpcExtensionDataTransfer DeserializeGrpcExtensionDataTransfer(JsonElement element)
+        internal static GrpcExtensionDataTransfer DeserializeGrpcExtensionDataTransfer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> sharedMemorySizeMiB = default;
             GrpcExtensionDataTransferMode mode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sharedMemorySizeMiB"u8))
@@ -45,8 +68,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     mode = new GrpcExtensionDataTransferMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GrpcExtensionDataTransfer(sharedMemorySizeMiB.Value, mode);
+            return new GrpcExtensionDataTransfer(sharedMemorySizeMiB.Value, mode, rawData);
+        }
+
+        GrpcExtensionDataTransfer IModelJsonSerializable<GrpcExtensionDataTransfer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGrpcExtensionDataTransfer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GrpcExtensionDataTransfer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GrpcExtensionDataTransfer IModelSerializable<GrpcExtensionDataTransfer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGrpcExtensionDataTransfer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GrpcExtensionDataTransfer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GrpcExtensionDataTransfer"/> to convert. </param>
+        public static implicit operator RequestContent(GrpcExtensionDataTransfer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GrpcExtensionDataTransfer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GrpcExtensionDataTransfer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGrpcExtensionDataTransfer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

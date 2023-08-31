@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class KeyInfo : IXmlSerializable
+    internal partial class KeyInfo : IXmlSerializable, IModelSerializable<KeyInfo>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "KeyInfo");
             if (Optional.IsDefined(Start))
@@ -25,6 +30,74 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteValue(Expiry);
             writer.WriteEndElement();
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static KeyInfo DeserializeKeyInfo(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            string start = default;
+            string expiry = default;
+            if (element.Element("Start") is XElement startElement)
+            {
+                start = (string)startElement;
+            }
+            if (element.Element("Expiry") is XElement expiryElement)
+            {
+                expiry = (string)expiryElement;
+            }
+            return new KeyInfo(start, expiry, default);
+        }
+
+        BinaryData IModelSerializable<KeyInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        KeyInfo IModelSerializable<KeyInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeKeyInfo(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="KeyInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KeyInfo"/> to convert. </param>
+        public static implicit operator RequestContent(KeyInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KeyInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KeyInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeKeyInfo(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

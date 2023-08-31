@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobDefinitionData : IUtf8JsonSerializable
+    public partial class JobDefinitionData : IUtf8JsonSerializable, IModelJsonSerializable<JobDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JobDefinitionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JobDefinitionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,11 +54,25 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WriteStringValue(AgentName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element)
+        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +95,7 @@ namespace Azure.ResourceManager.StorageMover
             Optional<string> agentName = default;
             Optional<ResourceIdentifier> agentResourceId = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,8 +228,61 @@ namespace Azure.ResourceManager.StorageMover
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestJobRunName.Value, latestJobRunResourceId.Value, Optional.ToNullable(latestJobRunStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(provisioningState));
+            return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestJobRunName.Value, latestJobRunResourceId.Value, Optional.ToNullable(latestJobRunStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        JobDefinitionData IModelJsonSerializable<JobDefinitionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobDefinitionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JobDefinitionData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JobDefinitionData IModelSerializable<JobDefinitionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJobDefinitionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JobDefinitionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JobDefinitionData"/> to convert. </param>
+        public static implicit operator RequestContent(JobDefinitionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JobDefinitionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JobDefinitionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJobDefinitionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

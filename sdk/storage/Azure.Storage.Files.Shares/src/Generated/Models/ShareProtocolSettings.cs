@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Protocol settings. </summary>
     public partial class ShareProtocolSettings
     {
-        /// <summary> Initializes a new instance of ShareProtocolSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareProtocolSettings"/>. </summary>
         /// <param name="smb"> Settings for SMB protocol. </param>
-        internal ShareProtocolSettings(ShareSmbSettings smb)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareProtocolSettings(ShareSmbSettings smb, Dictionary<string, BinaryData> rawData)
         {
             Smb = smb;
+            _rawData = rawData;
         }
 
         /// <summary> Settings for SMB protocol. </summary>

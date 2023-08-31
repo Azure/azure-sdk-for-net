@@ -6,23 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RunNotebookResponseConverter))]
-    public partial class RunNotebookResponse
+    public partial class RunNotebookResponse : IUtf8JsonSerializable, IModelJsonSerializable<RunNotebookResponse>
     {
-        internal static RunNotebookResponse DeserializeRunNotebookResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RunNotebookResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RunNotebookResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                if (Result is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RunNotebookResult>)Result).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RunNotebookResponse DeserializeRunNotebookResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> message = default;
             Optional<RunNotebookResult> result = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -39,15 +79,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     result = RunNotebookResult.DeserializeRunNotebookResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RunNotebookResponse(message.Value, result.Value);
+            return new RunNotebookResponse(message.Value, result.Value, rawData);
+        }
+
+        RunNotebookResponse IModelJsonSerializable<RunNotebookResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunNotebookResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RunNotebookResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RunNotebookResponse IModelSerializable<RunNotebookResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRunNotebookResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RunNotebookResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RunNotebookResponse"/> to convert. </param>
+        public static implicit operator RequestContent(RunNotebookResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RunNotebookResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RunNotebookResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRunNotebookResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class RunNotebookResponseConverter : JsonConverter<RunNotebookResponse>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override RunNotebookResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

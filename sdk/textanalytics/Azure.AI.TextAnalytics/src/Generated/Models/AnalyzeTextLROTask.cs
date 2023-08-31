@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
@@ -14,15 +17,16 @@ namespace Azure.AI.TextAnalytics.Models
     /// </summary>
     internal partial class AnalyzeTextLROTask : TaskIdentifier
     {
-        /// <summary> Initializes a new instance of AnalyzeTextLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROTask"/>. </summary>
         public AnalyzeTextLROTask()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
-        internal AnalyzeTextLROTask(string taskName, AnalyzeTextLROTaskKind kind) : base(taskName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextLROTask(string taskName, AnalyzeTextLROTaskKind kind, Dictionary<string, BinaryData> rawData) : base(taskName, rawData)
         {
             Kind = kind;
         }

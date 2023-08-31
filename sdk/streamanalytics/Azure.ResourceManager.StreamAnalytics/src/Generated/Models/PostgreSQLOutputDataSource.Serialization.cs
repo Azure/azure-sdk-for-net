@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class PostgreSQLOutputDataSource : IUtf8JsonSerializable
+    public partial class PostgreSQLOutputDataSource : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSQLOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSQLOutputDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSQLOutputDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PostgreSQLOutputDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
@@ -55,11 +63,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSQLOutputDataSource DeserializePostgreSQLOutputDataSource(JsonElement element)
+        internal static PostgreSQLOutputDataSource DeserializePostgreSQLOutputDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> password = default;
             Optional<int> maxWriterCount = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -134,8 +157,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSQLOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new PostgreSQLOutputDataSource(type, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode), rawData);
+        }
+
+        PostgreSQLOutputDataSource IModelJsonSerializable<PostgreSQLOutputDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PostgreSQLOutputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSQLOutputDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSQLOutputDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PostgreSQLOutputDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSQLOutputDataSource IModelSerializable<PostgreSQLOutputDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PostgreSQLOutputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSQLOutputDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSQLOutputDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSQLOutputDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSQLOutputDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSQLOutputDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSQLOutputDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSQLOutputDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

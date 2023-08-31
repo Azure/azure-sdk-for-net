@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionResource. </summary>
     public partial class LinkConnectionResource
     {
-        /// <summary> Initializes a new instance of LinkConnectionResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionResource"/>. </summary>
         /// <param name="properties"> Properties of link connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public LinkConnectionResource(LinkConnection properties)
@@ -23,19 +26,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionResource"/>. </summary>
         /// <param name="id"> Link connection id. </param>
         /// <param name="name"> Link connection name. </param>
         /// <param name="type"> Link connection type. </param>
         /// <param name="properties"> Properties of link connection. </param>
         /// <param name="description"> Link connection description. </param>
-        internal LinkConnectionResource(string id, string name, string type, LinkConnection properties, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnectionResource(string id, string name, string type, LinkConnection properties, string description, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
             Description = description;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionResource"/> for deserialization. </summary>
+        internal LinkConnectionResource()
+        {
         }
 
         /// <summary> Link connection id. </summary>

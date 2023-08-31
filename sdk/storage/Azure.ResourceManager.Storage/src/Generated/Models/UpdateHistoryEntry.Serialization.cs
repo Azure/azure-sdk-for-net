@@ -6,15 +6,52 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class UpdateHistoryEntry
+    public partial class UpdateHistoryEntry : IUtf8JsonSerializable, IModelJsonSerializable<UpdateHistoryEntry>
     {
-        internal static UpdateHistoryEntry DeserializeUpdateHistoryEntry(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateHistoryEntry>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateHistoryEntry>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
+            {
+                writer.WritePropertyName("allowProtectedAppendWrites"u8);
+                writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
+            }
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            {
+                writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
+                writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static UpdateHistoryEntry DeserializeUpdateHistoryEntry(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> upn = default;
             Optional<bool> allowProtectedAppendWrites = default;
             Optional<bool> allowProtectedAppendWritesAll = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("update"u8))
@@ -93,8 +131,61 @@ namespace Azure.ResourceManager.Storage.Models
                     allowProtectedAppendWritesAll = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UpdateHistoryEntry(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
+            return new UpdateHistoryEntry(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), rawData);
+        }
+
+        UpdateHistoryEntry IModelJsonSerializable<UpdateHistoryEntry>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateHistoryEntry(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateHistoryEntry>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateHistoryEntry IModelSerializable<UpdateHistoryEntry>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateHistoryEntry(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UpdateHistoryEntry"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UpdateHistoryEntry"/> to convert. </param>
+        public static implicit operator RequestContent(UpdateHistoryEntry model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateHistoryEntry"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UpdateHistoryEntry(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateHistoryEntry(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

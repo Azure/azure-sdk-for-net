@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PemCertificateList : IUtf8JsonSerializable
+    public partial class PemCertificateList : IUtf8JsonSerializable, IModelJsonSerializable<PemCertificateList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PemCertificateList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PemCertificateList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PemCertificateList>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificates"u8);
             writer.WriteStartArray();
@@ -25,17 +32,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteEndArray();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PemCertificateList DeserializePemCertificateList(JsonElement element)
+        internal static PemCertificateList DeserializePemCertificateList(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> certificates = default;
             string type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificates"u8))
@@ -53,8 +75,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PemCertificateList(type, certificates);
+            return new PemCertificateList(type, certificates, rawData);
+        }
+
+        PemCertificateList IModelJsonSerializable<PemCertificateList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PemCertificateList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePemCertificateList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PemCertificateList>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PemCertificateList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PemCertificateList IModelSerializable<PemCertificateList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PemCertificateList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePemCertificateList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PemCertificateList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PemCertificateList"/> to convert. </param>
+        public static implicit operator RequestContent(PemCertificateList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PemCertificateList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PemCertificateList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePemCertificateList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

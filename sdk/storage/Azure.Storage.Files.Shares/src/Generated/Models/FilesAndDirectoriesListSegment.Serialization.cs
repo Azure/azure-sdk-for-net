@@ -5,16 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FilesAndDirectoriesListSegment
+    internal partial class FilesAndDirectoriesListSegment : IXmlSerializable, IModelSerializable<FilesAndDirectoriesListSegment>
     {
-        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "Entries");
+            foreach (var item in DirectoryItems)
+            {
+                writer.WriteObjectValue(item, "Directory");
+            }
+            foreach (var item in FileItems)
+            {
+                writer.WriteObjectValue(item, "File");
+            }
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static FilesAndDirectoriesListSegment DeserializeFilesAndDirectoriesListSegment(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             IReadOnlyList<DirectoryItem> directoryItems = default;
             IReadOnlyList<FileItem> fileItems = default;
             var array = new List<DirectoryItem>();
@@ -29,7 +51,57 @@ namespace Azure.Storage.Files.Shares.Models
                 array0.Add(FileItem.DeserializeFileItem(e));
             }
             fileItems = array0;
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
+            return new FilesAndDirectoriesListSegment(directoryItems, fileItems, default);
+        }
+
+        BinaryData IModelSerializable<FilesAndDirectoriesListSegment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        FilesAndDirectoriesListSegment IModelSerializable<FilesAndDirectoriesListSegment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeFilesAndDirectoriesListSegment(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="FilesAndDirectoriesListSegment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FilesAndDirectoriesListSegment"/> to convert. </param>
+        public static implicit operator RequestContent(FilesAndDirectoriesListSegment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FilesAndDirectoriesListSegment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FilesAndDirectoriesListSegment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeFilesAndDirectoriesListSegment(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

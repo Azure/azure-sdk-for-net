@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Columns that define the structure of the dataset. </summary>
     public partial class DatasetDataElement
     {
-        /// <summary> Initializes a new instance of DatasetDataElement. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         public DatasetDataElement()
         {
         }
 
-        /// <summary> Initializes a new instance of DatasetDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         /// <param name="name"> Name of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> Type of the column. Type: string (or Expression with resultType string). </param>
-        internal DatasetDataElement(object name, object type)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatasetDataElement(object name, object type, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Type = type;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>

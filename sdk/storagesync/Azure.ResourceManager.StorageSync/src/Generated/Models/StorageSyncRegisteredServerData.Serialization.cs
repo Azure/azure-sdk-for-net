@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncRegisteredServerData : IUtf8JsonSerializable
+    public partial class StorageSyncRegisteredServerData : IUtf8JsonSerializable, IModelJsonSerializable<StorageSyncRegisteredServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageSyncRegisteredServerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageSyncRegisteredServerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -125,11 +132,25 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WriteStringValue(MonitoringConfiguration);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSyncRegisteredServerData DeserializeStorageSyncRegisteredServerData(JsonElement element)
+        internal static StorageSyncRegisteredServerData DeserializeStorageSyncRegisteredServerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,6 +182,7 @@ namespace Azure.ResourceManager.StorageSync
             Optional<Uri> monitoringEndpointUri = default;
             Optional<string> monitoringConfiguration = default;
             Optional<string> serverName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -362,8 +384,61 @@ namespace Azure.ResourceManager.StorageSync
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value);
+            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, rawData);
+        }
+
+        StorageSyncRegisteredServerData IModelJsonSerializable<StorageSyncRegisteredServerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSyncRegisteredServerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageSyncRegisteredServerData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageSyncRegisteredServerData IModelSerializable<StorageSyncRegisteredServerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageSyncRegisteredServerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageSyncRegisteredServerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageSyncRegisteredServerData"/> to convert. </param>
+        public static implicit operator RequestContent(StorageSyncRegisteredServerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageSyncRegisteredServerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageSyncRegisteredServerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageSyncRegisteredServerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

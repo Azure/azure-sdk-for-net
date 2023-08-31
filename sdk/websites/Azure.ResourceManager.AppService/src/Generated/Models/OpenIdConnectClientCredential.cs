@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectClientCredential
     {
-        /// <summary> Initializes a new instance of OpenIdConnectClientCredential. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectClientCredential"/>. </summary>
         public OpenIdConnectClientCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of OpenIdConnectClientCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectClientCredential"/>. </summary>
         /// <param name="method"> The method that should be used to authenticate the user. </param>
         /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
-        internal OpenIdConnectClientCredential(ClientCredentialMethod? method, string clientSecretSettingName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OpenIdConnectClientCredential(ClientCredentialMethod? method, string clientSecretSettingName, Dictionary<string, BinaryData> rawData)
         {
             Method = method;
             ClientSecretSettingName = clientSecretSettingName;
+            _rawData = rawData;
         }
 
         /// <summary> The method that should be used to authenticate the user. </summary>

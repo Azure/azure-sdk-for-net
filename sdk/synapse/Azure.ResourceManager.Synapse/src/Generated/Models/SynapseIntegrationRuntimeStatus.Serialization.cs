@@ -5,14 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeStatus
+    public partial class SynapseIntegrationRuntimeStatus : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIntegrationRuntimeStatus>
     {
-        internal static SynapseIntegrationRuntimeStatus DeserializeSynapseIntegrationRuntimeStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIntegrationRuntimeStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIntegrationRuntimeStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RuntimeType.ToString());
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseIntegrationRuntimeStatus DeserializeSynapseIntegrationRuntimeStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,7 +53,86 @@ namespace Azure.ResourceManager.Synapse.Models
                     case "SelfHosted": return SynapseSelfHostedIntegrationRuntimeStatus.DeserializeSynapseSelfHostedIntegrationRuntimeStatus(element);
                 }
             }
-            return UnknownIntegrationRuntimeStatus.DeserializeUnknownIntegrationRuntimeStatus(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            IntegrationRuntimeType type = default;
+            Optional<string> dataFactoryName = default;
+            Optional<SynapseIntegrationRuntimeState> state = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new IntegrationRuntimeType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataFactoryName"u8))
+                {
+                    dataFactoryName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new SynapseIntegrationRuntimeState(property.Value.GetString());
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new UnknownIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties);
+        }
+
+        SynapseIntegrationRuntimeStatus IModelJsonSerializable<SynapseIntegrationRuntimeStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIntegrationRuntimeStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIntegrationRuntimeStatus IModelSerializable<SynapseIntegrationRuntimeStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseIntegrationRuntimeStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseIntegrationRuntimeStatus"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseIntegrationRuntimeStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseIntegrationRuntimeStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseIntegrationRuntimeStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseIntegrationRuntimeStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

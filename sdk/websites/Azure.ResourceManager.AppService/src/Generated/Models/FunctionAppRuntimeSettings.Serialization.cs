@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppRuntimeSettings
+    public partial class FunctionAppRuntimeSettings : IUtf8JsonSerializable, IModelJsonSerializable<FunctionAppRuntimeSettings>
     {
-        internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FunctionAppRuntimeSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FunctionAppRuntimeSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> isAutoUpdate = default;
             Optional<bool> isEarlyAccess = default;
             Optional<bool> isDefault = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtimeVersion"u8))
@@ -168,8 +195,61 @@ namespace Azure.ResourceManager.AppService.Models
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FunctionAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Optional.ToDictionary(appSettingsDictionary), siteConfigPropertiesDictionary.Value, Optional.ToList(supportedFunctionsExtensionVersions), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), Optional.ToNullable(isDefault));
+            return new FunctionAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Optional.ToDictionary(appSettingsDictionary), siteConfigPropertiesDictionary.Value, Optional.ToList(supportedFunctionsExtensionVersions), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), Optional.ToNullable(isDefault), rawData);
+        }
+
+        FunctionAppRuntimeSettings IModelJsonSerializable<FunctionAppRuntimeSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionAppRuntimeSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FunctionAppRuntimeSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FunctionAppRuntimeSettings IModelSerializable<FunctionAppRuntimeSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFunctionAppRuntimeSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FunctionAppRuntimeSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FunctionAppRuntimeSettings"/> to convert. </param>
+        public static implicit operator RequestContent(FunctionAppRuntimeSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FunctionAppRuntimeSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FunctionAppRuntimeSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFunctionAppRuntimeSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

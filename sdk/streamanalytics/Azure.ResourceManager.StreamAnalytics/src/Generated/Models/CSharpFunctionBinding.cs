@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The binding to a CSharp function. </summary>
     public partial class CSharpFunctionBinding : StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="CSharpFunctionBinding"/>. </summary>
         public CSharpFunctionBinding()
         {
             FunctionBindingType = "Microsoft.StreamAnalytics/CLRUdf";
         }
 
-        /// <summary> Initializes a new instance of CSharpFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="CSharpFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
         /// <param name="dllPath"> The Csharp code containing a single function definition. </param>
         /// <param name="class"> The Csharp code containing a single function definition. </param>
         /// <param name="method"> The Csharp code containing a single function definition. </param>
         /// <param name="updateMode"> Refresh modes for Stream Analytics functions. </param>
-        internal CSharpFunctionBinding(string functionBindingType, string dllPath, string @class, string method, StreamingJobFunctionUpdateMode? updateMode) : base(functionBindingType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CSharpFunctionBinding(string functionBindingType, string dllPath, string @class, string method, StreamingJobFunctionUpdateMode? updateMode, Dictionary<string, BinaryData> rawData) : base(functionBindingType, rawData)
         {
             DllPath = dllPath;
             Class = @class;

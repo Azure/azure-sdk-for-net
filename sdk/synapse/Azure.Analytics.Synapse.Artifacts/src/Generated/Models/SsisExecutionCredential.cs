@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS package execution credential. </summary>
     public partial class SsisExecutionCredential
     {
-        /// <summary> Initializes a new instance of SsisExecutionCredential. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. </param>
         /// <param name="userName"> UseName for windows authentication. </param>
         /// <param name="password"> Password for windows authentication. </param>
@@ -27,6 +30,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Domain = domain;
             UserName = userName;
             Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/>. </summary>
+        /// <param name="domain"> Domain for windows authentication. </param>
+        /// <param name="userName"> UseName for windows authentication. </param>
+        /// <param name="password"> Password for windows authentication. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisExecutionCredential(object domain, object userName, SecureString password, Dictionary<string, BinaryData> rawData)
+        {
+            Domain = domain;
+            UserName = userName;
+            Password = password;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/> for deserialization. </summary>
+        internal SsisExecutionCredential()
+        {
         }
 
         /// <summary> Domain for windows authentication. </summary>

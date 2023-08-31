@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DynamicsAXSourceConverter))]
-    public partial class DynamicsAXSource : IUtf8JsonSerializable
+    public partial class DynamicsAXSource : IUtf8JsonSerializable, IModelJsonSerializable<DynamicsAXSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynamicsAXSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynamicsAXSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DynamicsAXSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -64,8 +70,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DynamicsAXSource DeserializeDynamicsAXSource(JsonElement element)
+        internal static DynamicsAXSource DeserializeDynamicsAXSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,6 +162,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsAXSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, httpRequestTimeout.Value);
+        }
+
+        DynamicsAXSource IModelJsonSerializable<DynamicsAXSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicsAXSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicsAXSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynamicsAXSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicsAXSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynamicsAXSource IModelSerializable<DynamicsAXSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicsAXSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynamicsAXSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynamicsAXSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynamicsAXSource"/> to convert. </param>
+        public static implicit operator RequestContent(DynamicsAXSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynamicsAXSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynamicsAXSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynamicsAXSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DynamicsAXSourceConverter : JsonConverter<DynamicsAXSource>

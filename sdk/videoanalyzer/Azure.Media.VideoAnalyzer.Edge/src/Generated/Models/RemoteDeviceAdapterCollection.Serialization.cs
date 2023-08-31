@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RemoteDeviceAdapterCollection : IUtf8JsonSerializable
+    public partial class RemoteDeviceAdapterCollection : IUtf8JsonSerializable, IModelJsonSerializable<RemoteDeviceAdapterCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemoteDeviceAdapterCollection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemoteDeviceAdapterCollection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
@@ -22,7 +29,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RemoteDeviceAdapter>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,17 +45,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemoteDeviceAdapterCollection DeserializeRemoteDeviceAdapterCollection(JsonElement element)
+        internal static RemoteDeviceAdapterCollection DeserializeRemoteDeviceAdapterCollection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<RemoteDeviceAdapter>> value = default;
             Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -63,8 +92,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemoteDeviceAdapterCollection(Optional.ToList(value), continuationToken.Value);
+            return new RemoteDeviceAdapterCollection(Optional.ToList(value), continuationToken.Value, rawData);
+        }
+
+        RemoteDeviceAdapterCollection IModelJsonSerializable<RemoteDeviceAdapterCollection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoteDeviceAdapterCollection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemoteDeviceAdapterCollection>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemoteDeviceAdapterCollection IModelSerializable<RemoteDeviceAdapterCollection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemoteDeviceAdapterCollection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RemoteDeviceAdapterCollection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RemoteDeviceAdapterCollection"/> to convert. </param>
+        public static implicit operator RequestContent(RemoteDeviceAdapterCollection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RemoteDeviceAdapterCollection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RemoteDeviceAdapterCollection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemoteDeviceAdapterCollection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

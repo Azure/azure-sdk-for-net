@@ -5,16 +5,102 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GlobalCsmSkuDescription
+    public partial class GlobalCsmSkuDescription : IUtf8JsonSerializable, IModelJsonSerializable<GlobalCsmSkuDescription>
     {
-        internal static GlobalCsmSkuDescription DeserializeGlobalCsmSkuDescription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GlobalCsmSkuDescription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GlobalCsmSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier);
+            }
+            if (Optional.IsDefined(Size))
+            {
+                writer.WritePropertyName("size"u8);
+                writer.WriteStringValue(Size);
+            }
+            if (Optional.IsDefined(Family))
+            {
+                writer.WritePropertyName("family"u8);
+                writer.WriteStringValue(Family);
+            }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity"u8);
+                if (Capacity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppServiceSkuCapacity>)Capacity).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceSkuCapability>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GlobalCsmSkuDescription DeserializeGlobalCsmSkuDescription(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceSkuCapacity> capacity = default;
             Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<AppServiceSkuCapability>> capabilities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,8 +172,61 @@ namespace Azure.ResourceManager.AppService.Models
                     capabilities = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GlobalCsmSkuDescription(name.Value, tier.Value, size.Value, family.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
+            return new GlobalCsmSkuDescription(name.Value, tier.Value, size.Value, family.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(capabilities), rawData);
+        }
+
+        GlobalCsmSkuDescription IModelJsonSerializable<GlobalCsmSkuDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalCsmSkuDescription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GlobalCsmSkuDescription>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GlobalCsmSkuDescription IModelSerializable<GlobalCsmSkuDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGlobalCsmSkuDescription(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GlobalCsmSkuDescription"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GlobalCsmSkuDescription"/> to convert. </param>
+        public static implicit operator RequestContent(GlobalCsmSkuDescription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GlobalCsmSkuDescription"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GlobalCsmSkuDescription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGlobalCsmSkuDescription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

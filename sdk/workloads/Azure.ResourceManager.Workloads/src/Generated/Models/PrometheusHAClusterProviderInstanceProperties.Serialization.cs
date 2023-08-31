@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class PrometheusHAClusterProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class PrometheusHAClusterProviderInstanceProperties : IUtf8JsonSerializable, IModelJsonSerializable<PrometheusHAClusterProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrometheusHAClusterProviderInstanceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrometheusHAClusterProviderInstanceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PrometheusHAClusterProviderInstanceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrometheusUri))
             {
@@ -48,11 +55,25 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrometheusHAClusterProviderInstanceProperties DeserializePrometheusHAClusterProviderInstanceProperties(JsonElement element)
+        internal static PrometheusHAClusterProviderInstanceProperties DeserializePrometheusHAClusterProviderInstanceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +85,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SapSslPreference> sslPreference = default;
             Optional<Uri> sslCertificateUri = default;
             string providerType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prometheusUrl"u8))
@@ -113,8 +135,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrometheusHAClusterProviderInstanceProperties(providerType, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new PrometheusHAClusterProviderInstanceProperties(providerType, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, rawData);
+        }
+
+        PrometheusHAClusterProviderInstanceProperties IModelJsonSerializable<PrometheusHAClusterProviderInstanceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrometheusHAClusterProviderInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrometheusHAClusterProviderInstanceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrometheusHAClusterProviderInstanceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrometheusHAClusterProviderInstanceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrometheusHAClusterProviderInstanceProperties IModelSerializable<PrometheusHAClusterProviderInstanceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrometheusHAClusterProviderInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrometheusHAClusterProviderInstanceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrometheusHAClusterProviderInstanceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrometheusHAClusterProviderInstanceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PrometheusHAClusterProviderInstanceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrometheusHAClusterProviderInstanceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrometheusHAClusterProviderInstanceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

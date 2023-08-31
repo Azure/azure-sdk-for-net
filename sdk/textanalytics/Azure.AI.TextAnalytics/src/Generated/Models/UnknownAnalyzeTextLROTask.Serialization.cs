@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class UnknownAnalyzeTextLROTask : IUtf8JsonSerializable
+    internal partial class UnknownAnalyzeTextLROTask : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextLROTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextLROTask>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextLROTask>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextLROTask>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -22,31 +28,44 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAnalyzeTextLROTask DeserializeUnknownAnalyzeTextLROTask(JsonElement element)
+        internal static AnalyzeTextLROTask DeserializeUnknownAnalyzeTextLROTask(JsonElement element, ModelSerializerOptions options = default) => DeserializeAnalyzeTextLROTask(element, options);
+
+        AnalyzeTextLROTask IModelJsonSerializable<AnalyzeTextLROTask>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            AnalyzeTextLROTaskKind kind = "Unknown";
-            Optional<string> taskName = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new AnalyzeTextLROTaskKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("taskName"u8))
-                {
-                    taskName = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAnalyzeTextLROTask(taskName.Value, kind);
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextLROTask>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAnalyzeTextLROTask(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextLROTask>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextLROTask>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextLROTask IModelSerializable<AnalyzeTextLROTask>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AnalyzeTextLROTask>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextLROTask(doc.RootElement, options);
         }
     }
 }

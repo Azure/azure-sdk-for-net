@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSensitivityLabelUpdate : IUtf8JsonSerializable
+    public partial class SynapseSensitivityLabelUpdate : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSensitivityLabelUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSensitivityLabelUpdate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSensitivityLabelUpdate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -42,14 +50,35 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteObjectValue(SensitivityLabel);
+                if (SensitivityLabel is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapseSensitivityLabelData>)SensitivityLabel).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseSensitivityLabelUpdate DeserializeSynapseSensitivityLabelUpdate(JsonElement element)
+        internal static SynapseSensitivityLabelUpdate DeserializeSynapseSensitivityLabelUpdate(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +92,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> table = default;
             Optional<string> column = default;
             Optional<SynapseSensitivityLabelData> sensitivityLabel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -134,8 +164,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseSensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value);
+            return new SynapseSensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value, rawData);
+        }
+
+        SynapseSensitivityLabelUpdate IModelJsonSerializable<SynapseSensitivityLabelUpdate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSensitivityLabelUpdate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSensitivityLabelUpdate>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSensitivityLabelUpdate IModelSerializable<SynapseSensitivityLabelUpdate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSensitivityLabelUpdate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSensitivityLabelUpdate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSensitivityLabelUpdate"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSensitivityLabelUpdate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSensitivityLabelUpdate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSensitivityLabelUpdate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSensitivityLabelUpdate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

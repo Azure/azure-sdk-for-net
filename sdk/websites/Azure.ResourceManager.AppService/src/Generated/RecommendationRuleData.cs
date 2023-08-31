@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class RecommendationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendationRuleData"/>. </summary>
         public RecommendationRuleData()
         {
             CategoryTags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +49,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.AppService
             BladeName = bladeName;
             ForwardLink = forwardLink;
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Unique name of the rule. </summary>

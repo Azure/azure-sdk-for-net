@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An object that wraps the Lifecycle rule. Each rule is uniquely defined by name. </summary>
     public partial class ManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyRule"/>. </summary>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="ruleType"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
@@ -28,17 +31,24 @@ namespace Azure.ResourceManager.Storage.Models
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyRule"/>. </summary>
         /// <param name="isEnabled"> Rule is enabled if set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="ruleType"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
-        internal ManagementPolicyRule(bool? isEnabled, string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyRule(bool? isEnabled, string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
             Name = name;
             RuleType = ruleType;
             Definition = definition;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyRule"/> for deserialization. </summary>
+        internal ManagementPolicyRule()
+        {
         }
 
         /// <summary> Rule is enabled if set to true. </summary>

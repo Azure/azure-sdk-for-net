@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerEndpointCustomHeaderInfo : IUtf8JsonSerializable
+    public partial class TrafficManagerEndpointCustomHeaderInfo : IUtf8JsonSerializable, IModelJsonSerializable<TrafficManagerEndpointCustomHeaderInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrafficManagerEndpointCustomHeaderInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrafficManagerEndpointCustomHeaderInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerEndpointCustomHeaderInfo DeserializeTrafficManagerEndpointCustomHeaderInfo(JsonElement element)
+        internal static TrafficManagerEndpointCustomHeaderInfo DeserializeTrafficManagerEndpointCustomHeaderInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrafficManagerEndpointCustomHeaderInfo(name.Value, value.Value);
+            return new TrafficManagerEndpointCustomHeaderInfo(name.Value, value.Value, rawData);
+        }
+
+        TrafficManagerEndpointCustomHeaderInfo IModelJsonSerializable<TrafficManagerEndpointCustomHeaderInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerEndpointCustomHeaderInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrafficManagerEndpointCustomHeaderInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrafficManagerEndpointCustomHeaderInfo IModelSerializable<TrafficManagerEndpointCustomHeaderInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerEndpointCustomHeaderInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrafficManagerEndpointCustomHeaderInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrafficManagerEndpointCustomHeaderInfo"/> to convert. </param>
+        public static implicit operator RequestContent(TrafficManagerEndpointCustomHeaderInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrafficManagerEndpointCustomHeaderInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrafficManagerEndpointCustomHeaderInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrafficManagerEndpointCustomHeaderInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

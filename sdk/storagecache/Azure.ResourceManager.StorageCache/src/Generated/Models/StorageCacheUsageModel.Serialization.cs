@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsageModel
+    public partial class StorageCacheUsageModel : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheUsageModel>
     {
-        internal static StorageCacheUsageModel DeserializeStorageCacheUsageModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheUsageModel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheUsageModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Display))
+            {
+                writer.WritePropertyName("display"u8);
+                if (Display is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheUsageModelDisplay>)Display).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(TargetType))
+            {
+                writer.WritePropertyName("targetType"u8);
+                writer.WriteStringValue(TargetType);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageCacheUsageModel DeserializeStorageCacheUsageModel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +71,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<StorageCacheUsageModelDisplay> display = default;
             Optional<string> modelName = default;
             Optional<string> targetType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("display"u8))
@@ -42,8 +93,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     targetType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheUsageModel(display.Value, modelName.Value, targetType.Value);
+            return new StorageCacheUsageModel(display.Value, modelName.Value, targetType.Value, rawData);
+        }
+
+        StorageCacheUsageModel IModelJsonSerializable<StorageCacheUsageModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheUsageModel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheUsageModel>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheUsageModel IModelSerializable<StorageCacheUsageModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheUsageModel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheUsageModel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheUsageModel"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheUsageModel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheUsageModel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheUsageModel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheUsageModel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

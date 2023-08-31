@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Object representing the URI that will be used to request for media streaming. </summary>
     public partial class MediaUri
     {
-        /// <summary> Initializes a new instance of MediaUri. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaUri"/>. </summary>
         public MediaUri()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaUri"/>. </summary>
         /// <param name="uri"> URI that can be used for media streaming. </param>
-        internal MediaUri(string uri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaUri(string uri, Dictionary<string, BinaryData> rawData)
         {
             Uri = uri;
+            _rawData = rawData;
         }
 
         /// <summary> URI that can be used for media streaming. </summary>

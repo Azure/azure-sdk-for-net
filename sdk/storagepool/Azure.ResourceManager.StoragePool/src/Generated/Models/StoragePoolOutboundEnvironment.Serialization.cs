@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class StoragePoolOutboundEnvironment
+    public partial class StoragePoolOutboundEnvironment : IUtf8JsonSerializable, IModelJsonSerializable<StoragePoolOutboundEnvironment>
     {
-        internal static StoragePoolOutboundEnvironment DeserializeStoragePoolOutboundEnvironment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StoragePoolOutboundEnvironment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StoragePoolOutboundEnvironment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in Endpoints)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<OutboundEndpointDependency>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StoragePoolOutboundEnvironment DeserializeStoragePoolOutboundEnvironment(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> category = default;
             Optional<IReadOnlyList<OutboundEndpointDependency>> endpoints = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -42,8 +92,61 @@ namespace Azure.ResourceManager.StoragePool.Models
                     endpoints = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StoragePoolOutboundEnvironment(category.Value, Optional.ToList(endpoints));
+            return new StoragePoolOutboundEnvironment(category.Value, Optional.ToList(endpoints), rawData);
+        }
+
+        StoragePoolOutboundEnvironment IModelJsonSerializable<StoragePoolOutboundEnvironment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStoragePoolOutboundEnvironment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StoragePoolOutboundEnvironment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StoragePoolOutboundEnvironment IModelSerializable<StoragePoolOutboundEnvironment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStoragePoolOutboundEnvironment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StoragePoolOutboundEnvironment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StoragePoolOutboundEnvironment"/> to convert. </param>
+        public static implicit operator RequestContent(StoragePoolOutboundEnvironment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StoragePoolOutboundEnvironment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StoragePoolOutboundEnvironment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStoragePoolOutboundEnvironment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

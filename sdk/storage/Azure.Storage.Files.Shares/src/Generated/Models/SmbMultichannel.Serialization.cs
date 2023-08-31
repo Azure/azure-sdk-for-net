@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class SmbMultichannel : IXmlSerializable
+    public partial class SmbMultichannel : IXmlSerializable, IModelSerializable<SmbMultichannel>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Multichannel");
             if (Optional.IsDefined(Enabled))
@@ -25,14 +29,67 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static SmbMultichannel DeserializeSmbMultichannel(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static SmbMultichannel DeserializeSmbMultichannel(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             bool? enabled = default;
             if (element.Element("Enabled") is XElement enabledElement)
             {
                 enabled = (bool?)enabledElement;
             }
-            return new SmbMultichannel(enabled);
+            return new SmbMultichannel(enabled, default);
+        }
+
+        BinaryData IModelSerializable<SmbMultichannel>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        SmbMultichannel IModelSerializable<SmbMultichannel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeSmbMultichannel(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="SmbMultichannel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SmbMultichannel"/> to convert. </param>
+        public static implicit operator RequestContent(SmbMultichannel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SmbMultichannel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SmbMultichannel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeSmbMultichannel(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The data stored in text format. </summary>
     public partial class TextFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of TextFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextFormat"/>. </summary>
         public TextFormat()
         {
             Type = "TextFormat";
         }
 
-        /// <summary> Initializes a new instance of TextFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextFormat"/>. </summary>
         /// <param name="type"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>

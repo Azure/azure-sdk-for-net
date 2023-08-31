@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueSignedIdentifier : IXmlSerializable
+    public partial class QueueSignedIdentifier : IXmlSerializable, IModelSerializable<QueueSignedIdentifier>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -23,8 +27,11 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueueSignedIdentifier DeserializeQueueSignedIdentifier(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string id = default;
             QueueAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
@@ -35,7 +42,57 @@ namespace Azure.Storage.Queues.Models
             {
                 accessPolicy = QueueAccessPolicy.DeserializeQueueAccessPolicy(accessPolicyElement);
             }
-            return new QueueSignedIdentifier(id, accessPolicy);
+            return new QueueSignedIdentifier(id, accessPolicy, default);
+        }
+
+        BinaryData IModelSerializable<QueueSignedIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueSignedIdentifier IModelSerializable<QueueSignedIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeQueueSignedIdentifier(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="QueueSignedIdentifier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueueSignedIdentifier"/> to convert. </param>
+        public static implicit operator RequestContent(QueueSignedIdentifier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueueSignedIdentifier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueueSignedIdentifier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueueSignedIdentifier(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

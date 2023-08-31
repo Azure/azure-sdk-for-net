@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobName
+    internal partial class BlobName : IXmlSerializable, IModelSerializable<BlobName>
     {
-        internal static BlobName DeserializeBlobName(XElement element)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
+            writer.WriteStartElement(nameHint ?? "BlobName");
+            if (Optional.IsDefined(Encoded))
+            {
+                writer.WriteStartAttribute("Encoded");
+                writer.WriteValue(Encoded.Value);
+                writer.WriteEndAttribute();
+            }
+            writer.WriteValue(Content);
+            writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobName DeserializeBlobName(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             bool? encoded = default;
             string content = default;
             if (element.Attribute("Encoded") is XAttribute encodedAttribute)
@@ -20,7 +42,57 @@ namespace Azure.Storage.Blobs.Models
                 encoded = (bool?)encodedAttribute;
             }
             content = element.Value;
-            return new BlobName(encoded, content);
+            return new BlobName(encoded, content, default);
+        }
+
+        BinaryData IModelSerializable<BlobName>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobName IModelSerializable<BlobName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeBlobName(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobName"/> to convert. </param>
+        public static implicit operator RequestContent(BlobName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobName(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

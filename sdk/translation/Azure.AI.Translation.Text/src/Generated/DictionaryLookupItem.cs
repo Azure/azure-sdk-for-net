@@ -15,6 +15,8 @@ namespace Azure.AI.Translation.Text
     /// <summary> Dictionary Lookup Element. </summary>
     public partial class DictionaryLookupItem
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
@@ -51,11 +53,18 @@ namespace Azure.AI.Translation.Text
         /// spelling of the name: "John".
         /// </param>
         /// <param name="translations"> A list of translations for the source term. </param>
-        internal DictionaryLookupItem(string normalizedSource, string displaySource, IReadOnlyList<DictionaryTranslation> translations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryLookupItem(string normalizedSource, string displaySource, IReadOnlyList<DictionaryTranslation> translations, Dictionary<string, BinaryData> rawData)
         {
             NormalizedSource = normalizedSource;
             DisplaySource = displaySource;
             Translations = translations;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryLookupItem"/> for deserialization. </summary>
+        internal DictionaryLookupItem()
+        {
         }
 
         /// <summary>

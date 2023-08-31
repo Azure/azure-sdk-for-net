@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable
+    internal partial class DelimitedTextConfigurationInternal : IXmlSerializable, IModelSerializable<DelimitedTextConfigurationInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "DelimitedTextConfiguration");
             if (Optional.IsDefined(ColumnSeparator))
@@ -46,6 +51,89 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static DelimitedTextConfigurationInternal DeserializeDelimitedTextConfigurationInternal(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            string columnSeparator = default;
+            string fieldQuote = default;
+            string recordSeparator = default;
+            string escapeChar = default;
+            bool? headersPresent = default;
+            if (element.Element("ColumnSeparator") is XElement columnSeparatorElement)
+            {
+                columnSeparator = (string)columnSeparatorElement;
+            }
+            if (element.Element("FieldQuote") is XElement fieldQuoteElement)
+            {
+                fieldQuote = (string)fieldQuoteElement;
+            }
+            if (element.Element("RecordSeparator") is XElement recordSeparatorElement)
+            {
+                recordSeparator = (string)recordSeparatorElement;
+            }
+            if (element.Element("EscapeChar") is XElement escapeCharElement)
+            {
+                escapeChar = (string)escapeCharElement;
+            }
+            if (element.Element("HasHeaders") is XElement hasHeadersElement)
+            {
+                headersPresent = (bool?)hasHeadersElement;
+            }
+            return new DelimitedTextConfigurationInternal(columnSeparator, fieldQuote, recordSeparator, escapeChar, headersPresent, default);
+        }
+
+        BinaryData IModelSerializable<DelimitedTextConfigurationInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        DelimitedTextConfigurationInternal IModelSerializable<DelimitedTextConfigurationInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeDelimitedTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="DelimitedTextConfigurationInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DelimitedTextConfigurationInternal"/> to convert. </param>
+        public static implicit operator RequestContent(DelimitedTextConfigurationInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DelimitedTextConfigurationInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DelimitedTextConfigurationInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeDelimitedTextConfigurationInternal(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The AnalyzeTextKeyPhraseExtractionInput. </summary>
     internal partial class AnalyzeTextKeyPhraseExtractionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextKeyPhraseExtractionInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseExtractionInput"/>. </summary>
         public AnalyzeTextKeyPhraseExtractionInput()
         {
             Kind = AnalyzeTextTaskKind.KeyPhraseExtraction;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextKeyPhraseExtractionInput"/>. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis tasks. </param>
+        /// <param name="analysisInput"></param>
+        /// <param name="parameters"> Supported parameters for a Key Phrase Extraction task. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextKeyPhraseExtractionInput(AnalyzeTextTaskKind kind, MultiLanguageAnalysisInput analysisInput, KeyPhraseTaskParameters parameters, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
+        {
+            AnalysisInput = analysisInput;
+            Parameters = parameters;
+            Kind = kind;
         }
 
         /// <summary> Gets or sets the analysis input. </summary>

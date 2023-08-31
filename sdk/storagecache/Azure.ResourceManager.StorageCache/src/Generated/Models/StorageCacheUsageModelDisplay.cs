@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Localized information describing this usage model. </summary>
     internal partial class StorageCacheUsageModelDisplay
     {
-        /// <summary> Initializes a new instance of StorageCacheUsageModelDisplay. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModelDisplay"/>. </summary>
         internal StorageCacheUsageModelDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsageModelDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsageModelDisplay"/>. </summary>
         /// <param name="description"> String to display for this usage model. </param>
-        internal StorageCacheUsageModelDisplay(string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsageModelDisplay(string description, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> String to display for this usage model. </summary>

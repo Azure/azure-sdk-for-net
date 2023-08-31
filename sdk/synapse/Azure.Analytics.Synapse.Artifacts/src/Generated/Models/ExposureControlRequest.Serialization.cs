@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExposureControlRequestConverter))]
-    public partial class ExposureControlRequest : IUtf8JsonSerializable
+    public partial class ExposureControlRequest : IUtf8JsonSerializable, IModelJsonSerializable<ExposureControlRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExposureControlRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExposureControlRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FeatureName))
             {
@@ -28,17 +35,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExposureControlRequest DeserializeExposureControlRequest(JsonElement element)
+        internal static ExposureControlRequest DeserializeExposureControlRequest(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> featureName = default;
             Optional<string> featureType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -51,8 +73,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     featureType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExposureControlRequest(featureName.Value, featureType.Value);
+            return new ExposureControlRequest(featureName.Value, featureType.Value, rawData);
+        }
+
+        ExposureControlRequest IModelJsonSerializable<ExposureControlRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExposureControlRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExposureControlRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExposureControlRequest IModelSerializable<ExposureControlRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExposureControlRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExposureControlRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExposureControlRequest"/> to convert. </param>
+        public static implicit operator RequestContent(ExposureControlRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExposureControlRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExposureControlRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExposureControlRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ExposureControlRequestConverter : JsonConverter<ExposureControlRequest>

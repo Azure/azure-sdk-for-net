@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ProcessInfoData : IUtf8JsonSerializable
+    public partial class ProcessInfoData : IUtf8JsonSerializable, IModelJsonSerializable<ProcessInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProcessInfoData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProcessInfoData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -77,7 +83,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Threads)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ProcessThreadInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +110,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ProcessModuleInfoData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -228,11 +248,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProcessInfoData DeserializeProcessInfoData(JsonElement element)
+        internal static ProcessInfoData DeserializeProcessInfoData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -278,6 +312,7 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> isScmSite = default;
             Optional<bool> isWebjob = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -626,8 +661,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Optional.ToList(children), Optional.ToList(threads), Optional.ToList(openFileHandles), Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), Optional.ToDictionary(environmentVariables), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value);
+            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Optional.ToList(children), Optional.ToList(threads), Optional.ToList(openFileHandles), Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), Optional.ToDictionary(environmentVariables), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value, rawData);
+        }
+
+        ProcessInfoData IModelJsonSerializable<ProcessInfoData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProcessInfoData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProcessInfoData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProcessInfoData IModelSerializable<ProcessInfoData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProcessInfoData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProcessInfoData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProcessInfoData"/> to convert. </param>
+        public static implicit operator RequestContent(ProcessInfoData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProcessInfoData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProcessInfoData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProcessInfoData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

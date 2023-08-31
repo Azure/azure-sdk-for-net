@@ -5,21 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class EntitiesTaskResult
+    internal partial class EntitiesTaskResult : IUtf8JsonSerializable, IModelJsonSerializable<EntitiesTaskResult>
     {
-        internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EntitiesTaskResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EntitiesTaskResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<EntitiesTaskResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("results"u8);
+            if (Results is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EntitiesResult>)Results).Serialize(writer, options);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EntitiesResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -32,8 +72,61 @@ namespace Azure.AI.TextAnalytics.Models
                     kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EntitiesTaskResult(kind, results);
+            return new EntitiesTaskResult(kind, results, rawData);
+        }
+
+        EntitiesTaskResult IModelJsonSerializable<EntitiesTaskResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<EntitiesTaskResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEntitiesTaskResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EntitiesTaskResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<EntitiesTaskResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EntitiesTaskResult IModelSerializable<EntitiesTaskResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<EntitiesTaskResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEntitiesTaskResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EntitiesTaskResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EntitiesTaskResult"/> to convert. </param>
+        public static implicit operator RequestContent(EntitiesTaskResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EntitiesTaskResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EntitiesTaskResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEntitiesTaskResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

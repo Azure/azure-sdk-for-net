@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -17,7 +18,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public WebLinkedServiceTypeProperties(object url)
@@ -27,13 +30,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/>. </summary>
         /// <param name="url"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
-        internal WebLinkedServiceTypeProperties(object url, WebAuthenticationType authenticationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebLinkedServiceTypeProperties(object url, WebAuthenticationType authenticationType, Dictionary<string, BinaryData> rawData)
         {
             Url = url;
             AuthenticationType = authenticationType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/> for deserialization. </summary>
+        internal WebLinkedServiceTypeProperties()
+        {
         }
 
         /// <summary> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </summary>

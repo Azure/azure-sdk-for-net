@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDataLakeStoreWriteSettingsConverter))]
-    public partial class AzureDataLakeStoreWriteSettings : IUtf8JsonSerializable
+    public partial class AzureDataLakeStoreWriteSettings : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataLakeStoreWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureDataLakeStoreWriteSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureDataLakeStoreWriteSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreWriteSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpiryDateTime))
             {
@@ -44,8 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataLakeStoreWriteSettings DeserializeAzureDataLakeStoreWriteSettings(JsonElement element)
+        internal static AzureDataLakeStoreWriteSettings DeserializeAzureDataLakeStoreWriteSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +102,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataLakeStoreWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, expiryDateTime.Value);
+        }
+
+        AzureDataLakeStoreWriteSettings IModelJsonSerializable<AzureDataLakeStoreWriteSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreWriteSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStoreWriteSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataLakeStoreWriteSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreWriteSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataLakeStoreWriteSettings IModelSerializable<AzureDataLakeStoreWriteSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzureDataLakeStoreWriteSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataLakeStoreWriteSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureDataLakeStoreWriteSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureDataLakeStoreWriteSettings"/> to convert. </param>
+        public static implicit operator RequestContent(AzureDataLakeStoreWriteSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureDataLakeStoreWriteSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureDataLakeStoreWriteSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataLakeStoreWriteSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AzureDataLakeStoreWriteSettingsConverter : JsonConverter<AzureDataLakeStoreWriteSettings>

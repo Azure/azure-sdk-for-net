@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSsisEnvironment
+    public partial class SynapseSsisEnvironment : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSsisEnvironment>
     {
-        internal static SynapseSsisEnvironment DeserializeSynapseSsisEnvironment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSsisEnvironment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSsisEnvironment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisEnvironment>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FolderId))
+            {
+                writer.WritePropertyName("folderId"u8);
+                writer.WriteNumberValue(FolderId.Value);
+            }
+            if (Optional.IsCollectionDefined(Variables))
+            {
+                writer.WritePropertyName("variables"u8);
+                writer.WriteStartArray();
+                foreach (var item in Variables)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SynapseSsisVariable>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(MetadataType.ToString());
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseSsisEnvironment DeserializeSynapseSsisEnvironment(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +91,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderId"u8))
@@ -74,8 +141,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseSsisEnvironment(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToList(variables));
+            return new SynapseSsisEnvironment(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToList(variables), rawData);
+        }
+
+        SynapseSsisEnvironment IModelJsonSerializable<SynapseSsisEnvironment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSsisEnvironment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSsisEnvironment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisEnvironment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSsisEnvironment IModelSerializable<SynapseSsisEnvironment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisEnvironment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSsisEnvironment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSsisEnvironment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSsisEnvironment"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSsisEnvironment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSsisEnvironment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSsisEnvironment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSsisEnvironment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

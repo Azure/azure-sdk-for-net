@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServicePlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AppServicePlanData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServicePlanData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +66,8 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, string kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -91,6 +94,12 @@ namespace Azure.ResourceManager.AppService
             KubeEnvironmentProfile = kubeEnvironmentProfile;
             IsZoneRedundant = isZoneRedundant;
             Kind = kind;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/> for deserialization. </summary>
+        internal AppServicePlanData()
+        {
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ActivityDependencyConverter))]
-    public partial class ActivityDependency : IUtf8JsonSerializable
+    public partial class ActivityDependency : IUtf8JsonSerializable, IModelJsonSerializable<ActivityDependency>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActivityDependency>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActivityDependency>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("activity"u8);
             writer.WriteStringValue(Activity);
@@ -36,8 +42,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static ActivityDependency DeserializeActivityDependency(JsonElement element)
+        internal static ActivityDependency DeserializeActivityDependency(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +75,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ActivityDependency(activity, dependencyConditions, additionalProperties);
+        }
+
+        ActivityDependency IModelJsonSerializable<ActivityDependency>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeActivityDependency(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActivityDependency>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActivityDependency IModelSerializable<ActivityDependency>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActivityDependency(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ActivityDependency"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ActivityDependency"/> to convert. </param>
+        public static implicit operator RequestContent(ActivityDependency model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ActivityDependency"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ActivityDependency(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeActivityDependency(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ActivityDependencyConverter : JsonConverter<ActivityDependency>

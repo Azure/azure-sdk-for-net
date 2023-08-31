@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
@@ -13,18 +16,22 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class AutoHealCustomAction
     {
-        /// <summary> Initializes a new instance of AutoHealCustomAction. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
         public AutoHealCustomAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoHealCustomAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
         /// <param name="exe"> Executable to be run. </param>
         /// <param name="parameters"> Parameters for the executable. </param>
-        internal AutoHealCustomAction(string exe, string parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoHealCustomAction(string exe, string parameters, Dictionary<string, BinaryData> rawData)
         {
             Exe = exe;
             Parameters = parameters;
+            _rawData = rawData;
         }
 
         /// <summary> Executable to be run. </summary>

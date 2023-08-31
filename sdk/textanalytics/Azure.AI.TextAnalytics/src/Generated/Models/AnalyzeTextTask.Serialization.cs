@@ -5,19 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextTask : IUtf8JsonSerializable
+    internal partial class AnalyzeTextTask : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextTask>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextTask>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AnalyzeTextTask DeserializeAnalyzeTextTask(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "EntityLinking": return AnalyzeTextEntityLinkingInput.DeserializeAnalyzeTextEntityLinkingInput(element);
+                    case "EntityRecognition": return AnalyzeTextEntityRecognitionInput.DeserializeAnalyzeTextEntityRecognitionInput(element);
+                    case "KeyPhraseExtraction": return AnalyzeTextKeyPhraseExtractionInput.DeserializeAnalyzeTextKeyPhraseExtractionInput(element);
+                    case "LanguageDetection": return AnalyzeTextLanguageDetectionInput.DeserializeAnalyzeTextLanguageDetectionInput(element);
+                    case "PiiEntityRecognition": return AnalyzeTextPiiEntitiesRecognitionInput.DeserializeAnalyzeTextPiiEntitiesRecognitionInput(element);
+                    case "SentimentAnalysis": return AnalyzeTextSentimentAnalysisInput.DeserializeAnalyzeTextSentimentAnalysisInput(element);
+                }
+            }
+
+            // Unknown type found so we will deserialize the base properties only
+            AnalyzeTextTaskKind kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskKind(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnalyzeTextTask(kind, rawData);
+        }
+
+        AnalyzeTextTask IModelJsonSerializable<AnalyzeTextTask>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextTask(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextTask>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextTask IModelSerializable<AnalyzeTextTask>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextTask(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeTextTask"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeTextTask"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeTextTask model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeTextTask"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeTextTask(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeTextTask(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

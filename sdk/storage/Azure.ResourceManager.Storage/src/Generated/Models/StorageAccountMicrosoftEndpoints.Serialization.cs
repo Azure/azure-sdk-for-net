@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountMicrosoftEndpoints
+    public partial class StorageAccountMicrosoftEndpoints : IUtf8JsonSerializable, IModelJsonSerializable<StorageAccountMicrosoftEndpoints>
     {
-        internal static StorageAccountMicrosoftEndpoints DeserializeStorageAccountMicrosoftEndpoints(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageAccountMicrosoftEndpoints>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageAccountMicrosoftEndpoints>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageAccountMicrosoftEndpoints DeserializeStorageAccountMicrosoftEndpoints(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<Uri> file = default;
             Optional<Uri> web = default;
             Optional<Uri> dfs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"u8))
@@ -81,8 +109,61 @@ namespace Azure.ResourceManager.Storage.Models
                     dfs = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageAccountMicrosoftEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value);
+            return new StorageAccountMicrosoftEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value, rawData);
+        }
+
+        StorageAccountMicrosoftEndpoints IModelJsonSerializable<StorageAccountMicrosoftEndpoints>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountMicrosoftEndpoints(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageAccountMicrosoftEndpoints>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageAccountMicrosoftEndpoints IModelSerializable<StorageAccountMicrosoftEndpoints>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageAccountMicrosoftEndpoints(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageAccountMicrosoftEndpoints"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageAccountMicrosoftEndpoints"/> to convert. </param>
+        public static implicit operator RequestContent(StorageAccountMicrosoftEndpoints model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageAccountMicrosoftEndpoints(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageAccountMicrosoftEndpoints(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

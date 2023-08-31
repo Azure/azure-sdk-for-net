@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs azure blob storage configuration. </summary>
     public partial class AppServiceBlobStorageApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceBlobStorageApplicationLogsConfig. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageApplicationLogsConfig"/>. </summary>
         public AppServiceBlobStorageApplicationLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceBlobStorageApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceBlobStorageApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
         /// <param name="retentionInDays">
@@ -25,11 +28,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
         /// </param>
-        internal AppServiceBlobStorageApplicationLogsConfig(WebAppLogLevel? level, Uri sasUri, int? retentionInDays)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceBlobStorageApplicationLogsConfig(WebAppLogLevel? level, Uri sasUri, int? retentionInDays, Dictionary<string, BinaryData> rawData)
         {
             Level = level;
             SasUri = sasUri;
             RetentionInDays = retentionInDays;
+            _rawData = rawData;
         }
 
         /// <summary> Log level. </summary>

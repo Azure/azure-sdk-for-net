@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbMongoDbApiSourceConverter))]
-    public partial class CosmosDbMongoDbApiSource : IUtf8JsonSerializable
+    public partial class CosmosDbMongoDbApiSource : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDbMongoDbApiSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDbMongoDbApiSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDbMongoDbApiSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Filter))
             {
@@ -27,7 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue(CursorMethods);
+                if (CursorMethods is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDbCursorMethodsProperties>)CursorMethods).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -69,8 +82,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CosmosDbMongoDbApiSource DeserializeCosmosDbMongoDbApiSource(JsonElement element)
+        internal static CosmosDbMongoDbApiSource DeserializeCosmosDbMongoDbApiSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,6 +184,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, filter.Value, cursorMethods.Value, batchSize.Value, queryTimeout.Value, additionalColumns.Value);
+        }
+
+        CosmosDbMongoDbApiSource IModelJsonSerializable<CosmosDbMongoDbApiSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDbMongoDbApiSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDbMongoDbApiSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDbMongoDbApiSource IModelSerializable<CosmosDbMongoDbApiSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDbMongoDbApiSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDbMongoDbApiSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDbMongoDbApiSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDbMongoDbApiSource"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDbMongoDbApiSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDbMongoDbApiSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDbMongoDbApiSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDbMongoDbApiSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CosmosDbMongoDbApiSourceConverter : JsonConverter<CosmosDbMongoDbApiSource>

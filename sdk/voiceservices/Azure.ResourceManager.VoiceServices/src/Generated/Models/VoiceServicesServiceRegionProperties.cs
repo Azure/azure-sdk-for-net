@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The service region configuration needed for Teams Callings. </summary>
     public partial class VoiceServicesServiceRegionProperties
     {
-        /// <summary> Initializes a new instance of VoiceServicesServiceRegionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesServiceRegionProperties"/>. </summary>
         /// <param name="name"> The name of the region in which the resources needed for Teams Calling will be deployed. </param>
         /// <param name="primaryRegionProperties"> The configuration used in this region as primary, and other regions as backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="primaryRegionProperties"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
             Name = name;
             PrimaryRegionProperties = primaryRegionProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesServiceRegionProperties"/>. </summary>
+        /// <param name="name"> The name of the region in which the resources needed for Teams Calling will be deployed. </param>
+        /// <param name="primaryRegionProperties"> The configuration used in this region as primary, and other regions as backup. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VoiceServicesServiceRegionProperties(string name, VoiceServicesPrimaryRegionProperties primaryRegionProperties, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            PrimaryRegionProperties = primaryRegionProperties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesServiceRegionProperties"/> for deserialization. </summary>
+        internal VoiceServicesServiceRegionProperties()
+        {
         }
 
         /// <summary> The name of the region in which the resources needed for Teams Calling will be deployed. </summary>

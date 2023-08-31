@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemSubnetContent : IUtf8JsonSerializable
+    public partial class AmlFileSystemSubnetContent : IUtf8JsonSerializable, IModelJsonSerializable<AmlFileSystemSubnetContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmlFileSystemSubnetContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmlFileSystemSubnetContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FilesystemSubnet))
             {
@@ -28,14 +36,137 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheSkuName>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AmlFileSystemSubnetContent DeserializeAmlFileSystemSubnetContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> filesystemSubnet = default;
+            Optional<float> storageCapacityTiB = default;
+            Optional<StorageCacheSkuName> sku = default;
+            Optional<AzureLocation> location = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filesystemSubnet"u8))
+                {
+                    filesystemSubnet = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageCapacityTiB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageCapacityTiB = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = StorageCacheSkuName.DeserializeStorageCacheSkuName(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AmlFileSystemSubnetContent(filesystemSubnet.Value, Optional.ToNullable(storageCapacityTiB), sku.Value, Optional.ToNullable(location), rawData);
+        }
+
+        AmlFileSystemSubnetContent IModelJsonSerializable<AmlFileSystemSubnetContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlFileSystemSubnetContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmlFileSystemSubnetContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmlFileSystemSubnetContent IModelSerializable<AmlFileSystemSubnetContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmlFileSystemSubnetContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmlFileSystemSubnetContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmlFileSystemSubnetContent"/> to convert. </param>
+        public static implicit operator RequestContent(AmlFileSystemSubnetContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmlFileSystemSubnetContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmlFileSystemSubnetContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmlFileSystemSubnetContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

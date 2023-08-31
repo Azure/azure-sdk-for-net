@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Cache encryption settings. </summary>
     public partial class StorageCacheEncryptionSettings
     {
-        /// <summary> Initializes a new instance of StorageCacheEncryptionSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionSettings"/>. </summary>
         public StorageCacheEncryptionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheEncryptionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionSettings"/>. </summary>
         /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in key vault. </param>
         /// <param name="enableRotationToLatestKeyVersion"> Specifies whether the service will automatically rotate to the newest version of the key in the key vault. </param>
-        internal StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, bool? enableRotationToLatestKeyVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, bool? enableRotationToLatestKeyVersion, Dictionary<string, BinaryData> rawData)
         {
             KeyEncryptionKey = keyEncryptionKey;
             EnableRotationToLatestKeyVersion = enableRotationToLatestKeyVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the location of the key encryption key in key vault. </summary>

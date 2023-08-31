@@ -6,15 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LogSpecification
+    public partial class LogSpecification : IUtf8JsonSerializable, IModelJsonSerializable<LogSpecification>
     {
-        internal static LogSpecification DeserializeLogSpecification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogSpecification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogSpecification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(BlobDuration))
+            {
+                writer.WritePropertyName("blobDuration"u8);
+                writer.WriteStringValue(BlobDuration.Value, "P");
+            }
+            if (Optional.IsDefined(LogFilterPattern))
+            {
+                writer.WritePropertyName("logFilterPattern"u8);
+                writer.WriteStringValue(LogFilterPattern);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogSpecification DeserializeLogSpecification(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayName = default;
             Optional<TimeSpan> blobDuration = default;
             Optional<string> logFilterPattern = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,8 +97,61 @@ namespace Azure.ResourceManager.AppService.Models
                     logFilterPattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value);
+            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value, rawData);
+        }
+
+        LogSpecification IModelJsonSerializable<LogSpecification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogSpecification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogSpecification>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogSpecification IModelSerializable<LogSpecification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogSpecification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogSpecification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogSpecification"/> to convert. </param>
+        public static implicit operator RequestContent(LogSpecification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogSpecification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogSpecification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogSpecification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

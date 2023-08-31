@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class BlobNfsTarget : IUtf8JsonSerializable
+    public partial class BlobNfsTarget : IUtf8JsonSerializable, IModelJsonSerializable<BlobNfsTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobNfsTarget>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobNfsTarget>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Target))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("writeBackTimer"u8);
                 writer.WriteNumberValue(WriteBackDelayInSeconds.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobNfsTarget DeserializeBlobNfsTarget(JsonElement element)
+        internal static BlobNfsTarget DeserializeBlobNfsTarget(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<string> usageModel = default;
             Optional<int> verificationTimer = default;
             Optional<int> writeBackTimer = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("target"u8))
@@ -82,8 +105,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     writeBackTimer = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BlobNfsTarget(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer));
+            return new BlobNfsTarget(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer), rawData);
+        }
+
+        BlobNfsTarget IModelJsonSerializable<BlobNfsTarget>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobNfsTarget(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobNfsTarget>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobNfsTarget IModelSerializable<BlobNfsTarget>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobNfsTarget(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobNfsTarget"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobNfsTarget"/> to convert. </param>
+        public static implicit operator RequestContent(BlobNfsTarget model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobNfsTarget"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobNfsTarget(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobNfsTarget(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

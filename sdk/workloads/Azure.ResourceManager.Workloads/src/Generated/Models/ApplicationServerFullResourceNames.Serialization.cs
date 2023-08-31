@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ApplicationServerFullResourceNames : IUtf8JsonSerializable
+    public partial class ApplicationServerFullResourceNames : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationServerFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationServerFullResourceNames>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationServerFullResourceNames>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VirtualMachines))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualMachineResourceNames>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,17 +45,32 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationServerFullResourceNames DeserializeApplicationServerFullResourceNames(JsonElement element)
+        internal static ApplicationServerFullResourceNames DeserializeApplicationServerFullResourceNames(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
             Optional<string> availabilitySetName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachines"u8))
@@ -63,8 +92,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     availabilitySetName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationServerFullResourceNames(Optional.ToList(virtualMachines), availabilitySetName.Value);
+            return new ApplicationServerFullResourceNames(Optional.ToList(virtualMachines), availabilitySetName.Value, rawData);
+        }
+
+        ApplicationServerFullResourceNames IModelJsonSerializable<ApplicationServerFullResourceNames>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationServerFullResourceNames(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationServerFullResourceNames>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationServerFullResourceNames IModelSerializable<ApplicationServerFullResourceNames>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationServerFullResourceNames(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationServerFullResourceNames"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationServerFullResourceNames"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationServerFullResourceNames model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationServerFullResourceNames"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationServerFullResourceNames(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationServerFullResourceNames(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

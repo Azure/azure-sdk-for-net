@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueAnalyticsLogging : IXmlSerializable
+    public partial class QueueAnalyticsLogging : IXmlSerializable, IModelSerializable<QueueAnalyticsLogging>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");
@@ -32,8 +36,11 @@ namespace Azure.Storage.Queues.Models
             writer.WriteEndElement();
         }
 
-        internal static QueueAnalyticsLogging DeserializeQueueAnalyticsLogging(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static QueueAnalyticsLogging DeserializeQueueAnalyticsLogging(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string version = default;
             bool delete = default;
             bool read = default;
@@ -59,7 +66,57 @@ namespace Azure.Storage.Queues.Models
             {
                 retentionPolicy = QueueRetentionPolicy.DeserializeQueueRetentionPolicy(retentionPolicyElement);
             }
-            return new QueueAnalyticsLogging(version, delete, read, write, retentionPolicy);
+            return new QueueAnalyticsLogging(version, delete, read, write, retentionPolicy, default);
+        }
+
+        BinaryData IModelSerializable<QueueAnalyticsLogging>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        QueueAnalyticsLogging IModelSerializable<QueueAnalyticsLogging>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeQueueAnalyticsLogging(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="QueueAnalyticsLogging"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueueAnalyticsLogging"/> to convert. </param>
+        public static implicit operator RequestContent(QueueAnalyticsLogging model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueueAnalyticsLogging"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueueAnalyticsLogging(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeQueueAnalyticsLogging(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

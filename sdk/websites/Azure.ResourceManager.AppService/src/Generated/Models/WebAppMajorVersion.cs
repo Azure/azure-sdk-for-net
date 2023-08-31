@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Web App stack major version. </summary>
     public partial class WebAppMajorVersion
     {
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         internal WebAppMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<WebAppMinorVersion>();
         }
 
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Web App stack major version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
-        internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions, Dictionary<string, BinaryData> rawData)
         {
             DisplayText = displayText;
             Value = value;
             MinorVersions = minorVersions;
+            _rawData = rawData;
         }
 
         /// <summary> Web App stack major version (display only). </summary>

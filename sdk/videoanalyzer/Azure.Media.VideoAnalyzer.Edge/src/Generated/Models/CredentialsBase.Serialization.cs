@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class CredentialsBase : IUtf8JsonSerializable
+    public partial class CredentialsBase : IUtf8JsonSerializable, IModelJsonSerializable<CredentialsBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CredentialsBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CredentialsBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CredentialsBase DeserializeCredentialsBase(JsonElement element)
+        internal static CredentialsBase DeserializeCredentialsBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,7 +57,72 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.UsernamePasswordCredentials": return UsernamePasswordCredentials.DeserializeUsernamePasswordCredentials(element);
                 }
             }
-            return UnknownCredentialsBase.DeserializeUnknownCredentialsBase(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            string type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownCredentialsBase(type, rawData);
+        }
+
+        CredentialsBase IModelJsonSerializable<CredentialsBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCredentialsBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CredentialsBase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CredentialsBase IModelSerializable<CredentialsBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCredentialsBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CredentialsBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CredentialsBase"/> to convert. </param>
+        public static implicit operator RequestContent(CredentialsBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CredentialsBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CredentialsBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCredentialsBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MongoDbAtlasSourceConverter))]
-    public partial class MongoDbAtlasSource : IUtf8JsonSerializable
+    public partial class MongoDbAtlasSource : IUtf8JsonSerializable, IModelJsonSerializable<MongoDbAtlasSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDbAtlasSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDbAtlasSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MongoDbAtlasSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Filter))
             {
@@ -27,7 +33,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue(CursorMethods);
+                if (CursorMethods is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDbCursorMethodsProperties>)CursorMethods).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -69,8 +82,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static MongoDbAtlasSource DeserializeMongoDbAtlasSource(JsonElement element)
+        internal static MongoDbAtlasSource DeserializeMongoDbAtlasSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,6 +184,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbAtlasSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, filter.Value, cursorMethods.Value, batchSize.Value, queryTimeout.Value, additionalColumns.Value);
+        }
+
+        MongoDbAtlasSource IModelJsonSerializable<MongoDbAtlasSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDbAtlasSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDbAtlasSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDbAtlasSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDbAtlasSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDbAtlasSource IModelSerializable<MongoDbAtlasSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDbAtlasSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDbAtlasSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDbAtlasSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDbAtlasSource"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDbAtlasSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDbAtlasSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDbAtlasSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDbAtlasSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class MongoDbAtlasSourceConverter : JsonConverter<MongoDbAtlasSource>

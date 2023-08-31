@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A list of streaming jobs. Populated by a List operation. </summary>
     internal partial class StreamAnalyticsClusterJobListResult
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterJobListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterJobListResult"/>. </summary>
         internal StreamAnalyticsClusterJobListResult()
         {
             Value = new ChangeTrackingList<StreamAnalyticsClusterJob>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterJobListResult"/>. </summary>
         /// <param name="value"> A list of streaming jobs. </param>
         /// <param name="nextLink"> The URL to fetch the next set of streaming jobs. </param>
-        internal StreamAnalyticsClusterJobListResult(IReadOnlyList<StreamAnalyticsClusterJob> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsClusterJobListResult(IReadOnlyList<StreamAnalyticsClusterJob> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of streaming jobs. </summary>

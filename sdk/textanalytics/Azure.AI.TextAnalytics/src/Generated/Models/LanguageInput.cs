@@ -5,18 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The LanguageInput. </summary>
     internal partial class LanguageInput
     {
-        /// <summary> Initializes a new instance of LanguageInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LanguageInput"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="text"></param>
         public LanguageInput(string id, string text)
         {
             Id = id;
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageInput"/>. </summary>
+        /// <param name="id"> Unique, non-empty document identifier. </param>
+        /// <param name="text"></param>
+        /// <param name="countryHint"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LanguageInput(string id, string text, string countryHint, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            Text = text;
+            CountryHint = countryHint;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageInput"/> for deserialization. </summary>
+        internal LanguageInput()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

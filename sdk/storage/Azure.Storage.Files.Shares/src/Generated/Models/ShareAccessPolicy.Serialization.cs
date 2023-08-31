@@ -6,15 +6,18 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareAccessPolicy : IXmlSerializable
+    public partial class ShareAccessPolicy : IXmlSerializable, IModelSerializable<ShareAccessPolicy>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
             if (Optional.IsDefined(PolicyStartsOn))
@@ -38,8 +41,11 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             DateTimeOffset? policyStartsOn = default;
             DateTimeOffset? policyExpiresOn = default;
             string permissions = default;
@@ -55,7 +61,57 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 permissions = (string)permissionElement;
             }
-            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
+            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions, default);
+        }
+
+        BinaryData IModelSerializable<ShareAccessPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareAccessPolicy IModelSerializable<ShareAccessPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeShareAccessPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ShareAccessPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ShareAccessPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ShareAccessPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ShareAccessPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ShareAccessPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeShareAccessPolicy(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

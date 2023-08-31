@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzurePostgreSqlSourceConverter))]
-    public partial class AzurePostgreSqlSource : IUtf8JsonSerializable
+    public partial class AzurePostgreSqlSource : IUtf8JsonSerializable, IModelJsonSerializable<AzurePostgreSqlSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzurePostgreSqlSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzurePostgreSqlSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AzurePostgreSqlSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -59,8 +65,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzurePostgreSqlSource DeserializeAzurePostgreSqlSource(JsonElement element)
+        internal static AzurePostgreSqlSource DeserializeAzurePostgreSqlSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +147,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzurePostgreSqlSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+        }
+
+        AzurePostgreSqlSource IModelJsonSerializable<AzurePostgreSqlSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzurePostgreSqlSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzurePostgreSqlSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzurePostgreSqlSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzurePostgreSqlSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzurePostgreSqlSource IModelSerializable<AzurePostgreSqlSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AzurePostgreSqlSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzurePostgreSqlSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzurePostgreSqlSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzurePostgreSqlSource"/> to convert. </param>
+        public static implicit operator RequestContent(AzurePostgreSqlSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzurePostgreSqlSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzurePostgreSqlSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzurePostgreSqlSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AzurePostgreSqlSourceConverter : JsonConverter<AzurePostgreSqlSource>

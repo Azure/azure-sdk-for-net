@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class DeletedSiteData : IUtf8JsonSerializable
+    public partial class DeletedSiteData : IUtf8JsonSerializable, IModelJsonSerializable<DeletedSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeletedSiteData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeletedSiteData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.AppService
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element)
+        internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +68,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> slot = default;
             Optional<string> kind0 = default;
             Optional<string> geoRegionName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -133,8 +156,61 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value);
+            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value, rawData);
+        }
+
+        DeletedSiteData IModelJsonSerializable<DeletedSiteData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedSiteData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeletedSiteData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeletedSiteData IModelSerializable<DeletedSiteData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeletedSiteData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeletedSiteData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeletedSiteData"/> to convert. </param>
+        public static implicit operator RequestContent(DeletedSiteData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeletedSiteData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeletedSiteData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeletedSiteData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OpenIdConnectConfig : IUtf8JsonSerializable
+    public partial class OpenIdConnectConfig : IUtf8JsonSerializable, IModelJsonSerializable<OpenIdConnectConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OpenIdConnectConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OpenIdConnectConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationEndpoint))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OpenIdConnectConfig DeserializeOpenIdConnectConfig(JsonElement element)
+        internal static OpenIdConnectConfig DeserializeOpenIdConnectConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> issuer = default;
             Optional<Uri> certificationUri = default;
             Optional<string> wellKnownOpenIdConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationEndpoint"u8))
@@ -86,8 +108,61 @@ namespace Azure.ResourceManager.AppService.Models
                     wellKnownOpenIdConfiguration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value);
+            return new OpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value, rawData);
+        }
+
+        OpenIdConnectConfig IModelJsonSerializable<OpenIdConnectConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOpenIdConnectConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OpenIdConnectConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OpenIdConnectConfig IModelSerializable<OpenIdConnectConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOpenIdConnectConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OpenIdConnectConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OpenIdConnectConfig"/> to convert. </param>
+        public static implicit operator RequestContent(OpenIdConnectConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OpenIdConnectConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OpenIdConnectConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOpenIdConnectConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The plan object in Azure Resource Manager, represents a marketplace plan. </summary>
     public partial class AppServiceArmPlan
     {
-        /// <summary> Initializes a new instance of AppServiceArmPlan. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceArmPlan"/>. </summary>
         internal AppServiceArmPlan()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceArmPlan"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="product"> The product. </param>
         /// <param name="promotionCode"> The promotion code. </param>
         /// <param name="version"> Version of product. </param>
-        internal AppServiceArmPlan(string name, string publisher, string product, string promotionCode, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceArmPlan(string name, string publisher, string product, string promotionCode, string version, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Publisher = publisher;
             Product = product;
             PromotionCode = promotionCode;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> The name. </summary>

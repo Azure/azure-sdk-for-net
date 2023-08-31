@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookKernelSpecConverter))]
-    public partial class NotebookKernelSpec : IUtf8JsonSerializable
+    public partial class NotebookKernelSpec : IUtf8JsonSerializable, IModelJsonSerializable<NotebookKernelSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotebookKernelSpec>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotebookKernelSpec>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -31,8 +37,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static NotebookKernelSpec DeserializeNotebookKernelSpec(JsonElement element)
+        internal static NotebookKernelSpec DeserializeNotebookKernelSpec(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +65,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookKernelSpec(name, displayName, additionalProperties);
+        }
+
+        NotebookKernelSpec IModelJsonSerializable<NotebookKernelSpec>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotebookKernelSpec(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotebookKernelSpec>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotebookKernelSpec IModelSerializable<NotebookKernelSpec>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotebookKernelSpec(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NotebookKernelSpec"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NotebookKernelSpec"/> to convert. </param>
+        public static implicit operator RequestContent(NotebookKernelSpec model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NotebookKernelSpec"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NotebookKernelSpec(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotebookKernelSpec(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class NotebookKernelSpecConverter : JsonConverter<NotebookKernelSpec>

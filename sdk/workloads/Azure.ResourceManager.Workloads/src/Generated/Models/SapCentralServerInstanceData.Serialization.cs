@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapCentralServerInstanceData : IUtf8JsonSerializable
+    public partial class SapCentralServerInstanceData : IUtf8JsonSerializable, IModelJsonSerializable<SapCentralServerInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapCentralServerInstanceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapCentralServerInstanceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -37,29 +44,71 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
-                writer.WriteObjectValue(MessageServerProperties);
+                if (MessageServerProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MessageServerProperties>)MessageServerProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EnqueueServerProperties))
             {
                 writer.WritePropertyName("enqueueServerProperties"u8);
-                writer.WriteObjectValue(EnqueueServerProperties);
+                if (EnqueueServerProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EnqueueServerProperties>)EnqueueServerProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(GatewayServerProperties))
             {
                 writer.WritePropertyName("gatewayServerProperties"u8);
-                writer.WriteObjectValue(GatewayServerProperties);
+                if (GatewayServerProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GatewayServerProperties>)GatewayServerProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EnqueueReplicationServerProperties))
             {
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
-                writer.WriteObjectValue(EnqueueReplicationServerProperties);
+                if (EnqueueReplicationServerProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EnqueueReplicationServerProperties>)EnqueueReplicationServerProperties).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapCentralServerInstanceData DeserializeSapCentralServerInstanceData(JsonElement element)
+        internal static SapCentralServerInstanceData DeserializeSapCentralServerInstanceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +133,7 @@ namespace Azure.ResourceManager.Workloads
             Optional<SapHealthState> health = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
             Optional<SapVirtualInstanceError> errors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -270,8 +320,61 @@ namespace Azure.ResourceManager.Workloads
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapCentralServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, messageServerProperties.Value, enqueueServerProperties.Value, gatewayServerProperties.Value, enqueueReplicationServerProperties.Value, kernelVersion.Value, kernelPatch.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value, rawData);
+        }
+
+        SapCentralServerInstanceData IModelJsonSerializable<SapCentralServerInstanceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapCentralServerInstanceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapCentralServerInstanceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapCentralServerInstanceData IModelSerializable<SapCentralServerInstanceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapCentralServerInstanceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapCentralServerInstanceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapCentralServerInstanceData"/> to convert. </param>
+        public static implicit operator RequestContent(SapCentralServerInstanceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapCentralServerInstanceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapCentralServerInstanceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapCentralServerInstanceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

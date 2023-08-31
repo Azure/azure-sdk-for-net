@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints. </summary>
     internal partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult"/>. </summary>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult()
         {
             Value = new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult"/>. </summary>
         /// <param name="value"> The list of outbound network dependency endpoints. </param>
-        internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of outbound network dependency endpoints. </summary>

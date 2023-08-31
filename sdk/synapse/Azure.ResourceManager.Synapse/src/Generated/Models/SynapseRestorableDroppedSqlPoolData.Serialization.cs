@@ -6,25 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseRestorableDroppedSqlPoolData : IUtf8JsonSerializable
+    public partial class SynapseRestorableDroppedSqlPoolData : IUtf8JsonSerializable, IModelJsonSerializable<SynapseRestorableDroppedSqlPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseRestorableDroppedSqlPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseRestorableDroppedSqlPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseRestorableDroppedSqlPoolData DeserializeSynapseRestorableDroppedSqlPoolData(JsonElement element)
+        internal static SynapseRestorableDroppedSqlPoolData DeserializeSynapseRestorableDroppedSqlPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<DateTimeOffset> creationDate = default;
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -141,8 +163,61 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseRestorableDroppedSqlPoolData(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate));
+            return new SynapseRestorableDroppedSqlPoolData(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), rawData);
+        }
+
+        SynapseRestorableDroppedSqlPoolData IModelJsonSerializable<SynapseRestorableDroppedSqlPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseRestorableDroppedSqlPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseRestorableDroppedSqlPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseRestorableDroppedSqlPoolData IModelSerializable<SynapseRestorableDroppedSqlPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseRestorableDroppedSqlPoolData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseRestorableDroppedSqlPoolData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseRestorableDroppedSqlPoolData"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseRestorableDroppedSqlPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseRestorableDroppedSqlPoolData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseRestorableDroppedSqlPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseRestorableDroppedSqlPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

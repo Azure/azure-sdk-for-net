@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The binding to an Azure Machine Learning web service. </summary>
     public partial class MachineLearningServiceFunctionBinding : StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of MachineLearningServiceFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceFunctionBinding"/>. </summary>
         public MachineLearningServiceFunctionBinding()
         {
             Inputs = new ChangeTrackingList<MachineLearningServiceInputColumn>();
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             FunctionBindingType = "Microsoft.MachineLearningServices";
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServiceFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
         /// <param name="endpoint"> The Request-Response execute endpoint of the Azure Machine Learning web service. </param>
         /// <param name="apiKey"> The API key used to authenticate with Request-Response endpoint. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="numberOfParallelRequests"> The number of parallel requests that will be sent per partition of your job to the machine learning service. Default is 1. </param>
         /// <param name="inputRequestName"> Label for the input request object. </param>
         /// <param name="outputResponseName"> Label for the output request object. </param>
-        internal MachineLearningServiceFunctionBinding(string functionBindingType, string endpoint, string apiKey, IList<MachineLearningServiceInputColumn> inputs, IList<MachineLearningServiceOutputColumn> outputs, int? batchSize, int? numberOfParallelRequests, string inputRequestName, string outputResponseName) : base(functionBindingType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServiceFunctionBinding(string functionBindingType, string endpoint, string apiKey, IList<MachineLearningServiceInputColumn> inputs, IList<MachineLearningServiceOutputColumn> outputs, int? batchSize, int? numberOfParallelRequests, string inputRequestName, string outputResponseName, Dictionary<string, BinaryData> rawData) : base(functionBindingType, rawData)
         {
             Endpoint = endpoint;
             ApiKey = apiKey;

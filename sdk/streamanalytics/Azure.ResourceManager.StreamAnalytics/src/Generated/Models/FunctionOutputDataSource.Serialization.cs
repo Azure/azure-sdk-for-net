@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class FunctionOutputDataSource : IUtf8JsonSerializable
+    public partial class FunctionOutputDataSource : IUtf8JsonSerializable, IModelJsonSerializable<FunctionOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FunctionOutputDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FunctionOutputDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FunctionOutputDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteNumberValue(MaxBatchCount.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FunctionOutputDataSource DeserializeFunctionOutputDataSource(JsonElement element)
+        internal static FunctionOutputDataSource DeserializeFunctionOutputDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> apiKey = default;
             Optional<int> maxBatchSize = default;
             Optional<int> maxBatchCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -112,8 +135,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FunctionOutputDataSource(type, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
+            return new FunctionOutputDataSource(type, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount), rawData);
+        }
+
+        FunctionOutputDataSource IModelJsonSerializable<FunctionOutputDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FunctionOutputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionOutputDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FunctionOutputDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FunctionOutputDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FunctionOutputDataSource IModelSerializable<FunctionOutputDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FunctionOutputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFunctionOutputDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FunctionOutputDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FunctionOutputDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(FunctionOutputDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FunctionOutputDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FunctionOutputDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFunctionOutputDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

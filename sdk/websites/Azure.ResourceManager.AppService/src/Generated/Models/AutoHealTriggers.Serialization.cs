@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealTriggers : IUtf8JsonSerializable
+    public partial class AutoHealTriggers : IUtf8JsonSerializable, IModelJsonSerializable<AutoHealTriggers>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoHealTriggers>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoHealTriggers>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue(Requests);
+                if (Requests is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RequestsBasedTrigger>)Requests).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -32,14 +46,28 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StatusCodesBasedTrigger>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue(SlowRequests);
+                if (SlowRequests is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SlowRequestsBasedTrigger>)SlowRequests).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -47,7 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SlowRequestsBasedTrigger>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,15 +92,36 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StatusCodesRangeBasedTrigger>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element)
+        internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SlowRequestsBasedTrigger> slowRequests = default;
             Optional<IList<SlowRequestsBasedTrigger>> slowRequestsWithPath = default;
             Optional<IList<StatusCodesRangeBasedTrigger>> statusCodesRange = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requests"u8))
@@ -147,8 +204,61 @@ namespace Azure.ResourceManager.AppService.Models
                     statusCodesRange = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), Optional.ToList(statusCodes), slowRequests.Value, Optional.ToList(slowRequestsWithPath), Optional.ToList(statusCodesRange));
+            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), Optional.ToList(statusCodes), slowRequests.Value, Optional.ToList(slowRequestsWithPath), Optional.ToList(statusCodesRange), rawData);
+        }
+
+        AutoHealTriggers IModelJsonSerializable<AutoHealTriggers>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoHealTriggers(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoHealTriggers>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoHealTriggers IModelSerializable<AutoHealTriggers>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoHealTriggers(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutoHealTriggers"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutoHealTriggers"/> to convert. </param>
+        public static implicit operator RequestContent(AutoHealTriggers model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutoHealTriggers"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutoHealTriggers(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutoHealTriggers(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

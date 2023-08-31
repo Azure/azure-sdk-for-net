@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
     public partial class ClientRegistration
     {
-        /// <summary> Initializes a new instance of ClientRegistration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientRegistration"/>. </summary>
         public ClientRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientRegistration"/>. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
-        internal ClientRegistration(string clientId, string clientSecretSettingName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientRegistration(string clientId, string clientSecretSettingName, Dictionary<string, BinaryData> rawData)
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
+            _rawData = rawData;
         }
 
         /// <summary> The Client ID of the app used for login. </summary>

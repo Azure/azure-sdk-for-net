@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobStaticWebsite : IXmlSerializable
+    public partial class BlobStaticWebsite : IXmlSerializable, IModelSerializable<BlobStaticWebsite>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "StaticWebsite");
             writer.WriteStartElement("Enabled");
@@ -40,8 +44,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobStaticWebsite DeserializeBlobStaticWebsite(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             bool enabled = default;
             string indexDocument = default;
             string errorDocument404Path = default;
@@ -62,7 +69,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 defaultIndexDocumentPath = (string)defaultIndexDocumentPathElement;
             }
-            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
+            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath, default);
+        }
+
+        BinaryData IModelSerializable<BlobStaticWebsite>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobStaticWebsite IModelSerializable<BlobStaticWebsite>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeBlobStaticWebsite(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobStaticWebsite"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobStaticWebsite"/> to convert. </param>
+        public static implicit operator RequestContent(BlobStaticWebsite model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobStaticWebsite"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobStaticWebsite(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobStaticWebsite(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

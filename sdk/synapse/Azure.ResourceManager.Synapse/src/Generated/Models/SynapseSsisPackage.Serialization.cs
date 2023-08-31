@@ -5,16 +5,92 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSsisPackage
+    public partial class SynapseSsisPackage : IUtf8JsonSerializable, IModelJsonSerializable<SynapseSsisPackage>
     {
-        internal static SynapseSsisPackage DeserializeSynapseSsisPackage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseSsisPackage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseSsisPackage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisPackage>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FolderId))
+            {
+                writer.WritePropertyName("folderId"u8);
+                writer.WriteNumberValue(FolderId.Value);
+            }
+            if (Optional.IsDefined(ProjectVersion))
+            {
+                writer.WritePropertyName("projectVersion"u8);
+                writer.WriteNumberValue(ProjectVersion.Value);
+            }
+            if (Optional.IsDefined(ProjectId))
+            {
+                writer.WritePropertyName("projectId"u8);
+                writer.WriteNumberValue(ProjectId.Value);
+            }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in Parameters)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SynapseSsisParameter>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(MetadataType.ToString());
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SynapseSsisPackage DeserializeSynapseSsisPackage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +103,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderId"u8))
@@ -94,8 +171,61 @@ namespace Azure.ResourceManager.Synapse.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SynapseSsisPackage(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToNullable(projectVersion), Optional.ToNullable(projectId), Optional.ToList(parameters));
+            return new SynapseSsisPackage(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToNullable(projectVersion), Optional.ToNullable(projectId), Optional.ToList(parameters), rawData);
+        }
+
+        SynapseSsisPackage IModelJsonSerializable<SynapseSsisPackage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisPackage>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSsisPackage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseSsisPackage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisPackage>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseSsisPackage IModelSerializable<SynapseSsisPackage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SynapseSsisPackage>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseSsisPackage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseSsisPackage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseSsisPackage"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseSsisPackage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseSsisPackage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseSsisPackage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseSsisPackage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

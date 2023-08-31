@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SupportedConfigurationsDiskDetails
+    public partial class SupportedConfigurationsDiskDetails : IUtf8JsonSerializable, IModelJsonSerializable<SupportedConfigurationsDiskDetails>
     {
-        internal static SupportedConfigurationsDiskDetails DeserializeSupportedConfigurationsDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SupportedConfigurationsDiskDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SupportedConfigurationsDiskDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SapDiskSku>)Sku).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SizeInGB))
+            {
+                writer.WritePropertyName("sizeGB"u8);
+                writer.WriteNumberValue(SizeInGB.Value);
+            }
+            if (Optional.IsDefined(MinimumSupportedDiskCount))
+            {
+                writer.WritePropertyName("minimumSupportedDiskCount"u8);
+                writer.WriteNumberValue(MinimumSupportedDiskCount.Value);
+            }
+            if (Optional.IsDefined(MaximumSupportedDiskCount))
+            {
+                writer.WritePropertyName("maximumSupportedDiskCount"u8);
+                writer.WriteNumberValue(MaximumSupportedDiskCount.Value);
+            }
+            if (Optional.IsDefined(IopsReadWrite))
+            {
+                writer.WritePropertyName("iopsReadWrite"u8);
+                writer.WriteNumberValue(IopsReadWrite.Value);
+            }
+            if (Optional.IsDefined(MbpsReadWrite))
+            {
+                writer.WritePropertyName("mbpsReadWrite"u8);
+                writer.WriteNumberValue(MbpsReadWrite.Value);
+            }
+            if (Optional.IsDefined(DiskTier))
+            {
+                writer.WritePropertyName("diskTier"u8);
+                writer.WriteStringValue(DiskTier);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SupportedConfigurationsDiskDetails DeserializeSupportedConfigurationsDiskDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<long> iopsReadWrite = default;
             Optional<long> mbpsReadWrite = default;
             Optional<string> diskTier = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -86,8 +157,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     diskTier = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SupportedConfigurationsDiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value);
+            return new SupportedConfigurationsDiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value, rawData);
+        }
+
+        SupportedConfigurationsDiskDetails IModelJsonSerializable<SupportedConfigurationsDiskDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSupportedConfigurationsDiskDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SupportedConfigurationsDiskDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SupportedConfigurationsDiskDetails IModelSerializable<SupportedConfigurationsDiskDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSupportedConfigurationsDiskDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SupportedConfigurationsDiskDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SupportedConfigurationsDiskDetails"/> to convert. </param>
+        public static implicit operator RequestContent(SupportedConfigurationsDiskDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SupportedConfigurationsDiskDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SupportedConfigurationsDiskDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSupportedConfigurationsDiskDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

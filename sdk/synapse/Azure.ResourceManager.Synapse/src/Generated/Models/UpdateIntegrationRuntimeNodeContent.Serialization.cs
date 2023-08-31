@@ -5,22 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class UpdateIntegrationRuntimeNodeContent : IUtf8JsonSerializable
+    public partial class UpdateIntegrationRuntimeNodeContent : IUtf8JsonSerializable, IModelJsonSerializable<UpdateIntegrationRuntimeNodeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateIntegrationRuntimeNodeContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateIntegrationRuntimeNodeContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static UpdateIntegrationRuntimeNodeContent DeserializeUpdateIntegrationRuntimeNodeContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> concurrentJobsLimit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("concurrentJobsLimit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    concurrentJobsLimit = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UpdateIntegrationRuntimeNodeContent(Optional.ToNullable(concurrentJobsLimit), rawData);
+        }
+
+        UpdateIntegrationRuntimeNodeContent IModelJsonSerializable<UpdateIntegrationRuntimeNodeContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateIntegrationRuntimeNodeContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateIntegrationRuntimeNodeContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateIntegrationRuntimeNodeContent IModelSerializable<UpdateIntegrationRuntimeNodeContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateIntegrationRuntimeNodeContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UpdateIntegrationRuntimeNodeContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UpdateIntegrationRuntimeNodeContent"/> to convert. </param>
+        public static implicit operator RequestContent(UpdateIntegrationRuntimeNodeContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateIntegrationRuntimeNodeContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UpdateIntegrationRuntimeNodeContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateIntegrationRuntimeNodeContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

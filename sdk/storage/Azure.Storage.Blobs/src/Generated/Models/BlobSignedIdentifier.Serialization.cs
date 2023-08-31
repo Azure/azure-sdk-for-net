@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobSignedIdentifier : IXmlSerializable
+    public partial class BlobSignedIdentifier : IXmlSerializable, IModelSerializable<BlobSignedIdentifier>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "SignedIdentifier");
             writer.WriteStartElement("Id");
@@ -23,8 +27,11 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteEndElement();
         }
 
-        internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static BlobSignedIdentifier DeserializeBlobSignedIdentifier(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string id = default;
             BlobAccessPolicy accessPolicy = default;
             if (element.Element("Id") is XElement idElement)
@@ -35,7 +42,57 @@ namespace Azure.Storage.Blobs.Models
             {
                 accessPolicy = BlobAccessPolicy.DeserializeBlobAccessPolicy(accessPolicyElement);
             }
-            return new BlobSignedIdentifier(id, accessPolicy);
+            return new BlobSignedIdentifier(id, accessPolicy, default);
+        }
+
+        BinaryData IModelSerializable<BlobSignedIdentifier>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        BlobSignedIdentifier IModelSerializable<BlobSignedIdentifier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeBlobSignedIdentifier(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="BlobSignedIdentifier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobSignedIdentifier"/> to convert. </param>
+        public static implicit operator RequestContent(BlobSignedIdentifier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobSignedIdentifier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobSignedIdentifier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeBlobSignedIdentifier(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The LanguageBatchInput. </summary>
     internal partial class LanguageBatchInput
     {
-        /// <summary> Initializes a new instance of LanguageBatchInput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LanguageBatchInput"/>. </summary>
         /// <param name="documents"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
         public LanguageBatchInput(IEnumerable<LanguageInput> documents)
@@ -23,6 +25,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(documents, nameof(documents));
 
             Documents = documents.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageBatchInput"/>. </summary>
+        /// <param name="documents"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LanguageBatchInput(IList<LanguageInput> documents, Dictionary<string, BinaryData> rawData)
+        {
+            Documents = documents;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageBatchInput"/> for deserialization. </summary>
+        internal LanguageBatchInput()
+        {
         }
 
         /// <summary> Gets the documents. </summary>

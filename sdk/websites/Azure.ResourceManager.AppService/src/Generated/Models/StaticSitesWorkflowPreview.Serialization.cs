@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSitesWorkflowPreview : IUtf8JsonSerializable
+    public partial class StaticSitesWorkflowPreview : IUtf8JsonSerializable, IModelJsonSerializable<StaticSitesWorkflowPreview>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StaticSitesWorkflowPreview>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StaticSitesWorkflowPreview>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StaticSitesWorkflowPreview DeserializeStaticSitesWorkflowPreview(JsonElement element)
+        internal static StaticSitesWorkflowPreview DeserializeStaticSitesWorkflowPreview(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> path = default;
             Optional<string> contents = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -93,8 +116,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StaticSitesWorkflowPreview(id, name, type, systemData.Value, path.Value, contents.Value, kind.Value);
+            return new StaticSitesWorkflowPreview(id, name, type, systemData.Value, path.Value, contents.Value, kind.Value, rawData);
+        }
+
+        StaticSitesWorkflowPreview IModelJsonSerializable<StaticSitesWorkflowPreview>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticSitesWorkflowPreview(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StaticSitesWorkflowPreview>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StaticSitesWorkflowPreview IModelSerializable<StaticSitesWorkflowPreview>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStaticSitesWorkflowPreview(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StaticSitesWorkflowPreview"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StaticSitesWorkflowPreview"/> to convert. </param>
+        public static implicit operator RequestContent(StaticSitesWorkflowPreview model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StaticSitesWorkflowPreview"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StaticSitesWorkflowPreview(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStaticSitesWorkflowPreview(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

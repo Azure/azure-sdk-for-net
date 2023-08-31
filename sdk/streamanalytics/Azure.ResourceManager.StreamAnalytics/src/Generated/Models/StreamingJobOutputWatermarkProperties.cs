@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Settings which determine whether to send watermarks to downstream. </summary>
     public partial class StreamingJobOutputWatermarkProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputWatermarkProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputWatermarkProperties"/>. </summary>
         public StreamingJobOutputWatermarkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputWatermarkProperties"/>. </summary>
         /// <param name="watermarkMode"> The output watermark mode. </param>
         /// <param name="maxWatermarkDifferenceAcrossPartitions"> Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined. </param>
-        internal StreamingJobOutputWatermarkProperties(StreamingJobOutputWatermarkMode? watermarkMode, string maxWatermarkDifferenceAcrossPartitions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobOutputWatermarkProperties(StreamingJobOutputWatermarkMode? watermarkMode, string maxWatermarkDifferenceAcrossPartitions, Dictionary<string, BinaryData> rawData)
         {
             WatermarkMode = watermarkMode;
             MaxWatermarkDifferenceAcrossPartitions = maxWatermarkDifferenceAcrossPartitions;
+            _rawData = rawData;
         }
 
         /// <summary> The output watermark mode. </summary>

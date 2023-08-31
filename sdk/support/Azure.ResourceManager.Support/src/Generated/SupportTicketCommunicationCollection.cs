@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketCommunicationCommunicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Support
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _supportTicketCommunicationCommunicationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, top, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SupportTicketCommunicationResource(Client, SupportTicketCommunicationData.DeserializeSupportTicketCommunicationData(e)), _supportTicketCommunicationCommunicationsClientDiagnostics, Pipeline, "SupportTicketCommunicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

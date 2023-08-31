@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class BlobReferenceInputDataSource : IUtf8JsonSerializable
+    public partial class BlobReferenceInputDataSource : IUtf8JsonSerializable, IModelJsonSerializable<BlobReferenceInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobReferenceInputDataSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobReferenceInputDataSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<BlobReferenceInputDataSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceInputDataSourceType);
@@ -27,7 +33,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StreamAnalyticsStorageAccount>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,11 +95,25 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(DeltaSnapshotRefreshInterval.Value, "T");
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobReferenceInputDataSource DeserializeBlobReferenceInputDataSource(JsonElement element)
+        internal static BlobReferenceInputDataSource DeserializeBlobReferenceInputDataSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,6 +130,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> sourcePartitionCount = default;
             Optional<TimeSpan> fullSnapshotRefreshRate = default;
             Optional<TimeSpan> deltaSnapshotRefreshRate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -202,8 +230,61 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BlobReferenceInputDataSource(type, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate));
+            return new BlobReferenceInputDataSource(type, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate), rawData);
+        }
+
+        BlobReferenceInputDataSource IModelJsonSerializable<BlobReferenceInputDataSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BlobReferenceInputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobReferenceInputDataSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobReferenceInputDataSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BlobReferenceInputDataSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobReferenceInputDataSource IModelSerializable<BlobReferenceInputDataSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BlobReferenceInputDataSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobReferenceInputDataSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobReferenceInputDataSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobReferenceInputDataSource"/> to convert. </param>
+        public static implicit operator RequestContent(BlobReferenceInputDataSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobReferenceInputDataSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobReferenceInputDataSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobReferenceInputDataSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

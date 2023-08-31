@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ServiceSpecification
+    public partial class ServiceSpecification : IUtf8JsonSerializable, IModelJsonSerializable<ServiceSpecification>
     {
-        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceSpecification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceSpecification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(MetricSpecifications))
+            {
+                writer.WritePropertyName("metricSpecifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in MetricSpecifications)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricSpecification>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LogSpecifications))
+            {
+                writer.WritePropertyName("logSpecifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in LogSpecifications)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LogSpecification>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
             Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricSpecifications"u8))
@@ -51,8 +113,61 @@ namespace Azure.ResourceManager.AppService.Models
                     logSpecifications = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications));
+            return new ServiceSpecification(Optional.ToList(metricSpecifications), Optional.ToList(logSpecifications), rawData);
+        }
+
+        ServiceSpecification IModelJsonSerializable<ServiceSpecification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceSpecification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceSpecification>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceSpecification IModelSerializable<ServiceSpecification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceSpecification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceSpecification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceSpecification"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceSpecification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceSpecification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceSpecification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceSpecification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

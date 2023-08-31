@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The type used for update operations of the CommunicationsGateway. </summary>
     public partial class VoiceServicesCommunicationsGatewayPatch
     {
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayPatch"/>. </summary>
         public VoiceServicesCommunicationsGatewayPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VoiceServicesCommunicationsGatewayPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

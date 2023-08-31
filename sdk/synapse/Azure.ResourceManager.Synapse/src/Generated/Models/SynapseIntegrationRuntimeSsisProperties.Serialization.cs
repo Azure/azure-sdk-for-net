@@ -8,19 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable, IModelJsonSerializable<SynapseIntegrationRuntimeSsisProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SynapseIntegrationRuntimeSsisProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SynapseIntegrationRuntimeSsisProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue(CatalogInfo);
+                if (CatalogInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapseIntegrationRuntimeSsisCatalogInfo>)CatalogInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -30,12 +43,26 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue(CustomSetupScriptProperties);
+                if (CustomSetupScriptProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapseIntegrationRuntimeCustomSetupScriptProperties>)CustomSetupScriptProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue(DataProxyProperties);
+                if (DataProxyProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SynapseIntegrationRuntimeDataProxyProperties>)DataProxyProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Edition))
             {
@@ -48,7 +75,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SynapseCustomSetupBase>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,8 +98,10 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element)
+        internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -143,6 +179,54 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
+        }
+
+        SynapseIntegrationRuntimeSsisProperties IModelJsonSerializable<SynapseIntegrationRuntimeSsisProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeSsisProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SynapseIntegrationRuntimeSsisProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SynapseIntegrationRuntimeSsisProperties IModelSerializable<SynapseIntegrationRuntimeSsisProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeSsisProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SynapseIntegrationRuntimeSsisProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SynapseIntegrationRuntimeSsisProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SynapseIntegrationRuntimeSsisProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SynapseIntegrationRuntimeSsisProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SynapseIntegrationRuntimeSsisProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSynapseIntegrationRuntimeSsisProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

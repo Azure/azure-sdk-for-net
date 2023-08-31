@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class LivePipelineDeleteRequest : IUtf8JsonSerializable
+    public partial class LivePipelineDeleteRequest : IUtf8JsonSerializable, IModelJsonSerializable<LivePipelineDeleteRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LivePipelineDeleteRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LivePipelineDeleteRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<LivePipelineDeleteRequest>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -22,11 +30,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LivePipelineDeleteRequest DeserializeLivePipelineDeleteRequest(JsonElement element)
+        internal static LivePipelineDeleteRequest DeserializeLivePipelineDeleteRequest(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +56,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string name = default;
             string methodName = default;
             Optional<string> apiVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -51,8 +74,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LivePipelineDeleteRequest(methodName, apiVersion.Value, name);
+            return new LivePipelineDeleteRequest(methodName, apiVersion.Value, name, rawData);
+        }
+
+        LivePipelineDeleteRequest IModelJsonSerializable<LivePipelineDeleteRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LivePipelineDeleteRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLivePipelineDeleteRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LivePipelineDeleteRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LivePipelineDeleteRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LivePipelineDeleteRequest IModelSerializable<LivePipelineDeleteRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LivePipelineDeleteRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLivePipelineDeleteRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LivePipelineDeleteRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LivePipelineDeleteRequest"/> to convert. </param>
+        public static implicit operator RequestContent(LivePipelineDeleteRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LivePipelineDeleteRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LivePipelineDeleteRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLivePipelineDeleteRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

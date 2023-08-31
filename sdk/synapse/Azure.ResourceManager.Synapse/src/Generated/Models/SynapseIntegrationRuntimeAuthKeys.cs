@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The integration runtime authentication keys. </summary>
     public partial class SynapseIntegrationRuntimeAuthKeys
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeAuthKeys"/>. </summary>
         internal SynapseIntegrationRuntimeAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeAuthKeys"/>. </summary>
         /// <param name="authKey1"> The primary integration runtime authentication key. </param>
         /// <param name="authKey2"> The secondary integration runtime authentication key. </param>
-        internal SynapseIntegrationRuntimeAuthKeys(string authKey1, string authKey2)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIntegrationRuntimeAuthKeys(string authKey1, string authKey2, Dictionary<string, BinaryData> rawData)
         {
             AuthKey1 = authKey1;
             AuthKey2 = authKey2;
+            _rawData = rawData;
         }
 
         /// <summary> The primary integration runtime authentication key. </summary>

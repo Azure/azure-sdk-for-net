@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> The retention policy. </summary>
     public partial class ShareRetentionPolicy
     {
-        /// <summary> Initializes a new instance of ShareRetentionPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareRetentionPolicy"/>. </summary>
         /// <param name="enabled"> Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it. </param>
         /// <param name="days"> Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires. </param>
-        internal ShareRetentionPolicy(bool enabled, int? days)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareRetentionPolicy(bool enabled, int? days, Dictionary<string, BinaryData> rawData)
         {
             Enabled = enabled;
             Days = days;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Error details for when validation fails. </summary>
     public partial class ValidateResponseError
     {
-        /// <summary> Initializes a new instance of ValidateResponseError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateResponseError"/>. </summary>
         internal ValidateResponseError()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateResponseError"/>. </summary>
         /// <param name="code"> Validation error code. </param>
         /// <param name="message"> Validation error message. </param>
-        internal ValidateResponseError(string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateResponseError(string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Validation error code. </summary>

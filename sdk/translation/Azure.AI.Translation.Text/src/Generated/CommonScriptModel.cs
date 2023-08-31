@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,6 +14,8 @@ namespace Azure.AI.Translation.Text
     /// <summary> Common properties of language script. </summary>
     public partial class CommonScriptModel
     {
+        protected internal Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of CommonScriptModel. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
@@ -30,6 +33,26 @@ namespace Azure.AI.Translation.Text
             Name = name;
             NativeName = nativeName;
             Dir = dir;
+        }
+
+        /// <summary> Initializes a new instance of CommonScriptModel. </summary>
+        /// <param name="code"> Code identifying the script. </param>
+        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
+        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommonScriptModel(string code, string name, string nativeName, string dir, Dictionary<string, BinaryData> rawData)
+        {
+            Code = code;
+            Name = name;
+            NativeName = nativeName;
+            Dir = dir;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/> for deserialization. </summary>
+        internal CommonScriptModel()
+        {
         }
 
         /// <summary> Code identifying the script. </summary>

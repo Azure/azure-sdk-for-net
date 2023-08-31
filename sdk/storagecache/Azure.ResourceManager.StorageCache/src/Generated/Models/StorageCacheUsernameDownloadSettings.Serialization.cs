@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsernameDownloadSettings : IUtf8JsonSerializable
+    public partial class StorageCacheUsernameDownloadSettings : IUtf8JsonSerializable, IModelJsonSerializable<StorageCacheUsernameDownloadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageCacheUsernameDownloadSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageCacheUsernameDownloadSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableExtendedGroups))
             {
@@ -69,13 +76,34 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                if (Credentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageCacheUsernameDownloadCredential>)Credentials).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StorageCacheUsernameDownloadSettings DeserializeStorageCacheUsernameDownloadSettings(JsonElement element)
+        internal static StorageCacheUsernameDownloadSettings DeserializeStorageCacheUsernameDownloadSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +120,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<Uri> caCertificateUri = default;
             Optional<StorageCacheUsernameDownloadedType> usernameDownloaded = default;
             Optional<StorageCacheUsernameDownloadCredential> credentials = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedGroups"u8))
@@ -194,8 +223,61 @@ namespace Azure.ResourceManager.StorageCache.Models
                     credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageCacheUsernameDownloadSettings(Optional.ToNullable(extendedGroups), Optional.ToNullable(usernameSource), groupFileUri.Value, userFileUri.Value, ldapServer.Value, ldapBaseDN.Value, Optional.ToNullable(encryptLdapConnection), Optional.ToNullable(requireValidCertificate), Optional.ToNullable(autoDownloadCertificate), caCertificateUri.Value, Optional.ToNullable(usernameDownloaded), credentials.Value);
+            return new StorageCacheUsernameDownloadSettings(Optional.ToNullable(extendedGroups), Optional.ToNullable(usernameSource), groupFileUri.Value, userFileUri.Value, ldapServer.Value, ldapBaseDN.Value, Optional.ToNullable(encryptLdapConnection), Optional.ToNullable(requireValidCertificate), Optional.ToNullable(autoDownloadCertificate), caCertificateUri.Value, Optional.ToNullable(usernameDownloaded), credentials.Value, rawData);
+        }
+
+        StorageCacheUsernameDownloadSettings IModelJsonSerializable<StorageCacheUsernameDownloadSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheUsernameDownloadSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageCacheUsernameDownloadSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageCacheUsernameDownloadSettings IModelSerializable<StorageCacheUsernameDownloadSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageCacheUsernameDownloadSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageCacheUsernameDownloadSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageCacheUsernameDownloadSettings"/> to convert. </param>
+        public static implicit operator RequestContent(StorageCacheUsernameDownloadSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageCacheUsernameDownloadSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageCacheUsernameDownloadSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageCacheUsernameDownloadSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Azure.AI.Translation.Text
     /// <summary> Item containing break sentence result. </summary>
     public partial class BreakSentenceItem
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
         /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
@@ -34,10 +36,17 @@ namespace Azure.AI.Translation.Text
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen, Dictionary<string, BinaryData> rawData)
         {
             DetectedLanguage = detectedLanguage;
             SentLen = sentLen;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/> for deserialization. </summary>
+        internal BreakSentenceItem()
+        {
         }
 
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the OS and SAP Configurations for Deployment. </summary>
     public partial class OSSapConfiguration
     {
-        /// <summary> Initializes a new instance of OSSapConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSSapConfiguration"/>. </summary>
         public OSSapConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of OSSapConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSSapConfiguration"/>. </summary>
         /// <param name="deployerVmPackages"> The url and storage account ID where deployer VM packages are uploaded. </param>
         /// <param name="sapFqdn"> The FQDN to set for the SAP system. </param>
-        internal OSSapConfiguration(DeployerVmPackages deployerVmPackages, string sapFqdn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSSapConfiguration(DeployerVmPackages deployerVmPackages, string sapFqdn, Dictionary<string, BinaryData> rawData)
         {
             DeployerVmPackages = deployerVmPackages;
             SapFqdn = sapFqdn;
+            _rawData = rawData;
         }
 
         /// <summary> The url and storage account ID where deployer VM packages are uploaded. </summary>

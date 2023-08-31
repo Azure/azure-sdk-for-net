@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PreBuiltTaskParameters : IUtf8JsonSerializable
+    internal partial class PreBuiltTaskParameters : IUtf8JsonSerializable, IModelJsonSerializable<PreBuiltTaskParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PreBuiltTaskParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PreBuiltTaskParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PreBuiltTaskParameters>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ModelVersion))
             {
@@ -25,17 +33,32 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PreBuiltTaskParameters DeserializePreBuiltTaskParameters(JsonElement element)
+        internal static PreBuiltTaskParameters DeserializePreBuiltTaskParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -52,8 +75,61 @@ namespace Azure.AI.TextAnalytics.Models
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PreBuiltTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value);
+            return new PreBuiltTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, rawData);
+        }
+
+        PreBuiltTaskParameters IModelJsonSerializable<PreBuiltTaskParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PreBuiltTaskParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePreBuiltTaskParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PreBuiltTaskParameters>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PreBuiltTaskParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PreBuiltTaskParameters IModelSerializable<PreBuiltTaskParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PreBuiltTaskParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePreBuiltTaskParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PreBuiltTaskParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PreBuiltTaskParameters"/> to convert. </param>
+        public static implicit operator RequestContent(PreBuiltTaskParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PreBuiltTaskParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PreBuiltTaskParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePreBuiltTaskParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

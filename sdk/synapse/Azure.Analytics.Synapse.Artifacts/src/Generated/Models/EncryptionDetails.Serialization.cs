@@ -6,34 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EncryptionDetailsConverter))]
-    public partial class EncryptionDetails : IUtf8JsonSerializable
+    public partial class EncryptionDetails : IUtf8JsonSerializable, IModelJsonSerializable<EncryptionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EncryptionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EncryptionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
-                writer.WriteObjectValue(Cmk);
+                if (Cmk is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CustomerManagedKeyDetails>)Cmk).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element)
+        internal static EncryptionDetails DeserializeEncryptionDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> doubleEncryptionEnabled = default;
             Optional<CustomerManagedKeyDetails> cmk = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionEnabled"u8))
@@ -54,8 +83,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cmk = CustomerManagedKeyDetails.DeserializeCustomerManagedKeyDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+            return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value, rawData);
+        }
+
+        EncryptionDetails IModelJsonSerializable<EncryptionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncryptionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EncryptionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EncryptionDetails IModelSerializable<EncryptionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEncryptionDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EncryptionDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EncryptionDetails"/> to convert. </param>
+        public static implicit operator RequestContent(EncryptionDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EncryptionDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EncryptionDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEncryptionDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>

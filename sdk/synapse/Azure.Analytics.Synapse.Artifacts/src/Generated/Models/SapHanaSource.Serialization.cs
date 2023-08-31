@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SapHanaSourceConverter))]
-    public partial class SapHanaSource : IUtf8JsonSerializable
+    public partial class SapHanaSource : IUtf8JsonSerializable, IModelJsonSerializable<SapHanaSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SapHanaSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SapHanaSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SapHanaSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -37,7 +43,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                if (PartitionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SapHanaPartitionSettings>)PartitionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -74,8 +87,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SapHanaSource DeserializeSapHanaSource(JsonElement element)
+        internal static SapHanaSource DeserializeSapHanaSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -184,6 +199,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SapHanaSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, packetSize.Value, Optional.ToNullable(partitionOption), partitionSettings.Value);
+        }
+
+        SapHanaSource IModelJsonSerializable<SapHanaSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapHanaSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapHanaSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SapHanaSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapHanaSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SapHanaSource IModelSerializable<SapHanaSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SapHanaSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSapHanaSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SapHanaSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SapHanaSource"/> to convert. </param>
+        public static implicit operator RequestContent(SapHanaSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SapHanaSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SapHanaSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSapHanaSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SapHanaSourceConverter : JsonConverter<SapHanaSource>

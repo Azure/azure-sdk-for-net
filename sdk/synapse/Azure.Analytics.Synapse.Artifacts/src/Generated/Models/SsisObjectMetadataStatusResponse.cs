@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The status of the operation. </summary>
     public partial class SsisObjectMetadataStatusResponse
     {
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataStatusResponse"/>. </summary>
         public SsisObjectMetadataStatusResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of SsisObjectMetadataStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisObjectMetadataStatusResponse"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="properties"> The operation properties. </param>
         /// <param name="error"> The operation error message. </param>
-        internal SsisObjectMetadataStatusResponse(string status, string name, string properties, string error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisObjectMetadataStatusResponse(string status, string name, string properties, string error, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Name = name;
             Properties = properties;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> The status of the operation. </summary>

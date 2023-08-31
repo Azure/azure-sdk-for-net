@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy log entry. </summary>
     public partial class WebAppMSDeployLogEntry
     {
-        /// <summary> Initializes a new instance of WebAppMSDeployLogEntry. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppMSDeployLogEntry"/>. </summary>
         internal WebAppMSDeployLogEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppMSDeployLogEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMSDeployLogEntry"/>. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
         /// <param name="entryType"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>
-        internal WebAppMSDeployLogEntry(DateTimeOffset? time, WebAppMSDeployLogEntryType? entryType, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMSDeployLogEntry(DateTimeOffset? time, WebAppMSDeployLogEntryType? entryType, string message, Dictionary<string, BinaryData> rawData)
         {
             Time = time;
             EntryType = entryType;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Timestamp of log entry. </summary>

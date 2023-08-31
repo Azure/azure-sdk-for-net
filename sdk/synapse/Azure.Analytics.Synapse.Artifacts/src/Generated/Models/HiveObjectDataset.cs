@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Hive Server dataset. </summary>
     public partial class HiveObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of HiveObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public HiveObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HiveObject";
         }
 
-        /// <summary> Initializes a new instance of HiveObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HiveObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -43,6 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Type = type ?? "HiveObject";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HiveObjectDataset"/> for deserialization. </summary>
+        internal HiveObjectDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

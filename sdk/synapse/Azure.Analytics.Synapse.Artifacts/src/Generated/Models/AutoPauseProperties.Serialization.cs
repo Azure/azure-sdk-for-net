@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AutoPausePropertiesConverter))]
-    public partial class AutoPauseProperties : IUtf8JsonSerializable
+    public partial class AutoPauseProperties : IUtf8JsonSerializable, IModelJsonSerializable<AutoPauseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoPauseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoPauseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DelayInMinutes))
             {
@@ -28,17 +35,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutoPauseProperties DeserializeAutoPauseProperties(JsonElement element)
+        internal static AutoPauseProperties DeserializeAutoPauseProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> delayInMinutes = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delayInMinutes"u8))
@@ -59,8 +81,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled));
+            return new AutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled), rawData);
+        }
+
+        AutoPauseProperties IModelJsonSerializable<AutoPauseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoPauseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoPauseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoPauseProperties IModelSerializable<AutoPauseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoPauseProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutoPauseProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutoPauseProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AutoPauseProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutoPauseProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutoPauseProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutoPauseProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AutoPausePropertiesConverter : JsonConverter<AutoPauseProperties>

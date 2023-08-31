@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionComputeConverter))]
-    public partial class LinkConnectionCompute : IUtf8JsonSerializable
+    public partial class LinkConnectionCompute : IUtf8JsonSerializable, IModelJsonSerializable<LinkConnectionCompute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LinkConnectionCompute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LinkConnectionCompute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CoreCount))
             {
@@ -33,11 +40,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("dataProcessIntervalMinutes"u8);
                 writer.WriteNumberValue(DataProcessIntervalMinutes.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinkConnectionCompute DeserializeLinkConnectionCompute(JsonElement element)
+        internal static LinkConnectionCompute DeserializeLinkConnectionCompute(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<int> coreCount = default;
             Optional<string> computeType = default;
             Optional<int> dataProcessIntervalMinutes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coreCount"u8))
@@ -70,8 +92,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dataProcessIntervalMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value, Optional.ToNullable(dataProcessIntervalMinutes));
+            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value, Optional.ToNullable(dataProcessIntervalMinutes), rawData);
+        }
+
+        LinkConnectionCompute IModelJsonSerializable<LinkConnectionCompute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionCompute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LinkConnectionCompute>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LinkConnectionCompute IModelSerializable<LinkConnectionCompute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLinkConnectionCompute(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LinkConnectionCompute"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LinkConnectionCompute"/> to convert. </param>
+        public static implicit operator RequestContent(LinkConnectionCompute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LinkConnectionCompute"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LinkConnectionCompute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLinkConnectionCompute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class LinkConnectionComputeConverter : JsonConverter<LinkConnectionCompute>

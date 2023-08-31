@@ -15,7 +15,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of rerun triggers. </summary>
     public partial class RerunTriggerListResponse
     {
-        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RerunTriggerListResponse"/>. </summary>
         /// <param name="value"> List of rerun triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value)
@@ -25,13 +27,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RerunTriggerListResponse"/>. </summary>
         /// <param name="value"> List of rerun triggers. </param>
         /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal RerunTriggerListResponse(IList<RerunTriggerResource> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RerunTriggerListResponse(IList<RerunTriggerResource> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTriggerListResponse"/> for deserialization. </summary>
+        internal RerunTriggerListResponse()
+        {
         }
 
         /// <summary> List of rerun triggers. </summary>

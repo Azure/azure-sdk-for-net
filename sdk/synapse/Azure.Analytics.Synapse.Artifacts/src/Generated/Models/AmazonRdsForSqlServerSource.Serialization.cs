@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AmazonRdsForSqlServerSourceConverter))]
-    public partial class AmazonRdsForSqlServerSource : IUtf8JsonSerializable
+    public partial class AmazonRdsForSqlServerSource : IUtf8JsonSerializable, IModelJsonSerializable<AmazonRdsForSqlServerSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AmazonRdsForSqlServerSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AmazonRdsForSqlServerSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AmazonRdsForSqlServerSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlReaderQuery))
             {
@@ -36,7 +42,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in StoredProcedureParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StoredProcedureParameter>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -58,7 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                if (PartitionSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SqlPartitionSettings>)PartitionSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -95,8 +115,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonRdsForSqlServerSource DeserializeAmazonRdsForSqlServerSource(JsonElement element)
+        internal static AmazonRdsForSqlServerSource DeserializeAmazonRdsForSqlServerSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -240,6 +262,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonRdsForSqlServerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, Optional.ToDictionary(storedProcedureParameters), isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
+        }
+
+        AmazonRdsForSqlServerSource IModelJsonSerializable<AmazonRdsForSqlServerSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AmazonRdsForSqlServerSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonRdsForSqlServerSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AmazonRdsForSqlServerSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AmazonRdsForSqlServerSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AmazonRdsForSqlServerSource IModelSerializable<AmazonRdsForSqlServerSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AmazonRdsForSqlServerSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAmazonRdsForSqlServerSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AmazonRdsForSqlServerSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AmazonRdsForSqlServerSource"/> to convert. </param>
+        public static implicit operator RequestContent(AmazonRdsForSqlServerSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AmazonRdsForSqlServerSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AmazonRdsForSqlServerSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAmazonRdsForSqlServerSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AmazonRdsForSqlServerSourceConverter : JsonConverter<AmazonRdsForSqlServerSource>

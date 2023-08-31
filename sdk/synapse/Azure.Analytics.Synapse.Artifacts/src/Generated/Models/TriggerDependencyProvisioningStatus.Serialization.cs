@@ -6,33 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TriggerDependencyProvisioningStatusConverter))]
-    public partial class TriggerDependencyProvisioningStatus : IUtf8JsonSerializable
+    public partial class TriggerDependencyProvisioningStatus : IUtf8JsonSerializable, IModelJsonSerializable<TriggerDependencyProvisioningStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TriggerDependencyProvisioningStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TriggerDependencyProvisioningStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("triggerName"u8);
             writer.WriteStringValue(TriggerName);
             writer.WritePropertyName("provisioningStatus"u8);
             writer.WriteStringValue(ProvisioningStatus);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TriggerDependencyProvisioningStatus DeserializeTriggerDependencyProvisioningStatus(JsonElement element)
+        internal static TriggerDependencyProvisioningStatus DeserializeTriggerDependencyProvisioningStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string triggerName = default;
             string provisioningStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerName"u8))
@@ -45,8 +67,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     provisioningStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TriggerDependencyProvisioningStatus(triggerName, provisioningStatus);
+            return new TriggerDependencyProvisioningStatus(triggerName, provisioningStatus, rawData);
+        }
+
+        TriggerDependencyProvisioningStatus IModelJsonSerializable<TriggerDependencyProvisioningStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTriggerDependencyProvisioningStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TriggerDependencyProvisioningStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TriggerDependencyProvisioningStatus IModelSerializable<TriggerDependencyProvisioningStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTriggerDependencyProvisioningStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TriggerDependencyProvisioningStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TriggerDependencyProvisioningStatus"/> to convert. </param>
+        public static implicit operator RequestContent(TriggerDependencyProvisioningStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TriggerDependencyProvisioningStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TriggerDependencyProvisioningStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTriggerDependencyProvisioningStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class TriggerDependencyProvisioningStatusConverter : JsonConverter<TriggerDependencyProvisioningStatus>

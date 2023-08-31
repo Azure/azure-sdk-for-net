@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DataTableResponseObject : IUtf8JsonSerializable
+    public partial class DataTableResponseObject : IUtf8JsonSerializable, IModelJsonSerializable<DataTableResponseObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataTableResponseObject>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataTableResponseObject>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
@@ -27,7 +34,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataTableResponseColumn>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,11 +65,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataTableResponseObject DeserializeDataTableResponseObject(JsonElement element)
+        internal static DataTableResponseObject DeserializeDataTableResponseObject(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> tableName = default;
             Optional<IList<DataTableResponseColumn>> columns = default;
             Optional<IList<IList<string>>> rows = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -110,8 +139,61 @@ namespace Azure.ResourceManager.AppService.Models
                     rows = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataTableResponseObject(tableName.Value, Optional.ToList(columns), Optional.ToList(rows));
+            return new DataTableResponseObject(tableName.Value, Optional.ToList(columns), Optional.ToList(rows), rawData);
+        }
+
+        DataTableResponseObject IModelJsonSerializable<DataTableResponseObject>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataTableResponseObject(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataTableResponseObject>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataTableResponseObject IModelSerializable<DataTableResponseObject>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataTableResponseObject(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataTableResponseObject"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataTableResponseObject"/> to convert. </param>
+        public static implicit operator RequestContent(DataTableResponseObject model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataTableResponseObject"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataTableResponseObject(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataTableResponseObject(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

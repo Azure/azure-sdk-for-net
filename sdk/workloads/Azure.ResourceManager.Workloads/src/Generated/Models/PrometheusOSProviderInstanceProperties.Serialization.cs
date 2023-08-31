@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class PrometheusOSProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class PrometheusOSProviderInstanceProperties : IUtf8JsonSerializable, IModelJsonSerializable<PrometheusOSProviderInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrometheusOSProviderInstanceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrometheusOSProviderInstanceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PrometheusOSProviderInstanceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrometheusUri))
             {
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element)
+        internal static PrometheusOSProviderInstanceProperties DeserializePrometheusOSProviderInstanceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<Uri> sslCertificateUri = default;
             Optional<string> sapSid = default;
             string providerType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prometheusUrl"u8))
@@ -91,8 +113,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value);
+            return new PrometheusOSProviderInstanceProperties(providerType, prometheusUrl.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value, rawData);
+        }
+
+        PrometheusOSProviderInstanceProperties IModelJsonSerializable<PrometheusOSProviderInstanceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrometheusOSProviderInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrometheusOSProviderInstanceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrometheusOSProviderInstanceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrometheusOSProviderInstanceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrometheusOSProviderInstanceProperties IModelSerializable<PrometheusOSProviderInstanceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrometheusOSProviderInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrometheusOSProviderInstanceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrometheusOSProviderInstanceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrometheusOSProviderInstanceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PrometheusOSProviderInstanceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrometheusOSProviderInstanceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrometheusOSProviderInstanceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrometheusOSProviderInstanceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Properties of function key info. </summary>
     public partial class WebAppKeyInfoProperties
     {
-        /// <summary> Initializes a new instance of WebAppKeyInfoProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyInfoProperties"/>. </summary>
         public WebAppKeyInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppKeyInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppKeyInfoProperties"/>. </summary>
         /// <param name="name"> Key name. </param>
         /// <param name="value"> Key value. </param>
-        internal WebAppKeyInfoProperties(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppKeyInfoProperties(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Key name. </summary>

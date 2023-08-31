@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> Response for batch list operation. </summary>
     public partial class SparkBatchJobCollection
     {
-        /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobCollection"/>. </summary>
         /// <param name="from"> The start index of fetched sessions. </param>
         /// <param name="total"> Number of sessions fetched. </param>
         internal SparkBatchJobCollection(int @from, int total)
@@ -23,15 +26,22 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Sessions = new ChangeTrackingList<SparkBatchJob>();
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJobCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobCollection"/>. </summary>
         /// <param name="from"> The start index of fetched sessions. </param>
         /// <param name="total"> Number of sessions fetched. </param>
         /// <param name="sessions"> Batch list. </param>
-        internal SparkBatchJobCollection(int @from, int total, IReadOnlyList<SparkBatchJob> sessions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkBatchJobCollection(int @from, int total, IReadOnlyList<SparkBatchJob> sessions, Dictionary<string, BinaryData> rawData)
         {
             From = @from;
             Total = total;
             Sessions = sessions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobCollection"/> for deserialization. </summary>
+        internal SparkBatchJobCollection()
+        {
         }
 
         /// <summary> The start index of fetched sessions. </summary>

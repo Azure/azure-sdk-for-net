@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The context of the summary. </summary>
     internal partial class SummaryContextInternal
     {
-        /// <summary> Initializes a new instance of SummaryContextInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SummaryContextInternal"/>. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         public SummaryContextInternal(int offset, int length)
         {
             Offset = offset;
             Length = length;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SummaryContextInternal"/>. </summary>
+        /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SummaryContextInternal(int offset, int length, Dictionary<string, BinaryData> rawData)
+        {
+            Offset = offset;
+            Length = length;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SummaryContextInternal"/> for deserialization. </summary>
+        internal SummaryContextInternal()
+        {
         }
 
         /// <summary> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </summary>

@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Azure capacity definition. </summary>
     public partial class SynapseDataSourceCapacity
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceCapacity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceCapacity"/>. </summary>
         /// <param name="scaleType"> Scale type. </param>
         /// <param name="minimum"> Minimum allowed capacity. </param>
         /// <param name="maximum"> Maximum allowed capacity. </param>
@@ -21,6 +26,26 @@ namespace Azure.ResourceManager.Synapse.Models
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceCapacity"/>. </summary>
+        /// <param name="scaleType"> Scale type. </param>
+        /// <param name="minimum"> Minimum allowed capacity. </param>
+        /// <param name="maximum"> Maximum allowed capacity. </param>
+        /// <param name="default"> The default capacity that would be used. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataSourceCapacity(SynapseDataSourceScaleType scaleType, int minimum, int maximum, int @default, Dictionary<string, BinaryData> rawData)
+        {
+            ScaleType = scaleType;
+            Minimum = minimum;
+            Maximum = maximum;
+            Default = @default;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceCapacity"/> for deserialization. </summary>
+        internal SynapseDataSourceCapacity()
+        {
         }
 
         /// <summary> Scale type. </summary>

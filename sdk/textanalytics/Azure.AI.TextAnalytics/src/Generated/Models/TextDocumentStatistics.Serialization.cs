@@ -5,27 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct TextDocumentStatistics : IUtf8JsonSerializable
+    public partial struct TextDocumentStatistics : IUtf8JsonSerializable, IModelJsonSerializable<TextDocumentStatistics>, IModelJsonSerializable<object>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TextDocumentStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TextDocumentStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("charactersCount"u8);
             writer.WriteNumberValue(CharacterCount);
             writer.WritePropertyName("transactionsCount"u8);
             writer.WriteNumberValue(TransactionCount);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element)
+        void IModelJsonSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("charactersCount"u8);
+            writer.WriteNumberValue(CharacterCount);
+            writer.WritePropertyName("transactionsCount"u8);
+            writer.WriteNumberValue(TransactionCount);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             int charactersCount = default;
             int transactionsCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("charactersCount"u8))
@@ -38,8 +85,76 @@ namespace Azure.AI.TextAnalytics
                     transactionsCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TextDocumentStatistics(charactersCount, transactionsCount);
+            return new TextDocumentStatistics(charactersCount, transactionsCount, rawData);
+        }
+
+        TextDocumentStatistics IModelJsonSerializable<TextDocumentStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextDocumentStatistics(doc.RootElement, options);
+        }
+
+        object IModelJsonSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextDocumentStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TextDocumentStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TextDocumentStatistics IModelSerializable<TextDocumentStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTextDocumentStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextDocumentStatistics>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTextDocumentStatistics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TextDocumentStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TextDocumentStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(TextDocumentStatistics model)
+        {
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TextDocumentStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TextDocumentStatistics(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTextDocumentStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

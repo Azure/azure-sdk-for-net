@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> HDFS read settings. </summary>
     public partial class HdfsReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of HdfsReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsReadSettings"/>. </summary>
         public HdfsReadSettings()
         {
             Type = "HdfsReadSettings";
         }
 
-        /// <summary> Initializes a new instance of HdfsReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

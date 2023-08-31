@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RequestsBasedTrigger : IUtf8JsonSerializable
+    public partial class RequestsBasedTrigger : IUtf8JsonSerializable, IModelJsonSerializable<RequestsBasedTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RequestsBasedTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RequestsBasedTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Count))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RequestsBasedTrigger DeserializeRequestsBasedTrigger(JsonElement element)
+        internal static RequestsBasedTrigger DeserializeRequestsBasedTrigger(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> count = default;
             Optional<string> timeInterval = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -52,8 +75,61 @@ namespace Azure.ResourceManager.AppService.Models
                     timeInterval = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RequestsBasedTrigger(Optional.ToNullable(count), timeInterval.Value);
+            return new RequestsBasedTrigger(Optional.ToNullable(count), timeInterval.Value, rawData);
+        }
+
+        RequestsBasedTrigger IModelJsonSerializable<RequestsBasedTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestsBasedTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RequestsBasedTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RequestsBasedTrigger IModelSerializable<RequestsBasedTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRequestsBasedTrigger(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RequestsBasedTrigger"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RequestsBasedTrigger"/> to convert. </param>
+        public static implicit operator RequestContent(RequestsBasedTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RequestsBasedTrigger"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RequestsBasedTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRequestsBasedTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> The SparkBatchJobState. </summary>
     public partial class SparkBatchJobState
     {
-        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobState"/>. </summary>
         internal SparkBatchJobState()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJobState"/>. </summary>
         /// <param name="notStartedAt"> the time that at which "not_started" livy state was first seen. </param>
         /// <param name="startingAt"> the time that at which "starting" livy state was first seen. </param>
         /// <param name="runningAt"> the time that at which "running" livy state was first seen. </param>
@@ -27,7 +30,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="recoveringAt"> the time that at which "recovering" livy state was first seen. </param>
         /// <param name="currentState"> the Spark job state. </param>
         /// <param name="jobCreationRequest"></param>
-        internal SparkBatchJobState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? runningAt, DateTimeOffset? deadAt, DateTimeOffset? successAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, string currentState, SparkRequest jobCreationRequest)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkBatchJobState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? runningAt, DateTimeOffset? deadAt, DateTimeOffset? successAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, string currentState, SparkRequest jobCreationRequest, Dictionary<string, BinaryData> rawData)
         {
             NotStartedAt = notStartedAt;
             StartingAt = startingAt;
@@ -38,6 +42,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             RecoveringAt = recoveringAt;
             CurrentState = currentState;
             JobCreationRequest = jobCreationRequest;
+            _rawData = rawData;
         }
 
         /// <summary> the time that at which "not_started" livy state was first seen. </summary>

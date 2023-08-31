@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -12,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Deployment Configuration. </summary>
     public partial class DeploymentConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentConfiguration"/>. </summary>
         public DeploymentConfiguration()
         {
             ConfigurationType = SapConfigurationType.Deployment;
         }
 
-        /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
         /// <param name="infrastructureConfiguration">
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// Please note <see cref="SapSoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
         /// </param>
-        internal DeploymentConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration) : base(configurationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, Dictionary<string, BinaryData> rawData) : base(configurationType, rawData)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;

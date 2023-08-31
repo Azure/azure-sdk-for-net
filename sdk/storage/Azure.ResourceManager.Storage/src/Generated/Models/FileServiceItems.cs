@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Storage;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The FileServiceItems. </summary>
     internal partial class FileServiceItems
     {
-        /// <summary> Initializes a new instance of FileServiceItems. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileServiceItems"/>. </summary>
         internal FileServiceItems()
         {
             Value = new ChangeTrackingList<FileServiceData>();
         }
 
-        /// <summary> Initializes a new instance of FileServiceItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceItems"/>. </summary>
         /// <param name="value"> List of file services returned. </param>
-        internal FileServiceItems(IReadOnlyList<FileServiceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileServiceItems(IReadOnlyList<FileServiceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of file services returned. </summary>

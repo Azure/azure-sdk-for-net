@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -12,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Deployment along with OS Configuration. </summary>
     public partial class DeploymentWithOSConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentWithOSConfiguration"/>. </summary>
         public DeploymentWithOSConfiguration()
         {
             ConfigurationType = SapConfigurationType.DeploymentWithOSConfig;
         }
 
-        /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentWithOSConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
         /// <param name="infrastructureConfiguration">
@@ -32,7 +34,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// The available derived classes include <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
         /// </param>
         /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SapSoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration, Dictionary<string, BinaryData> rawData) : base(configurationType, rawData)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;

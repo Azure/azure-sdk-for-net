@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerMemoryStatistics. </summary>
     public partial class ContainerMemoryStatistics
     {
-        /// <summary> Initializes a new instance of ContainerMemoryStatistics. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
         public ContainerMemoryStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerMemoryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
         /// <param name="usage"></param>
         /// <param name="maxUsage"></param>
         /// <param name="limit"></param>
-        internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit, Dictionary<string, BinaryData> rawData)
         {
             Usage = usage;
             MaxUsage = maxUsage;
             Limit = limit;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the usage. </summary>

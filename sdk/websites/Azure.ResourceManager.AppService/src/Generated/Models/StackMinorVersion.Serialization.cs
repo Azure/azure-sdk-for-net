@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMinorVersion : IUtf8JsonSerializable
+    public partial class StackMinorVersion : IUtf8JsonSerializable, IModelJsonSerializable<StackMinorVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StackMinorVersion>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StackMinorVersion>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayVersion))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element)
+        internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> runtimeVersion = default;
             Optional<bool> isDefault = default;
             Optional<bool> isRemoteDebuggingEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"u8))
@@ -78,8 +101,61 @@ namespace Azure.ResourceManager.AppService.Models
                     isRemoteDebuggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled));
+            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled), rawData);
+        }
+
+        StackMinorVersion IModelJsonSerializable<StackMinorVersion>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStackMinorVersion(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StackMinorVersion>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StackMinorVersion IModelSerializable<StackMinorVersion>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStackMinorVersion(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StackMinorVersion"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StackMinorVersion"/> to convert. </param>
+        public static implicit operator RequestContent(StackMinorVersion model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StackMinorVersion"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StackMinorVersion(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStackMinorVersion(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

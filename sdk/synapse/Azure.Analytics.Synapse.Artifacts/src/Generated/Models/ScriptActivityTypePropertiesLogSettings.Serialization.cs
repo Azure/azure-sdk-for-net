@@ -5,34 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class ScriptActivityTypePropertiesLogSettings : IUtf8JsonSerializable
+    public partial class ScriptActivityTypePropertiesLogSettings : IUtf8JsonSerializable, IModelJsonSerializable<ScriptActivityTypePropertiesLogSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScriptActivityTypePropertiesLogSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScriptActivityTypePropertiesLogSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                if (LogLocationSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LogLocationSettings>)LogLocationSettings).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ScriptActivityTypePropertiesLogSettings DeserializeScriptActivityTypePropertiesLogSettings(JsonElement element)
+        internal static ScriptActivityTypePropertiesLogSettings DeserializeScriptActivityTypePropertiesLogSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
             Optional<LogLocationSettings> logLocationSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logDestination"u8))
@@ -49,8 +79,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     logLocationSettings = LogLocationSettings.DeserializeLogLocationSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScriptActivityTypePropertiesLogSettings(logDestination, logLocationSettings.Value);
+            return new ScriptActivityTypePropertiesLogSettings(logDestination, logLocationSettings.Value, rawData);
+        }
+
+        ScriptActivityTypePropertiesLogSettings IModelJsonSerializable<ScriptActivityTypePropertiesLogSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptActivityTypePropertiesLogSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScriptActivityTypePropertiesLogSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScriptActivityTypePropertiesLogSettings IModelSerializable<ScriptActivityTypePropertiesLogSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScriptActivityTypePropertiesLogSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScriptActivityTypePropertiesLogSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScriptActivityTypePropertiesLogSettings"/> to convert. </param>
+        public static implicit operator RequestContent(ScriptActivityTypePropertiesLogSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScriptActivityTypePropertiesLogSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScriptActivityTypePropertiesLogSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScriptActivityTypePropertiesLogSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

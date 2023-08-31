@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppBackupSchedule : IUtf8JsonSerializable
+    public partial class WebAppBackupSchedule : IUtf8JsonSerializable, IModelJsonSerializable<WebAppBackupSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebAppBackupSchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebAppBackupSchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("frequencyInterval"u8);
             writer.WriteNumberValue(FrequencyInterval);
@@ -29,11 +36,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebAppBackupSchedule DeserializeWebAppBackupSchedule(JsonElement element)
+        internal static WebAppBackupSchedule DeserializeWebAppBackupSchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             int retentionPeriodInDays = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastExecutionTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequencyInterval"u8))
@@ -84,8 +106,61 @@ namespace Azure.ResourceManager.AppService.Models
                     lastExecutionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Optional.ToNullable(startTime), Optional.ToNullable(lastExecutionTime));
+            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Optional.ToNullable(startTime), Optional.ToNullable(lastExecutionTime), rawData);
+        }
+
+        WebAppBackupSchedule IModelJsonSerializable<WebAppBackupSchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppBackupSchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebAppBackupSchedule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebAppBackupSchedule IModelSerializable<WebAppBackupSchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebAppBackupSchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebAppBackupSchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebAppBackupSchedule"/> to convert. </param>
+        public static implicit operator RequestContent(WebAppBackupSchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebAppBackupSchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebAppBackupSchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebAppBackupSchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

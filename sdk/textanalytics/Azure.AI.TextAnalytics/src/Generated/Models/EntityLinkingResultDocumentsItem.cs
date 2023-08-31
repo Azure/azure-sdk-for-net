@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The EntityLinkingResultDocumentsItem. </summary>
     internal partial class EntityLinkingResultDocumentsItem : LinkedEntitiesDocumentResult
     {
-        /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Recognized well known entities in the document. </param>
@@ -27,12 +27,18 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(entities, nameof(entities));
         }
 
-        /// <summary> Initializes a new instance of EntityLinkingResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized well known entities in the document. </param>
-        internal EntityLinkingResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<LinkedEntity> entities) : base(id, warnings, statistics, entities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntityLinkingResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<LinkedEntity> entities, Dictionary<string, BinaryData> rawData) : base(id, warnings, statistics, entities, rawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingResultDocumentsItem"/> for deserialization. </summary>
+        internal EntityLinkingResultDocumentsItem()
         {
         }
     }

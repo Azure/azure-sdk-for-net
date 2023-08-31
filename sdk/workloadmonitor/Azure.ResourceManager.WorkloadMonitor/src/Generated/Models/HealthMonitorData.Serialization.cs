@@ -6,17 +6,100 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WorkloadMonitor.Models;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
-    public partial class HealthMonitorData
+    public partial class HealthMonitorData : IUtf8JsonSerializable, IModelJsonSerializable<HealthMonitorData>
     {
-        internal static HealthMonitorData DeserializeHealthMonitorData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthMonitorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthMonitorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MonitorName))
+            {
+                writer.WritePropertyName("monitorName"u8);
+                writer.WriteStringValue(MonitorName);
+            }
+            if (Optional.IsDefined(MonitorType))
+            {
+                writer.WritePropertyName("monitorType"u8);
+                writer.WriteStringValue(MonitorType);
+            }
+            if (Optional.IsDefined(MonitoredObject))
+            {
+                writer.WritePropertyName("monitoredObject"u8);
+                writer.WriteStringValue(MonitoredObject);
+            }
+            if (Optional.IsDefined(ParentMonitorName))
+            {
+                writer.WritePropertyName("parentMonitorName"u8);
+                writer.WriteStringValue(ParentMonitorName);
+            }
+            if (Optional.IsDefined(EvaluationTimestamp))
+            {
+                writer.WritePropertyName("evaluationTimestamp"u8);
+                writer.WriteStringValue(EvaluationTimestamp);
+            }
+            if (Optional.IsDefined(CurrentStateFirstObservedTimestamp))
+            {
+                writer.WritePropertyName("currentStateFirstObservedTimestamp"u8);
+                writer.WriteStringValue(CurrentStateFirstObservedTimestamp);
+            }
+            if (Optional.IsDefined(LastReportedTimestamp))
+            {
+                writer.WritePropertyName("lastReportedTimestamp"u8);
+                writer.WriteStringValue(LastReportedTimestamp);
+            }
+            if (Optional.IsDefined(Evidence))
+            {
+                writer.WritePropertyName("evidence"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Evidence);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Evidence.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(MonitorConfiguration))
+            {
+                writer.WritePropertyName("monitorConfiguration"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MonitorConfiguration);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MonitorConfiguration.ToString()).RootElement);
+#endif
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthMonitorData DeserializeHealthMonitorData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +119,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             Optional<string> lastReportedTimestamp = default;
             Optional<BinaryData> evidence = default;
             Optional<BinaryData> monitorConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -145,8 +229,61 @@ namespace Azure.ResourceManager.WorkloadMonitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthMonitorData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, parentMonitorName.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, lastReportedTimestamp.Value, evidence.Value, monitorConfiguration.Value);
+            return new HealthMonitorData(id, name, type, systemData.Value, monitorName.Value, monitorType.Value, monitoredObject.Value, parentMonitorName.Value, Optional.ToNullable(previousMonitorState), Optional.ToNullable(currentMonitorState), evaluationTimestamp.Value, currentStateFirstObservedTimestamp.Value, lastReportedTimestamp.Value, evidence.Value, monitorConfiguration.Value, rawData);
+        }
+
+        HealthMonitorData IModelJsonSerializable<HealthMonitorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthMonitorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthMonitorData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthMonitorData IModelSerializable<HealthMonitorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthMonitorData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthMonitorData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthMonitorData"/> to convert. </param>
+        public static implicit operator RequestContent(HealthMonitorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthMonitorData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthMonitorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthMonitorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

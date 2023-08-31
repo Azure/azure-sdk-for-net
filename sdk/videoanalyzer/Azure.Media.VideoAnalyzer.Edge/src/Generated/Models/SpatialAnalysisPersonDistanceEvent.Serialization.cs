@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonDistanceEvent : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonDistanceEvent : IUtf8JsonSerializable, IModelJsonSerializable<SpatialAnalysisPersonDistanceEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SpatialAnalysisPersonDistanceEvent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SpatialAnalysisPersonDistanceEvent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonDistanceEvent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Trigger))
             {
@@ -45,11 +53,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpatialAnalysisPersonDistanceEvent DeserializeSpatialAnalysisPersonDistanceEvent(JsonElement element)
+        internal static SpatialAnalysisPersonDistanceEvent DeserializeSpatialAnalysisPersonDistanceEvent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> maximumDistanceThreshold = default;
             Optional<string> threshold = default;
             Optional<SpatialAnalysisOperationFocus> focus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))
@@ -100,8 +123,61 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     focus = new SpatialAnalysisOperationFocus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SpatialAnalysisPersonDistanceEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value, minimumDistanceThreshold.Value, maximumDistanceThreshold.Value);
+            return new SpatialAnalysisPersonDistanceEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value, minimumDistanceThreshold.Value, maximumDistanceThreshold.Value, rawData);
+        }
+
+        SpatialAnalysisPersonDistanceEvent IModelJsonSerializable<SpatialAnalysisPersonDistanceEvent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonDistanceEvent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpatialAnalysisPersonDistanceEvent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SpatialAnalysisPersonDistanceEvent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonDistanceEvent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SpatialAnalysisPersonDistanceEvent IModelSerializable<SpatialAnalysisPersonDistanceEvent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SpatialAnalysisPersonDistanceEvent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSpatialAnalysisPersonDistanceEvent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SpatialAnalysisPersonDistanceEvent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SpatialAnalysisPersonDistanceEvent"/> to convert. </param>
+        public static implicit operator RequestContent(SpatialAnalysisPersonDistanceEvent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SpatialAnalysisPersonDistanceEvent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SpatialAnalysisPersonDistanceEvent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSpatialAnalysisPersonDistanceEvent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolZoneInfo
+    public partial class DiskPoolZoneInfo : IUtf8JsonSerializable, IModelJsonSerializable<DiskPoolZoneInfo>
     {
-        internal static DiskPoolZoneInfo DeserializeDiskPoolZoneInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiskPoolZoneInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiskPoolZoneInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DiskPoolZoneInfo DeserializeDiskPoolZoneInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<IReadOnlyList<string>> availabilityZones = default;
             Optional<IReadOnlyList<string>> additionalCapabilities = default;
             Optional<StoragePoolSku> sku = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZones"u8))
@@ -61,8 +89,61 @@ namespace Azure.ResourceManager.StoragePool.Models
                     sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value);
+            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value, rawData);
+        }
+
+        DiskPoolZoneInfo IModelJsonSerializable<DiskPoolZoneInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiskPoolZoneInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiskPoolZoneInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiskPoolZoneInfo IModelSerializable<DiskPoolZoneInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiskPoolZoneInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiskPoolZoneInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiskPoolZoneInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DiskPoolZoneInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiskPoolZoneInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiskPoolZoneInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiskPoolZoneInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

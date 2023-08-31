@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerMemoryStatistics : IUtf8JsonSerializable
+    public partial class ContainerMemoryStatistics : IUtf8JsonSerializable, IModelJsonSerializable<ContainerMemoryStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerMemoryStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerMemoryStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Usage))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element)
+        internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<long> usage = default;
             Optional<long> maxUsage = default;
             Optional<long> limit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.AppService.Models
                     limit = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit));
+            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit), rawData);
+        }
+
+        ContainerMemoryStatistics IModelJsonSerializable<ContainerMemoryStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerMemoryStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerMemoryStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerMemoryStatistics IModelSerializable<ContainerMemoryStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerMemoryStatistics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerMemoryStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerMemoryStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerMemoryStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerMemoryStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerMemoryStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerMemoryStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

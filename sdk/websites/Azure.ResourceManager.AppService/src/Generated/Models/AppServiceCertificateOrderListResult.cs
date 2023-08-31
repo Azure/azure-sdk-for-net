@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of certificate orders. </summary>
     internal partial class AppServiceCertificateOrderListResult
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceCertificateOrderListResult(IEnumerable<AppServiceCertificateOrderData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceCertificateOrderListResult(IReadOnlyList<AppServiceCertificateOrderData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateOrderListResult(IReadOnlyList<AppServiceCertificateOrderData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderListResult"/> for deserialization. </summary>
+        internal AppServiceCertificateOrderListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

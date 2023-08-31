@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide. </summary>
     public partial class UserAssignedServiceIdentity
     {
-        /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserAssignedServiceIdentity"/>. </summary>
         /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
         public UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType)
         {
@@ -22,13 +25,20 @@ namespace Azure.ResourceManager.Workloads.Models
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of UserAssignedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedServiceIdentity"/>. </summary>
         /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
         /// <param name="userAssignedIdentities"> User assigned identities dictionary. </param>
-        internal UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserAssignedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Dictionary<string, BinaryData> rawData)
         {
             ManagedServiceIdentityType = managedServiceIdentityType;
             UserAssignedIdentities = userAssignedIdentities;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserAssignedServiceIdentity"/> for deserialization. </summary>
+        internal UserAssignedServiceIdentity()
+        {
         }
 
         /// <summary> Type of manage identity. </summary>

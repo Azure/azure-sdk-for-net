@@ -135,9 +135,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedPrivateEndpoint);
-            request.Content = content;
+            request.Content = managedPrivateEndpoint;
             return message;
         }
 

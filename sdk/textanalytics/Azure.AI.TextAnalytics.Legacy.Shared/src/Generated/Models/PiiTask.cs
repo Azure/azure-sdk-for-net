@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The PiiTask. </summary>
     internal partial class PiiTask
     {
-        /// <summary> Initializes a new instance of PiiTask. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PiiTask"/>. </summary>
         public PiiTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PiiTask"/>. </summary>
+        /// <param name="parameters"></param>
+        /// <param name="taskName"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PiiTask(PiiTaskParameters parameters, string taskName, Dictionary<string, BinaryData> rawData)
+        {
+            Parameters = parameters;
+            TaskName = taskName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
@@ -18,7 +19,9 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class JobDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of JobDefinitionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
         /// <param name="copyMode"> Strategy to use for copy. </param>
         /// <param name="sourceName"> The name of the source Endpoint. </param>
         /// <param name="targetName"> The name of the target Endpoint. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.StorageMover
             TargetName = targetName;
         }
 
-        /// <summary> Initializes a new instance of JobDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +55,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="agentName"> Name of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent to assign for new Job Runs of this Job Definition. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, StorageMoverProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             CopyMode = copyMode;
@@ -68,6 +72,12 @@ namespace Azure.ResourceManager.StorageMover
             AgentName = agentName;
             AgentResourceId = agentResourceId;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionData"/> for deserialization. </summary>
+        internal JobDefinitionData()
+        {
         }
 
         /// <summary> A description for the Job Definition. </summary>

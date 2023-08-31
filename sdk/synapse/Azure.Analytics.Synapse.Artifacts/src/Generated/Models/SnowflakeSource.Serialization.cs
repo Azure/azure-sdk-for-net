@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SnowflakeSourceConverter))]
-    public partial class SnowflakeSource : IUtf8JsonSerializable
+    public partial class SnowflakeSource : IUtf8JsonSerializable, IModelJsonSerializable<SnowflakeSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SnowflakeSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SnowflakeSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SnowflakeSource>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -25,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue(ExportSettings);
+            if (ExportSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SnowflakeExportCopyCommand>)ExportSettings).Serialize(writer, options);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -51,8 +64,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SnowflakeSource DeserializeSnowflakeSource(JsonElement element)
+        internal static SnowflakeSource DeserializeSnowflakeSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,6 +132,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SnowflakeSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, exportSettings);
+        }
+
+        SnowflakeSource IModelJsonSerializable<SnowflakeSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SnowflakeSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnowflakeSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SnowflakeSource>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SnowflakeSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SnowflakeSource IModelSerializable<SnowflakeSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SnowflakeSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnowflakeSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SnowflakeSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SnowflakeSource"/> to convert. </param>
+        public static implicit operator RequestContent(SnowflakeSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SnowflakeSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SnowflakeSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnowflakeSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SnowflakeSourceConverter : JsonConverter<SnowflakeSource>

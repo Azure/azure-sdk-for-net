@@ -15,7 +15,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of integration runtime resources. </summary>
     public partial class IntegrationRuntimeListResponse
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeListResponse"/>. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IntegrationRuntimeListResponse(IEnumerable<IntegrationRuntimeResource> value)
@@ -25,13 +27,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeListResponse"/>. </summary>
         /// <param name="value"> List of integration runtimes. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal IntegrationRuntimeListResponse(IReadOnlyList<IntegrationRuntimeResource> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeListResponse(IReadOnlyList<IntegrationRuntimeResource> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeListResponse"/> for deserialization. </summary>
+        internal IntegrationRuntimeListResponse()
+        {
         }
 
         /// <summary> List of integration runtimes. </summary>

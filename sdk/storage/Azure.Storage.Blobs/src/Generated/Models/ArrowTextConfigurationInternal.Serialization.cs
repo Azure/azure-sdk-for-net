@@ -5,14 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
+using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowTextConfigurationInternal : IXmlSerializable
+    internal partial class ArrowTextConfigurationInternal : IXmlSerializable, IModelSerializable<ArrowTextConfigurationInternal>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "ArrowConfiguration");
             writer.WriteStartElement("Schema");
@@ -22,6 +28,74 @@ namespace Azure.Storage.Blobs.Models
             }
             writer.WriteEndElement();
             writer.WriteEndElement();
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static ArrowTextConfigurationInternal DeserializeArrowTextConfigurationInternal(XElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            IList<ArrowFieldInternal> schema = default;
+            if (element.Element("Schema") is XElement schemaElement)
+            {
+                var array = new List<ArrowFieldInternal>();
+                foreach (var e in schemaElement.Elements("Field"))
+                {
+                    array.Add(ArrowFieldInternal.DeserializeArrowFieldInternal(e));
+                }
+                schema = array;
+            }
+            return new ArrowTextConfigurationInternal(schema, default);
+        }
+
+        BinaryData IModelSerializable<ArrowTextConfigurationInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ArrowTextConfigurationInternal IModelSerializable<ArrowTextConfigurationInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeArrowTextConfigurationInternal(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="ArrowTextConfigurationInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ArrowTextConfigurationInternal"/> to convert. </param>
+        public static implicit operator RequestContent(ArrowTextConfigurationInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ArrowTextConfigurationInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ArrowTextConfigurationInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeArrowTextConfigurationInternal(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

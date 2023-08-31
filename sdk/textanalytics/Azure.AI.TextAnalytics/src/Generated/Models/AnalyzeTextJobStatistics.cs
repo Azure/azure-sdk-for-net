@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -12,16 +14,20 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextJobStatistics. </summary>
     internal partial class AnalyzeTextJobStatistics
     {
-        /// <summary> Initializes a new instance of AnalyzeTextJobStatistics. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobStatistics"/>. </summary>
         internal AnalyzeTextJobStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextJobStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobStatistics"/>. </summary>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        internal AnalyzeTextJobStatistics(TextDocumentBatchStatistics statistics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextJobStatistics(TextDocumentBatchStatistics statistics, Dictionary<string, BinaryData> rawData)
         {
             Statistics = statistics;
+            _rawData = rawData;
         }
 
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>

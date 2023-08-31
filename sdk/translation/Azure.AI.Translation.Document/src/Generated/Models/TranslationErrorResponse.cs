@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary>
@@ -14,16 +17,20 @@ namespace Azure.AI.Translation.Document.Models
     /// </summary>
     internal partial class TranslationErrorResponse
     {
-        /// <summary> Initializes a new instance of TranslationErrorResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranslationErrorResponse"/>. </summary>
         internal TranslationErrorResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of TranslationErrorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationErrorResponse"/>. </summary>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
-        internal TranslationErrorResponse(TranslationError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationErrorResponse(TranslationError error, Dictionary<string, BinaryData> rawData)
         {
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>

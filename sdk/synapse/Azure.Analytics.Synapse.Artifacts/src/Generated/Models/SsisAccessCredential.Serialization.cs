@@ -6,29 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SsisAccessCredentialConverter))]
-    public partial class SsisAccessCredential : IUtf8JsonSerializable
+    public partial class SsisAccessCredential : IUtf8JsonSerializable, IModelJsonSerializable<SsisAccessCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisAccessCredential>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisAccessCredential>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue(Domain);
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue(UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            if (Password is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SecretBase>)Password).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element)
+        internal static SsisAccessCredential DeserializeSsisAccessCredential(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object domain = default;
             object userName = default;
             SecretBase password = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
@@ -53,8 +82,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     password = SecretBase.DeserializeSecretBase(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SsisAccessCredential(domain, userName, password);
+            return new SsisAccessCredential(domain, userName, password, rawData);
+        }
+
+        SsisAccessCredential IModelJsonSerializable<SsisAccessCredential>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisAccessCredential(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisAccessCredential>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisAccessCredential IModelSerializable<SsisAccessCredential>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisAccessCredential(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SsisAccessCredential"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SsisAccessCredential"/> to convert. </param>
+        public static implicit operator RequestContent(SsisAccessCredential model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SsisAccessCredential"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SsisAccessCredential(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSsisAccessCredential(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SsisAccessCredentialConverter : JsonConverter<SsisAccessCredential>

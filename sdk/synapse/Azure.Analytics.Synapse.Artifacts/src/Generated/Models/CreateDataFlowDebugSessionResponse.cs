@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Response body structure for creating data flow debug session. </summary>
     public partial class CreateDataFlowDebugSessionResponse
     {
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateDataFlowDebugSessionResponse"/>. </summary>
         internal CreateDataFlowDebugSessionResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDataFlowDebugSessionResponse"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
-        internal CreateDataFlowDebugSessionResponse(string sessionId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateDataFlowDebugSessionResponse(string sessionId, Dictionary<string, BinaryData> rawData)
         {
             SessionId = sessionId;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

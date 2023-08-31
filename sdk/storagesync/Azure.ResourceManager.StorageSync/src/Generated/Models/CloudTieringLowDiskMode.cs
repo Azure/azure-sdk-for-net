@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Information regarding the low disk mode state. </summary>
     public partial class CloudTieringLowDiskMode
     {
-        /// <summary> Initializes a new instance of CloudTieringLowDiskMode. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudTieringLowDiskMode"/>. </summary>
         internal CloudTieringLowDiskMode()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudTieringLowDiskMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudTieringLowDiskMode"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="state"> Low disk mode state. </param>
-        internal CloudTieringLowDiskMode(DateTimeOffset? lastUpdatedOn, CloudTieringLowDiskModeState? state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudTieringLowDiskMode(DateTimeOffset? lastUpdatedOn, CloudTieringLowDiskModeState? state, Dictionary<string, BinaryData> rawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             State = state;
+            _rawData = rawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

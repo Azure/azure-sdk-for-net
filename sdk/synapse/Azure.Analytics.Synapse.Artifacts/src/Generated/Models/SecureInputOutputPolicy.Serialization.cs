@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SecureInputOutputPolicyConverter))]
-    public partial class SecureInputOutputPolicy : IUtf8JsonSerializable
+    public partial class SecureInputOutputPolicy : IUtf8JsonSerializable, IModelJsonSerializable<SecureInputOutputPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecureInputOutputPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecureInputOutputPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SecureInput))
             {
@@ -28,17 +35,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecureInputOutputPolicy DeserializeSecureInputOutputPolicy(JsonElement element)
+        internal static SecureInputOutputPolicy DeserializeSecureInputOutputPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> secureInput = default;
             Optional<bool> secureOutput = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureInput"u8))
@@ -59,8 +81,61 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     secureOutput = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecureInputOutputPolicy(Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput));
+            return new SecureInputOutputPolicy(Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), rawData);
+        }
+
+        SecureInputOutputPolicy IModelJsonSerializable<SecureInputOutputPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecureInputOutputPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecureInputOutputPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecureInputOutputPolicy IModelSerializable<SecureInputOutputPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecureInputOutputPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecureInputOutputPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecureInputOutputPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(SecureInputOutputPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecureInputOutputPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecureInputOutputPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecureInputOutputPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SecureInputOutputPolicyConverter : JsonConverter<SecureInputOutputPolicy>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class RestoreFileSpec : IUtf8JsonSerializable
+    public partial class RestoreFileSpec : IUtf8JsonSerializable, IModelJsonSerializable<RestoreFileSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestoreFileSpec>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestoreFileSpec>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
@@ -25,7 +33,103 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("isdir"u8);
                 writer.WriteBooleanValue(IsDirectory.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RestoreFileSpec DeserializeRestoreFileSpec(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> path = default;
+            Optional<bool> isdir = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("path"u8))
+                {
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isdir"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isdir = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RestoreFileSpec(path.Value, Optional.ToNullable(isdir), rawData);
+        }
+
+        RestoreFileSpec IModelJsonSerializable<RestoreFileSpec>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreFileSpec(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestoreFileSpec>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestoreFileSpec IModelSerializable<RestoreFileSpec>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestoreFileSpec(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestoreFileSpec"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestoreFileSpec"/> to convert. </param>
+        public static implicit operator RequestContent(RestoreFileSpec model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestoreFileSpec"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestoreFileSpec(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestoreFileSpec(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

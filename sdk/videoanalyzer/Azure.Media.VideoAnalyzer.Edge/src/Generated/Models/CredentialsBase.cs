@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownCredentialsBase))]
     public abstract partial class CredentialsBase
     {
-        /// <summary> Initializes a new instance of CredentialsBase. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CredentialsBase"/>. </summary>
         protected CredentialsBase()
         {
         }
 
-        /// <summary> Initializes a new instance of CredentialsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialsBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal CredentialsBase(string type)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CredentialsBase(string type, Dictionary<string, BinaryData> rawData)
         {
             Type = type;
+            _rawData = rawData;
         }
 
         /// <summary> Type discriminator for the derived types. </summary>

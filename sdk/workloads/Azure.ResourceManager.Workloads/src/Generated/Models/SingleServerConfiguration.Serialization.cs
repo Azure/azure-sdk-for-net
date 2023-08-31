@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SingleServerConfiguration : IUtf8JsonSerializable
+    public partial class SingleServerConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<SingleServerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SingleServerConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SingleServerConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SingleServerConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                if (NetworkConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkConfiguration>)NetworkConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DatabaseType))
             {
@@ -28,26 +43,61 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration);
+            if (VirtualMachineConfiguration is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SapVirtualMachineConfiguration>)VirtualMachineConfiguration).Serialize(writer, options);
+            }
             if (Optional.IsDefined(DBDiskConfiguration))
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
-                writer.WriteObjectValue(DBDiskConfiguration);
+                if (DBDiskConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiskConfiguration>)DBDiskConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                if (CustomResourceNames is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SingleServerCustomResourceNames>)CustomResourceNames).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("appResourceGroup"u8);
             writer.WriteStringValue(AppResourceGroup);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element)
+        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<SingleServerCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkConfiguration"u8))
@@ -118,8 +169,61 @@ namespace Azure.ResourceManager.Workloads.Models
                     appResourceGroup = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
+            return new SingleServerConfiguration(deploymentType, appResourceGroup, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value, rawData);
+        }
+
+        SingleServerConfiguration IModelJsonSerializable<SingleServerConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SingleServerConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSingleServerConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SingleServerConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SingleServerConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SingleServerConfiguration IModelSerializable<SingleServerConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SingleServerConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSingleServerConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SingleServerConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SingleServerConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(SingleServerConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SingleServerConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SingleServerConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSingleServerConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownThreeTierCustomResourceNames : IUtf8JsonSerializable
+    internal partial class UnknownThreeTierCustomResourceNames : IUtf8JsonSerializable, IModelJsonSerializable<ThreeTierCustomResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ThreeTierCustomResourceNames>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ThreeTierCustomResourceNames>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("namingPatternType"u8);
             writer.WriteStringValue(NamingPatternType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownThreeTierCustomResourceNames DeserializeUnknownThreeTierCustomResourceNames(JsonElement element)
+        internal static ThreeTierCustomResourceNames DeserializeUnknownThreeTierCustomResourceNames(JsonElement element, ModelSerializerOptions options = default) => DeserializeThreeTierCustomResourceNames(element, options);
+
+        ThreeTierCustomResourceNames IModelJsonSerializable<ThreeTierCustomResourceNames>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SapNamingPatternType namingPatternType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("namingPatternType"u8))
-                {
-                    namingPatternType = new SapNamingPatternType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownThreeTierCustomResourceNames(namingPatternType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownThreeTierCustomResourceNames(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ThreeTierCustomResourceNames>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ThreeTierCustomResourceNames IModelSerializable<ThreeTierCustomResourceNames>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeThreeTierCustomResourceNames(doc.RootElement, options);
         }
     }
 }

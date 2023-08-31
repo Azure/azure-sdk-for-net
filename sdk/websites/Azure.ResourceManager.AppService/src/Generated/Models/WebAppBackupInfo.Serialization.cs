@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppBackupInfo : IUtf8JsonSerializable
+    public partial class WebAppBackupInfo : IUtf8JsonSerializable, IModelJsonSerializable<WebAppBackupInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebAppBackupInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebAppBackupInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -43,7 +49,14 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BackupSchedule))
             {
                 writer.WritePropertyName("backupSchedule"u8);
-                writer.WriteObjectValue(BackupSchedule);
+                if (BackupSchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WebAppBackupSchedule>)BackupSchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Databases))
             {
@@ -51,16 +64,37 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppServiceDatabaseBackupSetting>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebAppBackupInfo DeserializeWebAppBackupInfo(JsonElement element)
+        internal static WebAppBackupInfo DeserializeWebAppBackupInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Uri> storageAccountUrl = default;
             Optional<WebAppBackupSchedule> backupSchedule = default;
             Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -164,8 +199,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebAppBackupInfo(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases), kind.Value);
+            return new WebAppBackupInfo(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases), kind.Value, rawData);
+        }
+
+        WebAppBackupInfo IModelJsonSerializable<WebAppBackupInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppBackupInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebAppBackupInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebAppBackupInfo IModelSerializable<WebAppBackupInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebAppBackupInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebAppBackupInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebAppBackupInfo"/> to convert. </param>
+        public static implicit operator RequestContent(WebAppBackupInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebAppBackupInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebAppBackupInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebAppBackupInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

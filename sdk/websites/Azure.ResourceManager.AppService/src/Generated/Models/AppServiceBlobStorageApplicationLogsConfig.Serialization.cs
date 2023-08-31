@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceBlobStorageApplicationLogsConfig : IUtf8JsonSerializable
+    public partial class AppServiceBlobStorageApplicationLogsConfig : IUtf8JsonSerializable, IModelJsonSerializable<AppServiceBlobStorageApplicationLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppServiceBlobStorageApplicationLogsConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppServiceBlobStorageApplicationLogsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Level))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceBlobStorageApplicationLogsConfig DeserializeAppServiceBlobStorageApplicationLogsConfig(JsonElement element)
+        internal static AppServiceBlobStorageApplicationLogsConfig DeserializeAppServiceBlobStorageApplicationLogsConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<WebAppLogLevel> level = default;
             Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"u8))
@@ -72,8 +94,61 @@ namespace Azure.ResourceManager.AppService.Models
                     retentionInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppServiceBlobStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl.Value, Optional.ToNullable(retentionInDays));
+            return new AppServiceBlobStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl.Value, Optional.ToNullable(retentionInDays), rawData);
+        }
+
+        AppServiceBlobStorageApplicationLogsConfig IModelJsonSerializable<AppServiceBlobStorageApplicationLogsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceBlobStorageApplicationLogsConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppServiceBlobStorageApplicationLogsConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppServiceBlobStorageApplicationLogsConfig IModelSerializable<AppServiceBlobStorageApplicationLogsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppServiceBlobStorageApplicationLogsConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppServiceBlobStorageApplicationLogsConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppServiceBlobStorageApplicationLogsConfig"/> to convert. </param>
+        public static implicit operator RequestContent(AppServiceBlobStorageApplicationLogsConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppServiceBlobStorageApplicationLogsConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppServiceBlobStorageApplicationLogsConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppServiceBlobStorageApplicationLogsConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

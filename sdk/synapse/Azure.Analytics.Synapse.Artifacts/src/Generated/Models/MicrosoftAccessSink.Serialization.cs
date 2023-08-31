@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MicrosoftAccessSinkConverter))]
-    public partial class MicrosoftAccessSink : IUtf8JsonSerializable
+    public partial class MicrosoftAccessSink : IUtf8JsonSerializable, IModelJsonSerializable<MicrosoftAccessSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MicrosoftAccessSink>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MicrosoftAccessSink>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MicrosoftAccessSink>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -59,8 +65,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftAccessSink DeserializeMicrosoftAccessSink(JsonElement element)
+        internal static MicrosoftAccessSink DeserializeMicrosoftAccessSink(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +147,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MicrosoftAccessSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value);
+        }
+
+        MicrosoftAccessSink IModelJsonSerializable<MicrosoftAccessSink>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MicrosoftAccessSink>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftAccessSink(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MicrosoftAccessSink>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MicrosoftAccessSink>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MicrosoftAccessSink IModelSerializable<MicrosoftAccessSink>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MicrosoftAccessSink>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMicrosoftAccessSink(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MicrosoftAccessSink"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MicrosoftAccessSink"/> to convert. </param>
+        public static implicit operator RequestContent(MicrosoftAccessSink model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MicrosoftAccessSink"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MicrosoftAccessSink(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMicrosoftAccessSink(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class MicrosoftAccessSinkConverter : JsonConverter<MicrosoftAccessSink>

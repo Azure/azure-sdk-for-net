@@ -5,15 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableCorsRule : IXmlSerializable
+    public partial class TableCorsRule : IXmlSerializable, IModelSerializable<TableCorsRule>
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        private void Serialize(XmlWriter writer, string nameHint, ModelSerializerOptions options)
         {
             writer.WriteStartElement(nameHint ?? "CorsRule");
             writer.WriteStartElement("AllowedOrigins");
@@ -34,8 +38,11 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableCorsRule DeserializeTableCorsRule(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, nameHint, ModelSerializerOptions.DefaultWireOptions);
+
+        internal static TableCorsRule DeserializeTableCorsRule(XElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             string allowedOrigins = default;
             string allowedMethods = default;
             string allowedHeaders = default;
@@ -61,7 +68,57 @@ namespace Azure.Data.Tables.Models
             {
                 maxAgeInSeconds = (int)maxAgeInSecondsElement;
             }
-            return new TableCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds);
+            return new TableCorsRule(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders, maxAgeInSeconds, default);
+        }
+
+        BinaryData IModelSerializable<TableCorsRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            Serialize(writer, null, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableCorsRule IModelSerializable<TableCorsRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeTableCorsRule(XElement.Load(data.ToStream()), options);
+        }
+
+        /// <summary> Converts a <see cref="TableCorsRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TableCorsRule"/> to convert. </param>
+        public static implicit operator RequestContent(TableCorsRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TableCorsRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TableCorsRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            return DeserializeTableCorsRule(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

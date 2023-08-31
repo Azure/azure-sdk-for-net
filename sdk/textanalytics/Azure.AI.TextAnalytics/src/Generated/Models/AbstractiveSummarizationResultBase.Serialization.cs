@@ -5,34 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationResultBase : IUtf8JsonSerializable
+    internal partial class AbstractiveSummarizationResultBase : IUtf8JsonSerializable, IModelJsonSerializable<AbstractiveSummarizationResultBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AbstractiveSummarizationResultBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AbstractiveSummarizationResultBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AbstractiveSummaryDocumentResult>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AbstractiveSummarizationResultBase DeserializeAbstractiveSummarizationResultBase(JsonElement element)
+        internal static AbstractiveSummarizationResultBase DeserializeAbstractiveSummarizationResultBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<AbstractiveSummaryDocumentResult> documents = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"u8))
@@ -45,8 +74,61 @@ namespace Azure.AI.TextAnalytics.Models
                     documents = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AbstractiveSummarizationResultBase(documents);
+            return new AbstractiveSummarizationResultBase(documents, rawData);
+        }
+
+        AbstractiveSummarizationResultBase IModelJsonSerializable<AbstractiveSummarizationResultBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAbstractiveSummarizationResultBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AbstractiveSummarizationResultBase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AbstractiveSummarizationResultBase IModelSerializable<AbstractiveSummarizationResultBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAbstractiveSummarizationResultBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AbstractiveSummarizationResultBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AbstractiveSummarizationResultBase"/> to convert. </param>
+        public static implicit operator RequestContent(AbstractiveSummarizationResultBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AbstractiveSummarizationResultBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AbstractiveSummarizationResultBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAbstractiveSummarizationResultBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -9,15 +9,34 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PipelineRunConverter))]
-    public partial class PipelineRun
+    public partial class PipelineRun : IUtf8JsonSerializable, IModelJsonSerializable<PipelineRun>
     {
-        internal static PipelineRun DeserializePipelineRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineRun>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineRun>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PipelineRun DeserializePipelineRun(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -138,11 +157,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
 
+        PipelineRun IModelJsonSerializable<PipelineRun>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineRun(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineRun>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineRun IModelSerializable<PipelineRun>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineRun(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineRun"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineRun"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineRun model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineRun"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineRun(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineRun(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
+
         internal partial class PipelineRunConverter : JsonConverter<PipelineRun>
         {
             public override void Write(Utf8JsonWriter writer, PipelineRun model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override PipelineRun Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

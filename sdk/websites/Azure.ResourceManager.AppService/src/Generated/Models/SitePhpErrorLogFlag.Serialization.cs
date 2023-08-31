@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SitePhpErrorLogFlag : IUtf8JsonSerializable
+    public partial class SitePhpErrorLogFlag : IUtf8JsonSerializable, IModelJsonSerializable<SitePhpErrorLogFlag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SitePhpErrorLogFlag>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SitePhpErrorLogFlag>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -44,11 +52,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(MasterLogErrorsMaxLength);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SitePhpErrorLogFlag DeserializeSitePhpErrorLogFlag(JsonElement element)
+        internal static SitePhpErrorLogFlag DeserializeSitePhpErrorLogFlag(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> masterLogErrors = default;
             Optional<string> localLogErrorsMaxLength = default;
             Optional<string> masterLogErrorsMaxLength = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -125,8 +148,61 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SitePhpErrorLogFlag(id, name, type, systemData.Value, localLogErrors.Value, masterLogErrors.Value, localLogErrorsMaxLength.Value, masterLogErrorsMaxLength.Value, kind.Value);
+            return new SitePhpErrorLogFlag(id, name, type, systemData.Value, localLogErrors.Value, masterLogErrors.Value, localLogErrorsMaxLength.Value, masterLogErrorsMaxLength.Value, kind.Value, rawData);
+        }
+
+        SitePhpErrorLogFlag IModelJsonSerializable<SitePhpErrorLogFlag>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSitePhpErrorLogFlag(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SitePhpErrorLogFlag>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SitePhpErrorLogFlag IModelSerializable<SitePhpErrorLogFlag>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSitePhpErrorLogFlag(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SitePhpErrorLogFlag"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SitePhpErrorLogFlag"/> to convert. </param>
+        public static implicit operator RequestContent(SitePhpErrorLogFlag model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SitePhpErrorLogFlag"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SitePhpErrorLogFlag(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSitePhpErrorLogFlag(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
