@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Integrations for Azure Monitor Workspace. </summary>
     public partial class MonitorWorkspaceIntegration
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceIntegration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceIntegration"/>. </summary>
         public MonitorWorkspaceIntegration()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceIntegration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceIntegration"/>. </summary>
         /// <param name="monitorWorkspaceResourceId"> The resource Id of the connected Azure Monitor Workspace. </param>
-        internal MonitorWorkspaceIntegration(ResourceIdentifier monitorWorkspaceResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorWorkspaceIntegration(ResourceIdentifier monitorWorkspaceResourceId, Dictionary<string, BinaryData> rawData)
         {
             MonitorWorkspaceResourceId = monitorWorkspaceResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The resource Id of the connected Azure Monitor Workspace. </summary>

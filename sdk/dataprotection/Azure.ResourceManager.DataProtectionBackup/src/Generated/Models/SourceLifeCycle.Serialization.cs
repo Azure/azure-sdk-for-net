@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SourceLifeCycle : IUtf8JsonSerializable
+    public partial class SourceLifeCycle : IUtf8JsonSerializable, IModelJsonSerializable<SourceLifeCycle>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SourceLifeCycle>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SourceLifeCycle>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
             writer.WriteObjectValue(DeleteAfter);
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element)
+        internal static SourceLifeCycle DeserializeSourceLifeCycle(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
             Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteAfter"u8))
@@ -68,8 +90,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     targetDataStoreCopySettings = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings));
+            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings), rawData);
+        }
+
+        SourceLifeCycle IModelJsonSerializable<SourceLifeCycle>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceLifeCycle(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SourceLifeCycle>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SourceLifeCycle IModelSerializable<SourceLifeCycle>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSourceLifeCycle(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SourceLifeCycle model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SourceLifeCycle(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSourceLifeCycle(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Health.Insights.CancerProfiling
 {
     /// <summary> A piece of evidence corresponding to an inference. </summary>
     public partial class InferenceEvidence
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of InferenceEvidence. </summary>
         internal InferenceEvidence()
         {
@@ -22,11 +27,13 @@ namespace Azure.Health.Insights.CancerProfiling
         /// system.
         /// </param>
         /// <param name="importance"> A value indicating how important this piece of evidence is for the inference. </param>
-        internal InferenceEvidence(ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InferenceEvidence(ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance, Dictionary<string, BinaryData> rawData)
         {
             PatientDataEvidence = patientDataEvidence;
             PatientInfoEvidence = patientInfoEvidence;
             Importance = importance;
+            _rawData = rawData;
         }
 
         /// <summary> A piece of evidence from a clinical note (text document). </summary>

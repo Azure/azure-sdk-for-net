@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEventHubProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventHubProperties : IUtf8JsonSerializable, IModelJsonSerializable<DigitalTwinsEventHubProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DigitalTwinsEventHubProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DigitalTwinsEventHubProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DigitalTwinsEventHubProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConnectionStringPrimaryKey))
             {
@@ -107,11 +114,25 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element)
+        internal static DigitalTwinsEventHubProperties DeserializeDigitalTwinsEventHubProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -127,6 +148,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStringPrimaryKey"u8))
@@ -233,8 +255,57 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DigitalTwinsEventHubProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, connectionStringPrimaryKey.Value, connectionStringSecondaryKey.Value, endpointUri.Value, entityPath.Value);
+            return new DigitalTwinsEventHubProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, connectionStringPrimaryKey.Value, connectionStringSecondaryKey.Value, endpointUri.Value, entityPath.Value, rawData);
+        }
+
+        DigitalTwinsEventHubProperties IModelJsonSerializable<DigitalTwinsEventHubProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DigitalTwinsEventHubProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsEventHubProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DigitalTwinsEventHubProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DigitalTwinsEventHubProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DigitalTwinsEventHubProperties IModelSerializable<DigitalTwinsEventHubProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DigitalTwinsEventHubProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDigitalTwinsEventHubProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DigitalTwinsEventHubProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DigitalTwinsEventHubProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDigitalTwinsEventHubProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

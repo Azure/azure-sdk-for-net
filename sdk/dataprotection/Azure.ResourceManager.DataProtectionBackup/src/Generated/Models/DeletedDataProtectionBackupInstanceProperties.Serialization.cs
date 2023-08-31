@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DeletedDataProtectionBackupInstanceProperties : IUtf8JsonSerializable
+    public partial class DeletedDataProtectionBackupInstanceProperties : IUtf8JsonSerializable, IModelJsonSerializable<DeletedDataProtectionBackupInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeletedDataProtectionBackupInstanceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeletedDataProtectionBackupInstanceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DeletedDataProtectionBackupInstanceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
@@ -42,11 +49,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeletedDataProtectionBackupInstanceProperties DeserializeDeletedDataProtectionBackupInstanceProperties(JsonElement element)
+        internal static DeletedDataProtectionBackupInstanceProperties DeserializeDeletedDataProtectionBackupInstanceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
             Optional<BackupValidationType> validationType = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deletionInfo"u8))
@@ -153,8 +175,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeletedDataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), objectType, deletionInfo.Value);
+            return new DeletedDataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), objectType, deletionInfo.Value, rawData);
+        }
+
+        DeletedDataProtectionBackupInstanceProperties IModelJsonSerializable<DeletedDataProtectionBackupInstanceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DeletedDataProtectionBackupInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedDataProtectionBackupInstanceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeletedDataProtectionBackupInstanceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DeletedDataProtectionBackupInstanceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeletedDataProtectionBackupInstanceProperties IModelSerializable<DeletedDataProtectionBackupInstanceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DeletedDataProtectionBackupInstanceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeletedDataProtectionBackupInstanceProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DeletedDataProtectionBackupInstanceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DeletedDataProtectionBackupInstanceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeletedDataProtectionBackupInstanceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

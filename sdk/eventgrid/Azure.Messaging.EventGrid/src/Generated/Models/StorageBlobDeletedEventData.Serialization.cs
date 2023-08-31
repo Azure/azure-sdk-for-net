@@ -6,17 +6,89 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageBlobDeletedEventDataConverter))]
-    public partial class StorageBlobDeletedEventData
+    public partial class StorageBlobDeletedEventData : IUtf8JsonSerializable, IModelJsonSerializable<StorageBlobDeletedEventData>
     {
-        internal static StorageBlobDeletedEventData DeserializeStorageBlobDeletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageBlobDeletedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageBlobDeletedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Api))
+            {
+                writer.WritePropertyName("api"u8);
+                writer.WriteStringValue(Api);
+            }
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                writer.WritePropertyName("clientRequestId"u8);
+                writer.WriteStringValue(ClientRequestId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WritePropertyName("contentType"u8);
+                writer.WriteStringValue(ContentType);
+            }
+            if (Optional.IsDefined(BlobType))
+            {
+                writer.WritePropertyName("blobType"u8);
+                writer.WriteStringValue(BlobType);
+            }
+            if (Optional.IsDefined(Url))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Url);
+            }
+            if (Optional.IsDefined(Sequencer))
+            {
+                writer.WritePropertyName("sequencer"u8);
+                writer.WriteStringValue(Sequencer);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
+            }
+            if (Optional.IsDefined(StorageDiagnostics))
+            {
+                writer.WritePropertyName("storageDiagnostics"u8);
+                writer.WriteObjectValue(StorageDiagnostics);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageBlobDeletedEventData DeserializeStorageBlobDeletedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +102,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> sequencer = default;
             Optional<string> identity = default;
             Optional<object> storageDiagnostics = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"u8))
@@ -81,15 +154,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageBlobDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageBlobDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value, rawData);
+        }
+
+        StorageBlobDeletedEventData IModelJsonSerializable<StorageBlobDeletedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageBlobDeletedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageBlobDeletedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageBlobDeletedEventData IModelSerializable<StorageBlobDeletedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageBlobDeletedEventData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StorageBlobDeletedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StorageBlobDeletedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageBlobDeletedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class StorageBlobDeletedEventDataConverter : JsonConverter<StorageBlobDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobDeletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override StorageBlobDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

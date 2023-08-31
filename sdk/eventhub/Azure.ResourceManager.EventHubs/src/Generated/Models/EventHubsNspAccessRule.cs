@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information of Access Rule in Network Profile. </summary>
     public partial class EventHubsNspAccessRule : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsNspAccessRule. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRule"/>. </summary>
         internal EventHubsNspAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNspAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of Access Rule. </param>
-        internal EventHubsNspAccessRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsNspAccessRuleProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNspAccessRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsNspAccessRuleProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Properties of Access Rule. </summary>

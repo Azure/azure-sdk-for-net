@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> ConnectionState information. </summary>
     public partial class EventGridPrivateEndpointConnectionState
     {
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionState"/>. </summary>
         public EventGridPrivateEndpointConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         /// <param name="actionsRequired"> Actions required (if any). </param>
-        internal EventGridPrivateEndpointConnectionState(EventGridPrivateEndpointPersistedConnectionStatus? status, string description, string actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridPrivateEndpointConnectionState(EventGridPrivateEndpointPersistedConnectionStatus? status, string description, string actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
         }
 
         /// <summary> Status of the connection. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> A REST based health check. </summary>
     public partial class RestHealthCheck
     {
-        /// <summary> Initializes a new instance of RestHealthCheck. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestHealthCheck"/>. </summary>
         /// <param name="name"> A unique name for this check. </param>
         /// <param name="request"> The request to the health provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="request"/> is null. </exception>
@@ -26,15 +29,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Request = request;
         }
 
-        /// <summary> Initializes a new instance of RestHealthCheck. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestHealthCheck"/>. </summary>
         /// <param name="name"> A unique name for this check. </param>
         /// <param name="request"> The request to the health provider. </param>
         /// <param name="response"> The expected response from the health provider. If no expected response is provided, the default is to expect the received response to have an HTTP status code of 200 OK. </param>
-        internal RestHealthCheck(string name, RestRequest request, RestResponse response)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestHealthCheck(string name, RestRequest request, RestResponse response, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Request = request;
             Response = response;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestHealthCheck"/> for deserialization. </summary>
+        internal RestHealthCheck()
+        {
         }
 
         /// <summary> A unique name for this check. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ResourceGuardProperties : IUtf8JsonSerializable
+    public partial class ResourceGuardProperties : IUtf8JsonSerializable, IModelJsonSerializable<ResourceGuardProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceGuardProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceGuardProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
             {
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element)
+        internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
             Optional<IList<string>> vaultCriticalOperationExclusionList = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -93,8 +115,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value);
+            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value, rawData);
+        }
+
+        ResourceGuardProperties IModelJsonSerializable<ResourceGuardProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGuardProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceGuardProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceGuardProperties IModelSerializable<ResourceGuardProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceGuardProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceGuardProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceGuardProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceGuardProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

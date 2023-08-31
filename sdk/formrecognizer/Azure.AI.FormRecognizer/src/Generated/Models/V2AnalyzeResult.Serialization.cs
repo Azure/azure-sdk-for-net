@@ -5,16 +5,106 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class V2AnalyzeResult
+    internal partial class V2AnalyzeResult : IUtf8JsonSerializable, IModelJsonSerializable<V2AnalyzeResult>
     {
-        internal static V2AnalyzeResult DeserializeV2AnalyzeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<V2AnalyzeResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<V2AnalyzeResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("version"u8);
+            writer.WriteStringValue(Version);
+            if (Optional.IsCollectionDefined(ReadResults))
+            {
+                if (ReadResults != null)
+                {
+                    writer.WritePropertyName("readResults"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ReadResults)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("readResults");
+                }
+            }
+            if (Optional.IsCollectionDefined(PageResults))
+            {
+                if (PageResults != null)
+                {
+                    writer.WritePropertyName("pageResults"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PageResults)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("pageResults");
+                }
+            }
+            if (Optional.IsCollectionDefined(DocumentResults))
+            {
+                if (DocumentResults != null)
+                {
+                    writer.WritePropertyName("documentResults"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DocumentResults)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("documentResults");
+                }
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static V2AnalyzeResult DeserializeV2AnalyzeResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +114,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<IReadOnlyList<PageResult>> pageResults = default;
             Optional<IReadOnlyList<DocumentResult>> documentResults = default;
             Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -90,8 +181,57 @@ namespace Azure.AI.FormRecognizer.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new V2AnalyzeResult(version, Optional.ToList(readResults), Optional.ToList(pageResults), Optional.ToList(documentResults), Optional.ToList(errors));
+            return new V2AnalyzeResult(version, Optional.ToList(readResults), Optional.ToList(pageResults), Optional.ToList(documentResults), Optional.ToList(errors), rawData);
+        }
+
+        V2AnalyzeResult IModelJsonSerializable<V2AnalyzeResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeV2AnalyzeResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<V2AnalyzeResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        V2AnalyzeResult IModelSerializable<V2AnalyzeResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeV2AnalyzeResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(V2AnalyzeResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator V2AnalyzeResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeV2AnalyzeResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

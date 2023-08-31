@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightStorageAccountInfo : IUtf8JsonSerializable
+    public partial class HDInsightStorageAccountInfo : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightStorageAccountInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightStorageAccountInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightStorageAccountInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -79,11 +87,25 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("enableSecureChannel"u8);
                 writer.WriteBooleanValue(EnableSecureChannel.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightStorageAccountInfo DeserializeHDInsightStorageAccountInfo(JsonElement element)
+        internal static HDInsightStorageAccountInfo DeserializeHDInsightStorageAccountInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +120,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> saskey = default;
             Optional<string> fileshare = default;
             Optional<bool> enableSecureChannel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -168,8 +191,57 @@ namespace Azure.ResourceManager.HDInsight.Models
                     enableSecureChannel = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel));
+            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel), rawData);
+        }
+
+        HDInsightStorageAccountInfo IModelJsonSerializable<HDInsightStorageAccountInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightStorageAccountInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightStorageAccountInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightStorageAccountInfo IModelSerializable<HDInsightStorageAccountInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightStorageAccountInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HDInsightStorageAccountInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HDInsightStorageAccountInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightStorageAccountInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Please note <see cref="BackupFeatureValidationResultBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BackupFeatureValidationResult"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownFeatureValidationResponseBase))]
     public abstract partial class BackupFeatureValidationResultBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationResultBase. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResultBase"/>. </summary>
         protected BackupFeatureValidationResultBase()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupFeatureValidationResultBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResultBase"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal BackupFeatureValidationResultBase(string objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupFeatureValidationResultBase(string objectType, Dictionary<string, BinaryData> rawData)
         {
             ObjectType = objectType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

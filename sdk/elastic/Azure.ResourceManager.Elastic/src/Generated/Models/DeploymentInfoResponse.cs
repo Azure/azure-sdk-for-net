@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The properties of deployment in Elastic cloud corresponding to the Elastic monitor resource. </summary>
     public partial class DeploymentInfoResponse
     {
-        /// <summary> Initializes a new instance of DeploymentInfoResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentInfoResponse"/>. </summary>
         internal DeploymentInfoResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentInfoResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentInfoResponse"/>. </summary>
         /// <param name="status"> The Elastic deployment status. </param>
         /// <param name="version"> Version of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="memoryCapacity"> RAM capacity of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="diskCapacity"> Disk capacity of the elasticsearch in Elastic cloud deployment. </param>
-        internal DeploymentInfoResponse(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentInfoResponse(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Version = version;
             MemoryCapacity = memoryCapacity;
             DiskCapacity = diskCapacity;
+            _rawData = rawData;
         }
 
         /// <summary> The Elastic deployment status. </summary>

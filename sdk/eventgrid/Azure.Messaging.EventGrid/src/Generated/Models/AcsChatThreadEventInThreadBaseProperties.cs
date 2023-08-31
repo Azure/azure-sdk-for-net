@@ -6,23 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat thread events. </summary>
     public partial class AcsChatThreadEventInThreadBaseProperties : AcsChatEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatThreadEventInThreadBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         internal AcsChatThreadEventInThreadBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatThreadEventInThreadBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, DateTimeOffset? createTime, long? version) : base(transactionId, threadId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, DateTimeOffset? createTime, long? version, Dictionary<string, BinaryData> rawData) : base(transactionId, threadId, rawData)
         {
             CreateTime = createTime;
             Version = version;

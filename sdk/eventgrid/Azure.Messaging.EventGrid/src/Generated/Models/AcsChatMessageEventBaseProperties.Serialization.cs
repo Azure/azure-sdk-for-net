@@ -6,15 +6,87 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsChatMessageEventBaseProperties
+    public partial class AcsChatMessageEventBaseProperties : IUtf8JsonSerializable, IModelJsonSerializable<AcsChatMessageEventBaseProperties>
     {
-        internal static AcsChatMessageEventBaseProperties DeserializeAcsChatMessageEventBaseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsChatMessageEventBaseProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsChatMessageEventBaseProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AcsChatMessageEventBaseProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(SenderCommunicationIdentifier))
+            {
+                writer.WritePropertyName("senderCommunicationIdentifier"u8);
+                writer.WriteObjectValue(SenderCommunicationIdentifier);
+            }
+            if (Optional.IsDefined(SenderDisplayName))
+            {
+                writer.WritePropertyName("senderDisplayName"u8);
+                writer.WriteStringValue(SenderDisplayName);
+            }
+            if (Optional.IsDefined(ComposeTime))
+            {
+                writer.WritePropertyName("composeTime"u8);
+                writer.WriteStringValue(ComposeTime.Value, "O");
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(RecipientCommunicationIdentifier))
+            {
+                writer.WritePropertyName("recipientCommunicationIdentifier"u8);
+                writer.WriteObjectValue(RecipientCommunicationIdentifier);
+            }
+            if (Optional.IsDefined(TransactionId))
+            {
+                writer.WritePropertyName("transactionId"u8);
+                writer.WriteStringValue(TransactionId);
+            }
+            if (Optional.IsDefined(ThreadId))
+            {
+                writer.WritePropertyName("threadId"u8);
+                writer.WriteStringValue(ThreadId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsChatMessageEventBaseProperties DeserializeAcsChatMessageEventBaseProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +100,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -91,8 +164,57 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     threadId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsChatMessageEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version));
+            return new AcsChatMessageEventBaseProperties(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), rawData);
+        }
+
+        AcsChatMessageEventBaseProperties IModelJsonSerializable<AcsChatMessageEventBaseProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AcsChatMessageEventBaseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsChatMessageEventBaseProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsChatMessageEventBaseProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AcsChatMessageEventBaseProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsChatMessageEventBaseProperties IModelSerializable<AcsChatMessageEventBaseProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AcsChatMessageEventBaseProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsChatMessageEventBaseProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AcsChatMessageEventBaseProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AcsChatMessageEventBaseProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsChatMessageEventBaseProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The billing meters. </summary>
     public partial class HDInsightBillingMeters
     {
-        /// <summary> Initializes a new instance of HDInsightBillingMeters. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingMeters"/>. </summary>
         internal HDInsightBillingMeters()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightBillingMeters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingMeters"/>. </summary>
         /// <param name="meterParameter"> The virtual machine sizes. </param>
         /// <param name="meter"> The HDInsight meter guid. </param>
         /// <param name="unit"> The unit of meter, VMHours or CoreHours. </param>
-        internal HDInsightBillingMeters(string meterParameter, string meter, string unit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightBillingMeters(string meterParameter, string meter, string unit, Dictionary<string, BinaryData> rawData)
         {
             MeterParameter = meterParameter;
             Meter = meter;
             Unit = unit;
+            _rawData = rawData;
         }
 
         /// <summary> The virtual machine sizes. </summary>

@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabUserData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabUserData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabUserData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,13 +39,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdOn"> The creation date of the user profile. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabUserIdentity identity, DevTestLabUserSecretStore secretStore, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabUserIdentity identity, DevTestLabUserSecretStore secretStore, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             SecretStore = secretStore;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserData"/> for deserialization. </summary>
+        internal DevTestLabUserData()
+        {
         }
 
         /// <summary> The identity of the user. </summary>

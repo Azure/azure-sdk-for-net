@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines the properties of a health check step. </summary>
     public partial class HealthCheckStepProperties : StepProperties
     {
-        /// <summary> Initializes a new instance of HealthCheckStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStepProperties"/>. </summary>
         /// <param name="attributes">
         /// The health check step attributes
         /// Please note <see cref="HealthCheckStepAttributes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -28,17 +29,23 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             StepType = StepType.HealthCheck;
         }
 
-        /// <summary> Initializes a new instance of HealthCheckStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStepProperties"/>. </summary>
         /// <param name="stepType"> The type of step. </param>
         /// <param name="attributes">
         /// The health check step attributes
         /// Please note <see cref="HealthCheckStepAttributes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RestHealthCheckStepAttributes"/>.
         /// </param>
-        internal HealthCheckStepProperties(StepType stepType, HealthCheckStepAttributes attributes) : base(stepType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthCheckStepProperties(StepType stepType, HealthCheckStepAttributes attributes, Dictionary<string, BinaryData> rawData) : base(stepType, rawData)
         {
             Attributes = attributes;
             StepType = stepType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthCheckStepProperties"/> for deserialization. </summary>
+        internal HealthCheckStepProperties()
+        {
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -13,6 +14,8 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The content of the patient document. </summary>
     public partial class DocumentContent
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of DocumentContent. </summary>
         /// <param name="sourceType">
         /// The type of the content's source.
@@ -27,6 +30,26 @@ namespace Azure.Health.Insights.CancerProfiling
 
             SourceType = sourceType;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of DocumentContent. </summary>
+        /// <param name="sourceType">
+        /// The type of the content's source.
+        /// In case the source type is 'inline', the content is given as a string (for instance, text).
+        /// In case the source type is 'reference', the content is given as a URI.
+        /// </param>
+        /// <param name="value"> The content of the document, given either inline (as a string) or as a reference (URI). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentContent(DocumentContentSourceType sourceType, string value, Dictionary<string, BinaryData> rawData)
+        {
+            SourceType = sourceType;
+            Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentContent"/> for deserialization. </summary>
+        internal DocumentContent()
+        {
         }
 
         /// <summary>

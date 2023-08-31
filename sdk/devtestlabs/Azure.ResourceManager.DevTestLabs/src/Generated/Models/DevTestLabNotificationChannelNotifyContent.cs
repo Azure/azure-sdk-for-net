@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for generating a Notification. </summary>
     public partial class DevTestLabNotificationChannelNotifyContent
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelNotifyContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelNotifyContent"/>. </summary>
         public DevTestLabNotificationChannelNotifyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelNotifyContent"/>. </summary>
+        /// <param name="eventName"> The type of event (i.e. AutoShutdown, Cost). </param>
+        /// <param name="jsonPayload"> Properties for the notification in json format. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabNotificationChannelNotifyContent(DevTestLabNotificationChannelEventType? eventName, string jsonPayload, Dictionary<string, BinaryData> rawData)
+        {
+            EventName = eventName;
+            JsonPayload = jsonPayload;
+            _rawData = rawData;
         }
 
         /// <summary> The type of event (i.e. AutoShutdown, Cost). </summary>

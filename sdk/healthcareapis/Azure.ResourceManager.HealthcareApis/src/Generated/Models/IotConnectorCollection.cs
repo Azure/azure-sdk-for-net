@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A collection of IoT Connectors. </summary>
     internal partial class IotConnectorCollection
     {
-        /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotConnectorCollection"/>. </summary>
         internal IotConnectorCollection()
         {
             Value = new ChangeTrackingList<HealthcareApisIotConnectorData>();
         }
 
-        /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotConnectorCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Connectors. </param>
         /// <param name="value"> The list of IoT Connectors. </param>
-        internal IotConnectorCollection(string nextLink, IReadOnlyList<HealthcareApisIotConnectorData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotConnectorCollection(string nextLink, IReadOnlyList<HealthcareApisIotConnectorData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of IoT Connectors. </summary>

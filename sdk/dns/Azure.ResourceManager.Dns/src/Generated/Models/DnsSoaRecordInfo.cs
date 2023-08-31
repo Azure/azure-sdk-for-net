@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An SOA record. </summary>
     public partial class DnsSoaRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsSoaRecordInfo"/>. </summary>
         public DnsSoaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsSoaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSoaRecordInfo"/>. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
         /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
         /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
-        internal DnsSoaRecordInfo(string host, string email, long? serialNumber, long? refreshTimeInSeconds, long? retryTimeInSeconds, long? expireTimeInSeconds, long? minimumTtlInSeconds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsSoaRecordInfo(string host, string email, long? serialNumber, long? refreshTimeInSeconds, long? retryTimeInSeconds, long? expireTimeInSeconds, long? minimumTtlInSeconds, Dictionary<string, BinaryData> rawData)
         {
             Host = host;
             Email = email;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.Dns.Models
             RetryTimeInSeconds = retryTimeInSeconds;
             ExpireTimeInSeconds = expireTimeInSeconds;
             MinimumTtlInSeconds = minimumTtlInSeconds;
+            _rawData = rawData;
         }
 
         /// <summary> The domain name of the authoritative name server for this SOA record. </summary>

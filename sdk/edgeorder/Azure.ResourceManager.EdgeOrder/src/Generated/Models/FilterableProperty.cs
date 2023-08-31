@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Different types of filters supported and its values. </summary>
     public partial class FilterableProperty
     {
-        /// <summary> Initializes a new instance of FilterableProperty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
@@ -27,13 +29,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             SupportedValues = supportedValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterableProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
-        internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues, Dictionary<string, BinaryData> rawData)
         {
             SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/> for deserialization. </summary>
+        internal FilterableProperty()
+        {
         }
 
         /// <summary> Type of product filter. </summary>

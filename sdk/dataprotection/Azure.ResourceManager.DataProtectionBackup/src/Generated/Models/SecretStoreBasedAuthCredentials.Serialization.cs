@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SecretStoreBasedAuthCredentials : IUtf8JsonSerializable
+    public partial class SecretStoreBasedAuthCredentials : IUtf8JsonSerializable, IModelJsonSerializable<SecretStoreBasedAuthCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecretStoreBasedAuthCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecretStoreBasedAuthCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SecretStoreBasedAuthCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretStoreResource))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecretStoreBasedAuthCredentials DeserializeSecretStoreBasedAuthCredentials(JsonElement element)
+        internal static SecretStoreBasedAuthCredentials DeserializeSecretStoreBasedAuthCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SecretStoreResourceInfo> secretStoreResource = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretStoreResource"u8))
@@ -49,8 +72,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecretStoreBasedAuthCredentials(objectType, secretStoreResource.Value);
+            return new SecretStoreBasedAuthCredentials(objectType, secretStoreResource.Value, rawData);
+        }
+
+        SecretStoreBasedAuthCredentials IModelJsonSerializable<SecretStoreBasedAuthCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecretStoreBasedAuthCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretStoreBasedAuthCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecretStoreBasedAuthCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecretStoreBasedAuthCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecretStoreBasedAuthCredentials IModelSerializable<SecretStoreBasedAuthCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SecretStoreBasedAuthCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecretStoreBasedAuthCredentials(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SecretStoreBasedAuthCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SecretStoreBasedAuthCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecretStoreBasedAuthCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

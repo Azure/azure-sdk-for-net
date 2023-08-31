@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -15,7 +16,9 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> IP configuration. </summary>
     public partial class InboundEndpointIPConfiguration
     {
-        /// <summary> Initializes a new instance of InboundEndpointIPConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
         public InboundEndpointIPConfiguration(WritableSubResource subnet)
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Subnet = subnet;
         }
 
-        /// <summary> Initializes a new instance of InboundEndpointIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/>. </summary>
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
         /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>
-        internal InboundEndpointIPConfiguration(WritableSubResource subnet, IPAddress privateIPAddress, InboundEndpointIPAllocationMethod? privateIPAllocationMethod)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InboundEndpointIPConfiguration(WritableSubResource subnet, IPAddress privateIPAddress, InboundEndpointIPAllocationMethod? privateIPAllocationMethod, Dictionary<string, BinaryData> rawData)
         {
             Subnet = subnet;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPConfiguration"/> for deserialization. </summary>
+        internal InboundEndpointIPConfiguration()
+        {
         }
 
         /// <summary> The reference to the subnet bound to the IP configuration. </summary>

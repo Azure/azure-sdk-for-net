@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -16,13 +17,15 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> A class representing the EventGridPrivateEndpointConnection data model. </summary>
     public partial class EventGridPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionData"/>. </summary>
         public EventGridPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +34,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="groupIds"> GroupIds from the private link service resource. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal EventGridPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, EventGridPrivateEndpointConnectionState connectionState, EventGridResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, EventGridPrivateEndpointConnectionState connectionState, EventGridResourceProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Storage setting. </summary>
     public partial class DataProtectionBackupStorageSetting
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupStorageSetting. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupStorageSetting"/>. </summary>
         public DataProtectionBackupStorageSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupStorageSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupStorageSetting"/>. </summary>
         /// <param name="dataStoreType"> Gets or sets the type of the datastore. </param>
         /// <param name="storageSettingType"> Gets or sets the type. </param>
-        internal DataProtectionBackupStorageSetting(StorageSettingStoreType? dataStoreType, StorageSettingType? storageSettingType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupStorageSetting(StorageSettingStoreType? dataStoreType, StorageSettingType? storageSettingType, Dictionary<string, BinaryData> rawData)
         {
             DataStoreType = dataStoreType;
             StorageSettingType = storageSettingType;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the type of the datastore. </summary>

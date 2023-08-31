@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines the PUT rollout request body. </summary>
     public partial class RolloutCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RolloutCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RolloutCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="buildVersion"> The version of the build being deployed. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             StepGroups = stepGroups.ToList();
         }
 
-        /// <summary> Initializes a new instance of RolloutCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,13 +50,20 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <param name="artifactSourceId"> The reference to the artifact source resource Id where the payload is located. </param>
         /// <param name="targetServiceTopologyId"> The resource Id of the service topology from which service units are being referenced in step groups to be deployed. </param>
         /// <param name="stepGroups"> The list of step groups that define the orchestration. </param>
-        internal RolloutCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, string buildVersion, string artifactSourceId, string targetServiceTopologyId, IList<StepGroup> stepGroups) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RolloutCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, string buildVersion, string artifactSourceId, string targetServiceTopologyId, IList<StepGroup> stepGroups, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             BuildVersion = buildVersion;
             ArtifactSourceId = artifactSourceId;
             TargetServiceTopologyId = targetServiceTopologyId;
             StepGroups = stepGroups;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RolloutCreateOrUpdateContent"/> for deserialization. </summary>
+        internal RolloutCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Identity for the resource. </summary>

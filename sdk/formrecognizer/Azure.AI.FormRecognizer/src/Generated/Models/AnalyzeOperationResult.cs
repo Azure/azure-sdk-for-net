@@ -6,13 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status and result of the queued analyze operation. </summary>
     internal partial class AnalyzeOperationResult
     {
-        /// <summary> Initializes a new instance of AnalyzeOperationResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeOperationResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
@@ -23,17 +26,24 @@ namespace Azure.AI.FormRecognizer.Models
             LastUpdatedDateTime = lastUpdatedDateTime;
         }
 
-        /// <summary> Initializes a new instance of AnalyzeOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeOperationResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the analyze operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="analyzeResult"> Results of the analyze operation. </param>
-        internal AnalyzeOperationResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, V2AnalyzeResult analyzeResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeOperationResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, V2AnalyzeResult analyzeResult, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             AnalyzeResult = analyzeResult;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeOperationResult"/> for deserialization. </summary>
+        internal AnalyzeOperationResult()
+        {
         }
 
         /// <summary> Operation status. </summary>

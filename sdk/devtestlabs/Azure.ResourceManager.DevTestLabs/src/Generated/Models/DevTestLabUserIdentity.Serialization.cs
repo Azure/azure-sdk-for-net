@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabUserIdentity : IUtf8JsonSerializable
+    public partial class DevTestLabUserIdentity : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabUserIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabUserIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabUserIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrincipalName))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabUserIdentity DeserializeDevTestLabUserIdentity(JsonElement element)
+        internal static DevTestLabUserIdentity DeserializeDevTestLabUserIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<Guid> tenantId = default;
             Optional<string> objectId = default;
             Optional<string> appId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalName"u8))
@@ -86,8 +108,57 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     appId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabUserIdentity(principalName.Value, principalId.Value, Optional.ToNullable(tenantId), objectId.Value, appId.Value);
+            return new DevTestLabUserIdentity(principalName.Value, principalId.Value, Optional.ToNullable(tenantId), objectId.Value, appId.Value, rawData);
+        }
+
+        DevTestLabUserIdentity IModelJsonSerializable<DevTestLabUserIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabUserIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabUserIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabUserIdentity IModelSerializable<DevTestLabUserIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabUserIdentity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DevTestLabUserIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DevTestLabUserIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabUserIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

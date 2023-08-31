@@ -6,22 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceNodePoolRollingEventDataConverter))]
-    public partial class ContainerServiceNodePoolRollingEventData
+    public partial class ContainerServiceNodePoolRollingEventData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerServiceNodePoolRollingEventData>
     {
-        internal static ContainerServiceNodePoolRollingEventData DeserializeContainerServiceNodePoolRollingEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerServiceNodePoolRollingEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerServiceNodePoolRollingEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NodePoolName))
+            {
+                writer.WritePropertyName("nodePoolName"u8);
+                writer.WriteStringValue(NodePoolName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerServiceNodePoolRollingEventData DeserializeContainerServiceNodePoolRollingEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nodePoolName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodePoolName"u8))
@@ -29,15 +62,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nodePoolName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerServiceNodePoolRollingEventData(nodePoolName.Value);
+            return new ContainerServiceNodePoolRollingEventData(nodePoolName.Value, rawData);
+        }
+
+        ContainerServiceNodePoolRollingEventData IModelJsonSerializable<ContainerServiceNodePoolRollingEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNodePoolRollingEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerServiceNodePoolRollingEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerServiceNodePoolRollingEventData IModelSerializable<ContainerServiceNodePoolRollingEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerServiceNodePoolRollingEventData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerServiceNodePoolRollingEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerServiceNodePoolRollingEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerServiceNodePoolRollingEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ContainerServiceNodePoolRollingEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerServiceNodePoolRollingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

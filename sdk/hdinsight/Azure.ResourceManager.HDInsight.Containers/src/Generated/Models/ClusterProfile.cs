@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster profile. </summary>
     public partial class ClusterProfile
     {
-        /// <summary> Initializes a new instance of ClusterProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="identityProfile"> Identity Profile with details of an MSI. </param>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ScriptActionProfiles = new ChangeTrackingList<ScriptActionProfile>();
         }
 
-        /// <summary> Initializes a new instance of ClusterProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>
@@ -59,7 +61,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="sparkProfile"> The spark cluster profile. </param>
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
-        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles, Dictionary<string, BinaryData> rawData)
         {
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
@@ -80,6 +83,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             SparkProfile = sparkProfile;
             StubProfile = stubProfile;
             ScriptActionProfiles = scriptActionProfiles;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/> for deserialization. </summary>
+        internal ClusterProfile()
+        {
         }
 
         /// <summary> Version with 3/4 part. </summary>

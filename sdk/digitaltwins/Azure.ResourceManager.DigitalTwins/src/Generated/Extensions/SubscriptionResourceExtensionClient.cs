@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

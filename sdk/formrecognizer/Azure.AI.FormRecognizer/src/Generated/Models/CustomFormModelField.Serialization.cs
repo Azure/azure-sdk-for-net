@@ -5,21 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class CustomFormModelField
+    public partial class CustomFormModelField : IUtf8JsonSerializable, IModelJsonSerializable<CustomFormModelField>
     {
-        internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomFormModelField>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomFormModelField>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("fieldName"u8);
+            writer.WriteStringValue(Name);
+            if (Accuracy != null)
+            {
+                writer.WritePropertyName("accuracy"u8);
+                writer.WriteNumberValue(Accuracy.Value);
+            }
+            else
+            {
+                writer.WriteNull("accuracy");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string fieldName = default;
             float? accuracy = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))
@@ -37,8 +77,57 @@ namespace Azure.AI.FormRecognizer.Training
                     accuracy = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomFormModelField(fieldName, accuracy);
+            return new CustomFormModelField(fieldName, accuracy, rawData);
+        }
+
+        CustomFormModelField IModelJsonSerializable<CustomFormModelField>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomFormModelField(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomFormModelField>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomFormModelField IModelSerializable<CustomFormModelField>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomFormModelField(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CustomFormModelField model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CustomFormModelField(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomFormModelField(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

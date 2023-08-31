@@ -15,14 +15,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the LatencyScorecard. </summary>
     public partial class LatencyScorecard : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LatencyScorecard. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         /// <param name="location"> The location. </param>
         public LatencyScorecard(AzureLocation location) : base(location)
         {
             LatencyMetrics = new ChangeTrackingList<LatencyMetric>();
         }
 
-        /// <summary> Initializes a new instance of LatencyScorecard. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
-        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, Uri scorecardEndpointA, Uri scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LatencyScorecard(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string latencyScorecardId, string latencyScorecardName, string description, Uri scorecardEndpointA, Uri scorecardEndpointB, DateTimeOffset? startOn, DateTimeOffset? endOn, string country, IList<LatencyMetric> latencyMetrics, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             LatencyScorecardId = latencyScorecardId;
             LatencyScorecardName = latencyScorecardName;
@@ -49,6 +52,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             EndOn = endOn;
             Country = country;
             LatencyMetrics = latencyMetrics;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LatencyScorecard"/> for deserialization. </summary>
+        internal LatencyScorecard()
+        {
         }
 
         /// <summary> The unique identifier of the Latency Scorecard. </summary>

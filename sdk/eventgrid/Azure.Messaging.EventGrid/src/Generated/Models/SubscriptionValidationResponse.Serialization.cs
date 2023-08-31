@@ -6,33 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(SubscriptionValidationResponseConverter))]
-    public partial class SubscriptionValidationResponse : IUtf8JsonSerializable
+    public partial class SubscriptionValidationResponse : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionValidationResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionValidationResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionValidationResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidationResponse))
             {
                 writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionValidationResponse DeserializeSubscriptionValidationResponse(JsonElement element)
+        internal static SubscriptionValidationResponse DeserializeSubscriptionValidationResponse(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> validationResponse = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationResponse"u8))
@@ -40,8 +62,57 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     validationResponse = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionValidationResponse(validationResponse.Value);
+            return new SubscriptionValidationResponse(validationResponse.Value, rawData);
+        }
+
+        SubscriptionValidationResponse IModelJsonSerializable<SubscriptionValidationResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionValidationResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionValidationResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionValidationResponse IModelSerializable<SubscriptionValidationResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionValidationResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SubscriptionValidationResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SubscriptionValidationResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionValidationResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class SubscriptionValidationResponseConverter : JsonConverter<SubscriptionValidationResponse>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class GrafanaIntegrations : IUtf8JsonSerializable
+    internal partial class GrafanaIntegrations : IUtf8JsonSerializable, IModelJsonSerializable<GrafanaIntegrations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GrafanaIntegrations>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GrafanaIntegrations>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
             {
@@ -26,16 +33,31 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GrafanaIntegrations DeserializeGrafanaIntegrations(JsonElement element)
+        internal static GrafanaIntegrations DeserializeGrafanaIntegrations(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorWorkspaceIntegrations"u8))
@@ -52,8 +74,57 @@ namespace Azure.ResourceManager.Grafana.Models
                     azureMonitorWorkspaceIntegrations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GrafanaIntegrations(Optional.ToList(azureMonitorWorkspaceIntegrations));
+            return new GrafanaIntegrations(Optional.ToList(azureMonitorWorkspaceIntegrations), rawData);
+        }
+
+        GrafanaIntegrations IModelJsonSerializable<GrafanaIntegrations>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGrafanaIntegrations(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GrafanaIntegrations>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GrafanaIntegrations IModelSerializable<GrafanaIntegrations>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGrafanaIntegrations(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GrafanaIntegrations model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GrafanaIntegrations(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGrafanaIntegrations(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

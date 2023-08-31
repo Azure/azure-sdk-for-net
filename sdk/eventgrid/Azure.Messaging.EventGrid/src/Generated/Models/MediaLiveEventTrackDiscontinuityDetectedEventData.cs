@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest track discontinuity detected event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventTrackDiscontinuityDetected event. </summary>
     public partial class MediaLiveEventTrackDiscontinuityDetectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventTrackDiscontinuityDetectedEventData"/>. </summary>
         internal MediaLiveEventTrackDiscontinuityDetectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventTrackDiscontinuityDetectedEventData"/>. </summary>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
         /// <param name="bitrate"> Gets the bitrate. </param>
@@ -23,7 +28,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="newTimestamp"> Gets the timestamp of the current fragment. </param>
         /// <param name="timescale"> Gets the timescale in which both timestamps and discontinuity gap are represented. </param>
         /// <param name="discontinuityGap"> Gets the discontinuity gap between PreviousTimestamp and NewTimestamp. </param>
-        internal MediaLiveEventTrackDiscontinuityDetectedEventData(string trackType, string trackName, long? bitrate, string previousTimestamp, string newTimestamp, string timescale, string discontinuityGap)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventTrackDiscontinuityDetectedEventData(string trackType, string trackName, long? bitrate, string previousTimestamp, string newTimestamp, string timescale, string discontinuityGap, Dictionary<string, BinaryData> rawData)
         {
             TrackType = trackType;
             TrackName = trackName;
@@ -32,6 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             NewTimestamp = newTimestamp;
             Timescale = timescale;
             DiscontinuityGap = discontinuityGap;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the type of the track (Audio / Video). </summary>

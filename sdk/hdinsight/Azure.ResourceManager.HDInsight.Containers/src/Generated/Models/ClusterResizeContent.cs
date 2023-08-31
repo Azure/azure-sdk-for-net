@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The parameters for resizing a cluster. </summary>
     public partial class ClusterResizeContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ClusterResizeContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterResizeContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public ClusterResizeContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterResizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResizeContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,9 +31,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="targetWorkerNodeCount"> Target node count of worker node. </param>
-        internal ClusterResizeContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? targetWorkerNodeCount) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterResizeContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, int? targetWorkerNodeCount, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TargetWorkerNodeCount = targetWorkerNodeCount;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterResizeContent"/> for deserialization. </summary>
+        internal ClusterResizeContent()
+        {
         }
 
         /// <summary> Target node count of worker node. </summary>

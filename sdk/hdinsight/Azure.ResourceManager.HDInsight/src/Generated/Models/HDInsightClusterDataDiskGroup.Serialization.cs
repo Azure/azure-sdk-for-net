@@ -5,26 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterDataDiskGroup : IUtf8JsonSerializable
+    public partial class HDInsightClusterDataDiskGroup : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightClusterDataDiskGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightClusterDataDiskGroup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightClusterDataDiskGroup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisksPerNode))
             {
                 writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightClusterDataDiskGroup DeserializeHDInsightClusterDataDiskGroup(JsonElement element)
+        internal static HDInsightClusterDataDiskGroup DeserializeHDInsightClusterDataDiskGroup(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<int> disksPerNode = default;
             Optional<string> storageAccountType = default;
             Optional<int> diskSizeGB = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disksPerNode"u8))
@@ -57,8 +80,57 @@ namespace Azure.ResourceManager.HDInsight.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightClusterDataDiskGroup(Optional.ToNullable(disksPerNode), storageAccountType.Value, Optional.ToNullable(diskSizeGB));
+            return new HDInsightClusterDataDiskGroup(Optional.ToNullable(disksPerNode), storageAccountType.Value, Optional.ToNullable(diskSizeGB), rawData);
+        }
+
+        HDInsightClusterDataDiskGroup IModelJsonSerializable<HDInsightClusterDataDiskGroup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterDataDiskGroup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightClusterDataDiskGroup>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightClusterDataDiskGroup IModelSerializable<HDInsightClusterDataDiskGroup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterDataDiskGroup(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HDInsightClusterDataDiskGroup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HDInsightClusterDataDiskGroup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightClusterDataDiskGroup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> List document models response object. </summary>
     internal partial class GetDocumentModelsResponse
     {
-        /// <summary> Initializes a new instance of GetDocumentModelsResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetDocumentModelsResponse"/>. </summary>
         /// <param name="value"> List of document models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetDocumentModelsResponse(IEnumerable<DocumentModelSummary> value)
@@ -25,13 +27,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetDocumentModelsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDocumentModelsResponse"/>. </summary>
         /// <param name="value"> List of document models. </param>
         /// <param name="nextLink"> Link to the next page of document models. </param>
-        internal GetDocumentModelsResponse(IReadOnlyList<DocumentModelSummary> value, Uri nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetDocumentModelsResponse(IReadOnlyList<DocumentModelSummary> value, Uri nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetDocumentModelsResponse"/> for deserialization. </summary>
+        internal GetDocumentModelsResponse()
+        {
         }
 
         /// <summary> List of document models. </summary>

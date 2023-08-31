@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Forward shipment details. </summary>
     public partial class ForwardShippingDetails
     {
-        /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForwardShippingDetails"/>. </summary>
         internal ForwardShippingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardShippingDetails"/>. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
         /// <param name="trackingId"> TrackingId of the package. </param>
         /// <param name="trackingUri"> TrackingUrl of the package. </param>
-        internal ForwardShippingDetails(string carrierName, string carrierDisplayName, string trackingId, Uri trackingUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForwardShippingDetails(string carrierName, string carrierDisplayName, string trackingId, Uri trackingUri, Dictionary<string, BinaryData> rawData)
         {
             CarrierName = carrierName;
             CarrierDisplayName = carrierDisplayName;
             TrackingId = trackingId;
             TrackingUri = trackingUri;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the carrier. </summary>

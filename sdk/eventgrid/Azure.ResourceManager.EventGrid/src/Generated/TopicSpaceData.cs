@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class TopicSpaceData : ResourceData
     {
-        /// <summary> Initializes a new instance of TopicSpaceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicSpaceData"/>. </summary>
         public TopicSpaceData()
         {
             TopicTemplates = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TopicSpaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicSpaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,11 +41,13 @@ namespace Azure.ResourceManager.EventGrid
         ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the TopicSpace resource. </param>
-        internal TopicSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> topicTemplates, TopicSpaceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> topicTemplates, TopicSpaceProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             TopicTemplates = topicTemplates;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Description for the Topic Space resource. </summary>

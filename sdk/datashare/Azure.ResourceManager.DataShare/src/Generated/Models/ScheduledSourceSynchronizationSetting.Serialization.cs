@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ScheduledSourceSynchronizationSetting
+    public partial class ScheduledSourceSynchronizationSetting : IUtf8JsonSerializable, IModelJsonSerializable<ScheduledSourceSynchronizationSetting>
     {
-        internal static ScheduledSourceSynchronizationSetting DeserializeScheduledSourceSynchronizationSetting(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScheduledSourceSynchronizationSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScheduledSourceSynchronizationSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ScheduledSourceSynchronizationSetting>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecurrenceInterval))
+            {
+                writer.WritePropertyName("recurrenceInterval"u8);
+                writer.WriteStringValue(RecurrenceInterval.Value.ToString());
+            }
+            if (Optional.IsDefined(SynchronizeOn))
+            {
+                writer.WritePropertyName("synchronizationTime"u8);
+                writer.WriteStringValue(SynchronizeOn.Value, "O");
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ScheduledSourceSynchronizationSetting DeserializeScheduledSourceSynchronizationSetting(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.DataShare.Models
             SourceShareSynchronizationSettingKind kind = default;
             Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
             Optional<DateTimeOffset> synchronizationTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -59,8 +102,57 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScheduledSourceSynchronizationSetting(kind, Optional.ToNullable(recurrenceInterval), Optional.ToNullable(synchronizationTime));
+            return new ScheduledSourceSynchronizationSetting(kind, Optional.ToNullable(recurrenceInterval), Optional.ToNullable(synchronizationTime), rawData);
+        }
+
+        ScheduledSourceSynchronizationSetting IModelJsonSerializable<ScheduledSourceSynchronizationSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduledSourceSynchronizationSetting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduledSourceSynchronizationSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScheduledSourceSynchronizationSetting>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduledSourceSynchronizationSetting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScheduledSourceSynchronizationSetting IModelSerializable<ScheduledSourceSynchronizationSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ScheduledSourceSynchronizationSetting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScheduledSourceSynchronizationSetting(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ScheduledSourceSynchronizationSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ScheduledSourceSynchronizationSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScheduledSourceSynchronizationSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

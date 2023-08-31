@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,26 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a forwarding rule for PATCH operation. </summary>
     public partial class DnsForwardingRulePatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulePatch"/>. </summary>
         public DnsForwardingRulePatch()
         {
             TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();
             Metadata = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulePatch"/>. </summary>
+        /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
+        /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
+        /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulePatch(IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, Dictionary<string, BinaryData> rawData)
+        {
+            TargetDnsServers = targetDnsServers;
+            Metadata = metadata;
+            DnsForwardingRuleState = dnsForwardingRuleState;
+            _rawData = rawData;
         }
 
         /// <summary> DNS servers to forward the DNS query to. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Instance. </summary>
     public partial class DataProtectionBackupInstanceProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
         /// <param name="objectType"></param>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = objectType;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="objectType"></param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, Dictionary<string, BinaryData> rawData)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -59,6 +63,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceAuthCredentials = dataSourceAuthCredentials;
             ValidationType = validationType;
             ObjectType = objectType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInstanceProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupInstanceProperties()
+        {
         }
 
         /// <summary> Gets or sets the Backup Instance friendly name. </summary>

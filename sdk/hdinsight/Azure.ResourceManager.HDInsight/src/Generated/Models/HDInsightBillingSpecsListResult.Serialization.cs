@@ -5,16 +5,83 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightBillingSpecsListResult
+    public partial class HDInsightBillingSpecsListResult : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightBillingSpecsListResult>
     {
-        internal static HDInsightBillingSpecsListResult DeserializeHDInsightBillingSpecsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightBillingSpecsListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightBillingSpecsListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(VmSizes))
+            {
+                writer.WritePropertyName("vmSizes"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmSizesWithEncryptionAtHost))
+            {
+                writer.WritePropertyName("vmSizesWithEncryptionAtHost"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizesWithEncryptionAtHost)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmSizeFilters))
+            {
+                writer.WritePropertyName("vmSizeFilters"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizeFilters)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(BillingResources))
+            {
+                writer.WritePropertyName("billingResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in BillingResources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HDInsightBillingSpecsListResult DeserializeHDInsightBillingSpecsListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
             Optional<IReadOnlyList<HDInsightVmSizeProperty>> vmSizeProperties = default;
             Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSizes"u8))
@@ -96,8 +164,57 @@ namespace Azure.ResourceManager.HDInsight.Models
                     billingResources = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightBillingSpecsListResult(Optional.ToList(vmSizes), Optional.ToList(vmSizesWithEncryptionAtHost), Optional.ToList(vmSizeFilters), Optional.ToList(vmSizeProperties), Optional.ToList(billingResources));
+            return new HDInsightBillingSpecsListResult(Optional.ToList(vmSizes), Optional.ToList(vmSizesWithEncryptionAtHost), Optional.ToList(vmSizeFilters), Optional.ToList(vmSizeProperties), Optional.ToList(billingResources), rawData);
+        }
+
+        HDInsightBillingSpecsListResult IModelJsonSerializable<HDInsightBillingSpecsListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightBillingSpecsListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightBillingSpecsListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightBillingSpecsListResult IModelSerializable<HDInsightBillingSpecsListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightBillingSpecsListResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HDInsightBillingSpecsListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HDInsightBillingSpecsListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightBillingSpecsListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

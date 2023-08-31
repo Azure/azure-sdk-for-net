@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for creating a schedule. </summary>
     public partial class DevTestLabScheduleCreationParameter
     {
-        /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
         public DevTestLabScheduleCreationParameter()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
         /// <param name="name"> The name of the virtual machine or environment. </param>
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
-        internal DevTestLabScheduleCreationParameter(string name, AzureLocation? location, IDictionary<string, string> tags, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabScheduleCreationParameter(string name, AzureLocation? location, IDictionary<string, string> tags, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Location = location;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             TimeZoneId = timeZoneId;
             NotificationSettings = notificationSettings;
             TargetResourceId = targetResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the virtual machine or environment. </summary>

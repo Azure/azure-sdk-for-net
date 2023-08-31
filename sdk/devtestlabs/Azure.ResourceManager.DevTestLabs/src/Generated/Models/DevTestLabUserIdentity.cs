@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Identity attributes of a lab user. </summary>
     public partial class DevTestLabUserIdentity
     {
-        /// <summary> Initializes a new instance of DevTestLabUserIdentity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserIdentity"/>. </summary>
         public DevTestLabUserIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabUserIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserIdentity"/>. </summary>
         /// <param name="principalName"> Set to the principal name / UPN of the client JWT making the request. </param>
         /// <param name="principalId"> Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. </param>
         /// <param name="tenantId"> Set to the tenant ID of the client JWT making the request. </param>
         /// <param name="objectId"> Set to the object Id of the client JWT making the request. Not all users have object Id. For CSP (reseller) scenarios for example, object Id is not available. </param>
         /// <param name="appId"> Set to the app Id of the client JWT making the request. </param>
-        internal DevTestLabUserIdentity(string principalName, string principalId, Guid? tenantId, string objectId, string appId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabUserIdentity(string principalName, string principalId, Guid? tenantId, string objectId, string appId, Dictionary<string, BinaryData> rawData)
         {
             PrincipalName = principalName;
             PrincipalId = principalId;
             TenantId = tenantId;
             ObjectId = objectId;
             AppId = appId;
+            _rawData = rawData;
         }
 
         /// <summary> Set to the principal name / UPN of the client JWT making the request. </summary>

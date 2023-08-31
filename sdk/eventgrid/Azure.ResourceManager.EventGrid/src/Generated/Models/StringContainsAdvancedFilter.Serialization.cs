@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StringContainsAdvancedFilter : IUtf8JsonSerializable
+    public partial class StringContainsAdvancedFilter : IUtf8JsonSerializable, IModelJsonSerializable<StringContainsAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StringContainsAdvancedFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StringContainsAdvancedFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<StringContainsAdvancedFilter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
@@ -33,11 +40,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StringContainsAdvancedFilter DeserializeStringContainsAdvancedFilter(JsonElement element)
+        internal static StringContainsAdvancedFilter DeserializeStringContainsAdvancedFilter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<IList<string>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -71,8 +93,57 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StringContainsAdvancedFilter(operatorType, key.Value, Optional.ToList(values));
+            return new StringContainsAdvancedFilter(operatorType, key.Value, Optional.ToList(values), rawData);
+        }
+
+        StringContainsAdvancedFilter IModelJsonSerializable<StringContainsAdvancedFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StringContainsAdvancedFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStringContainsAdvancedFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StringContainsAdvancedFilter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StringContainsAdvancedFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StringContainsAdvancedFilter IModelSerializable<StringContainsAdvancedFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StringContainsAdvancedFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStringContainsAdvancedFilter(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StringContainsAdvancedFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StringContainsAdvancedFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStringContainsAdvancedFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

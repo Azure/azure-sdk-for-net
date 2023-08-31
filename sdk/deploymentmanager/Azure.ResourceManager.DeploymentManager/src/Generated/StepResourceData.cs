@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.DeploymentManager
     /// </summary>
     public partial class StepResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StepResourceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StepResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// The properties that define the step.
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.DeploymentManager
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of StepResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,9 +48,16 @@ namespace Azure.ResourceManager.DeploymentManager
         /// Please note <see cref="StepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HealthCheckStepProperties"/> and <see cref="WaitStepProperties"/>.
         /// </param>
-        internal StepResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StepProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StepProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StepResourceData"/> for deserialization. </summary>
+        internal StepResourceData()
+        {
         }
 
         /// <summary>

@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The cpu and memory requirement definition. </summary>
     public partial class ComputeResourceRequirement
     {
-        /// <summary> Initializes a new instance of ComputeResourceRequirement. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceRequirement"/>. </summary>
         /// <param name="cpu"> The required CPU. </param>
         /// <param name="memory"> The required memory in MB, Container memory will be 110 percentile. </param>
         public ComputeResourceRequirement(float cpu, long memory)
         {
             Cpu = cpu;
             Memory = memory;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceRequirement"/>. </summary>
+        /// <param name="cpu"> The required CPU. </param>
+        /// <param name="memory"> The required memory in MB, Container memory will be 110 percentile. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeResourceRequirement(float cpu, long memory, Dictionary<string, BinaryData> rawData)
+        {
+            Cpu = cpu;
+            Memory = memory;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceRequirement"/> for deserialization. </summary>
+        internal ComputeResourceRequirement()
+        {
         }
 
         /// <summary> The required CPU. </summary>

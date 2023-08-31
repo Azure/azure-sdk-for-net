@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstancePolicyInfo : IUtf8JsonSerializable
+    public partial class BackupInstancePolicyInfo : IUtf8JsonSerializable, IModelJsonSerializable<BackupInstancePolicyInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupInstancePolicyInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupInstancePolicyInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
@@ -22,11 +30,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("policyParameters"u8);
                 writer.WriteObjectValue(PolicyParameters);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupInstancePolicyInfo DeserializeBackupInstancePolicyInfo(JsonElement element)
+        internal static BackupInstancePolicyInfo DeserializeBackupInstancePolicyInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceIdentifier policyId = default;
             Optional<string> policyVersion = default;
             Optional<BackupInstancePolicySettings> policyParameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyId"u8))
@@ -55,8 +78,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     policyParameters = BackupInstancePolicySettings.DeserializeBackupInstancePolicySettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupInstancePolicyInfo(policyId, policyVersion.Value, policyParameters.Value);
+            return new BackupInstancePolicyInfo(policyId, policyVersion.Value, policyParameters.Value, rawData);
+        }
+
+        BackupInstancePolicyInfo IModelJsonSerializable<BackupInstancePolicyInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupInstancePolicyInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupInstancePolicyInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupInstancePolicyInfo IModelSerializable<BackupInstancePolicyInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupInstancePolicyInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BackupInstancePolicyInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BackupInstancePolicyInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupInstancePolicyInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

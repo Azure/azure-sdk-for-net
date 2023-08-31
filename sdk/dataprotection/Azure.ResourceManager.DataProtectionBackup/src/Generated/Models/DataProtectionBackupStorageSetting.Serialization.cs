@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupStorageSetting : IUtf8JsonSerializable
+    public partial class DataProtectionBackupStorageSetting : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupStorageSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupStorageSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupStorageSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DataStoreType))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupStorageSetting DeserializeDataProtectionBackupStorageSetting(JsonElement element)
+        internal static DataProtectionBackupStorageSetting DeserializeDataProtectionBackupStorageSetting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<StorageSettingStoreType> datastoreType = default;
             Optional<StorageSettingType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datastoreType"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     type = new StorageSettingType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataProtectionBackupStorageSetting(Optional.ToNullable(datastoreType), Optional.ToNullable(type));
+            return new DataProtectionBackupStorageSetting(Optional.ToNullable(datastoreType), Optional.ToNullable(type), rawData);
+        }
+
+        DataProtectionBackupStorageSetting IModelJsonSerializable<DataProtectionBackupStorageSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupStorageSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupStorageSetting>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupStorageSetting IModelSerializable<DataProtectionBackupStorageSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupStorageSetting(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataProtectionBackupStorageSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataProtectionBackupStorageSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupStorageSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

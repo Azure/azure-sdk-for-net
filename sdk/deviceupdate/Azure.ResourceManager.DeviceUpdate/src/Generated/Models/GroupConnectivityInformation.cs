@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,23 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Group connectivity details. </summary>
     public partial class GroupConnectivityInformation
     {
-        /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GroupConnectivityInformation"/>. </summary>
         public GroupConnectivityInformation()
         {
             CustomerVisibleFqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupConnectivityInformation"/>. </summary>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
         /// <param name="customerVisibleFqdns"> List of customer visible FQDNs. </param>
         /// <param name="internalFqdn"> Internal FQDN. </param>
         /// <param name="redirectMapId"> Redirect map ID. </param>
         /// <param name="privateLinkServiceArmRegion"> PrivateLinkService ARM region. </param>
-        internal GroupConnectivityInformation(string groupId, string memberName, IList<string> customerVisibleFqdns, string internalFqdn, string redirectMapId, string privateLinkServiceArmRegion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GroupConnectivityInformation(string groupId, string memberName, IList<string> customerVisibleFqdns, string internalFqdn, string redirectMapId, string privateLinkServiceArmRegion, Dictionary<string, BinaryData> rawData)
         {
             GroupId = groupId;
             MemberName = memberName;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             InternalFqdn = internalFqdn;
             RedirectMapId = redirectMapId;
             PrivateLinkServiceArmRegion = privateLinkServiceArmRegion;
+            _rawData = rawData;
         }
 
         /// <summary> Group ID. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ResourceGuardProxyBase : IUtf8JsonSerializable
+    public partial class ResourceGuardProxyBase : IUtf8JsonSerializable, IModelJsonSerializable<ResourceGuardProxyBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceGuardProxyBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceGuardProxyBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGuardResourceId))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGuardProxyBase DeserializeResourceGuardProxyBase(JsonElement element)
+        internal static ResourceGuardProxyBase DeserializeResourceGuardProxyBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
             Optional<string> lastUpdatedTime = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
@@ -85,8 +107,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value);
+            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value, rawData);
+        }
+
+        ResourceGuardProxyBase IModelJsonSerializable<ResourceGuardProxyBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGuardProxyBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceGuardProxyBase>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceGuardProxyBase IModelSerializable<ResourceGuardProxyBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceGuardProxyBase(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceGuardProxyBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceGuardProxyBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceGuardProxyBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable
+    public partial class EventHubsSchemaGroupData : IUtf8JsonSerializable, IModelJsonSerializable<EventHubsSchemaGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventHubsSchemaGroupData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventHubsSchemaGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -44,11 +49,25 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element)
+        internal static EventHubsSchemaGroupData DeserializeEventHubsSchemaGroupData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +83,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IDictionary<string, string>> groupProperties = default;
             Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
             Optional<EventHubsSchemaType> schemaType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -170,8 +190,57 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location));
+            return new EventHubsSchemaGroupData(id, name, type, systemData.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType), Optional.ToNullable(location), rawData);
+        }
+
+        EventHubsSchemaGroupData IModelJsonSerializable<EventHubsSchemaGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsSchemaGroupData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventHubsSchemaGroupData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventHubsSchemaGroupData IModelSerializable<EventHubsSchemaGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventHubsSchemaGroupData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EventHubsSchemaGroupData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EventHubsSchemaGroupData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventHubsSchemaGroupData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

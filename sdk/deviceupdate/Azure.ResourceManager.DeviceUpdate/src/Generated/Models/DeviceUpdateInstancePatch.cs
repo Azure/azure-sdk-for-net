@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Request payload used to update an existing resource's tags. </summary>
     public partial class DeviceUpdateInstancePatch
     {
-        /// <summary> Initializes a new instance of DeviceUpdateInstancePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstancePatch"/>. </summary>
         public DeviceUpdateInstancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateInstancePatch"/>. </summary>
+        /// <param name="tags"> List of key value pairs that describe the resource. This will overwrite the existing tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdateInstancePatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>

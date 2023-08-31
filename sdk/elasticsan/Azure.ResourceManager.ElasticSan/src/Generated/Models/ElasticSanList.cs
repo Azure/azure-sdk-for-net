@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of Elastic Sans. </summary>
     internal partial class ElasticSanList
     {
-        /// <summary> Initializes a new instance of ElasticSanList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanList"/>. </summary>
         internal ElasticSanList()
         {
             Value = new ChangeTrackingList<ElasticSanData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanList"/>. </summary>
         /// <param name="value"> An array of Elastic San objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal ElasticSanList(IReadOnlyList<ElasticSanData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanList(IReadOnlyList<ElasticSanData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> An array of Elastic San objects. </summary>

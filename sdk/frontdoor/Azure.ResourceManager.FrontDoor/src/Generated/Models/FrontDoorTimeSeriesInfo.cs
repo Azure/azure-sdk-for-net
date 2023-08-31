@@ -15,14 +15,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the Timeseries. </summary>
     public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
             TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +38,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="timeSeriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
-        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Endpoint = endpoint;
             StartOn = startOn;
@@ -45,6 +48,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             TimeSeriesType = timeSeriesType;
             Country = country;
             TimeSeriesData = timeSeriesData;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/> for deserialization. </summary>
+        internal FrontDoorTimeSeriesInfo()
+        {
         }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>

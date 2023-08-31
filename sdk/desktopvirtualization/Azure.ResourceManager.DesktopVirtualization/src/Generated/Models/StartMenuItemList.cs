@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of StartMenuItem definitions. </summary>
     internal partial class StartMenuItemList
     {
-        /// <summary> Initializes a new instance of StartMenuItemList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StartMenuItemList"/>. </summary>
         internal StartMenuItemList()
         {
             Value = new ChangeTrackingList<DesktopVirtualizationStartMenuItem>();
         }
 
-        /// <summary> Initializes a new instance of StartMenuItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartMenuItemList"/>. </summary>
         /// <param name="value"> List of StartMenuItem definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal StartMenuItemList(IReadOnlyList<DesktopVirtualizationStartMenuItem> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartMenuItemList(IReadOnlyList<DesktopVirtualizationStartMenuItem> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of StartMenuItem definitions. </summary>

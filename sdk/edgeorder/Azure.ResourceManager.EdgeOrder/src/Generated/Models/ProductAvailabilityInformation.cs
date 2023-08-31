@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Availability information of a product system. </summary>
     public partial class ProductAvailabilityInformation
     {
-        /// <summary> Initializes a new instance of ProductAvailabilityInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductAvailabilityInformation"/>. </summary>
         internal ProductAvailabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductAvailabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductAvailabilityInformation"/>. </summary>
         /// <param name="availabilityStage"> Current availability stage of the product. Availability stage. </param>
         /// <param name="disabledReason"> Reason why the product is disabled. </param>
         /// <param name="disabledReasonMessage"> Message for why the product is disabled. </param>
-        internal ProductAvailabilityInformation(ProductAvailabilityStage? availabilityStage, ProductDisabledReason? disabledReason, string disabledReasonMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductAvailabilityInformation(ProductAvailabilityStage? availabilityStage, ProductDisabledReason? disabledReason, string disabledReasonMessage, Dictionary<string, BinaryData> rawData)
         {
             AvailabilityStage = availabilityStage;
             DisabledReason = disabledReason;
             DisabledReasonMessage = disabledReasonMessage;
+            _rawData = rawData;
         }
 
         /// <summary> Current availability stage of the product. Availability stage. </summary>

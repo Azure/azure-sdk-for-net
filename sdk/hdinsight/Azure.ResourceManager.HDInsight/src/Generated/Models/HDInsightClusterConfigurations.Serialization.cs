@@ -5,21 +5,71 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterConfigurations
+    public partial class HDInsightClusterConfigurations : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightClusterConfigurations>
     {
-        internal static HDInsightClusterConfigurations DeserializeHDInsightClusterConfigurations(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightClusterConfigurations>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightClusterConfigurations>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Configurations))
+            {
+                writer.WritePropertyName("configurations"u8);
+                writer.WriteStartObject();
+                foreach (var item in Configurations)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartObject();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writer.WriteStringValue(item0.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HDInsightClusterConfigurations DeserializeHDInsightClusterConfigurations(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyDictionary<string, IDictionary<string, string>>> configurations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurations"u8))
@@ -48,8 +98,57 @@ namespace Azure.ResourceManager.HDInsight.Models
                     configurations = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightClusterConfigurations(Optional.ToDictionary(configurations));
+            return new HDInsightClusterConfigurations(Optional.ToDictionary(configurations), rawData);
+        }
+
+        HDInsightClusterConfigurations IModelJsonSerializable<HDInsightClusterConfigurations>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterConfigurations(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightClusterConfigurations>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightClusterConfigurations IModelSerializable<HDInsightClusterConfigurations>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterConfigurations(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HDInsightClusterConfigurations model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HDInsightClusterConfigurations(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightClusterConfigurations(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

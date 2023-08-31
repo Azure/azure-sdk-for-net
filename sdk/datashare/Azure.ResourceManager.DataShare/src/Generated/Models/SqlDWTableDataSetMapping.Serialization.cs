@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class SqlDWTableDataSetMapping : IUtf8JsonSerializable
+    public partial class SqlDWTableDataSetMapping : IUtf8JsonSerializable, IModelJsonSerializable<SqlDWTableDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlDWTableDataSetMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlDWTableDataSetMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<SqlDWTableDataSetMapping>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDWTableDataSetMapping DeserializeSqlDWTableDataSetMapping(JsonElement element)
+        internal static SqlDWTableDataSetMapping DeserializeSqlDWTableDataSetMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string schemaName = default;
             ResourceIdentifier sqlServerResourceId = default;
             string tableName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -139,8 +161,57 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlDWTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), dataWarehouseName, Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName);
+            return new SqlDWTableDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), dataWarehouseName, Optional.ToNullable(provisioningState), schemaName, sqlServerResourceId, tableName, rawData);
+        }
+
+        SqlDWTableDataSetMapping IModelJsonSerializable<SqlDWTableDataSetMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlDWTableDataSetMapping>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDWTableDataSetMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlDWTableDataSetMapping>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlDWTableDataSetMapping>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlDWTableDataSetMapping IModelSerializable<SqlDWTableDataSetMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<SqlDWTableDataSetMapping>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlDWTableDataSetMapping(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SqlDWTableDataSetMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SqlDWTableDataSetMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlDWTableDataSetMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleSetDefinition : IUtf8JsonSerializable
+    public partial class ManagedRuleSetDefinition : IUtf8JsonSerializable, IModelJsonSerializable<ManagedRuleSetDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedRuleSetDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedRuleSetDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -33,11 +40,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element)
+        internal static ManagedRuleSetDefinition DeserializeManagedRuleSetDefinition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +74,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
             Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -144,8 +166,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), rawData);
+        }
+
+        ManagedRuleSetDefinition IModelJsonSerializable<ManagedRuleSetDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleSetDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedRuleSetDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedRuleSetDefinition IModelSerializable<ManagedRuleSetDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedRuleSetDefinition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedRuleSetDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedRuleSetDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedRuleSetDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

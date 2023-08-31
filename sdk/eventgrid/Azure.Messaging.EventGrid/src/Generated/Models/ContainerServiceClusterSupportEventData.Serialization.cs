@@ -6,22 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceClusterSupportEventDataConverter))]
-    public partial class ContainerServiceClusterSupportEventData
+    public partial class ContainerServiceClusterSupportEventData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerServiceClusterSupportEventData>
     {
-        internal static ContainerServiceClusterSupportEventData DeserializeContainerServiceClusterSupportEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerServiceClusterSupportEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerServiceClusterSupportEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerServiceClusterSupportEventData DeserializeContainerServiceClusterSupportEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> kubernetesVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -29,15 +62,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     kubernetesVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerServiceClusterSupportEventData(kubernetesVersion.Value);
+            return new ContainerServiceClusterSupportEventData(kubernetesVersion.Value, rawData);
+        }
+
+        ContainerServiceClusterSupportEventData IModelJsonSerializable<ContainerServiceClusterSupportEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceClusterSupportEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerServiceClusterSupportEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerServiceClusterSupportEventData IModelSerializable<ContainerServiceClusterSupportEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerServiceClusterSupportEventData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContainerServiceClusterSupportEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContainerServiceClusterSupportEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerServiceClusterSupportEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ContainerServiceClusterSupportEventDataConverter : JsonConverter<ContainerServiceClusterSupportEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceClusterSupportEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerServiceClusterSupportEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    internal partial class UnknownTimeSeriesDatabaseConnectionProperties : IUtf8JsonSerializable
+    internal partial class UnknownTimeSeriesDatabaseConnectionProperties : IUtf8JsonSerializable, IModelJsonSerializable<TimeSeriesDatabaseConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TimeSeriesDatabaseConnectionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TimeSeriesDatabaseConnectionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
@@ -29,46 +35,44 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element)
+        internal static TimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeTimeSeriesDatabaseConnectionProperties(element, options);
+
+        TimeSeriesDatabaseConnectionProperties IModelJsonSerializable<TimeSeriesDatabaseConnectionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ConnectionType connectionType = "Unknown";
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("connectionType"u8))
-                {
-                    connectionType = new ConnectionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new TimeSeriesDatabaseConnectionState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TimeSeriesDatabaseConnectionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TimeSeriesDatabaseConnectionProperties IModelSerializable<TimeSeriesDatabaseConnectionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTimeSeriesDatabaseConnectionProperties(doc.RootElement, options);
         }
     }
 }

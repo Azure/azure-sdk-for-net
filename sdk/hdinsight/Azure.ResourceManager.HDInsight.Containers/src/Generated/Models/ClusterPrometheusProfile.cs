@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Cluster Prometheus profile. </summary>
     internal partial class ClusterPrometheusProfile
     {
-        /// <summary> Initializes a new instance of ClusterPrometheusProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPrometheusProfile"/>. </summary>
         /// <param name="isEnabled"> Enable Prometheus for cluster or not. </param>
         public ClusterPrometheusProfile(bool isEnabled)
         {
             IsEnabled = isEnabled;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPrometheusProfile"/>. </summary>
+        /// <param name="isEnabled"> Enable Prometheus for cluster or not. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterPrometheusProfile(bool isEnabled, Dictionary<string, BinaryData> rawData)
+        {
+            IsEnabled = isEnabled;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPrometheusProfile"/> for deserialization. </summary>
+        internal ClusterPrometheusProfile()
+        {
         }
 
         /// <summary> Enable Prometheus for cluster or not. </summary>

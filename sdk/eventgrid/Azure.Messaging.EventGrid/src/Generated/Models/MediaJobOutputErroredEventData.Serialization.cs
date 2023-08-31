@@ -9,15 +9,57 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaJobOutputErroredEventDataConverter))]
-    public partial class MediaJobOutputErroredEventData
+    public partial class MediaJobOutputErroredEventData : IUtf8JsonSerializable, IModelJsonSerializable<MediaJobOutputErroredEventData>
     {
-        internal static MediaJobOutputErroredEventData DeserializeMediaJobOutputErroredEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaJobOutputErroredEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaJobOutputErroredEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MediaJobOutputErroredEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Output))
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteObjectValue(Output);
+            }
+            if (Optional.IsCollectionDefined(JobCorrelationData))
+            {
+                writer.WritePropertyName("jobCorrelationData"u8);
+                writer.WriteStartObject();
+                foreach (var item in JobCorrelationData)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MediaJobOutputErroredEventData DeserializeMediaJobOutputErroredEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +67,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<MediaJobState> previousState = default;
             Optional<MediaJobOutput> output = default;
             Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("previousState"u8))
@@ -59,15 +102,64 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     jobCorrelationData = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaJobOutputErroredEventData(Optional.ToNullable(previousState), output.Value, Optional.ToDictionary(jobCorrelationData));
+            return new MediaJobOutputErroredEventData(Optional.ToNullable(previousState), output.Value, Optional.ToDictionary(jobCorrelationData), rawData);
+        }
+
+        MediaJobOutputErroredEventData IModelJsonSerializable<MediaJobOutputErroredEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MediaJobOutputErroredEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobOutputErroredEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaJobOutputErroredEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MediaJobOutputErroredEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaJobOutputErroredEventData IModelSerializable<MediaJobOutputErroredEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MediaJobOutputErroredEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaJobOutputErroredEventData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MediaJobOutputErroredEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MediaJobOutputErroredEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaJobOutputErroredEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class MediaJobOutputErroredEventDataConverter : JsonConverter<MediaJobOutputErroredEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaJobOutputErroredEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaJobOutputErroredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

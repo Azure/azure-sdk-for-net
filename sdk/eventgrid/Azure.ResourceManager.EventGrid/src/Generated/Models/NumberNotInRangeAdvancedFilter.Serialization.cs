@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NumberNotInRangeAdvancedFilter : IUtf8JsonSerializable
+    public partial class NumberNotInRangeAdvancedFilter : IUtf8JsonSerializable, IModelJsonSerializable<NumberNotInRangeAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NumberNotInRangeAdvancedFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NumberNotInRangeAdvancedFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<NumberNotInRangeAdvancedFilter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
@@ -43,11 +50,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NumberNotInRangeAdvancedFilter DeserializeNumberNotInRangeAdvancedFilter(JsonElement element)
+        internal static NumberNotInRangeAdvancedFilter DeserializeNumberNotInRangeAdvancedFilter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<IList<IList<double>>> values = default;
             AdvancedFilterOperatorType operatorType = default;
             Optional<string> key = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -93,8 +115,57 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NumberNotInRangeAdvancedFilter(operatorType, key.Value, Optional.ToList(values));
+            return new NumberNotInRangeAdvancedFilter(operatorType, key.Value, Optional.ToList(values), rawData);
+        }
+
+        NumberNotInRangeAdvancedFilter IModelJsonSerializable<NumberNotInRangeAdvancedFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NumberNotInRangeAdvancedFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNumberNotInRangeAdvancedFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NumberNotInRangeAdvancedFilter>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NumberNotInRangeAdvancedFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NumberNotInRangeAdvancedFilter IModelSerializable<NumberNotInRangeAdvancedFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NumberNotInRangeAdvancedFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNumberNotInRangeAdvancedFilter(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NumberNotInRangeAdvancedFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NumberNotInRangeAdvancedFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNumberNotInRangeAdvancedFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

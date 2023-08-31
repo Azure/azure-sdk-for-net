@@ -14,7 +14,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A word object consisting of a contiguous sequence of characters.  For non-space delimited languages, such as Chinese, Japanese, and Korean, each character is represented as its own word. </summary>
     public partial class DocumentWord
     {
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
@@ -29,17 +31,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="polygon"> Bounding polygon of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, Dictionary<string, BinaryData> rawData)
         {
             Content = content;
             Polygon = polygon;
             Span = span;
             Confidence = confidence;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/> for deserialization. </summary>
+        internal DocumentWord()
+        {
         }
 
         /// <summary> Text content of the word. </summary>

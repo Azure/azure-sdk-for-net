@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Topic Types operation. </summary>
     internal partial class TopicTypesListResult
     {
-        /// <summary> Initializes a new instance of TopicTypesListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicTypesListResult"/>. </summary>
         internal TopicTypesListResult()
         {
             Value = new ChangeTrackingList<TopicTypeData>();
         }
 
-        /// <summary> Initializes a new instance of TopicTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicTypesListResult"/>. </summary>
         /// <param name="value"> A collection of topic types. </param>
-        internal TopicTypesListResult(IReadOnlyList<TopicTypeData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicTypesListResult(IReadOnlyList<TopicTypeData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A collection of topic types. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreFilesTargetInfo : IUtf8JsonSerializable
+    public partial class RestoreFilesTargetInfo : IUtf8JsonSerializable, IModelJsonSerializable<RestoreFilesTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestoreFilesTargetInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestoreFilesTargetInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RestoreFilesTargetInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
             writer.WriteObjectValue(TargetDetails);
@@ -26,7 +34,111 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RestoreFilesTargetInfo DeserializeRestoreFilesTargetInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RestoreFilesTargetDetails targetDetails = default;
+            string objectType = default;
+            RecoverySetting recoveryOption = default;
+            Optional<AzureLocation> restoreLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetDetails"u8))
+                {
+                    targetDetails = RestoreFilesTargetDetails.DeserializeRestoreFilesTargetDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryOption"u8))
+                {
+                    recoveryOption = new RecoverySetting(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("restoreLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RestoreFilesTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), targetDetails, rawData);
+        }
+
+        RestoreFilesTargetInfo IModelJsonSerializable<RestoreFilesTargetInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RestoreFilesTargetInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreFilesTargetInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestoreFilesTargetInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RestoreFilesTargetInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestoreFilesTargetInfo IModelSerializable<RestoreFilesTargetInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RestoreFilesTargetInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestoreFilesTargetInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RestoreFilesTargetInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RestoreFilesTargetInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestoreFilesTargetInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

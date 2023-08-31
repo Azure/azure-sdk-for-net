@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class KustoTableDataSet : IUtf8JsonSerializable
+    public partial class KustoTableDataSet : IUtf8JsonSerializable, IModelJsonSerializable<KustoTableDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoTableDataSet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoTableDataSet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<KustoTableDataSet>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("tableLevelSharingProperties"u8);
             writer.WriteObjectValue(TableLevelSharingProperties);
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoTableDataSet DeserializeKustoTableDataSet(JsonElement element)
+        internal static KustoTableDataSet DeserializeKustoTableDataSet(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<AzureLocation> location = default;
             Optional<DataShareProvisioningState> provisioningState = default;
             TableLevelSharingProperties tableLevelSharingProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -125,8 +147,57 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoTableDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), kustoDatabaseResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState), tableLevelSharingProperties);
+            return new KustoTableDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), kustoDatabaseResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState), tableLevelSharingProperties, rawData);
+        }
+
+        KustoTableDataSet IModelJsonSerializable<KustoTableDataSet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoTableDataSet>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoTableDataSet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoTableDataSet>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoTableDataSet>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoTableDataSet IModelSerializable<KustoTableDataSet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<KustoTableDataSet>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoTableDataSet(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KustoTableDataSet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KustoTableDataSet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoTableDataSet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

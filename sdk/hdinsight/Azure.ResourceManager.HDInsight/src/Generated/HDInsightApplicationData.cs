@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,15 @@ namespace Azure.ResourceManager.HDInsight
     /// </summary>
     public partial class HDInsightApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationData"/>. </summary>
         public HDInsightApplicationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +36,13 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="etag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
         /// <param name="properties"> The properties of the application. </param>
-        internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Tags = tags;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The ETag for the application. </summary>

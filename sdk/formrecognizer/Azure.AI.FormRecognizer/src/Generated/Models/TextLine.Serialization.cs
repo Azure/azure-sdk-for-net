@@ -5,16 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TextLine
+    internal partial class TextLine : IUtf8JsonSerializable, IModelJsonSerializable<TextLine>
     {
-        internal static TextLine DeserializeTextLine(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TextLine>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TextLine>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("boundingBox"u8);
+            writer.WriteStartArray();
+            foreach (var item in BoundingBox)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("words"u8);
+            writer.WriteStartArray();
+            foreach (var item in Words)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Appearance))
+            {
+                writer.WritePropertyName("appearance"u8);
+                writer.WriteObjectValue(Appearance);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TextLine DeserializeTextLine(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +71,7 @@ namespace Azure.AI.FormRecognizer.Models
             IReadOnlyList<float> boundingBox = default;
             IReadOnlyList<TextWord> words = default;
             Optional<TextAppearance> appearance = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -59,8 +108,57 @@ namespace Azure.AI.FormRecognizer.Models
                     appearance = TextAppearance.DeserializeTextAppearance(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TextLine(text, boundingBox, words, appearance.Value);
+            return new TextLine(text, boundingBox, words, appearance.Value, rawData);
+        }
+
+        TextLine IModelJsonSerializable<TextLine>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextLine(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TextLine>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TextLine IModelSerializable<TextLine>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTextLine(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TextLine model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TextLine(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTextLine(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

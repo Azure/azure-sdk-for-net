@@ -6,18 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser event. </summary>
     public partial class AcsChatParticipantRemovedFromThreadWithUserEventData : AcsChatThreadEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatParticipantRemovedFromThreadWithUserEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>
         internal AcsChatParticipantRemovedFromThreadWithUserEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatParticipantRemovedFromThreadWithUserEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -26,7 +27,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="time"> The time at which the user was removed to the thread. </param>
         /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
-        internal AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, DateTimeOffset? time, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, DateTimeOffset? time, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved, Dictionary<string, BinaryData> rawData) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, rawData)
         {
             Time = time;
             RemovedByCommunicationIdentifier = removedByCommunicationIdentifier;

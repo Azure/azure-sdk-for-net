@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -12,20 +13,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The spark cluster profile. </summary>
     public partial class SparkProfile
     {
-        /// <summary> Initializes a new instance of SparkProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkProfile"/>. </summary>
         public SparkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkProfile"/>. </summary>
         /// <param name="defaultStorageUriString"> The default storage URL. </param>
         /// <param name="metastoreSpec"> The metastore specification for Spark cluster. </param>
         /// <param name="userPluginsSpec"> Spark user plugins spec. </param>
-        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPluginListResult userPluginsSpec)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPluginListResult userPluginsSpec, Dictionary<string, BinaryData> rawData)
         {
             DefaultStorageUriString = defaultStorageUriString;
             MetastoreSpec = metastoreSpec;
             UserPluginsSpec = userPluginsSpec;
+            _rawData = rawData;
         }
 
         /// <summary> The default storage URL. </summary>

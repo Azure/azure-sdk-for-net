@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Details of the user's elastic deployment associated with the monitor resource. </summary>
     public partial class ElasticCloudDeployment
     {
-        /// <summary> Initializes a new instance of ElasticCloudDeployment. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticCloudDeployment"/>. </summary>
         public ElasticCloudDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticCloudDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticCloudDeployment"/>. </summary>
         /// <param name="name"> Elastic deployment name. </param>
         /// <param name="deploymentId"> Elastic deployment Id. </param>
         /// <param name="azureSubscriptionId"> Associated Azure subscription Id for the elastic deployment. </param>
@@ -25,7 +28,8 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="elasticsearchServiceUri"> Elasticsearch ingestion endpoint of the Elastic deployment. </param>
         /// <param name="kibanaServiceUri"> Kibana endpoint of the Elastic deployment. </param>
         /// <param name="kibanaSsoUri"> Kibana dashboard sso URL of the Elastic deployment. </param>
-        internal ElasticCloudDeployment(string name, string deploymentId, string azureSubscriptionId, string elasticsearchRegion, Uri elasticsearchServiceUri, Uri kibanaServiceUri, Uri kibanaSsoUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticCloudDeployment(string name, string deploymentId, string azureSubscriptionId, string elasticsearchRegion, Uri elasticsearchServiceUri, Uri kibanaServiceUri, Uri kibanaSsoUri, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             DeploymentId = deploymentId;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.Elastic.Models
             ElasticsearchServiceUri = elasticsearchServiceUri;
             KibanaServiceUri = kibanaServiceUri;
             KibanaSsoUri = kibanaSsoUri;
+            _rawData = rawData;
         }
 
         /// <summary> Elastic deployment name. </summary>

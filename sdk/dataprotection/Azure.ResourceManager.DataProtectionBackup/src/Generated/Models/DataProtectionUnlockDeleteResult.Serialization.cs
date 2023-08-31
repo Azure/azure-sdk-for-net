@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionUnlockDeleteResult
+    public partial class DataProtectionUnlockDeleteResult : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionUnlockDeleteResult>
     {
-        internal static DataProtectionUnlockDeleteResult DeserializeDataProtectionUnlockDeleteResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionUnlockDeleteResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionUnlockDeleteResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UnlockDeleteExpiryTime))
+            {
+                writer.WritePropertyName("unlockDeleteExpiryTime"u8);
+                writer.WriteStringValue(UnlockDeleteExpiryTime);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataProtectionUnlockDeleteResult DeserializeDataProtectionUnlockDeleteResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> unlockDeleteExpiryTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unlockDeleteExpiryTime"u8))
@@ -26,8 +60,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     unlockDeleteExpiryTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime.Value);
+            return new DataProtectionUnlockDeleteResult(unlockDeleteExpiryTime.Value, rawData);
+        }
+
+        DataProtectionUnlockDeleteResult IModelJsonSerializable<DataProtectionUnlockDeleteResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionUnlockDeleteResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionUnlockDeleteResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionUnlockDeleteResult IModelSerializable<DataProtectionUnlockDeleteResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionUnlockDeleteResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataProtectionUnlockDeleteResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataProtectionUnlockDeleteResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionUnlockDeleteResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

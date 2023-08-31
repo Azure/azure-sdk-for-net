@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The table configuration for the Log Analytics integration. </summary>
     public partial class HDInsightAzureMonitorTableConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorTableConfiguration"/>. </summary>
         public HDInsightAzureMonitorTableConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorTableConfiguration"/>. </summary>
         /// <param name="name"> The name. </param>
-        internal HDInsightAzureMonitorTableConfiguration(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAzureMonitorTableConfiguration(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The name. </summary>

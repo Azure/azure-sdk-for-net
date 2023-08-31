@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsNamespaceData : IUtf8JsonSerializable
+    public partial class EventHubsNamespaceData : IUtf8JsonSerializable, IModelJsonSerializable<EventHubsNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventHubsNamespaceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventHubsNamespaceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -105,11 +111,25 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStringValue(AlternateName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element)
+        internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +159,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -352,8 +373,57 @@ namespace Azure.ResourceManager.EventHubs
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, rawData);
+        }
+
+        EventHubsNamespaceData IModelJsonSerializable<EventHubsNamespaceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsNamespaceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventHubsNamespaceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventHubsNamespaceData IModelSerializable<EventHubsNamespaceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventHubsNamespaceData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EventHubsNamespaceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EventHubsNamespaceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventHubsNamespaceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

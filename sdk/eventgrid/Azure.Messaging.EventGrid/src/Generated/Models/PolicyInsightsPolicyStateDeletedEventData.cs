@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateDeleted event. </summary>
     public partial class PolicyInsightsPolicyStateDeletedEventData
     {
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateDeletedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
         internal PolicyInsightsPolicyStateDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateDeletedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
@@ -25,7 +28,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="complianceState"> The compliance state of the resource with respect to the policy assignment. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
-        internal PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyInsightsPolicyStateDeletedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, Dictionary<string, BinaryData> rawData)
         {
             Timestamp = timestamp;
             PolicyAssignmentId = policyAssignmentId;
@@ -34,6 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ComplianceState = complianceState;
             SubscriptionId = subscriptionId;
             ComplianceReasonCode = complianceReasonCode;
+            _rawData = rawData;
         }
 
         /// <summary> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </summary>

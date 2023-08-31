@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,21 +15,25 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> Workspaces resource specific properties. </summary>
     public partial class HealthcareApisWorkspaceProperties
     {
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspaceProperties"/>. </summary>
         public HealthcareApisWorkspaceProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisWorkspaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisWorkspaceProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        internal HealthcareApisWorkspaceProperties(HealthcareApisProvisioningState? provisioningState, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisWorkspaceProperties(HealthcareApisProvisioningState? provisioningState, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            _rawData = rawData;
         }
 
         /// <summary> The provisioning state. </summary>

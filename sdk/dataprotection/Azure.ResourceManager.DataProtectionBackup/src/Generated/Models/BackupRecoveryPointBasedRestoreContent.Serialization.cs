@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupRecoveryPointBasedRestoreContent : IUtf8JsonSerializable
+    public partial class BackupRecoveryPointBasedRestoreContent : IUtf8JsonSerializable, IModelJsonSerializable<BackupRecoveryPointBasedRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupRecoveryPointBasedRestoreContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupRecoveryPointBasedRestoreContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<BackupRecoveryPointBasedRestoreContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointId"u8);
             writer.WriteStringValue(RecoveryPointId);
@@ -28,7 +36,126 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static BackupRecoveryPointBasedRestoreContent DeserializeBackupRecoveryPointBasedRestoreContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element);
+                }
+            }
+
+            // Unknown type found so we will deserialize the base properties only
+            string recoveryPointId = default;
+            string objectType = default;
+            RestoreTargetInfoBase restoreTargetInfo = default;
+            SourceDataStoreType sourceDataStoreType = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointId"u8))
+                {
+                    recoveryPointId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreTargetInfo"u8))
+                {
+                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sourceDataStoreType"u8))
+                {
+                    sourceDataStoreType = new SourceDataStoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sourceResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new BackupRecoveryPointBasedRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, recoveryPointId, rawData);
+        }
+
+        BackupRecoveryPointBasedRestoreContent IModelJsonSerializable<BackupRecoveryPointBasedRestoreContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackupRecoveryPointBasedRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupRecoveryPointBasedRestoreContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupRecoveryPointBasedRestoreContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackupRecoveryPointBasedRestoreContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupRecoveryPointBasedRestoreContent IModelSerializable<BackupRecoveryPointBasedRestoreContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<BackupRecoveryPointBasedRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupRecoveryPointBasedRestoreContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BackupRecoveryPointBasedRestoreContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BackupRecoveryPointBasedRestoreContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupRecoveryPointBasedRestoreContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerAuthorization : IUtf8JsonSerializable
+    public partial class PartnerAuthorization : IUtf8JsonSerializable, IModelJsonSerializable<PartnerAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerAuthorization>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerAuthorization>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
@@ -31,17 +38,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartnerAuthorization DeserializePartnerAuthorization(JsonElement element)
+        internal static PartnerAuthorization DeserializePartnerAuthorization(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> defaultMaximumExpirationTimeInDays = default;
             Optional<IList<EventGridPartnerContent>> authorizedPartnersList = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultMaximumExpirationTimeInDays"u8))
@@ -67,8 +89,57 @@ namespace Azure.ResourceManager.EventGrid.Models
                     authorizedPartnersList = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PartnerAuthorization(Optional.ToNullable(defaultMaximumExpirationTimeInDays), Optional.ToList(authorizedPartnersList));
+            return new PartnerAuthorization(Optional.ToNullable(defaultMaximumExpirationTimeInDays), Optional.ToList(authorizedPartnersList), rawData);
+        }
+
+        PartnerAuthorization IModelJsonSerializable<PartnerAuthorization>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerAuthorization(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerAuthorization>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerAuthorization IModelSerializable<PartnerAuthorization>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerAuthorization(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PartnerAuthorization model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PartnerAuthorization(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePartnerAuthorization(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

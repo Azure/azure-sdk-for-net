@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class TableLevelSharingProperties : IUtf8JsonSerializable
+    public partial class TableLevelSharingProperties : IUtf8JsonSerializable, IModelJsonSerializable<TableLevelSharingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TableLevelSharingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TableLevelSharingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
@@ -76,11 +83,25 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TableLevelSharingProperties DeserializeTableLevelSharingProperties(JsonElement element)
+        internal static TableLevelSharingProperties DeserializeTableLevelSharingProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +112,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<IList<string>> materializedViewsToInclude = default;
             Optional<IList<string>> tablesToExclude = default;
             Optional<IList<string>> tablesToInclude = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("externalTablesToExclude"u8))
@@ -177,8 +199,57 @@ namespace Azure.ResourceManager.DataShare.Models
                     tablesToInclude = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TableLevelSharingProperties(Optional.ToList(externalTablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(tablesToExclude), Optional.ToList(tablesToInclude));
+            return new TableLevelSharingProperties(Optional.ToList(externalTablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(tablesToExclude), Optional.ToList(tablesToInclude), rawData);
+        }
+
+        TableLevelSharingProperties IModelJsonSerializable<TableLevelSharingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableLevelSharingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TableLevelSharingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TableLevelSharingProperties IModelSerializable<TableLevelSharingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTableLevelSharingProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TableLevelSharingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TableLevelSharingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTableLevelSharingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

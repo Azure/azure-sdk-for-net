@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Validate for backup request. </summary>
     public partial class AdhocBackupValidateContent
     {
-        /// <summary> Initializes a new instance of AdhocBackupValidateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupValidateContent"/>. </summary>
         /// <param name="backupInstance"> Backup Instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstance"/> is null. </exception>
         public AdhocBackupValidateContent(DataProtectionBackupInstanceProperties backupInstance)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(backupInstance, nameof(backupInstance));
 
             BackupInstance = backupInstance;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupValidateContent"/>. </summary>
+        /// <param name="backupInstance"> Backup Instance. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdhocBackupValidateContent(DataProtectionBackupInstanceProperties backupInstance, Dictionary<string, BinaryData> rawData)
+        {
+            BackupInstance = backupInstance;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupValidateContent"/> for deserialization. </summary>
+        internal AdhocBackupValidateContent()
+        {
         }
 
         /// <summary> Backup Instance. </summary>

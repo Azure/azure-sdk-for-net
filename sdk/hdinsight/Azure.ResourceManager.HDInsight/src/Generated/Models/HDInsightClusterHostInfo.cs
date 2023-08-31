@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The cluster host information. </summary>
     public partial class HDInsightClusterHostInfo
     {
-        /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterHostInfo"/>. </summary>
         internal HDInsightClusterHostInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterHostInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterHostInfo"/>. </summary>
         /// <param name="name"> The host name. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
         /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>
-        internal HDInsightClusterHostInfo(string name, string fqdn, Uri effectiveDiskEncryptionKeyUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterHostInfo(string name, string fqdn, Uri effectiveDiskEncryptionKeyUri, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Fqdn = fqdn;
             EffectiveDiskEncryptionKeyUri = effectiveDiskEncryptionKeyUri;
+            _rawData = rawData;
         }
 
         /// <summary> The host name. </summary>

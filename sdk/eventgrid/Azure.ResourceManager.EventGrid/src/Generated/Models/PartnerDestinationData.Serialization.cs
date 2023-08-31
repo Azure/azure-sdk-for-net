@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerDestinationData : IUtf8JsonSerializable
+    public partial class PartnerDestinationData : IUtf8JsonSerializable, IModelJsonSerializable<PartnerDestinationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerDestinationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerDestinationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -65,11 +71,25 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(MessageForActivation);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartnerDestinationData DeserializePartnerDestinationData(JsonElement element)
+        internal static PartnerDestinationData DeserializePartnerDestinationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +107,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<PartnerDestinationActivationState> activationState = default;
             Optional<Uri> endpointBaseUri = default;
             Optional<string> messageForActivation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -199,8 +220,57 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PartnerDestinationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(partnerRegistrationImmutableId), endpointServiceContext.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), endpointBaseUri.Value, messageForActivation.Value);
+            return new PartnerDestinationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(partnerRegistrationImmutableId), endpointServiceContext.Value, Optional.ToNullable(expirationTimeIfNotActivatedUtc), Optional.ToNullable(provisioningState), Optional.ToNullable(activationState), endpointBaseUri.Value, messageForActivation.Value, rawData);
+        }
+
+        PartnerDestinationData IModelJsonSerializable<PartnerDestinationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerDestinationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerDestinationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerDestinationData IModelSerializable<PartnerDestinationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerDestinationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PartnerDestinationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PartnerDestinationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePartnerDestinationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

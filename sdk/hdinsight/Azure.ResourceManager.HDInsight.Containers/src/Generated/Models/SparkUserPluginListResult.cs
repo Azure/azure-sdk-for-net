@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Spark user plugins spec. </summary>
     internal partial class SparkUserPluginListResult
     {
-        /// <summary> Initializes a new instance of SparkUserPluginListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkUserPluginListResult"/>. </summary>
         public SparkUserPluginListResult()
         {
             Plugins = new ChangeTrackingList<SparkUserPlugin>();
         }
 
-        /// <summary> Initializes a new instance of SparkUserPluginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkUserPluginListResult"/>. </summary>
         /// <param name="plugins"> Spark user plugins. </param>
-        internal SparkUserPluginListResult(IList<SparkUserPlugin> plugins)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkUserPluginListResult(IList<SparkUserPlugin> plugins, Dictionary<string, BinaryData> rawData)
         {
             Plugins = plugins;
+            _rawData = rawData;
         }
 
         /// <summary> Spark user plugins. </summary>

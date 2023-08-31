@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryArtifactEventTarget
     {
-        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventTarget. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
         internal ContainerRegistryArtifactEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the artifact. </param>
         /// <param name="size"> The size in bytes of the artifact. </param>
         /// <param name="digest"> The digest of the artifact. </param>
@@ -23,7 +28,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tag"> The tag of the artifact. </param>
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
-        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version, Dictionary<string, BinaryData> rawData)
         {
             MediaType = mediaType;
             Size = size;
@@ -32,6 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Tag = tag;
             Name = name;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> The MIME type of the artifact. </summary>

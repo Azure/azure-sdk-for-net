@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownOperationExtendedInfo. </summary>
     internal partial class UnknownOperationExtendedInfo : DataProtectionOperationExtendedInfo
     {
-        /// <summary> Initializes a new instance of UnknownOperationExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownOperationExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal UnknownOperationExtendedInfo(string objectType) : base(objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownOperationExtendedInfo(string objectType, Dictionary<string, BinaryData> rawData) : base(objectType, rawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownOperationExtendedInfo"/> for deserialization. </summary>
+        internal UnknownOperationExtendedInfo()
+        {
         }
     }
 }

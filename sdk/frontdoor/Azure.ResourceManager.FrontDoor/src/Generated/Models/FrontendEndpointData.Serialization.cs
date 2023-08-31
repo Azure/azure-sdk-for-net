@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontendEndpointData : IUtf8JsonSerializable
+    public partial class FrontendEndpointData : IUtf8JsonSerializable, IModelJsonSerializable<FrontendEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontendEndpointData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontendEndpointData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FrontendEndpointData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -50,11 +58,25 @@ namespace Azure.ResourceManager.FrontDoor
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element)
+        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +92,7 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
             Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
             Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -178,8 +201,57 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value, rawData);
+        }
+
+        FrontendEndpointData IModelJsonSerializable<FrontendEndpointData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FrontendEndpointData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontendEndpointData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontendEndpointData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FrontendEndpointData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontendEndpointData IModelSerializable<FrontendEndpointData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FrontendEndpointData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontendEndpointData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FrontendEndpointData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FrontendEndpointData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontendEndpointData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

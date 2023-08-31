@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class CopyAuthorizationResult : IUtf8JsonSerializable
+    internal partial class CopyAuthorizationResult : IUtf8JsonSerializable, IModelJsonSerializable<CopyAuthorizationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CopyAuthorizationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CopyAuthorizationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
@@ -21,11 +29,25 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expirationDateTimeTicks"u8);
             writer.WriteNumberValue(ExpirationDateTimeTicks);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CopyAuthorizationResult DeserializeCopyAuthorizationResult(JsonElement element)
+        internal static CopyAuthorizationResult DeserializeCopyAuthorizationResult(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
             string modelId = default;
             string accessToken = default;
             long expirationDateTimeTicks = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -50,8 +73,57 @@ namespace Azure.AI.FormRecognizer.Models
                     expirationDateTimeTicks = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CopyAuthorizationResult(modelId, accessToken, expirationDateTimeTicks);
+            return new CopyAuthorizationResult(modelId, accessToken, expirationDateTimeTicks, rawData);
+        }
+
+        CopyAuthorizationResult IModelJsonSerializable<CopyAuthorizationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyAuthorizationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CopyAuthorizationResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CopyAuthorizationResult IModelSerializable<CopyAuthorizationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCopyAuthorizationResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CopyAuthorizationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CopyAuthorizationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCopyAuthorizationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

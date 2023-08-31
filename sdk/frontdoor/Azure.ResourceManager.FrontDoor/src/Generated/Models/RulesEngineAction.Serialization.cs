@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineAction : IUtf8JsonSerializable
+    public partial class RulesEngineAction : IUtf8JsonSerializable, IModelJsonSerializable<RulesEngineAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RulesEngineAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RulesEngineAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequestHeaderActions))
             {
@@ -48,11 +55,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("routeConfigurationOverride");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element)
+        internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +81,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<IList<RulesEngineHeaderAction>> requestHeaderActions = default;
             Optional<IList<RulesEngineHeaderAction>> responseHeaderActions = default;
             Optional<RouteConfiguration> routeConfigurationOverride = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestHeaderActions"u8))
@@ -100,8 +122,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RulesEngineAction(Optional.ToList(requestHeaderActions), Optional.ToList(responseHeaderActions), routeConfigurationOverride.Value);
+            return new RulesEngineAction(Optional.ToList(requestHeaderActions), Optional.ToList(responseHeaderActions), routeConfigurationOverride.Value, rawData);
+        }
+
+        RulesEngineAction IModelJsonSerializable<RulesEngineAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRulesEngineAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RulesEngineAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RulesEngineAction IModelSerializable<RulesEngineAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRulesEngineAction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RulesEngineAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RulesEngineAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRulesEngineAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

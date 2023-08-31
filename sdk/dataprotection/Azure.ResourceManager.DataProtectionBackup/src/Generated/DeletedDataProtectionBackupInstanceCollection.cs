@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedDataProtectionBackupInstanceResource(Client, DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(e)), _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, "DeletedDataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DeletedDataProtectionBackupInstanceResource(Client, DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(e)), _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, "DeletedDataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedDataProtectionBackupInstanceResource(Client, DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(e)), _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, "DeletedDataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DeletedDataProtectionBackupInstanceResource(Client, DeletedDataProtectionBackupInstanceData.DeserializeDeletedDataProtectionBackupInstanceData(e)), _deletedDataProtectionBackupInstanceDeletedBackupInstancesClientDiagnostics, Pipeline, "DeletedDataProtectionBackupInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

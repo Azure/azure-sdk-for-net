@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Dimensions of a configuration. </summary>
     public partial class ProductDimensions
     {
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         internal ProductDimensions()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductDimensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDimensions"/>. </summary>
         /// <param name="length"> Length of the device. </param>
         /// <param name="height"> Height of the device. </param>
         /// <param name="width"> Width of the device. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="weight"> Weight of the device. </param>
         /// <param name="depth"> Depth of the device. </param>
         /// <param name="weightUnit"> Unit for the dimensions of weight. </param>
-        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductDimensions(double? length, double? height, double? width, ProductLengthHeightWidthUnit? lengthHeightUnit, double? weight, double? depth, ProductWeightMeasurementUnit? weightUnit, Dictionary<string, BinaryData> rawData)
         {
             Length = length;
             Height = height;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Weight = weight;
             Depth = depth;
             WeightUnit = weightUnit;
+            _rawData = rawData;
         }
 
         /// <summary> Length of the device. </summary>

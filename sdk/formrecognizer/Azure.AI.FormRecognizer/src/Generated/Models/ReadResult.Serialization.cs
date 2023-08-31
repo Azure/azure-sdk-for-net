@@ -5,16 +5,80 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class ReadResult
+    internal partial class ReadResult : IUtf8JsonSerializable, IModelJsonSerializable<ReadResult>
     {
-        internal static ReadResult DeserializeReadResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReadResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReadResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("page"u8);
+            writer.WriteNumberValue(Page);
+            writer.WritePropertyName("angle"u8);
+            writer.WriteNumberValue(Angle);
+            writer.WritePropertyName("width"u8);
+            writer.WriteNumberValue(Width);
+            writer.WritePropertyName("height"u8);
+            writer.WriteNumberValue(Height);
+            writer.WritePropertyName("unit"u8);
+            writer.WriteStringValue(Unit.ToSerialString());
+            if (Optional.IsCollectionDefined(Lines))
+            {
+                writer.WritePropertyName("lines"u8);
+                writer.WriteStartArray();
+                foreach (var item in Lines)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SelectionMarks))
+            {
+                if (SelectionMarks != null)
+                {
+                    writer.WritePropertyName("selectionMarks"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in SelectionMarks)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("selectionMarks");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReadResult DeserializeReadResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +90,7 @@ namespace Azure.AI.FormRecognizer.Models
             LengthUnit unit = default;
             Optional<IReadOnlyList<TextLine>> lines = default;
             Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"u8))
@@ -82,8 +147,57 @@ namespace Azure.AI.FormRecognizer.Models
                     selectionMarks = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReadResult(page, angle, width, height, unit, Optional.ToList(lines), Optional.ToList(selectionMarks));
+            return new ReadResult(page, angle, width, height, unit, Optional.ToList(lines), Optional.ToList(selectionMarks), rawData);
+        }
+
+        ReadResult IModelJsonSerializable<ReadResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReadResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReadResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReadResult IModelSerializable<ReadResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReadResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReadResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReadResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReadResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

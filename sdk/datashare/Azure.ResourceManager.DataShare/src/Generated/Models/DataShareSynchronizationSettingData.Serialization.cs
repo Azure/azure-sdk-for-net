@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareSynchronizationSettingData : IUtf8JsonSerializable
+    public partial class DataShareSynchronizationSettingData : IUtf8JsonSerializable, IModelJsonSerializable<DataShareSynchronizationSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataShareSynchronizationSettingData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataShareSynchronizationSettingData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataShareSynchronizationSettingData DeserializeDataShareSynchronizationSettingData(JsonElement element)
+        internal static DataShareSynchronizationSettingData DeserializeDataShareSynchronizationSettingData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,11 +57,14 @@ namespace Azure.ResourceManager.DataShare
                     case "ScheduleBased": return ScheduledSynchronizationSetting.DeserializeScheduledSynchronizationSetting(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             SynchronizationSettingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -71,8 +96,57 @@ namespace Azure.ResourceManager.DataShare
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataShareSynchronizationSettingData(id, name, type, systemData.Value, kind);
+            return new DataShareSynchronizationSettingData(id, name, type, systemData.Value, kind, rawData);
+        }
+
+        DataShareSynchronizationSettingData IModelJsonSerializable<DataShareSynchronizationSettingData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataShareSynchronizationSettingData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataShareSynchronizationSettingData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataShareSynchronizationSettingData IModelSerializable<DataShareSynchronizationSettingData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataShareSynchronizationSettingData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataShareSynchronizationSettingData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataShareSynchronizationSettingData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataShareSynchronizationSettingData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

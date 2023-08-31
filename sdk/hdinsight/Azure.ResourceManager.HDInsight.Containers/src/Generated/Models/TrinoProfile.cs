@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -12,24 +13,28 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino Cluster profile. </summary>
     public partial class TrinoProfile
     {
-        /// <summary> Initializes a new instance of TrinoProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoProfile"/>. </summary>
         public TrinoProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoProfile"/>. </summary>
         /// <param name="catalogOptions"> Trino cluster catalog options. </param>
         /// <param name="coordinator"> Trino Coordinator. </param>
         /// <param name="userPluginsSpec"> Trino user plugins spec. </param>
         /// <param name="userTelemetrySpec"> User telemetry. </param>
         /// <param name="worker"> Trino worker. </param>
-        internal TrinoProfile(CatalogOptions catalogOptions, TrinoCoordinator coordinator, TrinoUserPluginListResult userPluginsSpec, TrinoUserTelemetry userTelemetrySpec, TrinoWorker worker)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoProfile(CatalogOptions catalogOptions, TrinoCoordinator coordinator, TrinoUserPluginListResult userPluginsSpec, TrinoUserTelemetry userTelemetrySpec, TrinoWorker worker, Dictionary<string, BinaryData> rawData)
         {
             CatalogOptions = catalogOptions;
             Coordinator = coordinator;
             UserPluginsSpec = userPluginsSpec;
             UserTelemetrySpec = userTelemetrySpec;
             Worker = worker;
+            _rawData = rawData;
         }
 
         /// <summary> Trino cluster catalog options. </summary>

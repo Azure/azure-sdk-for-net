@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataShareAccountData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Identity Info on the Account. Current supported identity types: SystemAssigned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/> is null. </exception>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.DataShare
             Identity = identity;
         }
 
-        /// <summary> Initializes a new instance of DataShareAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,13 +44,20 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="provisioningState"> Provisioning state of the Account. </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>
         /// <param name="userName"> Name of the user who created the resource. </param>
-        internal DataShareAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, string userEmail, string userName) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, string userEmail, string userName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             UserEmail = userEmail;
             UserName = userName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountData"/> for deserialization. </summary>
+        internal DataShareAccountData()
+        {
         }
 
         /// <summary> Identity Info on the Account. Current supported identity types: SystemAssigned. </summary>

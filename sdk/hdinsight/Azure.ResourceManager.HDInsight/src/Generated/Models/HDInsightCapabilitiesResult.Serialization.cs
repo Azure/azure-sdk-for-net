@@ -5,16 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightCapabilitiesResult
+    public partial class HDInsightCapabilitiesResult : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightCapabilitiesResult>
     {
-        internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightCapabilitiesResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightCapabilitiesResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Versions))
+            {
+                writer.WritePropertyName("versions"u8);
+                writer.WriteStartObject();
+                foreach (var item in Versions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                writer.WritePropertyName("regions"u8);
+                writer.WriteStartObject();
+                foreach (var item in Regions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
             Optional<IReadOnlyList<string>> features = default;
             Optional<QuotaCapability> quota = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("versions"u8))
@@ -76,8 +136,57 @@ namespace Azure.ResourceManager.HDInsight.Models
                     quota = QuotaCapability.DeserializeQuotaCapability(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value);
+            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value, rawData);
+        }
+
+        HDInsightCapabilitiesResult IModelJsonSerializable<HDInsightCapabilitiesResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightCapabilitiesResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightCapabilitiesResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightCapabilitiesResult IModelSerializable<HDInsightCapabilitiesResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightCapabilitiesResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HDInsightCapabilitiesResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HDInsightCapabilitiesResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightCapabilitiesResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

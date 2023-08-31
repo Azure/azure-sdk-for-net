@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
@@ -13,7 +14,9 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A route which directs notification and telemetry events to an endpoint. Endpoints are a destination outside of Azure Digital Twins such as an EventHub. </summary>
     public partial class DigitalTwinsEventRoute
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventRoute"/>. </summary>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="filter"/> is null. </exception>
@@ -26,15 +29,22 @@ namespace Azure.DigitalTwins.Core
             Filter = filter;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventRoute"/>. </summary>
         /// <param name="id"> The id of the event route. </param>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
-        internal DigitalTwinsEventRoute(string id, string endpointName, string filter)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsEventRoute(string id, string endpointName, string filter, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             EndpointName = endpointName;
             Filter = filter;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventRoute"/> for deserialization. </summary>
+        internal DigitalTwinsEventRoute()
+        {
         }
 
         /// <summary> The id of the event route. </summary>

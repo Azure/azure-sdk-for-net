@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> resource sku. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.ElasticSan
             PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +56,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -67,6 +70,12 @@ namespace Azure.ResourceManager.ElasticSan
             TotalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
             PrivateEndpointConnections = privateEndpointConnections;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/> for deserialization. </summary>
+        internal ElasticSanData()
+        {
         }
 
         /// <summary> resource sku. </summary>

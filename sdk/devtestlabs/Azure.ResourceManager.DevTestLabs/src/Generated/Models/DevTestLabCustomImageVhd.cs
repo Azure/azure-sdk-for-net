@@ -5,27 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for creating a custom image from a VHD. </summary>
     public partial class DevTestLabCustomImageVhd
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
         public DevTestLabCustomImageVhd(DevTestLabCustomImageOSType osType)
         {
             OSType = osType;
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/>. </summary>
         /// <param name="imageName"> The image name. </param>
         /// <param name="isSysPrepEnabled"> Indicates whether sysprep has been run on the VHD. </param>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
-        internal DevTestLabCustomImageVhd(string imageName, bool? isSysPrepEnabled, DevTestLabCustomImageOSType osType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCustomImageVhd(string imageName, bool? isSysPrepEnabled, DevTestLabCustomImageOSType osType, Dictionary<string, BinaryData> rawData)
         {
             ImageName = imageName;
             IsSysPrepEnabled = isSysPrepEnabled;
             OSType = osType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVhd"/> for deserialization. </summary>
+        internal DevTestLabCustomImageVhd()
+        {
         }
 
         /// <summary> The image name. </summary>

@@ -15,6 +15,8 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The response for the Onco Phenotype request. </summary>
     public partial class OncoPhenotypeResult
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of OncoPhenotypeResult. </summary>
         internal OncoPhenotypeResult()
         {
@@ -29,7 +31,8 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="status"> The status of the processing job. </param>
         /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
         /// <param name="results"> The inference results for the Onco Phenotype request. </param>
-        internal OncoPhenotypeResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, OncoPhenotypeResults results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeResult(Guid jobId, DateTimeOffset createdDateTime, DateTimeOffset expirationDateTime, DateTimeOffset lastUpdateDateTime, JobStatus status, IReadOnlyList<ResponseError> errors, OncoPhenotypeResults results, Dictionary<string, BinaryData> rawData)
         {
             JobId = jobId;
             CreatedDateTime = createdDateTime;
@@ -38,6 +41,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Status = status;
             Errors = errors;
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> A processing job identifier. </summary>

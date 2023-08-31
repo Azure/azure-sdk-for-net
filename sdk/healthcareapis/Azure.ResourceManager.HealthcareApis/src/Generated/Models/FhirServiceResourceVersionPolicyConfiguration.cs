@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The settings for history tracking for FHIR resources. </summary>
     public partial class FhirServiceResourceVersionPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FhirServiceResourceVersionPolicyConfiguration"/>. </summary>
         public FhirServiceResourceVersionPolicyConfiguration()
         {
             ResourceTypeOverrides = new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>();
         }
 
-        /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceResourceVersionPolicyConfiguration"/>. </summary>
         /// <param name="default"> The default value for tracking history across all resources. </param>
         /// <param name="resourceTypeOverrides"> A list of FHIR Resources and their version policy overrides. </param>
-        internal FhirServiceResourceVersionPolicyConfiguration(FhirResourceVersionPolicy? @default, IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FhirServiceResourceVersionPolicyConfiguration(FhirResourceVersionPolicy? @default, IDictionary<string, FhirResourceVersionPolicy> resourceTypeOverrides, Dictionary<string, BinaryData> rawData)
         {
             Default = @default;
             ResourceTypeOverrides = resourceTypeOverrides;
+            _rawData = rawData;
         }
 
         /// <summary> The default value for tracking history across all resources. </summary>

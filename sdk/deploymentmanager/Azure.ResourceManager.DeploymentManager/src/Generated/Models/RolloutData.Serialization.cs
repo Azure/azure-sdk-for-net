@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DeploymentManager.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    public partial class RolloutData : IUtf8JsonSerializable
+    public partial class RolloutData : IUtf8JsonSerializable, IModelJsonSerializable<RolloutData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RolloutData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RolloutData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -64,11 +71,25 @@ namespace Azure.ResourceManager.DeploymentManager
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RolloutData DeserializeRolloutData(JsonElement element)
+        internal static RolloutData DeserializeRolloutData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +109,7 @@ namespace Azure.ResourceManager.DeploymentManager
             Optional<int> totalRetryAttempts = default;
             Optional<RolloutOperationInfo> operationInfo = default;
             Optional<IReadOnlyList<Service>> services = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -220,8 +242,57 @@ namespace Azure.ResourceManager.DeploymentManager
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RolloutData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, buildVersion.Value, artifactSourceId.Value, targetServiceTopologyId.Value, Optional.ToList(stepGroups), status.Value, Optional.ToNullable(totalRetryAttempts), operationInfo.Value, Optional.ToList(services));
+            return new RolloutData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, buildVersion.Value, artifactSourceId.Value, targetServiceTopologyId.Value, Optional.ToList(stepGroups), status.Value, Optional.ToNullable(totalRetryAttempts), operationInfo.Value, Optional.ToList(services), rawData);
+        }
+
+        RolloutData IModelJsonSerializable<RolloutData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRolloutData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RolloutData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RolloutData IModelSerializable<RolloutData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRolloutData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RolloutData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RolloutData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRolloutData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

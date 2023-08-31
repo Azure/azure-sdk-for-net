@@ -5,18 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Notification preference for a job stage. </summary>
     public partial class NotificationPreference
     {
-        /// <summary> Initializes a new instance of NotificationPreference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationPreference"/>. </summary>
         /// <param name="stageName"> Name of the stage. </param>
         /// <param name="isNotificationRequired"> Notification is required or not. </param>
         public NotificationPreference(NotificationStageName stageName, bool isNotificationRequired)
         {
             StageName = stageName;
             IsNotificationRequired = isNotificationRequired;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationPreference"/>. </summary>
+        /// <param name="stageName"> Name of the stage. </param>
+        /// <param name="isNotificationRequired"> Notification is required or not. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationPreference(NotificationStageName stageName, bool isNotificationRequired, Dictionary<string, BinaryData> rawData)
+        {
+            StageName = stageName;
+            IsNotificationRequired = isNotificationRequired;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationPreference"/> for deserialization. </summary>
+        internal NotificationPreference()
+        {
         }
 
         /// <summary> Name of the stage. </summary>

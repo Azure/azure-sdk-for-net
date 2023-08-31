@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a virtual machine returned by the Microsoft.Compute API. </summary>
     public partial class ComputeVmProperties
     {
-        /// <summary> Initializes a new instance of ComputeVmProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeVmProperties"/>. </summary>
         internal ComputeVmProperties()
         {
             Statuses = new ChangeTrackingList<ComputeVmInstanceViewStatus>();
@@ -21,7 +24,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DataDisks = new ChangeTrackingList<ComputeDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of ComputeVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeVmProperties"/>. </summary>
         /// <param name="statuses"> Gets the statuses of the virtual machine. </param>
         /// <param name="osType"> Gets the OS type of the virtual machine. </param>
         /// <param name="vmSize"> Gets the size of the virtual machine. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="osDiskId"> Gets OS disk blob uri for the virtual machine. </param>
         /// <param name="dataDiskIds"> Gets data disks blob uri for the virtual machine. </param>
         /// <param name="dataDisks"> Gets all data disks attached to the virtual machine. </param>
-        internal ComputeVmProperties(IReadOnlyList<ComputeVmInstanceViewStatus> statuses, string osType, string vmSize, string networkInterfaceId, string osDiskId, IReadOnlyList<string> dataDiskIds, IReadOnlyList<ComputeDataDisk> dataDisks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeVmProperties(IReadOnlyList<ComputeVmInstanceViewStatus> statuses, string osType, string vmSize, string networkInterfaceId, string osDiskId, IReadOnlyList<string> dataDiskIds, IReadOnlyList<ComputeDataDisk> dataDisks, Dictionary<string, BinaryData> rawData)
         {
             Statuses = statuses;
             OSType = osType;
@@ -38,6 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             OSDiskId = osDiskId;
             DataDiskIds = dataDiskIds;
             DataDisks = dataDisks;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the statuses of the virtual machine. </summary>

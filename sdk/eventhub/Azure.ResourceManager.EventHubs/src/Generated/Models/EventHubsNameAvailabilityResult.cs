@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The Result of the CheckNameAvailability operation. </summary>
     public partial class EventHubsNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of EventHubsNameAvailabilityResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityResult"/>. </summary>
         internal EventHubsNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNameAvailabilityResult"/>. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
         /// <param name="nameAvailable"> Value indicating Namespace is availability, true if the Namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a Namespace. </param>
-        internal EventHubsNameAvailabilityResult(string message, bool? nameAvailable, EventHubsNameUnavailableReason? reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNameAvailabilityResult(string message, bool? nameAvailable, EventHubsNameUnavailableReason? reason, Dictionary<string, BinaryData> rawData)
         {
             Message = message;
             NameAvailable = nameAvailable;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> The detailed info regarding the reason associated with the Namespace. </summary>

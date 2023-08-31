@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -18,23 +19,27 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorRulesEngineData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
         public FrontDoorRulesEngineData()
         {
             Rules = new ChangeTrackingList<RulesEngineRule>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rules"> A list of rules that define a particular Rules Engine Configuration. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RulesEngineRule> rules, FrontDoorResourceState? resourceState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRulesEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RulesEngineRule> rules, FrontDoorResourceState? resourceState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Rules = rules;
             ResourceState = resourceState;
+            _rawData = rawData;
         }
 
         /// <summary> A list of rules that define a particular Rules Engine Configuration. </summary>

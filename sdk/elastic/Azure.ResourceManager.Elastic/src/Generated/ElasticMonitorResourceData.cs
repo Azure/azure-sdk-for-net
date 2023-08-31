@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Elastic.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Elastic
     /// </summary>
     public partial class ElasticMonitorResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticMonitorResourceData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ElasticMonitorResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticMonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +37,18 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="sku"> SKU of the monitor resource. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
         /// <param name="identity"> Identity properties of the monitor resource. Current supported identity types: SystemAssigned. </param>
-        internal ElasticMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, MonitorProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticMonitorResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, MonitorProperties properties, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticMonitorResourceData"/> for deserialization. </summary>
+        internal ElasticMonitorResourceData()
+        {
         }
 
         /// <summary> SKU of the monitor resource. </summary>

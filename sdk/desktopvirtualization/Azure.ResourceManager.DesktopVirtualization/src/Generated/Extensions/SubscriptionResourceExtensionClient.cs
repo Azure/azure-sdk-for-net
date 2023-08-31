@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
         }
     }
 }

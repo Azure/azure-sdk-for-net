@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.DatasetDriftDetected event. </summary>
     public partial class MachineLearningServicesDatasetDriftDetectedEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesDatasetDriftDetectedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
         internal MachineLearningServicesDatasetDriftDetectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesDatasetDriftDetectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
         /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>
         /// <param name="dataDriftName"> The name of the data drift monitor that triggered the event. </param>
         /// <param name="runId"> The ID of the Run that detected data drift. </param>
@@ -26,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="driftCoefficient"> The coefficient result that triggered the event. </param>
         /// <param name="startTime"> The start time of the target dataset time series that resulted in drift detection. </param>
         /// <param name="endTime"> The end time of the target dataset time series that resulted in drift detection. </param>
-        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesDatasetDriftDetectedEventData(string dataDriftId, string dataDriftName, string runId, string baseDatasetId, string targetDatasetId, double? driftCoefficient, DateTimeOffset? startTime, DateTimeOffset? endTime, Dictionary<string, BinaryData> rawData)
         {
             DataDriftId = dataDriftId;
             DataDriftName = dataDriftName;
@@ -36,6 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             DriftCoefficient = driftCoefficient;
             StartTime = startTime;
             EndTime = endTime;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of the data drift monitor that triggered the event. </summary>
