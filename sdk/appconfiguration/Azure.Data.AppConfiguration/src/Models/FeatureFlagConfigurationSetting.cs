@@ -67,7 +67,7 @@ namespace Azure.Data.AppConfiguration
         {
         }
 
-         /// <summary>
+        /// <summary>
         /// Initializes an instance of the <see cref="FeatureFlagConfigurationSetting"/> using a provided feature id and
         /// the enabled value.
         /// </summary>
