@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "Locations", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "MdeOnboardings", "2021-10-01-preview"),
                 new Tuple<string, string, string>("Security", "Operations", "2015-06-01-preview"),
-                new Tuple<string, string, string>("Security", "Pricings", "2022-03-01"),
+                new Tuple<string, string, string>("Security", "Pricings", "2023-01-01"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceControls", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "RegulatoryComplianceStandards", "2019-01-01-preview"),
