@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable
+    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<CommonDynamicMatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommonDynamicMatchConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommonDynamicMatchConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPGroups))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommonDynamicMatchConfiguration DeserializeCommonDynamicMatchConfiguration(JsonElement element)
+        internal static CommonDynamicMatchConfiguration DeserializeCommonDynamicMatchConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
             Optional<IList<VlanGroupProperties>> vlanGroups = default;
             Optional<IList<PortGroupProperties>> portGroups = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipGroups"u8))
@@ -102,8 +124,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     portGroups = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups));
+            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups), rawData);
+        }
+
+        CommonDynamicMatchConfiguration IModelJsonSerializable<CommonDynamicMatchConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonDynamicMatchConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommonDynamicMatchConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommonDynamicMatchConfiguration IModelSerializable<CommonDynamicMatchConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommonDynamicMatchConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CommonDynamicMatchConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CommonDynamicMatchConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommonDynamicMatchConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,17 +5,82 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class TrialMatcherInference
+    public partial class TrialMatcherInference : IUtf8JsonSerializable, IModelJsonSerializable<TrialMatcherInference>
     {
-        internal static TrialMatcherInference DeserializeTrialMatcherInference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrialMatcherInference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrialMatcherInference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Value);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ConfidenceScore))
+            {
+                writer.WritePropertyName("confidenceScore"u8);
+                writer.WriteNumberValue(ConfidenceScore.Value);
+            }
+            if (Optional.IsCollectionDefined(Evidence))
+            {
+                writer.WritePropertyName("evidence"u8);
+                writer.WriteStartArray();
+                foreach (var item in Evidence)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source.Value.ToString());
+            }
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteObjectValue(Metadata);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrialMatcherInference DeserializeTrialMatcherInference(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +93,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Optional<string> id = default;
             Optional<ClinicalTrialSource> source = default;
             Optional<ClinicalTrialMetadata> metadata = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -91,16 +157,57 @@ namespace Azure.Health.Insights.ClinicalMatching
                     metadata = ClinicalTrialMetadata.DeserializeClinicalTrialMetadata(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), id.Value, Optional.ToNullable(source), metadata.Value);
+            return new TrialMatcherInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), id.Value, Optional.ToNullable(source), metadata.Value, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrialMatcherInference FromResponse(Response response)
+        TrialMatcherInference IModelJsonSerializable<TrialMatcherInference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrialMatcherInference(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrialMatcherInference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrialMatcherInference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrialMatcherInference IModelSerializable<TrialMatcherInference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrialMatcherInference(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TrialMatcherInference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TrialMatcherInference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrialMatcherInference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

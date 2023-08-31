@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
@@ -13,7 +14,9 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> The SASTokenParameter. </summary>
     internal partial class SASTokenParameter
     {
-        /// <summary> Initializes a new instance of SASTokenParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>
         /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
         /// <param name="token"> The SAS token pointing to an Azure Blob storage container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageResourceUri"/> or <paramref name="token"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.Security.KeyVault.Administration.Models
 
             StorageResourceUri = storageResourceUri;
             Token = token;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/>. </summary>
+        /// <param name="storageResourceUri"> Azure Blob storage container Uri. </param>
+        /// <param name="token"> The SAS token pointing to an Azure Blob storage container. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SASTokenParameter(string storageResourceUri, string token, Dictionary<string, BinaryData> rawData)
+        {
+            StorageResourceUri = storageResourceUri;
+            Token = token;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SASTokenParameter"/> for deserialization. </summary>
+        internal SASTokenParameter()
+        {
         }
 
         /// <summary> Azure Blob storage container Uri. </summary>

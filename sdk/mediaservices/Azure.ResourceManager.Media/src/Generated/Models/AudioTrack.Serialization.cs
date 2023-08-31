@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioTrack : IUtf8JsonSerializable
+    public partial class AudioTrack : IUtf8JsonSerializable, IModelJsonSerializable<AudioTrack>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AudioTrack>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AudioTrack>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AudioTrack>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FileName))
             {
@@ -54,11 +62,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AudioTrack DeserializeAudioTrack(JsonElement element)
+        internal static AudioTrack DeserializeAudioTrack(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,6 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int?> mpeg4TrackId = default;
             Optional<int> bitRate = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -130,8 +153,57 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AudioTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
+            return new AudioTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate), rawData);
+        }
+
+        AudioTrack IModelJsonSerializable<AudioTrack>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AudioTrack>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAudioTrack(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AudioTrack>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AudioTrack>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AudioTrack IModelSerializable<AudioTrack>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AudioTrack>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAudioTrack(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AudioTrack model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AudioTrack(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAudioTrack(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

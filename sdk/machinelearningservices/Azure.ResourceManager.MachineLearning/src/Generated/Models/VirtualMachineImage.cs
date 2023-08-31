@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Virtual Machine image for Windows AML Compute. </summary>
     internal partial class VirtualMachineImage
     {
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="id"> Virtual Machine image path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public VirtualMachineImage(string id)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
+        /// <param name="id"> Virtual Machine image path. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineImage(string id, Dictionary<string, BinaryData> rawData)
+        {
+            Id = id;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/> for deserialization. </summary>
+        internal VirtualMachineImage()
+        {
         }
 
         /// <summary> Virtual Machine image path. </summary>

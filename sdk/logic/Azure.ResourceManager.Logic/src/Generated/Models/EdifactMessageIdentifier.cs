@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact message identifier. </summary>
     public partial class EdifactMessageIdentifier
     {
-        /// <summary> Initializes a new instance of EdifactMessageIdentifier. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageIdentifier"/>. </summary>
         /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public EdifactMessageIdentifier(string messageId)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.Logic.Models
             Argument.AssertNotNull(messageId, nameof(messageId));
 
             MessageId = messageId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageIdentifier"/>. </summary>
+        /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactMessageIdentifier(string messageId, Dictionary<string, BinaryData> rawData)
+        {
+            MessageId = messageId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageIdentifier"/> for deserialization. </summary>
+        internal EdifactMessageIdentifier()
+        {
         }
 
         /// <summary> The message id on which this envelope settings has to be applied. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StandardEncoderPreset : IUtf8JsonSerializable
+    public partial class StandardEncoderPreset : IUtf8JsonSerializable, IModelJsonSerializable<StandardEncoderPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StandardEncoderPreset>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StandardEncoderPreset>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<StandardEncoderPreset>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
@@ -48,11 +55,25 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndArray();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
+        internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.Media.Models
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentalOptions"u8))
@@ -112,8 +134,57 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StandardEncoderPreset(odataType, Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats);
+            return new StandardEncoderPreset(odataType, Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats, rawData);
+        }
+
+        StandardEncoderPreset IModelJsonSerializable<StandardEncoderPreset>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StandardEncoderPreset>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStandardEncoderPreset(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StandardEncoderPreset>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StandardEncoderPreset>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StandardEncoderPreset IModelSerializable<StandardEncoderPreset>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StandardEncoderPreset>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStandardEncoderPreset(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StandardEncoderPreset model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StandardEncoderPreset(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStandardEncoderPreset(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

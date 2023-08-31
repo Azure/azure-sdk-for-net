@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), _connectedClusterClientDiagnostics, Pipeline, "ConnectedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), _connectedClusterClientDiagnostics, Pipeline, "ConnectedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), _connectedClusterClientDiagnostics, Pipeline, "ConnectedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), _connectedClusterClientDiagnostics, Pipeline, "ConnectedClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

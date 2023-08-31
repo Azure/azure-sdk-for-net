@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Vlan group properties. </summary>
     public partial class VlanGroupProperties
     {
-        /// <summary> Initializes a new instance of VlanGroupProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VlanGroupProperties"/>. </summary>
         public VlanGroupProperties()
         {
             Vlans = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VlanGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VlanGroupProperties"/>. </summary>
         /// <param name="name"> Vlan group name. </param>
         /// <param name="vlans"> List of vlans. </param>
-        internal VlanGroupProperties(string name, IList<string> vlans)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VlanGroupProperties(string name, IList<string> vlans, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Vlans = vlans;
+            _rawData = rawData;
         }
 
         /// <summary> Vlan group name. </summary>

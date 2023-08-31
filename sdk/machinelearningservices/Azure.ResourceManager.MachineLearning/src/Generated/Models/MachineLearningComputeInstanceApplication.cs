@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an Aml Instance application and its connectivity endpoint URI. </summary>
     public partial class MachineLearningComputeInstanceApplication
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceApplication"/>. </summary>
         internal MachineLearningComputeInstanceApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceApplication"/>. </summary>
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
         /// <param name="endpointUri"> Application' endpoint URI. </param>
-        internal MachineLearningComputeInstanceApplication(string displayName, Uri endpointUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceApplication(string displayName, Uri endpointUri, Dictionary<string, BinaryData> rawData)
         {
             DisplayName = displayName;
             EndpointUri = endpointUri;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the ComputeInstance application. </summary>

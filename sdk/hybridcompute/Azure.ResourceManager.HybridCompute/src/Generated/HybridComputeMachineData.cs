@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
@@ -18,14 +19,16 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputeMachineData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridComputeMachineData(AzureLocation location) : base(location)
         {
             Resources = new ChangeTrackingList<HybridComputeMachineExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,11 +38,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="properties"> Hybrid Compute Machine properties. </param>
         /// <param name="resources"> The list of extensions affiliated to the machine. </param>
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineProperties properties, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Resources = resources;
             Identity = identity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/> for deserialization. </summary>
+        internal HybridComputeMachineData()
+        {
         }
 
         /// <summary> Hybrid Compute Machine properties. </summary>

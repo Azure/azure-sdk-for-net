@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerRecurrence : IUtf8JsonSerializable
+    public partial class LogicWorkflowTriggerRecurrence : IUtf8JsonSerializable, IModelJsonSerializable<LogicWorkflowTriggerRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicWorkflowTriggerRecurrence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicWorkflowTriggerRecurrence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Frequency))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowTriggerRecurrence DeserializeLogicWorkflowTriggerRecurrence(JsonElement element)
+        internal static LogicWorkflowTriggerRecurrence DeserializeLogicWorkflowTriggerRecurrence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> timeZone = default;
             Optional<LogicWorkflowRecurrenceSchedule> schedule = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"u8))
@@ -113,8 +135,57 @@ namespace Azure.ResourceManager.Logic.Models
                     schedule = LogicWorkflowRecurrenceSchedule.DeserializeLogicWorkflowRecurrenceSchedule(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicWorkflowTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value);
+            return new LogicWorkflowTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, rawData);
+        }
+
+        LogicWorkflowTriggerRecurrence IModelJsonSerializable<LogicWorkflowTriggerRecurrence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowTriggerRecurrence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicWorkflowTriggerRecurrence>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicWorkflowTriggerRecurrence IModelSerializable<LogicWorkflowTriggerRecurrence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowTriggerRecurrence(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicWorkflowTriggerRecurrence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicWorkflowTriggerRecurrence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicWorkflowTriggerRecurrence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

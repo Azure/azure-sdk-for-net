@@ -5,15 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class OperationalizationClusterCredentials
+    public partial class OperationalizationClusterCredentials : IUtf8JsonSerializable, IModelJsonSerializable<OperationalizationClusterCredentials>
     {
-        internal static OperationalizationClusterCredentials DeserializeOperationalizationClusterCredentials(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalizationClusterCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalizationClusterCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(StorageAccount))
+            {
+                writer.WritePropertyName("storageAccount"u8);
+                writer.WriteObjectValue(StorageAccount);
+            }
+            if (Optional.IsDefined(ContainerRegistry))
+            {
+                writer.WritePropertyName("containerRegistry"u8);
+                writer.WriteObjectValue(ContainerRegistry);
+            }
+            if (Optional.IsDefined(ContainerService))
+            {
+                writer.WritePropertyName("containerService"u8);
+                writer.WriteObjectValue(ContainerService);
+            }
+            if (Optional.IsDefined(AppInsights))
+            {
+                writer.WritePropertyName("appInsights"u8);
+                writer.WriteObjectValue(AppInsights);
+            }
+            if (Optional.IsDefined(ServiceAuthConfiguration))
+            {
+                writer.WritePropertyName("serviceAuthConfiguration"u8);
+                writer.WriteObjectValue(ServiceAuthConfiguration);
+            }
+            if (Optional.IsDefined(SslConfiguration))
+            {
+                writer.WritePropertyName("sslConfiguration"u8);
+                writer.WriteObjectValue(SslConfiguration);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OperationalizationClusterCredentials DeserializeOperationalizationClusterCredentials(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +82,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<AppInsightsCredentials> appInsights = default;
             Optional<ServiceAuthConfiguration> serviceAuthConfiguration = default;
             Optional<SslConfiguration> sslConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccount"u8))
@@ -80,8 +139,57 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     sslConfiguration = SslConfiguration.DeserializeSslConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalizationClusterCredentials(storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, serviceAuthConfiguration.Value, sslConfiguration.Value);
+            return new OperationalizationClusterCredentials(storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, serviceAuthConfiguration.Value, sslConfiguration.Value, rawData);
+        }
+
+        OperationalizationClusterCredentials IModelJsonSerializable<OperationalizationClusterCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalizationClusterCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalizationClusterCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalizationClusterCredentials IModelSerializable<OperationalizationClusterCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalizationClusterCredentials(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OperationalizationClusterCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OperationalizationClusterCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalizationClusterCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class LoadBalancerProfile : IUtf8JsonSerializable
+    public partial class LoadBalancerProfile : IUtf8JsonSerializable, IModelJsonSerializable<LoadBalancerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadBalancerProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadBalancerProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<LoadBalancerProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinuxProfile))
             {
@@ -102,11 +109,25 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("cloudProviderProfile"u8);
                 writer.WriteObjectValue(CloudProviderProfile);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerProfile DeserializeLoadBalancerProfile(JsonElement element)
+        internal static LoadBalancerProfile DeserializeLoadBalancerProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +146,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> nodeImageVersion = default;
             Optional<string> vmSize = default;
             Optional<CloudProviderProfile> cloudProviderProfile = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxProfile"u8))
@@ -256,8 +278,57 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     cloudProviderProfile = CloudProviderProfile.DeserializeCloudProviderProfile(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoadBalancerProfile(Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, name.Value, linuxProfile.Value);
+            return new LoadBalancerProfile(Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, name.Value, linuxProfile.Value, rawData);
+        }
+
+        LoadBalancerProfile IModelJsonSerializable<LoadBalancerProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LoadBalancerProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadBalancerProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LoadBalancerProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadBalancerProfile IModelSerializable<LoadBalancerProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LoadBalancerProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadBalancerProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LoadBalancerProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LoadBalancerProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadBalancerProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

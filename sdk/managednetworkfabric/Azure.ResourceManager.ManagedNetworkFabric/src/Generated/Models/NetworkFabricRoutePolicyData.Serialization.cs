@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricRoutePolicyData : IUtf8JsonSerializable
+    public partial class NetworkFabricRoutePolicyData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkFabricRoutePolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkFabricRoutePolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkFabricRoutePolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(AddressFamilyType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFabricRoutePolicyData DeserializeNetworkFabricRoutePolicyData(JsonElement element)
+        internal static NetworkFabricRoutePolicyData DeserializeNetworkFabricRoutePolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -195,8 +217,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkFabricRoutePolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(statements), networkFabricId, Optional.ToNullable(addressFamilyType), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            return new NetworkFabricRoutePolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(statements), networkFabricId, Optional.ToNullable(addressFamilyType), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), rawData);
+        }
+
+        NetworkFabricRoutePolicyData IModelJsonSerializable<NetworkFabricRoutePolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricRoutePolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkFabricRoutePolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkFabricRoutePolicyData IModelSerializable<NetworkFabricRoutePolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricRoutePolicyData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetworkFabricRoutePolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetworkFabricRoutePolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkFabricRoutePolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

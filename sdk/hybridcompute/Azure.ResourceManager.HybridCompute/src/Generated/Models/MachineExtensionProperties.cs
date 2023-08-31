@@ -14,14 +14,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the properties of a Machine Extension. </summary>
     public partial class MachineExtensionProperties
     {
-        /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionProperties"/>. </summary>
         public MachineExtensionProperties()
         {
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
             ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionProperties"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -32,7 +34,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine extension instance view. </param>
-        internal MachineExtensionProperties(string forceUpdateTag, string publisher, string machineExtensionPropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, string provisioningState, MachineExtensionInstanceView instanceView)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionProperties(string forceUpdateTag, string publisher, string machineExtensionPropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings, string provisioningState, MachineExtensionInstanceView instanceView, Dictionary<string, BinaryData> rawData)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ProtectedSettings = protectedSettings;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            _rawData = rawData;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

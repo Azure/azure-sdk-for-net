@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class MediaKeyDelivery : IUtf8JsonSerializable
+    internal partial class MediaKeyDelivery : IUtf8JsonSerializable, IModelJsonSerializable<MediaKeyDelivery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaKeyDelivery>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaKeyDelivery>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
                 writer.WriteObjectValue(AccessControl);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaKeyDelivery DeserializeMediaKeyDelivery(JsonElement element)
+        internal static MediaKeyDelivery DeserializeMediaKeyDelivery(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MediaAccessControl> accessControl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessControl"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.Media.Models
                     accessControl = MediaAccessControl.DeserializeMediaAccessControl(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaKeyDelivery(accessControl.Value);
+            return new MediaKeyDelivery(accessControl.Value, rawData);
+        }
+
+        MediaKeyDelivery IModelJsonSerializable<MediaKeyDelivery>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaKeyDelivery(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaKeyDelivery>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaKeyDelivery IModelSerializable<MediaKeyDelivery>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaKeyDelivery(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MediaKeyDelivery model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MediaKeyDelivery(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaKeyDelivery(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

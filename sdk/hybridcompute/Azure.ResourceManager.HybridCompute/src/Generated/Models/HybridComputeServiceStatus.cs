@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the status and behavior of a service. </summary>
     public partial class HybridComputeServiceStatus
     {
-        /// <summary> Initializes a new instance of HybridComputeServiceStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceStatus"/>. </summary>
         public HybridComputeServiceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridComputeServiceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeServiceStatus"/>. </summary>
         /// <param name="status"> The current status of the service. </param>
         /// <param name="startupType"> The behavior of the service when the Arc-enabled machine starts up. </param>
-        internal HybridComputeServiceStatus(string status, string startupType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeServiceStatus(string status, string startupType, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             StartupType = startupType;
+            _rawData = rawData;
         }
 
         /// <summary> The current status of the service. </summary>

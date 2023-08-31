@@ -6,15 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRunTrigger
+    public partial class LogicWorkflowRunTrigger : IUtf8JsonSerializable, IModelJsonSerializable<LogicWorkflowRunTrigger>
     {
-        internal static LogicWorkflowRunTrigger DeserializeLogicWorkflowRunTrigger(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicWorkflowRunTrigger>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicWorkflowRunTrigger>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Correlation))
+            {
+                writer.WritePropertyName("correlation"u8);
+                writer.WriteObjectValue(Correlation);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicWorkflowRunTrigger DeserializeLogicWorkflowRunTrigger(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicWorkflowStatus> status = default;
             Optional<BinaryData> error = default;
             Optional<BinaryData> trackedProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -153,8 +186,57 @@ namespace Azure.ResourceManager.Logic.Models
                     trackedProperties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Optional.ToNullable(scheduledTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(trackingId), correlation.Value, code.Value, Optional.ToNullable(status), error.Value, trackedProperties.Value);
+            return new LogicWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Optional.ToNullable(scheduledTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(trackingId), correlation.Value, code.Value, Optional.ToNullable(status), error.Value, trackedProperties.Value, rawData);
+        }
+
+        LogicWorkflowRunTrigger IModelJsonSerializable<LogicWorkflowRunTrigger>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowRunTrigger(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicWorkflowRunTrigger>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicWorkflowRunTrigger IModelSerializable<LogicWorkflowRunTrigger>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowRunTrigger(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicWorkflowRunTrigger model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicWorkflowRunTrigger(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicWorkflowRunTrigger(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

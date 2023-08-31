@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStorePlanDetails : IUtf8JsonSerializable
+    public partial class PrivateStorePlanDetails : IUtf8JsonSerializable, IModelJsonSerializable<PrivateStorePlanDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateStorePlanDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateStorePlanDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PlanId))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateStorePlanDetails DeserializePrivateStorePlanDetails(JsonElement element)
+        internal static PrivateStorePlanDetails DeserializePrivateStorePlanDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +72,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> justification = default;
             Optional<string> subscriptionId = default;
             Optional<string> subscriptionName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))
@@ -91,8 +113,57 @@ namespace Azure.ResourceManager.Marketplace.Models
                     subscriptionName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
+            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, rawData);
+        }
+
+        PrivateStorePlanDetails IModelJsonSerializable<PrivateStorePlanDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateStorePlanDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateStorePlanDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateStorePlanDetails IModelSerializable<PrivateStorePlanDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateStorePlanDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PrivateStorePlanDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PrivateStorePlanDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateStorePlanDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

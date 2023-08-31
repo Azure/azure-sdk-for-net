@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSynapseSparkProperties : IUtf8JsonSerializable
+    public partial class MachineLearningSynapseSparkProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSynapseSparkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSynapseSparkProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSynapseSparkProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoScaleProperties))
             {
@@ -65,11 +73,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("poolName"u8);
                 writer.WriteStringValue(PoolName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSynapseSparkProperties DeserializeMachineLearningSynapseSparkProperties(JsonElement element)
+        internal static MachineLearningSynapseSparkProperties DeserializeMachineLearningSynapseSparkProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> resourceGroup = default;
             Optional<string> workspaceName = default;
             Optional<string> poolName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoScaleProperties"u8))
@@ -148,8 +171,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     poolName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value);
+            return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value, rawData);
+        }
+
+        MachineLearningSynapseSparkProperties IModelJsonSerializable<MachineLearningSynapseSparkProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSynapseSparkProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSynapseSparkProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSynapseSparkProperties IModelSerializable<MachineLearningSynapseSparkProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSynapseSparkProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningSynapseSparkProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningSynapseSparkProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSynapseSparkProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

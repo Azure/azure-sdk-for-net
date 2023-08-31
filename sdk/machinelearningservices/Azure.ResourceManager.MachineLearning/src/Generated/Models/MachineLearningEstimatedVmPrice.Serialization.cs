@@ -5,15 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEstimatedVmPrice
+    public partial class MachineLearningEstimatedVmPrice : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEstimatedVmPrice>
     {
-        internal static MachineLearningEstimatedVmPrice DeserializeMachineLearningEstimatedVmPrice(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEstimatedVmPrice>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEstimatedVmPrice>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("retailPrice"u8);
+            writer.WriteNumberValue(RetailPrice);
+            writer.WritePropertyName("osType"u8);
+            writer.WriteStringValue(OSType.ToString());
+            writer.WritePropertyName("vmTier"u8);
+            writer.WriteStringValue(VmTier.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningEstimatedVmPrice DeserializeMachineLearningEstimatedVmPrice(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             double retailPrice = default;
             MachineLearningVmPriceOSType osType = default;
             MachineLearningVmTier vmTier = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retailPrice"u8))
@@ -38,8 +73,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     vmTier = new MachineLearningVmTier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningEstimatedVmPrice(retailPrice, osType, vmTier);
+            return new MachineLearningEstimatedVmPrice(retailPrice, osType, vmTier, rawData);
+        }
+
+        MachineLearningEstimatedVmPrice IModelJsonSerializable<MachineLearningEstimatedVmPrice>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEstimatedVmPrice(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEstimatedVmPrice>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEstimatedVmPrice IModelSerializable<MachineLearningEstimatedVmPrice>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEstimatedVmPrice(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningEstimatedVmPrice model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningEstimatedVmPrice(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningEstimatedVmPrice(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

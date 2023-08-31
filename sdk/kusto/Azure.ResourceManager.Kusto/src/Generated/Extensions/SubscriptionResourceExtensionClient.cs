@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoClusterResource> GetKustoClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoClusterResource> GetKustoClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKustoClusters", "value", null, cancellationToken);
         }
 
         /// <summary>

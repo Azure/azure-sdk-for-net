@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The client access policy. </summary>
     public partial class CrossSiteAccessPolicies
     {
-        /// <summary> Initializes a new instance of CrossSiteAccessPolicies. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CrossSiteAccessPolicies"/>. </summary>
         public CrossSiteAccessPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of CrossSiteAccessPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossSiteAccessPolicies"/>. </summary>
         /// <param name="clientAccessPolicy"> The content of clientaccesspolicy.xml used by Silverlight. </param>
         /// <param name="crossDomainPolicy"> The content of crossdomain.xml used by Silverlight. </param>
-        internal CrossSiteAccessPolicies(string clientAccessPolicy, string crossDomainPolicy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CrossSiteAccessPolicies(string clientAccessPolicy, string crossDomainPolicy, Dictionary<string, BinaryData> rawData)
         {
             ClientAccessPolicy = clientAccessPolicy;
             CrossDomainPolicy = crossDomainPolicy;
+            _rawData = rawData;
         }
 
         /// <summary> The content of clientaccesspolicy.xml used by Silverlight. </summary>

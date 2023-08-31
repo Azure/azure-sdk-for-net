@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Command job definition. </summary>
     public partial class MachineLearningCommandJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningCommandJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Command;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningCommandJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
@@ -74,7 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, MachineLearningJobResourceConfiguration resources, Dictionary<string, BinaryData> rawData) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status, rawData)
         {
             CodeId = codeId;
             Command = command;
@@ -87,6 +88,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Parameters = parameters;
             Resources = resources;
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/> for deserialization. </summary>
+        internal MachineLearningCommandJob()
+        {
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>

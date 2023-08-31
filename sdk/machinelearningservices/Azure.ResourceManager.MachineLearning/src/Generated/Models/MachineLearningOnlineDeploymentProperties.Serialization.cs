@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineDeploymentProperties : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineDeploymentProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningOnlineDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningOnlineDeploymentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningOnlineDeploymentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppInsightsEnabled))
             {
@@ -184,11 +191,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element)
+        internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -201,6 +222,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Managed": return MachineLearningManagedOnlineDeployment.DeserializeMachineLearningManagedOnlineDeployment(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<bool> appInsightsEnabled = default;
             Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
@@ -217,6 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appInsightsEnabled"u8))
@@ -381,8 +405,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningOnlineDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
+            return new UnknownOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, rawData);
+        }
+
+        MachineLearningOnlineDeploymentProperties IModelJsonSerializable<MachineLearningOnlineDeploymentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOnlineDeploymentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningOnlineDeploymentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningOnlineDeploymentProperties IModelSerializable<MachineLearningOnlineDeploymentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningOnlineDeploymentProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningOnlineDeploymentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningOnlineDeploymentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningOnlineDeploymentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchAddressBatchResult
+    public partial class ReverseSearchAddressBatchResult : IUtf8JsonSerializable, IModelJsonSerializable<ReverseSearchAddressBatchResult>
     {
-        internal static ReverseSearchAddressBatchResult DeserializeReverseSearchAddressBatchResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReverseSearchAddressBatchResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReverseSearchAddressBatchResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ReverseSearchAddressBatchResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReverseSearchAddressBatchResult DeserializeReverseSearchAddressBatchResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ReverseSearchAddressBatchItem>> batchItems = default;
             Optional<BatchResultSummary> summary = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -46,8 +74,57 @@ namespace Azure.Maps.Search.Models
                     summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReverseSearchAddressBatchResult(summary.Value, Optional.ToList(batchItems));
+            return new ReverseSearchAddressBatchResult(summary.Value, Optional.ToList(batchItems), rawData);
+        }
+
+        ReverseSearchAddressBatchResult IModelJsonSerializable<ReverseSearchAddressBatchResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ReverseSearchAddressBatchResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReverseSearchAddressBatchResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReverseSearchAddressBatchResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ReverseSearchAddressBatchResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReverseSearchAddressBatchResult IModelSerializable<ReverseSearchAddressBatchResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ReverseSearchAddressBatchResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReverseSearchAddressBatchResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReverseSearchAddressBatchResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReverseSearchAddressBatchResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReverseSearchAddressBatchResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

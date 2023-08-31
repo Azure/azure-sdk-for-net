@@ -6,20 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class LogicApiResourceBackendService
+    internal partial class LogicApiResourceBackendService : IUtf8JsonSerializable, IModelJsonSerializable<LogicApiResourceBackendService>
     {
-        internal static LogicApiResourceBackendService DeserializeLogicApiResourceBackendService(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicApiResourceBackendService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicApiResourceBackendService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServiceUri))
+            {
+                writer.WritePropertyName("serviceUrl"u8);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicApiResourceBackendService DeserializeLogicApiResourceBackendService(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Uri> serviceUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUrl"u8))
@@ -31,8 +64,57 @@ namespace Azure.ResourceManager.Logic.Models
                     serviceUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicApiResourceBackendService(serviceUrl.Value);
+            return new LogicApiResourceBackendService(serviceUrl.Value, rawData);
+        }
+
+        LogicApiResourceBackendService IModelJsonSerializable<LogicApiResourceBackendService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiResourceBackendService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicApiResourceBackendService>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicApiResourceBackendService IModelSerializable<LogicApiResourceBackendService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicApiResourceBackendService(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicApiResourceBackendService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicApiResourceBackendService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicApiResourceBackendService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

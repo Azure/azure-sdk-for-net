@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownWorkspaceConnectionPropertiesV2 : IUtf8JsonSerializable
+    internal partial class UnknownWorkspaceConnectionPropertiesV2 : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningWorkspaceConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningWorkspaceConnectionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningWorkspaceConnectionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -37,57 +43,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownWorkspaceConnectionPropertiesV2 DeserializeUnknownWorkspaceConnectionPropertiesV2(JsonElement element)
+        internal static MachineLearningWorkspaceConnectionProperties DeserializeUnknownWorkspaceConnectionPropertiesV2(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningWorkspaceConnectionProperties(element, options);
+
+        MachineLearningWorkspaceConnectionProperties IModelJsonSerializable<MachineLearningWorkspaceConnectionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            MachineLearningConnectionAuthType authType = "Unknown";
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<string> target = default;
-            Optional<string> value = default;
-            Optional<MachineLearningValueFormat> valueFormat = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("authType"u8))
-                {
-                    authType = new MachineLearningConnectionAuthType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("category"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    category = new MachineLearningConnectionCategory(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("target"u8))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueFormat"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    valueFormat = new MachineLearningValueFormat(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownWorkspaceConnectionPropertiesV2(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat));
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownWorkspaceConnectionPropertiesV2(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningWorkspaceConnectionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningWorkspaceConnectionProperties IModelSerializable<MachineLearningWorkspaceConnectionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceConnectionProperties(doc.RootElement, options);
         }
     }
 }

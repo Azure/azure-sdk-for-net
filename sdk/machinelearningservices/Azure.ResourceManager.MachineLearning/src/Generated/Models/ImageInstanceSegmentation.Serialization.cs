@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageInstanceSegmentation : IUtf8JsonSerializable
+    public partial class ImageInstanceSegmentation : IUtf8JsonSerializable, IModelJsonSerializable<ImageInstanceSegmentation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageInstanceSegmentation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageInstanceSegmentation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ImageInstanceSegmentation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryMetric))
             {
@@ -109,11 +116,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageInstanceSegmentation DeserializeImageInstanceSegmentation(JsonElement element)
+        internal static ImageInstanceSegmentation DeserializeImageInstanceSegmentation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,6 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"u8))
@@ -229,8 +251,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageInstanceSegmentation(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageInstanceSegmentation(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize), rawData);
+        }
+
+        ImageInstanceSegmentation IModelJsonSerializable<ImageInstanceSegmentation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageInstanceSegmentation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageInstanceSegmentation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageInstanceSegmentation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageInstanceSegmentation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageInstanceSegmentation IModelSerializable<ImageInstanceSegmentation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageInstanceSegmentation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageInstanceSegmentation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ImageInstanceSegmentation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ImageInstanceSegmentation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageInstanceSegmentation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

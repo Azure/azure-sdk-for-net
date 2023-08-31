@@ -5,15 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareSummary
+    public partial class FirmwareSummary : IUtf8JsonSerializable, IModelJsonSerializable<FirmwareSummary>
     {
-        internal static FirmwareSummary DeserializeFirmwareSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirmwareSummary>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirmwareSummary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ExtractedSize))
+            {
+                if (ExtractedSize != null)
+                {
+                    writer.WritePropertyName("extractedSize"u8);
+                    writer.WriteNumberValue(ExtractedSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("extractedSize");
+                }
+            }
+            if (Optional.IsDefined(FileSize))
+            {
+                if (FileSize != null)
+                {
+                    writer.WritePropertyName("fileSize"u8);
+                    writer.WriteNumberValue(FileSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("fileSize");
+                }
+            }
+            if (Optional.IsDefined(ExtractedFileCount))
+            {
+                if (ExtractedFileCount != null)
+                {
+                    writer.WritePropertyName("extractedFileCount"u8);
+                    writer.WriteNumberValue(ExtractedFileCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("extractedFileCount");
+                }
+            }
+            if (Optional.IsDefined(ComponentCount))
+            {
+                if (ComponentCount != null)
+                {
+                    writer.WritePropertyName("componentCount"u8);
+                    writer.WriteNumberValue(ComponentCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("componentCount");
+                }
+            }
+            if (Optional.IsDefined(BinaryCount))
+            {
+                if (BinaryCount != null)
+                {
+                    writer.WritePropertyName("binaryCount"u8);
+                    writer.WriteNumberValue(BinaryCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("binaryCount");
+                }
+            }
+            if (Optional.IsDefined(AnalysisTimeSeconds))
+            {
+                if (AnalysisTimeSeconds != null)
+                {
+                    writer.WritePropertyName("analysisTimeSeconds"u8);
+                    writer.WriteNumberValue(AnalysisTimeSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("analysisTimeSeconds");
+                }
+            }
+            if (Optional.IsDefined(RootFileSystems))
+            {
+                if (RootFileSystems != null)
+                {
+                    writer.WritePropertyName("rootFileSystems"u8);
+                    writer.WriteNumberValue(RootFileSystems.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rootFileSystems");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FirmwareSummary DeserializeFirmwareSummary(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<long?> binaryCount = default;
             Optional<long?> analysisTimeSeconds = default;
             Optional<long?> rootFileSystems = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extractedSize"u8))
@@ -97,8 +210,57 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     rootFileSystems = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirmwareSummary(Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems));
+            return new FirmwareSummary(Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems), rawData);
+        }
+
+        FirmwareSummary IModelJsonSerializable<FirmwareSummary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareSummary(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirmwareSummary>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirmwareSummary IModelSerializable<FirmwareSummary>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirmwareSummary(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FirmwareSummary model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FirmwareSummary(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirmwareSummary(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

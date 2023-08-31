@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> HybridAKSStorageStatus defines the observed state of HybridAKSStorage. </summary>
     internal partial class StorageSpacesPropertiesStatus
     {
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatus"/>. </summary>
         public StorageSpacesPropertiesStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesPropertiesStatus"/>. </summary>
         /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
-        internal StorageSpacesPropertiesStatus(StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpacesPropertiesStatus(StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningStatus = provisioningStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Contains Provisioning errors. </summary>

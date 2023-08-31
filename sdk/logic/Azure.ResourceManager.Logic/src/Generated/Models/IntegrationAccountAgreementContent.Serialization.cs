@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountAgreementContent : IUtf8JsonSerializable
+    public partial class IntegrationAccountAgreementContent : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountAgreementContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountAgreementContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountAgreementContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AS2))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("edifact"u8);
                 writer.WriteObjectValue(Edifact);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element)
+        internal static IntegrationAccountAgreementContent DeserializeIntegrationAccountAgreementContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<AS2AgreementContent> aS2 = default;
             Optional<X12AgreementContent> x12 = default;
             Optional<EdifactAgreementContent> edifact = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aS2"u8))
@@ -71,8 +94,57 @@ namespace Azure.ResourceManager.Logic.Models
                     edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value);
+            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value, rawData);
+        }
+
+        IntegrationAccountAgreementContent IModelJsonSerializable<IntegrationAccountAgreementContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountAgreementContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountAgreementContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountAgreementContent IModelSerializable<IntegrationAccountAgreementContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountAgreementContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IntegrationAccountAgreementContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IntegrationAccountAgreementContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountAgreementContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

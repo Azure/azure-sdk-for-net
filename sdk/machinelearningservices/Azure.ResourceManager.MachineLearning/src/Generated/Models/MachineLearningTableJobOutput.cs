@@ -6,24 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningTableJobOutput. </summary>
     public partial class MachineLearningTableJobOutput : MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningTableJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTableJobOutput"/>. </summary>
         public MachineLearningTableJobOutput()
         {
             JobOutputType = JobOutputType.Mltable;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTableJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTableJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningTableJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTableJobOutput(string description, JobOutputType jobOutputType, MachineLearningOutputDeliveryMode? mode, Uri uri, Dictionary<string, BinaryData> rawData) : base(description, jobOutputType, rawData)
         {
             Mode = mode;
             Uri = uri;

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Azure resource SKU definition. </summary>
     public partial class KustoAvailableSkuDetails
     {
-        /// <summary> Initializes a new instance of KustoAvailableSkuDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoAvailableSkuDetails"/>. </summary>
         internal KustoAvailableSkuDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoAvailableSkuDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAvailableSkuDetails"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>
-        internal KustoAvailableSkuDetails(string resourceType, KustoSku sku, KustoCapacity capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoAvailableSkuDetails(string resourceType, KustoSku sku, KustoCapacity capacity, Dictionary<string, BinaryData> rawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Namespace and Type. </summary>

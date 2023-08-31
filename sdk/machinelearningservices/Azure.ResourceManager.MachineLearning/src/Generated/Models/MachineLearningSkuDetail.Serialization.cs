@@ -5,15 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSkuDetail
+    public partial class MachineLearningSkuDetail : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSkuDetail>
     {
-        internal static MachineLearningSkuDetail DeserializeMachineLearningSkuDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSkuDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSkuDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Capacity))
+            {
+                if (Capacity != null)
+                {
+                    writer.WritePropertyName("capacity"u8);
+                    writer.WriteObjectValue(Capacity);
+                }
+                else
+                {
+                    writer.WriteNull("capacity");
+                }
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                if (Sku != null)
+                {
+                    writer.WritePropertyName("sku"u8);
+                    writer.WriteObjectValue(Sku);
+                }
+                else
+                {
+                    writer.WriteNull("sku");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningSkuDetail DeserializeMachineLearningSkuDetail(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningSkuCapacity> capacity = default;
             Optional<string> resourceType = default;
             Optional<MachineLearningSkuSetting> sku = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"u8))
@@ -53,8 +106,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningSkuDetail(capacity.Value, resourceType.Value, sku.Value);
+            return new MachineLearningSkuDetail(capacity.Value, resourceType.Value, sku.Value, rawData);
+        }
+
+        MachineLearningSkuDetail IModelJsonSerializable<MachineLearningSkuDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSkuDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSkuDetail>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSkuDetail IModelSerializable<MachineLearningSkuDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSkuDetail(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningSkuDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningSkuDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSkuDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

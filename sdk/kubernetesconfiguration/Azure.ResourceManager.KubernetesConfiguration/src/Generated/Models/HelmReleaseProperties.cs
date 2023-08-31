@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Properties for HelmRelease objects. </summary>
     public partial class HelmReleaseProperties
     {
-        /// <summary> Initializes a new instance of HelmReleaseProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HelmReleaseProperties"/>. </summary>
         internal HelmReleaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmReleaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmReleaseProperties"/>. </summary>
         /// <param name="lastRevisionApplied"> The revision number of the last released object change. </param>
         /// <param name="helmChartRef"> The reference to the HelmChart object used as the source to this HelmRelease. </param>
         /// <param name="failureCount"> Total number of times that the HelmRelease failed to install or upgrade. </param>
         /// <param name="installFailureCount"> Number of times that the HelmRelease failed to install. </param>
         /// <param name="upgradeFailureCount"> Number of times that the HelmRelease failed to upgrade. </param>
-        internal HelmReleaseProperties(long? lastRevisionApplied, KubernetesObjectReference helmChartRef, long? failureCount, long? installFailureCount, long? upgradeFailureCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HelmReleaseProperties(long? lastRevisionApplied, KubernetesObjectReference helmChartRef, long? failureCount, long? installFailureCount, long? upgradeFailureCount, Dictionary<string, BinaryData> rawData)
         {
             LastRevisionApplied = lastRevisionApplied;
             HelmChartRef = helmChartRef;
             FailureCount = failureCount;
             InstallFailureCount = installFailureCount;
             UpgradeFailureCount = upgradeFailureCount;
+            _rawData = rawData;
         }
 
         /// <summary> The revision number of the last released object change. </summary>

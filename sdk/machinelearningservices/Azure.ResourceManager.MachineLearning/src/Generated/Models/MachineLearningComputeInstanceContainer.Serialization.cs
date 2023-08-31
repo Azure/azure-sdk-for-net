@@ -8,14 +8,65 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceContainer
+    public partial class MachineLearningComputeInstanceContainer : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningComputeInstanceContainer>
     {
-        internal static MachineLearningComputeInstanceContainer DeserializeMachineLearningComputeInstanceContainer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningComputeInstanceContainer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningComputeInstanceContainer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Autosave))
+            {
+                writer.WritePropertyName("autosave"u8);
+                writer.WriteStringValue(Autosave.Value.ToString());
+            }
+            if (Optional.IsDefined(Gpu))
+            {
+                writer.WritePropertyName("gpu"u8);
+                writer.WriteStringValue(Gpu);
+            }
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteStringValue(Network.Value.ToString());
+            }
+            if (Optional.IsDefined(Environment))
+            {
+                writer.WritePropertyName("environment"u8);
+                writer.WriteObjectValue(Environment);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningComputeInstanceContainer DeserializeMachineLearningComputeInstanceContainer(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningNetwork> network = default;
             Optional<MachineLearningComputeInstanceEnvironmentInfo> environment = default;
             Optional<IReadOnlyList<BinaryData>> services = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,8 +138,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     services = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningComputeInstanceContainer(name.Value, Optional.ToNullable(autosave), gpu.Value, Optional.ToNullable(network), environment.Value, Optional.ToList(services));
+            return new MachineLearningComputeInstanceContainer(name.Value, Optional.ToNullable(autosave), gpu.Value, Optional.ToNullable(network), environment.Value, Optional.ToList(services), rawData);
+        }
+
+        MachineLearningComputeInstanceContainer IModelJsonSerializable<MachineLearningComputeInstanceContainer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceContainer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningComputeInstanceContainer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningComputeInstanceContainer IModelSerializable<MachineLearningComputeInstanceContainer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeInstanceContainer(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningComputeInstanceContainer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningComputeInstanceContainer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningComputeInstanceContainer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

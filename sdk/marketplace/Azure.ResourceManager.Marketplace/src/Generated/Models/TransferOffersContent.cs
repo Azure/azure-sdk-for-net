@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,26 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Transfer offers properties. </summary>
     public partial class TransferOffersContent
     {
-        /// <summary> Initializes a new instance of TransferOffersContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferOffersContent"/>. </summary>
         public TransferOffersContent()
         {
             TargetCollections = new ChangeTrackingList<string>();
             OfferIdsList = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferOffersContent"/>. </summary>
+        /// <param name="targetCollections"> Target collections ids. </param>
+        /// <param name="operation"> Operation to perform (For example: Copy or Move). </param>
+        /// <param name="offerIdsList"> Offers ids list to transfer from source collection to target collection(s). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferOffersContent(IList<string> targetCollections, string operation, IList<string> offerIdsList, Dictionary<string, BinaryData> rawData)
+        {
+            TargetCollections = targetCollections;
+            Operation = operation;
+            OfferIdsList = offerIdsList;
+            _rawData = rawData;
         }
 
         /// <summary> Target collections ids. </summary>

@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Status from the extension. </summary>
     public partial class KubernetesClusterExtensionStatus
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatus"/>. </summary>
         public KubernetesClusterExtensionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionStatus"/>. </summary>
         /// <param name="code"> Status code provided by the Extension. </param>
         /// <param name="displayStatus"> Short description of status of the extension. </param>
         /// <param name="level"> Level of the status. </param>
         /// <param name="message"> Detailed message of the status from the Extension. </param>
         /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
-        internal KubernetesClusterExtensionStatus(string code, string displayStatus, KubernetesClusterExtensionStatusLevel? level, string message, string time)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionStatus(string code, string displayStatus, KubernetesClusterExtensionStatusLevel? level, string message, string time, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             DisplayStatus = displayStatus;
             Level = level;
             Message = message;
             Time = time;
+            _rawData = rawData;
         }
 
         /// <summary> Status code provided by the Extension. </summary>

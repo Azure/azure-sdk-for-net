@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableVerticalFeaturizationSettings : IUtf8JsonSerializable
+    public partial class TableVerticalFeaturizationSettings : IUtf8JsonSerializable, IModelJsonSerializable<TableVerticalFeaturizationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TableVerticalFeaturizationSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TableVerticalFeaturizationSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TableVerticalFeaturizationSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
@@ -101,11 +108,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("datasetLanguage");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TableVerticalFeaturizationSettings DeserializeTableVerticalFeaturizationSettings(JsonElement element)
+        internal static TableVerticalFeaturizationSettings DeserializeTableVerticalFeaturizationSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,6 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningFeaturizationMode> mode = default;
             Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
             Optional<string> datasetLanguage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blockedTransformers"u8))
@@ -203,8 +225,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     datasetLanguage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams), rawData);
+        }
+
+        TableVerticalFeaturizationSettings IModelJsonSerializable<TableVerticalFeaturizationSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TableVerticalFeaturizationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableVerticalFeaturizationSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TableVerticalFeaturizationSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TableVerticalFeaturizationSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TableVerticalFeaturizationSettings IModelSerializable<TableVerticalFeaturizationSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TableVerticalFeaturizationSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTableVerticalFeaturizationSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TableVerticalFeaturizationSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TableVerticalFeaturizationSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTableVerticalFeaturizationSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,12 +13,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BGP configuration properties. </summary>
     public partial class InternalNetworkBgpConfiguration : BgpConfiguration
     {
-        /// <summary> Initializes a new instance of InternalNetworkBgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpConfiguration"/>. </summary>
         public InternalNetworkBgpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of InternalNetworkBgpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpConfiguration"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -29,7 +30,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
         /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
         /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
-        internal InternalNetworkBgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress) : base(annotation, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes, ipv6ListenRangePrefixes, ipv4NeighborAddress, ipv6NeighborAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InternalNetworkBgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress, Dictionary<string, BinaryData> rawData) : base(annotation, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes, ipv6ListenRangePrefixes, ipv4NeighborAddress, ipv6NeighborAddress, rawData)
         {
         }
     }

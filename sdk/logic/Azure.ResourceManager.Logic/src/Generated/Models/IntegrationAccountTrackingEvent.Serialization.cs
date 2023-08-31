@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountTrackingEvent : IUtf8JsonSerializable
+    public partial class IntegrationAccountTrackingEvent : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountTrackingEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountTrackingEvent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountTrackingEvent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("eventLevel"u8);
             writer.WriteStringValue(EventLevel.ToSerialString());
@@ -35,7 +43,121 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IntegrationAccountTrackingEvent DeserializeIntegrationAccountTrackingEvent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IntegrationAccountEventLevel eventLevel = default;
+            DateTimeOffset eventTime = default;
+            IntegrationAccountTrackingRecordType recordType = default;
+            Optional<BinaryData> record = default;
+            Optional<IntegrationAccountTrackingEventErrorInfo> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("eventLevel"u8))
+                {
+                    eventLevel = property.Value.GetString().ToIntegrationAccountEventLevel();
+                    continue;
+                }
+                if (property.NameEquals("eventTime"u8))
+                {
+                    eventTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("recordType"u8))
+                {
+                    recordType = new IntegrationAccountTrackingRecordType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("record"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    record = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = IntegrationAccountTrackingEventErrorInfo.DeserializeIntegrationAccountTrackingEventErrorInfo(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IntegrationAccountTrackingEvent(eventLevel, eventTime, recordType, record.Value, error.Value, rawData);
+        }
+
+        IntegrationAccountTrackingEvent IModelJsonSerializable<IntegrationAccountTrackingEvent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountTrackingEvent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountTrackingEvent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountTrackingEvent IModelSerializable<IntegrationAccountTrackingEvent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountTrackingEvent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IntegrationAccountTrackingEvent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IntegrationAccountTrackingEvent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountTrackingEvent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionUpdateProperties : IUtf8JsonSerializable
+    public partial class MachineExtensionUpdateProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineExtensionUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineExtensionUpdateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineExtensionUpdateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -85,7 +93,171 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MachineExtensionUpdateProperties DeserializeMachineExtensionUpdateProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> forceUpdateTag = default;
+            Optional<string> publisher = default;
+            Optional<string> type = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<bool> enableAutomaticUpgrade = default;
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<IDictionary<string, BinaryData>> settings = default;
+            Optional<IDictionary<string, BinaryData>> protectedSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("forceUpdateTag"u8))
+                {
+                    forceUpdateTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("publisher"u8))
+                {
+                    publisher = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("typeHandlerVersion"u8))
+                {
+                    typeHandlerVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableAutomaticUpgrade"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAutomaticUpgrade = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("autoUpgradeMinorVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeMinorVersion = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("settings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    settings = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("protectedSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    protectedSettings = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MachineExtensionUpdateProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), rawData);
+        }
+
+        MachineExtensionUpdateProperties IModelJsonSerializable<MachineExtensionUpdateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineExtensionUpdateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineExtensionUpdateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineExtensionUpdateProperties IModelSerializable<MachineExtensionUpdateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineExtensionUpdateProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineExtensionUpdateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineExtensionUpdateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineExtensionUpdateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

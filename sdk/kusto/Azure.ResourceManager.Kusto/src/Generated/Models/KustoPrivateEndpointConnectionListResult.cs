@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class KustoPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateEndpointConnectionListResult"/>. </summary>
         internal KustoPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal KustoPrivateEndpointConnectionListResult(IReadOnlyList<KustoPrivateEndpointConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPrivateEndpointConnectionListResult(IReadOnlyList<KustoPrivateEndpointConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

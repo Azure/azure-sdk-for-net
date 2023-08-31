@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Class representing an iot hub data connection. </summary>
     public partial class KustoIotHubDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of KustoIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoIotHubDataConnection"/>. </summary>
         public KustoIotHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
             Kind = DataConnectionKind.IotHub;
         }
 
-        /// <summary> Initializes a new instance of KustoIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoIotHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoIotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, ResourceIdentifier iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoIotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, location, kind, rawData)
         {
             IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;

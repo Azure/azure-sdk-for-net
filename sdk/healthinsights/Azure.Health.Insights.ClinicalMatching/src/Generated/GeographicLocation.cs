@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -17,6 +18,8 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// </summary>
     public partial class GeographicLocation
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of GeographicLocation. </summary>
         /// <param name="countryOrRegion"> Country/region name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countryOrRegion"/> is null. </exception>
@@ -31,11 +34,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="city"> City name. </param>
         /// <param name="state"> State name. </param>
         /// <param name="countryOrRegion"> Country/region name. </param>
-        internal GeographicLocation(string city, string state, string countryOrRegion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeographicLocation(string city, string state, string countryOrRegion, Dictionary<string, BinaryData> rawData)
         {
             City = city;
             State = state;
             CountryOrRegion = countryOrRegion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeographicLocation"/> for deserialization. </summary>
+        internal GeographicLocation()
+        {
         }
 
         /// <summary> City name. </summary>

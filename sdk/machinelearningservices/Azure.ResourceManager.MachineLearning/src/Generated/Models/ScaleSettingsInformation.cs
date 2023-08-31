@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Desired scale settings for the amlCompute. </summary>
     internal partial class ScaleSettingsInformation
     {
-        /// <summary> Initializes a new instance of ScaleSettingsInformation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScaleSettingsInformation"/>. </summary>
         public ScaleSettingsInformation()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScaleSettingsInformation"/>. </summary>
+        /// <param name="scaleSettings"> scale settings for AML Compute. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScaleSettingsInformation(AmlComputeScaleSettings scaleSettings, Dictionary<string, BinaryData> rawData)
+        {
+            ScaleSettings = scaleSettings;
+            _rawData = rawData;
         }
 
         /// <summary> scale settings for AML Compute. </summary>

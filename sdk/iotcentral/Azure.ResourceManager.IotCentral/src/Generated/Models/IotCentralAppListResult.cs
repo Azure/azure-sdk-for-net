@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotCentral;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> A list of IoT Central Applications with a next link. </summary>
     internal partial class IotCentralAppListResult
     {
-        /// <summary> Initializes a new instance of IotCentralAppListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppListResult"/>. </summary>
         internal IotCentralAppListResult()
         {
             Value = new ChangeTrackingList<IotCentralAppData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Central Applications. </param>
         /// <param name="value"> A list of IoT Central Applications. </param>
-        internal IotCentralAppListResult(string nextLink, IReadOnlyList<IotCentralAppData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppListResult(string nextLink, IReadOnlyList<IotCentralAppData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of IoT Central Applications. </summary>

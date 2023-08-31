@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The Streaming Locators associated with this Asset. </summary>
     internal partial class ListStreamingLocatorsResponse
     {
-        /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListStreamingLocatorsResponse"/>. </summary>
         internal ListStreamingLocatorsResponse()
         {
             StreamingLocators = new ChangeTrackingList<MediaAssetStreamingLocator>();
         }
 
-        /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListStreamingLocatorsResponse"/>. </summary>
         /// <param name="streamingLocators"> The list of Streaming Locators. </param>
-        internal ListStreamingLocatorsResponse(IReadOnlyList<MediaAssetStreamingLocator> streamingLocators)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListStreamingLocatorsResponse(IReadOnlyList<MediaAssetStreamingLocator> streamingLocators, Dictionary<string, BinaryData> rawData)
         {
             StreamingLocators = streamingLocators;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Streaming Locators. </summary>

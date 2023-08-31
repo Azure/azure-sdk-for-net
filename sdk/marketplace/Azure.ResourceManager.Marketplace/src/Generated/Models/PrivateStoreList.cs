@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Describes the json payload for the list of available private stores (between zero and one, inclusive). </summary>
     internal partial class PrivateStoreList
     {
-        /// <summary> Initializes a new instance of PrivateStoreList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreList"/>. </summary>
         internal PrivateStoreList()
         {
             Value = new ChangeTrackingList<PrivateStoreData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of PrivateStore list results if there are any. </param>
-        internal PrivateStoreList(IReadOnlyList<PrivateStoreData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreList(IReadOnlyList<PrivateStoreData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

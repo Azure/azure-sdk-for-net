@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class Mp4Format : IUtf8JsonSerializable
+    public partial class Mp4Format : IUtf8JsonSerializable, IModelJsonSerializable<Mp4Format>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Mp4Format>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Mp4Format>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<Mp4Format>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(OutputFiles))
             {
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Mp4Format DeserializeMp4Format(JsonElement element)
+        internal static Mp4Format DeserializeMp4Format(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputFiles"u8))
@@ -68,8 +90,57 @@ namespace Azure.ResourceManager.Media.Models
                     filenamePattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Mp4Format(odataType, filenamePattern, Optional.ToList(outputFiles));
+            return new Mp4Format(odataType, filenamePattern, Optional.ToList(outputFiles), rawData);
+        }
+
+        Mp4Format IModelJsonSerializable<Mp4Format>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<Mp4Format>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMp4Format(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Mp4Format>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<Mp4Format>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Mp4Format IModelSerializable<Mp4Format>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<Mp4Format>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMp4Format(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(Mp4Format model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator Mp4Format(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMp4Format(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

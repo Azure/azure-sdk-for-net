@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointDeploymentProperties : IUtf8JsonSerializable
+    public partial class MachineLearningEndpointDeploymentProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningEndpointDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningEndpointDeploymentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningEndpointDeploymentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CodeConfiguration))
             {
@@ -88,11 +95,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningEndpointDeploymentProperties DeserializeMachineLearningEndpointDeploymentProperties(JsonElement element)
+        internal static MachineLearningEndpointDeploymentProperties DeserializeMachineLearningEndpointDeploymentProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,6 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeConfiguration"u8))
@@ -164,8 +186,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningEndpointDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties));
+            return new MachineLearningEndpointDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), rawData);
+        }
+
+        MachineLearningEndpointDeploymentProperties IModelJsonSerializable<MachineLearningEndpointDeploymentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningEndpointDeploymentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningEndpointDeploymentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningEndpointDeploymentProperties IModelSerializable<MachineLearningEndpointDeploymentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningEndpointDeploymentProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningEndpointDeploymentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningEndpointDeploymentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningEndpointDeploymentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

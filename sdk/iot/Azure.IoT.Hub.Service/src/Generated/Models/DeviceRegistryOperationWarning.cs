@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The device registry operation warning details. </summary>
     public partial class DeviceRegistryOperationWarning
     {
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationWarning"/>. </summary>
         internal DeviceRegistryOperationWarning()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryOperationWarning"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>
-        internal DeviceRegistryOperationWarning(string deviceId, DeviceRegistryOperationWarningCode? warningCode, string warningStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryOperationWarning(string deviceId, DeviceRegistryOperationWarningCode? warningCode, string warningStatus, Dictionary<string, BinaryData> rawData)
         {
             DeviceId = deviceId;
             WarningCode = warningCode;
             WarningStatus = warningStatus;
+            _rawData = rawData;
         }
 
         /// <summary> The unique identifier of the device. </summary>

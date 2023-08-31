@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class VideoOverlay : IUtf8JsonSerializable
+    public partial class VideoOverlay : IUtf8JsonSerializable, IModelJsonSerializable<VideoOverlay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VideoOverlay>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VideoOverlay>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<VideoOverlay>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Position))
             {
@@ -60,11 +67,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VideoOverlay DeserializeVideoOverlay(JsonElement element)
+        internal static VideoOverlay DeserializeVideoOverlay(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +100,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<TimeSpan> fadeInDuration = default;
             Optional<TimeSpan> fadeOutDuration = default;
             Optional<double> audioGainLevel = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("position"u8))
@@ -163,8 +185,57 @@ namespace Azure.ResourceManager.Media.Models
                     audioGainLevel = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), position.Value, Optional.ToNullable(opacity), cropRectangle.Value);
+            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), position.Value, Optional.ToNullable(opacity), cropRectangle.Value, rawData);
+        }
+
+        VideoOverlay IModelJsonSerializable<VideoOverlay>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VideoOverlay>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoOverlay(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VideoOverlay>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VideoOverlay>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VideoOverlay IModelSerializable<VideoOverlay>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<VideoOverlay>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVideoOverlay(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VideoOverlay model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VideoOverlay(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVideoOverlay(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

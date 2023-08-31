@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
     public partial class NetworkToNetworkInterconnectPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         public NetworkToNetworkInterconnectPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Layer2Configuration = layer2Configuration;
             OptionBLayer3Configuration = optionBLayer3Configuration;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ExportRoutePolicy = exportRoutePolicy;
             EgressAclId = egressAclId;
             IngressAclId = ingressAclId;
+            _rawData = rawData;
         }
 
         /// <summary> Common properties for Layer2Configuration. </summary>

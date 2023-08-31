@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
     public partial class AccessControlListMatchCondition : CommonMatchConditions
     {
-        /// <summary> Initializes a new instance of AccessControlListMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
         public AccessControlListMatchCondition()
         {
             EtherTypes = new ChangeTrackingList<string>();
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             DscpMarkings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AccessControlListMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListMatchCondition"/>. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ttlValues"> List of TTL [Time To Live] values that needs to be matched. </param>
         /// <param name="dscpMarkings"> List of DSCP Markings that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessControlListMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IList<string> etherTypes, IList<string> fragments, IList<string> ipLengths, IList<string> ttlValues, IList<string> dscpMarkings, AccessControlListPortCondition portCondition, Dictionary<string, BinaryData> rawData) : base(protocolTypes, vlanMatchCondition, ipCondition, rawData)
         {
             EtherTypes = etherTypes;
             Fragments = fragments;

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesFluxConfigurationPatch : IUtf8JsonSerializable
+    public partial class KubernetesFluxConfigurationPatch : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesFluxConfigurationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesFluxConfigurationPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesFluxConfigurationPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -114,7 +122,182 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KubernetesFluxConfigurationPatch DeserializeKubernetesFluxConfigurationPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<KubernetesConfigurationSourceKind?> sourceKind = default;
+            Optional<bool?> suspend = default;
+            Optional<KubernetesGitRepositoryUpdateContent> gitRepository = default;
+            Optional<KubernetesBucketUpdateContent> bucket = default;
+            Optional<KubernetesAzureBlobUpdateContent> azureBlob = default;
+            Optional<IDictionary<string, KustomizationUpdateContent>> kustomizations = default;
+            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("sourceKind"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                sourceKind = null;
+                                continue;
+                            }
+                            sourceKind = new KubernetesConfigurationSourceKind(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("suspend"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                suspend = null;
+                                continue;
+                            }
+                            suspend = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("gitRepository"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                gitRepository = null;
+                                continue;
+                            }
+                            gitRepository = KubernetesGitRepositoryUpdateContent.DeserializeKubernetesGitRepositoryUpdateContent(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("bucket"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                bucket = null;
+                                continue;
+                            }
+                            bucket = KubernetesBucketUpdateContent.DeserializeKubernetesBucketUpdateContent(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("azureBlob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                azureBlob = null;
+                                continue;
+                            }
+                            azureBlob = KubernetesAzureBlobUpdateContent.DeserializeKubernetesAzureBlobUpdateContent(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("kustomizations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                kustomizations = null;
+                                continue;
+                            }
+                            Dictionary<string, KustomizationUpdateContent> dictionary = new Dictionary<string, KustomizationUpdateContent>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value));
+                            }
+                            kustomizations = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationProtectedSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                configurationProtectedSettings = null;
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            configurationProtectedSettings = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new KubernetesFluxConfigurationPatch(Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), rawData);
+        }
+
+        KubernetesFluxConfigurationPatch IModelJsonSerializable<KubernetesFluxConfigurationPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesFluxConfigurationPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesFluxConfigurationPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesFluxConfigurationPatch IModelSerializable<KubernetesFluxConfigurationPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesFluxConfigurationPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KubernetesFluxConfigurationPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KubernetesFluxConfigurationPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesFluxConfigurationPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

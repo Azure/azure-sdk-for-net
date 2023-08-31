@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningUsernamePasswordAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningUsernamePasswordAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.UsernamePassword;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="target"></param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="credentials"></param>
-        internal MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, MachineLearningWorkspaceConnectionUsernamePassword credentials) : base(authType, category, target, value, valueFormat)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUsernamePasswordAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, MachineLearningWorkspaceConnectionUsernamePassword credentials, Dictionary<string, BinaryData> rawData) : base(authType, category, target, value, valueFormat, rawData)
         {
             Credentials = credentials;
             AuthType = authType;

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class CloudToDeviceFeedbackQueueProperties : IUtf8JsonSerializable
+    public partial class CloudToDeviceFeedbackQueueProperties : IUtf8JsonSerializable, IModelJsonSerializable<CloudToDeviceFeedbackQueueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudToDeviceFeedbackQueueProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudToDeviceFeedbackQueueProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LockDurationAsIso8601))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element)
+        internal static CloudToDeviceFeedbackQueueProperties DeserializeCloudToDeviceFeedbackQueueProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<TimeSpan> lockDurationAsIso8601 = default;
             Optional<TimeSpan> ttlAsIso8601 = default;
             Optional<int> maxDeliveryCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lockDurationAsIso8601"u8))
@@ -72,8 +94,57 @@ namespace Azure.ResourceManager.IotHub.Models
                     maxDeliveryCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount));
+            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount), rawData);
+        }
+
+        CloudToDeviceFeedbackQueueProperties IModelJsonSerializable<CloudToDeviceFeedbackQueueProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudToDeviceFeedbackQueueProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudToDeviceFeedbackQueueProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudToDeviceFeedbackQueueProperties IModelSerializable<CloudToDeviceFeedbackQueueProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudToDeviceFeedbackQueueProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CloudToDeviceFeedbackQueueProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CloudToDeviceFeedbackQueueProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudToDeviceFeedbackQueueProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KustomizationUpdateContent : IUtf8JsonSerializable
+    public partial class KustomizationUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<KustomizationUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustomizationUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustomizationUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
@@ -104,7 +112,165 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("force");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KustomizationUpdateContent DeserializeKustomizationUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> path = default;
+            Optional<IList<string>> dependsOn = default;
+            Optional<long?> timeoutInSeconds = default;
+            Optional<long?> syncIntervalInSeconds = default;
+            Optional<long?> retryIntervalInSeconds = default;
+            Optional<bool?> prune = default;
+            Optional<bool?> force = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("path"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        path = null;
+                        continue;
+                    }
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dependsOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dependsOn = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    dependsOn = array;
+                    continue;
+                }
+                if (property.NameEquals("timeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeoutInSeconds = null;
+                        continue;
+                    }
+                    timeoutInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("syncIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        syncIntervalInSeconds = null;
+                        continue;
+                    }
+                    syncIntervalInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("retryIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        retryIntervalInSeconds = null;
+                        continue;
+                    }
+                    retryIntervalInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("prune"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        prune = null;
+                        continue;
+                    }
+                    prune = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("force"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        force = null;
+                        continue;
+                    }
+                    force = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new KustomizationUpdateContent(path.Value, Optional.ToList(dependsOn), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force), rawData);
+        }
+
+        KustomizationUpdateContent IModelJsonSerializable<KustomizationUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustomizationUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustomizationUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustomizationUpdateContent IModelSerializable<KustomizationUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustomizationUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KustomizationUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KustomizationUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustomizationUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

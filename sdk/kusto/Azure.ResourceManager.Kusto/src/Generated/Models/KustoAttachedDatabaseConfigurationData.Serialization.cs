@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoAttachedDatabaseConfigurationData : IUtf8JsonSerializable
+    public partial class KustoAttachedDatabaseConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<KustoAttachedDatabaseConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoAttachedDatabaseConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoAttachedDatabaseConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteStringValue(DatabaseNamePrefix);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoAttachedDatabaseConfigurationData DeserializeKustoAttachedDatabaseConfigurationData(JsonElement element)
+        internal static KustoAttachedDatabaseConfigurationData DeserializeKustoAttachedDatabaseConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +99,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
             Optional<string> databaseNameOverride = default;
             Optional<string> databaseNamePrefix = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -190,8 +212,57 @@ namespace Azure.ResourceManager.Kusto
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value);
+            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value, rawData);
+        }
+
+        KustoAttachedDatabaseConfigurationData IModelJsonSerializable<KustoAttachedDatabaseConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoAttachedDatabaseConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoAttachedDatabaseConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoAttachedDatabaseConfigurationData IModelSerializable<KustoAttachedDatabaseConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoAttachedDatabaseConfigurationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(KustoAttachedDatabaseConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator KustoAttachedDatabaseConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoAttachedDatabaseConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

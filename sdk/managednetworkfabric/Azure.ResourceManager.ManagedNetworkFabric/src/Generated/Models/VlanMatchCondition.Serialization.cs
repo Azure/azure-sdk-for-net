@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VlanMatchCondition : IUtf8JsonSerializable
+    public partial class VlanMatchCondition : IUtf8JsonSerializable, IModelJsonSerializable<VlanMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VlanMatchCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VlanMatchCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Vlans))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VlanMatchCondition DeserializeVlanMatchCondition(JsonElement element)
+        internal static VlanMatchCondition DeserializeVlanMatchCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<string>> vlans = default;
             Optional<IList<string>> innerVlans = default;
             Optional<IList<string>> vlanGroupNames = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vlans"u8))
@@ -102,8 +124,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     vlanGroupNames = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VlanMatchCondition(Optional.ToList(vlans), Optional.ToList(innerVlans), Optional.ToList(vlanGroupNames));
+            return new VlanMatchCondition(Optional.ToList(vlans), Optional.ToList(innerVlans), Optional.ToList(vlanGroupNames), rawData);
+        }
+
+        VlanMatchCondition IModelJsonSerializable<VlanMatchCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVlanMatchCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VlanMatchCondition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VlanMatchCondition IModelSerializable<VlanMatchCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVlanMatchCondition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VlanMatchCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VlanMatchCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVlanMatchCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDataPathAssetReference : IUtf8JsonSerializable
+    public partial class MachineLearningDataPathAssetReference : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningDataPathAssetReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningDataPathAssetReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningDataPathAssetReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDataPathAssetReference>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DatastoreId))
             {
@@ -41,11 +49,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("referenceType"u8);
             writer.WriteStringValue(ReferenceType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDataPathAssetReference DeserializeMachineLearningDataPathAssetReference(JsonElement element)
+        internal static MachineLearningDataPathAssetReference DeserializeMachineLearningDataPathAssetReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> datastoreId = default;
             Optional<string> path = default;
             ReferenceType referenceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datastoreId"u8))
@@ -80,8 +103,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     referenceType = new ReferenceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningDataPathAssetReference(referenceType, datastoreId.Value, path.Value);
+            return new MachineLearningDataPathAssetReference(referenceType, datastoreId.Value, path.Value, rawData);
+        }
+
+        MachineLearningDataPathAssetReference IModelJsonSerializable<MachineLearningDataPathAssetReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDataPathAssetReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDataPathAssetReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningDataPathAssetReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDataPathAssetReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningDataPathAssetReference IModelSerializable<MachineLearningDataPathAssetReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningDataPathAssetReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDataPathAssetReference(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningDataPathAssetReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningDataPathAssetReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningDataPathAssetReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

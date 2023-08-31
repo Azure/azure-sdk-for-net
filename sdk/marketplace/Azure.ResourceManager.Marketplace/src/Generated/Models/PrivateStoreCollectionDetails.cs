@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Collection name and id. </summary>
     public partial class PrivateStoreCollectionDetails
     {
-        /// <summary> Initializes a new instance of PrivateStoreCollectionDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionDetails"/>. </summary>
         internal PrivateStoreCollectionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreCollectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreCollectionDetails"/>. </summary>
         /// <param name="collectionName"> Collection name. </param>
         /// <param name="collectionId"> Collection id. </param>
-        internal PrivateStoreCollectionDetails(string collectionName, Guid? collectionId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreCollectionDetails(string collectionName, Guid? collectionId, Dictionary<string, BinaryData> rawData)
         {
             CollectionName = collectionName;
             CollectionId = collectionId;
+            _rawData = rawData;
         }
 
         /// <summary> Collection name. </summary>

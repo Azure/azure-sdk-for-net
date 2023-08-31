@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRuleMatchCondition : IUtf8JsonSerializable
+    public partial class NetworkTapRuleMatchCondition : IUtf8JsonSerializable, IModelJsonSerializable<NetworkTapRuleMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkTapRuleMatchCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkTapRuleMatchCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<NetworkTapRuleMatchCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EncapsulationType))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkTapRuleMatchCondition DeserializeNetworkTapRuleMatchCondition(JsonElement element)
+        internal static NetworkTapRuleMatchCondition DeserializeNetworkTapRuleMatchCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<string>> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
             Optional<IPMatchCondition> ipCondition = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encapsulationType"u8))
@@ -112,8 +134,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkTapRuleMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Optional.ToNullable(encapsulationType), portCondition.Value);
+            return new NetworkTapRuleMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Optional.ToNullable(encapsulationType), portCondition.Value, rawData);
+        }
+
+        NetworkTapRuleMatchCondition IModelJsonSerializable<NetworkTapRuleMatchCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkTapRuleMatchCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkTapRuleMatchCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkTapRuleMatchCondition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkTapRuleMatchCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkTapRuleMatchCondition IModelSerializable<NetworkTapRuleMatchCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<NetworkTapRuleMatchCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkTapRuleMatchCondition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetworkTapRuleMatchCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetworkTapRuleMatchCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkTapRuleMatchCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

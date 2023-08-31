@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Crypto key properties. </summary>
     public partial class FirmwareCryptoKey
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKey"/>. </summary>
         internal FirmwareCryptoKey()
         {
             Usage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKey"/>. </summary>
         /// <param name="firmwareCryptoKeyId"> ID for the key. </param>
         /// <param name="keyType"> Type of the key (public or private). </param>
         /// <param name="keySize"> Size of the key in bits. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="filePaths"> List of files paths for this key. </param>
         /// <param name="pairedKey"> A matching paired key or certificate. </param>
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
-        internal FirmwareCryptoKey(string firmwareCryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsShortKeySize? isShortKeySize)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCryptoKey(string firmwareCryptoKeyId, string keyType, long? keySize, string keyAlgorithm, IReadOnlyList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, IsShortKeySize? isShortKeySize, Dictionary<string, BinaryData> rawData)
         {
             FirmwareCryptoKeyId = firmwareCryptoKeyId;
             KeyType = keyType;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             FilePaths = filePaths;
             PairedKey = pairedKey;
             IsShortKeySize = isShortKeySize;
+            _rawData = rawData;
         }
 
         /// <summary> ID for the key. </summary>

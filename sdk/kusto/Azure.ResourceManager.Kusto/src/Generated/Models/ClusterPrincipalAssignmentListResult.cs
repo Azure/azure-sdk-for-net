@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto cluster principal assignments operation response. </summary>
     internal partial class ClusterPrincipalAssignmentListResult
     {
-        /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPrincipalAssignmentListResult"/>. </summary>
         internal ClusterPrincipalAssignmentListResult()
         {
             Value = new ChangeTrackingList<KustoClusterPrincipalAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPrincipalAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of Kusto cluster principal assignments. </param>
-        internal ClusterPrincipalAssignmentListResult(IReadOnlyList<KustoClusterPrincipalAssignmentData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterPrincipalAssignmentListResult(IReadOnlyList<KustoClusterPrincipalAssignmentData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Kusto cluster principal assignments. </summary>

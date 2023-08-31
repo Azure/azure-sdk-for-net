@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </summary>
     internal partial class VirtualNetworksPropertiesStatus
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesStatus"/>. </summary>
         internal VirtualNetworksPropertiesStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesStatus"/>. </summary>
         /// <param name="provisioningStatus"> Contains Provisioning errors. </param>
-        internal VirtualNetworksPropertiesStatus(VirtualNetworksPropertiesStatusProvisioningStatus provisioningStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesStatus(VirtualNetworksPropertiesStatusProvisioningStatus provisioningStatus, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningStatus = provisioningStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Contains Provisioning errors. </summary>

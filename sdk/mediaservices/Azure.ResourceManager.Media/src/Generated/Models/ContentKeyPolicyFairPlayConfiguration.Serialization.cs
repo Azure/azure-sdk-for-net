@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContentKeyPolicyFairPlayConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContentKeyPolicyFairPlayConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContentKeyPolicyFairPlayConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyFairPlayConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (ApplicationSecretKey != null)
             {
@@ -54,11 +61,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyFairPlayConfiguration DeserializeContentKeyPolicyFairPlayConfiguration(JsonElement element)
+        internal static ContentKeyPolicyFairPlayConfiguration DeserializeContentKeyPolicyFairPlayConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +91,7 @@ namespace Azure.ResourceManager.Media.Models
             long rentalDuration = default;
             Optional<ContentKeyPolicyFairPlayOfflineRentalConfiguration> offlineRentalConfiguration = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ask"u8))
@@ -126,8 +148,57 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContentKeyPolicyFairPlayConfiguration(odataType, ask, fairPlayPfxPassword, fairPlayPfx, rentalAndLeaseKeyType, rentalDuration, offlineRentalConfiguration.Value);
+            return new ContentKeyPolicyFairPlayConfiguration(odataType, ask, fairPlayPfxPassword, fairPlayPfx, rentalAndLeaseKeyType, rentalDuration, offlineRentalConfiguration.Value, rawData);
+        }
+
+        ContentKeyPolicyFairPlayConfiguration IModelJsonSerializable<ContentKeyPolicyFairPlayConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyFairPlayConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyFairPlayConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContentKeyPolicyFairPlayConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyFairPlayConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContentKeyPolicyFairPlayConfiguration IModelSerializable<ContentKeyPolicyFairPlayConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContentKeyPolicyFairPlayConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContentKeyPolicyFairPlayConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ContentKeyPolicyFairPlayConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ContentKeyPolicyFairPlayConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContentKeyPolicyFairPlayConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

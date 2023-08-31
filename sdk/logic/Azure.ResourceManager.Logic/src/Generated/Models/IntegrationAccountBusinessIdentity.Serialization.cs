@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountBusinessIdentity : IUtf8JsonSerializable
+    public partial class IntegrationAccountBusinessIdentity : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountBusinessIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountBusinessIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountBusinessIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("qualifier"u8);
             writer.WriteStringValue(Qualifier);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationAccountBusinessIdentity DeserializeIntegrationAccountBusinessIdentity(JsonElement element)
+        internal static IntegrationAccountBusinessIdentity DeserializeIntegrationAccountBusinessIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string qualifier = default;
             string value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("qualifier"u8))
@@ -42,8 +65,57 @@ namespace Azure.ResourceManager.Logic.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IntegrationAccountBusinessIdentity(qualifier, value);
+            return new IntegrationAccountBusinessIdentity(qualifier, value, rawData);
+        }
+
+        IntegrationAccountBusinessIdentity IModelJsonSerializable<IntegrationAccountBusinessIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountBusinessIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountBusinessIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountBusinessIdentity IModelSerializable<IntegrationAccountBusinessIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountBusinessIdentity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IntegrationAccountBusinessIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IntegrationAccountBusinessIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountBusinessIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

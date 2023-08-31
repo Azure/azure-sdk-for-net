@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class DatabaseInviteFollowerContent : IUtf8JsonSerializable
+    public partial class DatabaseInviteFollowerContent : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseInviteFollowerContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseInviteFollowerContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseInviteFollowerContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("inviteeEmail"u8);
             writer.WriteStringValue(InviteeEmail);
@@ -22,7 +30,99 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DatabaseInviteFollowerContent DeserializeDatabaseInviteFollowerContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string inviteeEmail = default;
+            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("inviteeEmail"u8))
+                {
+                    inviteeEmail = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tableLevelSharingProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties.Value, rawData);
+        }
+
+        DatabaseInviteFollowerContent IModelJsonSerializable<DatabaseInviteFollowerContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseInviteFollowerContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseInviteFollowerContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseInviteFollowerContent IModelSerializable<DatabaseInviteFollowerContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseInviteFollowerContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DatabaseInviteFollowerContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DatabaseInviteFollowerContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseInviteFollowerContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

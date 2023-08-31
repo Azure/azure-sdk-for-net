@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventInputTrackSelection : IUtf8JsonSerializable
+    public partial class LiveEventInputTrackSelection : IUtf8JsonSerializable, IModelJsonSerializable<LiveEventInputTrackSelection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LiveEventInputTrackSelection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LiveEventInputTrackSelection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Property))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LiveEventInputTrackSelection DeserializeLiveEventInputTrackSelection(JsonElement element)
+        internal static LiveEventInputTrackSelection DeserializeLiveEventInputTrackSelection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> property = default;
             Optional<string> operation = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))
@@ -59,8 +82,57 @@ namespace Azure.ResourceManager.Media.Models
                     value = property0.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LiveEventInputTrackSelection(property.Value, operation.Value, value.Value);
+            return new LiveEventInputTrackSelection(property.Value, operation.Value, value.Value, rawData);
+        }
+
+        LiveEventInputTrackSelection IModelJsonSerializable<LiveEventInputTrackSelection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLiveEventInputTrackSelection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LiveEventInputTrackSelection>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LiveEventInputTrackSelection IModelSerializable<LiveEventInputTrackSelection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLiveEventInputTrackSelection(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LiveEventInputTrackSelection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LiveEventInputTrackSelection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLiveEventInputTrackSelection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,22 +16,26 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The X509 Certificate. </summary>
     public partial class IotHubCertificateWithNonceDescription : ResourceData
     {
-        /// <summary> Initializes a new instance of IotHubCertificateWithNonceDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateWithNonceDescription"/>. </summary>
         internal IotHubCertificateWithNonceDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateWithNonceDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateWithNonceDescription"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </param>
         /// <param name="etag"> The entity tag. </param>
-        internal IotHubCertificateWithNonceDescription(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubCertificatePropertiesWithNonce properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubCertificateWithNonceDescription(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubCertificatePropertiesWithNonce properties, ETag? etag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiOperationAnnotation : IUtf8JsonSerializable
+    public partial class LogicApiOperationAnnotation : IUtf8JsonSerializable, IModelJsonSerializable<LogicApiOperationAnnotation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicApiOperationAnnotation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicApiOperationAnnotation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicApiOperationAnnotation DeserializeLogicApiOperationAnnotation(JsonElement element)
+        internal static LogicApiOperationAnnotation DeserializeLogicApiOperationAnnotation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiOperationAnnotationStatus> status = default;
             Optional<string> family = default;
             Optional<int> revision = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -67,8 +90,57 @@ namespace Azure.ResourceManager.Logic.Models
                     revision = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicApiOperationAnnotation(Optional.ToNullable(status), family.Value, Optional.ToNullable(revision));
+            return new LogicApiOperationAnnotation(Optional.ToNullable(status), family.Value, Optional.ToNullable(revision), rawData);
+        }
+
+        LogicApiOperationAnnotation IModelJsonSerializable<LogicApiOperationAnnotation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiOperationAnnotation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicApiOperationAnnotation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicApiOperationAnnotation IModelSerializable<LogicApiOperationAnnotation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicApiOperationAnnotation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicApiOperationAnnotation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicApiOperationAnnotation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicApiOperationAnnotation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

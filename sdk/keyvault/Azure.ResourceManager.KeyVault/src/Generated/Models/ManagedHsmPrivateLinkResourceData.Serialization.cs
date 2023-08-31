@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmPrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class ManagedHsmPrivateLinkResourceData : IUtf8JsonSerializable, IModelJsonSerializable<ManagedHsmPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedHsmPrivateLinkResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedHsmPrivateLinkResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -48,11 +55,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmPrivateLinkResourceData DeserializeManagedHsmPrivateLinkResourceData(JsonElement element)
+        internal static ManagedHsmPrivateLinkResourceData DeserializeManagedHsmPrivateLinkResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IList<string>> requiredZoneNames = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -166,8 +188,57 @@ namespace Azure.ResourceManager.KeyVault.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), sku.Value);
+            return new ManagedHsmPrivateLinkResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), sku.Value, rawData);
+        }
+
+        ManagedHsmPrivateLinkResourceData IModelJsonSerializable<ManagedHsmPrivateLinkResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedHsmPrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedHsmPrivateLinkResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedHsmPrivateLinkResourceData IModelSerializable<ManagedHsmPrivateLinkResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedHsmPrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedHsmPrivateLinkResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedHsmPrivateLinkResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedHsmPrivateLinkResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

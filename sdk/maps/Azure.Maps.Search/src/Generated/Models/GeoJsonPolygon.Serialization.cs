@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonPolygon : IUtf8JsonSerializable
+    internal partial class GeoJsonPolygon : IUtf8JsonSerializable, IModelJsonSerializable<GeoJsonPolygon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GeoJsonPolygon>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GeoJsonPolygon>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GeoJsonPolygon>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("coordinates"u8);
             writer.WriteStartArray();
@@ -45,17 +52,32 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element)
+        internal static GeoJsonPolygon DeserializeGeoJsonPolygon(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<IList<IList<double>>> coordinates = default;
             GeoJsonObjectType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"u8))
@@ -97,8 +119,57 @@ namespace Azure.Maps.Search.Models
                     type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GeoJsonPolygon(type, coordinates);
+            return new GeoJsonPolygon(type, coordinates, rawData);
+        }
+
+        GeoJsonPolygon IModelJsonSerializable<GeoJsonPolygon>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GeoJsonPolygon>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonPolygon(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GeoJsonPolygon>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GeoJsonPolygon>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GeoJsonPolygon IModelSerializable<GeoJsonPolygon>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GeoJsonPolygon>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGeoJsonPolygon(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GeoJsonPolygon model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GeoJsonPolygon(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGeoJsonPolygon(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

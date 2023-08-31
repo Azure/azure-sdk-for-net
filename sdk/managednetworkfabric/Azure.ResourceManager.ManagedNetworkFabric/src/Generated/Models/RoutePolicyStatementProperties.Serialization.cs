@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable
+    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable, IModelJsonSerializable<RoutePolicyStatementProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoutePolicyStatementProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoutePolicyStatementProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutePolicyStatementProperties DeserializeRoutePolicyStatementProperties(JsonElement element)
+        internal static RoutePolicyStatementProperties DeserializeRoutePolicyStatementProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             StatementConditionProperties condition = default;
             StatementActionProperties action = default;
             Optional<string> annotation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceNumber"u8))
@@ -61,8 +84,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoutePolicyStatementProperties(annotation.Value, sequenceNumber, condition, action);
+            return new RoutePolicyStatementProperties(annotation.Value, sequenceNumber, condition, action, rawData);
+        }
+
+        RoutePolicyStatementProperties IModelJsonSerializable<RoutePolicyStatementProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutePolicyStatementProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoutePolicyStatementProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoutePolicyStatementProperties IModelSerializable<RoutePolicyStatementProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoutePolicyStatementProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoutePolicyStatementProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RoutePolicyStatementProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RoutePolicyStatementProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoutePolicyStatementProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

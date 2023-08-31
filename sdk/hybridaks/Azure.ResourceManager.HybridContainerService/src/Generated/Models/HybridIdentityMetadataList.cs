@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> List of hybridIdentityMetadata. </summary>
     internal partial class HybridIdentityMetadataList
     {
-        /// <summary> Initializes a new instance of HybridIdentityMetadataList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/>. </summary>
         /// <param name="value"> Array of hybridIdentityMetadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridIdentityMetadataList(IEnumerable<HybridIdentityMetadataData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of hybridIdentityMetadata. </param>
         /// <param name="value"> Array of hybridIdentityMetadata. </param>
-        internal HybridIdentityMetadataList(string nextLink, IReadOnlyList<HybridIdentityMetadataData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridIdentityMetadataList(string nextLink, IReadOnlyList<HybridIdentityMetadataData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/> for deserialization. </summary>
+        internal HybridIdentityMetadataList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of hybridIdentityMetadata. </summary>

@@ -15,7 +15,9 @@ namespace Azure.Maps.Search.Models
     /// <summary> Data contained by a `GeoJson MultiPoint`. </summary>
     public partial class GeoJsonMultiPointData
     {
-        /// <summary> Initializes a new instance of GeoJsonMultiPointData. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPointData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonMultiPointData(IEnumerable<IList<double>> coordinates)
@@ -25,11 +27,18 @@ namespace Azure.Maps.Search.Models
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of GeoJsonMultiPointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPointData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson MultiPoint` geometry. </param>
-        internal GeoJsonMultiPointData(IList<IList<double>> coordinates)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonMultiPointData(IList<IList<double>> coordinates, Dictionary<string, BinaryData> rawData)
         {
             Coordinates = coordinates;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonMultiPointData"/> for deserialization. </summary>
+        internal GeoJsonMultiPointData()
+        {
         }
 
         /// <summary> Coordinates for the `GeoJson MultiPoint` geometry. </summary>

@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmProperties : IUtf8JsonSerializable
+    public partial class ManagedHsmProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagedHsmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedHsmProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedHsmProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
@@ -72,11 +78,25 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element)
+        internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,6 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<ManagedHSMSecurityDomainProperties> securityDomainProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -244,8 +265,57 @@ namespace Azure.ResourceManager.KeyVault.Models
                     securityDomainProperties = ManagedHSMSecurityDomainProperties.DeserializeManagedHSMSecurityDomainProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedHsmProperties(Optional.ToNullable(tenantId), Optional.ToList(initialAdminObjectIds), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, Optional.ToList(regions), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value);
+            return new ManagedHsmProperties(Optional.ToNullable(tenantId), Optional.ToList(initialAdminObjectIds), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, Optional.ToList(regions), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value, rawData);
+        }
+
+        ManagedHsmProperties IModelJsonSerializable<ManagedHsmProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedHsmProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedHsmProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedHsmProperties IModelSerializable<ManagedHsmProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedHsmProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagedHsmProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagedHsmProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedHsmProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

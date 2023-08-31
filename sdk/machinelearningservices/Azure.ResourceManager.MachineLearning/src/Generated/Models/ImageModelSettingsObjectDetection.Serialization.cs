@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelSettingsObjectDetection : IUtf8JsonSerializable
+    public partial class ImageModelSettingsObjectDetection : IUtf8JsonSerializable, IModelJsonSerializable<ImageModelSettingsObjectDetection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageModelSettingsObjectDetection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageModelSettingsObjectDetection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ImageModelSettingsObjectDetection>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BoxDetectionsPerImage))
             {
@@ -527,11 +535,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightDecay");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageModelSettingsObjectDetection DeserializeImageModelSettingsObjectDetection(JsonElement element)
+        internal static ImageModelSettingsObjectDetection DeserializeImageModelSettingsObjectDetection(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -581,6 +603,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<float?> warmupCosineLRCycles = default;
             Optional<int?> warmupCosineLRWarmupEpochs = default;
             Optional<float?> weightDecay = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boxDetectionsPerImage"u8))
@@ -1029,8 +1052,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weightDecay = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageModelSettingsObjectDetection(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), Optional.ToNullable(boxDetectionsPerImage), Optional.ToNullable(boxScoreThreshold), Optional.ToNullable(imageSize), Optional.ToNullable(maxSize), Optional.ToNullable(minSize), Optional.ToNullable(modelSize), Optional.ToNullable(multiScale), Optional.ToNullable(nmsIouThreshold), tileGridSize.Value, Optional.ToNullable(tileOverlapRatio), Optional.ToNullable(tilePredictionsNmsThreshold), Optional.ToNullable(validationIouThreshold), Optional.ToNullable(validationMetricType));
+            return new ImageModelSettingsObjectDetection(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), Optional.ToNullable(boxDetectionsPerImage), Optional.ToNullable(boxScoreThreshold), Optional.ToNullable(imageSize), Optional.ToNullable(maxSize), Optional.ToNullable(minSize), Optional.ToNullable(modelSize), Optional.ToNullable(multiScale), Optional.ToNullable(nmsIouThreshold), tileGridSize.Value, Optional.ToNullable(tileOverlapRatio), Optional.ToNullable(tilePredictionsNmsThreshold), Optional.ToNullable(validationIouThreshold), Optional.ToNullable(validationMetricType), rawData);
+        }
+
+        ImageModelSettingsObjectDetection IModelJsonSerializable<ImageModelSettingsObjectDetection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageModelSettingsObjectDetection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageModelSettingsObjectDetection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageModelSettingsObjectDetection>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageModelSettingsObjectDetection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageModelSettingsObjectDetection IModelSerializable<ImageModelSettingsObjectDetection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ImageModelSettingsObjectDetection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageModelSettingsObjectDetection(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ImageModelSettingsObjectDetection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ImageModelSettingsObjectDetection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageModelSettingsObjectDetection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

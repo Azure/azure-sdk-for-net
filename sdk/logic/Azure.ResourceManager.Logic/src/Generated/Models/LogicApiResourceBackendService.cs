@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The API backend service. </summary>
     internal partial class LogicApiResourceBackendService
     {
-        /// <summary> Initializes a new instance of LogicApiResourceBackendService. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceBackendService"/>. </summary>
         internal LogicApiResourceBackendService()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceBackendService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiResourceBackendService"/>. </summary>
         /// <param name="serviceUri"> The service URL. </param>
-        internal LogicApiResourceBackendService(Uri serviceUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiResourceBackendService(Uri serviceUri, Dictionary<string, BinaryData> rawData)
         {
             ServiceUri = serviceUri;
+            _rawData = rawData;
         }
 
         /// <summary> The service URL. </summary>

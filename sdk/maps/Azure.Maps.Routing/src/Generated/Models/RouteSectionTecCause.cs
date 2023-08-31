@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> The cause of the traffic event. Can contain mainCauseCode and subCauseCode elements. Can be used to define iconography and descriptions. </summary>
     public partial class RouteSectionTecCause
     {
-        /// <summary> Initializes a new instance of RouteSectionTecCause. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteSectionTecCause"/>. </summary>
         internal RouteSectionTecCause()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteSectionTecCause. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteSectionTecCause"/>. </summary>
         /// <param name="mainCauseCode"> The main cause of the traffic event. Contains a value in the tec002:CauseCode table, as defined in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. </param>
         /// <param name="subCauseCode"> The subcause of the traffic event. Contains a value in the sub cause table defined by the mainCauseCode, as defined in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. </param>
-        internal RouteSectionTecCause(int? mainCauseCode, int? subCauseCode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteSectionTecCause(int? mainCauseCode, int? subCauseCode, Dictionary<string, BinaryData> rawData)
         {
             MainCauseCode = mainCauseCode;
             SubCauseCode = subCauseCode;
+            _rawData = rawData;
         }
 
         /// <summary> The main cause of the traffic event. Contains a value in the tec002:CauseCode table, as defined in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. </summary>

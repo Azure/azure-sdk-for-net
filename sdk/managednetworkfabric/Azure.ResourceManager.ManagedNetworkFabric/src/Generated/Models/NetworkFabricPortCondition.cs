@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Port condition that needs to be matched. </summary>
     public partial class NetworkFabricPortCondition
     {
-        /// <summary> Initializes a new instance of NetworkFabricPortCondition. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPortCondition"/>. </summary>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         public NetworkFabricPortCondition(Layer4Protocol layer4Protocol)
         {
@@ -22,17 +25,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             PortGroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricPortCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPortCondition"/>. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that to be matched. </param>
-        internal NetworkFabricPortCondition(NetworkFabricPortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricPortCondition(NetworkFabricPortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames, Dictionary<string, BinaryData> rawData)
         {
             PortType = portType;
             Layer4Protocol = layer4Protocol;
             Ports = ports;
             PortGroupNames = portGroupNames;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPortCondition"/> for deserialization. </summary>
+        internal NetworkFabricPortCondition()
+        {
         }
 
         /// <summary> Port type that needs to be matched. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Paged list of lab services skus. </summary>
     internal partial class PagedLabServicesSkus
     {
-        /// <summary> Initializes a new instance of PagedLabServicesSkus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PagedLabServicesSkus"/>. </summary>
         internal PagedLabServicesSkus()
         {
             Value = new ChangeTrackingList<AvailableLabServicesSku>();
         }
 
-        /// <summary> Initializes a new instance of PagedLabServicesSkus. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedLabServicesSkus"/>. </summary>
         /// <param name="value"> The array page of sku results. </param>
         /// <param name="nextLink"> The link to get the next page of sku results. </param>
-        internal PagedLabServicesSkus(IReadOnlyList<AvailableLabServicesSku> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PagedLabServicesSkus(IReadOnlyList<AvailableLabServicesSku> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The array page of sku results. </summary>

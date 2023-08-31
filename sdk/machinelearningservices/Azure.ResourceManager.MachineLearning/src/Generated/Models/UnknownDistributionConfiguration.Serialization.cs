@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownDistributionConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownDistributionConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningDistributionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningDistributionConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningDistributionConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("distributionType"u8);
             writer.WriteStringValue(DistributionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDistributionConfiguration DeserializeUnknownDistributionConfiguration(JsonElement element)
+        internal static MachineLearningDistributionConfiguration DeserializeUnknownDistributionConfiguration(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningDistributionConfiguration(element, options);
+
+        MachineLearningDistributionConfiguration IModelJsonSerializable<MachineLearningDistributionConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            DistributionType distributionType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("distributionType"u8))
-                {
-                    distributionType = new DistributionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownDistributionConfiguration(distributionType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDistributionConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningDistributionConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningDistributionConfiguration IModelSerializable<MachineLearningDistributionConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningDistributionConfiguration(doc.RootElement, options);
         }
     }
 }

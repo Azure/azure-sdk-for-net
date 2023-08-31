@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoScriptData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoScriptData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoScriptData"/>. </summary>
         public KustoScriptData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="forceUpdateTag"> A unique string. If changed the script will be applied again. </param>
         /// <param name="shouldContinueOnErrors"> Flag that indicates whether to continue if one of the command fails. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ScriptUri = scriptUri;
             ScriptUriSasToken = scriptUriSasToken;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.Kusto
             ForceUpdateTag = forceUpdateTag;
             ShouldContinueOnErrors = shouldContinueOnErrors;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The url to the KQL script blob file. Must not be used together with scriptContent property. </summary>

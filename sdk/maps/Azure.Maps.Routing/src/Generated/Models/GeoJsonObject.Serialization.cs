@@ -5,19 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    internal partial class GeoJsonObject : IUtf8JsonSerializable
+    internal partial class GeoJsonObject : IUtf8JsonSerializable, IModelJsonSerializable<GeoJsonObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GeoJsonObject>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GeoJsonObject>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static GeoJsonObject DeserializeGeoJsonObject(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
+                    case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
+                    case "LineString": return GeoJsonLineString.DeserializeGeoJsonLineString(element);
+                    case "MultiLineString": return GeoJsonMultiLineString.DeserializeGeoJsonMultiLineString(element);
+                    case "MultiPolygon": return GeoJsonMultiPolygon.DeserializeGeoJsonMultiPolygon(element);
+                    case "Point": return GeoJsonPoint.DeserializeGeoJsonPoint(element);
+                    case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
+                    case "GeometryCollection": return GeoJsonGeometryCollection.DeserializeGeoJsonGeometryCollection(element);
+                    case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);
+                    case "MultiPoint": return GeoJsonMultiPoint.DeserializeGeoJsonMultiPoint(element);
+                }
+            }
+
+            // Unknown type found so we will deserialize the base properties only
+            GeoJsonObjectType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new Models.GeoJsonObject(type, rawData);
+        }
+
+        GeoJsonObject IModelJsonSerializable<GeoJsonObject>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonObject(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GeoJsonObject>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GeoJsonObject IModelSerializable<GeoJsonObject>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGeoJsonObject(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GeoJsonObject model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GeoJsonObject(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGeoJsonObject(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

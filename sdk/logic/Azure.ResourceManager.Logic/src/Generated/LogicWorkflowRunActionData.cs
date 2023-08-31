@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowRunActionData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionData"/>. </summary>
         internal LogicWorkflowRunActionData()
         {
             RetryHistory = new ChangeTrackingList<LogicWorkRetryHistory>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="outputsLink"> Gets the link to outputs. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
-        internal LogicWorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, LogicWorkflowRunActionCorrelation correlation, LogicContentLink inputsLink, LogicContentLink outputsLink, BinaryData trackedProperties, IReadOnlyList<LogicWorkRetryHistory> retryHistory) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, LogicWorkflowRunActionCorrelation correlation, LogicContentLink inputsLink, LogicContentLink outputsLink, BinaryData trackedProperties, IReadOnlyList<LogicWorkRetryHistory> retryHistory, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -54,6 +57,7 @@ namespace Azure.ResourceManager.Logic
             OutputsLink = outputsLink;
             TrackedProperties = trackedProperties;
             RetryHistory = retryHistory;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the start time. </summary>

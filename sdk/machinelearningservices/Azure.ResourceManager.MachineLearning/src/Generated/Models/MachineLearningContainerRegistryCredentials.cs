@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningContainerRegistryCredentials. </summary>
     public partial class MachineLearningContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         internal MachineLearningContainerRegistryCredentials()
         {
             Passwords = new ChangeTrackingList<MachineLearningPasswordDetail>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         /// <param name="location"></param>
         /// <param name="username"></param>
         /// <param name="passwords"></param>
-        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, string username, IReadOnlyList<MachineLearningPasswordDetail> passwords)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, string username, IReadOnlyList<MachineLearningPasswordDetail> passwords, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             Username = username;
             Passwords = passwords;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the location. </summary>

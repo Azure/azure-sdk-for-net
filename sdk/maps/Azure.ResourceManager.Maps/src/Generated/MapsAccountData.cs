@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Maps
     /// </summary>
     public partial class MapsAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MapsAccountData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Maps
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of MapsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,12 +43,19 @@ namespace Azure.ResourceManager.Maps
         /// <param name="kind"> Get or Set Kind property. </param>
         /// <param name="identity"> Sets the identity property for maps account. </param>
         /// <param name="properties"> The map account properties. </param>
-        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
             Identity = identity;
             Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountData"/> for deserialization. </summary>
+        internal MapsAccountData()
+        {
         }
 
         /// <summary> The SKU of this account. </summary>

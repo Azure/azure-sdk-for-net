@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class BulkRegistryOperationResponse
+    public partial class BulkRegistryOperationResponse : IUtf8JsonSerializable, IModelJsonSerializable<BulkRegistryOperationResponse>
     {
-        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BulkRegistryOperationResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BulkRegistryOperationResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsSuccessful))
+            {
+                writer.WritePropertyName("isSuccessful"u8);
+                writer.WriteBooleanValue(IsSuccessful.Value);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BulkRegistryOperationResponse DeserializeBulkRegistryOperationResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +74,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<bool> isSuccessful = default;
             Optional<IReadOnlyList<DeviceRegistryOperationError>> errors = default;
             Optional<IReadOnlyList<DeviceRegistryOperationWarning>> warnings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSuccessful"u8))
@@ -61,8 +114,57 @@ namespace Azure.IoT.Hub.Service.Models
                     warnings = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BulkRegistryOperationResponse(Optional.ToNullable(isSuccessful), Optional.ToList(errors), Optional.ToList(warnings));
+            return new BulkRegistryOperationResponse(Optional.ToNullable(isSuccessful), Optional.ToList(errors), Optional.ToList(warnings), rawData);
+        }
+
+        BulkRegistryOperationResponse IModelJsonSerializable<BulkRegistryOperationResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBulkRegistryOperationResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BulkRegistryOperationResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BulkRegistryOperationResponse IModelSerializable<BulkRegistryOperationResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBulkRegistryOperationResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BulkRegistryOperationResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BulkRegistryOperationResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBulkRegistryOperationResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TextTrack : IUtf8JsonSerializable
+    public partial class TextTrack : IUtf8JsonSerializable, IModelJsonSerializable<TextTrack>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TextTrack>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TextTrack>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TextTrack>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FileName))
             {
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TextTrack DeserializeTextTrack(JsonElement element)
+        internal static TextTrack DeserializeTextTrack(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<PlayerVisibility> playerVisibility = default;
             Optional<HlsSettings> hlsSettings = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -92,8 +115,57 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TextTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, Optional.ToNullable(playerVisibility), hlsSettings.Value);
+            return new TextTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, Optional.ToNullable(playerVisibility), hlsSettings.Value, rawData);
+        }
+
+        TextTrack IModelJsonSerializable<TextTrack>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextTrack>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextTrack(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TextTrack>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextTrack>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TextTrack IModelSerializable<TextTrack>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TextTrack>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTextTrack(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TextTrack model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TextTrack(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTextTrack(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

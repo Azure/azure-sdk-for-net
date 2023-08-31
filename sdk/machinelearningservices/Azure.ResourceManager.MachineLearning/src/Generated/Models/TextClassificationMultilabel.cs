@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextClassificationMultilabel : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassificationMultilabel"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextClassificationMultilabel(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.TextClassificationMultilabel;
         }
 
-        /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassificationMultilabel"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -41,13 +42,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationMultilabelPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationMultilabelPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData, Dictionary<string, BinaryData> rawData) : base(logVerbosity, targetColumnName, taskType, trainingData, rawData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
             LimitSettings = limitSettings;
             ValidationData = validationData;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextClassificationMultilabel"/> for deserialization. </summary>
+        internal TextClassificationMultilabel()
+        {
         }
 
         /// <summary>

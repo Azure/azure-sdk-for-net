@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeSettings : IUtf8JsonSerializable
+    public partial class X12EnvelopeSettings : IUtf8JsonSerializable, IModelJsonSerializable<X12EnvelopeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12EnvelopeSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12EnvelopeSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("controlStandardsId"u8);
             writer.WriteNumberValue(ControlStandardsId);
@@ -72,11 +80,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(GroupHeaderTimeFormat.ToString());
             writer.WritePropertyName("usageIndicator"u8);
             writer.WriteStringValue(UsageIndicator.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12EnvelopeSettings DeserializeX12EnvelopeSettings(JsonElement element)
+        internal static X12EnvelopeSettings DeserializeX12EnvelopeSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +127,7 @@ namespace Azure.ResourceManager.Logic.Models
             X12DateFormat groupHeaderDateFormat = default;
             X12TimeFormat groupHeaderTimeFormat = default;
             UsageIndicator usageIndicator = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("controlStandardsId"u8))
@@ -227,8 +250,57 @@ namespace Azure.ResourceManager.Logic.Models
                     usageIndicator = new UsageIndicator(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12EnvelopeSettings(controlStandardsId, useControlStandardsIdAsRepetitionCharacter, senderApplicationId, receiverApplicationId, controlVersionNumber, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, enableDefaultGroupHeaders, functionalGroupId.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupHeaderAgencyCode, groupHeaderVersion, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, overwriteExistingTransactionSetControlNumber, groupHeaderDateFormat, groupHeaderTimeFormat, usageIndicator);
+            return new X12EnvelopeSettings(controlStandardsId, useControlStandardsIdAsRepetitionCharacter, senderApplicationId, receiverApplicationId, controlVersionNumber, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, enableDefaultGroupHeaders, functionalGroupId.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupHeaderAgencyCode, groupHeaderVersion, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, overwriteExistingTransactionSetControlNumber, groupHeaderDateFormat, groupHeaderTimeFormat, usageIndicator, rawData);
+        }
+
+        X12EnvelopeSettings IModelJsonSerializable<X12EnvelopeSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12EnvelopeSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12EnvelopeSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12EnvelopeSettings IModelSerializable<X12EnvelopeSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12EnvelopeSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(X12EnvelopeSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator X12EnvelopeSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12EnvelopeSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

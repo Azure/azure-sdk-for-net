@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionProperties : IUtf8JsonSerializable
+    public partial class MachineExtensionProperties : IUtf8JsonSerializable, IModelJsonSerializable<MachineExtensionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineExtensionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineExtensionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ForceUpdateTag))
             {
@@ -92,11 +98,25 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element)
+        internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,6 +131,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<IDictionary<string, BinaryData>> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<MachineExtensionInstanceView> instanceView = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forceUpdateTag"u8))
@@ -207,8 +228,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value);
+            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value, rawData);
+        }
+
+        MachineExtensionProperties IModelJsonSerializable<MachineExtensionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineExtensionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineExtensionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineExtensionProperties IModelSerializable<MachineExtensionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineExtensionProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineExtensionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineExtensionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineExtensionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

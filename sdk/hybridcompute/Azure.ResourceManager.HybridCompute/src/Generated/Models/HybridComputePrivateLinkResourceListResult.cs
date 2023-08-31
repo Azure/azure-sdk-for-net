@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class HybridComputePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceListResult"/>. </summary>
         internal HybridComputePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<HybridComputePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal HybridComputePrivateLinkResourceListResult(IReadOnlyList<HybridComputePrivateLinkResourceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputePrivateLinkResourceListResult(IReadOnlyList<HybridComputePrivateLinkResourceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

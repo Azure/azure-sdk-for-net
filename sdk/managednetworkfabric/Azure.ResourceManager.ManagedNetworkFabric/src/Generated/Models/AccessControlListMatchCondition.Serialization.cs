@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListMatchCondition : IUtf8JsonSerializable
+    public partial class AccessControlListMatchCondition : IUtf8JsonSerializable, IModelJsonSerializable<AccessControlListMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AccessControlListMatchCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AccessControlListMatchCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AccessControlListMatchCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EtherTypes))
             {
@@ -91,11 +98,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element)
+        internal static AccessControlListMatchCondition DeserializeAccessControlListMatchCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<string>> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
             Optional<IPMatchCondition> ipCondition = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etherTypes"u8))
@@ -222,8 +244,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AccessControlListMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Optional.ToList(etherTypes), Optional.ToList(fragments), Optional.ToList(ipLengths), Optional.ToList(ttlValues), Optional.ToList(dscpMarkings), portCondition.Value);
+            return new AccessControlListMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, Optional.ToList(etherTypes), Optional.ToList(fragments), Optional.ToList(ipLengths), Optional.ToList(ttlValues), Optional.ToList(dscpMarkings), portCondition.Value, rawData);
+        }
+
+        AccessControlListMatchCondition IModelJsonSerializable<AccessControlListMatchCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AccessControlListMatchCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAccessControlListMatchCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AccessControlListMatchCondition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AccessControlListMatchCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AccessControlListMatchCondition IModelSerializable<AccessControlListMatchCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AccessControlListMatchCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAccessControlListMatchCondition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AccessControlListMatchCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AccessControlListMatchCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAccessControlListMatchCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

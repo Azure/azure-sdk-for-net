@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to an event hub endpoint. </summary>
     public partial class RoutingEventHubProperties
     {
-        /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RoutingEventHubProperties(string name)
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/>. </summary>
         /// <param name="id"> Id of the event hub endpoint. </param>
         /// <param name="connectionString"> The connection string of the event hub endpoint. </param>
         /// <param name="endpoint"> The url of the event hub endpoint. It must include the protocol sb://. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="subscriptionId"> The subscription identifier of the event hub endpoint. </param>
         /// <param name="resourceGroup"> The name of the resource group of the event hub endpoint. </param>
-        internal RoutingEventHubProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingEventHubProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -44,6 +48,12 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/> for deserialization. </summary>
+        internal RoutingEventHubProperties()
+        {
         }
 
         /// <summary> Id of the event hub endpoint. </summary>

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricAccessControlListAccessControlListsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricAccessControlListAccessControlListsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), _networkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "NetworkFabricAccessControlListCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), _networkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "NetworkFabricAccessControlListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricAccessControlListAccessControlListsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricAccessControlListAccessControlListsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), _networkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "NetworkFabricAccessControlListCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricAccessControlListResource(Client, NetworkFabricAccessControlListData.DeserializeNetworkFabricAccessControlListData(e)), _networkFabricAccessControlListAccessControlListsClientDiagnostics, Pipeline, "NetworkFabricAccessControlListCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Describes AML Resource Usage. </summary>
     public partial class MachineLearningUsage
     {
-        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         internal MachineLearningUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="usageType"> Specifies the resource type. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUsage(string id, string amlWorkspaceLocation, string usageType, MachineLearningUsageUnit? unit, long? currentValue, long? limit, MachineLearningUsageName name, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the resource ID. </summary>

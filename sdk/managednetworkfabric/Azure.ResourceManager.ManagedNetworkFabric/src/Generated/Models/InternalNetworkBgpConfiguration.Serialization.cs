@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class InternalNetworkBgpConfiguration : IUtf8JsonSerializable
+    public partial class InternalNetworkBgpConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<InternalNetworkBgpConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InternalNetworkBgpConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InternalNetworkBgpConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkBgpConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -86,11 +93,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InternalNetworkBgpConfiguration DeserializeInternalNetworkBgpConfiguration(JsonElement element)
+        internal static InternalNetworkBgpConfiguration DeserializeInternalNetworkBgpConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,6 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<NeighborAddress>> ipv4NeighborAddress = default;
             Optional<IList<NeighborAddress>> ipv6NeighborAddress = default;
             Optional<string> annotation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -223,8 +245,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     annotation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InternalNetworkBgpConfiguration(annotation.Value, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress));
+            return new InternalNetworkBgpConfiguration(annotation.Value, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress), rawData);
+        }
+
+        InternalNetworkBgpConfiguration IModelJsonSerializable<InternalNetworkBgpConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkBgpConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInternalNetworkBgpConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InternalNetworkBgpConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkBgpConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InternalNetworkBgpConfiguration IModelSerializable<InternalNetworkBgpConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InternalNetworkBgpConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInternalNetworkBgpConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InternalNetworkBgpConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InternalNetworkBgpConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInternalNetworkBgpConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.HybridContainerService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    public partial class HybridContainerServiceAgentPoolData : IUtf8JsonSerializable
+    public partial class HybridContainerServiceAgentPoolData : IUtf8JsonSerializable, IModelJsonSerializable<HybridContainerServiceAgentPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridContainerServiceAgentPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridContainerServiceAgentPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -120,11 +127,25 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridContainerServiceAgentPoolData DeserializeHybridContainerServiceAgentPoolData(JsonElement element)
+        internal static HybridContainerServiceAgentPoolData DeserializeHybridContainerServiceAgentPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,6 +171,7 @@ namespace Azure.ResourceManager.HybridContainerService
             Optional<CloudProviderProfile> cloudProviderProfile = default;
             Optional<AgentPoolProvisioningState> provisioningState = default;
             Optional<AgentPoolProvisioningStatusStatus> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -349,8 +371,57 @@ namespace Azure.ResourceManager.HybridContainerService
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, rawData);
+        }
+
+        HybridContainerServiceAgentPoolData IModelJsonSerializable<HybridContainerServiceAgentPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridContainerServiceAgentPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridContainerServiceAgentPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridContainerServiceAgentPoolData IModelSerializable<HybridContainerServiceAgentPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridContainerServiceAgentPoolData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(HybridContainerServiceAgentPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator HybridContainerServiceAgentPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridContainerServiceAgentPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Edifact message filter for odata query. </summary>
     public partial class EdifactMessageFilter
     {
-        /// <summary> Initializes a new instance of EdifactMessageFilter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageFilter"/>. </summary>
         /// <param name="messageFilterType"> The message filter type. </param>
         public EdifactMessageFilter(MessageFilterType messageFilterType)
         {
             MessageFilterType = messageFilterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageFilter"/>. </summary>
+        /// <param name="messageFilterType"> The message filter type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactMessageFilter(MessageFilterType messageFilterType, Dictionary<string, BinaryData> rawData)
+        {
+            MessageFilterType = messageFilterType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactMessageFilter"/> for deserialization. </summary>
+        internal EdifactMessageFilter()
+        {
         }
 
         /// <summary> The message filter type. </summary>

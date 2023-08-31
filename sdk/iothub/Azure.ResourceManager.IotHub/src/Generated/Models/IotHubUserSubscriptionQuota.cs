@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> User subscription quota response. </summary>
     public partial class IotHubUserSubscriptionQuota
     {
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuota. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuota"/>. </summary>
         internal IotHubUserSubscriptionQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuota"/>. </summary>
         /// <param name="iotHubTypeId"> IotHub type id. </param>
         /// <param name="userSubscriptionQuotaType"> Response type. </param>
         /// <param name="unit"> Unit of IotHub type. </param>
         /// <param name="currentValue"> Current number of IotHub type. </param>
         /// <param name="limit"> Numerical limit on IotHub type. </param>
         /// <param name="name"> IotHub type. </param>
-        internal IotHubUserSubscriptionQuota(string iotHubTypeId, string userSubscriptionQuotaType, string unit, int? currentValue, int? limit, IotHubTypeName name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubUserSubscriptionQuota(string iotHubTypeId, string userSubscriptionQuotaType, string unit, int? currentValue, int? limit, IotHubTypeName name, Dictionary<string, BinaryData> rawData)
         {
             IotHubTypeId = iotHubTypeId;
             UserSubscriptionQuotaType = userSubscriptionQuotaType;
@@ -30,6 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> IotHub type id. </summary>

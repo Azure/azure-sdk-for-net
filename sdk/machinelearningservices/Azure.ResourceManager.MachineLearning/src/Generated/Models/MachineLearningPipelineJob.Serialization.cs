@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningPipelineJob : IUtf8JsonSerializable
+    public partial class MachineLearningPipelineJob : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningPipelineJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningPipelineJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningPipelineJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningPipelineJob>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
             {
@@ -234,11 +240,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningPipelineJob DeserializeMachineLearningPipelineJob(JsonElement element)
+        internal static MachineLearningPipelineJob DeserializeMachineLearningPipelineJob(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -260,6 +280,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"u8))
@@ -457,8 +478,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningPipelineJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToDictionary(inputs), Optional.ToDictionary(jobs), Optional.ToDictionary(outputs), settings.Value, sourceJobId.Value);
+            return new MachineLearningPipelineJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToDictionary(inputs), Optional.ToDictionary(jobs), Optional.ToDictionary(outputs), settings.Value, sourceJobId.Value, rawData);
+        }
+
+        MachineLearningPipelineJob IModelJsonSerializable<MachineLearningPipelineJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningPipelineJob>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningPipelineJob(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningPipelineJob>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningPipelineJob>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningPipelineJob IModelSerializable<MachineLearningPipelineJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningPipelineJob>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningPipelineJob(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningPipelineJob model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningPipelineJob(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningPipelineJob(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

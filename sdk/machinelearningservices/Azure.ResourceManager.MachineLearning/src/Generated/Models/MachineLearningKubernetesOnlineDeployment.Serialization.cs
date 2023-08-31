@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesOnlineDeployment : IUtf8JsonSerializable
+    public partial class MachineLearningKubernetesOnlineDeployment : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningKubernetesOnlineDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningKubernetesOnlineDeployment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningKubernetesOnlineDeployment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesOnlineDeployment>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerResourceRequirements))
             {
@@ -196,11 +203,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningKubernetesOnlineDeployment DeserializeMachineLearningKubernetesOnlineDeployment(JsonElement element)
+        internal static MachineLearningKubernetesOnlineDeployment DeserializeMachineLearningKubernetesOnlineDeployment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -222,6 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerResourceRequirements"u8))
@@ -396,8 +418,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
+            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value, rawData);
+        }
+
+        MachineLearningKubernetesOnlineDeployment IModelJsonSerializable<MachineLearningKubernetesOnlineDeployment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesOnlineDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningKubernetesOnlineDeployment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningKubernetesOnlineDeployment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesOnlineDeployment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningKubernetesOnlineDeployment IModelSerializable<MachineLearningKubernetesOnlineDeployment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningKubernetesOnlineDeployment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningKubernetesOnlineDeployment(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningKubernetesOnlineDeployment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningKubernetesOnlineDeployment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningKubernetesOnlineDeployment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

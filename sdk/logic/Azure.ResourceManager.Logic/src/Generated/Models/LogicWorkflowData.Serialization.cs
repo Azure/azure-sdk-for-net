@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowData : IUtf8JsonSerializable
+    public partial class LogicWorkflowData : IUtf8JsonSerializable, IModelJsonSerializable<LogicWorkflowData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicWorkflowData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicWorkflowData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -85,11 +91,25 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowData DeserializeLogicWorkflowData(JsonElement element)
+        internal static LogicWorkflowData DeserializeLogicWorkflowData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +134,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicResourceReference> integrationServiceEnvironment = default;
             Optional<BinaryData> definition = default;
             Optional<IDictionary<string, LogicWorkflowParameterInfo>> parameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -294,8 +315,57 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicWorkflowData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Optional.ToDictionary(parameters));
+            return new LogicWorkflowData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Optional.ToDictionary(parameters), rawData);
+        }
+
+        LogicWorkflowData IModelJsonSerializable<LogicWorkflowData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicWorkflowData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicWorkflowData IModelSerializable<LogicWorkflowData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicWorkflowData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicWorkflowData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicWorkflowData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

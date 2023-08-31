@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H264Layer : IUtf8JsonSerializable
+    public partial class H264Layer : IUtf8JsonSerializable, IModelJsonSerializable<H264Layer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<H264Layer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<H264Layer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<H264Layer>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Profile))
             {
@@ -88,11 +95,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static H264Layer DeserializeH264Layer(JsonElement element)
+        internal static H264Layer DeserializeH264Layer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,6 +133,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> width = default;
             Optional<string> height = default;
             Optional<string> label = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profile"u8))
@@ -225,8 +247,57 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new H264Layer(width.Value, height.Value, label.Value, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames), Optional.ToNullable(entropyMode));
+            return new H264Layer(width.Value, height.Value, label.Value, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames), Optional.ToNullable(entropyMode), rawData);
+        }
+
+        H264Layer IModelJsonSerializable<H264Layer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<H264Layer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeH264Layer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<H264Layer>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<H264Layer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        H264Layer IModelSerializable<H264Layer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<H264Layer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeH264Layer(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(H264Layer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator H264Layer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeH264Layer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

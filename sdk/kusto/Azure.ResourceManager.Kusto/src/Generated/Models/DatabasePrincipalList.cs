@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database principals operation request. </summary>
     public partial class DatabasePrincipalList
     {
-        /// <summary> Initializes a new instance of DatabasePrincipalList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalList"/>. </summary>
         public DatabasePrincipalList()
         {
             Value = new ChangeTrackingList<KustoDatabasePrincipal>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalList"/>. </summary>
+        /// <param name="value"> The list of Kusto database principals. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabasePrincipalList(IList<KustoDatabasePrincipal> value, Dictionary<string, BinaryData> rawData)
+        {
+            Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of Kusto database principals. </summary>

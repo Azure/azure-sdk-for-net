@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of admin request approval resources. </summary>
     internal partial class MarketplaceAdminApprovalRequestList
     {
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         internal MarketplaceAdminApprovalRequestList()
         {
             Value = new ChangeTrackingList<MarketplaceAdminApprovalRequestData>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
-        internal MarketplaceAdminApprovalRequestList(IReadOnlyList<MarketplaceAdminApprovalRequestData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceAdminApprovalRequestList(IReadOnlyList<MarketplaceAdminApprovalRequestData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

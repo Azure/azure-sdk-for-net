@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactEnvelopeOverride : IUtf8JsonSerializable
+    public partial class EdifactEnvelopeOverride : IUtf8JsonSerializable, IModelJsonSerializable<EdifactEnvelopeOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdifactEnvelopeOverride>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdifactEnvelopeOverride>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageId))
             {
@@ -90,11 +98,25 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("applicationPassword"u8);
                 writer.WriteStringValue(ApplicationPassword);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdifactEnvelopeOverride DeserializeEdifactEnvelopeOverride(JsonElement element)
+        internal static EdifactEnvelopeOverride DeserializeEdifactEnvelopeOverride(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +136,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> groupHeaderMessageRelease = default;
             Optional<string> associationAssignedCode = default;
             Optional<string> applicationPassword = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -191,8 +214,57 @@ namespace Azure.ResourceManager.Logic.Models
                     applicationPassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdifactEnvelopeOverride(messageId.Value, messageVersion.Value, messageRelease.Value, messageAssociationAssignedCode.Value, targetNamespace.Value, functionalGroupId.Value, senderApplicationQualifier.Value, senderApplicationId.Value, receiverApplicationQualifier.Value, receiverApplicationId.Value, controllingAgencyCode.Value, groupHeaderMessageVersion.Value, groupHeaderMessageRelease.Value, associationAssignedCode.Value, applicationPassword.Value);
+            return new EdifactEnvelopeOverride(messageId.Value, messageVersion.Value, messageRelease.Value, messageAssociationAssignedCode.Value, targetNamespace.Value, functionalGroupId.Value, senderApplicationQualifier.Value, senderApplicationId.Value, receiverApplicationQualifier.Value, receiverApplicationId.Value, controllingAgencyCode.Value, groupHeaderMessageVersion.Value, groupHeaderMessageRelease.Value, associationAssignedCode.Value, applicationPassword.Value, rawData);
+        }
+
+        EdifactEnvelopeOverride IModelJsonSerializable<EdifactEnvelopeOverride>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdifactEnvelopeOverride(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdifactEnvelopeOverride>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdifactEnvelopeOverride IModelSerializable<EdifactEnvelopeOverride>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdifactEnvelopeOverride(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EdifactEnvelopeOverride model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EdifactEnvelopeOverride(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdifactEnvelopeOverride(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

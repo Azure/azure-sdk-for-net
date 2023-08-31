@@ -5,15 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAksComputeSecrets
+    public partial class MachineLearningAksComputeSecrets : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningAksComputeSecrets>
     {
-        internal static MachineLearningAksComputeSecrets DeserializeMachineLearningAksComputeSecrets(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningAksComputeSecrets>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningAksComputeSecrets>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeSecrets>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UserKubeConfig))
+            {
+                writer.WritePropertyName("userKubeConfig"u8);
+                writer.WriteStringValue(UserKubeConfig);
+            }
+            if (Optional.IsDefined(AdminKubeConfig))
+            {
+                writer.WritePropertyName("adminKubeConfig"u8);
+                writer.WriteStringValue(AdminKubeConfig);
+            }
+            if (Optional.IsDefined(ImagePullSecretName))
+            {
+                if (ImagePullSecretName != null)
+                {
+                    writer.WritePropertyName("imagePullSecretName"u8);
+                    writer.WriteStringValue(ImagePullSecretName);
+                }
+                else
+                {
+                    writer.WriteNull("imagePullSecretName");
+                }
+            }
+            writer.WritePropertyName("computeType"u8);
+            writer.WriteStringValue(ComputeType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningAksComputeSecrets DeserializeMachineLearningAksComputeSecrets(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> adminKubeConfig = default;
             Optional<string> imagePullSecretName = default;
             ComputeType computeType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userKubeConfig"u8))
@@ -49,8 +102,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     computeType = new ComputeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningAksComputeSecrets(computeType, userKubeConfig.Value, adminKubeConfig.Value, imagePullSecretName.Value);
+            return new MachineLearningAksComputeSecrets(computeType, userKubeConfig.Value, adminKubeConfig.Value, imagePullSecretName.Value, rawData);
+        }
+
+        MachineLearningAksComputeSecrets IModelJsonSerializable<MachineLearningAksComputeSecrets>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeSecrets>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAksComputeSecrets(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningAksComputeSecrets>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeSecrets>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningAksComputeSecrets IModelSerializable<MachineLearningAksComputeSecrets>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MachineLearningAksComputeSecrets>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningAksComputeSecrets(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningAksComputeSecrets model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningAksComputeSecrets(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningAksComputeSecrets(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

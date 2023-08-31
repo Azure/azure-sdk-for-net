@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> IoT Central Application Template. </summary>
     public partial class IotCentralAppTemplate
     {
-        /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplate"/>. </summary>
         internal IotCentralAppTemplate()
         {
             Locations = new ChangeTrackingList<IotCentralAppTemplateLocation>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppTemplate"/>. </summary>
         /// <param name="manifestId"> The ID of the template. </param>
         /// <param name="manifestVersion"> The version of the template. </param>
         /// <param name="name"> The name of the template. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <param name="description"> The description of the template. </param>
         /// <param name="industry"> The industry of the template. </param>
         /// <param name="locations"> A list of locations that support the template. </param>
-        internal IotCentralAppTemplate(string manifestId, string manifestVersion, string name, string title, int? order, string description, string industry, IReadOnlyList<IotCentralAppTemplateLocation> locations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppTemplate(string manifestId, string manifestVersion, string name, string title, int? order, string description, string industry, IReadOnlyList<IotCentralAppTemplateLocation> locations, Dictionary<string, BinaryData> rawData)
         {
             ManifestId = manifestId;
             ManifestVersion = manifestVersion;
@@ -38,6 +42,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Description = description;
             Industry = industry;
             Locations = locations;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of the template. </summary>

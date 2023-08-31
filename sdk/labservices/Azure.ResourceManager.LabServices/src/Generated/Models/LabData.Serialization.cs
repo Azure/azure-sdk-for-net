@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabData : IUtf8JsonSerializable
+    public partial class LabData : IUtf8JsonSerializable, IModelJsonSerializable<LabData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -79,11 +86,25 @@ namespace Azure.ResourceManager.LabServices
                 writer.WriteObjectValue(NetworkProfile);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabData DeserializeLabData(JsonElement element)
+        internal static LabData DeserializeLabData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +126,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabServicesProvisioningState> provisioningState = default;
             Optional<LabNetworkProfile> networkProfile = default;
             Optional<LabState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -253,8 +275,57 @@ namespace Azure.ResourceManager.LabServices
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(state));
+            return new LabData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(state), rawData);
+        }
+
+        LabData IModelJsonSerializable<LabData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabData IModelSerializable<LabData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LabData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LabData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

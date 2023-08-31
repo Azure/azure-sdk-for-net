@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> A request. </summary>
     public partial class LogicWorkflowRequest
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequest"/>. </summary>
         public LogicWorkflowRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequest"/>. </summary>
         /// <param name="headers"> A list of all the headers attached to the request. </param>
         /// <param name="uri"> The destination for the request. </param>
         /// <param name="method"> The HTTP method used for the request. </param>
-        internal LogicWorkflowRequest(BinaryData headers, Uri uri, string method)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRequest(BinaryData headers, Uri uri, string method, Dictionary<string, BinaryData> rawData)
         {
             Headers = headers;
             Uri = uri;
             Method = method;
+            _rawData = rawData;
         }
 
         /// <summary>

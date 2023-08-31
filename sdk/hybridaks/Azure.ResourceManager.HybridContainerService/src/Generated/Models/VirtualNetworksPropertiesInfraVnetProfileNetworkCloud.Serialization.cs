@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : IUtf8JsonSerializable
+    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworksPropertiesInfraVnetProfileNetworkCloud DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(JsonElement element)
+        internal static VirtualNetworksPropertiesInfraVnetProfileNetworkCloud DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> networkId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkId"u8))
@@ -37,8 +60,57 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     networkId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(networkId.Value);
+            return new VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(networkId.Value, rawData);
+        }
+
+        VirtualNetworksPropertiesInfraVnetProfileNetworkCloud IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworksPropertiesInfraVnetProfileNetworkCloud IModelSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualNetworksPropertiesInfraVnetProfileNetworkCloud model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualNetworksPropertiesInfraVnetProfileNetworkCloud(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfileNetworkCloud(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

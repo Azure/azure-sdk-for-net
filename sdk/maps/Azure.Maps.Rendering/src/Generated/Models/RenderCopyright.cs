@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,26 @@ namespace Azure.Maps.Rendering
     /// <summary> This object is returned from a successful copyright request. </summary>
     public partial class RenderCopyright
     {
-        /// <summary> Initializes a new instance of RenderCopyright. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RenderCopyright"/>. </summary>
         internal RenderCopyright()
         {
             GeneralCopyrights = new ChangeTrackingList<string>();
             RegionalCopyrights = new ChangeTrackingList<RegionalCopyright>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RenderCopyright"/>. </summary>
+        /// <param name="formatVersion"> Format Version property. </param>
+        /// <param name="generalCopyrights"> General Copyrights array. </param>
+        /// <param name="regionalCopyrights"> Regions array. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenderCopyright(string formatVersion, IReadOnlyList<string> generalCopyrights, IReadOnlyList<RegionalCopyright> regionalCopyrights, Dictionary<string, BinaryData> rawData)
+        {
+            FormatVersion = formatVersion;
+            GeneralCopyrights = generalCopyrights;
+            RegionalCopyrights = regionalCopyrights;
+            _rawData = rawData;
         }
 
         /// <summary> Format Version property. </summary>

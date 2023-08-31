@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ManagementNetworkConfigurationProperties : IUtf8JsonSerializable
+    public partial class ManagementNetworkConfigurationProperties : IUtf8JsonSerializable, IModelJsonSerializable<ManagementNetworkConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagementNetworkConfigurationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagementNetworkConfigurationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
             writer.WriteObjectValue(InfrastructureVpnConfiguration);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
             writer.WriteObjectValue(WorkloadVpnConfiguration);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagementNetworkConfigurationProperties DeserializeManagementNetworkConfigurationProperties(JsonElement element)
+        internal static ManagementNetworkConfigurationProperties DeserializeManagementNetworkConfigurationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             VpnConfigurationProperties infrastructureVpnConfiguration = default;
             VpnConfigurationProperties workloadVpnConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infrastructureVpnConfiguration"u8))
@@ -42,8 +65,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     workloadVpnConfiguration = VpnConfigurationProperties.DeserializeVpnConfigurationProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagementNetworkConfigurationProperties(infrastructureVpnConfiguration, workloadVpnConfiguration);
+            return new ManagementNetworkConfigurationProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, rawData);
+        }
+
+        ManagementNetworkConfigurationProperties IModelJsonSerializable<ManagementNetworkConfigurationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementNetworkConfigurationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagementNetworkConfigurationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagementNetworkConfigurationProperties IModelSerializable<ManagementNetworkConfigurationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagementNetworkConfigurationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ManagementNetworkConfigurationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ManagementNetworkConfigurationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagementNetworkConfigurationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

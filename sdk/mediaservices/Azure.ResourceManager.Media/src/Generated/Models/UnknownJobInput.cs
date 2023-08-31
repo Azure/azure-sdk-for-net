@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownJobInput. </summary>
     internal partial class UnknownJobInput : MediaJobInputBasicProperties
     {
-        /// <summary> Initializes a new instance of UnknownJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobInput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownJobInput(string odataType) : base(odataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownJobInput(string odataType, Dictionary<string, BinaryData> rawData) : base(odataType, rawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownJobInput"/> for deserialization. </summary>
+        internal UnknownJobInput()
+        {
         }
     }
 }

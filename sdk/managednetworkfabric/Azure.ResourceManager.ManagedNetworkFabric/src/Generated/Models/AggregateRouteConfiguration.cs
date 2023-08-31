@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
     public partial class AggregateRouteConfiguration
     {
-        /// <summary> Initializes a new instance of AggregateRouteConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AggregateRouteConfiguration"/>. </summary>
         public AggregateRouteConfiguration()
         {
             IPv4Routes = new ChangeTrackingList<AggregateRoute>();
             IPv6Routes = new ChangeTrackingList<AggregateRoute>();
         }
 
-        /// <summary> Initializes a new instance of AggregateRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateRouteConfiguration"/>. </summary>
         /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
         /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
-        internal AggregateRouteConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AggregateRouteConfiguration(IList<AggregateRoute> ipv4Routes, IList<AggregateRoute> ipv6Routes, Dictionary<string, BinaryData> rawData)
         {
             IPv4Routes = ipv4Routes;
             IPv6Routes = ipv6Routes;
+            _rawData = rawData;
         }
 
         /// <summary> List of IPv4 Route prefixes. </summary>

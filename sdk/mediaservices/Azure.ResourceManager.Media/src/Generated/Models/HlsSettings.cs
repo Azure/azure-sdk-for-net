@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The HLS setting for a track. </summary>
     public partial class HlsSettings
     {
-        /// <summary> Initializes a new instance of HlsSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HlsSettings"/>. </summary>
         public HlsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of HlsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HlsSettings"/>. </summary>
         /// <param name="isDefault"> The default for the HLS setting. </param>
         /// <param name="isForced"> The forced for the HLS setting. </param>
         /// <param name="characteristics"> The characteristics for the HLS setting. </param>
-        internal HlsSettings(bool? isDefault, bool? isForced, string characteristics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HlsSettings(bool? isDefault, bool? isForced, string characteristics, Dictionary<string, BinaryData> rawData)
         {
             IsDefault = isDefault;
             IsForced = isForced;
             Characteristics = characteristics;
+            _rawData = rawData;
         }
 
         /// <summary> The default for the HLS setting. </summary>

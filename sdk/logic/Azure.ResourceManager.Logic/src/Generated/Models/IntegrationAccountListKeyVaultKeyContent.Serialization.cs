@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountListKeyVaultKeyContent : IUtf8JsonSerializable
+    public partial class IntegrationAccountListKeyVaultKeyContent : IUtf8JsonSerializable, IModelJsonSerializable<IntegrationAccountListKeyVaultKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IntegrationAccountListKeyVaultKeyContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IntegrationAccountListKeyVaultKeyContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
             writer.WriteObjectValue(KeyVault);
@@ -22,7 +30,95 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IntegrationAccountListKeyVaultKeyContent DeserializeIntegrationAccountListKeyVaultKeyContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IntegrationAccountKeyVaultNameReference keyVault = default;
+            Optional<string> skipToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("keyVault"u8))
+                {
+                    keyVault = IntegrationAccountKeyVaultNameReference.DeserializeIntegrationAccountKeyVaultNameReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("skipToken"u8))
+                {
+                    skipToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken.Value, rawData);
+        }
+
+        IntegrationAccountListKeyVaultKeyContent IModelJsonSerializable<IntegrationAccountListKeyVaultKeyContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationAccountListKeyVaultKeyContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IntegrationAccountListKeyVaultKeyContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IntegrationAccountListKeyVaultKeyContent IModelSerializable<IntegrationAccountListKeyVaultKeyContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIntegrationAccountListKeyVaultKeyContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IntegrationAccountListKeyVaultKeyContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IntegrationAccountListKeyVaultKeyContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIntegrationAccountListKeyVaultKeyContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,20 +14,23 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> New plans notification details. </summary>
     public partial class NewPlanNotification
     {
-        /// <summary> Initializes a new instance of NewPlanNotification. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewPlanNotification"/>. </summary>
         internal NewPlanNotification()
         {
             Plans = new ChangeTrackingList<PlanNotificationDetails>();
         }
 
-        /// <summary> Initializes a new instance of NewPlanNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewPlanNotification"/>. </summary>
         /// <param name="offerId"> Gets offer id. </param>
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="isFuturePlansEnabled"> Gets a value indicating whether future plans is enabled. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
         /// <param name="iconUri"> Gets or sets the icon url. </param>
         /// <param name="plans"> Gets or sets removed plans notifications. </param>
-        internal NewPlanNotification(string offerId, string displayName, bool? isFuturePlansEnabled, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewPlanNotification(string offerId, string displayName, bool? isFuturePlansEnabled, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans, Dictionary<string, BinaryData> rawData)
         {
             OfferId = offerId;
             DisplayName = displayName;
@@ -35,6 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             MessageCode = messageCode;
             IconUri = iconUri;
             Plans = plans;
+            _rawData = rawData;
         }
 
         /// <summary> Gets offer id. </summary>

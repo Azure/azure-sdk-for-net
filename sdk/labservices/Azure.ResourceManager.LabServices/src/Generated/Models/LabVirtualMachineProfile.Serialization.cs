@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineProfile : IUtf8JsonSerializable
+    public partial class LabVirtualMachineProfile : IUtf8JsonSerializable, IModelJsonSerializable<LabVirtualMachineProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabVirtualMachineProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabVirtualMachineProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToSerialString());
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WritePropertyName("nonAdminUser"u8);
                 writer.WriteObjectValue(NonAdminUser);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabVirtualMachineProfile DeserializeLabVirtualMachineProfile(JsonElement element)
+        internal static LabVirtualMachineProfile DeserializeLabVirtualMachineProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +80,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<LabServicesEnableState> useSharedPassword = default;
             LabVirtualMachineCredential adminUser = default;
             Optional<LabVirtualMachineCredential> nonAdminUser = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -122,8 +144,57 @@ namespace Azure.ResourceManager.LabServices.Models
                     nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value);
+            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value, rawData);
+        }
+
+        LabVirtualMachineProfile IModelJsonSerializable<LabVirtualMachineProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabVirtualMachineProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabVirtualMachineProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabVirtualMachineProfile IModelSerializable<LabVirtualMachineProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabVirtualMachineProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LabVirtualMachineProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LabVirtualMachineProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabVirtualMachineProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

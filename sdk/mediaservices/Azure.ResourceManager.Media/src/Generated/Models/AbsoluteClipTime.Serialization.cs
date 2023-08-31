@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AbsoluteClipTime : IUtf8JsonSerializable
+    public partial class AbsoluteClipTime : IUtf8JsonSerializable, IModelJsonSerializable<AbsoluteClipTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AbsoluteClipTime>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AbsoluteClipTime>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AbsoluteClipTime>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("time"u8);
             writer.WriteStringValue(Time, "P");
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AbsoluteClipTime DeserializeAbsoluteClipTime(JsonElement element)
+        internal static AbsoluteClipTime DeserializeAbsoluteClipTime(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TimeSpan time = default;
             string odataType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -43,8 +65,57 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AbsoluteClipTime(odataType, time);
+            return new AbsoluteClipTime(odataType, time, rawData);
+        }
+
+        AbsoluteClipTime IModelJsonSerializable<AbsoluteClipTime>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AbsoluteClipTime>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAbsoluteClipTime(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AbsoluteClipTime>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AbsoluteClipTime>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AbsoluteClipTime IModelSerializable<AbsoluteClipTime>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AbsoluteClipTime>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAbsoluteClipTime(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AbsoluteClipTime model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AbsoluteClipTime(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAbsoluteClipTime(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

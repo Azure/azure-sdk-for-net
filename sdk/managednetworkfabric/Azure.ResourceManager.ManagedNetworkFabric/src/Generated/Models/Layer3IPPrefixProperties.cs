@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Layer 3 primary and secondary IP Address prefixes. </summary>
     public partial class Layer3IPPrefixProperties
     {
-        /// <summary> Initializes a new instance of Layer3IPPrefixProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Layer3IPPrefixProperties"/>. </summary>
         public Layer3IPPrefixProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of Layer3IPPrefixProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Layer3IPPrefixProperties"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal Layer3IPPrefixProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Layer3IPPrefixProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, Dictionary<string, BinaryData> rawData)
         {
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             PrimaryIPv6Prefix = primaryIPv6Prefix;
             SecondaryIPv4Prefix = secondaryIPv4Prefix;
             SecondaryIPv6Prefix = secondaryIPv6Prefix;
+            _rawData = rawData;
         }
 
         /// <summary> IPv4 Address Prefix. </summary>

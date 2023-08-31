@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiDeploymentParameterMetadata
+    public partial class LogicApiDeploymentParameterMetadata : IUtf8JsonSerializable, IModelJsonSerializable<LogicApiDeploymentParameterMetadata>
     {
-        internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicApiDeploymentParameterMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicApiDeploymentParameterMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApiDeploymentParameterMetadataType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ApiDeploymentParameterMetadataType);
+            }
+            if (Optional.IsDefined(IsRequired))
+            {
+                writer.WritePropertyName("isRequired"u8);
+                writer.WriteBooleanValue(IsRequired.Value);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Visibility))
+            {
+                writer.WritePropertyName("visibility"u8);
+                writer.WriteStringValue(Visibility.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicApiDeploymentParameterMetadata DeserializeLogicApiDeploymentParameterMetadata(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<LogicApiDeploymentParameterVisibility> visibility = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -58,8 +112,57 @@ namespace Azure.ResourceManager.Logic.Models
                     visibility = new LogicApiDeploymentParameterVisibility(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility));
+            return new LogicApiDeploymentParameterMetadata(type.Value, Optional.ToNullable(isRequired), displayName.Value, description.Value, Optional.ToNullable(visibility), rawData);
+        }
+
+        LogicApiDeploymentParameterMetadata IModelJsonSerializable<LogicApiDeploymentParameterMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiDeploymentParameterMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicApiDeploymentParameterMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicApiDeploymentParameterMetadata IModelSerializable<LogicApiDeploymentParameterMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicApiDeploymentParameterMetadata(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(LogicApiDeploymentParameterMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator LogicApiDeploymentParameterMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicApiDeploymentParameterMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

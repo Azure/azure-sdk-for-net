@@ -19,7 +19,9 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountAgreementData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="agreementType"> The agreement type. </param>
         /// <param name="hostPartner"> The integration account partner that is set as host partner for this agreement. </param>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Logic
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -60,7 +62,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="hostIdentity"> The business identity of the host partner. </param>
         /// <param name="guestIdentity"> The business identity of the guest partner. </param>
         /// <param name="content"> The agreement content. </param>
-        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -71,6 +74,12 @@ namespace Azure.ResourceManager.Logic
             HostIdentity = hostIdentity;
             GuestIdentity = guestIdentity;
             Content = content;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementData"/> for deserialization. </summary>
+        internal IntegrationAccountAgreementData()
+        {
         }
 
         /// <summary> The created time. </summary>

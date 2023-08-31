@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Akamai access control. </summary>
     internal partial class AkamaiAccessControl
     {
-        /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AkamaiAccessControl"/>. </summary>
         public AkamaiAccessControl()
         {
             AkamaiSignatureHeaderAuthenticationKeyList = new ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>();
         }
 
-        /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiAccessControl"/>. </summary>
         /// <param name="akamaiSignatureHeaderAuthenticationKeyList"> authentication key list. </param>
-        internal AkamaiAccessControl(IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AkamaiAccessControl(IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList, Dictionary<string, BinaryData> rawData)
         {
             AkamaiSignatureHeaderAuthenticationKeyList = akamaiSignatureHeaderAuthenticationKeyList;
+            _rawData = rawData;
         }
 
         /// <summary> authentication key list. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceGetNotebookKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetNotebookKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetNotebookKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetNotebookKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetNotebookKeysResult"/>. </summary>
         /// <param name="primaryAccessKey"></param>
         /// <param name="secondaryAccessKey"></param>
-        internal MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceGetNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey, Dictionary<string, BinaryData> rawData)
         {
             PrimaryAccessKey = primaryAccessKey;
             SecondaryAccessKey = secondaryAccessKey;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the primary access key. </summary>

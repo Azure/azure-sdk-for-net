@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class RouteOptimizedWaypoint
+    public partial class RouteOptimizedWaypoint : IUtf8JsonSerializable, IModelJsonSerializable<RouteOptimizedWaypoint>
     {
-        internal static RouteOptimizedWaypoint DeserializeRouteOptimizedWaypoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteOptimizedWaypoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteOptimizedWaypoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouteOptimizedWaypoint DeserializeRouteOptimizedWaypoint(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> providedIndex = default;
             Optional<int> optimizedIndex = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providedIndex"u8))
@@ -40,8 +69,57 @@ namespace Azure.Maps.Routing.Models
                     optimizedIndex = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex));
+            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex), rawData);
+        }
+
+        RouteOptimizedWaypoint IModelJsonSerializable<RouteOptimizedWaypoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteOptimizedWaypoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteOptimizedWaypoint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteOptimizedWaypoint IModelSerializable<RouteOptimizedWaypoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteOptimizedWaypoint(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RouteOptimizedWaypoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RouteOptimizedWaypoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteOptimizedWaypoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

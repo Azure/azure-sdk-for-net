@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceIdentity : IUtf8JsonSerializable
+    public partial class DeviceIdentity : IUtf8JsonSerializable, IModelJsonSerializable<DeviceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceId))
             {
@@ -81,11 +88,25 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element)
+        internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,6 +124,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<AuthenticationMechanism> authentication = default;
             Optional<DeviceCapabilities> capabilities = default;
             Optional<string> deviceScope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -202,8 +224,57 @@ namespace Azure.IoT.Hub.Service.Models
                     deviceScope = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value);
+            return new DeviceIdentity(deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(statusUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, capabilities.Value, deviceScope.Value, rawData);
+        }
+
+        DeviceIdentity IModelJsonSerializable<DeviceIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceIdentity IModelSerializable<DeviceIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceIdentity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DeviceIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DeviceIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

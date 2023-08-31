@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> API server endpoint for the control plane. </summary>
     public partial class ControlPlaneEndpointProfileControlPlaneEndpoint
     {
-        /// <summary> Initializes a new instance of ControlPlaneEndpointProfileControlPlaneEndpoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneEndpointProfileControlPlaneEndpoint"/>. </summary>
         public ControlPlaneEndpointProfileControlPlaneEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of ControlPlaneEndpointProfileControlPlaneEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneEndpointProfileControlPlaneEndpoint"/>. </summary>
         /// <param name="hostIP"> Host IP address for API server. </param>
         /// <param name="port"> Port for the API server. </param>
-        internal ControlPlaneEndpointProfileControlPlaneEndpoint(string hostIP, string port)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ControlPlaneEndpointProfileControlPlaneEndpoint(string hostIP, string port, Dictionary<string, BinaryData> rawData)
         {
             HostIP = hostIP;
             Port = port;
+            _rawData = rawData;
         }
 
         /// <summary> Host IP address for API server. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEncryptionKeyVaultProperties. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultArmId"/> or <paramref name="keyIdentifier"/> is null. </exception>
@@ -26,15 +29,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyIdentifier = keyIdentifier;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <param name="identityClientId"> For future use - The client id of the identity which will be used to access key vault. </param>
-        internal MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier, string identityClientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier, string identityClientId, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultArmId = keyVaultArmId;
             KeyIdentifier = keyIdentifier;
             IdentityClientId = identityClientId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/> for deserialization. </summary>
+        internal MachineLearningEncryptionKeyVaultProperties()
+        {
         }
 
         /// <summary> The ArmId of the keyVault where the customer owned encryption key is present. </summary>

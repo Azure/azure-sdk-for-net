@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceWindowsPatchSettings : IUtf8JsonSerializable
+    public partial class MaintenanceWindowsPatchSettings : IUtf8JsonSerializable, IModelJsonSerializable<MaintenanceWindowsPatchSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MaintenanceWindowsPatchSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MaintenanceWindowsPatchSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(IsExcludeKbsRebootRequired.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceWindowsPatchSettings DeserializeMaintenanceWindowsPatchSettings(JsonElement element)
+        internal static MaintenanceWindowsPatchSettings DeserializeMaintenanceWindowsPatchSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +85,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<IList<string>> kbNumbersToInclude = default;
             Optional<IList<string>> classificationsToInclude = default;
             Optional<bool> excludeKbsRequiringReboot = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kbNumbersToExclude"u8))
@@ -117,8 +139,57 @@ namespace Azure.ResourceManager.Maintenance.Models
                     excludeKbsRequiringReboot = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenanceWindowsPatchSettings(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot));
+            return new MaintenanceWindowsPatchSettings(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot), rawData);
+        }
+
+        MaintenanceWindowsPatchSettings IModelJsonSerializable<MaintenanceWindowsPatchSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceWindowsPatchSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenanceWindowsPatchSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenanceWindowsPatchSettings IModelSerializable<MaintenanceWindowsPatchSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenanceWindowsPatchSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MaintenanceWindowsPatchSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MaintenanceWindowsPatchSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenanceWindowsPatchSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

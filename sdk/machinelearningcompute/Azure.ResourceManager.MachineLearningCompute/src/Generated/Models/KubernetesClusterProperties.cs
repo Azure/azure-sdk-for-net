@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Kubernetes cluster specific properties. </summary>
     internal partial class KubernetesClusterProperties
     {
-        /// <summary> Initializes a new instance of KubernetesClusterProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterProperties"/>. </summary>
         public KubernetesClusterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterProperties"/>. </summary>
         /// <param name="servicePrincipal"> The Azure Service Principal used by Kubernetes. </param>
-        internal KubernetesClusterProperties(ServicePrincipalProperties servicePrincipal)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterProperties(ServicePrincipalProperties servicePrincipal, Dictionary<string, BinaryData> rawData)
         {
             ServicePrincipal = servicePrincipal;
+            _rawData = rawData;
         }
 
         /// <summary> The Azure Service Principal used by Kubernetes. </summary>

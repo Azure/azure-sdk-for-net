@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of KustoClusterData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Kusto
             PrivateEndpointConnections = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of KustoClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -73,7 +75,8 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
-        internal KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
@@ -104,6 +107,12 @@ namespace Azure.ResourceManager.Kusto
             VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
             PrivateEndpointConnections = privateEndpointConnections;
             MigrationCluster = migrationCluster;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterData"/> for deserialization. </summary>
+        internal KustoClusterData()
+        {
         }
 
         /// <summary> The SKU of the cluster. </summary>

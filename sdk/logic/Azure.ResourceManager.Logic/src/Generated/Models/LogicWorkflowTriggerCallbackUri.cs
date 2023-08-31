@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,23 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow trigger callback URL. </summary>
     public partial class LogicWorkflowTriggerCallbackUri
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
         internal LogicWorkflowTriggerCallbackUri()
         {
             RelativePathParameters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
         /// <param name="value"> Gets the workflow trigger callback URL. </param>
         /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
         /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>
         /// <param name="relativePath"> Gets the workflow trigger callback URL relative path. </param>
         /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
         /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
-        internal LogicWorkflowTriggerCallbackUri(string value, RequestMethod? method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, LogicWorkflowTriggerCallbackQueryParameterInfo queries)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerCallbackUri(string value, RequestMethod? method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, LogicWorkflowTriggerCallbackQueryParameterInfo queries, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Method = method;
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
             RelativePath = relativePath;
             RelativePathParameters = relativePathParameters;
             Queries = queries;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the workflow trigger callback URL. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningContainerResourceRequirements : IUtf8JsonSerializable
+    public partial class MachineLearningContainerResourceRequirements : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningContainerResourceRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningContainerResourceRequirements>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningContainerResourceRequirements>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerResourceLimits))
             {
@@ -39,17 +47,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerResourceRequests");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningContainerResourceRequirements DeserializeMachineLearningContainerResourceRequirements(JsonElement element)
+        internal static MachineLearningContainerResourceRequirements DeserializeMachineLearningContainerResourceRequirements(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<MachineLearningContainerResourceSettings> containerResourceLimits = default;
             Optional<MachineLearningContainerResourceSettings> containerResourceRequests = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerResourceLimits"u8))
@@ -72,8 +95,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningContainerResourceRequirements(containerResourceLimits.Value, containerResourceRequests.Value);
+            return new MachineLearningContainerResourceRequirements(containerResourceLimits.Value, containerResourceRequests.Value, rawData);
+        }
+
+        MachineLearningContainerResourceRequirements IModelJsonSerializable<MachineLearningContainerResourceRequirements>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningContainerResourceRequirements(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningContainerResourceRequirements>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningContainerResourceRequirements IModelSerializable<MachineLearningContainerResourceRequirements>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningContainerResourceRequirements(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MachineLearningContainerResourceRequirements model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MachineLearningContainerResourceRequirements(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningContainerResourceRequirements(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
