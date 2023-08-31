@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeReportsRestClient.CreateListByNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeReportsRestClient.CreateListByNodeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DscNodeReport.DeserializeDscNodeReport, _nodeReportsClientDiagnostics, Pipeline, "DscNodeResource.GetNodeReportsByNode", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DscNodeReport.DeserializeDscNodeReport, _nodeReportsClientDiagnostics, Pipeline, "DscNodeResource.GetNodeReportsByNode", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeReportsRestClient.CreateListByNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeReportsRestClient.CreateListByNodeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DscNodeReport.DeserializeDscNodeReport, _nodeReportsClientDiagnostics, Pipeline, "DscNodeResource.GetNodeReportsByNode", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DscNodeReport.DeserializeDscNodeReport, _nodeReportsClientDiagnostics, Pipeline, "DscNodeResource.GetNodeReportsByNode", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
