@@ -6,9 +6,7 @@
           "OSVmImage": "ubuntu-22.04",
           "Pool": "azsdk-pool-mms-ubuntu-2204-identitymsi",
           "AdditionalTestFilters": "TestCategory=NonVirtualized"
-        }
-      },
-      "ContainerAgent": {
+        },
         "ubuntu_keyring_container": {
           "OSVmImage": "ubuntu-20.04",
           "Pool": "Azure Pipelines",
