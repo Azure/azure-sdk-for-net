@@ -182,15 +182,12 @@ namespace Azure.Core.Serialization
 
         private static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
-            Type typeToActivate = returnType;
-            if (returnType.IsAbstract)
+            DeserializationProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(DeserializationProxyAttribute), false) as DeserializationProxyAttribute;
+            Type typeToActivate = attribute is null ? returnType : attribute.ProxyType;
+
+            if (returnType.IsAbstract && attribute is null)
             {
-                DeserializationProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(DeserializationProxyAttribute)) as DeserializationProxyAttribute;
-                if (attribute is null)
-                {
-                    throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(DeserializationProxyAttribute)} to be used with {nameof(ModelSerializer)}");
-                }
-                typeToActivate = attribute.ProxyType;
+                throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(DeserializationProxyAttribute)} to be used with {nameof(ModelSerializer)}");
             }
 
             var obj = Activator.CreateInstance(typeToActivate, true);
