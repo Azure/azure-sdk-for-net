@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0 (2023-09-15)
 
 - Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
   - Added new parameter `DomainNameLabelScope` to VM and VMSS Public IP Dns Settings.
