@@ -95,7 +95,7 @@ namespace Azure.Core.Tests
             Assert.DoesNotThrow(() => json.Bar = jsonWithArray.MyArray);
 
             // Create list to add an item to
-            List<string> list = new((IEnumerable<string>)json.Foo);
+            List<string> list = new((string[])json.Foo);
             list.Add("d");
 
             json.Foo = list;
