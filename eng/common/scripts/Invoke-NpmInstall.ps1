@@ -14,20 +14,24 @@ try {
     Write-Host "Generating from $currentDur"
 
     if (Test-Path "package.json") {
-        Remove-Item -Path "package.json" -Force
-    }
+      Write-Host "Removing existing package.json"
+      Remove-Item -Path "package.json" -Force
+  }
 
-    if (Test-Path ".npmrc") {
-        Remove-Item -Path ".npmrc" -Force
-    }
+  if (Test-Path "package-lock.json") {
+      Write-Host "Removing existing package-lock.json"
+      Remove-Item -Path "package-lock.json" -Force
+  }
 
-    if (Test-Path "node_modules") {
-        Remove-Item -Path "node_modules" -Force -Recurse
-    }
+  if (Test-Path ".npmrc") {
+      Write-Host "Removing existing .nprc"
+      Remove-Item -Path ".npmrc" -Force
+  }
 
-    if (Test-Path "package-lock.json") {
-        Remove-Item -Path "package-lock.json" -Force
-    }
+  if (Test-Path "node_modules") {
+      Write-Host "Removing existing node_modules folder"
+      Remove-Item -Path "node_modules" -Force -Recurse
+  }
 
     #default to root/eng/emitter-package.json but you can override by writing
     #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
