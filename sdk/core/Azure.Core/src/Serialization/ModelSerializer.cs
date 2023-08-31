@@ -185,12 +185,12 @@ namespace Azure.Core.Serialization
             Type typeToActivate = returnType;
             if (returnType.IsAbstract)
             {
-                AbstractTypeDeserializerAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(AbstractTypeDeserializerAttribute)) as AbstractTypeDeserializerAttribute;
+                DeserializationProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(DeserializationProxyAttribute)) as DeserializationProxyAttribute;
                 if (attribute is null)
                 {
-                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(AbstractTypeDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
+                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(DeserializationProxyAttribute)} to be used with {nameof(ModelSerializer)}");
                 }
-                typeToActivate = attribute.DeserializationProxy;
+                typeToActivate = attribute.ProxyType;
             }
 
             var obj = Activator.CreateInstance(typeToActivate, true);

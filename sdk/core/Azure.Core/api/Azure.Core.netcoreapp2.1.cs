@@ -1078,10 +1078,10 @@ namespace Azure.Core.Pipeline
 namespace Azure.Core.Serialization
 {
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public sealed partial class AbstractTypeDeserializerAttribute : System.Attribute
+    public sealed partial class DeserializationProxyAttribute : System.Attribute
     {
-        public AbstractTypeDeserializerAttribute(System.Type deserializationProxy) { }
-        public System.Type DeserializationProxy { get { throw null; } }
+        public DeserializationProxyAttribute(System.Type proxyType) { }
+        public System.Type ProxyType { get { throw null; } }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
