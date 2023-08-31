@@ -6,13 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Patch schedule entry for a Premium Redis Cache. </summary>
     public partial class RedisPatchScheduleSetting
     {
-        /// <summary> Initializes a new instance of RedisPatchScheduleSetting. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleSetting"/>. </summary>
         /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
         /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
         public RedisPatchScheduleSetting(RedisDayOfWeek dayOfWeek, int startHourUtc)
@@ -21,15 +24,22 @@ namespace Azure.ResourceManager.Redis.Models
             StartHourUtc = startHourUtc;
         }
 
-        /// <summary> Initializes a new instance of RedisPatchScheduleSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleSetting"/>. </summary>
         /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
         /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
         /// <param name="maintenanceWindow"> ISO8601 timespan specifying how much time cache patching can take. </param>
-        internal RedisPatchScheduleSetting(RedisDayOfWeek dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisPatchScheduleSetting(RedisDayOfWeek dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow, Dictionary<string, BinaryData> rawData)
         {
             DayOfWeek = dayOfWeek;
             StartHourUtc = startHourUtc;
             MaintenanceWindow = maintenanceWindow;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleSetting"/> for deserialization. </summary>
+        internal RedisPatchScheduleSetting()
+        {
         }
 
         /// <summary> Day of the week when a cache can be patched. </summary>

@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The settings to enable AAD authentication on the cluster. </summary>
     public partial class ClusterAadSetting
     {
-        /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterAadSetting"/>. </summary>
         public ClusterAadSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterAadSetting"/>. </summary>
         /// <param name="tenantId"> Azure active directory tenant id. </param>
         /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
         /// <param name="clientApplication"> Azure active directory client application id. </param>
-        internal ClusterAadSetting(Guid? tenantId, string clusterApplication, string clientApplication)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterAadSetting(Guid? tenantId, string clusterApplication, string clientApplication, Dictionary<string, BinaryData> rawData)
         {
             TenantId = tenantId;
             ClusterApplication = clusterApplication;
             ClientApplication = clientApplication;
+            _rawData = rawData;
         }
 
         /// <summary> Azure active directory tenant id. </summary>

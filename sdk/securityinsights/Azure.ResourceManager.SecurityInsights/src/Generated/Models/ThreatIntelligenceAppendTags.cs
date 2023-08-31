@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Array of tags to be appended to the threat intelligence indicator. </summary>
     public partial class ThreatIntelligenceAppendTags
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceAppendTags. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceAppendTags"/>. </summary>
         public ThreatIntelligenceAppendTags()
         {
             ThreatIntelligenceTags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceAppendTags"/>. </summary>
+        /// <param name="threatIntelligenceTags"> List of tags to be appended. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceAppendTags(IList<string> threatIntelligenceTags, Dictionary<string, BinaryData> rawData)
+        {
+            ThreatIntelligenceTags = threatIntelligenceTags;
+            _rawData = rawData;
         }
 
         /// <summary> List of tags to be appended. </summary>

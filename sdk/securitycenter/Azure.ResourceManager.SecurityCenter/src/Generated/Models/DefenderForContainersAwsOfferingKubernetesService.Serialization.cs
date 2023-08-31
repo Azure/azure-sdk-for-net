@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class DefenderForContainersAwsOfferingKubernetesService : IUtf8JsonSerializable
+    internal partial class DefenderForContainersAwsOfferingKubernetesService : IUtf8JsonSerializable, IModelJsonSerializable<DefenderForContainersAwsOfferingKubernetesService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DefenderForContainersAwsOfferingKubernetesService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DefenderForContainersAwsOfferingKubernetesService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForContainersAwsOfferingKubernetesService DeserializeDefenderForContainersAwsOfferingKubernetesService(JsonElement element)
+        internal static DefenderForContainersAwsOfferingKubernetesService DeserializeDefenderForContainersAwsOfferingKubernetesService(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> cloudRoleArn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudRoleArn"u8))
@@ -37,8 +60,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DefenderForContainersAwsOfferingKubernetesService(cloudRoleArn.Value);
+            return new DefenderForContainersAwsOfferingKubernetesService(cloudRoleArn.Value, rawData);
+        }
+
+        DefenderForContainersAwsOfferingKubernetesService IModelJsonSerializable<DefenderForContainersAwsOfferingKubernetesService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForContainersAwsOfferingKubernetesService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DefenderForContainersAwsOfferingKubernetesService>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DefenderForContainersAwsOfferingKubernetesService IModelSerializable<DefenderForContainersAwsOfferingKubernetesService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDefenderForContainersAwsOfferingKubernetesService(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DefenderForContainersAwsOfferingKubernetesService"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DefenderForContainersAwsOfferingKubernetesService"/> to convert. </param>
+        public static implicit operator RequestContent(DefenderForContainersAwsOfferingKubernetesService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DefenderForContainersAwsOfferingKubernetesService"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DefenderForContainersAwsOfferingKubernetesService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDefenderForContainersAwsOfferingKubernetesService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

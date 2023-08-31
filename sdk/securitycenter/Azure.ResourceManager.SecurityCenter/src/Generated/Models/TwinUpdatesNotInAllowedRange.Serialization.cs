@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class TwinUpdatesNotInAllowedRange : IUtf8JsonSerializable
+    public partial class TwinUpdatesNotInAllowedRange : IUtf8JsonSerializable, IModelJsonSerializable<TwinUpdatesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TwinUpdatesNotInAllowedRange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TwinUpdatesNotInAllowedRange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TwinUpdatesNotInAllowedRange>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
             writer.WriteStringValue(TimeWindowSize, "P");
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TwinUpdatesNotInAllowedRange DeserializeTwinUpdatesNotInAllowedRange(JsonElement element)
+        internal static TwinUpdatesNotInAllowedRange DeserializeTwinUpdatesNotInAllowedRange(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeWindowSize"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TwinUpdatesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize);
+            return new TwinUpdatesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize, rawData);
+        }
+
+        TwinUpdatesNotInAllowedRange IModelJsonSerializable<TwinUpdatesNotInAllowedRange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TwinUpdatesNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTwinUpdatesNotInAllowedRange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TwinUpdatesNotInAllowedRange>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TwinUpdatesNotInAllowedRange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TwinUpdatesNotInAllowedRange IModelSerializable<TwinUpdatesNotInAllowedRange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TwinUpdatesNotInAllowedRange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTwinUpdatesNotInAllowedRange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TwinUpdatesNotInAllowedRange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TwinUpdatesNotInAllowedRange"/> to convert. </param>
+        public static implicit operator RequestContent(TwinUpdatesNotInAllowedRange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TwinUpdatesNotInAllowedRange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TwinUpdatesNotInAllowedRange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTwinUpdatesNotInAllowedRange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

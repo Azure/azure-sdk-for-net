@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Critical past job details of the migration item. </summary>
     public partial class CriticalJobHistoryDetails
     {
-        /// <summary> Initializes a new instance of CriticalJobHistoryDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CriticalJobHistoryDetails"/>. </summary>
         internal CriticalJobHistoryDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CriticalJobHistoryDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CriticalJobHistoryDetails"/>. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="jobStatus"> The job state. </param>
-        internal CriticalJobHistoryDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn, string jobStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CriticalJobHistoryDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn, string jobStatus, Dictionary<string, BinaryData> rawData)
         {
             JobName = jobName;
             JobId = jobId;
             StartOn = startOn;
             JobStatus = jobStatus;
+            _rawData = rawData;
         }
 
         /// <summary> The job name. </summary>

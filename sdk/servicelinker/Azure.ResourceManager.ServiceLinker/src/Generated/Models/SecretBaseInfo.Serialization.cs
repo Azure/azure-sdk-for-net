@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class SecretBaseInfo : IUtf8JsonSerializable
+    public partial class SecretBaseInfo : IUtf8JsonSerializable, IModelJsonSerializable<SecretBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecretBaseInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecretBaseInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element)
+        internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,7 +57,72 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element);
                 }
             }
-            return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            LinkerSecretType secretType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("secretType"u8))
+                {
+                    secretType = new LinkerSecretType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownSecretInfoBase(secretType, rawData);
+        }
+
+        SecretBaseInfo IModelJsonSerializable<SecretBaseInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretBaseInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecretBaseInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecretBaseInfo IModelSerializable<SecretBaseInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecretBaseInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecretBaseInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecretBaseInfo"/> to convert. </param>
+        public static implicit operator RequestContent(SecretBaseInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecretBaseInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecretBaseInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecretBaseInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

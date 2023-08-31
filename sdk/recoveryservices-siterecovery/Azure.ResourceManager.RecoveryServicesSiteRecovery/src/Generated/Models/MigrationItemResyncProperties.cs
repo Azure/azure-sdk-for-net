@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resync input properties. </summary>
     public partial class MigrationItemResyncProperties
     {
-        /// <summary> Initializes a new instance of MigrationItemResyncProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationItemResyncProperties"/>. </summary>
         /// <param name="providerSpecificDetails">
         /// The provider specific details.
         /// Please note <see cref="ResyncProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -25,6 +28,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(providerSpecificDetails, nameof(providerSpecificDetails));
 
             ProviderSpecificDetails = providerSpecificDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrationItemResyncProperties"/>. </summary>
+        /// <param name="providerSpecificDetails">
+        /// The provider specific details.
+        /// Please note <see cref="ResyncProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtResyncContent"/>.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationItemResyncProperties(ResyncProviderSpecificContent providerSpecificDetails, Dictionary<string, BinaryData> rawData)
+        {
+            ProviderSpecificDetails = providerSpecificDetails;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrationItemResyncProperties"/> for deserialization. </summary>
+        internal MigrationItemResyncProperties()
+        {
         }
 
         /// <summary>

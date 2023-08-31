@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,13 +17,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents threat intelligence data connector. </summary>
     public partial class SecurityInsightsTIDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsTIDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsTIDataConnector"/>. </summary>
         public SecurityInsightsTIDataConnector()
         {
             Kind = DataConnectorKind.ThreatIntelligence;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsTIDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsTIDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="tipLookbackOn"> The lookback period for the feed to be imported. </param>
         /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal SecurityInsightsTIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, DateTimeOffset? tipLookbackOn, TIDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsTIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, DateTimeOffset? tipLookbackOn, TIDataConnectorDataTypes dataTypes, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, etag, rawData)
         {
             TenantId = tenantId;
             TipLookbackOn = tipLookbackOn;

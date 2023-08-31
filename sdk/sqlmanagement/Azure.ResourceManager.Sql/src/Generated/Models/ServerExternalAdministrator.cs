@@ -6,25 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a active directory administrator. </summary>
     public partial class ServerExternalAdministrator
     {
-        /// <summary> Initializes a new instance of ServerExternalAdministrator. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerExternalAdministrator"/>. </summary>
         public ServerExternalAdministrator()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerExternalAdministrator. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerExternalAdministrator"/>. </summary>
         /// <param name="administratorType"> Type of the sever administrator. </param>
         /// <param name="principalType"> Principal Type of the sever administrator. </param>
         /// <param name="login"> Login name of the server administrator. </param>
         /// <param name="sid"> SID (object ID) of the server administrator. </param>
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
-        internal ServerExternalAdministrator(SqlAdministratorType? administratorType, SqlServerPrincipalType? principalType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerExternalAdministrator(SqlAdministratorType? administratorType, SqlServerPrincipalType? principalType, string login, Guid? sid, Guid? tenantId, bool? isAzureADOnlyAuthenticationEnabled, Dictionary<string, BinaryData> rawData)
         {
             AdministratorType = administratorType;
             PrincipalType = principalType;
@@ -32,6 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
             Sid = sid;
             TenantId = tenantId;
             IsAzureADOnlyAuthenticationEnabled = isAzureADOnlyAuthenticationEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the sever administrator. </summary>

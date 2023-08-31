@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary>
@@ -16,12 +19,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// </summary>
     public partial class MoverDisplayInfo
     {
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverDisplayInfo"/>. </summary>
         internal MoverDisplayInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverDisplayInfo"/>. </summary>
         /// <param name="provider">
         /// Gets or sets the provider.
         /// The localized friendly form of the resource provider name – it is expected to also
@@ -60,12 +65,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Read any 'display.resource' Create or Update any  'display.resource' Delete any
         ///  'display.resource' 'ActionName' any 'display.resources'.
         /// </param>
-        internal MoverDisplayInfo(string provider, string resource, string operation, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverDisplayInfo(string provider, string resource, string operation, string description, Dictionary<string, BinaryData> rawData)
         {
             Provider = provider;
             Resource = resource;
             Operation = operation;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure storage workload specific job task details. </summary>
     public partial class StorageBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of StorageBackupJobTaskDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJobTaskDetails"/>. </summary>
         public StorageBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="status"> The status. </param>
-        internal StorageBackupJobTaskDetails(string taskId, string status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageBackupJobTaskDetails(string taskId, string status, Dictionary<string, BinaryData> rawData)
         {
             TaskId = taskId;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> The task display name. </summary>

@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    public partial class RecoveryServicesVaultExtendedInfoData : IUtf8JsonSerializable
+    public partial class RecoveryServicesVaultExtendedInfoData : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryServicesVaultExtendedInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryServicesVaultExtendedInfoData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryServicesVaultExtendedInfoData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -45,11 +52,25 @@ namespace Azure.ResourceManager.RecoveryServices
                 writer.WriteStringValue(Algorithm);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryServicesVaultExtendedInfoData DeserializeRecoveryServicesVaultExtendedInfoData(JsonElement element)
+        internal static RecoveryServicesVaultExtendedInfoData DeserializeRecoveryServicesVaultExtendedInfoData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +84,7 @@ namespace Azure.ResourceManager.RecoveryServices
             Optional<string> encryptionKey = default;
             Optional<string> encryptionKeyThumbprint = default;
             Optional<string> algorithm = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -130,8 +152,61 @@ namespace Azure.ResourceManager.RecoveryServices
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecoveryServicesVaultExtendedInfoData(id, name, type, systemData.Value, integrityKey.Value, encryptionKey.Value, encryptionKeyThumbprint.Value, algorithm.Value, Optional.ToNullable(etag));
+            return new RecoveryServicesVaultExtendedInfoData(id, name, type, systemData.Value, integrityKey.Value, encryptionKey.Value, encryptionKeyThumbprint.Value, algorithm.Value, Optional.ToNullable(etag), rawData);
+        }
+
+        RecoveryServicesVaultExtendedInfoData IModelJsonSerializable<RecoveryServicesVaultExtendedInfoData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryServicesVaultExtendedInfoData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryServicesVaultExtendedInfoData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryServicesVaultExtendedInfoData IModelSerializable<RecoveryServicesVaultExtendedInfoData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryServicesVaultExtendedInfoData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RecoveryServicesVaultExtendedInfoData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RecoveryServicesVaultExtendedInfoData"/> to convert. </param>
+        public static implicit operator RequestContent(RecoveryServicesVaultExtendedInfoData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RecoveryServicesVaultExtendedInfoData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RecoveryServicesVaultExtendedInfoData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryServicesVaultExtendedInfoData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

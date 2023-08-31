@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> The billing information of the resource. </summary>
     public partial class SignalRResourceSku
     {
-        /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -47,13 +50,20 @@ namespace Azure.ResourceManager.SignalR.Models
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100
         /// </param>
-        internal SignalRResourceSku(string name, SignalRSkuTier? tier, string size, string family, int? capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRResourceSku(string name, SignalRSkuTier? tier, string size, string family, int? capacity, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
             Size = size;
             Family = family;
             Capacity = capacity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRResourceSku"/> for deserialization. </summary>
+        internal SignalRResourceSku()
+        {
         }
 
         /// <summary>

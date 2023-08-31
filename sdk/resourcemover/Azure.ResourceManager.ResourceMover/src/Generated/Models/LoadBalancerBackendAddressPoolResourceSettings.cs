@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines load balancer backend address pool properties. </summary>
     public partial class LoadBalancerBackendAddressPoolResourceSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolResourceSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolResourceSettings"/>. </summary>
         public LoadBalancerBackendAddressPoolResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the backend address pool name. </param>
-        internal LoadBalancerBackendAddressPoolResourceSettings(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerBackendAddressPoolResourceSettings(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the backend address pool name. </summary>

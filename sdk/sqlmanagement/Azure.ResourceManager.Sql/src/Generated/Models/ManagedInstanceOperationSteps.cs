@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The steps of a managed instance operation. </summary>
     public partial class ManagedInstanceOperationSteps
     {
-        /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationSteps"/>. </summary>
         internal ManagedInstanceOperationSteps()
         {
             StepsList = new ChangeTrackingList<UpsertManagedServerOperationStep>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationSteps"/>. </summary>
         /// <param name="totalSteps"> The total number of operation steps. </param>
         /// <param name="currentStep"> The number of current operation steps. </param>
         /// <param name="stepsList"> The operation steps list. </param>
-        internal ManagedInstanceOperationSteps(string totalSteps, int? currentStep, IReadOnlyList<UpsertManagedServerOperationStep> stepsList)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceOperationSteps(string totalSteps, int? currentStep, IReadOnlyList<UpsertManagedServerOperationStep> stepsList, Dictionary<string, BinaryData> rawData)
         {
             TotalSteps = totalSteps;
             CurrentStep = currentStep;
             StepsList = stepsList;
+            _rawData = rawData;
         }
 
         /// <summary> The total number of operation steps. </summary>

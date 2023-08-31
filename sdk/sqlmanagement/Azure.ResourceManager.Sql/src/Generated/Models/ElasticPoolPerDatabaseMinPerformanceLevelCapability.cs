@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The minimum per-database performance level capability. </summary>
     public partial class ElasticPoolPerDatabaseMinPerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMinPerformanceLevelCapability. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMinPerformanceLevelCapability"/>. </summary>
         internal ElasticPoolPerDatabaseMinPerformanceLevelCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMinPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMinPerformanceLevelCapability"/>. </summary>
         /// <param name="limit"> The minimum performance level per database. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, SqlCapabilityStatus? status, string reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, SqlCapabilityStatus? status, string reason, Dictionary<string, BinaryData> rawData)
         {
             Limit = limit;
             Unit = unit;
             Status = status;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> The minimum performance level per database. </summary>

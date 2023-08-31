@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an azure resource entity. </summary>
     public partial class SecurityInsightsAzureResourceEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAzureResourceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAzureResourceEntity"/>. </summary>
         public SecurityInsightsAzureResourceEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.AzureResource;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAzureResourceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAzureResourceEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="resourceId"> The azure resource id of the resource. </param>
         /// <param name="subscriptionId"> The subscription id of the resource. </param>
-        internal SecurityInsightsAzureResourceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string resourceId, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAzureResourceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string resourceId, string subscriptionId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

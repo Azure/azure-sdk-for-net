@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The response of a Frontend list operation. </summary>
     internal partial class FrontendListResult
     {
-        /// <summary> Initializes a new instance of FrontendListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/>. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FrontendListResult(IEnumerable<FrontendData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FrontendListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/>. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal FrontendListResult(IReadOnlyList<FrontendData> value, Uri nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontendListResult(IReadOnlyList<FrontendData> value, Uri nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/> for deserialization. </summary>
+        internal FrontendListResult()
+        {
         }
 
         /// <summary> The Frontend items on this page. </summary>

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of the pattern for an alias path. </summary>
     public partial class ResourceTypeAliasPattern
     {
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPattern"/>. </summary>
         internal ResourceTypeAliasPattern()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAliasPattern"/>. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
         /// <param name="patternType"> The type of alias pattern. </param>
-        internal ResourceTypeAliasPattern(string phrase, string variable, ResourceTypeAliasPatternType? patternType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeAliasPattern(string phrase, string variable, ResourceTypeAliasPatternType? patternType, Dictionary<string, BinaryData> rawData)
         {
             Phrase = phrase;
             Variable = variable;
             PatternType = patternType;
+            _rawData = rawData;
         }
 
         /// <summary> The alias pattern phrase. </summary>

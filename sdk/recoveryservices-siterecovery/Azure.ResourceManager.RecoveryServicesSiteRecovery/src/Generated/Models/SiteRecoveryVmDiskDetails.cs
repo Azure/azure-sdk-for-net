@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,12 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Disk details for E2A provider. </summary>
     public partial class SiteRecoveryVmDiskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmDiskDetails"/>. </summary>
         internal SiteRecoveryVmDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVmDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmDiskDetails"/>. </summary>
         /// <param name="vhdType"> VHD type. </param>
         /// <param name="vhdId"> The VHD id. </param>
         /// <param name="diskId"> The disk resource id. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lunId"> Ordinal\LunId of the disk for the Azure VM. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="customTargetDiskName"> The custom target Azure disk name. </param>
-        internal SiteRecoveryVmDiskDetails(string vhdType, string vhdId, string diskId, string vhdName, string maxSizeMB, string targetDiskLocation, string targetDiskName, string lunId, ResourceIdentifier diskEncryptionSetId, string customTargetDiskName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVmDiskDetails(string vhdType, string vhdId, string diskId, string vhdName, string maxSizeMB, string targetDiskLocation, string targetDiskName, string lunId, ResourceIdentifier diskEncryptionSetId, string customTargetDiskName, Dictionary<string, BinaryData> rawData)
         {
             VhdType = vhdType;
             VhdId = vhdId;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LunId = lunId;
             DiskEncryptionSetId = diskEncryptionSetId;
             CustomTargetDiskName = customTargetDiskName;
+            _rawData = rawData;
         }
 
         /// <summary> VHD type. </summary>

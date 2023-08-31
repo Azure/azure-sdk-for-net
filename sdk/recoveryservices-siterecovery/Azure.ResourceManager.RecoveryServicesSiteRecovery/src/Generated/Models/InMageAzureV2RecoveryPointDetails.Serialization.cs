@@ -5,21 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2RecoveryPointDetails
+    public partial class InMageAzureV2RecoveryPointDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageAzureV2RecoveryPointDetails>
     {
-        internal static InMageAzureV2RecoveryPointDetails DeserializeInMageAzureV2RecoveryPointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageAzureV2RecoveryPointDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageAzureV2RecoveryPointDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InMageAzureV2RecoveryPointDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsMultiVmSyncPoint))
+            {
+                writer.WritePropertyName("isMultiVmSyncPoint"u8);
+                writer.WriteStringValue(IsMultiVmSyncPoint);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageAzureV2RecoveryPointDetails DeserializeInMageAzureV2RecoveryPointDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> isMultiVmSyncPoint = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isMultiVmSyncPoint"u8))
@@ -32,8 +68,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageAzureV2RecoveryPointDetails(instanceType, isMultiVmSyncPoint.Value);
+            return new InMageAzureV2RecoveryPointDetails(instanceType, isMultiVmSyncPoint.Value, rawData);
+        }
+
+        InMageAzureV2RecoveryPointDetails IModelJsonSerializable<InMageAzureV2RecoveryPointDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageAzureV2RecoveryPointDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2RecoveryPointDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageAzureV2RecoveryPointDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageAzureV2RecoveryPointDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageAzureV2RecoveryPointDetails IModelSerializable<InMageAzureV2RecoveryPointDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageAzureV2RecoveryPointDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageAzureV2RecoveryPointDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageAzureV2RecoveryPointDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageAzureV2RecoveryPointDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageAzureV2RecoveryPointDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageAzureV2RecoveryPointDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageAzureV2RecoveryPointDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageAzureV2RecoveryPointDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

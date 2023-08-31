@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
@@ -14,11 +17,15 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
-        internal DataChangeDetectionPolicy(string oDataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataChangeDetectionPolicy(string oDataType, Dictionary<string, BinaryData> rawData)
         {
             ODataType = oDataType;
+            _rawData = rawData;
         }
 
         /// <summary> Identifies the concrete type of the data change detection policy. </summary>

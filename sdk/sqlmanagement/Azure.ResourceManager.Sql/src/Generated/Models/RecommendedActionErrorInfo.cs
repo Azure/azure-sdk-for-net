@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains error information for an Azure SQL Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionErrorInfo
     {
-        /// <summary> Initializes a new instance of RecommendedActionErrorInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionErrorInfo"/>. </summary>
         internal RecommendedActionErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionErrorInfo"/>. </summary>
         /// <param name="errorCode"> Gets the reason why the recommended action was put to error state. e.g., DatabaseHasQdsOff, IndexAlreadyExists. </param>
         /// <param name="isRetryable"> Gets whether the error could be ignored and recommended action could be retried. Possible values are: Yes/No. </param>
-        internal RecommendedActionErrorInfo(string errorCode, ActionRetryableState? isRetryable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedActionErrorInfo(string errorCode, ActionRetryableState? isRetryable, Dictionary<string, BinaryData> rawData)
         {
             ErrorCode = errorCode;
             IsRetryable = isRetryable;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the reason why the recommended action was put to error state. e.g., DatabaseHasQdsOff, IndexAlreadyExists. </summary>

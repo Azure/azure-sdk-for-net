@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Pre-backup validation for Azure VM Workload provider. </summary>
     public partial class PreBackupValidation
     {
-        /// <summary> Initializes a new instance of PreBackupValidation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PreBackupValidation"/>. </summary>
         public PreBackupValidation()
         {
         }
 
-        /// <summary> Initializes a new instance of PreBackupValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBackupValidation"/>. </summary>
         /// <param name="status"> Status of protectable item, i.e. InProgress,Succeeded,Failed. </param>
         /// <param name="code"> Error code of protectable item. </param>
         /// <param name="message"> Message corresponding to the error code for the protectable item. </param>
-        internal PreBackupValidation(InquiryStatus? status, string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PreBackupValidation(InquiryStatus? status, string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Status of protectable item, i.e. InProgress,Succeeded,Failed. </summary>

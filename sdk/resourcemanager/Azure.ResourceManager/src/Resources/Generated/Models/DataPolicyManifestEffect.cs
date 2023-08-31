@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The data effect definition. </summary>
     public partial class DataPolicyManifestEffect
     {
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataPolicyManifestEffect"/>. </summary>
         internal DataPolicyManifestEffect()
         {
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPolicyManifestEffect"/>. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
-        internal DataPolicyManifestEffect(string name, BinaryData detailsSchema)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataPolicyManifestEffect(string name, BinaryData detailsSchema, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             DetailsSchema = detailsSchema;
+            _rawData = rawData;
         }
 
         /// <summary> The data effect name. </summary>

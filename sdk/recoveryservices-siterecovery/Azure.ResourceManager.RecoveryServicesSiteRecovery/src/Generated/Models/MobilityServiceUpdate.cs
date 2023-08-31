@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The Mobility Service update details. </summary>
     public partial class MobilityServiceUpdate
     {
-        /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobilityServiceUpdate"/>. </summary>
         internal MobilityServiceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MobilityServiceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobilityServiceUpdate"/>. </summary>
         /// <param name="version"> The version of the latest update. </param>
         /// <param name="rebootStatus"> The reboot status of the update - whether it is required or not. </param>
         /// <param name="osType"> The OS type. </param>
-        internal MobilityServiceUpdate(string version, string rebootStatus, string osType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobilityServiceUpdate(string version, string rebootStatus, string osType, Dictionary<string, BinaryData> rawData)
         {
             Version = version;
             RebootStatus = rebootStatus;
             OSType = osType;
+            _rawData = rawData;
         }
 
         /// <summary> The version of the latest update. </summary>

@@ -6,15 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthRecommendedAction
+    public partial class ResourceHealthRecommendedAction : IUtf8JsonSerializable, IModelJsonSerializable<ResourceHealthRecommendedAction>
     {
-        internal static ResourceHealthRecommendedAction DeserializeResourceHealthRecommendedAction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceHealthRecommendedAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceHealthRecommendedAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action);
+            }
+            if (Optional.IsDefined(ActionUri))
+            {
+                writer.WritePropertyName("actionUrl"u8);
+                writer.WriteStringValue(ActionUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(ActionUriComment))
+            {
+                writer.WritePropertyName("_ActionUrl.Comment"u8);
+                writer.WriteStringValue(ActionUriComment);
+            }
+            if (Optional.IsDefined(ActionUriText))
+            {
+                writer.WritePropertyName("actionUrlText"u8);
+                writer.WriteStringValue(ActionUriText);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceHealthRecommendedAction DeserializeResourceHealthRecommendedAction(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +70,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<Uri> actionUri = default;
             Optional<string> actionUriComment = default;
             Optional<string> actionUriText = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -49,8 +97,61 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     actionUriText = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceHealthRecommendedAction(action.Value, actionUri.Value, actionUriComment.Value, actionUriText.Value);
+            return new ResourceHealthRecommendedAction(action.Value, actionUri.Value, actionUriComment.Value, actionUriText.Value, rawData);
+        }
+
+        ResourceHealthRecommendedAction IModelJsonSerializable<ResourceHealthRecommendedAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthRecommendedAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceHealthRecommendedAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceHealthRecommendedAction IModelSerializable<ResourceHealthRecommendedAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceHealthRecommendedAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceHealthRecommendedAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceHealthRecommendedAction"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceHealthRecommendedAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceHealthRecommendedAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceHealthRecommendedAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceHealthRecommendedAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

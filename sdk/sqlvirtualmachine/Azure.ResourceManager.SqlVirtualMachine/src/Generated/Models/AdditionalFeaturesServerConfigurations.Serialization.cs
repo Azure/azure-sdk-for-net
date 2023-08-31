@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class AdditionalFeaturesServerConfigurations : IUtf8JsonSerializable
+    internal partial class AdditionalFeaturesServerConfigurations : IUtf8JsonSerializable, IModelJsonSerializable<AdditionalFeaturesServerConfigurations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdditionalFeaturesServerConfigurations>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdditionalFeaturesServerConfigurations>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsRServicesEnabled))
             {
                 writer.WritePropertyName("isRServicesEnabled"u8);
                 writer.WriteBooleanValue(IsRServicesEnabled.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdditionalFeaturesServerConfigurations DeserializeAdditionalFeaturesServerConfigurations(JsonElement element)
+        internal static AdditionalFeaturesServerConfigurations DeserializeAdditionalFeaturesServerConfigurations(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isRServicesEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isRServicesEnabled"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     isRServicesEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdditionalFeaturesServerConfigurations(Optional.ToNullable(isRServicesEnabled));
+            return new AdditionalFeaturesServerConfigurations(Optional.ToNullable(isRServicesEnabled), rawData);
+        }
+
+        AdditionalFeaturesServerConfigurations IModelJsonSerializable<AdditionalFeaturesServerConfigurations>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdditionalFeaturesServerConfigurations(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdditionalFeaturesServerConfigurations>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdditionalFeaturesServerConfigurations IModelSerializable<AdditionalFeaturesServerConfigurations>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdditionalFeaturesServerConfigurations(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdditionalFeaturesServerConfigurations"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdditionalFeaturesServerConfigurations"/> to convert. </param>
+        public static implicit operator RequestContent(AdditionalFeaturesServerConfigurations model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdditionalFeaturesServerConfigurations(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdditionalFeaturesServerConfigurations(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

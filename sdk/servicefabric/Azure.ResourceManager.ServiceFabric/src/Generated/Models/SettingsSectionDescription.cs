@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes a section in the fabric settings of the cluster. </summary>
     public partial class SettingsSectionDescription
     {
-        /// <summary> Initializes a new instance of SettingsSectionDescription. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SettingsSectionDescription"/>. </summary>
         /// <param name="name"> The section name of the fabric settings. </param>
         /// <param name="parameters"> The collection of parameters in the section. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
@@ -28,13 +30,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Parameters = parameters.ToList();
         }
 
-        /// <summary> Initializes a new instance of SettingsSectionDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="SettingsSectionDescription"/>. </summary>
         /// <param name="name"> The section name of the fabric settings. </param>
         /// <param name="parameters"> The collection of parameters in the section. </param>
-        internal SettingsSectionDescription(string name, IList<SettingsParameterDescription> parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SettingsSectionDescription(string name, IList<SettingsParameterDescription> parameters, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Parameters = parameters;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SettingsSectionDescription"/> for deserialization. </summary>
+        internal SettingsSectionDescription()
+        {
         }
 
         /// <summary> The section name of the fabric settings. </summary>

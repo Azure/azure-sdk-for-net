@@ -8,14 +8,161 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryRecoveryPlanProperties
+    public partial class SiteRecoveryRecoveryPlanProperties : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryRecoveryPlanProperties>
     {
-        internal static SiteRecoveryRecoveryPlanProperties DeserializeSiteRecoveryRecoveryPlanProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryRecoveryPlanProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryRecoveryPlanProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(PrimaryFabricId))
+            {
+                writer.WritePropertyName("primaryFabricId"u8);
+                writer.WriteStringValue(PrimaryFabricId);
+            }
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            {
+                writer.WritePropertyName("primaryFabricFriendlyName"u8);
+                writer.WriteStringValue(PrimaryFabricFriendlyName);
+            }
+            if (Optional.IsDefined(RecoveryFabricId))
+            {
+                writer.WritePropertyName("recoveryFabricId"u8);
+                writer.WriteStringValue(RecoveryFabricId);
+            }
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            {
+                writer.WritePropertyName("recoveryFabricFriendlyName"u8);
+                writer.WriteStringValue(RecoveryFabricFriendlyName);
+            }
+            if (Optional.IsDefined(FailoverDeploymentModel))
+            {
+                writer.WritePropertyName("failoverDeploymentModel"u8);
+                writer.WriteStringValue(FailoverDeploymentModel);
+            }
+            if (Optional.IsCollectionDefined(ReplicationProviders))
+            {
+                writer.WritePropertyName("replicationProviders"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReplicationProviders)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AllowedOperations))
+            {
+                writer.WritePropertyName("allowedOperations"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedOperations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LastPlannedFailoverOn))
+            {
+                writer.WritePropertyName("lastPlannedFailoverTime"u8);
+                writer.WriteStringValue(LastPlannedFailoverOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastUnplannedFailoverOn))
+            {
+                writer.WritePropertyName("lastUnplannedFailoverTime"u8);
+                writer.WriteStringValue(LastUnplannedFailoverOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastTestFailoverOn))
+            {
+                writer.WritePropertyName("lastTestFailoverTime"u8);
+                writer.WriteStringValue(LastTestFailoverOn.Value, "O");
+            }
+            if (Optional.IsDefined(CurrentScenario))
+            {
+                writer.WritePropertyName("currentScenario"u8);
+                if (CurrentScenario is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CurrentScenarioDetails>)CurrentScenario).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(CurrentScenarioStatus))
+            {
+                writer.WritePropertyName("currentScenarioStatus"u8);
+                writer.WriteStringValue(CurrentScenarioStatus);
+            }
+            if (Optional.IsDefined(CurrentScenarioStatusDescription))
+            {
+                writer.WritePropertyName("currentScenarioStatusDescription"u8);
+                writer.WriteStringValue(CurrentScenarioStatusDescription);
+            }
+            if (Optional.IsCollectionDefined(Groups))
+            {
+                writer.WritePropertyName("groups"u8);
+                writer.WriteStartArray();
+                foreach (var item in Groups)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryPlanGroup>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProviderSpecificDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RecoveryPlanProviderSpecificDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryRecoveryPlanProperties DeserializeSiteRecoveryRecoveryPlanProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> currentScenarioStatusDescription = default;
             Optional<IReadOnlyList<SiteRecoveryPlanGroup>> groups = default;
             Optional<IReadOnlyList<RecoveryPlanProviderSpecificDetails>> providerSpecificDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -178,8 +326,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     providerSpecificDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, Optional.ToList(replicationProviders), Optional.ToList(allowedOperations), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, Optional.ToList(groups), Optional.ToList(providerSpecificDetails));
+            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, Optional.ToList(replicationProviders), Optional.ToList(allowedOperations), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, Optional.ToList(groups), Optional.ToList(providerSpecificDetails), rawData);
+        }
+
+        SiteRecoveryRecoveryPlanProperties IModelJsonSerializable<SiteRecoveryRecoveryPlanProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryRecoveryPlanProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryRecoveryPlanProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryRecoveryPlanProperties IModelSerializable<SiteRecoveryRecoveryPlanProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryRecoveryPlanProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryRecoveryPlanProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryRecoveryPlanProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryRecoveryPlanProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryRecoveryPlanProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryRecoveryPlanProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryRecoveryPlanProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The execution options of a job step. </summary>
     public partial class JobStepExecutionOptions
     {
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobStepExecutionOptions"/>. </summary>
         public JobStepExecutionOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of JobStepExecutionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepExecutionOptions"/>. </summary>
         /// <param name="timeoutSeconds"> Execution timeout for the job step. </param>
         /// <param name="retryAttempts"> Maximum number of times the job step will be reattempted if the first attempt fails. </param>
         /// <param name="initialRetryIntervalSeconds"> Initial delay between retries for job step execution. </param>
         /// <param name="maximumRetryIntervalSeconds"> The maximum amount of time to wait between retries for job step execution. </param>
         /// <param name="retryIntervalBackoffMultiplier"> The backoff multiplier for the time between retries. </param>
-        internal JobStepExecutionOptions(int? timeoutSeconds, int? retryAttempts, int? initialRetryIntervalSeconds, int? maximumRetryIntervalSeconds, float? retryIntervalBackoffMultiplier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobStepExecutionOptions(int? timeoutSeconds, int? retryAttempts, int? initialRetryIntervalSeconds, int? maximumRetryIntervalSeconds, float? retryIntervalBackoffMultiplier, Dictionary<string, BinaryData> rawData)
         {
             TimeoutSeconds = timeoutSeconds;
             RetryAttempts = retryAttempts;
             InitialRetryIntervalSeconds = initialRetryIntervalSeconds;
             MaximumRetryIntervalSeconds = maximumRetryIntervalSeconds;
             RetryIntervalBackoffMultiplier = retryIntervalBackoffMultiplier;
+            _rawData = rawData;
         }
 
         /// <summary> Execution timeout for the job step. </summary>

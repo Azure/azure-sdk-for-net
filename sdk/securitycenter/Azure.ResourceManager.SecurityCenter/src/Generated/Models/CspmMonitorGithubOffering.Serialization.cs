@@ -5,29 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CspmMonitorGithubOffering : IUtf8JsonSerializable
+    public partial class CspmMonitorGithubOffering : IUtf8JsonSerializable, IModelJsonSerializable<CspmMonitorGithubOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CspmMonitorGithubOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CspmMonitorGithubOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CspmMonitorGithubOffering>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CspmMonitorGithubOffering DeserializeCspmMonitorGithubOffering(JsonElement element)
+        internal static CspmMonitorGithubOffering DeserializeCspmMonitorGithubOffering(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OfferingType offeringType = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offeringType"u8))
@@ -40,8 +63,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CspmMonitorGithubOffering(offeringType, description.Value);
+            return new CspmMonitorGithubOffering(offeringType, description.Value, rawData);
+        }
+
+        CspmMonitorGithubOffering IModelJsonSerializable<CspmMonitorGithubOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CspmMonitorGithubOffering>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCspmMonitorGithubOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CspmMonitorGithubOffering>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CspmMonitorGithubOffering>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CspmMonitorGithubOffering IModelSerializable<CspmMonitorGithubOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CspmMonitorGithubOffering>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCspmMonitorGithubOffering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CspmMonitorGithubOffering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CspmMonitorGithubOffering"/> to convert. </param>
+        public static implicit operator RequestContent(CspmMonitorGithubOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CspmMonitorGithubOffering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CspmMonitorGithubOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCspmMonitorGithubOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

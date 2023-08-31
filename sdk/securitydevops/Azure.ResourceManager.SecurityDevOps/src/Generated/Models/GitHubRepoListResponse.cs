@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityDevOps;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The GitHubRepoListResponse. </summary>
     internal partial class GitHubRepoListResponse
     {
-        /// <summary> Initializes a new instance of GitHubRepoListResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoListResponse"/>. </summary>
         internal GitHubRepoListResponse()
         {
             Value = new ChangeTrackingList<GitHubRepoData>();
         }
 
-        /// <summary> Initializes a new instance of GitHubRepoListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
-        internal GitHubRepoListResponse(IReadOnlyList<GitHubRepoData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubRepoListResponse(IReadOnlyList<GitHubRepoData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets list of resources. </summary>

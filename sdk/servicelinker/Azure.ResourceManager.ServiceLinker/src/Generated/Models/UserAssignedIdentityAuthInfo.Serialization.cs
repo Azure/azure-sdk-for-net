@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class UserAssignedIdentityAuthInfo : IUtf8JsonSerializable
+    public partial class UserAssignedIdentityAuthInfo : IUtf8JsonSerializable, IModelJsonSerializable<UserAssignedIdentityAuthInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UserAssignedIdentityAuthInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UserAssignedIdentityAuthInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<UserAssignedIdentityAuthInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserAssignedIdentityAuthInfo DeserializeUserAssignedIdentityAuthInfo(JsonElement element)
+        internal static UserAssignedIdentityAuthInfo DeserializeUserAssignedIdentityAuthInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             Optional<string> clientId = default;
             Optional<string> subscriptionId = default;
             LinkerAuthType authType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UserAssignedIdentityAuthInfo(authType, clientId.Value, subscriptionId.Value);
+            return new UserAssignedIdentityAuthInfo(authType, clientId.Value, subscriptionId.Value, rawData);
+        }
+
+        UserAssignedIdentityAuthInfo IModelJsonSerializable<UserAssignedIdentityAuthInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UserAssignedIdentityAuthInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserAssignedIdentityAuthInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UserAssignedIdentityAuthInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UserAssignedIdentityAuthInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UserAssignedIdentityAuthInfo IModelSerializable<UserAssignedIdentityAuthInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UserAssignedIdentityAuthInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUserAssignedIdentityAuthInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UserAssignedIdentityAuthInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserAssignedIdentityAuthInfo"/> to convert. </param>
+        public static implicit operator RequestContent(UserAssignedIdentityAuthInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserAssignedIdentityAuthInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUserAssignedIdentityAuthInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

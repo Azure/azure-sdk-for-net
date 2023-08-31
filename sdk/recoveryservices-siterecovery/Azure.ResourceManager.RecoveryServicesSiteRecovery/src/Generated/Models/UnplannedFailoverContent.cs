@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for unplanned failover. </summary>
     public partial class UnplannedFailoverContent
     {
-        /// <summary> Initializes a new instance of UnplannedFailoverContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverContent"/>. </summary>
         /// <param name="properties"> Unplanned failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public UnplannedFailoverContent(UnplannedFailoverProperties properties)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverContent"/>. </summary>
+        /// <param name="properties"> Unplanned failover input properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnplannedFailoverContent(UnplannedFailoverProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverContent"/> for deserialization. </summary>
+        internal UnplannedFailoverContent()
+        {
         }
 
         /// <summary> Unplanned failover input properties. </summary>

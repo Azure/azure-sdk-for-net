@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Article of event. </summary>
     public partial class ResourceHealthEventArticle
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventArticle. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventArticle"/>. </summary>
         internal ResourceHealthEventArticle()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventArticle. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventArticle"/>. </summary>
         /// <param name="articleContent"> Article content of event. </param>
         /// <param name="articleId"> Article Id. </param>
         /// <param name="parameters"> It provides a map of parameter name and value. </param>
-        internal ResourceHealthEventArticle(string articleContent, string articleId, BinaryData parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventArticle(string articleContent, string articleId, BinaryData parameters, Dictionary<string, BinaryData> rawData)
         {
             ArticleContent = articleContent;
             ArticleId = articleId;
             Parameters = parameters;
+            _rawData = rawData;
         }
 
         /// <summary> Article content of event. </summary>

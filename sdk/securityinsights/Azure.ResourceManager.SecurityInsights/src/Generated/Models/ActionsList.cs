@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the actions. </summary>
     internal partial class ActionsList
     {
-        /// <summary> Initializes a new instance of ActionsList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionsList"/>. </summary>
         /// <param name="value"> Array of actions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActionsList(IEnumerable<SecurityInsightsAlertRuleActionData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ActionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionsList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of actions. </param>
         /// <param name="value"> Array of actions. </param>
-        internal ActionsList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleActionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionsList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleActionData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ActionsList"/> for deserialization. </summary>
+        internal ActionsList()
+        {
         }
 
         /// <summary> URL to fetch the next set of actions. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanA2AFailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanA2AFailoverContent : IUtf8JsonSerializable, IModelJsonSerializable<RecoveryPlanA2AFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecoveryPlanA2AFailoverContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecoveryPlanA2AFailoverContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanA2AFailoverContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
@@ -29,7 +37,115 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RecoveryPlanA2AFailoverContent DeserializeRecoveryPlanA2AFailoverContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            A2ARpRecoveryPointType recoveryPointType = default;
+            Optional<string> cloudServiceCreationOption = default;
+            Optional<MultiVmSyncPointOption> multiVmSyncPointOption = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointType"u8))
+                {
+                    recoveryPointType = new A2ARpRecoveryPointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("cloudServiceCreationOption"u8))
+                {
+                    cloudServiceCreationOption = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("multiVmSyncPointOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    multiVmSyncPointOption = new MultiVmSyncPointOption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RecoveryPlanA2AFailoverContent(instanceType, recoveryPointType, cloudServiceCreationOption.Value, Optional.ToNullable(multiVmSyncPointOption), rawData);
+        }
+
+        RecoveryPlanA2AFailoverContent IModelJsonSerializable<RecoveryPlanA2AFailoverContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanA2AFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanA2AFailoverContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecoveryPlanA2AFailoverContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanA2AFailoverContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecoveryPlanA2AFailoverContent IModelSerializable<RecoveryPlanA2AFailoverContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RecoveryPlanA2AFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanA2AFailoverContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RecoveryPlanA2AFailoverContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RecoveryPlanA2AFailoverContent"/> to convert. </param>
+        public static implicit operator RequestContent(RecoveryPlanA2AFailoverContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RecoveryPlanA2AFailoverContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RecoveryPlanA2AFailoverContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecoveryPlanA2AFailoverContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

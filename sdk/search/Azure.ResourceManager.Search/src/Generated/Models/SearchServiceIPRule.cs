@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The IP restriction rule of the Azure Cognitive Search service. </summary>
     public partial class SearchServiceIPRule
     {
-        /// <summary> Initializes a new instance of SearchServiceIPRule. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchServiceIPRule"/>. </summary>
         public SearchServiceIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchServiceIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceIPRule"/>. </summary>
         /// <param name="value"> Value corresponding to a single IPv4 address (eg., 123.1.2.3) or an IP range in CIDR format (eg., 123.1.2.3/24) to be allowed. </param>
-        internal SearchServiceIPRule(string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceIPRule(string value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Value corresponding to a single IPv4 address (eg., 123.1.2.3) or an IP range in CIDR format (eg., 123.1.2.3/24) to be allowed. </summary>

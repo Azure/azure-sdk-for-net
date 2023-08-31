@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     /// </summary>
     public partial class AvailabilityGroupListenerData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerData"/>. </summary>
         public AvailabilityGroupListenerData()
         {
             LoadBalancerConfigurations = new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>();
             MultiSubnetIPConfigurations = new ChangeTrackingList<MultiSubnetIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of AvailabilityGroupListenerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityGroupListenerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="createDefaultAvailabilityGroupIfNotExist"> Create a default availability group if it does not exist. </param>
         /// <param name="port"> Listener port. </param>
         /// <param name="availabilityGroupConfiguration"> Availability Group configuration. </param>
-        internal AvailabilityGroupListenerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string availabilityGroupName, IList<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations, IList<MultiSubnetIPConfiguration> multiSubnetIPConfigurations, bool? createDefaultAvailabilityGroupIfNotExist, int? port, AvailabilityGroupConfiguration availabilityGroupConfiguration) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityGroupListenerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string availabilityGroupName, IList<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations, IList<MultiSubnetIPConfiguration> multiSubnetIPConfigurations, bool? createDefaultAvailabilityGroupIfNotExist, int? port, AvailabilityGroupConfiguration availabilityGroupConfiguration, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AvailabilityGroupName = availabilityGroupName;
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             CreateDefaultAvailabilityGroupIfNotExist = createDefaultAvailabilityGroupIfNotExist;
             Port = port;
             AvailabilityGroupConfiguration = availabilityGroupConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state to track the async operation status. </summary>

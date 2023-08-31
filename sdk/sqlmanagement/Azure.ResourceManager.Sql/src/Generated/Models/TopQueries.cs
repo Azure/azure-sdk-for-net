@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The TopQueries. </summary>
     public partial class TopQueries
     {
-        /// <summary> Initializes a new instance of TopQueries. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopQueries"/>. </summary>
         internal TopQueries()
         {
             Queries = new ChangeTrackingList<QueryStatisticsProperties>();
         }
 
-        /// <summary> Initializes a new instance of TopQueries. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopQueries"/>. </summary>
         /// <param name="numberOfQueries"> Requested number of top queries. </param>
         /// <param name="aggregationFunction"> Aggregation function used to calculate query metrics. </param>
         /// <param name="observationMetric"> Metric used to rank queries. </param>
@@ -27,7 +30,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="queries"> List of top resource consuming queries with appropriate metric data. </param>
-        internal TopQueries(int? numberOfQueries, string aggregationFunction, string observationMetric, QueryTimeGrainType? intervalType, string startTime, string endTime, IReadOnlyList<QueryStatisticsProperties> queries)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopQueries(int? numberOfQueries, string aggregationFunction, string observationMetric, QueryTimeGrainType? intervalType, string startTime, string endTime, IReadOnlyList<QueryStatisticsProperties> queries, Dictionary<string, BinaryData> rawData)
         {
             NumberOfQueries = numberOfQueries;
             AggregationFunction = aggregationFunction;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
             StartTime = startTime;
             EndTime = endTime;
             Queries = queries;
+            _rawData = rawData;
         }
 
         /// <summary> Requested number of top queries. </summary>

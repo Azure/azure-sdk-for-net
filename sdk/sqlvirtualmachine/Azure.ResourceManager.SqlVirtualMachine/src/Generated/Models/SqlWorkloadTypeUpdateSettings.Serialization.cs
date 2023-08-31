@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class SqlWorkloadTypeUpdateSettings : IUtf8JsonSerializable
+    internal partial class SqlWorkloadTypeUpdateSettings : IUtf8JsonSerializable, IModelJsonSerializable<SqlWorkloadTypeUpdateSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SqlWorkloadTypeUpdateSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SqlWorkloadTypeUpdateSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlWorkloadType))
             {
                 writer.WritePropertyName("sqlWorkloadType"u8);
                 writer.WriteStringValue(SqlWorkloadType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlWorkloadTypeUpdateSettings DeserializeSqlWorkloadTypeUpdateSettings(JsonElement element)
+        internal static SqlWorkloadTypeUpdateSettings DeserializeSqlWorkloadTypeUpdateSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SqlWorkloadType> sqlWorkloadType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlWorkloadType"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlWorkloadType = new SqlWorkloadType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType));
+            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType), rawData);
+        }
+
+        SqlWorkloadTypeUpdateSettings IModelJsonSerializable<SqlWorkloadTypeUpdateSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlWorkloadTypeUpdateSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SqlWorkloadTypeUpdateSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SqlWorkloadTypeUpdateSettings IModelSerializable<SqlWorkloadTypeUpdateSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSqlWorkloadTypeUpdateSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SqlWorkloadTypeUpdateSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SqlWorkloadTypeUpdateSettings"/> to convert. </param>
+        public static implicit operator RequestContent(SqlWorkloadTypeUpdateSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SqlWorkloadTypeUpdateSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SqlWorkloadTypeUpdateSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSqlWorkloadTypeUpdateSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

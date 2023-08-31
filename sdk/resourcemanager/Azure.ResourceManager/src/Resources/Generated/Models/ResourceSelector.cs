@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource selector to filter policies by resource properties. </summary>
     public partial class ResourceSelector
     {
-        /// <summary> Initializes a new instance of ResourceSelector. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSelector"/>. </summary>
         public ResourceSelector()
         {
             Selectors = new ChangeTrackingList<ResourceSelectorExpression>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSelector"/>. </summary>
         /// <param name="name"> The name of the resource selector. </param>
         /// <param name="selectors"> The list of the selector expressions. </param>
-        internal ResourceSelector(string name, IList<ResourceSelectorExpression> selectors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSelector(string name, IList<ResourceSelectorExpression> selectors, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Selectors = selectors;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the resource selector. </summary>

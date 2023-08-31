@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,24 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class RecoverableManagedDatabaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoverableManagedDatabaseData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoverableManagedDatabaseData"/>. </summary>
         public RecoverableManagedDatabaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoverableManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastAvailableBackupDate"> The last available backup date. </param>
-        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastAvailableBackupDate) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoverableManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastAvailableBackupDate, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             LastAvailableBackupDate = lastAvailableBackupDate;
+            _rawData = rawData;
         }
 
         /// <summary> The last available backup date. </summary>

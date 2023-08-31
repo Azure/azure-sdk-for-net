@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Incident Configuration property bag. </summary>
     public partial class SecurityInsightsIncidentConfiguration
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/>. </summary>
         /// <param name="isIncidentCreated"> Create incidents from alerts triggered by this analytics rule. </param>
         public SecurityInsightsIncidentConfiguration(bool isIncidentCreated)
         {
             IsIncidentCreated = isIncidentCreated;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/>. </summary>
         /// <param name="isIncidentCreated"> Create incidents from alerts triggered by this analytics rule. </param>
         /// <param name="groupingConfiguration"> Set how the alerts that are triggered by this analytics rule, are grouped into incidents. </param>
-        internal SecurityInsightsIncidentConfiguration(bool isIncidentCreated, SecurityInsightsGroupingConfiguration groupingConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentConfiguration(bool isIncidentCreated, SecurityInsightsGroupingConfiguration groupingConfiguration, Dictionary<string, BinaryData> rawData)
         {
             IsIncidentCreated = isIncidentCreated;
             GroupingConfiguration = groupingConfiguration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/> for deserialization. </summary>
+        internal SecurityInsightsIncidentConfiguration()
+        {
         }
 
         /// <summary> Create incidents from alerts triggered by this analytics rule. </summary>

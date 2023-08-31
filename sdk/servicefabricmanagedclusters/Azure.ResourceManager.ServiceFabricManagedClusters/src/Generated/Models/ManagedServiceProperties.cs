@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
-        /// <summary> Initializes a new instance of ManagedServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             PartitionDescription = partitionDescription;
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
@@ -61,7 +61,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
         ///
         /// </param>
-        internal ManagedServiceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceProperties(string placementConstraints, IList<ManagedServiceCorrelation> correlationScheme, IList<ManagedServiceLoadMetric> serviceLoadMetrics, IList<ManagedServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedServiceMoveCost? defaultMoveCost, IList<ManagedServiceScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedServicePartitionScheme partitionDescription, ManagedServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, Dictionary<string, BinaryData> rawData) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, rawData)
         {
             ProvisioningState = provisioningState;
             ServiceKind = serviceKind;
@@ -69,6 +70,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             PartitionDescription = partitionDescription;
             ServicePackageActivationMode = servicePackageActivationMode;
             ServiceDnsName = serviceDnsName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/> for deserialization. </summary>
+        internal ManagedServiceProperties()
+        {
         }
 
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>

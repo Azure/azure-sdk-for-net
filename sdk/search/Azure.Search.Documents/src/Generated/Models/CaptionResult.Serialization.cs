@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class CaptionResult
+    public partial class CaptionResult : IUtf8JsonSerializable, IModelJsonSerializable<CaptionResult>
     {
-        internal static CaptionResult DeserializeCaptionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CaptionResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CaptionResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CaptionResult DeserializeCaptionResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +64,54 @@ namespace Azure.Search.Documents.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CaptionResult(text.Value, highlights.Value, additionalProperties);
+        }
+
+        CaptionResult IModelJsonSerializable<CaptionResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCaptionResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CaptionResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CaptionResult IModelSerializable<CaptionResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCaptionResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CaptionResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CaptionResult"/> to convert. </param>
+        public static implicit operator RequestContent(CaptionResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CaptionResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CaptionResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCaptionResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

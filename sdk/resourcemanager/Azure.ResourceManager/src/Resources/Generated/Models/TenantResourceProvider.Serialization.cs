@@ -5,22 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TenantResourceProvider
+    public partial class TenantResourceProvider : IUtf8JsonSerializable, IModelJsonSerializable<TenantResourceProvider>
     {
-        internal static TenantResourceProvider DeserializeTenantResourceProvider(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TenantResourceProvider>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TenantResourceProvider>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TenantResourceProvider DeserializeTenantResourceProvider(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> @namespace = default;
             Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespace"u8))
@@ -42,8 +75,61 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceTypes = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes));
+            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes), rawData);
+        }
+
+        TenantResourceProvider IModelJsonSerializable<TenantResourceProvider>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTenantResourceProvider(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TenantResourceProvider>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TenantResourceProvider IModelSerializable<TenantResourceProvider>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTenantResourceProvider(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TenantResourceProvider"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TenantResourceProvider"/> to convert. </param>
+        public static implicit operator RequestContent(TenantResourceProvider model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TenantResourceProvider"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TenantResourceProvider(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTenantResourceProvider(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

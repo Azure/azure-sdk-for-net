@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The List events operation response. </summary>
     internal partial class ResourceHealthEventListResult
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventListResult"/>. </summary>
         /// <param name="value"> The list of event. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceHealthEventListResult(IEnumerable<ResourceHealthEventData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventListResult"/>. </summary>
         /// <param name="value"> The list of event. </param>
         /// <param name="nextLink"> The URI to fetch the next page of events. Call ListNext() with this URI to fetch the next page of events. </param>
-        internal ResourceHealthEventListResult(IReadOnlyList<ResourceHealthEventData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventListResult(IReadOnlyList<ResourceHealthEventData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventListResult"/> for deserialization. </summary>
+        internal ResourceHealthEventListResult()
+        {
         }
 
         /// <summary> The list of event. </summary>

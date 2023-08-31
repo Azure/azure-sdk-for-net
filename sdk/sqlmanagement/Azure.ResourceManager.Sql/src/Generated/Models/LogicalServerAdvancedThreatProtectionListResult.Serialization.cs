@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class LogicalServerAdvancedThreatProtectionListResult
+    internal partial class LogicalServerAdvancedThreatProtectionListResult : IUtf8JsonSerializable, IModelJsonSerializable<LogicalServerAdvancedThreatProtectionListResult>
     {
-        internal static LogicalServerAdvancedThreatProtectionListResult DeserializeLogicalServerAdvancedThreatProtectionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LogicalServerAdvancedThreatProtectionListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LogicalServerAdvancedThreatProtectionListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LogicalServerAdvancedThreatProtectionListResult DeserializeLogicalServerAdvancedThreatProtectionListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ServerAdvancedThreatProtectionData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Sql.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LogicalServerAdvancedThreatProtectionListResult(Optional.ToList(value), nextLink.Value);
+            return new LogicalServerAdvancedThreatProtectionListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        LogicalServerAdvancedThreatProtectionListResult IModelJsonSerializable<LogicalServerAdvancedThreatProtectionListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicalServerAdvancedThreatProtectionListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LogicalServerAdvancedThreatProtectionListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LogicalServerAdvancedThreatProtectionListResult IModelSerializable<LogicalServerAdvancedThreatProtectionListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLogicalServerAdvancedThreatProtectionListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LogicalServerAdvancedThreatProtectionListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LogicalServerAdvancedThreatProtectionListResult"/> to convert. </param>
+        public static implicit operator RequestContent(LogicalServerAdvancedThreatProtectionListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LogicalServerAdvancedThreatProtectionListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LogicalServerAdvancedThreatProtectionListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLogicalServerAdvancedThreatProtectionListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

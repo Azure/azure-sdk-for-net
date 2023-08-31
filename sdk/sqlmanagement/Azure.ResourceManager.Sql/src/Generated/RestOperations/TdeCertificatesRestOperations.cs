@@ -53,9 +53,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tdeCertificate);
-            request.Content = content;
+            request.Content = tdeCertificate;
             _userAgent.Apply(message);
             return message;
         }

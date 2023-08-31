@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class RestorableDroppedManagedDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public RestorableDroppedManagedDatabaseData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +37,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
-        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DatabaseName = databaseName;
             CreatedOn = createdOn;
             DeletedOn = deletedOn;
             EarliestRestoreOn = earliestRestoreOn;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseData"/> for deserialization. </summary>
+        internal RestorableDroppedManagedDatabaseData()
+        {
         }
 
         /// <summary> The name of the database. </summary>

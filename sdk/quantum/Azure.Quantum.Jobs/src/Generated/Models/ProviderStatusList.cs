@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Providers status. </summary>
     internal partial class ProviderStatusList
     {
-        /// <summary> Initializes a new instance of ProviderStatusList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderStatusList"/>. </summary>
         internal ProviderStatusList()
         {
             Value = new ChangeTrackingList<ProviderStatus>();
         }
 
-        /// <summary> Initializes a new instance of ProviderStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderStatusList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal ProviderStatusList(IReadOnlyList<ProviderStatus> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderStatusList(IReadOnlyList<ProviderStatus> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

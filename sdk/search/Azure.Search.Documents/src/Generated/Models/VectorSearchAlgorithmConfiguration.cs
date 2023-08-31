@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,9 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownVectorSearchAlgorithmConfiguration))]
     public abstract partial class VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected VectorSearchAlgorithmConfiguration(string name)
@@ -27,13 +33,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of VectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. Only `hnsw` is supported in the current preview. </param>
-        internal VectorSearchAlgorithmConfiguration(string name, string kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorSearchAlgorithmConfiguration(string name, string kind, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Kind = kind;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchAlgorithmConfiguration"/> for deserialization. </summary>
+        internal VectorSearchAlgorithmConfiguration()
+        {
         }
 
         /// <summary> The name to associate with this particular configuration. </summary>

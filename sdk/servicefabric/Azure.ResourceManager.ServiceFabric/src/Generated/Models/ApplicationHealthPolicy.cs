@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,19 +17,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         public ApplicationHealthPolicy()
         {
             ServiceTypeHealthPolicies = new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationHealthPolicy"/>. </summary>
         /// <param name="defaultServiceTypeHealthPolicy"> The health policy used by default to evaluate the health of a service type. </param>
         /// <param name="serviceTypeHealthPolicies"> The map with service type health policy per service type name. The map is empty by default. </param>
-        internal ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy, IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies, Dictionary<string, BinaryData> rawData)
         {
             DefaultServiceTypeHealthPolicy = defaultServiceTypeHealthPolicy;
             ServiceTypeHealthPolicies = serviceTypeHealthPolicies;
+            _rawData = rawData;
         }
 
         /// <summary> The health policy used by default to evaluate the health of a service type. </summary>

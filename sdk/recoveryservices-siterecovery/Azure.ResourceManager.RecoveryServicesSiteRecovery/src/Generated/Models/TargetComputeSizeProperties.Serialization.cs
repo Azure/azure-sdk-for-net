@@ -5,16 +5,105 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class TargetComputeSizeProperties
+    public partial class TargetComputeSizeProperties : IUtf8JsonSerializable, IModelJsonSerializable<TargetComputeSizeProperties>
     {
-        internal static TargetComputeSizeProperties DeserializeTargetComputeSizeProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TargetComputeSizeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TargetComputeSizeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(CpuCoresCount))
+            {
+                writer.WritePropertyName("cpuCoresCount"u8);
+                writer.WriteNumberValue(CpuCoresCount.Value);
+            }
+            if (Optional.IsDefined(MemoryInGB))
+            {
+                writer.WritePropertyName("memoryInGB"u8);
+                writer.WriteNumberValue(MemoryInGB.Value);
+            }
+            if (Optional.IsDefined(MaxDataDiskCount))
+            {
+                writer.WritePropertyName("maxDataDiskCount"u8);
+                writer.WriteNumberValue(MaxDataDiskCount.Value);
+            }
+            if (Optional.IsDefined(MaxNicsCount))
+            {
+                writer.WritePropertyName("maxNicsCount"u8);
+                writer.WriteNumberValue(MaxNicsCount.Value);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SiteRecoveryComputeSizeErrorDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HighIopsSupported))
+            {
+                writer.WritePropertyName("highIopsSupported"u8);
+                writer.WriteStringValue(HighIopsSupported);
+            }
+            if (Optional.IsCollectionDefined(HyperVGenerations))
+            {
+                writer.WritePropertyName("hyperVGenerations"u8);
+                writer.WriteStartArray();
+                foreach (var item in HyperVGenerations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TargetComputeSizeProperties DeserializeTargetComputeSizeProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
             Optional<string> highIopsSupported = default;
             Optional<IReadOnlyList<string>> hyperVGenerations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -119,8 +209,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     hyperVGenerations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations));
+            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations), rawData);
+        }
+
+        TargetComputeSizeProperties IModelJsonSerializable<TargetComputeSizeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetComputeSizeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TargetComputeSizeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TargetComputeSizeProperties IModelSerializable<TargetComputeSizeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTargetComputeSizeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TargetComputeSizeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TargetComputeSizeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(TargetComputeSizeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TargetComputeSizeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TargetComputeSizeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTargetComputeSizeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

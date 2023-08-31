@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment What-If operation settings. </summary>
     internal partial class ArmDeploymentWhatIfSettings
     {
-        /// <summary> Initializes a new instance of ArmDeploymentWhatIfSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfSettings"/>. </summary>
         public ArmDeploymentWhatIfSettings()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfSettings"/>. </summary>
+        /// <param name="resultFormat"> The format of the What-If results. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentWhatIfSettings(WhatIfResultFormat? resultFormat, Dictionary<string, BinaryData> rawData)
+        {
+            ResultFormat = resultFormat;
+            _rawData = rawData;
         }
 
         /// <summary> The format of the What-If results. </summary>

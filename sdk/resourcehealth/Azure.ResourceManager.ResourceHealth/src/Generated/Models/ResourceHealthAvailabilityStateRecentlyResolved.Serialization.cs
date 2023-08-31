@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthAvailabilityStateRecentlyResolved
+    public partial class ResourceHealthAvailabilityStateRecentlyResolved : IUtf8JsonSerializable, IModelJsonSerializable<ResourceHealthAvailabilityStateRecentlyResolved>
     {
-        internal static ResourceHealthAvailabilityStateRecentlyResolved DeserializeResourceHealthAvailabilityStateRecentlyResolved(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceHealthAvailabilityStateRecentlyResolved>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceHealthAvailabilityStateRecentlyResolved>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UnavailableOccuredOn))
+            {
+                writer.WritePropertyName("unavailableOccuredTime"u8);
+                writer.WriteStringValue(UnavailableOccuredOn.Value, "O");
+            }
+            if (Optional.IsDefined(ResolvedOn))
+            {
+                writer.WritePropertyName("resolvedTime"u8);
+                writer.WriteStringValue(ResolvedOn.Value, "O");
+            }
+            if (Optional.IsDefined(UnavailableSummary))
+            {
+                writer.WritePropertyName("unavailableSummary"u8);
+                writer.WriteStringValue(UnavailableSummary);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceHealthAvailabilityStateRecentlyResolved DeserializeResourceHealthAvailabilityStateRecentlyResolved(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<DateTimeOffset> unavailableOccuredTime = default;
             Optional<DateTimeOffset> resolvedTime = default;
             Optional<string> unavailableSummary = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unavailableOccuredTime"u8))
@@ -47,8 +90,61 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     unavailableSummary = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceHealthAvailabilityStateRecentlyResolved(Optional.ToNullable(unavailableOccuredTime), Optional.ToNullable(resolvedTime), unavailableSummary.Value);
+            return new ResourceHealthAvailabilityStateRecentlyResolved(Optional.ToNullable(unavailableOccuredTime), Optional.ToNullable(resolvedTime), unavailableSummary.Value, rawData);
+        }
+
+        ResourceHealthAvailabilityStateRecentlyResolved IModelJsonSerializable<ResourceHealthAvailabilityStateRecentlyResolved>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthAvailabilityStateRecentlyResolved(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceHealthAvailabilityStateRecentlyResolved>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceHealthAvailabilityStateRecentlyResolved IModelSerializable<ResourceHealthAvailabilityStateRecentlyResolved>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceHealthAvailabilityStateRecentlyResolved(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceHealthAvailabilityStateRecentlyResolved"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceHealthAvailabilityStateRecentlyResolved"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceHealthAvailabilityStateRecentlyResolved model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceHealthAvailabilityStateRecentlyResolved"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceHealthAvailabilityStateRecentlyResolved(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceHealthAvailabilityStateRecentlyResolved(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

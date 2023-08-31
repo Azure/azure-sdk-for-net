@@ -14,23 +14,27 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The definition of a parameter that can be provided to the policy. </summary>
     public partial class ArmPolicyParameter
     {
-        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameter"/>. </summary>
         public ArmPolicyParameter()
         {
             AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPolicyParameter"/>. </summary>
         /// <param name="parameterType"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
         /// <param name="metadata"> General metadata for the parameter. </param>
-        internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmPolicyParameter(ArmPolicyParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata, Dictionary<string, BinaryData> rawData)
         {
             ParameterType = parameterType;
             AllowedValues = allowedValues;
             DefaultValue = defaultValue;
             Metadata = metadata;
+            _rawData = rawData;
         }
 
         /// <summary> The data type of the parameter. </summary>

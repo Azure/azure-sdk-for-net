@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpMemberOrganizationalInfo : IUtf8JsonSerializable
+    public partial class GcpMemberOrganizationalInfo : IUtf8JsonSerializable, IModelJsonSerializable<GcpMemberOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GcpMemberOrganizationalInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GcpMemberOrganizationalInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GcpMemberOrganizationalInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentHierarchyId))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("organizationMembershipType"u8);
             writer.WriteStringValue(OrganizationMembershipType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GcpMemberOrganizationalInfo DeserializeGcpMemberOrganizationalInfo(JsonElement element)
+        internal static GcpMemberOrganizationalInfo DeserializeGcpMemberOrganizationalInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> parentHierarchyId = default;
             Optional<string> managementProjectNumber = default;
             OrganizationMembershipType organizationMembershipType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentHierarchyId"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     organizationMembershipType = new OrganizationMembershipType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GcpMemberOrganizationalInfo(organizationMembershipType, parentHierarchyId.Value, managementProjectNumber.Value);
+            return new GcpMemberOrganizationalInfo(organizationMembershipType, parentHierarchyId.Value, managementProjectNumber.Value, rawData);
+        }
+
+        GcpMemberOrganizationalInfo IModelJsonSerializable<GcpMemberOrganizationalInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GcpMemberOrganizationalInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGcpMemberOrganizationalInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GcpMemberOrganizationalInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GcpMemberOrganizationalInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GcpMemberOrganizationalInfo IModelSerializable<GcpMemberOrganizationalInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GcpMemberOrganizationalInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGcpMemberOrganizationalInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GcpMemberOrganizationalInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GcpMemberOrganizationalInfo"/> to convert. </param>
+        public static implicit operator RequestContent(GcpMemberOrganizationalInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GcpMemberOrganizationalInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GcpMemberOrganizationalInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGcpMemberOrganizationalInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Response from a list skillset request. If successful, it includes the full definitions of all skillsets. </summary>
     internal partial class ListSkillsetsResult
     {
-        /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/>. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skillsets"/> is null. </exception>
         internal ListSkillsetsResult(IEnumerable<SearchIndexerSkillset> skillsets)
@@ -25,11 +27,18 @@ namespace Azure.Search.Documents.Indexes.Models
             Skillsets = skillsets.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/>. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
-        internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets, Dictionary<string, BinaryData> rawData)
         {
             Skillsets = skillsets;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/> for deserialization. </summary>
+        internal ListSkillsetsResult()
+        {
         }
 
         /// <summary> The skillsets defined in the Search service. </summary>

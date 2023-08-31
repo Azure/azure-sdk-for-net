@@ -5,28 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> This is used to represent the various nodes of the distributed container. </summary>
     public partial class DistributedNodesInfo
     {
-        /// <summary> Initializes a new instance of DistributedNodesInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DistributedNodesInfo"/>. </summary>
         public DistributedNodesInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DistributedNodesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributedNodesInfo"/>. </summary>
         /// <param name="nodeName"> Name of the node under a distributed container. </param>
         /// <param name="status">
         /// Status of this Node.
         /// Failed | Succeeded
         /// </param>
         /// <param name="errorDetail"> Error Details if the Status is non-success. </param>
-        internal DistributedNodesInfo(string nodeName, string status, BackupErrorDetail errorDetail)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DistributedNodesInfo(string nodeName, string status, BackupErrorDetail errorDetail, Dictionary<string, BinaryData> rawData)
         {
             NodeName = nodeName;
             Status = status;
             ErrorDetail = errorDetail;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the node under a distributed container. </summary>

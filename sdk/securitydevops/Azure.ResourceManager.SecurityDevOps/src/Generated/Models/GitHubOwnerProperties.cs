@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> GitHub Repo Owner properties. </summary>
     public partial class GitHubOwnerProperties
     {
-        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubOwnerProperties"/>. </summary>
         public GitHubOwnerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubOwnerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubOwnerProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="ownerUri"> Gets or sets gitHub owner url. </param>
-        internal GitHubOwnerProperties(ProvisioningState? provisioningState, Uri ownerUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubOwnerProperties(ProvisioningState? provisioningState, Uri ownerUri, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             OwnerUri = ownerUri;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

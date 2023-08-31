@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVFailoverIPConfigDetails : IUtf8JsonSerializable
+    public partial class HyperVFailoverIPConfigDetails : IUtf8JsonSerializable, IModelJsonSerializable<HyperVFailoverIPConfigDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVFailoverIPConfigDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVFailoverIPConfigDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPConfigName))
             {
@@ -80,7 +89,195 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HyperVFailoverIPConfigDetails DeserializeHyperVFailoverIPConfigDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> ipConfigName = default;
+            Optional<bool> isPrimary = default;
+            Optional<bool> isSeletedForFailover = default;
+            Optional<string> recoverySubnetName = default;
+            Optional<IPAddress> recoveryStaticIPAddress = default;
+            Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
+            Optional<IList<string>> recoveryLBBackendAddressPoolIds = default;
+            Optional<string> tfoSubnetName = default;
+            Optional<IPAddress> tfoStaticIPAddress = default;
+            Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
+            Optional<IList<string>> tfoLBBackendAddressPoolIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("ipConfigName"u8))
+                {
+                    ipConfigName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isPrimary"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isPrimary = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isSeletedForFailover"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSeletedForFailover = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("recoverySubnetName"u8))
+                {
+                    recoverySubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryStaticIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryPublicIPAddressId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPublicIPAddressId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recoveryLBBackendAddressPoolIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    recoveryLBBackendAddressPoolIds = array;
+                    continue;
+                }
+                if (property.NameEquals("tfoSubnetName"u8))
+                {
+                    tfoSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tfoStaticIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tfoStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tfoPublicIPAddressId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tfoPublicIPAddressId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tfoLBBackendAddressPoolIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    tfoLBBackendAddressPoolIds = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HyperVFailoverIPConfigDetails(ipConfigName.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), rawData);
+        }
+
+        HyperVFailoverIPConfigDetails IModelJsonSerializable<HyperVFailoverIPConfigDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVFailoverIPConfigDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVFailoverIPConfigDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVFailoverIPConfigDetails IModelSerializable<HyperVFailoverIPConfigDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVFailoverIPConfigDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HyperVFailoverIPConfigDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HyperVFailoverIPConfigDetails"/> to convert. </param>
+        public static implicit operator RequestContent(HyperVFailoverIPConfigDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HyperVFailoverIPConfigDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HyperVFailoverIPConfigDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVFailoverIPConfigDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

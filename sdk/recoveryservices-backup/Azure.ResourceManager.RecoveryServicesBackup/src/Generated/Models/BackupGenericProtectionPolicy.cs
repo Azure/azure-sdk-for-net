@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,23 +17,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="BackupGenericProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="VmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownProtectionPolicy))]
     public abstract partial class BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionPolicy"/>. </summary>
         protected BackupGenericProtectionPolicy()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        internal BackupGenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, Dictionary<string, BinaryData> rawData)
         {
             ProtectedItemsCount = protectedItemsCount;
             BackupManagementType = backupManagementType;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            _rawData = rawData;
         }
 
         /// <summary> Number of items associated with this policy. </summary>

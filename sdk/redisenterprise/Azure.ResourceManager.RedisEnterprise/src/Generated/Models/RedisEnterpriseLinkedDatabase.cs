@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -12,18 +14,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Specifies details of a linked database resource. </summary>
     public partial class RedisEnterpriseLinkedDatabase
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseLinkedDatabase. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseLinkedDatabase"/>. </summary>
         public RedisEnterpriseLinkedDatabase()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseLinkedDatabase"/>. </summary>
         /// <param name="id"> Resource ID of a database resource to link with this database. </param>
         /// <param name="state"> State of the link between the database resources. </param>
-        internal RedisEnterpriseLinkedDatabase(ResourceIdentifier id, RedisEnterpriseDatabaseLinkState? state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseLinkedDatabase(ResourceIdentifier id, RedisEnterpriseDatabaseLinkState? state, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             State = state;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID of a database resource to link with this database. </summary>

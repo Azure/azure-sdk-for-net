@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ExportRdbContent : IUtf8JsonSerializable
+    public partial class ExportRdbContent : IUtf8JsonSerializable, IModelJsonSerializable<ExportRdbContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportRdbContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportRdbContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Format))
             {
@@ -34,7 +42,117 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ExportRdbContent DeserializeExportRdbContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> format = default;
+            string prefix = default;
+            string container = default;
+            Optional<string> preferredDataArchiveAuthMethod = default;
+            Optional<string> storageSubscriptionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("format"u8))
+                {
+                    format = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("prefix"u8))
+                {
+                    prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("container"u8))
+                {
+                    container = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("preferred-data-archive-auth-method"u8))
+                {
+                    preferredDataArchiveAuthMethod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storage-subscription-id"u8))
+                {
+                    storageSubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ExportRdbContent(format.Value, prefix, container, preferredDataArchiveAuthMethod.Value, storageSubscriptionId.Value, rawData);
+        }
+
+        ExportRdbContent IModelJsonSerializable<ExportRdbContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportRdbContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportRdbContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportRdbContent IModelSerializable<ExportRdbContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportRdbContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExportRdbContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExportRdbContent"/> to convert. </param>
+        public static implicit operator RequestContent(ExportRdbContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExportRdbContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExportRdbContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportRdbContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

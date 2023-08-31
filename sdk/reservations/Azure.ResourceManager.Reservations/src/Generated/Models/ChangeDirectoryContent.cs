@@ -6,15 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Request body for change directory of a reservation. </summary>
     public partial class ChangeDirectoryContent
     {
-        /// <summary> Initializes a new instance of ChangeDirectoryContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryContent"/>. </summary>
         public ChangeDirectoryContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryContent"/>. </summary>
+        /// <param name="destinationTenantId"> Tenant id GUID that reservation order is to be transferred to. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChangeDirectoryContent(Guid? destinationTenantId, Dictionary<string, BinaryData> rawData)
+        {
+            DestinationTenantId = destinationTenantId;
+            _rawData = rawData;
         }
 
         /// <summary> Tenant id GUID that reservation order is to be transferred to. </summary>

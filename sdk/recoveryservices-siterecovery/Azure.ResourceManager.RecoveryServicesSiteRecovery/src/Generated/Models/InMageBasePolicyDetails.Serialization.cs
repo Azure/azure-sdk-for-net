@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageBasePolicyDetails
+    public partial class InMageBasePolicyDetails : IUtf8JsonSerializable, IModelJsonSerializable<InMageBasePolicyDetails>
     {
-        internal static InMageBasePolicyDetails DeserializeInMageBasePolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageBasePolicyDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageBasePolicyDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InMageBasePolicyDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryPointThresholdInMinutes))
+            {
+                writer.WritePropertyName("recoveryPointThresholdInMinutes"u8);
+                writer.WriteNumberValue(RecoveryPointThresholdInMinutes.Value);
+            }
+            if (Optional.IsDefined(RecoveryPointHistory))
+            {
+                writer.WritePropertyName("recoveryPointHistory"u8);
+                writer.WriteNumberValue(RecoveryPointHistory.Value);
+            }
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
+            }
+            if (Optional.IsDefined(MultiVmSyncStatus))
+            {
+                writer.WritePropertyName("multiVmSyncStatus"u8);
+                writer.WriteStringValue(MultiVmSyncStatus);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static InMageBasePolicyDetails DeserializeInMageBasePolicyDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> appConsistentFrequencyInMinutes = default;
             Optional<string> multiVmSyncStatus = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointThresholdInMinutes"u8))
@@ -62,8 +113,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InMageBasePolicyDetails(instanceType, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value);
+            return new InMageBasePolicyDetails(instanceType, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, rawData);
+        }
+
+        InMageBasePolicyDetails IModelJsonSerializable<InMageBasePolicyDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageBasePolicyDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageBasePolicyDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageBasePolicyDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageBasePolicyDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageBasePolicyDetails IModelSerializable<InMageBasePolicyDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageBasePolicyDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageBasePolicyDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageBasePolicyDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageBasePolicyDetails"/> to convert. </param>
+        public static implicit operator RequestContent(InMageBasePolicyDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageBasePolicyDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageBasePolicyDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageBasePolicyDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

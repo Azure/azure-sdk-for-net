@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryJobQueryContent : IUtf8JsonSerializable
+    public partial class SiteRecoveryJobQueryContent : IUtf8JsonSerializable, IModelJsonSerializable<SiteRecoveryJobQueryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SiteRecoveryJobQueryContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SiteRecoveryJobQueryContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
@@ -55,7 +63,147 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("timezoneOffset"u8);
                 writer.WriteNumberValue(TimezoneOffset.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SiteRecoveryJobQueryContent DeserializeSiteRecoveryJobQueryContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> startTime = default;
+            Optional<string> endTime = default;
+            Optional<ResourceIdentifier> fabricId = default;
+            Optional<string> affectedObjectTypes = default;
+            Optional<string> jobStatus = default;
+            Optional<ExportJobOutputSerializationType> jobOutputType = default;
+            Optional<string> jobName = default;
+            Optional<double> timezoneOffset = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("startTime"u8))
+                {
+                    startTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    endTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fabricId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fabricId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("affectedObjectTypes"u8))
+                {
+                    affectedObjectTypes = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobStatus"u8))
+                {
+                    jobStatus = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("jobOutputType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobOutputType = new ExportJobOutputSerializationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("jobName"u8))
+                {
+                    jobName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("timezoneOffset"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timezoneOffset = property.Value.GetDouble();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SiteRecoveryJobQueryContent(startTime.Value, endTime.Value, fabricId.Value, affectedObjectTypes.Value, jobStatus.Value, Optional.ToNullable(jobOutputType), jobName.Value, Optional.ToNullable(timezoneOffset), rawData);
+        }
+
+        SiteRecoveryJobQueryContent IModelJsonSerializable<SiteRecoveryJobQueryContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobQueryContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SiteRecoveryJobQueryContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SiteRecoveryJobQueryContent IModelSerializable<SiteRecoveryJobQueryContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryJobQueryContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SiteRecoveryJobQueryContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SiteRecoveryJobQueryContent"/> to convert. </param>
+        public static implicit operator RequestContent(SiteRecoveryJobQueryContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SiteRecoveryJobQueryContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SiteRecoveryJobQueryContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSiteRecoveryJobQueryContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal partial class LongTermRetentionPolicyListResult
+    internal partial class LongTermRetentionPolicyListResult : IUtf8JsonSerializable, IModelJsonSerializable<LongTermRetentionPolicyListResult>
     {
-        internal static LongTermRetentionPolicyListResult DeserializeLongTermRetentionPolicyListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LongTermRetentionPolicyListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LongTermRetentionPolicyListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LongTermRetentionPolicyListResult DeserializeLongTermRetentionPolicyListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<LongTermRetentionPolicyData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Sql.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LongTermRetentionPolicyListResult(Optional.ToList(value), nextLink.Value);
+            return new LongTermRetentionPolicyListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        LongTermRetentionPolicyListResult IModelJsonSerializable<LongTermRetentionPolicyListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLongTermRetentionPolicyListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LongTermRetentionPolicyListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LongTermRetentionPolicyListResult IModelSerializable<LongTermRetentionPolicyListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLongTermRetentionPolicyListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LongTermRetentionPolicyListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LongTermRetentionPolicyListResult"/> to convert. </param>
+        public static implicit operator RequestContent(LongTermRetentionPolicyListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LongTermRetentionPolicyListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LongTermRetentionPolicyListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLongTermRetentionPolicyListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

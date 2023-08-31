@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -12,14 +16,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// Please note <see cref="ProtectableContainer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="StorageProtectableContainer"/> and <see cref="VmAppContainerProtectableContainer"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownProtectableContainer))]
     public abstract partial class ProtectableContainer
     {
-        /// <summary> Initializes a new instance of ProtectableContainer. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/>. </summary>
         protected ProtectableContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectableContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">
@@ -29,13 +36,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, Dictionary<string, BinaryData> rawData)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
             ProtectableContainerType = protectableContainerType;
             HealthStatus = healthStatus;
             ContainerId = containerId;
+            _rawData = rawData;
         }
 
         /// <summary> Friendly name of the container. </summary>

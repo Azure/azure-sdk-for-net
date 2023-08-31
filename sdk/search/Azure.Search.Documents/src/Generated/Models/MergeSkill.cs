@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill for merging two or more strings into a single unified string, with an optional user-defined delimiter separating each component part. </summary>
     public partial class MergeSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of MergeSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="MergeSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Skills.Text.MergeSkill";
         }
 
-        /// <summary> Initializes a new instance of MergeSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="MergeSkill"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -35,11 +35,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="insertPreTag"> The tag indicates the start of the merged text. By default, the tag is an empty space. </param>
         /// <param name="insertPostTag"> The tag indicates the end of the merged text. By default, the tag is an empty space. </param>
-        internal MergeSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string insertPreTag, string insertPostTag) : base(oDataType, name, description, context, inputs, outputs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MergeSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string insertPreTag, string insertPostTag, Dictionary<string, BinaryData> rawData) : base(oDataType, name, description, context, inputs, outputs, rawData)
         {
             InsertPreTag = insertPreTag;
             InsertPostTag = insertPostTag;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.MergeSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MergeSkill"/> for deserialization. </summary>
+        internal MergeSkill()
+        {
         }
 
         /// <summary> The tag indicates the start of the merged text. By default, the tag is an empty space. </summary>

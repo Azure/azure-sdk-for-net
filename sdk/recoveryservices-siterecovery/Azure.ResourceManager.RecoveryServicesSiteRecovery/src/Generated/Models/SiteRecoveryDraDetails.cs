@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> DRA details. </summary>
     public partial class SiteRecoveryDraDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDraDetails"/>. </summary>
         internal SiteRecoveryDraDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDraDetails"/>. </summary>
         /// <param name="id"> The DRA Id. </param>
         /// <param name="name"> The DRA name. </param>
         /// <param name="biosId"> The DRA Bios Id. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="forwardProtectedItemCount"> The count of protected items which are protected in forward direction. </param>
         /// <param name="reverseProtectedItemCount"> The count of protected items which are protected in reverse direction. </param>
-        internal SiteRecoveryDraDetails(string id, string name, string biosId, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? forwardProtectedItemCount, int? reverseProtectedItemCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryDraDetails(string id, string name, string biosId, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? forwardProtectedItemCount, int? reverseProtectedItemCount, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             ForwardProtectedItemCount = forwardProtectedItemCount;
             ReverseProtectedItemCount = reverseProtectedItemCount;
+            _rawData = rawData;
         }
 
         /// <summary> The DRA Id. </summary>

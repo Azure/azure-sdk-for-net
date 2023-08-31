@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Page of a security assessments list. </summary>
     internal partial class SecurityAssessmentList
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentList"/>. </summary>
         internal SecurityAssessmentList()
         {
             Value = new ChangeTrackingList<SecurityAssessmentData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentList"/>. </summary>
         /// <param name="value"> Collection of security assessments in this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecurityAssessmentList(IReadOnlyList<SecurityAssessmentData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentList(IReadOnlyList<SecurityAssessmentData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of security assessments in this page. </summary>

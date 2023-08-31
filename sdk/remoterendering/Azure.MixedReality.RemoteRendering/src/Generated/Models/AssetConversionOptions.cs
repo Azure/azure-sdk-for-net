@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
@@ -13,7 +14,9 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> Conversion settings describe the origin of input files and destination of output files. </summary>
     public partial class AssetConversionOptions
     {
-        /// <summary> Initializes a new instance of AssetConversionOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOptions"/>. </summary>
         /// <param name="inputOptions"> Conversion input settings describe the origin of conversion input. </param>
         /// <param name="outputOptions"> Conversion output settings describe the destination of conversion output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputOptions"/> or <paramref name="outputOptions"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.MixedReality.RemoteRendering
 
             InputOptions = inputOptions;
             OutputOptions = outputOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOptions"/>. </summary>
+        /// <param name="inputOptions"> Conversion input settings describe the origin of conversion input. </param>
+        /// <param name="outputOptions"> Conversion output settings describe the destination of conversion output. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetConversionOptions(AssetConversionInputOptions inputOptions, AssetConversionOutputOptions outputOptions, Dictionary<string, BinaryData> rawData)
+        {
+            InputOptions = inputOptions;
+            OutputOptions = outputOptions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionOptions"/> for deserialization. </summary>
+        internal AssetConversionOptions()
+        {
         }
     }
 }

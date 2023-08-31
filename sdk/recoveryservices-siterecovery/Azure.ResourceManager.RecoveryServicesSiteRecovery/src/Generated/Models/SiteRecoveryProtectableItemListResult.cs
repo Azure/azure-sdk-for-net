@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protectable item collection. </summary>
     internal partial class SiteRecoveryProtectableItemListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemListResult"/>. </summary>
         internal SiteRecoveryProtectableItemListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryProtectableItemData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemListResult"/>. </summary>
         /// <param name="value"> The Protectable item details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryProtectableItemListResult(IReadOnlyList<SiteRecoveryProtectableItemData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProtectableItemListResult(IReadOnlyList<SiteRecoveryProtectableItemData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The Protectable item details. </summary>

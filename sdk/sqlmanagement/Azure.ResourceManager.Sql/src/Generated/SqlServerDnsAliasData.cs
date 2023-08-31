@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,24 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDnsAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerDnsAliasData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerDnsAliasData"/>. </summary>
         public SqlServerDnsAliasData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDnsAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="azureDnsRecord"> The fully qualified DNS record for alias. </param>
-        internal SqlServerDnsAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azureDnsRecord) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerDnsAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azureDnsRecord, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AzureDnsRecord = azureDnsRecord;
+            _rawData = rawData;
         }
 
         /// <summary> The fully qualified DNS record for alias. </summary>

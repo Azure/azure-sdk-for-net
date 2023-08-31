@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> confidence reason item. </summary>
     public partial class SecurityInsightsAlertConfidenceReason
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertConfidenceReason. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceReason"/>. </summary>
         internal SecurityInsightsAlertConfidenceReason()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertConfidenceReason. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertConfidenceReason"/>. </summary>
         /// <param name="reason"> The reason's description. </param>
         /// <param name="reasonType"> The type (category) of the reason. </param>
-        internal SecurityInsightsAlertConfidenceReason(string reason, string reasonType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertConfidenceReason(string reason, string reasonType, Dictionary<string, BinaryData> rawData)
         {
             Reason = reason;
             ReasonType = reasonType;
+            _rawData = rawData;
         }
 
         /// <summary> The reason's description. </summary>

@@ -5,43 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class LongTermRetentionPolicy : IUtf8JsonSerializable
+    public partial class LongTermRetentionPolicy : IUtf8JsonSerializable, IModelJsonSerializable<LongTermRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LongTermRetentionPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LongTermRetentionPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<LongTermRetentionPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue(DailySchedule);
+                if (DailySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DailyRetentionSchedule>)DailySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue(WeeklySchedule);
+                if (WeeklySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WeeklyRetentionSchedule>)WeeklySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue(MonthlySchedule);
+                if (MonthlySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MonthlyRetentionSchedule>)MonthlySchedule).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
-                writer.WriteObjectValue(YearlySchedule);
+                if (YearlySchedule is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<YearlyRetentionSchedule>)YearlySchedule).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element)
+        internal static LongTermRetentionPolicy DeserializeLongTermRetentionPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<MonthlyRetentionSchedule> monthlySchedule = default;
             Optional<YearlyRetentionSchedule> yearlySchedule = default;
             string retentionPolicyType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dailySchedule"u8))
@@ -94,8 +145,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionPolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LongTermRetentionPolicy(retentionPolicyType, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, yearlySchedule.Value);
+            return new LongTermRetentionPolicy(retentionPolicyType, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, yearlySchedule.Value, rawData);
+        }
+
+        LongTermRetentionPolicy IModelJsonSerializable<LongTermRetentionPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LongTermRetentionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLongTermRetentionPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LongTermRetentionPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LongTermRetentionPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LongTermRetentionPolicy IModelSerializable<LongTermRetentionPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<LongTermRetentionPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLongTermRetentionPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LongTermRetentionPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LongTermRetentionPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(LongTermRetentionPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LongTermRetentionPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LongTermRetentionPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLongTermRetentionPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

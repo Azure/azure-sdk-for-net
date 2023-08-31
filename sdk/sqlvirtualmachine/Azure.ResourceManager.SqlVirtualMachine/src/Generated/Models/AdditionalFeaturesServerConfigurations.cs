@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Additional SQL Server feature settings. </summary>
     internal partial class AdditionalFeaturesServerConfigurations
     {
-        /// <summary> Initializes a new instance of AdditionalFeaturesServerConfigurations. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
         public AdditionalFeaturesServerConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of AdditionalFeaturesServerConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalFeaturesServerConfigurations"/>. </summary>
         /// <param name="isRServicesEnabled"> Enable or disable R services (SQL 2016 onwards). </param>
-        internal AdditionalFeaturesServerConfigurations(bool? isRServicesEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalFeaturesServerConfigurations(bool? isRServicesEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsRServicesEnabled = isRServicesEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Enable or disable R services (SQL 2016 onwards). </summary>

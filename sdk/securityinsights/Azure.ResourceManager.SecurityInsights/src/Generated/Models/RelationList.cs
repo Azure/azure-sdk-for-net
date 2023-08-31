@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of relations. </summary>
     internal partial class RelationList
     {
-        /// <summary> Initializes a new instance of RelationList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationList"/>. </summary>
         /// <param name="value"> Array of relations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RelationList(IEnumerable<SecurityInsightsIncidentRelationData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RelationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of relations. </param>
         /// <param name="value"> Array of relations. </param>
-        internal RelationList(string nextLink, IReadOnlyList<SecurityInsightsIncidentRelationData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationList(string nextLink, IReadOnlyList<SecurityInsightsIncidentRelationData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationList"/> for deserialization. </summary>
+        internal RelationList()
+        {
         }
 
         /// <summary> URL to fetch the next set of relations. </summary>

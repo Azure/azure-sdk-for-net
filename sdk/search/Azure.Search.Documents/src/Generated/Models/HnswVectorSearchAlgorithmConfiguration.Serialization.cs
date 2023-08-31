@@ -5,30 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    public partial class HnswVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<HnswVectorSearchAlgorithmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HnswVectorSearchAlgorithmConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HnswVectorSearchAlgorithmConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HnswVectorSearchAlgorithmConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("hnswParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                if (Parameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HnswParameters>)Parameters).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HnswVectorSearchAlgorithmConfiguration DeserializeHnswVectorSearchAlgorithmConfiguration(JsonElement element)
+        internal static HnswVectorSearchAlgorithmConfiguration DeserializeHnswVectorSearchAlgorithmConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<HnswParameters> hnswParameters = default;
             string name = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hnswParameters"u8))
@@ -57,8 +87,61 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HnswVectorSearchAlgorithmConfiguration(name, kind, hnswParameters.Value);
+            return new HnswVectorSearchAlgorithmConfiguration(name, kind, hnswParameters.Value, rawData);
+        }
+
+        HnswVectorSearchAlgorithmConfiguration IModelJsonSerializable<HnswVectorSearchAlgorithmConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HnswVectorSearchAlgorithmConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHnswVectorSearchAlgorithmConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HnswVectorSearchAlgorithmConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HnswVectorSearchAlgorithmConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HnswVectorSearchAlgorithmConfiguration IModelSerializable<HnswVectorSearchAlgorithmConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HnswVectorSearchAlgorithmConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHnswVectorSearchAlgorithmConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HnswVectorSearchAlgorithmConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HnswVectorSearchAlgorithmConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(HnswVectorSearchAlgorithmConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HnswVectorSearchAlgorithmConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HnswVectorSearchAlgorithmConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHnswVectorSearchAlgorithmConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

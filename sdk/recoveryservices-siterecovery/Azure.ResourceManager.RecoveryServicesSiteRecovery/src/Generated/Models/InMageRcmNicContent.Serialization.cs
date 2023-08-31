@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmNicContent : IUtf8JsonSerializable
+    public partial class InMageRcmNicContent : IUtf8JsonSerializable, IModelJsonSerializable<InMageRcmNicContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageRcmNicContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageRcmNicContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
@@ -44,7 +53,137 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InMageRcmNicContent DeserializeInMageRcmNicContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string nicId = default;
+            string isPrimaryNic = default;
+            Optional<string> isSelectedForFailover = default;
+            Optional<string> targetSubnetName = default;
+            Optional<IPAddress> targetStaticIPAddress = default;
+            Optional<string> testSubnetName = default;
+            Optional<IPAddress> testStaticIPAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("nicId"u8))
+                {
+                    nicId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isPrimaryNic"u8))
+                {
+                    isPrimaryNic = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isSelectedForFailover"u8))
+                {
+                    isSelectedForFailover = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetSubnetName"u8))
+                {
+                    targetSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetStaticIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("testSubnetName"u8))
+                {
+                    testSubnetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("testStaticIPAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testStaticIPAddress = IPAddress.Parse(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InMageRcmNicContent(nicId, isPrimaryNic, isSelectedForFailover.Value, targetSubnetName.Value, targetStaticIPAddress.Value, testSubnetName.Value, testStaticIPAddress.Value, rawData);
+        }
+
+        InMageRcmNicContent IModelJsonSerializable<InMageRcmNicContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmNicContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageRcmNicContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageRcmNicContent IModelSerializable<InMageRcmNicContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageRcmNicContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageRcmNicContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageRcmNicContent"/> to convert. </param>
+        public static implicit operator RequestContent(InMageRcmNicContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageRcmNicContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageRcmNicContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageRcmNicContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

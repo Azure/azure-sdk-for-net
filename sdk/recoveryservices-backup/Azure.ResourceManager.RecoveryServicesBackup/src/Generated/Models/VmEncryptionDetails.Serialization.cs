@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmEncryptionDetails : IUtf8JsonSerializable
+    public partial class VmEncryptionDetails : IUtf8JsonSerializable, IModelJsonSerializable<VmEncryptionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmEncryptionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmEncryptionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEncryptionEnabled))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("secretKeyVaultId"u8);
                 writer.WriteStringValue(SecretKeyVaultId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmEncryptionDetails DeserializeVmEncryptionDetails(JsonElement element)
+        internal static VmEncryptionDetails DeserializeVmEncryptionDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<Uri> secretKeyUrl = default;
             Optional<ResourceIdentifier> kekVaultId = default;
             Optional<ResourceIdentifier> secretKeyVaultId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptionEnabled"u8))
@@ -102,8 +124,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     secretKeyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmEncryptionDetails(Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value);
+            return new VmEncryptionDetails(Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value, rawData);
+        }
+
+        VmEncryptionDetails IModelJsonSerializable<VmEncryptionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmEncryptionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmEncryptionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmEncryptionDetails IModelSerializable<VmEncryptionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmEncryptionDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmEncryptionDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmEncryptionDetails"/> to convert. </param>
+        public static implicit operator RequestContent(VmEncryptionDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmEncryptionDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmEncryptionDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmEncryptionDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

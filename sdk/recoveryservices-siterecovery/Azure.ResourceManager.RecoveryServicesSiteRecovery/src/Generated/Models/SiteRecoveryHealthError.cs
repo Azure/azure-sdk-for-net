@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Health Error. </summary>
     public partial class SiteRecoveryHealthError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
         internal SiteRecoveryHealthError()
         {
             InnerHealthErrors = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryHealthError"/>. </summary>
         /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
@@ -36,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="entityId"> ID of the entity. </param>
         /// <param name="errorId"> The health error unique id. </param>
         /// <param name="customerResolvability"> Value indicating whether the health error is customer resolvable. </param>
-        internal SiteRecoveryHealthError(IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryHealthError(IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors, string errorSource, string errorType, string errorLevel, string errorCategory, string errorCode, string summaryMessage, string errorMessage, string possibleCauses, string recommendedAction, DateTimeOffset? creationTimeUtc, string recoveryProviderErrorMessage, string entityId, string errorId, HealthErrorCustomerResolvability? customerResolvability, Dictionary<string, BinaryData> rawData)
         {
             InnerHealthErrors = innerHealthErrors;
             ErrorSource = errorSource;
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EntityId = entityId;
             ErrorId = errorId;
             CustomerResolvability = customerResolvability;
+            _rawData = rawData;
         }
 
         /// <summary> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </summary>

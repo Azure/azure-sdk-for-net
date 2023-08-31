@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Common field for data type in data connectors. </summary>
     internal partial class DataConnectorDataTypeCommon
     {
-        /// <summary> Initializes a new instance of DataConnectorDataTypeCommon. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataConnectorDataTypeCommon"/>. </summary>
         public DataConnectorDataTypeCommon()
         {
         }
 
-        /// <summary> Initializes a new instance of DataConnectorDataTypeCommon. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataConnectorDataTypeCommon"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState? state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState? state, Dictionary<string, BinaryData> rawData)
         {
             State = state;
+            _rawData = rawData;
         }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>

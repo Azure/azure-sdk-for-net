@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication appliance definition. </summary>
     public partial class SiteRecoveryReplicationAppliance
     {
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationAppliance"/>. </summary>
         internal SiteRecoveryReplicationAppliance()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryReplicationAppliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryReplicationAppliance"/>. </summary>
         /// <param name="properties"> Appliance related data. </param>
-        internal SiteRecoveryReplicationAppliance(SiteRecoveryReplicationApplianceProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryReplicationAppliance(SiteRecoveryReplicationApplianceProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Appliance related data. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage specific job. </summary>
     public partial class WorkloadBackupJob : BackupGenericJob
     {
-        /// <summary> Initializes a new instance of WorkloadBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadBackupJob"/>. </summary>
         public WorkloadBackupJob()
         {
             ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             JobType = "AzureWorkloadJob";
         }
 
-        /// <summary> Initializes a new instance of WorkloadBackupJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadBackupJob"/>. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="actionsInfo"> Gets or sets the state/actions applicable on this job like cancel/retry. </param>
         /// <param name="errorDetails"> Error details on execution of this job. </param>
         /// <param name="extendedInfo"> Additional information about the job. </param>
-        internal WorkloadBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, string workloadType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<WorkloadErrorInfo> errorDetails, WorkloadBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadBackupJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, string workloadType, TimeSpan? duration, IList<JobSupportedAction> actionsInfo, IList<WorkloadErrorInfo> errorDetails, WorkloadBackupJobExtendedInfo extendedInfo, Dictionary<string, BinaryData> rawData) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, rawData)
         {
             WorkloadType = workloadType;
             Duration = duration;

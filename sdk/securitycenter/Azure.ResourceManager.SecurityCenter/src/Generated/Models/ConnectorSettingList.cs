@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> For a subscription, list of all cloud account connectors and their settings. </summary>
     internal partial class ConnectorSettingList
     {
-        /// <summary> Initializes a new instance of ConnectorSettingList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorSettingList"/>. </summary>
         internal ConnectorSettingList()
         {
             Value = new ChangeTrackingList<SecurityCloudConnectorData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectorSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorSettingList"/>. </summary>
         /// <param name="value"> List of all the cloud account connector settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ConnectorSettingList(IReadOnlyList<SecurityCloudConnectorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorSettingList(IReadOnlyList<SecurityCloudConnectorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of all the cloud account connector settings. </summary>

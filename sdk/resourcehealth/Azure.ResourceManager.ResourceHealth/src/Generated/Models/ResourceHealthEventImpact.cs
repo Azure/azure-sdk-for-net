@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Azure service impacted by the service health event. </summary>
     public partial class ResourceHealthEventImpact
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpact. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpact"/>. </summary>
         internal ResourceHealthEventImpact()
         {
             ImpactedRegions = new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpact. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpact"/>. </summary>
         /// <param name="impactedService"> Impacted service name. </param>
         /// <param name="impactedRegions"> List regions impacted by the service health event. </param>
-        internal ResourceHealthEventImpact(string impactedService, IReadOnlyList<ResourceHealthEventImpactedServiceRegion> impactedRegions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventImpact(string impactedService, IReadOnlyList<ResourceHealthEventImpactedServiceRegion> impactedRegions, Dictionary<string, BinaryData> rawData)
         {
             ImpactedService = impactedService;
             ImpactedRegions = impactedRegions;
+            _rawData = rawData;
         }
 
         /// <summary> Impacted service name. </summary>

@@ -5,15 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ErrorDeploymentExtended
+    public partial class ErrorDeploymentExtended : IUtf8JsonSerializable, IModelJsonSerializable<ErrorDeploymentExtended>
     {
-        internal static ErrorDeploymentExtended DeserializeErrorDeploymentExtended(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ErrorDeploymentExtended>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ErrorDeploymentExtended>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeploymentType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(DeploymentType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("deploymentName"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ErrorDeploymentExtended DeserializeErrorDeploymentExtended(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> provisioningState = default;
             Optional<ErrorDeploymentType> type = default;
             Optional<string> deploymentName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -42,8 +81,61 @@ namespace Azure.ResourceManager.Resources.Models
                     deploymentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value);
+            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value, rawData);
+        }
+
+        ErrorDeploymentExtended IModelJsonSerializable<ErrorDeploymentExtended>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeErrorDeploymentExtended(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ErrorDeploymentExtended>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ErrorDeploymentExtended IModelSerializable<ErrorDeploymentExtended>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeErrorDeploymentExtended(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ErrorDeploymentExtended"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ErrorDeploymentExtended"/> to convert. </param>
+        public static implicit operator RequestContent(ErrorDeploymentExtended model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ErrorDeploymentExtended"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ErrorDeploymentExtended(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeErrorDeploymentExtended(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

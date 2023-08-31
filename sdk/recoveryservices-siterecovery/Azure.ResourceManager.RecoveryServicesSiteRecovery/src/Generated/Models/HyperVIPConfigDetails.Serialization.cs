@@ -5,17 +5,129 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVIPConfigDetails
+    public partial class HyperVIPConfigDetails : IUtf8JsonSerializable, IModelJsonSerializable<HyperVIPConfigDetails>
     {
-        internal static HyperVIPConfigDetails DeserializeHyperVIPConfigDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVIPConfigDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVIPConfigDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsPrimary))
+            {
+                writer.WritePropertyName("isPrimary"u8);
+                writer.WriteBooleanValue(IsPrimary.Value);
+            }
+            if (Optional.IsDefined(SubnetName))
+            {
+                writer.WritePropertyName("subnetName"u8);
+                writer.WriteStringValue(SubnetName);
+            }
+            if (Optional.IsDefined(StaticIPAddress))
+            {
+                writer.WritePropertyName("staticIPAddress"u8);
+                writer.WriteStringValue(StaticIPAddress.ToString());
+            }
+            if (Optional.IsDefined(IPAddressType))
+            {
+                writer.WritePropertyName("ipAddressType"u8);
+                writer.WriteStringValue(IPAddressType);
+            }
+            if (Optional.IsDefined(IsSeletedForFailover))
+            {
+                writer.WritePropertyName("isSeletedForFailover"u8);
+                writer.WriteBooleanValue(IsSeletedForFailover.Value);
+            }
+            if (Optional.IsDefined(RecoverySubnetName))
+            {
+                writer.WritePropertyName("recoverySubnetName"u8);
+                writer.WriteStringValue(RecoverySubnetName);
+            }
+            if (Optional.IsDefined(RecoveryStaticIPAddress))
+            {
+                writer.WritePropertyName("recoveryStaticIPAddress"u8);
+                writer.WriteStringValue(RecoveryStaticIPAddress.ToString());
+            }
+            if (Optional.IsDefined(RecoveryIPAddressType))
+            {
+                writer.WritePropertyName("recoveryIPAddressType"u8);
+                writer.WriteStringValue(RecoveryIPAddressType);
+            }
+            if (Optional.IsDefined(RecoveryPublicIPAddressId))
+            {
+                writer.WritePropertyName("recoveryPublicIPAddressId"u8);
+                writer.WriteStringValue(RecoveryPublicIPAddressId);
+            }
+            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
+            {
+                writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecoveryLBBackendAddressPoolIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(TfoSubnetName))
+            {
+                writer.WritePropertyName("tfoSubnetName"u8);
+                writer.WriteStringValue(TfoSubnetName);
+            }
+            if (Optional.IsDefined(TfoStaticIPAddress))
+            {
+                writer.WritePropertyName("tfoStaticIPAddress"u8);
+                writer.WriteStringValue(TfoStaticIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TfoPublicIPAddressId))
+            {
+                writer.WritePropertyName("tfoPublicIPAddressId"u8);
+                writer.WriteStringValue(TfoPublicIPAddressId);
+            }
+            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
+            {
+                writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in TfoLBBackendAddressPoolIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HyperVIPConfigDetails DeserializeHyperVIPConfigDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IPAddress> tfoStaticIPAddress = default;
             Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
             Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -158,8 +271,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tfoLBBackendAddressPoolIds = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds));
+            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), rawData);
+        }
+
+        HyperVIPConfigDetails IModelJsonSerializable<HyperVIPConfigDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVIPConfigDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVIPConfigDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVIPConfigDetails IModelSerializable<HyperVIPConfigDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVIPConfigDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HyperVIPConfigDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HyperVIPConfigDetails"/> to convert. </param>
+        public static implicit operator RequestContent(HyperVIPConfigDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HyperVIPConfigDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HyperVIPConfigDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVIPConfigDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

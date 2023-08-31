@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of regulatory compliance standards response. </summary>
     internal partial class RegulatoryComplianceStandardList
     {
-        /// <summary> Initializes a new instance of RegulatoryComplianceStandardList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RegulatoryComplianceStandardList(IEnumerable<RegulatoryComplianceStandardData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RegulatoryComplianceStandardList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal RegulatoryComplianceStandardList(IReadOnlyList<RegulatoryComplianceStandardData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegulatoryComplianceStandardList(IReadOnlyList<RegulatoryComplianceStandardData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardList"/> for deserialization. </summary>
+        internal RegulatoryComplianceStandardList()
+        {
         }
 
         /// <summary> Gets the value. </summary>

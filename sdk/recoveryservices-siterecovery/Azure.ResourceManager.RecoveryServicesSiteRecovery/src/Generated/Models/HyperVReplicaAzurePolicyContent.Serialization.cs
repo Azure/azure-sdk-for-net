@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzurePolicyContent : IUtf8JsonSerializable
+    public partial class HyperVReplicaAzurePolicyContent : IUtf8JsonSerializable, IModelJsonSerializable<HyperVReplicaAzurePolicyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVReplicaAzurePolicyContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVReplicaAzurePolicyContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzurePolicyContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointHistoryDuration))
             {
@@ -47,7 +55,144 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HyperVReplicaAzurePolicyContent DeserializeHyperVReplicaAzurePolicyContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> recoveryPointHistoryDuration = default;
+            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
+            Optional<int> replicationInterval = default;
+            Optional<string> onlineReplicationStartTime = default;
+            Optional<IList<string>> storageAccounts = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPointHistoryDuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPointHistoryDuration = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("replicationInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replicationInterval = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("onlineReplicationStartTime"u8))
+                {
+                    onlineReplicationStartTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageAccounts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    storageAccounts = array;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HyperVReplicaAzurePolicyContent(instanceType, Optional.ToNullable(recoveryPointHistoryDuration), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, Optional.ToList(storageAccounts), rawData);
+        }
+
+        HyperVReplicaAzurePolicyContent IModelJsonSerializable<HyperVReplicaAzurePolicyContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzurePolicyContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzurePolicyContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVReplicaAzurePolicyContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzurePolicyContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVReplicaAzurePolicyContent IModelSerializable<HyperVReplicaAzurePolicyContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzurePolicyContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaAzurePolicyContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HyperVReplicaAzurePolicyContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HyperVReplicaAzurePolicyContent"/> to convert. </param>
+        public static implicit operator RequestContent(HyperVReplicaAzurePolicyContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HyperVReplicaAzurePolicyContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HyperVReplicaAzurePolicyContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVReplicaAzurePolicyContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

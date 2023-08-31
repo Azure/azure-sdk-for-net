@@ -5,15 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaBluePolicyDetails
+    public partial class HyperVReplicaBluePolicyDetails : IUtf8JsonSerializable, IModelJsonSerializable<HyperVReplicaBluePolicyDetails>
     {
-        internal static HyperVReplicaBluePolicyDetails DeserializeHyperVReplicaBluePolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVReplicaBluePolicyDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVReplicaBluePolicyDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaBluePolicyDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReplicationFrequencyInSeconds))
+            {
+                writer.WritePropertyName("replicationFrequencyInSeconds"u8);
+                writer.WriteNumberValue(ReplicationFrequencyInSeconds.Value);
+            }
+            if (Optional.IsDefined(RecoveryPoints))
+            {
+                writer.WritePropertyName("recoveryPoints"u8);
+                writer.WriteNumberValue(RecoveryPoints.Value);
+            }
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            {
+                writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
+                writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
+            }
+            if (Optional.IsDefined(Compression))
+            {
+                writer.WritePropertyName("compression"u8);
+                writer.WriteStringValue(Compression);
+            }
+            if (Optional.IsDefined(InitialReplicationMethod))
+            {
+                writer.WritePropertyName("initialReplicationMethod"u8);
+                writer.WriteStringValue(InitialReplicationMethod);
+            }
+            if (Optional.IsDefined(OnlineReplicationStartTime))
+            {
+                writer.WritePropertyName("onlineReplicationStartTime"u8);
+                writer.WriteStringValue(OnlineReplicationStartTime);
+            }
+            if (Optional.IsDefined(OfflineReplicationImportPath))
+            {
+                writer.WritePropertyName("offlineReplicationImportPath"u8);
+                writer.WriteStringValue(OfflineReplicationImportPath);
+            }
+            if (Optional.IsDefined(OfflineReplicationExportPath))
+            {
+                writer.WritePropertyName("offlineReplicationExportPath"u8);
+                writer.WriteStringValue(OfflineReplicationExportPath);
+            }
+            if (Optional.IsDefined(ReplicationPort))
+            {
+                writer.WritePropertyName("replicationPort"u8);
+                writer.WriteNumberValue(ReplicationPort.Value);
+            }
+            if (Optional.IsDefined(AllowedAuthenticationType))
+            {
+                writer.WritePropertyName("allowedAuthenticationType"u8);
+                writer.WriteNumberValue(AllowedAuthenticationType.Value);
+            }
+            if (Optional.IsDefined(ReplicaDeletionOption))
+            {
+                writer.WritePropertyName("replicaDeletionOption"u8);
+                writer.WriteStringValue(ReplicaDeletionOption);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HyperVReplicaBluePolicyDetails DeserializeHyperVReplicaBluePolicyDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<int> allowedAuthenticationType = default;
             Optional<string> replicaDeletionOption = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicationFrequencyInSeconds"u8))
@@ -112,8 +198,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HyperVReplicaBluePolicyDetails(instanceType, Optional.ToNullable(replicationFrequencyInSeconds), Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletionOption.Value);
+            return new HyperVReplicaBluePolicyDetails(instanceType, Optional.ToNullable(replicationFrequencyInSeconds), Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletionOption.Value, rawData);
+        }
+
+        HyperVReplicaBluePolicyDetails IModelJsonSerializable<HyperVReplicaBluePolicyDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaBluePolicyDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaBluePolicyDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVReplicaBluePolicyDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaBluePolicyDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVReplicaBluePolicyDetails IModelSerializable<HyperVReplicaBluePolicyDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaBluePolicyDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaBluePolicyDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HyperVReplicaBluePolicyDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HyperVReplicaBluePolicyDetails"/> to convert. </param>
+        public static implicit operator RequestContent(HyperVReplicaBluePolicyDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HyperVReplicaBluePolicyDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HyperVReplicaBluePolicyDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVReplicaBluePolicyDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public partial class WorkloadSapHanaPointInTimeRestoreContent : WorkloadSapHanaRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>. </summary>
         public WorkloadSapHanaPointInTimeRestoreContent()
         {
             ObjectType = "AzureWorkloadSAPHanaPointInTimeRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>
@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// For e.g. /subscriptions/{subId}/resourcegroups/{rg}/provider/Microsoft.Compute/virtualmachines/{vm}
         /// </param>
         /// <param name="pointInTime"> PointInTime value. </param>
-        internal WorkloadSapHanaPointInTimeRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, DateTimeOffset? pointInTime) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSapHanaPointInTimeRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, IDictionary<string, string> propertyBag, TargetRestoreInfo targetInfo, RecoveryMode? recoveryMode, ResourceIdentifier targetVirtualMachineId, DateTimeOffset? pointInTime, Dictionary<string, BinaryData> rawData) : base(objectType, recoveryType, sourceResourceId, propertyBag, targetInfo, recoveryMode, targetVirtualMachineId, rawData)
         {
             PointInTime = pointInTime;
             ObjectType = objectType ?? "AzureWorkloadSAPHanaPointInTimeRestoreRequest";

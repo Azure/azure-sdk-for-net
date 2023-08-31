@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TemplateSpecVersionInfo
+    public partial class TemplateSpecVersionInfo : IUtf8JsonSerializable, IModelJsonSerializable<TemplateSpecVersionInfo>
     {
-        internal static TemplateSpecVersionInfo DeserializeTemplateSpecVersionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TemplateSpecVersionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TemplateSpecVersionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TemplateSpecVersionInfo DeserializeTemplateSpecVersionInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> description = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> timeModified = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -47,8 +75,61 @@ namespace Azure.ResourceManager.Resources.Models
                     timeModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TemplateSpecVersionInfo(description.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified));
+            return new TemplateSpecVersionInfo(description.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), rawData);
+        }
+
+        TemplateSpecVersionInfo IModelJsonSerializable<TemplateSpecVersionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTemplateSpecVersionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TemplateSpecVersionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TemplateSpecVersionInfo IModelSerializable<TemplateSpecVersionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTemplateSpecVersionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TemplateSpecVersionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TemplateSpecVersionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(TemplateSpecVersionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TemplateSpecVersionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TemplateSpecVersionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTemplateSpecVersionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

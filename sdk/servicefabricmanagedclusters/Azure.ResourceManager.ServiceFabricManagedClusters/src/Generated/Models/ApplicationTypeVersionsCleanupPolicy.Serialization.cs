@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class ApplicationTypeVersionsCleanupPolicy : IUtf8JsonSerializable
+    internal partial class ApplicationTypeVersionsCleanupPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationTypeVersionsCleanupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationTypeVersionsCleanupPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationTypeVersionsCleanupPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("maxUnusedVersionsToKeep"u8);
             writer.WriteNumberValue(MaxUnusedVersionsToKeep);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationTypeVersionsCleanupPolicy DeserializeApplicationTypeVersionsCleanupPolicy(JsonElement element)
+        internal static ApplicationTypeVersionsCleanupPolicy DeserializeApplicationTypeVersionsCleanupPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int maxUnusedVersionsToKeep = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxUnusedVersionsToKeep"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     maxUnusedVersionsToKeep = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep);
+            return new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep, rawData);
+        }
+
+        ApplicationTypeVersionsCleanupPolicy IModelJsonSerializable<ApplicationTypeVersionsCleanupPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationTypeVersionsCleanupPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationTypeVersionsCleanupPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationTypeVersionsCleanupPolicy IModelSerializable<ApplicationTypeVersionsCleanupPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationTypeVersionsCleanupPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationTypeVersionsCleanupPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationTypeVersionsCleanupPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationTypeVersionsCleanupPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationTypeVersionsCleanupPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationTypeVersionsCleanupPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationTypeVersionsCleanupPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

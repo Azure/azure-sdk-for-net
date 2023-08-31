@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The details of the InMage agent. </summary>
     public partial class InMageAgentDetails
     {
-        /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageAgentDetails"/>. </summary>
         internal InMageAgentDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAgentDetails"/>. </summary>
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
         /// <param name="agentExpireOn"> Agent expiry date. </param>
-        internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpireOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpireOn, Dictionary<string, BinaryData> rawData)
         {
             AgentVersion = agentVersion;
             AgentUpdateStatus = agentUpdateStatus;
             PostUpdateRebootStatus = postUpdateRebootStatus;
             AgentExpireOn = agentExpireOn;
+            _rawData = rawData;
         }
 
         /// <summary> The agent version. </summary>

@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ServicePlacementInvalidDomainPolicy : IUtf8JsonSerializable
+    public partial class ServicePlacementInvalidDomainPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ServicePlacementInvalidDomainPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServicePlacementInvalidDomainPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServicePlacementInvalidDomainPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ServicePlacementInvalidDomainPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ServicePlacementPolicyType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServicePlacementInvalidDomainPolicy DeserializeServicePlacementInvalidDomainPolicy(JsonElement element)
+        internal static ServicePlacementInvalidDomainPolicy DeserializeServicePlacementInvalidDomainPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string domainName = default;
             ServicePlacementPolicyType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     type = new ServicePlacementPolicyType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServicePlacementInvalidDomainPolicy(type, domainName);
+            return new ServicePlacementInvalidDomainPolicy(type, domainName, rawData);
+        }
+
+        ServicePlacementInvalidDomainPolicy IModelJsonSerializable<ServicePlacementInvalidDomainPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePlacementInvalidDomainPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePlacementInvalidDomainPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePlacementInvalidDomainPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePlacementInvalidDomainPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePlacementInvalidDomainPolicy IModelSerializable<ServicePlacementInvalidDomainPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePlacementInvalidDomainPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePlacementInvalidDomainPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServicePlacementInvalidDomainPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServicePlacementInvalidDomainPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ServicePlacementInvalidDomainPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServicePlacementInvalidDomainPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServicePlacementInvalidDomainPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServicePlacementInvalidDomainPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

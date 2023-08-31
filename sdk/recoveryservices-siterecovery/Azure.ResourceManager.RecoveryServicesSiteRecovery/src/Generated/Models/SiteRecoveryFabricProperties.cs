@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Fabric properties. </summary>
     public partial class SiteRecoveryFabricProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProperties"/>. </summary>
         internal SiteRecoveryFabricProperties()
         {
             HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricProperties"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the fabric. </param>
         /// <param name="encryptionDetails"> Encryption details for the fabric. </param>
         /// <param name="rolloverEncryptionDetails"> Rollover encryption details for the fabric. </param>
@@ -32,7 +35,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </param>
         /// <param name="healthErrorDetails"> Fabric health error details. </param>
         /// <param name="health"> Health of fabric. </param>
-        internal SiteRecoveryFabricProperties(string friendlyName, SiteRecoveryEncryptionDetails encryptionDetails, SiteRecoveryEncryptionDetails rolloverEncryptionDetails, string internalIdentifier, string bcdrState, FabricSpecificDetails customDetails, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string health)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryFabricProperties(string friendlyName, SiteRecoveryEncryptionDetails encryptionDetails, SiteRecoveryEncryptionDetails rolloverEncryptionDetails, string internalIdentifier, string bcdrState, FabricSpecificDetails customDetails, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string health, Dictionary<string, BinaryData> rawData)
         {
             FriendlyName = friendlyName;
             EncryptionDetails = encryptionDetails;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
             HealthErrorDetails = healthErrorDetails;
             Health = health;
+            _rawData = rawData;
         }
 
         /// <summary> Friendly name of the fabric. </summary>

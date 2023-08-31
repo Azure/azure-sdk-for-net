@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPolicyInitiateVirtualMachine : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyInitiateVirtualMachine : IUtf8JsonSerializable, IModelJsonSerializable<JitNetworkAccessPolicyInitiateVirtualMachine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JitNetworkAccessPolicyInitiateVirtualMachine>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JitNetworkAccessPolicyInitiateVirtualMachine>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -21,10 +29,114 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JitNetworkAccessPolicyInitiatePort>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JitNetworkAccessPolicyInitiateVirtualMachine DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier id = default;
+            IList<JitNetworkAccessPolicyInitiatePort> ports = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ports"u8))
+                {
+                    List<JitNetworkAccessPolicyInitiatePort> array = new List<JitNetworkAccessPolicyInitiatePort>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JitNetworkAccessPolicyInitiatePort.DeserializeJitNetworkAccessPolicyInitiatePort(item));
+                    }
+                    ports = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JitNetworkAccessPolicyInitiateVirtualMachine(id, ports, rawData);
+        }
+
+        JitNetworkAccessPolicyInitiateVirtualMachine IModelJsonSerializable<JitNetworkAccessPolicyInitiateVirtualMachine>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JitNetworkAccessPolicyInitiateVirtualMachine>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JitNetworkAccessPolicyInitiateVirtualMachine IModelSerializable<JitNetworkAccessPolicyInitiateVirtualMachine>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JitNetworkAccessPolicyInitiateVirtualMachine"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JitNetworkAccessPolicyInitiateVirtualMachine"/> to convert. </param>
+        public static implicit operator RequestContent(JitNetworkAccessPolicyInitiateVirtualMachine model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JitNetworkAccessPolicyInitiateVirtualMachine"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JitNetworkAccessPolicyInitiateVirtualMachine(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

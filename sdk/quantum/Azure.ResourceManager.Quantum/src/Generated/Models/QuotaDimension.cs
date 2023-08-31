@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Information about a specific quota dimension. </summary>
     public partial class QuotaDimension
     {
-        /// <summary> Initializes a new instance of QuotaDimension. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaDimension"/>. </summary>
         internal QuotaDimension()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaDimension"/>. </summary>
         /// <param name="id"> Unique id of this dimension. </param>
         /// <param name="scope"> The scope of this quota dimension. </param>
         /// <param name="period"> The reset period of this quota dimension. </param>
@@ -24,7 +29,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="description"> A description about this quota dimension. </param>
         /// <param name="unit"> The standard unit of measurement used for this quota dimension. </param>
         /// <param name="unitPlural"> The standard unit of measurement used for this quota dimension in plural form. </param>
-        internal QuotaDimension(string id, string scope, string period, float? quota, string name, string description, string unit, string unitPlural)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaDimension(string id, string scope, string period, float? quota, string name, string description, string unit, string unitPlural, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Scope = scope;
@@ -34,6 +40,7 @@ namespace Azure.ResourceManager.Quantum.Models
             Description = description;
             Unit = unit;
             UnitPlural = unitPlural;
+            _rawData = rawData;
         }
 
         /// <summary> Unique id of this dimension. </summary>

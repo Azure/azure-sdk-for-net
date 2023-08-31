@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Test migrate cleanup input properties. </summary>
     public partial class TestMigrateCleanupProperties
     {
-        /// <summary> Initializes a new instance of TestMigrateCleanupProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupProperties"/>. </summary>
         public TestMigrateCleanupProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupProperties"/>. </summary>
+        /// <param name="comments"> Test migrate cleanup comments. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TestMigrateCleanupProperties(string comments, Dictionary<string, BinaryData> rawData)
+        {
+            Comments = comments;
+            _rawData = rawData;
         }
 
         /// <summary> Test migrate cleanup comments. </summary>

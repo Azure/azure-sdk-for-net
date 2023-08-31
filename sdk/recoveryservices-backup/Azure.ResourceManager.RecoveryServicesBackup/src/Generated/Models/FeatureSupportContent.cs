@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -14,9 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class FeatureSupportContent
     {
-        /// <summary> Initializes a new instance of FeatureSupportContent. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSupportContent"/>. </summary>
         protected FeatureSupportContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSupportContent"/>. </summary>
+        /// <param name="featureType"> backup support feature type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureSupportContent(string featureType, Dictionary<string, BinaryData> rawData)
+        {
+            FeatureType = featureType;
+            _rawData = rawData;
         }
 
         /// <summary> backup support feature type. </summary>

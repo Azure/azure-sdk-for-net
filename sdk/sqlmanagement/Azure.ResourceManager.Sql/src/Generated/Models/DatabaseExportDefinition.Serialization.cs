@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseExportDefinition : IUtf8JsonSerializable
+    public partial class DatabaseExportDefinition : IUtf8JsonSerializable, IModelJsonSerializable<DatabaseExportDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatabaseExportDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatabaseExportDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageKeyType"u8);
             writer.WriteStringValue(StorageKeyType.ToString());
@@ -33,9 +41,142 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue(NetworkIsolation);
+                if (NetworkIsolation is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NetworkIsolationSettings>)NetworkIsolation).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static DatabaseExportDefinition DeserializeDatabaseExportDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            StorageKeyType storageKeyType = default;
+            string storageKey = default;
+            Uri storageUri = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            Optional<string> authenticationType = default;
+            Optional<NetworkIsolationSettings> networkIsolation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageKeyType"u8))
+                {
+                    storageKeyType = new StorageKeyType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageKey"u8))
+                {
+                    storageKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("storageUri"u8))
+                {
+                    storageUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("administratorLogin"u8))
+                {
+                    administratorLogin = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("administratorLoginPassword"u8))
+                {
+                    administratorLoginPassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authenticationType"u8))
+                {
+                    authenticationType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("networkIsolation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DatabaseExportDefinition(storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, rawData);
+        }
+
+        DatabaseExportDefinition IModelJsonSerializable<DatabaseExportDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseExportDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatabaseExportDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatabaseExportDefinition IModelSerializable<DatabaseExportDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatabaseExportDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatabaseExportDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatabaseExportDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(DatabaseExportDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatabaseExportDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatabaseExportDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatabaseExportDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

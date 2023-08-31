@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationMergeProperties
+    public partial class ReservationMergeProperties : IUtf8JsonSerializable, IModelJsonSerializable<ReservationMergeProperties>
     {
-        internal static ReservationMergeProperties DeserializeReservationMergeProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationMergeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationMergeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MergeDestination))
+            {
+                writer.WritePropertyName("mergeDestination"u8);
+                writer.WriteStringValue(MergeDestination);
+            }
+            if (Optional.IsCollectionDefined(MergeSources))
+            {
+                writer.WritePropertyName("mergeSources"u8);
+                writer.WriteStartArray();
+                foreach (var item in MergeSources)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationMergeProperties DeserializeReservationMergeProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> mergeDestination = default;
             Optional<IReadOnlyList<string>> mergeSources = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mergeDestination"u8))
@@ -42,8 +85,61 @@ namespace Azure.ResourceManager.Reservations.Models
                     mergeSources = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationMergeProperties(mergeDestination.Value, Optional.ToList(mergeSources));
+            return new ReservationMergeProperties(mergeDestination.Value, Optional.ToList(mergeSources), rawData);
+        }
+
+        ReservationMergeProperties IModelJsonSerializable<ReservationMergeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationMergeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationMergeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationMergeProperties IModelSerializable<ReservationMergeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationMergeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ReservationMergeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ReservationMergeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ReservationMergeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ReservationMergeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ReservationMergeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationMergeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> CalculateExchange response properties. </summary>
     public partial class CalculateExchangeResultProperties
     {
-        /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResultProperties"/>. </summary>
         internal CalculateExchangeResultProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationToPurchaseCalculateExchange>();
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ReservationsToExchange = new ChangeTrackingList<ReservationToExchange>();
         }
 
-        /// <summary> Initializes a new instance of CalculateExchangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResultProperties"/>. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
         /// <param name="netPayable"> Pricing information containing the amount and the currency code. </param>
         /// <param name="refundsTotal"> Pricing information containing the amount and the currency code. </param>
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="savingsPlansToPurchase"> Details of the savings plans being purchased. </param>
         /// <param name="reservationsToExchange"> Details of the reservations being returned. </param>
         /// <param name="policyResult"> Exchange policy errors. </param>
-        internal CalculateExchangeResultProperties(Guid? sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseCalculateExchange> reservationsToPurchase, IReadOnlyList<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase, IReadOnlyList<ReservationToExchange> reservationsToExchange, ExchangePolicyErrors policyResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CalculateExchangeResultProperties(Guid? sessionId, PurchasePrice netPayable, PurchasePrice refundsTotal, PurchasePrice purchasesTotal, IReadOnlyList<ReservationToPurchaseCalculateExchange> reservationsToPurchase, IReadOnlyList<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase, IReadOnlyList<ReservationToExchange> reservationsToExchange, ExchangePolicyErrors policyResult, Dictionary<string, BinaryData> rawData)
         {
             SessionId = sessionId;
             NetPayable = netPayable;
@@ -41,6 +44,7 @@ namespace Azure.ResourceManager.Reservations.Models
             SavingsPlansToPurchase = savingsPlansToPurchase;
             ReservationsToExchange = reservationsToExchange;
             PolicyResult = policyResult;
+            _rawData = rawData;
         }
 
         /// <summary> Exchange session identifier. </summary>

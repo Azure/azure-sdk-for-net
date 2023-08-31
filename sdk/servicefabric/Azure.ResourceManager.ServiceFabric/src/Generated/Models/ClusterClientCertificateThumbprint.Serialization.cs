@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterClientCertificateThumbprint : IUtf8JsonSerializable
+    public partial class ClusterClientCertificateThumbprint : IUtf8JsonSerializable, IModelJsonSerializable<ClusterClientCertificateThumbprint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterClientCertificateThumbprint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterClientCertificateThumbprint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
@@ -24,17 +31,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(CertificateThumbprint.ToString()).RootElement);
 #endif
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterClientCertificateThumbprint DeserializeClusterClientCertificateThumbprint(JsonElement element)
+        internal static ClusterClientCertificateThumbprint DeserializeClusterClientCertificateThumbprint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool isAdmin = default;
             BinaryData certificateThumbprint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isAdmin"u8))
@@ -47,8 +69,61 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     certificateThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterClientCertificateThumbprint(isAdmin, certificateThumbprint);
+            return new ClusterClientCertificateThumbprint(isAdmin, certificateThumbprint, rawData);
+        }
+
+        ClusterClientCertificateThumbprint IModelJsonSerializable<ClusterClientCertificateThumbprint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterClientCertificateThumbprint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterClientCertificateThumbprint>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterClientCertificateThumbprint IModelSerializable<ClusterClientCertificateThumbprint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterClientCertificateThumbprint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterClientCertificateThumbprint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterClientCertificateThumbprint"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterClientCertificateThumbprint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterClientCertificateThumbprint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterClientCertificateThumbprint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterClientCertificateThumbprint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

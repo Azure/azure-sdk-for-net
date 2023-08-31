@@ -8,14 +8,92 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthEventImpactedServiceRegion
+    public partial class ResourceHealthEventImpactedServiceRegion : IUtf8JsonSerializable, IModelJsonSerializable<ResourceHealthEventImpactedServiceRegion>
     {
-        internal static ResourceHealthEventImpactedServiceRegion DeserializeResourceHealthEventImpactedServiceRegion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceHealthEventImpactedServiceRegion>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceHealthEventImpactedServiceRegion>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ImpactedRegion))
+            {
+                writer.WritePropertyName("impactedRegion"u8);
+                writer.WriteStringValue(ImpactedRegion);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ImpactedSubscriptions))
+            {
+                writer.WritePropertyName("impactedSubscriptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImpactedSubscriptions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ImpactedTenants))
+            {
+                writer.WritePropertyName("impactedTenants"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImpactedTenants)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LastUpdateOn))
+            {
+                writer.WritePropertyName("lastUpdateTime"u8);
+                writer.WriteStringValue(LastUpdateOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Updates))
+            {
+                writer.WritePropertyName("updates"u8);
+                writer.WriteStartArray();
+                foreach (var item in Updates)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceHealthEventUpdate>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceHealthEventImpactedServiceRegion DeserializeResourceHealthEventImpactedServiceRegion(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +104,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<IReadOnlyList<string>> impactedTenants = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<IReadOnlyList<ResourceHealthEventUpdate>> updates = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedRegion"u8))
@@ -93,8 +172,61 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     updates = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates));
+            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates), rawData);
+        }
+
+        ResourceHealthEventImpactedServiceRegion IModelJsonSerializable<ResourceHealthEventImpactedServiceRegion>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthEventImpactedServiceRegion(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceHealthEventImpactedServiceRegion>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceHealthEventImpactedServiceRegion IModelSerializable<ResourceHealthEventImpactedServiceRegion>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceHealthEventImpactedServiceRegion(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceHealthEventImpactedServiceRegion"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceHealthEventImpactedServiceRegion"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceHealthEventImpactedServiceRegion model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceHealthEventImpactedServiceRegion"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceHealthEventImpactedServiceRegion(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceHealthEventImpactedServiceRegion(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

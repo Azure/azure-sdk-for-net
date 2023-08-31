@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describes properties of a connected resource. </summary>
     public partial class ConnectedResourceInfo
     {
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         internal ConnectedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedResourceInfo"/>. </summary>
         /// <param name="connectedResourceId"> The Azure resource id of the connected resource. </param>
         /// <param name="tcpPorts"> The allowed tcp ports. </param>
         /// <param name="udpPorts"> The allowed udp ports. </param>
-        internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedResourceInfo(ResourceIdentifier connectedResourceId, string tcpPorts, string udpPorts, Dictionary<string, BinaryData> rawData)
         {
             ConnectedResourceId = connectedResourceId;
             TcpPorts = tcpPorts;
             UdpPorts = udpPorts;
+            _rawData = rawData;
         }
 
         /// <summary> The Azure resource id of the connected resource. </summary>

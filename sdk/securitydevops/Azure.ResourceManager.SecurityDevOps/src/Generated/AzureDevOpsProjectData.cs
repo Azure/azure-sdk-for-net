@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityDevOps.Models;
@@ -17,20 +19,24 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// </summary>
     public partial class AzureDevOpsProjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectData"/>. </summary>
         public AzureDevOpsProjectData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> AzureDevOps Project properties. </param>
-        internal AzureDevOpsProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureDevOpsProjectProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureDevOpsProjectProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> AzureDevOps Project properties. </summary>

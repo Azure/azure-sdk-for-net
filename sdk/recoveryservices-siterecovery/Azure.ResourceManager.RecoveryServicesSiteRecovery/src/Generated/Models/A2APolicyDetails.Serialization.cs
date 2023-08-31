@@ -5,15 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2APolicyDetails
+    public partial class A2APolicyDetails : IUtf8JsonSerializable, IModelJsonSerializable<A2APolicyDetails>
     {
-        internal static A2APolicyDetails DeserializeA2APolicyDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<A2APolicyDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<A2APolicyDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<A2APolicyDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryPointThresholdInMinutes))
+            {
+                writer.WritePropertyName("recoveryPointThresholdInMinutes"u8);
+                writer.WriteNumberValue(RecoveryPointThresholdInMinutes.Value);
+            }
+            if (Optional.IsDefined(RecoveryPointHistory))
+            {
+                writer.WritePropertyName("recoveryPointHistory"u8);
+                writer.WriteNumberValue(RecoveryPointHistory.Value);
+            }
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
+            }
+            if (Optional.IsDefined(MultiVmSyncStatus))
+            {
+                writer.WritePropertyName("multiVmSyncStatus"u8);
+                writer.WriteStringValue(MultiVmSyncStatus);
+            }
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            {
+                writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
+                writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static A2APolicyDetails DeserializeA2APolicyDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> multiVmSyncStatus = default;
             Optional<int> crashConsistentFrequencyInMinutes = default;
             string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointThresholdInMinutes"u8))
@@ -72,8 +128,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new A2APolicyDetails(instanceType, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new A2APolicyDetails(instanceType, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, Optional.ToNullable(crashConsistentFrequencyInMinutes), rawData);
+        }
+
+        A2APolicyDetails IModelJsonSerializable<A2APolicyDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2APolicyDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeA2APolicyDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<A2APolicyDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2APolicyDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        A2APolicyDetails IModelSerializable<A2APolicyDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<A2APolicyDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeA2APolicyDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="A2APolicyDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="A2APolicyDetails"/> to convert. </param>
+        public static implicit operator RequestContent(A2APolicyDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="A2APolicyDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator A2APolicyDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeA2APolicyDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

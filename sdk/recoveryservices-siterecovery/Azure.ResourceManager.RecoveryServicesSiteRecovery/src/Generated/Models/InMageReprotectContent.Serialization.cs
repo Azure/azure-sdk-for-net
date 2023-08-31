@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageReprotectContent : IUtf8JsonSerializable
+    public partial class InMageReprotectContent : IUtf8JsonSerializable, IModelJsonSerializable<InMageReprotectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InMageReprotectContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InMageReprotectContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<InMageReprotectContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("masterTargetId"u8);
             writer.WriteStringValue(MasterTargetId);
@@ -34,7 +42,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
-                writer.WriteObjectValue(DiskExclusionContent);
+                if (DiskExclusionContent is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<InMageDiskExclusionContent>)DiskExclusionContent).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
@@ -50,7 +65,154 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static InMageReprotectContent DeserializeInMageReprotectContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string masterTargetId = default;
+            Guid processServerId = default;
+            string retentionDrive = default;
+            Optional<string> runAsAccountId = default;
+            Optional<string> datastoreName = default;
+            Optional<InMageDiskExclusionContent> diskExclusionContent = default;
+            string profileId = default;
+            Optional<IList<string>> disksToInclude = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("masterTargetId"u8))
+                {
+                    masterTargetId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("processServerId"u8))
+                {
+                    processServerId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("retentionDrive"u8))
+                {
+                    retentionDrive = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("runAsAccountId"u8))
+                {
+                    runAsAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("datastoreName"u8))
+                {
+                    datastoreName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskExclusionInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("profileId"u8))
+                {
+                    profileId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("disksToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    disksToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new InMageReprotectContent(instanceType, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, datastoreName.Value, diskExclusionContent.Value, profileId, Optional.ToList(disksToInclude), rawData);
+        }
+
+        InMageReprotectContent IModelJsonSerializable<InMageReprotectContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageReprotectContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageReprotectContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InMageReprotectContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageReprotectContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InMageReprotectContent IModelSerializable<InMageReprotectContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<InMageReprotectContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInMageReprotectContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="InMageReprotectContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="InMageReprotectContent"/> to convert. </param>
+        public static implicit operator RequestContent(InMageReprotectContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="InMageReprotectContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator InMageReprotectContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInMageReprotectContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

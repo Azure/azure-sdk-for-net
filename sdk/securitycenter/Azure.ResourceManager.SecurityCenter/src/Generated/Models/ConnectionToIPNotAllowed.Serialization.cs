@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ConnectionToIPNotAllowed : IUtf8JsonSerializable
+    public partial class ConnectionToIPNotAllowed : IUtf8JsonSerializable, IModelJsonSerializable<ConnectionToIPNotAllowed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectionToIPNotAllowed>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectionToIPNotAllowed>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ConnectionToIPNotAllowed>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("allowlistValues"u8);
             writer.WriteStartArray();
@@ -27,11 +34,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectionToIPNotAllowed DeserializeConnectionToIPNotAllowed(JsonElement element)
+        internal static ConnectionToIPNotAllowed DeserializeConnectionToIPNotAllowed(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowlistValues"u8))
@@ -83,8 +105,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ruleType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectionToIPNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType), allowlistValues);
+            return new ConnectionToIPNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType), allowlistValues, rawData);
+        }
+
+        ConnectionToIPNotAllowed IModelJsonSerializable<ConnectionToIPNotAllowed>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConnectionToIPNotAllowed>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionToIPNotAllowed(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectionToIPNotAllowed>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConnectionToIPNotAllowed>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectionToIPNotAllowed IModelSerializable<ConnectionToIPNotAllowed>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ConnectionToIPNotAllowed>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectionToIPNotAllowed(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectionToIPNotAllowed"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectionToIPNotAllowed"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectionToIPNotAllowed model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectionToIPNotAllowed"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectionToIPNotAllowed(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectionToIPNotAllowed(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,19 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class UpdateApplianceForReplicationProtectedItemContent : IUtf8JsonSerializable
+    public partial class UpdateApplianceForReplicationProtectedItemContent : IUtf8JsonSerializable, IModelJsonSerializable<UpdateApplianceForReplicationProtectedItemContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateApplianceForReplicationProtectedItemContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateApplianceForReplicationProtectedItemContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<UpdateApplianceForReplicationProtectedItemProperties>)Properties).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static UpdateApplianceForReplicationProtectedItemContent DeserializeUpdateApplianceForReplicationProtectedItemContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            UpdateApplianceForReplicationProtectedItemProperties properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = UpdateApplianceForReplicationProtectedItemProperties.DeserializeUpdateApplianceForReplicationProtectedItemProperties(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UpdateApplianceForReplicationProtectedItemContent(properties, rawData);
+        }
+
+        UpdateApplianceForReplicationProtectedItemContent IModelJsonSerializable<UpdateApplianceForReplicationProtectedItemContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateApplianceForReplicationProtectedItemContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateApplianceForReplicationProtectedItemContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateApplianceForReplicationProtectedItemContent IModelSerializable<UpdateApplianceForReplicationProtectedItemContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateApplianceForReplicationProtectedItemContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UpdateApplianceForReplicationProtectedItemContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UpdateApplianceForReplicationProtectedItemContent"/> to convert. </param>
+        public static implicit operator RequestContent(UpdateApplianceForReplicationProtectedItemContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateApplianceForReplicationProtectedItemContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UpdateApplianceForReplicationProtectedItemContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateApplianceForReplicationProtectedItemContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Response for check name availability API. Resource provider will set availability as true | false. </summary>
     public partial class RecoveryServicesNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of RecoveryServicesNameAvailabilityResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesNameAvailabilityResult"/>. </summary>
         internal RecoveryServicesNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>
-        internal RecoveryServicesNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesNameAvailabilityResult(bool? isNameAvailable, string reason, string message, Dictionary<string, BinaryData> rawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the is name available. </summary>

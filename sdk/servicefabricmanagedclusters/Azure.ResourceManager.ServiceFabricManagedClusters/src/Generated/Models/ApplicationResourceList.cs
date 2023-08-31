@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The list of application resources. </summary>
     internal partial class ApplicationResourceList
     {
-        /// <summary> Initializes a new instance of ApplicationResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationResourceList"/>. </summary>
         internal ApplicationResourceList()
         {
             Value = new ChangeTrackingList<ServiceFabricManagedApplicationData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationResourceList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of application list results if there are any. </param>
-        internal ApplicationResourceList(IReadOnlyList<ServiceFabricManagedApplicationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationResourceList(IReadOnlyList<ServiceFabricManagedApplicationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

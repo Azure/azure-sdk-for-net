@@ -15,14 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Process server details. </summary>
     public partial class SiteRecoveryProcessServerDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServerDetails"/>. </summary>
         internal SiteRecoveryProcessServerDetails()
         {
             IPAddresses = new ChangeTrackingList<IPAddress>();
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServerDetails"/>. </summary>
         /// <param name="id"> The process server Id. </param>
         /// <param name="name"> The process server name. </param>
         /// <param name="biosId"> The process server Bios Id. </param>
@@ -52,7 +54,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="historicHealth"> The historic health of the process server based on the health in last 24 hours. </param>
-        internal SiteRecoveryProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatReceivedOn, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, SiteRecoveryProtectionHealth? historicHealth)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatReceivedOn, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, SiteRecoveryProtectionHealth? historicHealth, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -83,6 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             ProtectedItemCount = protectedItemCount;
             HistoricHealth = historicHealth;
+            _rawData = rawData;
         }
 
         /// <summary> The process server Id. </summary>

@@ -5,16 +5,98 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class TestFailoverJobDetails
+    public partial class TestFailoverJobDetails : IUtf8JsonSerializable, IModelJsonSerializable<TestFailoverJobDetails>
     {
-        internal static TestFailoverJobDetails DeserializeTestFailoverJobDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TestFailoverJobDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TestFailoverJobDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TestFailoverJobDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TestFailoverStatus))
+            {
+                writer.WritePropertyName("testFailoverStatus"u8);
+                writer.WriteStringValue(TestFailoverStatus);
+            }
+            if (Optional.IsDefined(Comments))
+            {
+                writer.WritePropertyName("comments"u8);
+                writer.WriteStringValue(Comments);
+            }
+            if (Optional.IsDefined(NetworkName))
+            {
+                writer.WritePropertyName("networkName"u8);
+                writer.WriteStringValue(NetworkName);
+            }
+            if (Optional.IsDefined(NetworkFriendlyName))
+            {
+                writer.WritePropertyName("networkFriendlyName"u8);
+                writer.WriteStringValue(NetworkFriendlyName);
+            }
+            if (Optional.IsDefined(NetworkType))
+            {
+                writer.WritePropertyName("networkType"u8);
+                writer.WriteStringValue(NetworkType);
+            }
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
+            {
+                writer.WritePropertyName("protectedItemDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedItemDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FailoverReplicationProtectedItemDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
+            {
+                writer.WritePropertyName("affectedObjectDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in AffectedObjectDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TestFailoverJobDetails DeserializeTestFailoverJobDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
             string instanceType = default;
             Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("testFailoverStatus"u8))
@@ -87,8 +170,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     affectedObjectDetails = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TestFailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, Optional.ToList(protectedItemDetails));
+            return new TestFailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, Optional.ToList(protectedItemDetails), rawData);
+        }
+
+        TestFailoverJobDetails IModelJsonSerializable<TestFailoverJobDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TestFailoverJobDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTestFailoverJobDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TestFailoverJobDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TestFailoverJobDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TestFailoverJobDetails IModelSerializable<TestFailoverJobDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TestFailoverJobDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTestFailoverJobDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TestFailoverJobDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TestFailoverJobDetails"/> to convert. </param>
+        public static implicit operator RequestContent(TestFailoverJobDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TestFailoverJobDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TestFailoverJobDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTestFailoverJobDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

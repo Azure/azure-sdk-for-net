@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAlertSupportingEvidence : IUtf8JsonSerializable
+    public partial class SecurityAlertSupportingEvidence : IUtf8JsonSerializable, IModelJsonSerializable<SecurityAlertSupportingEvidence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityAlertSupportingEvidence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityAlertSupportingEvidence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             foreach (var item in AdditionalProperties)
             {
@@ -29,8 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityAlertSupportingEvidence DeserializeSecurityAlertSupportingEvidence(JsonElement element)
+        internal static SecurityAlertSupportingEvidence DeserializeSecurityAlertSupportingEvidence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +57,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SecurityAlertSupportingEvidence(type.Value, additionalProperties);
+        }
+
+        SecurityAlertSupportingEvidence IModelJsonSerializable<SecurityAlertSupportingEvidence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAlertSupportingEvidence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityAlertSupportingEvidence>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityAlertSupportingEvidence IModelSerializable<SecurityAlertSupportingEvidence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityAlertSupportingEvidence(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityAlertSupportingEvidence"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityAlertSupportingEvidence"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityAlertSupportingEvidence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityAlertSupportingEvidence"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityAlertSupportingEvidence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityAlertSupportingEvidence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureUnplannedFailoverContent : IUtf8JsonSerializable
+    public partial class HyperVReplicaAzureUnplannedFailoverContent : IUtf8JsonSerializable, IModelJsonSerializable<HyperVReplicaAzureUnplannedFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HyperVReplicaAzureUnplannedFailoverContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HyperVReplicaAzureUnplannedFailoverContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureUnplannedFailoverContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
@@ -32,7 +40,115 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HyperVReplicaAzureUnplannedFailoverContent DeserializeHyperVReplicaAzureUnplannedFailoverContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> primaryKekCertificatePfx = default;
+            Optional<string> secondaryKekCertificatePfx = default;
+            Optional<ResourceIdentifier> recoveryPointId = default;
+            string instanceType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("primaryKekCertificatePfx"u8))
+                {
+                    primaryKekCertificatePfx = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secondaryKekCertificatePfx"u8))
+                {
+                    secondaryKekCertificatePfx = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryPointId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HyperVReplicaAzureUnplannedFailoverContent(instanceType, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, recoveryPointId.Value, rawData);
+        }
+
+        HyperVReplicaAzureUnplannedFailoverContent IModelJsonSerializable<HyperVReplicaAzureUnplannedFailoverContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureUnplannedFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzureUnplannedFailoverContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HyperVReplicaAzureUnplannedFailoverContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureUnplannedFailoverContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HyperVReplicaAzureUnplannedFailoverContent IModelSerializable<HyperVReplicaAzureUnplannedFailoverContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HyperVReplicaAzureUnplannedFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaAzureUnplannedFailoverContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HyperVReplicaAzureUnplannedFailoverContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HyperVReplicaAzureUnplannedFailoverContent"/> to convert. </param>
+        public static implicit operator RequestContent(HyperVReplicaAzureUnplannedFailoverContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HyperVReplicaAzureUnplannedFailoverContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HyperVReplicaAzureUnplannedFailoverContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHyperVReplicaAzureUnplannedFailoverContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

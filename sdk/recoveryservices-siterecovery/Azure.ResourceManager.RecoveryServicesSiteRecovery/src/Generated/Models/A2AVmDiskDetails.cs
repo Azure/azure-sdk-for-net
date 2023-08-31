@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A disk input details. </summary>
     public partial class A2AVmDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AVmDiskDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk Uri. </param>
         /// <param name="recoveryAzureStorageAccountId"> The recovery VHD storage account Id. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Id. </param>
@@ -27,6 +30,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskUri = diskUri;
             RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmDiskDetails"/>. </summary>
+        /// <param name="diskUri"> The disk Uri. </param>
+        /// <param name="recoveryAzureStorageAccountId"> The recovery VHD storage account Id. </param>
+        /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account Id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AVmDiskDetails(Uri diskUri, ResourceIdentifier recoveryAzureStorageAccountId, ResourceIdentifier primaryStagingAzureStorageAccountId, Dictionary<string, BinaryData> rawData)
+        {
+            DiskUri = diskUri;
+            RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;
+            PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2AVmDiskDetails"/> for deserialization. </summary>
+        internal A2AVmDiskDetails()
+        {
         }
 
         /// <summary> The disk Uri. </summary>

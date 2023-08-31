@@ -5,30 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleRunPlaybookAction : IUtf8JsonSerializable
+    public partial class AutomationRuleRunPlaybookAction : IUtf8JsonSerializable, IModelJsonSerializable<AutomationRuleRunPlaybookAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationRuleRunPlaybookAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationRuleRunPlaybookAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AutomationRuleRunPlaybookAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
-                writer.WriteObjectValue(ActionConfiguration);
+                if (ActionConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutomationRuleRunPlaybookActionProperties>)ActionConfiguration).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element)
+        internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionConfiguration"u8))
@@ -57,8 +87,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     actionType = new ActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationRuleRunPlaybookAction(order, actionType, actionConfiguration.Value);
+            return new AutomationRuleRunPlaybookAction(order, actionType, actionConfiguration.Value, rawData);
+        }
+
+        AutomationRuleRunPlaybookAction IModelJsonSerializable<AutomationRuleRunPlaybookAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AutomationRuleRunPlaybookAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRuleRunPlaybookAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationRuleRunPlaybookAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AutomationRuleRunPlaybookAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationRuleRunPlaybookAction IModelSerializable<AutomationRuleRunPlaybookAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AutomationRuleRunPlaybookAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationRuleRunPlaybookAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomationRuleRunPlaybookAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomationRuleRunPlaybookAction"/> to convert. </param>
+        public static implicit operator RequestContent(AutomationRuleRunPlaybookAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomationRuleRunPlaybookAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationRuleRunPlaybookAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,20 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class PurviewAccountProperties : IUtf8JsonSerializable
+    public partial class PurviewAccountProperties : IUtf8JsonSerializable, IModelJsonSerializable<PurviewAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PurviewAccountProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PurviewAccountProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue(CloudConnectors);
+                if (CloudConnectors is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CloudConnectors>)CloudConnectors).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ManagedResourceGroupName))
             {
@@ -30,7 +46,186 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PurviewAccountProperties DeserializePurviewAccountProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CloudConnectors> cloudConnectors = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<string> createdBy = default;
+            Optional<string> createdByObjectId = default;
+            Optional<PurviewAccountEndpoint> endpoints = default;
+            Optional<string> friendlyName = default;
+            Optional<string> managedResourceGroupName = default;
+            Optional<PurviewManagedResource> managedResources = default;
+            Optional<IReadOnlyList<PurviewPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<PurviewProvisioningState> provisioningState = default;
+            Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("cloudConnectors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createdAt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdAt = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("createdBy"u8))
+                {
+                    createdBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdByObjectId"u8))
+                {
+                    createdByObjectId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("endpoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("friendlyName"u8))
+                {
+                    friendlyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("managedResourceGroupName"u8))
+                {
+                    managedResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("managedResources"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("privateEndpointConnections"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PurviewPrivateEndpointConnectionData> array = new List<PurviewPrivateEndpointConnectionData>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(item));
+                    }
+                    privateEndpointConnections = array;
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new PurviewProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new PurviewPublicNetworkAccess(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PurviewAccountProperties(cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, managedResourceGroupName.Value, managedResources.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), rawData);
+        }
+
+        PurviewAccountProperties IModelJsonSerializable<PurviewAccountProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePurviewAccountProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PurviewAccountProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PurviewAccountProperties IModelSerializable<PurviewAccountProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePurviewAccountProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PurviewAccountProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PurviewAccountProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PurviewAccountProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PurviewAccountProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PurviewAccountProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePurviewAccountProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

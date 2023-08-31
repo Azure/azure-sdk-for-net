@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the notification target properties. </summary>
     public partial class ClusterNotificationTarget
     {
-        /// <summary> Initializes a new instance of ClusterNotificationTarget. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNotificationTarget"/>. </summary>
         /// <param name="notificationChannel"> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </param>
         /// <param name="receivers"> List of targets that subscribe to the notification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivers"/> is null. </exception>
@@ -27,13 +29,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Receivers = receivers.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterNotificationTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterNotificationTarget"/>. </summary>
         /// <param name="notificationChannel"> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </param>
         /// <param name="receivers"> List of targets that subscribe to the notification. </param>
-        internal ClusterNotificationTarget(ClusterNotificationChannel notificationChannel, IList<string> receivers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterNotificationTarget(ClusterNotificationChannel notificationChannel, IList<string> receivers, Dictionary<string, BinaryData> rawData)
         {
             NotificationChannel = notificationChannel;
             Receivers = receivers;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterNotificationTarget"/> for deserialization. </summary>
+        internal ClusterNotificationTarget()
+        {
         }
 
         /// <summary> The notification channel indicates the type of receivers subscribed to the notification, either user or subscription. </summary>

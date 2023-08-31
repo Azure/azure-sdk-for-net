@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
@@ -12,20 +14,24 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The managed resources in customer subscription. </summary>
     public partial class PurviewManagedResource
     {
-        /// <summary> Initializes a new instance of PurviewManagedResource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
         internal PurviewManagedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewManagedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewManagedResource"/>. </summary>
         /// <param name="eventHubNamespace"> Gets the managed event hub namespace resource identifier. </param>
         /// <param name="resourceGroup"> Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account. </param>
         /// <param name="storageAccount"> Gets the managed storage account resource identifier. </param>
-        internal PurviewManagedResource(ResourceIdentifier eventHubNamespace, ResourceIdentifier resourceGroup, ResourceIdentifier storageAccount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewManagedResource(ResourceIdentifier eventHubNamespace, ResourceIdentifier resourceGroup, ResourceIdentifier storageAccount, Dictionary<string, BinaryData> rawData)
         {
             EventHubNamespace = eventHubNamespace;
             ResourceGroup = resourceGroup;
             StorageAccount = storageAccount;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the managed event hub namespace resource identifier. </summary>

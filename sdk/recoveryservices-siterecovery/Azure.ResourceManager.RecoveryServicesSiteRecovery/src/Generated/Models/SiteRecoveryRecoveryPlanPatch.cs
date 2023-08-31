@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +13,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update recovery plan input class. </summary>
     public partial class SiteRecoveryRecoveryPlanPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanPatch"/>. </summary>
         public SiteRecoveryRecoveryPlanPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanPatch"/>. </summary>
+        /// <param name="properties"> Recovery plan update properties. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryRecoveryPlanPatch(UpdateRecoveryPlanContentProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Recovery plan update properties. </summary>

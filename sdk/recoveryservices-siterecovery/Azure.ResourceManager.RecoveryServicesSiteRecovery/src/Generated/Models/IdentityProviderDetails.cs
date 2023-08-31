@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Identity provider details. </summary>
     public partial class IdentityProviderDetails
     {
-        /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderDetails"/>. </summary>
         internal IdentityProviderDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderDetails"/>. </summary>
         /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="audience"> The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="aadAuthority"> The base authority for Azure Active Directory authentication. </param>
-        internal IdentityProviderDetails(Guid? tenantId, string applicationId, string objectId, string audience, string aadAuthority)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityProviderDetails(Guid? tenantId, string applicationId, string objectId, string audience, string aadAuthority, Dictionary<string, BinaryData> rawData)
         {
             TenantId = tenantId;
             ApplicationId = applicationId;
             ObjectId = objectId;
             Audience = audience;
             AadAuthority = aadAuthority;
+            _rawData = rawData;
         }
 
         /// <summary> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </summary>

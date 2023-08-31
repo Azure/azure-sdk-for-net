@@ -14,25 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Additional information of the container. </summary>
     public partial class MabContainerExtendedInfo
     {
-        /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MabContainerExtendedInfo"/>. </summary>
         public MabContainerExtendedInfo()
         {
             BackupItems = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabContainerExtendedInfo"/>. </summary>
         /// <param name="lastRefreshedOn"> Time stamp when this container was refreshed. </param>
         /// <param name="backupItemType"> Type of backup items associated with this container. </param>
         /// <param name="backupItems"> List of backup items associated with this container. </param>
         /// <param name="policyName"> Backup policy associated with this container. </param>
         /// <param name="lastBackupStatus"> Latest backup status of this container. </param>
-        internal MabContainerExtendedInfo(DateTimeOffset? lastRefreshedOn, BackupItemType? backupItemType, IList<string> backupItems, string policyName, string lastBackupStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MabContainerExtendedInfo(DateTimeOffset? lastRefreshedOn, BackupItemType? backupItemType, IList<string> backupItems, string policyName, string lastBackupStatus, Dictionary<string, BinaryData> rawData)
         {
             LastRefreshedOn = lastRefreshedOn;
             BackupItemType = backupItemType;
             BackupItems = backupItems;
             PolicyName = policyName;
             LastBackupStatus = lastBackupStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Time stamp when this container was refreshed. </summary>

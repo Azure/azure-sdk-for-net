@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Savings plan purchase details. </summary>
     public partial class SavingsPlanToPurchaseCalculateExchange
     {
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseCalculateExchange. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseCalculateExchange"/>. </summary>
         internal SavingsPlanToPurchaseCalculateExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseCalculateExchange"/>. </summary>
         /// <param name="properties"> Request body for savings plan purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
-        internal SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanToPurchaseCalculateExchange(SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal, Dictionary<string, BinaryData> rawData)
         {
             Properties = properties;
             BillingCurrencyTotal = billingCurrencyTotal;
+            _rawData = rawData;
         }
 
         /// <summary> Request body for savings plan purchase. </summary>

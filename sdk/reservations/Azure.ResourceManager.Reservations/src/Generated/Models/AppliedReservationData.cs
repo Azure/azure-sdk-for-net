@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The response for applied reservations api. </summary>
     public partial class AppliedReservationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppliedReservationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppliedReservationData"/>. </summary>
         internal AppliedReservationData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliedReservationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedReservationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="reservationOrderIds"> Paginated list of applied reservations. </param>
-        internal AppliedReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppliedReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ReservationOrderIds = reservationOrderIds;
+            _rawData = rawData;
         }
 
         /// <summary> Paginated list of applied reservations. </summary>

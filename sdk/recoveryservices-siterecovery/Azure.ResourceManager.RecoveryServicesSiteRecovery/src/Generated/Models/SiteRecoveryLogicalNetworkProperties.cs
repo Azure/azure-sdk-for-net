@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Logical Network Properties. </summary>
     public partial class SiteRecoveryLogicalNetworkProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkProperties"/>. </summary>
         internal SiteRecoveryLogicalNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkProperties"/>. </summary>
         /// <param name="friendlyName"> The Friendly Name. </param>
         /// <param name="networkVirtualizationStatus"> A value indicating whether Network Virtualization is enabled for the logical network. </param>
         /// <param name="logicalNetworkUsage"> A value indicating whether logical network is used as private test network by test failover. </param>
         /// <param name="logicalNetworkDefinitionsStatus"> A value indicating whether logical network definitions are isolated. </param>
-        internal SiteRecoveryLogicalNetworkProperties(string friendlyName, string networkVirtualizationStatus, string logicalNetworkUsage, string logicalNetworkDefinitionsStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryLogicalNetworkProperties(string friendlyName, string networkVirtualizationStatus, string logicalNetworkUsage, string logicalNetworkDefinitionsStatus, Dictionary<string, BinaryData> rawData)
         {
             FriendlyName = friendlyName;
             NetworkVirtualizationStatus = networkVirtualizationStatus;
             LogicalNetworkUsage = logicalNetworkUsage;
             LogicalNetworkDefinitionsStatus = logicalNetworkDefinitionsStatus;
+            _rawData = rawData;
         }
 
         /// <summary> The Friendly Name. </summary>

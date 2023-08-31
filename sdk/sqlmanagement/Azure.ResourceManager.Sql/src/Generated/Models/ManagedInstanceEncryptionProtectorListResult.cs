@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Sql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of managed instance encryption protectors. </summary>
     internal partial class ManagedInstanceEncryptionProtectorListResult
     {
-        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEncryptionProtectorListResult"/>. </summary>
         internal ManagedInstanceEncryptionProtectorListResult()
         {
             Value = new ChangeTrackingList<ManagedInstanceEncryptionProtectorData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEncryptionProtectorListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ManagedInstanceEncryptionProtectorListResult(IReadOnlyList<ManagedInstanceEncryptionProtectorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceEncryptionProtectorListResult(IReadOnlyList<ManagedInstanceEncryptionProtectorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class AwsCloudTrailDataConnectorDataTypes : IUtf8JsonSerializable
+    internal partial class AwsCloudTrailDataConnectorDataTypes : IUtf8JsonSerializable, IModelJsonSerializable<AwsCloudTrailDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AwsCloudTrailDataConnectorDataTypes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AwsCloudTrailDataConnectorDataTypes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
-                writer.WriteObjectValue(Logs);
+                if (Logs is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AwsCloudTrailDataConnectorDataTypesLogs>)Logs).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AwsCloudTrailDataConnectorDataTypes DeserializeAwsCloudTrailDataConnectorDataTypes(JsonElement element)
+        internal static AwsCloudTrailDataConnectorDataTypes DeserializeAwsCloudTrailDataConnectorDataTypes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logs"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     logs = AwsCloudTrailDataConnectorDataTypesLogs.DeserializeAwsCloudTrailDataConnectorDataTypesLogs(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AwsCloudTrailDataConnectorDataTypes(logs.Value);
+            return new AwsCloudTrailDataConnectorDataTypes(logs.Value, rawData);
+        }
+
+        AwsCloudTrailDataConnectorDataTypes IModelJsonSerializable<AwsCloudTrailDataConnectorDataTypes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAwsCloudTrailDataConnectorDataTypes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AwsCloudTrailDataConnectorDataTypes>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AwsCloudTrailDataConnectorDataTypes IModelSerializable<AwsCloudTrailDataConnectorDataTypes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAwsCloudTrailDataConnectorDataTypes(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AwsCloudTrailDataConnectorDataTypes"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AwsCloudTrailDataConnectorDataTypes"/> to convert. </param>
+        public static implicit operator RequestContent(AwsCloudTrailDataConnectorDataTypes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AwsCloudTrailDataConnectorDataTypes"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AwsCloudTrailDataConnectorDataTypes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAwsCloudTrailDataConnectorDataTypes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

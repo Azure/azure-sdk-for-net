@@ -8,14 +8,171 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthAvailabilityStatusProperties
+    public partial class ResourceHealthAvailabilityStatusProperties : IUtf8JsonSerializable, IModelJsonSerializable<ResourceHealthAvailabilityStatusProperties>
     {
-        internal static ResourceHealthAvailabilityStatusProperties DeserializeResourceHealthAvailabilityStatusProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceHealthAvailabilityStatusProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceHealthAvailabilityStatusProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AvailabilityState))
+            {
+                writer.WritePropertyName("availabilityState"u8);
+                writer.WriteStringValue(AvailabilityState.Value.ToString());
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
+            }
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStringValue(Summary);
+            }
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                writer.WritePropertyName("detailedStatus"u8);
+                writer.WriteStringValue(DetailedStatus);
+            }
+            if (Optional.IsDefined(ReasonType))
+            {
+                writer.WritePropertyName("reasonType"u8);
+                writer.WriteStringValue(ReasonType);
+            }
+            if (Optional.IsDefined(Context))
+            {
+                writer.WritePropertyName("context"u8);
+                writer.WriteStringValue(Context);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsDefined(ArticleId))
+            {
+                writer.WritePropertyName("articleId"u8);
+                writer.WriteStringValue(ArticleId);
+            }
+            if (Optional.IsDefined(RootCauseAttributionOn))
+            {
+                writer.WritePropertyName("rootCauseAttributionTime"u8);
+                writer.WriteStringValue(RootCauseAttributionOn.Value, "O");
+            }
+            if (Optional.IsDefined(HealthEventType))
+            {
+                writer.WritePropertyName("healthEventType"u8);
+                writer.WriteStringValue(HealthEventType);
+            }
+            if (Optional.IsDefined(HealthEventCause))
+            {
+                writer.WritePropertyName("healthEventCause"u8);
+                writer.WriteStringValue(HealthEventCause);
+            }
+            if (Optional.IsDefined(HealthEventCategory))
+            {
+                writer.WritePropertyName("healthEventCategory"u8);
+                writer.WriteStringValue(HealthEventCategory);
+            }
+            if (Optional.IsDefined(HealthEventId))
+            {
+                writer.WritePropertyName("healthEventId"u8);
+                writer.WriteStringValue(HealthEventId);
+            }
+            if (Optional.IsDefined(ResolutionEta))
+            {
+                writer.WritePropertyName("resolutionETA"u8);
+                writer.WriteStringValue(ResolutionEta.Value, "O");
+            }
+            if (Optional.IsDefined(OccuredOn))
+            {
+                writer.WritePropertyName("occuredTime"u8);
+                writer.WriteStringValue(OccuredOn.Value, "O");
+            }
+            if (Optional.IsDefined(ReasonChronicity))
+            {
+                writer.WritePropertyName("reasonChronicity"u8);
+                writer.WriteStringValue(ReasonChronicity.Value.ToString());
+            }
+            if (Optional.IsDefined(ReportedOn))
+            {
+                writer.WritePropertyName("reportedTime"u8);
+                writer.WriteStringValue(ReportedOn.Value, "O");
+            }
+            if (Optional.IsDefined(RecentlyResolved))
+            {
+                writer.WritePropertyName("recentlyResolved"u8);
+                if (RecentlyResolved is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ResourceHealthAvailabilityStateRecentlyResolved>)RecentlyResolved).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(RecommendedActions))
+            {
+                writer.WritePropertyName("recommendedActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecommendedActions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResourceHealthRecommendedAction>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ServiceImpactingEvents))
+            {
+                writer.WritePropertyName("serviceImpactingEvents"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceImpactingEvents)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceImpactingEvent>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceHealthAvailabilityStatusProperties DeserializeResourceHealthAvailabilityStatusProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +197,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<ResourceHealthAvailabilityStateRecentlyResolved> recentlyResolved = default;
             Optional<IReadOnlyList<ResourceHealthRecommendedAction>> recommendedActions = default;
             Optional<IReadOnlyList<ServiceImpactingEvent>> serviceImpactingEvents = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityState"u8))
@@ -188,8 +346,61 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     serviceImpactingEvents = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents));
+            return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents), rawData);
+        }
+
+        ResourceHealthAvailabilityStatusProperties IModelJsonSerializable<ResourceHealthAvailabilityStatusProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthAvailabilityStatusProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceHealthAvailabilityStatusProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceHealthAvailabilityStatusProperties IModelSerializable<ResourceHealthAvailabilityStatusProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceHealthAvailabilityStatusProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceHealthAvailabilityStatusProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceHealthAvailabilityStatusProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceHealthAvailabilityStatusProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceHealthAvailabilityStatusProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceHealthAvailabilityStatusProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceHealthAvailabilityStatusProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

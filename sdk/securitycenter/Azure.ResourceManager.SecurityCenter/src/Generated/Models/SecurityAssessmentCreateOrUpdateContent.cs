@@ -15,13 +15,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Security assessment on a resource. </summary>
     public partial class SecurityAssessmentCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentCreateOrUpdateContent"/>. </summary>
         public SecurityAssessmentCreateOrUpdateContent()
         {
             AdditionalData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> Describes properties of an assessment metadata. </param>
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, SecurityAssessmentStatus status) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, SecurityAssessmentStatus status, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Metadata = metadata;
             PartnersData = partnersData;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary>

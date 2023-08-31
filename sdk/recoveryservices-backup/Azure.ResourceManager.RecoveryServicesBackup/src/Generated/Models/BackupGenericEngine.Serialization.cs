@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupGenericEngine : IUtf8JsonSerializable
+    public partial class BackupGenericEngine : IUtf8JsonSerializable, IModelJsonSerializable<BackupGenericEngine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupGenericEngine>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupGenericEngine>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FriendlyName))
             {
@@ -75,13 +83,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                if (ExtendedInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupEngineExtendedInfo>)ExtendedInfo).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BackupGenericEngine DeserializeBackupGenericEngine(JsonElement element)
+        internal static BackupGenericEngine DeserializeBackupGenericEngine(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,7 +123,164 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "DpmBackupEngine": return DpmBackupEngine.DeserializeDpmBackupEngine(element);
                 }
             }
-            return UnknownBackupEngineBase.DeserializeUnknownBackupEngineBase(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            Optional<string> friendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> registrationStatus = default;
+            Optional<string> backupEngineState = default;
+            Optional<string> healthStatus = default;
+            BackupEngineType backupEngineType = default;
+            Optional<bool> canReRegister = default;
+            Optional<string> backupEngineId = default;
+            Optional<string> dpmVersion = default;
+            Optional<string> azureBackupAgentVersion = default;
+            Optional<bool> isAzureBackupAgentUpgradeAvailable = default;
+            Optional<bool> isDpmUpgradeAvailable = default;
+            Optional<BackupEngineExtendedInfo> extendedInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("friendlyName"u8))
+                {
+                    friendlyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("backupManagementType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupManagementType = new BackupManagementType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("registrationStatus"u8))
+                {
+                    registrationStatus = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("backupEngineState"u8))
+                {
+                    backupEngineState = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("healthStatus"u8))
+                {
+                    healthStatus = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("backupEngineType"u8))
+                {
+                    backupEngineType = new BackupEngineType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("canReRegister"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    canReRegister = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("backupEngineId"u8))
+                {
+                    backupEngineId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dpmVersion"u8))
+                {
+                    dpmVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("azureBackupAgentVersion"u8))
+                {
+                    azureBackupAgentVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isAzureBackupAgentUpgradeAvailable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAzureBackupAgentUpgradeAvailable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isDpmUpgradeAvailable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isDpmUpgradeAvailable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("extendedInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownBackupEngineBase(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, backupEngineState.Value, healthStatus.Value, backupEngineType, Optional.ToNullable(canReRegister), backupEngineId.Value, dpmVersion.Value, azureBackupAgentVersion.Value, Optional.ToNullable(isAzureBackupAgentUpgradeAvailable), Optional.ToNullable(isDpmUpgradeAvailable), extendedInfo.Value, rawData);
+        }
+
+        BackupGenericEngine IModelJsonSerializable<BackupGenericEngine>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupGenericEngine(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupGenericEngine>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupGenericEngine IModelSerializable<BackupGenericEngine>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupGenericEngine(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupGenericEngine"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupGenericEngine"/> to convert. </param>
+        public static implicit operator RequestContent(BackupGenericEngine model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupGenericEngine"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupGenericEngine(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupGenericEngine(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
