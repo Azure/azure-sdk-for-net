@@ -23,7 +23,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 var responseContent = response.Content.ToString();
 
-                var responseObj = JsonSerializer.Deserialize<ResponseObject>(responseContent);
+                ResponseObject? responseObj;
+
+#if NET6_0_OR_GREATER
+                responseObj = JsonSerializer.Deserialize<ResponseObject>(responseContent, SourceGenerationContext.Default.ResponseObject);
+#else
+                responseObj = JsonSerializer.Deserialize<ResponseObject>(responseContent);
+#endif
 
                 if (responseObj == null || responseObj.Errors == null)
                 {
@@ -39,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private class ResponseObject
+        internal class ResponseObject
         {
             [JsonPropertyName("itemsReceived")]
             public int ItemsReceived { get; set; }
@@ -51,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             public List<ErrorObject>? Errors { get; set; }
         }
 
-        private class ErrorObject
+        internal class ErrorObject
         {
             [JsonPropertyName("index")]
             public int Index { get; set; }
