@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable
+    public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable, IModelJsonSerializable<PSCredentialExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PSCredentialExecutionParameterDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PSCredentialExecutionParameterDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PSCredentialExecutionParameterDetails>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Username))
             {
@@ -29,11 +37,25 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PSCredentialExecutionParameterDetails DeserializePSCredentialExecutionParameterDetails(JsonElement element)
+        internal static PSCredentialExecutionParameterDetails DeserializePSCredentialExecutionParameterDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> password = default;
             string name = default;
             ScriptExecutionParameterType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -64,8 +87,57 @@ namespace Azure.ResourceManager.Avs.Models
                     type = new ScriptExecutionParameterType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PSCredentialExecutionParameterDetails(name, type, username.Value, password.Value);
+            return new PSCredentialExecutionParameterDetails(name, type, username.Value, password.Value, rawData);
+        }
+
+        PSCredentialExecutionParameterDetails IModelJsonSerializable<PSCredentialExecutionParameterDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PSCredentialExecutionParameterDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePSCredentialExecutionParameterDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PSCredentialExecutionParameterDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PSCredentialExecutionParameterDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PSCredentialExecutionParameterDetails IModelSerializable<PSCredentialExecutionParameterDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PSCredentialExecutionParameterDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePSCredentialExecutionParameterDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PSCredentialExecutionParameterDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PSCredentialExecutionParameterDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePSCredentialExecutionParameterDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

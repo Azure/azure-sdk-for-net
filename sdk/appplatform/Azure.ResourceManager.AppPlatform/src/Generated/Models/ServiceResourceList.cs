@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,22 +15,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Service resources and a possible link for next set. </summary>
     internal partial class ServiceResourceList
     {
-        /// <summary> Initializes a new instance of ServiceResourceList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         internal ServiceResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceList"/>. </summary>
         /// <param name="value"> Collection of Service resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal ServiceResourceList(IReadOnlyList<AppPlatformServiceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceResourceList(IReadOnlyList<AppPlatformServiceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of Service resources. </summary>

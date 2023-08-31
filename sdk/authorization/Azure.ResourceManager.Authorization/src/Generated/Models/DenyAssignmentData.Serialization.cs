@@ -5,18 +5,103 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class DenyAssignmentData
+    public partial class DenyAssignmentData : IUtf8JsonSerializable, IModelJsonSerializable<DenyAssignmentData>
     {
-        internal static DenyAssignmentData DeserializeDenyAssignmentData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DenyAssignmentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DenyAssignmentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DenyAssignmentName))
+            {
+                writer.WritePropertyName("denyAssignmentName"u8);
+                writer.WriteStringValue(DenyAssignmentName);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Permissions))
+            {
+                writer.WritePropertyName("permissions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Permissions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (Optional.IsDefined(IsAppliedToChildScopes))
+            {
+                writer.WritePropertyName("doNotApplyToChildScopes"u8);
+                writer.WriteBooleanValue(IsAppliedToChildScopes.Value);
+            }
+            if (Optional.IsCollectionDefined(Principals))
+            {
+                writer.WritePropertyName("principals"u8);
+                writer.WriteStartArray();
+                foreach (var item in Principals)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExcludePrincipals))
+            {
+                writer.WritePropertyName("excludePrincipals"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExcludePrincipals)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsSystemProtected))
+            {
+                writer.WritePropertyName("isSystemProtected"u8);
+                writer.WriteBooleanValue(IsSystemProtected.Value);
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DenyAssignmentData DeserializeDenyAssignmentData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +118,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
             Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
             Optional<bool> isSystemProtected = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -146,8 +232,57 @@ namespace Azure.ResourceManager.Authorization
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected));
+            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected), rawData);
+        }
+
+        DenyAssignmentData IModelJsonSerializable<DenyAssignmentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDenyAssignmentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DenyAssignmentData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DenyAssignmentData IModelSerializable<DenyAssignmentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDenyAssignmentData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DenyAssignmentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DenyAssignmentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDenyAssignmentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

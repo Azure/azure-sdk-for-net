@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigurationServiceGitValidateResult
+    public partial class AppPlatformConfigurationServiceGitValidateResult : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>
     {
-        internal static AppPlatformConfigurationServiceGitValidateResult DeserializeAppPlatformConfigurationServiceGitValidateResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsValid))
+            {
+                writer.WritePropertyName("isValid"u8);
+                writer.WriteBooleanValue(IsValid.Value);
+            }
+            if (Optional.IsCollectionDefined(GitReposValidationResult))
+            {
+                writer.WritePropertyName("gitReposValidationResult"u8);
+                writer.WriteStartArray();
+                foreach (var item in GitReposValidationResult)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppPlatformConfigurationServiceGitValidateResult DeserializeAppPlatformConfigurationServiceGitValidateResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isValid = default;
             Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -46,8 +89,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     gitReposValidationResult = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult));
+            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult), rawData);
+        }
+
+        AppPlatformConfigurationServiceGitValidateResult IModelJsonSerializable<AppPlatformConfigurationServiceGitValidateResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformConfigurationServiceGitValidateResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformConfigurationServiceGitValidateResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformConfigurationServiceGitValidateResult IModelSerializable<AppPlatformConfigurationServiceGitValidateResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformConfigurationServiceGitValidateResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppPlatformConfigurationServiceGitValidateResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppPlatformConfigurationServiceGitValidateResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformConfigurationServiceGitValidateResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

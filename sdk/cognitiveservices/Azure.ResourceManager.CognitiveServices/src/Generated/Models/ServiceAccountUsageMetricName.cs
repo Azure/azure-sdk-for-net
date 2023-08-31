@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> A metric name. </summary>
     public partial class ServiceAccountUsageMetricName
     {
-        /// <summary> Initializes a new instance of ServiceAccountUsageMetricName. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageMetricName"/>. </summary>
         internal ServiceAccountUsageMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsageMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountUsageMetricName"/>. </summary>
         /// <param name="value"> The name of the metric. </param>
         /// <param name="localizedValue"> The friendly name of the metric. </param>
-        internal ServiceAccountUsageMetricName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountUsageMetricName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the metric. </summary>

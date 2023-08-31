@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> The roll up count summary of savings plans in each state. </summary>
     internal partial class SavingsPlanSummaryCount
     {
-        /// <summary> Initializes a new instance of SavingsPlanSummaryCount. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummaryCount"/>. </summary>
         internal SavingsPlanSummaryCount()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanSummaryCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummaryCount"/>. </summary>
         /// <param name="succeededCount"> The number of savings plans in Succeeded state. </param>
         /// <param name="failedCount"> The number of savings plans in Failed state. </param>
         /// <param name="expiringCount"> The number of savings plans in Expiring state. </param>
@@ -25,7 +30,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="processingCount"> The number of savings plans in Processing state. </param>
         /// <param name="noBenefitCount"> The number of savings plans in No Benefit state. </param>
         /// <param name="warningCount"> The number of savings plans in Warning state. </param>
-        internal SavingsPlanSummaryCount(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? noBenefitCount, float? warningCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanSummaryCount(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? noBenefitCount, float? warningCount, Dictionary<string, BinaryData> rawData)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;
@@ -36,6 +42,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ProcessingCount = processingCount;
             NoBenefitCount = noBenefitCount;
             WarningCount = warningCount;
+            _rawData = rawData;
         }
 
         /// <summary> The number of savings plans in Succeeded state. </summary>

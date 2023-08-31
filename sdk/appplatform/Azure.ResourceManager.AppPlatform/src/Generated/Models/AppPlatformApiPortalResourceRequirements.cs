@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource requests of the API portal. </summary>
     public partial class AppPlatformApiPortalResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalResourceRequirements. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalResourceRequirements"/>. </summary>
         internal AppPlatformApiPortalResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each API portal instance. </param>
         /// <param name="memory"> Memory allocated to each API portal instance. </param>
-        internal AppPlatformApiPortalResourceRequirements(string cpu, string memory)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformApiPortalResourceRequirements(string cpu, string memory, Dictionary<string, BinaryData> rawData)
         {
             Cpu = cpu;
             Memory = memory;
+            _rawData = rawData;
         }
 
         /// <summary> Cpu allocated to each API portal instance. </summary>

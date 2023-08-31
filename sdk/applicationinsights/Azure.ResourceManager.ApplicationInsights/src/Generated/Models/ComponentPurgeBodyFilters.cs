@@ -6,15 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> User-defined filters to return data which will be purged from the table. </summary>
     public partial class ComponentPurgeBodyFilters
     {
-        /// <summary> Initializes a new instance of ComponentPurgeBodyFilters. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBodyFilters"/>. </summary>
         public ComponentPurgeBodyFilters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBodyFilters"/>. </summary>
+        /// <param name="column"> The column of the table over which the given query should run. </param>
+        /// <param name="operator"> A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query. </param>
+        /// <param name="value"> the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= '2017-09-01') or array of values. </param>
+        /// <param name="key"> When filtering over custom dimensions, this key will be used as the name of the custom dimension. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentPurgeBodyFilters(string column, string @operator, BinaryData value, string key, Dictionary<string, BinaryData> rawData)
+        {
+            Column = column;
+            Operator = @operator;
+            Value = value;
+            Key = key;
+            _rawData = rawData;
         }
 
         /// <summary> The column of the table over which the given query should run. </summary>

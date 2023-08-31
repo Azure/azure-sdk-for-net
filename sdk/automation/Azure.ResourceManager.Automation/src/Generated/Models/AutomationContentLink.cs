@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the content link. </summary>
     public partial class AutomationContentLink
     {
-        /// <summary> Initializes a new instance of AutomationContentLink. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationContentLink"/>. </summary>
         public AutomationContentLink()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationContentLink"/>. </summary>
         /// <param name="uri"> Gets or sets the uri of the runbook content. </param>
         /// <param name="contentHash"> Gets or sets the hash. </param>
         /// <param name="version"> Gets or sets the version of the content. </param>
-        internal AutomationContentLink(Uri uri, AutomationContentHash contentHash, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationContentLink(Uri uri, AutomationContentHash contentHash, string version, Dictionary<string, BinaryData> rawData)
         {
             Uri = uri;
             ContentHash = contentHash;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the uri of the runbook content. </summary>

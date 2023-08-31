@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> List of deleted configuration stores. </summary>
     internal partial class DeletedConfigurationStoreListResult
     {
-        /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedConfigurationStoreListResult"/>. </summary>
         internal DeletedConfigurationStoreListResult()
         {
             Value = new ChangeTrackingList<DeletedAppConfigurationStoreData>();
         }
 
-        /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedConfigurationStoreListResult"/>. </summary>
         /// <param name="value"> The list of deleted configuration store. </param>
         /// <param name="nextLink"> The URL to get the next set of deleted configuration stores. </param>
-        internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedAppConfigurationStoreData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedAppConfigurationStoreData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of deleted configuration store. </summary>

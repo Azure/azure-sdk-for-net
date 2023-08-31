@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class IssueContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of IssueContractData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IssueContractData"/>. </summary>
         public IssueContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of IssueContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="title"> The issue title. </param>
         /// <param name="description"> Text describing the issue. </param>
         /// <param name="userId"> A resource identifier for the user created the issue. </param>
-        internal IssueContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, ResourceIdentifier userId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IssueContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IssueState? state, ResourceIdentifier apiId, string title, string description, ResourceIdentifier userId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
             Title = title;
             Description = description;
             UserId = userId;
+            _rawData = rawData;
         }
 
         /// <summary> Date and time when the issue was created. </summary>

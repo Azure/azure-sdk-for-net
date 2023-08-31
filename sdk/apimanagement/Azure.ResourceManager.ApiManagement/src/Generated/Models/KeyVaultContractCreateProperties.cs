@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Create keyVault contract details. </summary>
     public partial class KeyVaultContractCreateProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultContractCreateProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultContractCreateProperties"/>. </summary>
         public KeyVaultContractCreateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultContractCreateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultContractCreateProperties"/>. </summary>
         /// <param name="secretIdentifier"> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </param>
         /// <param name="identityClientId"> Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret. </param>
-        internal KeyVaultContractCreateProperties(string secretIdentifier, string identityClientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultContractCreateProperties(string secretIdentifier, string identityClientId, Dictionary<string, BinaryData> rawData)
         {
             SecretIdentifier = secretIdentifier;
             IdentityClientId = identityClientId;
+            _rawData = rawData;
         }
 
         /// <summary> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </summary>

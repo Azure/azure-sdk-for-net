@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> ClassicAdministrator list result information. </summary>
     internal partial class AuthorizationClassicAdministratorListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministratorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationClassicAdministratorListResult"/>. </summary>
         internal AuthorizationClassicAdministratorListResult()
         {
             Value = new ChangeTrackingList<AuthorizationClassicAdministrator>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationClassicAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationClassicAdministratorListResult"/>. </summary>
         /// <param name="value"> An array of administrators. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal AuthorizationClassicAdministratorListResult(IReadOnlyList<AuthorizationClassicAdministrator> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationClassicAdministratorListResult(IReadOnlyList<AuthorizationClassicAdministrator> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> An array of administrators. </summary>

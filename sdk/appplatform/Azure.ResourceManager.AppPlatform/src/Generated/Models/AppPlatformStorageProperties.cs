@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// Please note <see cref="AppPlatformStorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AppPlatformStorageAccount"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownStorageProperties))]
     public abstract partial class AppPlatformStorageProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageProperties"/>. </summary>
         protected AppPlatformStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageProperties"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
-        internal AppPlatformStorageProperties(StorageType storageType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformStorageProperties(StorageType storageType, Dictionary<string, BinaryData> rawData)
         {
             StorageType = storageType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the storage. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list webhook operation. </summary>
     internal partial class AutomationWebhookListResult
     {
-        /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookListResult"/>. </summary>
         internal AutomationWebhookListResult()
         {
             Value = new ChangeTrackingList<AutomationWebhookData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWebhookListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of webhooks. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationWebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationWebhookListResult(IReadOnlyList<AutomationWebhookData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets a list of webhooks. </summary>

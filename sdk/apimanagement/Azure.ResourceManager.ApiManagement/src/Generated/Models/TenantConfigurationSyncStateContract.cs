@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Result of Tenant Configuration Sync State. </summary>
     public partial class TenantConfigurationSyncStateContract : ResourceData
     {
-        /// <summary> Initializes a new instance of TenantConfigurationSyncStateContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
         public TenantConfigurationSyncStateContract()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantConfigurationSyncStateContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantConfigurationSyncStateContract"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///
         /// </param>
         /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
-        internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Branch = branch;
             CommitId = commitId;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             SyncOn = syncOn;
             ConfigurationChangeOn = configurationChangeOn;
             LastOperationId = lastOperationId;
+            _rawData = rawData;
         }
 
         /// <summary> The name of Git branch. </summary>

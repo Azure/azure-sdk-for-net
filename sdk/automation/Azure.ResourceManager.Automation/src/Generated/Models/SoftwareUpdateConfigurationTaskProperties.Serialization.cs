@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationTaskProperties : IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationTaskProperties : IUtf8JsonSerializable, IModelJsonSerializable<SoftwareUpdateConfigurationTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SoftwareUpdateConfigurationTaskProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SoftwareUpdateConfigurationTaskProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -32,17 +39,32 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SoftwareUpdateConfigurationTaskProperties DeserializeSoftwareUpdateConfigurationTaskProperties(JsonElement element)
+        internal static SoftwareUpdateConfigurationTaskProperties DeserializeSoftwareUpdateConfigurationTaskProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, string>> parameters = default;
             Optional<string> source = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -64,8 +86,57 @@ namespace Azure.ResourceManager.Automation.Models
                     source = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SoftwareUpdateConfigurationTaskProperties(Optional.ToDictionary(parameters), source.Value);
+            return new SoftwareUpdateConfigurationTaskProperties(Optional.ToDictionary(parameters), source.Value, rawData);
+        }
+
+        SoftwareUpdateConfigurationTaskProperties IModelJsonSerializable<SoftwareUpdateConfigurationTaskProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationTaskProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SoftwareUpdateConfigurationTaskProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SoftwareUpdateConfigurationTaskProperties IModelSerializable<SoftwareUpdateConfigurationTaskProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationTaskProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(SoftwareUpdateConfigurationTaskProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator SoftwareUpdateConfigurationTaskProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSoftwareUpdateConfigurationTaskProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

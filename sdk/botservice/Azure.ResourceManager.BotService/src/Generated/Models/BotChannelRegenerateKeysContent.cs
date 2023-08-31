@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Site information for WebChat or DirectLine Channels to identify which site to regenerate keys for. </summary>
     public partial class BotChannelRegenerateKeysContent
     {
-        /// <summary> Initializes a new instance of BotChannelRegenerateKeysContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelRegenerateKeysContent"/>. </summary>
         /// <param name="siteName"> The site name. </param>
         /// <param name="key"> Determines which key is to be regenerated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
@@ -23,6 +26,22 @@ namespace Azure.ResourceManager.BotService.Models
 
             SiteName = siteName;
             Key = key;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelRegenerateKeysContent"/>. </summary>
+        /// <param name="siteName"> The site name. </param>
+        /// <param name="key"> Determines which key is to be regenerated. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotChannelRegenerateKeysContent(string siteName, BotServiceKey key, Dictionary<string, BinaryData> rawData)
+        {
+            SiteName = siteName;
+            Key = key;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelRegenerateKeysContent"/> for deserialization. </summary>
+        internal BotChannelRegenerateKeysContent()
+        {
         }
 
         /// <summary> The site name. </summary>

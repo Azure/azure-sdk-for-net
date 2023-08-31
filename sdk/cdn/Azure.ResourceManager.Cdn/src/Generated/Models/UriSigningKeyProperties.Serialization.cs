@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriSigningKeyProperties : IUtf8JsonSerializable
+    public partial class UriSigningKeyProperties : IUtf8JsonSerializable, IModelJsonSerializable<UriSigningKeyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UriSigningKeyProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UriSigningKeyProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<UriSigningKeyProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
@@ -26,11 +34,25 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UriSigningKeyProperties DeserializeUriSigningKeyProperties(JsonElement element)
+        internal static UriSigningKeyProperties DeserializeUriSigningKeyProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
             WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;
             SecretType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyId"u8))
@@ -61,8 +84,57 @@ namespace Azure.ResourceManager.Cdn.Models
                     type = new SecretType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UriSigningKeyProperties(type, keyId, secretSource, secretVersion.Value);
+            return new UriSigningKeyProperties(type, keyId, secretSource, secretVersion.Value, rawData);
+        }
+
+        UriSigningKeyProperties IModelJsonSerializable<UriSigningKeyProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UriSigningKeyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUriSigningKeyProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UriSigningKeyProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UriSigningKeyProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UriSigningKeyProperties IModelSerializable<UriSigningKeyProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<UriSigningKeyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUriSigningKeyProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(UriSigningKeyProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator UriSigningKeyProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUriSigningKeyProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

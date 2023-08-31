@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter example. </summary>
     public partial class ParameterExampleContract
     {
-        /// <summary> Initializes a new instance of ParameterExampleContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterExampleContract"/>. </summary>
         public ParameterExampleContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ParameterExampleContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterExampleContract"/>. </summary>
         /// <param name="summary"> Short description for the example. </param>
         /// <param name="description"> Long description for the example. </param>
         /// <param name="value"> Example value. May be a primitive value, or an object. </param>
         /// <param name="externalValue"> A URL that points to the literal example. </param>
-        internal ParameterExampleContract(string summary, string description, BinaryData value, string externalValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterExampleContract(string summary, string description, BinaryData value, string externalValue, Dictionary<string, BinaryData> rawData)
         {
             Summary = summary;
             Description = description;
             Value = value;
             ExternalValue = externalValue;
+            _rawData = rawData;
         }
 
         /// <summary> Short description for the example. </summary>

@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The connection state of the private endpoint connection. </summary>
     internal partial class PrivateEndpointConnectionRequestProperties
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionRequestProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestProperties"/>. </summary>
         public PrivateEndpointConnectionRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestProperties"/>. </summary>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionRequestProperties(ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, Dictionary<string, BinaryData> rawData)
+        {
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            _rawData = rawData;
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

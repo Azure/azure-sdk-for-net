@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : IUtf8JsonSerializable
+    public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : IUtf8JsonSerializable, IModelJsonSerializable<RoleEligibilityScheduleRequestPropertiesTicketInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TicketNumber))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleEligibilityScheduleRequestPropertiesTicketInfo DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(JsonElement element)
+        internal static RoleEligibilityScheduleRequestPropertiesTicketInfo DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ticketNumber = default;
             Optional<string> ticketSystem = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ticketNumber"u8))
@@ -48,8 +71,57 @@ namespace Azure.ResourceManager.Authorization.Models
                     ticketSystem = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleEligibilityScheduleRequestPropertiesTicketInfo(ticketNumber.Value, ticketSystem.Value);
+            return new RoleEligibilityScheduleRequestPropertiesTicketInfo(ticketNumber.Value, ticketSystem.Value, rawData);
+        }
+
+        RoleEligibilityScheduleRequestPropertiesTicketInfo IModelJsonSerializable<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleEligibilityScheduleRequestPropertiesTicketInfo IModelSerializable<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RoleEligibilityScheduleRequestPropertiesTicketInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RoleEligibilityScheduleRequestPropertiesTicketInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

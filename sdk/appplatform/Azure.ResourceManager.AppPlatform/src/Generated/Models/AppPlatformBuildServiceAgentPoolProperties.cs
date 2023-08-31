@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Build service agent pool properties. </summary>
     public partial class AppPlatformBuildServiceAgentPoolProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceAgentPoolProperties"/>. </summary>
         public AppPlatformBuildServiceAgentPoolProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceAgentPoolProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the build service agent pool. </param>
         /// <param name="poolSize"> build service agent pool size properties. </param>
-        internal AppPlatformBuildServiceAgentPoolProperties(string provisioningState, BuildServiceAgentPoolSizeProperties poolSize)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildServiceAgentPoolProperties(string provisioningState, BuildServiceAgentPoolSizeProperties poolSize, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             PoolSize = poolSize;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state of the build service agent pool. </summary>

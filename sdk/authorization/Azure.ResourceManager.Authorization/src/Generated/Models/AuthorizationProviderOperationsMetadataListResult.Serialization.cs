@@ -5,23 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class AuthorizationProviderOperationsMetadataListResult
+    internal partial class AuthorizationProviderOperationsMetadataListResult : IUtf8JsonSerializable, IModelJsonSerializable<AuthorizationProviderOperationsMetadataListResult>
     {
-        internal static AuthorizationProviderOperationsMetadataListResult DeserializeAuthorizationProviderOperationsMetadataListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AuthorizationProviderOperationsMetadataListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AuthorizationProviderOperationsMetadataListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AuthorizationProviderOperationsMetadataListResult DeserializeAuthorizationProviderOperationsMetadataListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<AuthorizationProviderOperationsMetadataData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +86,57 @@ namespace Azure.ResourceManager.Authorization.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AuthorizationProviderOperationsMetadataListResult(Optional.ToList(value), nextLink.Value);
+            return new AuthorizationProviderOperationsMetadataListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        AuthorizationProviderOperationsMetadataListResult IModelJsonSerializable<AuthorizationProviderOperationsMetadataListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthorizationProviderOperationsMetadataListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AuthorizationProviderOperationsMetadataListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AuthorizationProviderOperationsMetadataListResult IModelSerializable<AuthorizationProviderOperationsMetadataListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAuthorizationProviderOperationsMetadataListResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AuthorizationProviderOperationsMetadataListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AuthorizationProviderOperationsMetadataListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAuthorizationProviderOperationsMetadataListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

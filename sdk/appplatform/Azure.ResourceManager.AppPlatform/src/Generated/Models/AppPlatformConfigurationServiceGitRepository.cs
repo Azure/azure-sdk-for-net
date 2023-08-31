@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Git repository property payload for Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceGitRepository
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="patterns"> Collection of patterns of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SearchPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="patterns"> Collection of patterns of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
@@ -47,7 +49,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
         /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
-        internal AppPlatformConfigurationServiceGitRepository(string name, IList<string> patterns, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? isHostKeyCheckingStrict)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceGitRepository(string name, IList<string> patterns, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? isHostKeyCheckingStrict, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Patterns = patterns;
@@ -60,6 +63,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             HostKeyAlgorithm = hostKeyAlgorithm;
             PrivateKey = privateKey;
             IsHostKeyCheckingStrict = isHostKeyCheckingStrict;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitRepository"/> for deserialization. </summary>
+        internal AppPlatformConfigurationServiceGitRepository()
+        {
         }
 
         /// <summary> Name of the repository. </summary>

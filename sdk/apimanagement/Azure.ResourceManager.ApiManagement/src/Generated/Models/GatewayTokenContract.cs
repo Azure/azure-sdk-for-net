@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Gateway access token. </summary>
     public partial class GatewayTokenContract
     {
-        /// <summary> Initializes a new instance of GatewayTokenContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayTokenContract"/>. </summary>
         internal GatewayTokenContract()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayTokenContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayTokenContract"/>. </summary>
         /// <param name="value"> Shared Access Authentication token value for the Gateway. </param>
-        internal GatewayTokenContract(string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayTokenContract(string value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Shared Access Authentication token value for the Gateway. </summary>

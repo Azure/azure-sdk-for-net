@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Subscription quotas. </summary>
     public partial class AvsSubscriptionQuotaAvailabilityResult
     {
-        /// <summary> Initializes a new instance of AvsSubscriptionQuotaAvailabilityResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsSubscriptionQuotaAvailabilityResult"/>. </summary>
         internal AvsSubscriptionQuotaAvailabilityResult()
         {
             HostsRemaining = new ChangeTrackingDictionary<string, int>();
         }
 
-        /// <summary> Initializes a new instance of AvsSubscriptionQuotaAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsSubscriptionQuotaAvailabilityResult"/>. </summary>
         /// <param name="hostsRemaining"> Remaining hosts quota by sku type. </param>
         /// <param name="quotaEnabled"> Host quota is active for current subscription. </param>
-        internal AvsSubscriptionQuotaAvailabilityResult(IReadOnlyDictionary<string, int> hostsRemaining, AvsSubscriptionQuotaEnabled? quotaEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsSubscriptionQuotaAvailabilityResult(IReadOnlyDictionary<string, int> hostsRemaining, AvsSubscriptionQuotaEnabled? quotaEnabled, Dictionary<string, BinaryData> rawData)
         {
             HostsRemaining = hostsRemaining;
             QuotaEnabled = quotaEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Remaining hosts quota by sku type. </summary>

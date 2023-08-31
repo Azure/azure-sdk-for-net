@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription key parameter names details. </summary>
     public partial class SubscriptionKeyParameterNamesContract
     {
-        /// <summary> Initializes a new instance of SubscriptionKeyParameterNamesContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionKeyParameterNamesContract"/>. </summary>
         public SubscriptionKeyParameterNamesContract()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionKeyParameterNamesContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionKeyParameterNamesContract"/>. </summary>
         /// <param name="header"> Subscription key header name. </param>
         /// <param name="query"> Subscription key query string parameter name. </param>
-        internal SubscriptionKeyParameterNamesContract(string header, string query)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionKeyParameterNamesContract(string header, string query, Dictionary<string, BinaryData> rawData)
         {
             Header = header;
             Query = query;
+            _rawData = rawData;
         }
 
         /// <summary> Subscription key header name. </summary>

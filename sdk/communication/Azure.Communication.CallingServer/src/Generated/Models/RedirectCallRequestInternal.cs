@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,9 @@ namespace Azure.Communication.CallingServer
     /// <summary> The request payload for redirecting the call. </summary>
     internal partial class RedirectCallRequestInternal
     {
-        /// <summary> Initializes a new instance of RedirectCallRequestInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedirectCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="target"> The target identity to redirect the call to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="target"/> is null. </exception>
@@ -25,6 +28,22 @@ namespace Azure.Communication.CallingServer
 
             IncomingCallContext = incomingCallContext;
             Target = target;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedirectCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="target"> The target identity to redirect the call to. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedirectCallRequestInternal(string incomingCallContext, CommunicationIdentifierModel target, Dictionary<string, BinaryData> rawData)
+        {
+            IncomingCallContext = incomingCallContext;
+            Target = target;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedirectCallRequestInternal"/> for deserialization. </summary>
+        internal RedirectCallRequestInternal()
+        {
         }
 
         /// <summary> The context associated with the call. </summary>

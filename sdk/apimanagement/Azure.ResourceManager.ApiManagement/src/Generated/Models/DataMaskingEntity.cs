@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The DataMaskingEntity. </summary>
     public partial class DataMaskingEntity
     {
-        /// <summary> Initializes a new instance of DataMaskingEntity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMaskingEntity"/>. </summary>
         public DataMaskingEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMaskingEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingEntity"/>. </summary>
         /// <param name="value"> The name of an entity to mask (e.g. a name of a header or a query parameter). </param>
         /// <param name="mode"> Data masking mode. </param>
-        internal DataMaskingEntity(string value, DataMaskingMode? mode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMaskingEntity(string value, DataMaskingMode? mode, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Mode = mode;
+            _rawData = rawData;
         }
 
         /// <summary> The name of an entity to mask (e.g. a name of a header or a query parameter). </summary>

@@ -14,7 +14,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogOptions. </summary>
     internal partial class DialogOptionsInternal
     {
-        /// <summary> Initializes a new instance of DialogOptionsInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DialogOptionsInternal"/>. </summary>
         /// <param name="botAppId"> Bot identifier. </param>
         /// <param name="dialogContext"> Dialog context. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="botAppId"/> or <paramref name="dialogContext"/> is null. </exception>
@@ -25,6 +27,22 @@ namespace Azure.Communication.CallAutomation
 
             BotAppId = botAppId;
             DialogContext = dialogContext;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DialogOptionsInternal"/>. </summary>
+        /// <param name="botAppId"> Bot identifier. </param>
+        /// <param name="dialogContext"> Dialog context. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DialogOptionsInternal(string botAppId, IDictionary<string, object> dialogContext, Dictionary<string, BinaryData> rawData)
+        {
+            BotAppId = botAppId;
+            DialogContext = dialogContext;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DialogOptionsInternal"/> for deserialization. </summary>
+        internal DialogOptionsInternal()
+        {
         }
 
         /// <summary> Bot identifier. </summary>

@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Description of an additional API Management resource location. </summary>
     public partial class AdditionalLocation
     {
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of AdditionalLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/>. </summary>
         /// <param name="location"> The location name of the additional region among Azure Data center regions. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="gatewayRegionalUri"> Gateway URL of the API Management service in the Region. </param>
         /// <param name="disableGateway"> Property only valid for an Api Management service deployed in multiple locations. This can be used to disable the gateway in this additional location. </param>
         /// <param name="platformVersion"> Compute Platform Version running the service. </param>
-        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalLocation(AzureLocation location, ApiManagementServiceSkuProperties sku, IList<string> zones, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, VirtualNetworkConfiguration virtualNetworkConfiguration, Uri gatewayRegionalUri, bool? disableGateway, PlatformVersion? platformVersion, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             Sku = sku;
@@ -53,6 +56,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             GatewayRegionalUri = gatewayRegionalUri;
             DisableGateway = disableGateway;
             PlatformVersion = platformVersion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalLocation"/> for deserialization. </summary>
+        internal AdditionalLocation()
+        {
         }
 
         /// <summary> The location name of the additional region among Azure Data center regions. </summary>

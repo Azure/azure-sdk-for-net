@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class OfferData : ResourceData
     {
-        /// <summary> Initializes a new instance of OfferData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
         public OfferData()
         {
             SkuMappings = new ChangeTrackingList<HciSkuMappings>();
         }
 
-        /// <summary> Initializes a new instance of OfferData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfferData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +37,15 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> JSON serialized catalog content of the offer. </param>
         /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
         /// <param name="skuMappings"> Array of SKU mappings. </param>
-        internal OfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string content, string contentVersion, IList<HciSkuMappings> skuMappings) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfferData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string content, string contentVersion, IList<HciSkuMappings> skuMappings, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PublisherId = publisherId;
             Content = content;
             ContentVersion = contentVersion;
             SkuMappings = skuMappings;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning State. </summary>

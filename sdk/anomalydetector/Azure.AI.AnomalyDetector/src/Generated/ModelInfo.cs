@@ -17,6 +17,8 @@ namespace Azure.AI.AnomalyDetector
     /// </summary>
     public partial class ModelInfo
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ModelInfo. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
@@ -72,7 +74,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="status"> Model status. </param>
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
-        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, Dictionary<string, BinaryData> rawData)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -84,6 +87,12 @@ namespace Azure.AI.AnomalyDetector
             Status = status;
             Errors = errors;
             DiagnosticsInfo = diagnosticsInfo;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/> for deserialization. </summary>
+        internal ModelInfo()
+        {
         }
 
         /// <summary>

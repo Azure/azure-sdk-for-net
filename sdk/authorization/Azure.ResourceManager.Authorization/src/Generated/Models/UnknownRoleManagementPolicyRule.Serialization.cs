@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    internal partial class UnknownRoleManagementPolicyRule : IUtf8JsonSerializable
+    internal partial class UnknownRoleManagementPolicyRule : IUtf8JsonSerializable, IModelJsonSerializable<RoleManagementPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleManagementPolicyRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleManagementPolicyRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -27,41 +33,44 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element)
+        internal static RoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element, ModelSerializerOptions options = default) => DeserializeRoleManagementPolicyRule(element, options);
+
+        RoleManagementPolicyRule IModelJsonSerializable<RoleManagementPolicyRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> id = default;
-            RoleManagementPolicyRuleType ruleType = "Unknown";
-            Optional<RoleManagementPolicyRuleTarget> target = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("target"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
-                    continue;
-                }
-            }
-            return new UnknownRoleManagementPolicyRule(id.Value, ruleType, target.Value);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownRoleManagementPolicyRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleManagementPolicyRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleManagementPolicyRule IModelSerializable<RoleManagementPolicyRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleManagementPolicyRule(doc.RootElement, options);
         }
     }
 }

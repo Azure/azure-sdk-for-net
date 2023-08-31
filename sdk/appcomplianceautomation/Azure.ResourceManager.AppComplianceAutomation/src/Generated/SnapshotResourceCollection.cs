@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotsRestClient.CreateListRequest(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotsClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotsClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotsRestClient.CreateListRequest(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _snapshotResourceSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotsClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SnapshotResource(Client, SnapshotResourceData.DeserializeSnapshotResourceData(e)), _snapshotResourceSnapshotsClientDiagnostics, Pipeline, "SnapshotResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

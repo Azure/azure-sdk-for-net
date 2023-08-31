@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Expanded info of resource scope, role definition and policy. </summary>
     public partial class PolicyAssignmentProperties : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
         internal PolicyAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
         /// <param name="scopeType"> Type of the scope. </param>
-        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             LastModifiedBy = lastModifiedBy;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.Authorization.Models
             ScopeId = scopeId;
             ScopeDisplayName = scopeDisplayName;
             ScopeType = scopeType;
+            _rawData = rawData;
         }
 
         /// <summary> Id of the policy. </summary>

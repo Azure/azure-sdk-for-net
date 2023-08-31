@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssignmentResource(Client, AssignmentData.DeserializeAssignmentData(e)), _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AssignmentResource(Client, AssignmentData.DeserializeAssignmentData(e)), _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssignmentResource(Client, AssignmentData.DeserializeAssignmentData(e)), _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AssignmentResource(Client, AssignmentData.DeserializeAssignmentData(e)), _assignmentClientDiagnostics, Pipeline, "AssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

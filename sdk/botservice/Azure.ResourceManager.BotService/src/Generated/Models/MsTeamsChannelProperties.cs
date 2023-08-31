@@ -5,26 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
     public partial class MsTeamsChannelProperties
     {
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public MsTeamsChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isCallingEnabled"> Enable calling for Microsoft Teams channel. </param>
         /// <param name="callingWebhook"> Webhook for Microsoft Teams channel calls. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="incomingCallRoute"> Webhook for Microsoft Teams channel calls. </param>
         /// <param name="deploymentEnvironment"> Deployment environment for Microsoft Teams channel calls. </param>
         /// <param name="acceptedTerms"> Whether this channel accepted terms. </param>
-        internal MsTeamsChannelProperties(bool? isCallingEnabled, string callingWebhook, bool isEnabled, string incomingCallRoute, string deploymentEnvironment, bool? acceptedTerms)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MsTeamsChannelProperties(bool? isCallingEnabled, string callingWebhook, bool isEnabled, string incomingCallRoute, string deploymentEnvironment, bool? acceptedTerms, Dictionary<string, BinaryData> rawData)
         {
             IsCallingEnabled = isCallingEnabled;
             CallingWebhook = callingWebhook;
@@ -32,6 +38,12 @@ namespace Azure.ResourceManager.BotService.Models
             IncomingCallRoute = incomingCallRoute;
             DeploymentEnvironment = deploymentEnvironment;
             AcceptedTerms = acceptedTerms;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/> for deserialization. </summary>
+        internal MsTeamsChannelProperties()
+        {
         }
 
         /// <summary> Enable calling for Microsoft Teams channel. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An azure resource object. </summary>
     public partial class MyWorkbookResource
     {
-        /// <summary> Initializes a new instance of MyWorkbookResource. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookResource"/>. </summary>
         public MyWorkbookResource()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             ETag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookResource"/>. </summary>
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="name"> Azure resource name. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> Resource etag. </param>
-        internal MyWorkbookResource(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MyWorkbookResource(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, Dictionary<string, BinaryData> rawData)
         {
             Identity = identity;
             Id = id;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Location = location;
             Tags = tags;
             ETag = etag;
+            _rawData = rawData;
         }
 
         /// <summary> Identity used for BYOS. </summary>

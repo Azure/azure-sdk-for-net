@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationSourceControlSourceControlRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AutomationSourceControlResource(Client, AutomationSourceControlData.DeserializeAutomationSourceControlData(e)), _automationSourceControlSourceControlClientDiagnostics, Pipeline, "AutomationSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

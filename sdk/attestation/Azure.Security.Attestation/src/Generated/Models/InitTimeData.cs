@@ -6,15 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
     /// <summary> Defines the "initialization time data" used to provision the attestation target for use by the MAA. </summary>
     internal partial class InitTimeData
     {
-        /// <summary> Initializes a new instance of InitTimeData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
         public InitTimeData()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InitTimeData"/>. </summary>
+        /// <param name="data"> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </param>
+        /// <param name="dataType"> The type of data contained within the "data" field. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InitTimeData(byte[] data, DataType? dataType, Dictionary<string, BinaryData> rawData)
+        {
+            Data = data;
+            DataType = dataType;
+            _rawData = rawData;
         }
 
         /// <summary> UTF-8 encoded Initialization Data passed into the trusted environment when it is created. </summary>

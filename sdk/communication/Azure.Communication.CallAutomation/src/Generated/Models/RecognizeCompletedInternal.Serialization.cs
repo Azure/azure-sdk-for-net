@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeCompletedInternal
+    internal partial class RecognizeCompletedInternal : IUtf8JsonSerializable, IModelJsonSerializable<RecognizeCompletedInternal>
     {
-        internal static RecognizeCompletedInternal DeserializeRecognizeCompletedInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecognizeCompletedInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecognizeCompletedInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
+            if (Optional.IsDefined(ResultInformation))
+            {
+                writer.WritePropertyName("resultInformation"u8);
+                writer.WriteObjectValue(ResultInformation);
+            }
+            if (Optional.IsDefined(RecognitionType))
+            {
+                writer.WritePropertyName("recognitionType"u8);
+                writer.WriteStringValue(RecognitionType.ToString());
+            }
+            if (Optional.IsDefined(CollectTonesResult))
+            {
+                writer.WritePropertyName("collectTonesResult"u8);
+                writer.WriteObjectValue(CollectTonesResult);
+            }
+            if (Optional.IsDefined(DtmfResult))
+            {
+                writer.WritePropertyName("dtmfResult"u8);
+                writer.WriteObjectValue(DtmfResult);
+            }
+            if (Optional.IsDefined(ChoiceResult))
+            {
+                writer.WritePropertyName("choiceResult"u8);
+                writer.WriteObjectValue(ChoiceResult);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RecognizeCompletedInternal DeserializeRecognizeCompletedInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +101,7 @@ namespace Azure.Communication.CallAutomation
             Optional<DtmfResult> dtmfResult = default;
             Optional<ChoiceResult> choiceResult = default;
             Optional<SpeechResult> speechResult = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -104,8 +178,57 @@ namespace Azure.Communication.CallAutomation
                     speechResult = SpeechResult.DeserializeSpeechResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, choiceResult.Value, speechResult.Value);
+            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, choiceResult.Value, speechResult.Value, rawData);
+        }
+
+        RecognizeCompletedInternal IModelJsonSerializable<RecognizeCompletedInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecognizeCompletedInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecognizeCompletedInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecognizeCompletedInternal IModelSerializable<RecognizeCompletedInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecognizeCompletedInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecognizeCompletedInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecognizeCompletedInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecognizeCompletedInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

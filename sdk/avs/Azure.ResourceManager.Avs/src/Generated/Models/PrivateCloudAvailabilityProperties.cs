@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties describing private cloud availability zone distribution. </summary>
     public partial class PrivateCloudAvailabilityProperties
     {
-        /// <summary> Initializes a new instance of PrivateCloudAvailabilityProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateCloudAvailabilityProperties"/>. </summary>
         public PrivateCloudAvailabilityProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateCloudAvailabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateCloudAvailabilityProperties"/>. </summary>
         /// <param name="strategy"> The availability strategy for the private cloud. </param>
         /// <param name="zone"> The primary availability zone for the private cloud. </param>
         /// <param name="secondaryZone"> The secondary availability zone for the private cloud. </param>
-        internal PrivateCloudAvailabilityProperties(AvailabilityStrategy? strategy, int? zone, int? secondaryZone)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateCloudAvailabilityProperties(AvailabilityStrategy? strategy, int? zone, int? secondaryZone, Dictionary<string, BinaryData> rawData)
         {
             Strategy = strategy;
             Zone = zone;
             SecondaryZone = secondaryZone;
+            _rawData = rawData;
         }
 
         /// <summary> The availability strategy for the private cloud. </summary>

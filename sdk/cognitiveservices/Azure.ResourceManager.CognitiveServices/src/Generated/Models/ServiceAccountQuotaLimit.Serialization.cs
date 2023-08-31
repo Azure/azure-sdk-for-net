@@ -5,16 +5,63 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountQuotaLimit
+    public partial class ServiceAccountQuotaLimit : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAccountQuotaLimit>
     {
-        internal static ServiceAccountQuotaLimit DeserializeServiceAccountQuotaLimit(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAccountQuotaLimit>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAccountQuotaLimit>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(RenewalPeriod))
+            {
+                writer.WritePropertyName("renewalPeriod"u8);
+                writer.WriteNumberValue(RenewalPeriod.Value);
+            }
+            if (Optional.IsCollectionDefined(Rules))
+            {
+                writer.WritePropertyName("rules"u8);
+                writer.WriteStartArray();
+                foreach (var item in Rules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceAccountQuotaLimit DeserializeServiceAccountQuotaLimit(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<float> count = default;
             Optional<float> renewalPeriod = default;
             Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -56,8 +104,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     rules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAccountQuotaLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules));
+            return new ServiceAccountQuotaLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules), rawData);
+        }
+
+        ServiceAccountQuotaLimit IModelJsonSerializable<ServiceAccountQuotaLimit>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountQuotaLimit(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAccountQuotaLimit>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAccountQuotaLimit IModelSerializable<ServiceAccountQuotaLimit>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAccountQuotaLimit(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServiceAccountQuotaLimit model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServiceAccountQuotaLimit(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAccountQuotaLimit(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

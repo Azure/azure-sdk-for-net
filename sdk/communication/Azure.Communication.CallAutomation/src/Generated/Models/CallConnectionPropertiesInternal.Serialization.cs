@@ -5,17 +5,104 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CallConnectionPropertiesInternal
+    internal partial class CallConnectionPropertiesInternal : IUtf8JsonSerializable, IModelJsonSerializable<CallConnectionPropertiesInternal>
     {
-        internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CallConnectionPropertiesInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CallConnectionPropertiesInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsCollectionDefined(Targets))
+            {
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Targets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CallConnectionState))
+            {
+                writer.WritePropertyName("callConnectionState"u8);
+                writer.WriteStringValue(CallConnectionState.Value.ToString());
+            }
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri"u8);
+                writer.WriteStringValue(CallbackUri);
+            }
+            if (Optional.IsDefined(MediaSubscriptionId))
+            {
+                writer.WritePropertyName("mediaSubscriptionId"u8);
+                writer.WriteStringValue(MediaSubscriptionId);
+            }
+            if (Optional.IsDefined(SourceCallerIdNumber))
+            {
+                writer.WritePropertyName("sourceCallerIdNumber"u8);
+                writer.WriteObjectValue(SourceCallerIdNumber);
+            }
+            if (Optional.IsDefined(SourceDisplayName))
+            {
+                writer.WritePropertyName("sourceDisplayName"u8);
+                writer.WriteStringValue(SourceDisplayName);
+            }
+            if (Optional.IsDefined(SourceIdentity))
+            {
+                writer.WritePropertyName("sourceIdentity"u8);
+                writer.WriteObjectValue(SourceIdentity);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(AnsweredByIdentifier))
+            {
+                writer.WritePropertyName("answeredByIdentifier"u8);
+                writer.WriteObjectValue(AnsweredByIdentifier);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CallConnectionPropertiesInternal DeserializeCallConnectionPropertiesInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +118,7 @@ namespace Azure.Communication.CallAutomation
             Optional<CommunicationIdentifierModel> sourceIdentity = default;
             Optional<string> correlationId = default;
             Optional<CommunicationUserIdentifierModel> answeredByIdentifier = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -113,8 +201,57 @@ namespace Azure.Communication.CallAutomation
                     answeredByIdentifier = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value, rawData);
+        }
+
+        CallConnectionPropertiesInternal IModelJsonSerializable<CallConnectionPropertiesInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCallConnectionPropertiesInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CallConnectionPropertiesInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CallConnectionPropertiesInternal IModelSerializable<CallConnectionPropertiesInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCallConnectionPropertiesInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CallConnectionPropertiesInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CallConnectionPropertiesInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCallConnectionPropertiesInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

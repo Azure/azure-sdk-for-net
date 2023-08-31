@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ContinentsResponseContinentsItem. </summary>
     public partial class ContinentsResponseContinentsItem
     {
-        /// <summary> Initializes a new instance of ContinentsResponseContinentsItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinentsResponseContinentsItem"/>. </summary>
         internal ContinentsResponseContinentsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinentsResponseContinentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinentsResponseContinentsItem"/>. </summary>
         /// <param name="id"></param>
-        internal ContinentsResponseContinentsItem(string id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinentsResponseContinentsItem(string id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the id. </summary>

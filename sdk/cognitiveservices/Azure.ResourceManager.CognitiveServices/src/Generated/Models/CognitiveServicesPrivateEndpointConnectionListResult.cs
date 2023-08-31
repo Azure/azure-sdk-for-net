@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class CognitiveServicesPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateEndpointConnectionListResult"/>. </summary>
         internal CognitiveServicesPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal CognitiveServicesPrivateEndpointConnectionListResult(IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesPrivateEndpointConnectionListResult(IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

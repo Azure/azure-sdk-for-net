@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Backend list representation. </summary>
     internal partial class BackendListResult
     {
-        /// <summary> Initializes a new instance of BackendListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendListResult"/>. </summary>
         internal BackendListResult()
         {
             Value = new ChangeTrackingList<ApiManagementBackendData>();
         }
 
-        /// <summary> Initializes a new instance of BackendListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendListResult"/>. </summary>
         /// <param name="value"> Backend values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal BackendListResult(IReadOnlyList<ApiManagementBackendData> value, long? count, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendListResult(IReadOnlyList<ApiManagementBackendData> value, long? count, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Backend values. </summary>

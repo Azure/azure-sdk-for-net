@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class DscNodeConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DscNodeConfigurationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationData"/>. </summary>
         public DscNodeConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="source"> Source of node configuration. </param>
         /// <param name="nodeCount"> Number of nodes with this node configuration assigned. </param>
         /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
-        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, DscConfigurationAssociationProperty configuration, string source, long? nodeCount, bool? isIncrementNodeConfigurationBuildRequired, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             CreatedOn = createdOn;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.Automation
             Source = source;
             NodeCount = nodeCount;
             IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the last modified time. </summary>

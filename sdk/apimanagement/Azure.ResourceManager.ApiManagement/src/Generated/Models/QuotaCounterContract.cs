@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Quota counter details. </summary>
     public partial class QuotaCounterContract
     {
-        /// <summary> Initializes a new instance of QuotaCounterContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
         /// <param name="periodStartOn">
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PeriodEndOn = periodEndOn;
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/>. </summary>
         /// <param name="counterKey"> The Key value of the Counter. Must not be empty. </param>
         /// <param name="periodKey"> Identifier of the Period for which the counter was collected. Must not be empty. </param>
         /// <param name="periodStartOn">
@@ -48,13 +51,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///
         /// </param>
         /// <param name="value"> Quota Value Properties. </param>
-        internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn, QuotaCounterValueContractProperties value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCounterContract(string counterKey, string periodKey, DateTimeOffset periodStartOn, DateTimeOffset periodEndOn, QuotaCounterValueContractProperties value, Dictionary<string, BinaryData> rawData)
         {
             CounterKey = counterKey;
             PeriodKey = periodKey;
             PeriodStartOn = periodStartOn;
             PeriodEndOn = periodEndOn;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterContract"/> for deserialization. </summary>
+        internal QuotaCounterContract()
+        {
         }
 
         /// <summary> The Key value of the Counter. Must not be empty. </summary>

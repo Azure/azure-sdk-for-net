@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class AttestOpenEnclaveRequest : IUtf8JsonSerializable
+    internal partial class AttestOpenEnclaveRequest : IUtf8JsonSerializable, IModelJsonSerializable<AttestOpenEnclaveRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AttestOpenEnclaveRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AttestOpenEnclaveRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Report))
             {
@@ -35,7 +43,119 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static AttestOpenEnclaveRequest DeserializeAttestOpenEnclaveRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<byte[]> report = default;
+            Optional<RuntimeData> runtimeData = default;
+            Optional<InitTimeData> initTimeData = default;
+            Optional<string> draftPolicyForAttestation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("report"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    report = property.Value.GetBytesFromBase64("U");
+                    continue;
+                }
+                if (property.NameEquals("runtimeData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runtimeData = RuntimeData.DeserializeRuntimeData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("initTimeData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initTimeData = InitTimeData.DeserializeInitTimeData(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("draftPolicyForAttestation"u8))
+                {
+                    draftPolicyForAttestation = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AttestOpenEnclaveRequest(report.Value, runtimeData.Value, initTimeData.Value, draftPolicyForAttestation.Value, rawData);
+        }
+
+        AttestOpenEnclaveRequest IModelJsonSerializable<AttestOpenEnclaveRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttestOpenEnclaveRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AttestOpenEnclaveRequest>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AttestOpenEnclaveRequest IModelSerializable<AttestOpenEnclaveRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAttestOpenEnclaveRequest(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AttestOpenEnclaveRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AttestOpenEnclaveRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAttestOpenEnclaveRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

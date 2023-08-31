@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class TemplateArtifact : IUtf8JsonSerializable
+    public partial class TemplateArtifact : IUtf8JsonSerializable, IModelJsonSerializable<TemplateArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TemplateArtifact>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TemplateArtifact>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TemplateArtifact>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -62,11 +68,25 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TemplateArtifact DeserializeTemplateArtifact(JsonElement element)
+        internal static TemplateArtifact DeserializeTemplateArtifact(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +102,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             BinaryData template = default;
             Optional<string> resourceGroup = default;
             IDictionary<string, ParameterValue> parameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -169,8 +190,57 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TemplateArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), template, resourceGroup.Value, parameters);
+            return new TemplateArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), template, resourceGroup.Value, parameters, rawData);
+        }
+
+        TemplateArtifact IModelJsonSerializable<TemplateArtifact>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TemplateArtifact>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTemplateArtifact(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TemplateArtifact>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TemplateArtifact>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TemplateArtifact IModelSerializable<TemplateArtifact>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TemplateArtifact>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTemplateArtifact(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TemplateArtifact model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TemplateArtifact(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTemplateArtifact(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

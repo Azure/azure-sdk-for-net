@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmContainerRegistry : IUtf8JsonSerializable
+    public partial class BatchVmContainerRegistry : IUtf8JsonSerializable, IModelJsonSerializable<BatchVmContainerRegistry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchVmContainerRegistry>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchVmContainerRegistry>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchVmContainerRegistry DeserializeBatchVmContainerRegistry(JsonElement element)
+        internal static BatchVmContainerRegistry DeserializeBatchVmContainerRegistry(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> password = default;
             Optional<string> registryServer = default;
             Optional<ComputeNodeIdentityReference> identityReference = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -74,8 +97,57 @@ namespace Azure.ResourceManager.Batch.Models
                     identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchVmContainerRegistry(username.Value, password.Value, registryServer.Value, identityReference.Value);
+            return new BatchVmContainerRegistry(username.Value, password.Value, registryServer.Value, identityReference.Value, rawData);
+        }
+
+        BatchVmContainerRegistry IModelJsonSerializable<BatchVmContainerRegistry>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchVmContainerRegistry(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchVmContainerRegistry>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchVmContainerRegistry IModelSerializable<BatchVmContainerRegistry>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchVmContainerRegistry(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BatchVmContainerRegistry model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BatchVmContainerRegistry(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchVmContainerRegistry(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

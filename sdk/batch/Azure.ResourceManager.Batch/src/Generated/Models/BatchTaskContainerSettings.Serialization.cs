@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchTaskContainerSettings : IUtf8JsonSerializable
+    public partial class BatchTaskContainerSettings : IUtf8JsonSerializable, IModelJsonSerializable<BatchTaskContainerSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchTaskContainerSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchTaskContainerSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerRunOptions))
             {
@@ -32,11 +40,25 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element)
+        internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.Batch.Models
             string imageName = default;
             Optional<BatchVmContainerRegistry> registry = default;
             Optional<BatchContainerWorkingDirectory> workingDirectory = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerRunOptions"u8))
@@ -75,8 +98,57 @@ namespace Azure.ResourceManager.Batch.Models
                     workingDirectory = property.Value.GetString().ToBatchContainerWorkingDirectory();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchTaskContainerSettings(containerRunOptions.Value, imageName, registry.Value, Optional.ToNullable(workingDirectory));
+            return new BatchTaskContainerSettings(containerRunOptions.Value, imageName, registry.Value, Optional.ToNullable(workingDirectory), rawData);
+        }
+
+        BatchTaskContainerSettings IModelJsonSerializable<BatchTaskContainerSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchTaskContainerSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchTaskContainerSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchTaskContainerSettings IModelSerializable<BatchTaskContainerSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchTaskContainerSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BatchTaskContainerSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BatchTaskContainerSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchTaskContainerSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

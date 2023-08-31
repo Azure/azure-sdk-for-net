@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformMonitoringSettingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformMonitoringSettingProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformMonitoringSettingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformMonitoringSettingProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformMonitoringSettingProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
@@ -40,11 +48,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("appInsightsAgentVersions"u8);
                 writer.WriteObjectValue(AppInsightsAgentVersions);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformMonitoringSettingProperties DeserializeAppPlatformMonitoringSettingProperties(JsonElement element)
+        internal static AppPlatformMonitoringSettingProperties DeserializeAppPlatformMonitoringSettingProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +77,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> appInsightsInstrumentationKey = default;
             Optional<double> appInsightsSamplingRate = default;
             Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -107,8 +130,57 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     appInsightsAgentVersions = ApplicationInsightsAgentVersions.DeserializeApplicationInsightsAgentVersions(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformMonitoringSettingProperties(Optional.ToNullable(provisioningState), error.Value, Optional.ToNullable(traceEnabled), appInsightsInstrumentationKey.Value, Optional.ToNullable(appInsightsSamplingRate), appInsightsAgentVersions.Value);
+            return new AppPlatformMonitoringSettingProperties(Optional.ToNullable(provisioningState), error.Value, Optional.ToNullable(traceEnabled), appInsightsInstrumentationKey.Value, Optional.ToNullable(appInsightsSamplingRate), appInsightsAgentVersions.Value, rawData);
+        }
+
+        AppPlatformMonitoringSettingProperties IModelJsonSerializable<AppPlatformMonitoringSettingProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformMonitoringSettingProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformMonitoringSettingProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformMonitoringSettingProperties IModelSerializable<AppPlatformMonitoringSettingProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformMonitoringSettingProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AppPlatformMonitoringSettingProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AppPlatformMonitoringSettingProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformMonitoringSettingProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

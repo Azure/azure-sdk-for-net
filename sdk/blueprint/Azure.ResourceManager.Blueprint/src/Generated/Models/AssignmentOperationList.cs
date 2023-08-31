@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Blueprint;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> List of AssignmentOperation. </summary>
     internal partial class AssignmentOperationList
     {
-        /// <summary> Initializes a new instance of AssignmentOperationList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationList"/>. </summary>
         internal AssignmentOperationList()
         {
             Value = new ChangeTrackingList<AssignmentOperationData>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentOperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationList"/>. </summary>
         /// <param name="value"> List of AssignmentOperation. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal AssignmentOperationList(IReadOnlyList<AssignmentOperationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentOperationList(IReadOnlyList<AssignmentOperationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of AssignmentOperation. </summary>

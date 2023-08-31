@@ -5,16 +5,68 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesSkuRestrictions
+    public partial class CognitiveServicesSkuRestrictions : IUtf8JsonSerializable, IModelJsonSerializable<CognitiveServicesSkuRestrictions>
     {
-        internal static CognitiveServicesSkuRestrictions DeserializeCognitiveServicesSkuRestrictions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CognitiveServicesSkuRestrictions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CognitiveServicesSkuRestrictions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RestrictionsType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RestrictionsType.Value.ToSerialString());
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RestrictionInfo))
+            {
+                writer.WritePropertyName("restrictionInfo"u8);
+                writer.WriteObjectValue(RestrictionInfo);
+            }
+            if (Optional.IsDefined(ReasonCode))
+            {
+                writer.WritePropertyName("reasonCode"u8);
+                writer.WriteStringValue(ReasonCode.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CognitiveServicesSkuRestrictions DeserializeCognitiveServicesSkuRestrictions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<IReadOnlyList<string>> values = default;
             Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;
             Optional<CognitiveServicesSkuRestrictionReasonCode> reasonCode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -66,8 +119,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     reasonCode = new CognitiveServicesSkuRestrictionReasonCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CognitiveServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            return new CognitiveServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), rawData);
+        }
+
+        CognitiveServicesSkuRestrictions IModelJsonSerializable<CognitiveServicesSkuRestrictions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesSkuRestrictions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CognitiveServicesSkuRestrictions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CognitiveServicesSkuRestrictions IModelSerializable<CognitiveServicesSkuRestrictions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesSkuRestrictions(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CognitiveServicesSkuRestrictions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CognitiveServicesSkuRestrictions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCognitiveServicesSkuRestrictions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

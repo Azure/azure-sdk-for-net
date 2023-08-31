@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API OAuth2 Authentication settings details. </summary>
     public partial class OAuth2AuthenticationSettingsContract
     {
-        /// <summary> Initializes a new instance of OAuth2AuthenticationSettingsContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OAuth2AuthenticationSettingsContract"/>. </summary>
         public OAuth2AuthenticationSettingsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of OAuth2AuthenticationSettingsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="OAuth2AuthenticationSettingsContract"/>. </summary>
         /// <param name="authorizationServerId"> OAuth authorization server identifier. </param>
         /// <param name="scope"> operations scope. </param>
-        internal OAuth2AuthenticationSettingsContract(string authorizationServerId, string scope)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OAuth2AuthenticationSettingsContract(string authorizationServerId, string scope, Dictionary<string, BinaryData> rawData)
         {
             AuthorizationServerId = authorizationServerId;
             Scope = scope;
+            _rawData = rawData;
         }
 
         /// <summary> OAuth authorization server identifier. </summary>

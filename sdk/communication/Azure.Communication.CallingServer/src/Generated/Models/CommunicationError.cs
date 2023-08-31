@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,29 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CommunicationError. </summary>
     internal partial class CommunicationError
     {
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationError"/>. </summary>
         internal CommunicationError()
         {
             Details = new ChangeTrackingList<CommunicationError>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationError"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <param name="target"></param>
+        /// <param name="details"></param>
+        /// <param name="innererror"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innererror, Dictionary<string, BinaryData> rawData)
+        {
+            Code = code;
+            Message = message;
+            Target = target;
+            Details = details;
+            Innererror = innererror;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the code. </summary>

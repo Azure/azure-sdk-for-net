@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The MetricsResponseSeriesPropertiesItemsItem. </summary>
     public partial class MetricsResponseSeriesPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of MetricsResponseSeriesPropertiesItemsItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         internal MetricsResponseSeriesPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        internal MetricsResponseSeriesPropertiesItemsItem(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricsResponseSeriesPropertiesItemsItem(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the name. </summary>

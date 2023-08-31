@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscriptions delegation settings properties. </summary>
     internal partial class SubscriptionDelegationSettingProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionDelegationSettingProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDelegationSettingProperties"/>. </summary>
         public SubscriptionDelegationSettingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionDelegationSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDelegationSettingProperties"/>. </summary>
         /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
-        internal SubscriptionDelegationSettingProperties(bool? isSubscriptionDelegationEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionDelegationSettingProperties(bool? isSubscriptionDelegationEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsSubscriptionDelegationEnabled = isSubscriptionDelegationEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>

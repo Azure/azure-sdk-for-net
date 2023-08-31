@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines contents of rate limit rules. </summary>
     internal partial class RateLimitRuleList
     {
-        /// <summary> Initializes a new instance of RateLimitRuleList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RateLimitRuleList"/>. </summary>
         public RateLimitRuleList()
         {
             Rules = new ChangeTrackingList<RateLimitRule>();
         }
 
-        /// <summary> Initializes a new instance of RateLimitRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateLimitRuleList"/>. </summary>
         /// <param name="rules"> List of rules. </param>
-        internal RateLimitRuleList(IList<RateLimitRule> rules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RateLimitRuleList(IList<RateLimitRule> rules, Dictionary<string, BinaryData> rawData)
         {
             Rules = rules;
+            _rawData = rawData;
         }
 
         /// <summary> List of rules. </summary>

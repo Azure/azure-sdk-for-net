@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of VirtualMachines. </summary>
     internal partial class VirtualMachineListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineListResult"/>. </summary>
         internal VirtualMachineListResult()
         {
             Value = new ChangeTrackingList<ScVmmVirtualMachineData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineListResult"/>. </summary>
         /// <param name="value"> List of VirtualMachines. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal VirtualMachineListResult(IReadOnlyList<ScVmmVirtualMachineData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineListResult(IReadOnlyList<ScVmmVirtualMachineData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of VirtualMachines. </summary>

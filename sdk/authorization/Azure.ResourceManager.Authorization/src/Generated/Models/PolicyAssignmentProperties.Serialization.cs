@@ -6,16 +6,92 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class PolicyAssignmentProperties
+    public partial class PolicyAssignmentProperties : IUtf8JsonSerializable, IModelJsonSerializable<PolicyAssignmentProperties>
     {
-        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyAssignmentProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyAssignmentProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("policy"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PolicyId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedDateTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("roleDefinition"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(RoleDefinitionId);
+            }
+            if (Optional.IsDefined(RoleDefinitionDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(RoleDefinitionDisplayName);
+            }
+            if (Optional.IsDefined(RoleType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RoleType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ScopeId);
+            }
+            if (Optional.IsDefined(ScopeDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(ScopeDisplayName);
+            }
+            if (Optional.IsDefined(ScopeType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ScopeType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyAssignmentProperties DeserializePolicyAssignmentProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +109,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<ResourceIdentifier> id2 = default;
             Optional<string> displayName0 = default;
             Optional<RoleManagementScopeType> type1 = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,8 +245,57 @@ namespace Azure.ResourceManager.Authorization.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1));
+            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1), rawData);
+        }
+
+        PolicyAssignmentProperties IModelJsonSerializable<PolicyAssignmentProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyAssignmentProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyAssignmentProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyAssignmentProperties IModelSerializable<PolicyAssignmentProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyAssignmentProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PolicyAssignmentProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PolicyAssignmentProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyAssignmentProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Reference to a build result. </summary>
     public partial class AppPlatformBuildResultUserSourceInfo : AppPlatformUserSourceInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildResultUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultUserSourceInfo"/>. </summary>
         public AppPlatformBuildResultUserSourceInfo()
         {
             UserSourceInfoType = "BuildResult";
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="buildResultId"> Resource id of an existing succeeded build result under the same Spring instance. </param>
-        internal AppPlatformBuildResultUserSourceInfo(string userSourceInfoType, string version, string buildResultId) : base(userSourceInfoType, version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildResultUserSourceInfo(string userSourceInfoType, string version, string buildResultId, Dictionary<string, BinaryData> rawData) : base(userSourceInfoType, version, rawData)
         {
             BuildResultId = buildResultId;
             UserSourceInfoType = userSourceInfoType ?? "BuildResult";

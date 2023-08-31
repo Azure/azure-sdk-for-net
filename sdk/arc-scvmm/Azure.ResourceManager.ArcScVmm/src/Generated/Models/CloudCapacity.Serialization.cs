@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class CloudCapacity
+    public partial class CloudCapacity : IUtf8JsonSerializable, IModelJsonSerializable<CloudCapacity>
     {
-        internal static CloudCapacity DeserializeCloudCapacity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CloudCapacity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CloudCapacity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CpuCount))
+            {
+                writer.WritePropertyName("cpuCount"u8);
+                writer.WriteNumberValue(CpuCount.Value);
+            }
+            if (Optional.IsDefined(MemoryMB))
+            {
+                writer.WritePropertyName("memoryMB"u8);
+                writer.WriteNumberValue(MemoryMB.Value);
+            }
+            if (Optional.IsDefined(VmCount))
+            {
+                writer.WritePropertyName("vmCount"u8);
+                writer.WriteNumberValue(VmCount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CloudCapacity DeserializeCloudCapacity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<long> cpuCount = default;
             Optional<long> memoryMB = default;
             Optional<long> vmCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuCount"u8))
@@ -50,8 +94,57 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     vmCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CloudCapacity(Optional.ToNullable(cpuCount), Optional.ToNullable(memoryMB), Optional.ToNullable(vmCount));
+            return new CloudCapacity(Optional.ToNullable(cpuCount), Optional.ToNullable(memoryMB), Optional.ToNullable(vmCount), rawData);
+        }
+
+        CloudCapacity IModelJsonSerializable<CloudCapacity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudCapacity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CloudCapacity>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CloudCapacity IModelSerializable<CloudCapacity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCloudCapacity(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CloudCapacity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CloudCapacity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCloudCapacity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

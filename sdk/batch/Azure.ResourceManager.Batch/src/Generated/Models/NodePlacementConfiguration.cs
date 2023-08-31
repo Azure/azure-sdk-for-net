@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Allocation configuration used by Batch Service to provision the nodes. </summary>
     internal partial class NodePlacementConfiguration
     {
-        /// <summary> Initializes a new instance of NodePlacementConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodePlacementConfiguration"/>. </summary>
         public NodePlacementConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NodePlacementConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodePlacementConfiguration"/>. </summary>
         /// <param name="policy"> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </param>
-        internal NodePlacementConfiguration(BatchNodePlacementPolicyType? policy)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodePlacementConfiguration(BatchNodePlacementPolicyType? policy, Dictionary<string, BinaryData> rawData)
         {
             Policy = policy;
+            _rawData = rawData;
         }
 
         /// <summary> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The list of cognitive services models. </summary>
     internal partial class CognitiveServicesModelListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesModelListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelListResult"/>. </summary>
         internal CognitiveServicesModelListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesModel>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesModelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Model. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts Model and their properties. </param>
-        internal CognitiveServicesModelListResult(string nextLink, IReadOnlyList<CognitiveServicesModel> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesModelListResult(string nextLink, IReadOnlyList<CognitiveServicesModel> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of Model. </summary>

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class DiscreteAction : IUtf8JsonSerializable
+    public partial class DiscreteAction : IUtf8JsonSerializable, IModelJsonSerializable<DiscreteAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiscreteAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiscreteAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DiscreteAction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
             writer.WriteStartArray();
@@ -29,11 +36,25 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(ActionType);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiscreteAction DeserializeDiscreteAction(JsonElement element)
+        internal static DiscreteAction DeserializeDiscreteAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string selectorId = default;
             string type = default;
             string name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -69,8 +91,57 @@ namespace Azure.ResourceManager.Chaos.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiscreteAction(type, name, parameters, selectorId);
+            return new DiscreteAction(type, name, parameters, selectorId, rawData);
+        }
+
+        DiscreteAction IModelJsonSerializable<DiscreteAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DiscreteAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiscreteAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiscreteAction>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DiscreteAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiscreteAction IModelSerializable<DiscreteAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DiscreteAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiscreteAction(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DiscreteAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DiscreteAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiscreteAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

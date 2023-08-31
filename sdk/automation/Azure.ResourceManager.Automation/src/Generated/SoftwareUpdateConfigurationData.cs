@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,9 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class SoftwareUpdateConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/>. </summary>
         /// <param name="updateConfiguration"> update specific properties for the Software update configuration. </param>
         /// <param name="scheduleInfo"> Schedule information for the Software update configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateConfiguration"/> or <paramref name="scheduleInfo"/> is null. </exception>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.Automation
             ScheduleInfo = scheduleInfo;
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Tasks information for the Software update configuration. </param>
-        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationResponseError error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SoftwareUpdateConfigurationSpecificProperties updateConfiguration, SoftwareUpdateConfigurationScheduleProperties scheduleInfo, string provisioningState, AutomationResponseError error, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationTasks tasks, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             UpdateConfiguration = updateConfiguration;
             ScheduleInfo = scheduleInfo;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.Automation
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Tasks = tasks;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationData"/> for deserialization. </summary>
+        internal SoftwareUpdateConfigurationData()
+        {
         }
 
         /// <summary> update specific properties for the Software update configuration. </summary>

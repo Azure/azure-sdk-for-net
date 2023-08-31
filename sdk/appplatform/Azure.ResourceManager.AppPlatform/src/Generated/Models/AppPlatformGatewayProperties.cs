@@ -14,13 +14,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Spring Cloud Gateway properties payload. </summary>
     public partial class AppPlatformGatewayProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayProperties"/>. </summary>
         public AppPlatformGatewayProperties()
         {
             Instances = new ChangeTrackingList<AppPlatformGatewayInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
         /// <param name="isPublic"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
         /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when 'public' is true. </param>
@@ -31,7 +33,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Spring Cloud Gateway. </param>
         /// <param name="operatorProperties"> Properties of the Spring Cloud Gateway Operator. </param>
-        internal AppPlatformGatewayProperties(AppPlatformGatewayProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, AppPlatformSsoProperties ssoProperties, AppPlatformGatewayApiMetadataProperties apiMetadataProperties, AppPlatformGatewayCorsProperties corsProperties, AppPlatformGatewayResourceRequirements resourceRequests, IReadOnlyList<AppPlatformGatewayInstance> instances, AppPlatformGatewayOperatorProperties operatorProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayProperties(AppPlatformGatewayProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, AppPlatformSsoProperties ssoProperties, AppPlatformGatewayApiMetadataProperties apiMetadataProperties, AppPlatformGatewayCorsProperties corsProperties, AppPlatformGatewayResourceRequirements resourceRequests, IReadOnlyList<AppPlatformGatewayInstance> instances, AppPlatformGatewayOperatorProperties operatorProperties, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             IsPublic = isPublic;
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ResourceRequests = resourceRequests;
             Instances = instances;
             OperatorProperties = operatorProperties;
+            _rawData = rawData;
         }
 
         /// <summary> State of the Spring Cloud Gateway. </summary>

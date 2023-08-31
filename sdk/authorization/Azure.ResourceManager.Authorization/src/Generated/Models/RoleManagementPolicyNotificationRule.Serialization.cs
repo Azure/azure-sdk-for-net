@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyNotificationRule : IUtf8JsonSerializable
+    public partial class RoleManagementPolicyNotificationRule : IUtf8JsonSerializable, IModelJsonSerializable<RoleManagementPolicyNotificationRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleManagementPolicyNotificationRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleManagementPolicyNotificationRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyNotificationRule>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NotificationDeliveryType))
             {
@@ -58,11 +65,25 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element)
+        internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +96,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationType"u8))
@@ -146,8 +168,57 @@ namespace Azure.ResourceManager.Authorization.Models
                     target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), Optional.ToList(notificationRecipients), Optional.ToNullable(isDefaultRecipientsEnabled));
+            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), Optional.ToList(notificationRecipients), Optional.ToNullable(isDefaultRecipientsEnabled), rawData);
+        }
+
+        RoleManagementPolicyNotificationRule IModelJsonSerializable<RoleManagementPolicyNotificationRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyNotificationRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleManagementPolicyNotificationRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleManagementPolicyNotificationRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyNotificationRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleManagementPolicyNotificationRule IModelSerializable<RoleManagementPolicyNotificationRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RoleManagementPolicyNotificationRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleManagementPolicyNotificationRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RoleManagementPolicyNotificationRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RoleManagementPolicyNotificationRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleManagementPolicyNotificationRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

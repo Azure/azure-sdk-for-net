@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class PortalSettingValidationKeyContract
     {
-        /// <summary> Initializes a new instance of PortalSettingValidationKeyContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PortalSettingValidationKeyContract"/>. </summary>
         internal PortalSettingValidationKeyContract()
         {
         }
 
-        /// <summary> Initializes a new instance of PortalSettingValidationKeyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalSettingValidationKeyContract"/>. </summary>
         /// <param name="validationKey"> This is secret value of the validation key in portal settings. </param>
-        internal PortalSettingValidationKeyContract(string validationKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PortalSettingValidationKeyContract(string validationKey, Dictionary<string, BinaryData> rawData)
         {
             ValidationKey = validationKey;
+            _rawData = rawData;
         }
 
         /// <summary> This is secret value of the validation key in portal settings. </summary>

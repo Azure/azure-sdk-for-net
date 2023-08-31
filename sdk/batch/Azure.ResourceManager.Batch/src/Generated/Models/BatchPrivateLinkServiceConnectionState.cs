@@ -5,27 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The private link service connection state of the private endpoint connection. </summary>
     public partial class BatchPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of BatchPrivateLinkServiceConnectionState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of the Batch private endpoint connection. </param>
         public BatchPrivateLinkServiceConnectionState(BatchPrivateLinkServiceConnectionStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of BatchPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The status of the Batch private endpoint connection. </param>
         /// <param name="description"> Description of the private Connection state. </param>
         /// <param name="actionRequired"> Action required on the private connection state. </param>
-        internal BatchPrivateLinkServiceConnectionState(BatchPrivateLinkServiceConnectionStatus status, string description, string actionRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPrivateLinkServiceConnectionState(BatchPrivateLinkServiceConnectionStatus status, string description, string actionRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionRequired = actionRequired;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchPrivateLinkServiceConnectionState"/> for deserialization. </summary>
+        internal BatchPrivateLinkServiceConnectionState()
+        {
         }
 
         /// <summary> The status of the Batch private endpoint connection. </summary>

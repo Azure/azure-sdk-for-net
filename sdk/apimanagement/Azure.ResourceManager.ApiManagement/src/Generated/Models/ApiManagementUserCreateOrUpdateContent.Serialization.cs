@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementUserCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ApiManagementUserCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementUserCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementUserCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementUserCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -68,7 +76,170 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(Confirmation.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ApiManagementUserCreateOrUpdateContent DeserializeApiManagementUserCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ApiManagementUserState> state = default;
+            Optional<string> note = default;
+            Optional<IList<UserIdentityContract>> identities = default;
+            Optional<string> email = default;
+            Optional<string> firstName = default;
+            Optional<string> lastName = default;
+            Optional<string> password = default;
+            Optional<AppType> appType = default;
+            Optional<ConfirmationEmailType> confirmation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("state"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            state = new ApiManagementUserState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("note"u8))
+                        {
+                            note = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("identities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<UserIdentityContract> array = new List<UserIdentityContract>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item));
+                            }
+                            identities = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("email"u8))
+                        {
+                            email = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("firstName"u8))
+                        {
+                            firstName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("lastName"u8))
+                        {
+                            lastName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("password"u8))
+                        {
+                            password = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("appType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            appType = new AppType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("confirmation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            confirmation = new ConfirmationEmailType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ApiManagementUserCreateOrUpdateContent(Optional.ToNullable(state), note.Value, Optional.ToList(identities), email.Value, firstName.Value, lastName.Value, password.Value, Optional.ToNullable(appType), Optional.ToNullable(confirmation), rawData);
+        }
+
+        ApiManagementUserCreateOrUpdateContent IModelJsonSerializable<ApiManagementUserCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementUserCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementUserCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementUserCreateOrUpdateContent IModelSerializable<ApiManagementUserCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementUserCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApiManagementUserCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApiManagementUserCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementUserCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

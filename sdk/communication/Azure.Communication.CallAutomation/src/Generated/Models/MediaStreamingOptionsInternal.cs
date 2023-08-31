@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Configuration of Media streaming. </summary>
     internal partial class MediaStreamingOptionsInternal
     {
-        /// <summary> Initializes a new instance of MediaStreamingOptionsInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
         /// <param name="transportUrl"> Transport URL for media streaming. </param>
         /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
         /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
@@ -27,6 +30,26 @@ namespace Azure.Communication.CallAutomation
             TransportType = transportType;
             ContentType = contentType;
             AudioChannelType = audioChannelType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/>. </summary>
+        /// <param name="transportUrl"> Transport URL for media streaming. </param>
+        /// <param name="transportType"> The type of transport to be used for media streaming, eg. Websocket. </param>
+        /// <param name="contentType"> Content type to stream, eg. audio, audio/video. </param>
+        /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, Dictionary<string, BinaryData> rawData)
+        {
+            TransportUrl = transportUrl;
+            TransportType = transportType;
+            ContentType = contentType;
+            AudioChannelType = audioChannelType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingOptionsInternal"/> for deserialization. </summary>
+        internal MediaStreamingOptionsInternal()
+        {
         }
 
         /// <summary> Transport URL for media streaming. </summary>

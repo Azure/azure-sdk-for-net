@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeRequest. </summary>
     internal partial class RecognizeRequestInternal
     {
-        /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
@@ -23,6 +26,30 @@ namespace Azure.Communication.CallAutomation
 
             RecognizeInputType = recognizeInputType;
             RecognizeOptions = recognizeOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
+        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
+        /// <param name="playPrompt"> The source of the audio to be played for recognition. </param>
+        /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
+        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string callbackUri, Dictionary<string, BinaryData> rawData)
+        {
+            RecognizeInputType = recognizeInputType;
+            PlayPrompt = playPrompt;
+            InterruptCallMediaOperation = interruptCallMediaOperation;
+            RecognizeOptions = recognizeOptions;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/> for deserialization. </summary>
+        internal RecognizeRequestInternal()
+        {
         }
 
         /// <summary> Determines the type of the recognition. </summary>

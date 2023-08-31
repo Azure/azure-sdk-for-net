@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmVirtualMachineTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Disks = new ChangeTrackingList<VirtualDisk>();
         }
 
-        /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +61,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="networkInterfaces"> Gets or sets the network interfaces of the template. </param>
         /// <param name="disks"> Gets or sets the disks of the template. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, OSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, string isHighlyAvailable, int? generation, IReadOnlyList<NetworkInterfaces> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, OSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, string isHighlyAvailable, int? generation, IReadOnlyList<NetworkInterfaces> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -80,6 +83,12 @@ namespace Azure.ResourceManager.ArcScVmm
             NetworkInterfaces = networkInterfaces;
             Disks = disks;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineTemplateData"/> for deserialization. </summary>
+        internal ScVmmVirtualMachineTemplateData()
+        {
         }
 
         /// <summary> The extended location. </summary>

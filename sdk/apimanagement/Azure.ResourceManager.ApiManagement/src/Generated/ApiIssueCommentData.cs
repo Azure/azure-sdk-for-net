@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiIssueCommentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiIssueCommentData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiIssueCommentData"/>. </summary>
         public ApiIssueCommentData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiIssueCommentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiIssueCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +33,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="text"> Comment text. </param>
         /// <param name="createdOn"> Date and time when the comment was created. </param>
         /// <param name="userId"> A resource identifier for the user who left the comment. </param>
-        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, ResourceIdentifier userId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, ResourceIdentifier userId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Text = text;
             CreatedOn = createdOn;
             UserId = userId;
+            _rawData = rawData;
         }
 
         /// <summary> Comment text. </summary>

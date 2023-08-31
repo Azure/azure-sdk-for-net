@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Advisor;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The list of Advisor suppressions. </summary>
     internal partial class SuppressionContractListResult
     {
-        /// <summary> Initializes a new instance of SuppressionContractListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SuppressionContractListResult"/>. </summary>
         internal SuppressionContractListResult()
         {
             Value = new ChangeTrackingList<SuppressionContractData>();
         }
 
-        /// <summary> Initializes a new instance of SuppressionContractListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionContractListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of suppressions. </param>
         /// <param name="value"> The list of suppressions. </param>
-        internal SuppressionContractListResult(string nextLink, IReadOnlyList<SuppressionContractData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuppressionContractListResult(string nextLink, IReadOnlyList<SuppressionContractData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of suppressions. </summary>

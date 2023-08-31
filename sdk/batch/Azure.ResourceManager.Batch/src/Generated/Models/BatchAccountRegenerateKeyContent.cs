@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Parameters supplied to the RegenerateKey operation. </summary>
     public partial class BatchAccountRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of BatchAccountRegenerateKeyContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRegenerateKeyContent"/>. </summary>
         /// <param name="keyType"> The type of account key to regenerate. </param>
         public BatchAccountRegenerateKeyContent(BatchAccountKeyType keyType)
         {
             KeyType = keyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRegenerateKeyContent"/>. </summary>
+        /// <param name="keyType"> The type of account key to regenerate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountRegenerateKeyContent(BatchAccountKeyType keyType, Dictionary<string, BinaryData> rawData)
+        {
+            KeyType = keyType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountRegenerateKeyContent"/> for deserialization. </summary>
+        internal BatchAccountRegenerateKeyContent()
+        {
         }
 
         /// <summary> The type of account key to regenerate. </summary>

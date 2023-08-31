@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     internal partial class StorageProfileUpdate
     {
-        /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
         public StorageProfileUpdate()
         {
             Disks = new ChangeTrackingList<VirtualDiskUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
+        /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageProfileUpdate(IList<VirtualDiskUpdate> disks, Dictionary<string, BinaryData> rawData)
+        {
+            Disks = disks;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a continuous action. </summary>
     public partial class ContinuousAction : Action
     {
-        /// <summary> Initializes a new instance of ContinuousAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
@@ -33,18 +33,24 @@ namespace Azure.ResourceManager.Chaos.Models
             ActionType = "continuous";
         }
 
-        /// <summary> Initializes a new instance of ContinuousAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousAction"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        internal ContinuousAction(string actionType, string name, TimeSpan duration, IList<KeyValuePair> parameters, string selectorId) : base(actionType, name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousAction(string actionType, string name, TimeSpan duration, IList<KeyValuePair> parameters, string selectorId, Dictionary<string, BinaryData> rawData) : base(actionType, name, rawData)
         {
             Duration = duration;
             Parameters = parameters;
             SelectorId = selectorId;
             ActionType = actionType ?? "continuous";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousAction"/> for deserialization. </summary>
+        internal ContinuousAction()
+        {
         }
 
         /// <summary> ISO8601 formatted string that represents a duration. </summary>

@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create hybrid runbook worker group operation. </summary>
     public partial class HybridRunbookWorkerGroupCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerGroupCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupCreateOrUpdateContent"/>. </summary>
         public HybridRunbookWorkerGroupCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="credential"> Sets the credential of a worker group. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridRunbookWorkerGroupCreateOrUpdateContent(string name, RunAsCredentialAssociationProperty credential, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Credential = credential;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the resource. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,12 +14,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration Run properties. </summary>
     public partial class SoftwareUpdateConfigurationRun
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRun. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRun"/>. </summary>
         internal SoftwareUpdateConfigurationRun()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRun"/>. </summary>
         /// <param name="name"> Name of the software update configuration run. </param>
         /// <param name="id"> Resource Id of the software update configuration run. </param>
         /// <param name="softwareUpdateConfiguration"> software update configuration triggered this run. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
-        internal SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationRun(string name, ResourceIdentifier id, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Id = id;
@@ -51,6 +55,7 @@ namespace Azure.ResourceManager.Automation.Models
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Tasks = tasks;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the software update configuration run. </summary>

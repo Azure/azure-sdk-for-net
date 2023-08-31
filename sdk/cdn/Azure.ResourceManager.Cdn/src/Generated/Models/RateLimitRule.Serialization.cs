@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RateLimitRule : IUtf8JsonSerializable
+    public partial class RateLimitRule : IUtf8JsonSerializable, IModelJsonSerializable<RateLimitRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RateLimitRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RateLimitRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RateLimitRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("rateLimitThreshold"u8);
             writer.WriteNumberValue(RateLimitThreshold);
@@ -38,11 +45,25 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RateLimitRule DeserializeRateLimitRule(JsonElement element)
+        internal static RateLimitRule DeserializeRateLimitRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rateLimitThreshold"u8))
@@ -100,8 +122,57 @@ namespace Azure.ResourceManager.Cdn.Models
                     action = new OverrideActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, rateLimitThreshold, rateLimitDurationInMinutes);
+            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, rateLimitThreshold, rateLimitDurationInMinutes, rawData);
+        }
+
+        RateLimitRule IModelJsonSerializable<RateLimitRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RateLimitRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRateLimitRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RateLimitRule>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RateLimitRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RateLimitRule IModelSerializable<RateLimitRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RateLimitRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRateLimitRule(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RateLimitRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RateLimitRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRateLimitRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

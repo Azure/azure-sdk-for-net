@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
@@ -12,18 +14,22 @@ namespace Azure.Communication.CallingServer
     /// <summary> The AcsCallParticipant. </summary>
     internal partial class AcsCallParticipantInternal
     {
-        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantInternal"/>. </summary>
         internal AcsCallParticipantInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsCallParticipantInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantInternal"/>. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal AcsCallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsCallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted, Dictionary<string, BinaryData> rawData)
         {
             Identifier = identifier;
             IsMuted = isMuted;
+            _rawData = rawData;
         }
 
         /// <summary> Communication identifier of the participant. </summary>

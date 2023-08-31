@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatsExtensionRestClient.CreateListRequest(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _farmBeatsExtensionRestClient.CreateListNextPageRequest(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatsExtensionResource(Client, FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(e)), _farmBeatsExtensionClientDiagnostics, Pipeline, "FarmBeatsExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FarmBeatsExtensionResource(Client, FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(e)), _farmBeatsExtensionClientDiagnostics, Pipeline, "FarmBeatsExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatsExtensionRestClient.CreateListRequest(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _farmBeatsExtensionRestClient.CreateListNextPageRequest(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatsExtensionResource(Client, FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(e)), _farmBeatsExtensionClientDiagnostics, Pipeline, "FarmBeatsExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FarmBeatsExtensionResource(Client, FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(e)), _farmBeatsExtensionClientDiagnostics, Pipeline, "FarmBeatsExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

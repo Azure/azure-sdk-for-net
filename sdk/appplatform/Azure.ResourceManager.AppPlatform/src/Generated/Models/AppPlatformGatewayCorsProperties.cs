@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Cross-Origin Resource Sharing property. </summary>
     public partial class AppPlatformGatewayCorsProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCorsProperties"/>. </summary>
         public AppPlatformGatewayCorsProperties()
         {
             AllowedOrigins = new ChangeTrackingList<string>();
@@ -22,14 +25,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ExposedHeaders = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCorsProperties"/>. </summary>
         /// <param name="allowedOrigins"> Allowed origins to make cross-site requests. The special value `*` allows all domains. </param>
         /// <param name="allowedMethods"> Allowed HTTP methods on cross-site requests. The special value `*` allows all methods. If not set, `GET` and `HEAD` are allowed by default. </param>
         /// <param name="allowedHeaders"> Allowed headers in cross-site requests. The special value `*` allows actual requests to send any header. </param>
         /// <param name="maxAge"> How long, in seconds, the response from a pre-flight request can be cached by clients. </param>
         /// <param name="areCredentialsAllowed"> Whether user credentials are supported on cross-site requests. Valid values: `true`, `false`. </param>
         /// <param name="exposedHeaders"> HTTP response headers to expose for cross-site requests. </param>
-        internal AppPlatformGatewayCorsProperties(IList<string> allowedOrigins, IList<string> allowedMethods, IList<string> allowedHeaders, int? maxAge, bool? areCredentialsAllowed, IList<string> exposedHeaders)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayCorsProperties(IList<string> allowedOrigins, IList<string> allowedMethods, IList<string> allowedHeaders, int? maxAge, bool? areCredentialsAllowed, IList<string> exposedHeaders, Dictionary<string, BinaryData> rawData)
         {
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             MaxAge = maxAge;
             AreCredentialsAllowed = areCredentialsAllowed;
             ExposedHeaders = exposedHeaders;
+            _rawData = rawData;
         }
 
         /// <summary> Allowed origins to make cross-site requests. The special value `*` allows all domains. </summary>

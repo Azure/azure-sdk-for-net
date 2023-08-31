@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.CallAutomation;
 
 namespace Azure.Communication.CallAutomation.Models.Events
@@ -12,12 +14,14 @@ namespace Azure.Communication.CallAutomation.Models.Events
     /// <summary> The DialogHangup. </summary>
     internal partial class DialogHangupInternal
     {
-        /// <summary> Initializes a new instance of DialogHangupInternal. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DialogHangupInternal"/>. </summary>
         internal DialogHangupInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogHangupInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogHangupInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -26,7 +30,8 @@ namespace Azure.Communication.CallAutomation.Models.Events
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="dialogId"> Dialog ID. </param>
         /// <param name="ivrContext"> Ivr Context. </param>
-        internal DialogHangupInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, object ivrContext)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DialogHangupInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, object ivrContext, Dictionary<string, BinaryData> rawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -36,6 +41,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             DialogInputType = dialogInputType;
             DialogId = dialogId;
             IvrContext = ivrContext;
+            _rawData = rawData;
         }
 
         /// <summary> Call connection ID. </summary>

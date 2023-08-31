@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for UrlFileExtension match conditions. </summary>
     public partial class UriFileExtensionMatchCondition
     {
-        /// <summary> Initializes a new instance of UriFileExtensionMatchCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="uriFileExtensionOperator"> Describes operator to be matched. </param>
         public UriFileExtensionMatchCondition(UriFileExtensionMatchConditionType conditionType, UriFileExtensionOperator uriFileExtensionOperator)
@@ -24,19 +27,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of UriFileExtensionMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="uriFileExtensionOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal UriFileExtensionMatchCondition(UriFileExtensionMatchConditionType conditionType, UriFileExtensionOperator uriFileExtensionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UriFileExtensionMatchCondition(UriFileExtensionMatchConditionType conditionType, UriFileExtensionOperator uriFileExtensionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, Dictionary<string, BinaryData> rawData)
         {
             ConditionType = conditionType;
             UriFileExtensionOperator = uriFileExtensionOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriFileExtensionMatchCondition"/> for deserialization. </summary>
+        internal UriFileExtensionMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

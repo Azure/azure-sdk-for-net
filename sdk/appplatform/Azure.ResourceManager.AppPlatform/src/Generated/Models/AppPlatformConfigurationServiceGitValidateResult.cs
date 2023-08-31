@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for configuration service settings. </summary>
     public partial class AppPlatformConfigurationServiceGitValidateResult
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
         internal AppPlatformConfigurationServiceGitValidateResult()
         {
             GitReposValidationResult = new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the configuration service settings are valid. </param>
         /// <param name="gitReposValidationResult"> The detail validation results. </param>
-        internal AppPlatformConfigurationServiceGitValidateResult(bool? isValid, IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceGitValidateResult(bool? isValid, IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult, Dictionary<string, BinaryData> rawData)
         {
             IsValid = isValid;
             GitReposValidationResult = gitReposValidationResult;
+            _rawData = rawData;
         }
 
         /// <summary> Indicate if the configuration service settings are valid. </summary>

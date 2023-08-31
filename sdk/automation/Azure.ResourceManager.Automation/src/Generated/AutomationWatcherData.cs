@@ -19,14 +19,16 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationWatcherData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationWatcherData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationWatcherData(AzureLocation location) : base(location)
         {
             ScriptParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWatcherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +45,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="lastModifiedBy"> Details of the user who last modified the watcher. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationWatcherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? executionFrequencyInSeconds, string scriptName, IDictionary<string, string> scriptParameters, string scriptRunOn, string status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExecutionFrequencyInSeconds = executionFrequencyInSeconds;
@@ -55,6 +58,12 @@ namespace Azure.ResourceManager.Automation
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Description = description;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherData"/> for deserialization. </summary>
+        internal AutomationWatcherData()
+        {
         }
 
         /// <summary> Gets or sets the etag of the resource. </summary>

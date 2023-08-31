@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Cluster Identity details. </summary>
     public partial class HciClusterIdentityResult
     {
-        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
         internal HciClusterIdentityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
         /// <param name="aadClientId"></param>
         /// <param name="aadTenantId"></param>
         /// <param name="aadServicePrincipalObjectId"></param>
         /// <param name="aadApplicationObjectId"></param>
-        internal HciClusterIdentityResult(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterIdentityResult(Guid? aadClientId, Guid? aadTenantId, Guid? aadServicePrincipalObjectId, Guid? aadApplicationObjectId, Dictionary<string, BinaryData> rawData)
         {
             AadClientId = aadClientId;
             AadTenantId = aadTenantId;
             AadServicePrincipalObjectId = aadServicePrincipalObjectId;
             AadApplicationObjectId = aadApplicationObjectId;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the aad client id. </summary>

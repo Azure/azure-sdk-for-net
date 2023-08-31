@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Blueprint.Models
 {
     /// <summary> Response schema for querying the Azure Blueprints service principal in the tenant. </summary>
     public partial class WhoIsBlueprintContract
     {
-        /// <summary> Initializes a new instance of WhoIsBlueprintContract. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WhoIsBlueprintContract"/>. </summary>
         internal WhoIsBlueprintContract()
         {
         }
 
-        /// <summary> Initializes a new instance of WhoIsBlueprintContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhoIsBlueprintContract"/>. </summary>
         /// <param name="objectId"> AAD object Id of the Azure Blueprints service principal in the tenant. </param>
-        internal WhoIsBlueprintContract(string objectId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WhoIsBlueprintContract(string objectId, Dictionary<string, BinaryData> rawData)
         {
             ObjectId = objectId;
+            _rawData = rawData;
         }
 
         /// <summary> AAD object Id of the Azure Blueprints service principal in the tenant. </summary>

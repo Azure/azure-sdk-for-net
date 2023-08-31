@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class StartCallRecordingRequestInternal : IUtf8JsonSerializable
+    internal partial class StartCallRecordingRequestInternal : IUtf8JsonSerializable, IModelJsonSerializable<StartCallRecordingRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StartCallRecordingRequestInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StartCallRecordingRequestInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
             writer.WriteObjectValue(CallLocator);
@@ -62,7 +71,165 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("externalStorage"u8);
                 writer.WriteObjectValue(ExternalStorage);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static StartCallRecordingRequestInternal DeserializeStartCallRecordingRequestInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            CallLocatorInternal callLocator = default;
+            Optional<string> recordingStateCallbackUri = default;
+            Optional<RecordingContent> recordingContentType = default;
+            Optional<RecordingChannel> recordingChannelType = default;
+            Optional<RecordingFormat> recordingFormatType = default;
+            Optional<IList<CommunicationIdentifierModel>> audioChannelParticipantOrdering = default;
+            Optional<IList<ChannelAffinityInternal>> channelAffinity = default;
+            Optional<ExternalStorageInternal> externalStorage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("callLocator"u8))
+                {
+                    callLocator = CallLocatorInternal.DeserializeCallLocatorInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("recordingStateCallbackUri"u8))
+                {
+                    recordingStateCallbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recordingContentType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingContentType = new RecordingContent(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingChannelType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingChannelType = new RecordingChannel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("recordingFormatType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingFormatType = new RecordingFormat(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("audioChannelParticipantOrdering"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                    }
+                    audioChannelParticipantOrdering = array;
+                    continue;
+                }
+                if (property.NameEquals("channelAffinity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ChannelAffinityInternal> array = new List<ChannelAffinityInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChannelAffinityInternal.DeserializeChannelAffinityInternal(item));
+                    }
+                    channelAffinity = array;
+                    continue;
+                }
+                if (property.NameEquals("externalStorage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalStorage = ExternalStorageInternal.DeserializeExternalStorageInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new StartCallRecordingRequestInternal(callLocator, recordingStateCallbackUri.Value, Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), Optional.ToList(audioChannelParticipantOrdering), Optional.ToList(channelAffinity), externalStorage.Value, rawData);
+        }
+
+        StartCallRecordingRequestInternal IModelJsonSerializable<StartCallRecordingRequestInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStartCallRecordingRequestInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StartCallRecordingRequestInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StartCallRecordingRequestInternal IModelSerializable<StartCallRecordingRequestInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStartCallRecordingRequestInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StartCallRecordingRequestInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StartCallRecordingRequestInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStartCallRecordingRequestInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

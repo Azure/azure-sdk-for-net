@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount. </summary>
     public partial class BillingAmount
     {
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         internal BillingAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAmount"/>. </summary>
         /// <param name="currency"> The currency for the amount value. </param>
         /// <param name="value"> Amount value. </param>
-        internal BillingAmount(string currency, float? value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingAmount(string currency, float? value, Dictionary<string, BinaryData> rawData)
         {
             Currency = currency;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The currency for the amount value. </summary>

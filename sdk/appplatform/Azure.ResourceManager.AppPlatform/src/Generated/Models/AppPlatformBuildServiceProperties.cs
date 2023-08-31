@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Build service resource properties payload. </summary>
     public partial class AppPlatformBuildServiceProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceProperties"/>. </summary>
         public AppPlatformBuildServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceProperties"/>. </summary>
         /// <param name="kPackVersion"> The installed KPack version in this build service. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="resourceRequests"> The runtime resource configuration of this build service. </param>
-        internal AppPlatformBuildServiceProperties(string kPackVersion, AppPlatformBuildServiceProvisioningState? provisioningState, AppPlatformBuildServiceResourceRequirements resourceRequests)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildServiceProperties(string kPackVersion, AppPlatformBuildServiceProvisioningState? provisioningState, AppPlatformBuildServiceResourceRequirements resourceRequests, Dictionary<string, BinaryData> rawData)
         {
             KPackVersion = kPackVersion;
             ProvisioningState = provisioningState;
             ResourceRequests = resourceRequests;
+            _rawData = rawData;
         }
 
         /// <summary> The installed KPack version in this build service. </summary>

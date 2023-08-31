@@ -15,5 +15,26 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> The question and text record parameters to answer. </summary>
     public partial class AnswersFromTextOptions
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnswersFromTextOptions"/>. </summary>
+        /// <param name="question"> User question to query against the given text records. </param>
+        /// <param name="textDocuments"> Text records to be searched for given question. </param>
+        /// <param name="language"> Language of the text records. This is BCP-47 representation of a language. For example, use "en" for English; "es" for Spanish etc. If not set, use "en" for English as default. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnswersFromTextOptions(string question, IList<TextDocument> textDocuments, string language, StringIndexType? stringIndexType, Dictionary<string, BinaryData> rawData)
+        {
+            Question = question;
+            TextDocuments = textDocuments;
+            Language = language;
+            StringIndexType = stringIndexType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswersFromTextOptions"/> for deserialization. </summary>
+        internal AnswersFromTextOptions()
+        {
+        }
     }
 }

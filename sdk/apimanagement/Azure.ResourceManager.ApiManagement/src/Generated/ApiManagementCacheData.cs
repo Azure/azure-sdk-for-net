@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,14 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementCacheData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCacheData"/>. </summary>
         public ApiManagementCacheData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +34,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="connectionString"> Runtime connection string to cache. </param>
         /// <param name="useFromLocation"> Location identifier to use cache from (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
-        internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, Uri resourceUri) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, Uri resourceUri, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ConnectionString = connectionString;
             UseFromLocation = useFromLocation;
             ResourceUri = resourceUri;
+            _rawData = rawData;
         }
 
         /// <summary> Cache description. </summary>

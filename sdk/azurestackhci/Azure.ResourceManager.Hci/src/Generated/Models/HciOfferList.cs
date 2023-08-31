@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Offer proxy resources for the HCI cluster. </summary>
     internal partial class HciOfferList
     {
-        /// <summary> Initializes a new instance of HciOfferList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciOfferList"/>. </summary>
         internal HciOfferList()
         {
             Value = new ChangeTrackingList<OfferData>();
         }
 
-        /// <summary> Initializes a new instance of HciOfferList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciOfferList"/>. </summary>
         /// <param name="value"> List of Offer proxy resources. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal HciOfferList(IReadOnlyList<OfferData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciOfferList(IReadOnlyList<OfferData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Offer proxy resources. </summary>

@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,9 +17,12 @@ namespace Azure.ResourceManager.Avs.Models
     /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownScriptExecutionParameter))]
     public abstract partial class ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected ScriptExecutionParameterDetails(string name)
@@ -27,13 +32,20 @@ namespace Azure.ResourceManager.Avs.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
-        internal ScriptExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ParameterType = parameterType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/> for deserialization. </summary>
+        internal ScriptExecutionParameterDetails()
+        {
         }
 
         /// <summary> The parameter name. </summary>

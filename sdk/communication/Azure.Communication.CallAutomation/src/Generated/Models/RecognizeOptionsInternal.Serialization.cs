@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeOptionsInternal : IUtf8JsonSerializable
+    internal partial class RecognizeOptionsInternal : IUtf8JsonSerializable, IModelJsonSerializable<RecognizeOptionsInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecognizeOptionsInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecognizeOptionsInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InterruptPrompt))
             {
@@ -57,7 +66,156 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("speechOptions"u8);
                 writer.WriteObjectValue(SpeechOptions);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RecognizeOptionsInternal DeserializeRecognizeOptionsInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> interruptPrompt = default;
+            Optional<int> initialSilenceTimeoutInSeconds = default;
+            CommunicationIdentifierModel targetParticipant = default;
+            Optional<string> speechLanguage = default;
+            Optional<string> speechRecognitionModelEndpointId = default;
+            Optional<DtmfOptionsInternal> dtmfOptions = default;
+            Optional<IList<RecognizeChoice>> choices = default;
+            Optional<SpeechOptionsInternal> speechOptions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("interruptPrompt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interruptPrompt = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("initialSilenceTimeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    initialSilenceTimeoutInSeconds = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("targetParticipant"u8))
+                {
+                    targetParticipant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("speechLanguage"u8))
+                {
+                    speechLanguage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("speechRecognitionModelEndpointId"u8))
+                {
+                    speechRecognitionModelEndpointId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dtmfOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dtmfOptions = DtmfOptionsInternal.DeserializeDtmfOptionsInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("choices"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RecognizeChoice> array = new List<RecognizeChoice>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RecognizeChoice.DeserializeRecognizeChoice(item));
+                    }
+                    choices = array;
+                    continue;
+                }
+                if (property.NameEquals("speechOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    speechOptions = SpeechOptionsInternal.DeserializeSpeechOptionsInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RecognizeOptionsInternal(Optional.ToNullable(interruptPrompt), Optional.ToNullable(initialSilenceTimeoutInSeconds), targetParticipant, speechLanguage.Value, speechRecognitionModelEndpointId.Value, dtmfOptions.Value, Optional.ToList(choices), speechOptions.Value, rawData);
+        }
+
+        RecognizeOptionsInternal IModelJsonSerializable<RecognizeOptionsInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecognizeOptionsInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecognizeOptionsInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecognizeOptionsInternal IModelSerializable<RecognizeOptionsInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecognizeOptionsInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecognizeOptionsInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecognizeOptionsInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecognizeOptionsInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CallSourceInternal : IUtf8JsonSerializable
+    internal partial class CallSourceInternal : IUtf8JsonSerializable, IModelJsonSerializable<CallSourceInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CallSourceInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CallSourceInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CallerId))
             {
@@ -28,11 +36,25 @@ namespace Azure.Communication.CallingServer
             }
             writer.WritePropertyName("identifier"u8);
             writer.WriteObjectValue(Identifier);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element)
+        internal static CallSourceInternal DeserializeCallSourceInternal(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +62,7 @@ namespace Azure.Communication.CallingServer
             Optional<PhoneNumberIdentifierModel> callerId = default;
             Optional<string> displayName = default;
             CommunicationIdentifierModel identifier = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callerId"u8))
@@ -61,8 +84,57 @@ namespace Azure.Communication.CallingServer
                     identifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CallSourceInternal(callerId.Value, displayName.Value, identifier);
+            return new CallSourceInternal(callerId.Value, displayName.Value, identifier, rawData);
+        }
+
+        CallSourceInternal IModelJsonSerializable<CallSourceInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCallSourceInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CallSourceInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CallSourceInternal IModelSerializable<CallSourceInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCallSourceInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(CallSourceInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator CallSourceInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCallSourceInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BlueprintResource(Client, BlueprintData.DeserializeBlueprintData(e)), _blueprintClientDiagnostics, Pipeline, "BlueprintCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

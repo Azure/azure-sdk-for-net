@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class ReservationOrderAliasResponsePropertiesReservedResourceProperties : IUtf8JsonSerializable
+    internal partial class ReservationOrderAliasResponsePropertiesReservedResourceProperties : IUtf8JsonSerializable, IModelJsonSerializable<ReservationOrderAliasResponsePropertiesReservedResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ReservationOrderAliasResponsePropertiesReservedResourceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ReservationOrderAliasResponsePropertiesReservedResourceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReservationOrderAliasResponsePropertiesReservedResourceProperties DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(JsonElement element)
+        internal static ReservationOrderAliasResponsePropertiesReservedResourceProperties DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BillingBenefitsInstanceFlexibility> instanceFlexibility = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceFlexibility"u8))
@@ -41,8 +64,57 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     instanceFlexibility = new BillingBenefitsInstanceFlexibility(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ReservationOrderAliasResponsePropertiesReservedResourceProperties(Optional.ToNullable(instanceFlexibility));
+            return new ReservationOrderAliasResponsePropertiesReservedResourceProperties(Optional.ToNullable(instanceFlexibility), rawData);
+        }
+
+        ReservationOrderAliasResponsePropertiesReservedResourceProperties IModelJsonSerializable<ReservationOrderAliasResponsePropertiesReservedResourceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ReservationOrderAliasResponsePropertiesReservedResourceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ReservationOrderAliasResponsePropertiesReservedResourceProperties IModelSerializable<ReservationOrderAliasResponsePropertiesReservedResourceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ReservationOrderAliasResponsePropertiesReservedResourceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ReservationOrderAliasResponsePropertiesReservedResourceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeReservationOrderAliasResponsePropertiesReservedResourceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

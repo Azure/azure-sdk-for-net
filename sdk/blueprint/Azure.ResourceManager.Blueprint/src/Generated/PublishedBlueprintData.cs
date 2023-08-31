@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Blueprint.Models;
@@ -18,14 +19,16 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class PublishedBlueprintData : ResourceData
     {
-        /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublishedBlueprintData"/>. </summary>
         public PublishedBlueprintData()
         {
             Parameters = new ChangeTrackingDictionary<string, ParameterDefinition>();
             ResourceGroups = new ChangeTrackingDictionary<string, ResourceGroupDefinition>();
         }
 
-        /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishedBlueprintData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="resourceGroups"> Resource group placeholders defined by this blueprint definition. </param>
         /// <param name="blueprintName"> Name of the published blueprint definition. </param>
         /// <param name="changeNotes"> Version-specific change notes. </param>
-        internal PublishedBlueprintData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, BlueprintStatus status, BlueprintTargetScope? targetScope, IDictionary<string, ParameterDefinition> parameters, IDictionary<string, ResourceGroupDefinition> resourceGroups, string blueprintName, string changeNotes) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublishedBlueprintData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, BlueprintStatus status, BlueprintTargetScope? targetScope, IDictionary<string, ParameterDefinition> parameters, IDictionary<string, ResourceGroupDefinition> resourceGroups, string blueprintName, string changeNotes, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.Blueprint
             ResourceGroups = resourceGroups;
             BlueprintName = blueprintName;
             ChangeNotes = changeNotes;
+            _rawData = rawData;
         }
 
         /// <summary> One-liner string explain this resource. </summary>

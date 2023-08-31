@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,23 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Data contract for patch. </summary>
     public partial class AlertProcessingRulePatch
     {
-        /// <summary> Initializes a new instance of AlertProcessingRulePatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRulePatch"/>. </summary>
         public AlertProcessingRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRulePatch"/>. </summary>
+        /// <param name="tags"> Tags to be updated. </param>
+        /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertProcessingRulePatch(IDictionary<string, string> tags, bool? isEnabled, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Tags to be updated. </summary>

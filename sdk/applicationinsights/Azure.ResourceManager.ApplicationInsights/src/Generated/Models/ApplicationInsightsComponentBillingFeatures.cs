@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component billing features. </summary>
     public partial class ApplicationInsightsComponentBillingFeatures
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentBillingFeatures. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentBillingFeatures"/>. </summary>
         public ApplicationInsightsComponentBillingFeatures()
         {
             CurrentBillingFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentBillingFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentBillingFeatures"/>. </summary>
         /// <param name="dataVolumeCap"> An Application Insights component daily data volume cap. </param>
         /// <param name="currentBillingFeatures"> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both 'Basic' and 'Application Insights Enterprise'. </param>
-        internal ApplicationInsightsComponentBillingFeatures(ApplicationInsightsComponentDataVolumeCap dataVolumeCap, IList<string> currentBillingFeatures)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentBillingFeatures(ApplicationInsightsComponentDataVolumeCap dataVolumeCap, IList<string> currentBillingFeatures, Dictionary<string, BinaryData> rawData)
         {
             DataVolumeCap = dataVolumeCap;
             CurrentBillingFeatures = currentBillingFeatures;
+            _rawData = rawData;
         }
 
         /// <summary> An Application Insights component daily data volume cap. </summary>

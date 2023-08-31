@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeRequestInternal : IUtf8JsonSerializable
+    internal partial class RecognizeRequestInternal : IUtf8JsonSerializable, IModelJsonSerializable<RecognizeRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RecognizeRequestInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RecognizeRequestInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("recognizeInputType"u8);
             writer.WriteStringValue(RecognizeInputType.ToString());
@@ -39,7 +47,127 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RecognizeRequestInternal DeserializeRecognizeRequestInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RecognizeInputType recognizeInputType = default;
+            Optional<PlaySourceInternal> playPrompt = default;
+            Optional<bool> interruptCallMediaOperation = default;
+            RecognizeOptionsInternal recognizeOptions = default;
+            Optional<string> operationContext = default;
+            Optional<string> callbackUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recognizeInputType"u8))
+                {
+                    recognizeInputType = new RecognizeInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("playPrompt"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    playPrompt = PlaySourceInternal.DeserializePlaySourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("interruptCallMediaOperation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    interruptCallMediaOperation = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("recognizeOptions"u8))
+                {
+                    recognizeOptions = RecognizeOptionsInternal.DeserializeRecognizeOptionsInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callbackUri"u8))
+                {
+                    callbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RecognizeRequestInternal(recognizeInputType, playPrompt.Value, Optional.ToNullable(interruptCallMediaOperation), recognizeOptions, operationContext.Value, callbackUri.Value, rawData);
+        }
+
+        RecognizeRequestInternal IModelJsonSerializable<RecognizeRequestInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecognizeRequestInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RecognizeRequestInternal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RecognizeRequestInternal IModelSerializable<RecognizeRequestInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRecognizeRequestInternal(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RecognizeRequestInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RecognizeRequestInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRecognizeRequestInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Chaos;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list of Experiment resources and a link for pagination. </summary>
     internal partial class ExperimentListResult
     {
-        /// <summary> Initializes a new instance of ExperimentListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
         internal ExperimentListResult()
         {
             Value = new ChangeTrackingList<ExperimentData>();
         }
 
-        /// <summary> Initializes a new instance of ExperimentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
         /// <param name="value"> List of Experiment resources. </param>
         /// <param name="nextLink"> URL to retrieve the next page of Experiment resources. </param>
-        internal ExperimentListResult(IReadOnlyList<ExperimentData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentListResult(IReadOnlyList<ExperimentData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Experiment resources. </summary>

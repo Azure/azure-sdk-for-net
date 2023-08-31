@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public virtual AsyncPageable<AgFoodPlatformPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public virtual Pageable<AgFoodPlatformPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AgFoodPlatformPrivateEndpointConnectionResource(Client, AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(e)), _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "AgFoodPlatformPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

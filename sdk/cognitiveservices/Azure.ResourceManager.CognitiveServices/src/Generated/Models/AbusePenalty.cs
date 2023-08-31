@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The abuse penalty. </summary>
     public partial class AbusePenalty
     {
-        /// <summary> Initializes a new instance of AbusePenalty. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AbusePenalty"/>. </summary>
         internal AbusePenalty()
         {
         }
 
-        /// <summary> Initializes a new instance of AbusePenalty. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbusePenalty"/>. </summary>
         /// <param name="action"> The action of AbusePenalty. </param>
         /// <param name="rateLimitPercentage"> The percentage of rate limit. </param>
         /// <param name="expiration"> The datetime of expiration of the AbusePenalty. </param>
-        internal AbusePenalty(AbusePenaltyAction? action, float? rateLimitPercentage, DateTimeOffset? expiration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AbusePenalty(AbusePenaltyAction? action, float? rateLimitPercentage, DateTimeOffset? expiration, Dictionary<string, BinaryData> rawData)
         {
             Action = action;
             RateLimitPercentage = rateLimitPercentage;
             Expiration = expiration;
+            _rawData = rawData;
         }
 
         /// <summary> The action of AbusePenalty. </summary>
