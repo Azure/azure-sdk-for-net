@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The cached image and OS type. </summary>
     public partial class CachedImages
     {
-        /// <summary> Initializes a new instance of CachedImages. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CachedImages"/>. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> or <paramref name="image"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             OSType = osType;
             Image = image;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CachedImages"/>. </summary>
+        /// <param name="osType"> The OS type of the cached image. </param>
+        /// <param name="image"> The cached image name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CachedImages(string osType, string image, Dictionary<string, BinaryData> rawData)
+        {
+            OSType = osType;
+            Image = image;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CachedImages"/> for deserialization. </summary>
+        internal CachedImages()
+        {
         }
 
         /// <summary> The OS type of the cached image. </summary>

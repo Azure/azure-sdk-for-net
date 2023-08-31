@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies additional capabilities supported by the image. </summary>
     public partial class VirtualMachineImageFeature
     {
-        /// <summary> Initializes a new instance of VirtualMachineImageFeature. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImageFeature"/>. </summary>
         public VirtualMachineImageFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineImageFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImageFeature"/>. </summary>
         /// <param name="name"> The name of the feature. </param>
         /// <param name="value"> The corresponding value for the feature. </param>
-        internal VirtualMachineImageFeature(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineImageFeature(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the feature. </summary>

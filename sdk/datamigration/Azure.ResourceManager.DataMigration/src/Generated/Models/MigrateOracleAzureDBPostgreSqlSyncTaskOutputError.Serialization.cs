@@ -5,15 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError : IUtf8JsonSerializable, IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>
     {
-        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputError DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutputError DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<ReportableException> error = default;
             Optional<string> id = default;
             string resultType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -42,8 +73,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(id.Value, resultType, error.Value);
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(id.Value, resultType, error.Value, rawData);
+        }
+
+        MigrateOracleAzureDBPostgreSqlSyncTaskOutputError IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateOracleAzureDBPostgreSqlSyncTaskOutputError IModelSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MigrateOracleAzureDBPostgreSqlSyncTaskOutputError>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateOracleAzureDBPostgreSqlSyncTaskOutputError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

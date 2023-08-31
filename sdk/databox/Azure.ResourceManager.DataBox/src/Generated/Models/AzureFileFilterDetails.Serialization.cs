@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AzureFileFilterDetails : IUtf8JsonSerializable
+    public partial class AzureFileFilterDetails : IUtf8JsonSerializable, IModelJsonSerializable<AzureFileFilterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureFileFilterDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureFileFilterDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(FilePrefixList))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureFileFilterDetails DeserializeAzureFileFilterDetails(JsonElement element)
+        internal static AzureFileFilterDetails DeserializeAzureFileFilterDetails(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<IList<string>> filePrefixList = default;
             Optional<IList<string>> filePathList = default;
             Optional<IList<string>> fileShareList = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePrefixList"u8))
@@ -102,8 +124,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     fileShareList = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureFileFilterDetails(Optional.ToList(filePrefixList), Optional.ToList(filePathList), Optional.ToList(fileShareList));
+            return new AzureFileFilterDetails(Optional.ToList(filePrefixList), Optional.ToList(filePathList), Optional.ToList(fileShareList), rawData);
+        }
+
+        AzureFileFilterDetails IModelJsonSerializable<AzureFileFilterDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureFileFilterDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureFileFilterDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureFileFilterDetails IModelSerializable<AzureFileFilterDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureFileFilterDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AzureFileFilterDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AzureFileFilterDetails"/> to convert. </param>
+        public static implicit operator RequestContent(AzureFileFilterDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AzureFileFilterDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AzureFileFilterDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureFileFilterDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -56,9 +56,7 @@ namespace Azure.Communication.NetworkTraversal
                 RouteType = routeType,
                 Ttl = ttl
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 

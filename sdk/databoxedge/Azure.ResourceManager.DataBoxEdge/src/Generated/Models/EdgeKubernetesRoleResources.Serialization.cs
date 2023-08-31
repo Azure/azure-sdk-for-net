@@ -5,28 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleResources : IUtf8JsonSerializable
+    public partial class EdgeKubernetesRoleResources : IUtf8JsonSerializable, IModelJsonSerializable<EdgeKubernetesRoleResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EdgeKubernetesRoleResources>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EdgeKubernetesRoleResources>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                if (Storage is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EdgeKubernetesRoleStorage>)Storage).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("compute"u8);
-            writer.WriteObjectValue(Compute);
+            if (Compute is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<EdgeKubernetesRoleCompute>)Compute).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeKubernetesRoleResources DeserializeEdgeKubernetesRoleResources(JsonElement element)
+        internal static EdgeKubernetesRoleResources DeserializeEdgeKubernetesRoleResources(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<EdgeKubernetesRoleStorage> storage = default;
             EdgeKubernetesRoleCompute compute = default;
             Optional<EdgeKubernetesRoleNetwork> network = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storage"u8))
@@ -59,8 +96,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     network = EdgeKubernetesRoleNetwork.DeserializeEdgeKubernetesRoleNetwork(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EdgeKubernetesRoleResources(storage.Value, compute, network.Value);
+            return new EdgeKubernetesRoleResources(storage.Value, compute, network.Value, rawData);
+        }
+
+        EdgeKubernetesRoleResources IModelJsonSerializable<EdgeKubernetesRoleResources>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeKubernetesRoleResources(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EdgeKubernetesRoleResources>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EdgeKubernetesRoleResources IModelSerializable<EdgeKubernetesRoleResources>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEdgeKubernetesRoleResources(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EdgeKubernetesRoleResources"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EdgeKubernetesRoleResources"/> to convert. </param>
+        public static implicit operator RequestContent(EdgeKubernetesRoleResources model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EdgeKubernetesRoleResources"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EdgeKubernetesRoleResources(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEdgeKubernetesRoleResources(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

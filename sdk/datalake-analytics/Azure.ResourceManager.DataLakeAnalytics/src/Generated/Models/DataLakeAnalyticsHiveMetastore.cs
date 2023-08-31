@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsHiveMetastore : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsHiveMetastore. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsHiveMetastore"/>. </summary>
         internal DataLakeAnalyticsHiveMetastore()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsHiveMetastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsHiveMetastore"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +54,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The current state of the NestedResource
         /// Serialized Name: HiveMetastore.properties.nestedResourceProvisioningState
         /// </param>
-        internal DataLakeAnalyticsHiveMetastore(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri serverUri, string databaseName, string runtimeVersion, string userName, string password, NestedResourceProvisioningState? nestedResourceProvisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsHiveMetastore(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri serverUri, string databaseName, string runtimeVersion, string userName, string password, NestedResourceProvisioningState? nestedResourceProvisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ServerUri = serverUri;
             DatabaseName = databaseName;
@@ -59,6 +63,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             UserName = userName;
             Password = password;
             NestedResourceProvisioningState = nestedResourceProvisioningState;
+            _rawData = rawData;
         }
 
         /// <summary>

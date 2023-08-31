@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Connector mapping property structure. </summary>
     public partial class ConnectorMappingStructure
     {
-        /// <summary> Initializes a new instance of ConnectorMappingStructure. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingStructure"/>. </summary>
         /// <param name="propertyName"> The property name of the mapping entity. </param>
         /// <param name="columnName"> The column name of the import file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="propertyName"/> or <paramref name="columnName"/> is null. </exception>
@@ -26,17 +29,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             ColumnName = columnName;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingStructure. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingStructure"/>. </summary>
         /// <param name="propertyName"> The property name of the mapping entity. </param>
         /// <param name="columnName"> The column name of the import file. </param>
         /// <param name="customFormatSpecifier"> Custom format specifier for input parsing. </param>
         /// <param name="isEncrypted"> Indicates if the column is encrypted. </param>
-        internal ConnectorMappingStructure(string propertyName, string columnName, string customFormatSpecifier, bool? isEncrypted)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorMappingStructure(string propertyName, string columnName, string customFormatSpecifier, bool? isEncrypted, Dictionary<string, BinaryData> rawData)
         {
             PropertyName = propertyName;
             ColumnName = columnName;
             CustomFormatSpecifier = customFormatSpecifier;
             IsEncrypted = isEncrypted;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingStructure"/> for deserialization. </summary>
+        internal ConnectorMappingStructure()
+        {
         }
 
         /// <summary> The property name of the mapping entity. </summary>

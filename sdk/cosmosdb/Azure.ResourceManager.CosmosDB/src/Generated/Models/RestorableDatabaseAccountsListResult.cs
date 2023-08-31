@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the restorable database accounts and their properties. </summary>
     internal partial class RestorableDatabaseAccountsListResult
     {
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountsListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountsListResult"/>. </summary>
         internal RestorableDatabaseAccountsListResult()
         {
             Value = new ChangeTrackingList<RestorableCosmosDBAccountData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountsListResult"/>. </summary>
         /// <param name="value"> List of restorable database accounts and their properties. </param>
-        internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableCosmosDBAccountData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableCosmosDBAccountData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of restorable database accounts and their properties. </summary>

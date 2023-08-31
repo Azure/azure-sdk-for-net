@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateOracleAzureDBPostgreSqlSyncTaskOutputError. </summary>
     public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError : MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>. </summary>
         internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateOracleAzureDBPostgreSqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="error"> Migration error. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(string id, string resultType, ReportableException error) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputError(string id, string resultType, ReportableException error, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             Error = error;
             ResultType = resultType ?? "ErrorOutput";

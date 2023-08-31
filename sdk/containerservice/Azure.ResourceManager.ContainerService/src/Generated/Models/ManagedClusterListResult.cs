@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List Managed Clusters operation. </summary>
     internal partial class ManagedClusterListResult
     {
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         internal ManagedClusterListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceManagedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         /// <param name="value"> The list of managed clusters. </param>
         /// <param name="nextLink"> The URL to get the next set of managed cluster results. </param>
-        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of managed clusters. </summary>

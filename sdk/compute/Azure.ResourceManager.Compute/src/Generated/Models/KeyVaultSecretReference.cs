@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a reference to Key Vault Secret. </summary>
     public partial class KeyVaultSecretReference
     {
-        /// <summary> Initializes a new instance of KeyVaultSecretReference. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
         /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secretUri"/> or <paramref name="sourceVault"/> is null. </exception>
@@ -25,6 +28,22 @@ namespace Azure.ResourceManager.Compute.Models
 
             SecretUri = secretUri;
             SourceVault = sourceVault;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/>. </summary>
+        /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the secret. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSecretReference(Uri secretUri, WritableSubResource sourceVault, Dictionary<string, BinaryData> rawData)
+        {
+            SecretUri = secretUri;
+            SourceVault = sourceVault;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/> for deserialization. </summary>
+        internal KeyVaultSecretReference()
+        {
         }
 
         /// <summary> The URL referencing a secret in a Key Vault. </summary>

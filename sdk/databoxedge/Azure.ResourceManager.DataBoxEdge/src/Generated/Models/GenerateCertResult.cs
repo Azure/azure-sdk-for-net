@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Used in activation key generation flow. </summary>
     public partial class GenerateCertResult
     {
-        /// <summary> Initializes a new instance of GenerateCertResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateCertResult"/>. </summary>
         internal GenerateCertResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GenerateCertResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateCertResult"/>. </summary>
         /// <param name="publicKey">
         /// Gets or sets base64 encoded certificate raw data,
         /// this is the public part needed to be uploaded to cert vault
@@ -27,11 +30,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// needed to form the activation key
         /// </param>
         /// <param name="expireOn"> Gets or sets expiry time in UTC. </param>
-        internal GenerateCertResult(string publicKey, string privateKey, DateTimeOffset? expireOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateCertResult(string publicKey, string privateKey, DateTimeOffset? expireOn, Dictionary<string, BinaryData> rawData)
         {
             PublicKey = publicKey;
             PrivateKey = privateKey;
             ExpireOn = expireOn;
+            _rawData = rawData;
         }
 
         /// <summary>

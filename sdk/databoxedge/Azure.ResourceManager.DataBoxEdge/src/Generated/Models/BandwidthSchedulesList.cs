@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The collection of bandwidth schedules. </summary>
     internal partial class BandwidthSchedulesList
     {
-        /// <summary> Initializes a new instance of BandwidthSchedulesList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BandwidthSchedulesList"/>. </summary>
         internal BandwidthSchedulesList()
         {
             Value = new ChangeTrackingList<BandwidthScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of BandwidthSchedulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthSchedulesList"/>. </summary>
         /// <param name="value"> The list of bandwidth schedules. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal BandwidthSchedulesList(IReadOnlyList<BandwidthScheduleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BandwidthSchedulesList(IReadOnlyList<BandwidthScheduleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of bandwidth schedules. </summary>

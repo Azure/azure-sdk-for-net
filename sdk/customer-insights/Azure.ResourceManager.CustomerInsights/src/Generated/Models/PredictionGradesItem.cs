@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The definition of a prediction grade. </summary>
     public partial class PredictionGradesItem
     {
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionGradesItem"/>. </summary>
         public PredictionGradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of PredictionGradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionGradesItem"/>. </summary>
         /// <param name="gradeName"> Name of the grade. </param>
         /// <param name="minScoreThreshold"> Minimum score threshold. </param>
         /// <param name="maxScoreThreshold"> Maximum score threshold. </param>
-        internal PredictionGradesItem(string gradeName, int? minScoreThreshold, int? maxScoreThreshold)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionGradesItem(string gradeName, int? minScoreThreshold, int? maxScoreThreshold, Dictionary<string, BinaryData> rawData)
         {
             GradeName = gradeName;
             MinScoreThreshold = minScoreThreshold;
             MaxScoreThreshold = maxScoreThreshold;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the grade. </summary>

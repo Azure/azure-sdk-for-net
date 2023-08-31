@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,9 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFirewallRuleData"/>. </summary>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,11 +42,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        internal CosmosDBFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBProvisioningState? provisioningState, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBProvisioningState? provisioningState, string startIPAddress, string endIPAddress, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBFirewallRuleData"/> for deserialization. </summary>
+        internal CosmosDBFirewallRuleData()
+        {
         }
 
         /// <summary> The provisioning state of the firewall rule. </summary>

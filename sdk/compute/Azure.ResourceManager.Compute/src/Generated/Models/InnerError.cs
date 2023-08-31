@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Inner error details. </summary>
     public partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         internal InnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="exceptiontype"> The exception type. </param>
         /// <param name="errordetail"> The internal error message or exception dump. </param>
-        internal InnerError(string exceptiontype, string errordetail)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InnerError(string exceptiontype, string errordetail, Dictionary<string, BinaryData> rawData)
         {
             Exceptiontype = exceptiontype;
             Errordetail = errordetail;
+            _rawData = rawData;
         }
 
         /// <summary> The exception type. </summary>

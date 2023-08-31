@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> An Azure SKU instance. </summary>
     public partial class ServiceSku
     {
-        /// <summary> Initializes a new instance of ServiceSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceSku"/>. </summary>
         public ServiceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceSku"/>. </summary>
         /// <param name="name"> The unique name of the SKU, such as 'P3'. </param>
         /// <param name="tier"> The tier of the SKU, such as 'Basic', 'General Purpose', or 'Business Critical'. </param>
         /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines. </param>
         /// <param name="size"> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines. </param>
         /// <param name="capacity"> The capacity of the SKU, if it supports scaling. </param>
-        internal ServiceSku(string name, string tier, string family, string size, int? capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceSku(string name, string tier, string family, string size, int? capacity, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
             Family = family;
             Size = size;
             Capacity = capacity;
+            _rawData = rawData;
         }
 
         /// <summary> The unique name of the SKU, such as 'P3'. </summary>

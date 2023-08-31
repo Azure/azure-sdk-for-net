@@ -5,16 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters used to regenerate the login credential. </summary>
     public partial class ContainerRegistryCredentialRegenerateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryCredentialRegenerateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialRegenerateContent"/>. </summary>
         /// <param name="name"> Specifies name of the password which should be regenerated -- password or password2. </param>
         public ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName name)
         {
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialRegenerateContent"/>. </summary>
+        /// <param name="name"> Specifies name of the password which should be regenerated -- password or password2. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName name, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialRegenerateContent"/> for deserialization. </summary>
+        internal ContainerRegistryCredentialRegenerateContent()
+        {
         }
 
         /// <summary> Specifies name of the password which should be regenerated -- password or password2. </summary>

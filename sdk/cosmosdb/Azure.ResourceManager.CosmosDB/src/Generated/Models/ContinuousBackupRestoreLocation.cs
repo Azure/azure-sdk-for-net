@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,9 +14,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of the regional restorable account. </summary>
     public partial class ContinuousBackupRestoreLocation
     {
-        /// <summary> Initializes a new instance of ContinuousBackupRestoreLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousBackupRestoreLocation"/>. </summary>
         public ContinuousBackupRestoreLocation()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousBackupRestoreLocation"/>. </summary>
+        /// <param name="location"> The name of the continuous backup restore location. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousBackupRestoreLocation(AzureLocation? location, Dictionary<string, BinaryData> rawData)
+        {
+            Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the continuous backup restore location. </summary>

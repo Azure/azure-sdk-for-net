@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GraphResourceGetPropertiesOptions : IUtf8JsonSerializable
+    public partial class GraphResourceGetPropertiesOptions : IUtf8JsonSerializable, IModelJsonSerializable<GraphResourceGetPropertiesOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GraphResourceGetPropertiesOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GraphResourceGetPropertiesOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<GraphResourceGetPropertiesOptions>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
@@ -23,19 +31,41 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings);
+                if (AutoscaleSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AutoscaleSettings>)AutoscaleSettings).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static GraphResourceGetPropertiesOptions DeserializeGraphResourceGetPropertiesOptions(JsonElement element)
+        internal static GraphResourceGetPropertiesOptions DeserializeGraphResourceGetPropertiesOptions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> throughput = default;
             Optional<AutoscaleSettings> autoscaleSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -56,8 +86,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GraphResourceGetPropertiesOptions(Optional.ToNullable(throughput), autoscaleSettings.Value);
+            return new GraphResourceGetPropertiesOptions(Optional.ToNullable(throughput), autoscaleSettings.Value, rawData);
+        }
+
+        GraphResourceGetPropertiesOptions IModelJsonSerializable<GraphResourceGetPropertiesOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GraphResourceGetPropertiesOptions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGraphResourceGetPropertiesOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GraphResourceGetPropertiesOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GraphResourceGetPropertiesOptions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GraphResourceGetPropertiesOptions IModelSerializable<GraphResourceGetPropertiesOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<GraphResourceGetPropertiesOptions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGraphResourceGetPropertiesOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GraphResourceGetPropertiesOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GraphResourceGetPropertiesOptions"/> to convert. </param>
+        public static implicit operator RequestContent(GraphResourceGetPropertiesOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GraphResourceGetPropertiesOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GraphResourceGetPropertiesOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGraphResourceGetPropertiesOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

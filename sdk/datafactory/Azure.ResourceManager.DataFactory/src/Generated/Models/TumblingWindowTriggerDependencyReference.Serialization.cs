@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TumblingWindowTriggerDependencyReference : IUtf8JsonSerializable
+    public partial class TumblingWindowTriggerDependencyReference : IUtf8JsonSerializable, IModelJsonSerializable<TumblingWindowTriggerDependencyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TumblingWindowTriggerDependencyReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TumblingWindowTriggerDependencyReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TumblingWindowTriggerDependencyReference>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Offset))
             {
@@ -26,14 +34,35 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(Size);
             }
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
+            if (ReferenceTrigger is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataFactoryTriggerReference>)ReferenceTrigger).Serialize(writer, options);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TumblingWindowTriggerDependencyReference DeserializeTumblingWindowTriggerDependencyReference(JsonElement element)
+        internal static TumblingWindowTriggerDependencyReference DeserializeTumblingWindowTriggerDependencyReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> size = default;
             DataFactoryTriggerReference referenceTrigger = default;
             string type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offset"u8))
@@ -64,8 +94,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TumblingWindowTriggerDependencyReference(type, referenceTrigger, offset.Value, size.Value);
+            return new TumblingWindowTriggerDependencyReference(type, referenceTrigger, offset.Value, size.Value, rawData);
+        }
+
+        TumblingWindowTriggerDependencyReference IModelJsonSerializable<TumblingWindowTriggerDependencyReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TumblingWindowTriggerDependencyReference>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTumblingWindowTriggerDependencyReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TumblingWindowTriggerDependencyReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TumblingWindowTriggerDependencyReference>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TumblingWindowTriggerDependencyReference IModelSerializable<TumblingWindowTriggerDependencyReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TumblingWindowTriggerDependencyReference>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTumblingWindowTriggerDependencyReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TumblingWindowTriggerDependencyReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TumblingWindowTriggerDependencyReference"/> to convert. </param>
+        public static implicit operator RequestContent(TumblingWindowTriggerDependencyReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TumblingWindowTriggerDependencyReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTumblingWindowTriggerDependencyReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

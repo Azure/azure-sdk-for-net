@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Virtual Machine Scale Set List Skus operation response. </summary>
     internal partial class VirtualMachineScaleSetListSkusResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetListSkusResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetListSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the virtual machine scale set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineScaleSetListSkusResult(IEnumerable<VirtualMachineScaleSetSku> value)
@@ -25,13 +27,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetListSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetListSkusResult"/>. </summary>
         /// <param name="value"> The list of skus available for the virtual machine scale set. </param>
         /// <param name="nextLink"> The uri to fetch the next page of Virtual Machine Scale Set Skus. Call ListNext() with this to fetch the next page of VMSS Skus. </param>
-        internal VirtualMachineScaleSetListSkusResult(IReadOnlyList<VirtualMachineScaleSetSku> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetListSkusResult(IReadOnlyList<VirtualMachineScaleSetSku> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetListSkusResult"/> for deserialization. </summary>
+        internal VirtualMachineScaleSetListSkusResult()
+        {
         }
 
         /// <summary> The list of skus available for the virtual machine scale set. </summary>

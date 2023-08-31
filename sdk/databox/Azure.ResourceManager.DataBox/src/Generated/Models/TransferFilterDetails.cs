@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Details of the filtering the transfer of data. </summary>
     public partial class TransferFilterDetails
     {
-        /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/>. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         public TransferFilterDetails(DataAccountType dataAccountType)
         {
@@ -21,17 +24,24 @@ namespace Azure.ResourceManager.DataBox.Models
             FilterFileDetails = new ChangeTrackingList<FilterFileDetails>();
         }
 
-        /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/>. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
         /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
         /// <param name="filterFileDetails"> Details of the filter files to be used for data transfer. </param>
-        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferFilterDetails(DataAccountType dataAccountType, BlobFilterDetails blobFilterDetails, AzureFileFilterDetails azureFileFilterDetails, IList<FilterFileDetails> filterFileDetails, Dictionary<string, BinaryData> rawData)
         {
             DataAccountType = dataAccountType;
             BlobFilterDetails = blobFilterDetails;
             AzureFileFilterDetails = azureFileFilterDetails;
             FilterFileDetails = filterFileDetails;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferFilterDetails"/> for deserialization. </summary>
+        internal TransferFilterDetails()
+        {
         }
 
         /// <summary> Type of the account of data. </summary>

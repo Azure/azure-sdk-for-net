@@ -6,17 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Response body with a run identifier. </summary>
     public partial class PipelineCreateRunResult
     {
-        /// <summary> Initializes a new instance of PipelineCreateRunResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineCreateRunResult"/>. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         internal PipelineCreateRunResult(Guid runId)
         {
             RunId = runId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineCreateRunResult"/>. </summary>
+        /// <param name="runId"> Identifier of a run. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineCreateRunResult(Guid runId, Dictionary<string, BinaryData> rawData)
+        {
+            RunId = runId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineCreateRunResult"/> for deserialization. </summary>
+        internal PipelineCreateRunResult()
+        {
         }
 
         /// <summary> Identifier of a run. </summary>

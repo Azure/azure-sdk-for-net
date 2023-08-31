@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownActivity. </summary>
     internal partial class UnknownActivity : PipelineActivity
     {
-        /// <summary> Initializes a new instance of UnknownActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal UnknownActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownActivity"/> for deserialization. </summary>
+        internal UnknownActivity()
+        {
         }
     }
 }

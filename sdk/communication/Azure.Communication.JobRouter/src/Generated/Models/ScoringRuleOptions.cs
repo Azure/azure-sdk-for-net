@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.JobRouter;
 using Azure.Core;
@@ -14,7 +15,9 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
     public partial class ScoringRuleOptions
     {
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScoringRuleOptions"/>. </summary>
         /// <param name="batchSize"> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. Defaults to 20 if not configured. </param>
         /// <param name="scoringParameters">
         /// (Optional) List of extra parameters from the job that will be sent as part of the payload to scoring rule.
@@ -32,12 +35,14 @@ namespace Azure.Communication.JobRouter.Models
         /// (Optional)
         /// If false, will sort scores by ascending order. By default, set to true.
         /// </param>
-        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? allowScoringBatchOfWorkers, bool? descendingOrder)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? allowScoringBatchOfWorkers, bool? descendingOrder, Dictionary<string, BinaryData> rawData)
         {
             BatchSize = batchSize;
             ScoringParameters = scoringParameters;
             AllowScoringBatchOfWorkers = allowScoringBatchOfWorkers;
             DescendingOrder = descendingOrder;
+            _rawData = rawData;
         }
 
         /// <summary> (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true. Defaults to 20 if not configured. </summary>

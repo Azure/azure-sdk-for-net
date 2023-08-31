@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> File server write settings. </summary>
     public partial class FileServerWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of FileServerWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerWriteSettings"/>. </summary>
         public FileServerWriteSettings()
         {
             StoreWriteSettingsType = "FileServerWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of FileServerWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerWriteSettings"/>. </summary>
         /// <param name="storeWriteSettingsType"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

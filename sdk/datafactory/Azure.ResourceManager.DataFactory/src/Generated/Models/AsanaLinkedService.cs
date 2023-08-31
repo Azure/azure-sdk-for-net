@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Asana. </summary>
     public partial class AsanaLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AsanaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/>. </summary>
         /// <param name="apiToken"> The api token for the Asana source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         public AsanaLinkedService(DataFactorySecretBaseDefinition apiToken)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Asana";
         }
 
-        /// <summary> Initializes a new instance of AsanaLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Asana";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/> for deserialization. </summary>
+        internal AsanaLinkedService()
+        {
         }
 
         /// <summary> The api token for the Asana source. </summary>

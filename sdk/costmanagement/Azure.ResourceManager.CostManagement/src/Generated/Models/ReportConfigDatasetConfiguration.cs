@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The configuration of dataset in the report. </summary>
     internal partial class ReportConfigDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of ReportConfigDatasetConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportConfigDatasetConfiguration"/>. </summary>
         public ReportConfigDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ReportConfigDatasetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportConfigDatasetConfiguration"/>. </summary>
         /// <param name="columns"> Array of column names to be included in the report. Any valid report column name is allowed. If not provided, then report includes all columns. </param>
-        internal ReportConfigDatasetConfiguration(IList<string> columns)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportConfigDatasetConfiguration(IList<string> columns, Dictionary<string, BinaryData> rawData)
         {
             Columns = columns;
+            _rawData = rawData;
         }
 
         /// <summary> Array of column names to be included in the report. Any valid report column name is allowed. If not provided, then report includes all columns. </summary>

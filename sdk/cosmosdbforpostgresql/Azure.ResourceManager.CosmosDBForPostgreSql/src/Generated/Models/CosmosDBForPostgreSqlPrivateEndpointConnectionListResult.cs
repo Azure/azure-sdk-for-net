@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class CosmosDBForPostgreSqlPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
         internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateEndpointConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

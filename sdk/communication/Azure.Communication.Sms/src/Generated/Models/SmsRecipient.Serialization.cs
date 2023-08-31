@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Sms.Models
 {
-    internal partial class SmsRecipient : IUtf8JsonSerializable
+    internal partial class SmsRecipient : IUtf8JsonSerializable, IModelJsonSerializable<SmsRecipient>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SmsRecipient>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SmsRecipient>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To);
@@ -27,7 +35,105 @@ namespace Azure.Communication.Sms.Models
                 writer.WritePropertyName("repeatabilityFirstSent"u8);
                 writer.WriteStringValue(RepeatabilityFirstSent);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SmsRecipient DeserializeSmsRecipient(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string to = default;
+            Optional<string> repeatabilityRequestId = default;
+            Optional<string> repeatabilityFirstSent = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("to"u8))
+                {
+                    to = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("repeatabilityRequestId"u8))
+                {
+                    repeatabilityRequestId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("repeatabilityFirstSent"u8))
+                {
+                    repeatabilityFirstSent = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SmsRecipient(to, repeatabilityRequestId.Value, repeatabilityFirstSent.Value, rawData);
+        }
+
+        SmsRecipient IModelJsonSerializable<SmsRecipient>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmsRecipient(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SmsRecipient>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SmsRecipient IModelSerializable<SmsRecipient>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSmsRecipient(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SmsRecipient"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SmsRecipient"/> to convert. </param>
+        public static implicit operator RequestContent(SmsRecipient model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SmsRecipient"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SmsRecipient(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSmsRecipient(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

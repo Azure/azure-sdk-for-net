@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> A list of Database Migrations. </summary>
     internal partial class DatabaseMigrationListResult
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationListResult"/>. </summary>
         internal DatabaseMigrationListResult()
         {
             Value = new ChangeTrackingList<DatabaseMigration>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal DatabaseMigrationListResult(IReadOnlyList<DatabaseMigration> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseMigrationListResult(IReadOnlyList<DatabaseMigration> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

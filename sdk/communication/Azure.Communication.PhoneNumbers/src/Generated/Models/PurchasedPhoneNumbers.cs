@@ -15,5 +15,22 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The list of purchased phone numbers. </summary>
     internal partial class PurchasedPhoneNumbers
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumbers"/>. </summary>
+        /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
+        /// <param name="nextLink"> Represents the URL link to the next page of phone number results. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurchasedPhoneNumbers(IReadOnlyList<PurchasedPhoneNumber> phoneNumbers, string nextLink, Dictionary<string, BinaryData> rawData)
+        {
+            PhoneNumbers = phoneNumbers;
+            NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumbers"/> for deserialization. </summary>
+        internal PurchasedPhoneNumbers()
+        {
+        }
     }
 }

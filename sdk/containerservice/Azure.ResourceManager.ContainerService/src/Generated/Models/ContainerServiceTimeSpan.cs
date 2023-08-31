@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For example, between 2021-05-25T13:00:00Z and 2021-05-25T14:00:00Z. </summary>
     public partial class ContainerServiceTimeSpan
     {
-        /// <summary> Initializes a new instance of ContainerServiceTimeSpan. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeSpan"/>. </summary>
         public ContainerServiceTimeSpan()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTimeSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeSpan"/>. </summary>
         /// <param name="startOn"> The start of a time span. </param>
         /// <param name="endOn"> The end of a time span. </param>
-        internal ContainerServiceTimeSpan(DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceTimeSpan(DateTimeOffset? startOn, DateTimeOffset? endOn, Dictionary<string, BinaryData> rawData)
         {
             StartOn = startOn;
             EndOn = endOn;
+            _rawData = rawData;
         }
 
         /// <summary> The start of a time span. </summary>

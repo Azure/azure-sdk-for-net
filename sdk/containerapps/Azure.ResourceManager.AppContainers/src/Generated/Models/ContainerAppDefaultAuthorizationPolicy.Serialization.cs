@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDefaultAuthorizationPolicy : IUtf8JsonSerializable
+    public partial class ContainerAppDefaultAuthorizationPolicy : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppDefaultAuthorizationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppDefaultAuthorizationPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppDefaultAuthorizationPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue(AllowedPrincipals);
+                if (AllowedPrincipals is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ContainerAppAllowedPrincipals>)AllowedPrincipals).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {
@@ -31,17 +45,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppDefaultAuthorizationPolicy DeserializeContainerAppDefaultAuthorizationPolicy(JsonElement element)
+        internal static ContainerAppDefaultAuthorizationPolicy DeserializeContainerAppDefaultAuthorizationPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ContainerAppAllowedPrincipals> allowedPrincipals = default;
             Optional<IList<string>> allowedApplications = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedPrincipals"u8))
@@ -67,8 +96,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     allowedApplications = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals.Value, Optional.ToList(allowedApplications));
+            return new ContainerAppDefaultAuthorizationPolicy(allowedPrincipals.Value, Optional.ToList(allowedApplications), rawData);
+        }
+
+        ContainerAppDefaultAuthorizationPolicy IModelJsonSerializable<ContainerAppDefaultAuthorizationPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppDefaultAuthorizationPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppDefaultAuthorizationPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppDefaultAuthorizationPolicy IModelSerializable<ContainerAppDefaultAuthorizationPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppDefaultAuthorizationPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppDefaultAuthorizationPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppDefaultAuthorizationPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppDefaultAuthorizationPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppDefaultAuthorizationPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppDefaultAuthorizationPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppDefaultAuthorizationPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

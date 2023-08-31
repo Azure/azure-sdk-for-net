@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Results for checksum based Data Integrity validation results. </summary>
     public partial class DataIntegrityValidationResult
     {
-        /// <summary> Initializes a new instance of DataIntegrityValidationResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataIntegrityValidationResult"/>. </summary>
         internal DataIntegrityValidationResult()
         {
             FailedObjects = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataIntegrityValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataIntegrityValidationResult"/>. </summary>
         /// <param name="failedObjects"> List of failed table names of source and target pair. </param>
         /// <param name="validationErrors"> List of errors that happened while performing data integrity validation. </param>
-        internal DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects, ValidationError validationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataIntegrityValidationResult(IReadOnlyDictionary<string, string> failedObjects, ValidationError validationErrors, Dictionary<string, BinaryData> rawData)
         {
             FailedObjects = failedObjects;
             ValidationErrors = validationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> List of failed table names of source and target pair. </summary>

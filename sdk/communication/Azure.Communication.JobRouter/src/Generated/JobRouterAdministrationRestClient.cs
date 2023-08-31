@@ -52,9 +52,7 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             return message;
         }
 
@@ -414,9 +412,7 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             return message;
         }
 
@@ -776,9 +772,7 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             return message;
         }
 
@@ -1138,9 +1132,7 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             return message;
         }
 

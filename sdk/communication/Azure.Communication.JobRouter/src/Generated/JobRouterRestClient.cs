@@ -52,9 +52,7 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             return message;
         }
 
@@ -439,9 +437,7 @@ namespace Azure.Communication.JobRouter
                 Note = note,
                 DispositionCode = dispositionCode
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 
@@ -527,9 +523,7 @@ namespace Azure.Communication.JobRouter
             {
                 Note = note
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 
@@ -619,9 +613,7 @@ namespace Azure.Communication.JobRouter
                 CloseAt = closeAt,
                 Note = note
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 
@@ -887,9 +879,7 @@ namespace Azure.Communication.JobRouter
             if (unassignJobRequest != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(unassignJobRequest);
-                request.Content = content;
+                request.Content = unassignJobRequest;
             }
             return message;
         }
@@ -1060,9 +1050,7 @@ namespace Azure.Communication.JobRouter
             if (declineJobOfferRequest != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(declineJobOfferRequest);
-                request.Content = content;
+                request.Content = declineJobOfferRequest;
             }
             return message;
         }
@@ -1216,9 +1204,7 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
+            request.Content = patch;
             return message;
         }
 

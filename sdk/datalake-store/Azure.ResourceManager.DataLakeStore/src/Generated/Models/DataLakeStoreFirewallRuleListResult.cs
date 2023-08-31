@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeStore;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store firewall rule list information. </summary>
     internal partial class DataLakeStoreFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleListResult"/>. </summary>
         internal DataLakeStoreFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The results of the list operation. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal DataLakeStoreFirewallRuleListResult(IReadOnlyList<DataLakeStoreFirewallRuleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreFirewallRuleListResult(IReadOnlyList<DataLakeStoreFirewallRuleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The results of the list operation. </summary>

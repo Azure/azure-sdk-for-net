@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container execution command, for liveness or readiness probe. </summary>
     internal partial class ContainerExec
     {
-        /// <summary> Initializes a new instance of ContainerExec. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExec"/>. </summary>
         public ContainerExec()
         {
             Command = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerExec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerExec"/>. </summary>
         /// <param name="command"> The commands to execute within the container. </param>
-        internal ContainerExec(IList<string> command)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerExec(IList<string> command, Dictionary<string, BinaryData> rawData)
         {
             Command = command;
+            _rawData = rawData;
         }
 
         /// <summary> The commands to execute within the container. </summary>

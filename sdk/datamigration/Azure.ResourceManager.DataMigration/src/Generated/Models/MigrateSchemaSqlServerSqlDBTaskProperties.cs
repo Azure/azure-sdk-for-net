@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for task that migrates Schema for SQL Server databases to Azure SQL databases. </summary>
     public partial class MigrateSchemaSqlServerSqlDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskProperties"/>. </summary>
         public MigrateSchemaSqlServerSqlDBTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateSchemaSqlServerSqlDBTaskOutput>();
             TaskType = TaskType.MigrateSchemaSqlServerSqlDB;
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <param name="taskId"> Task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateSchemaSqlServerSqlDBTaskInput input, IReadOnlyList<MigrateSchemaSqlServerSqlDBTaskOutput> output, string createdOn, string taskId, bool? isCloneable) : base(taskType, errors, state, commands, clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSchemaSqlServerSqlDBTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateSchemaSqlServerSqlDBTaskInput input, IReadOnlyList<MigrateSchemaSqlServerSqlDBTaskOutput> output, string createdOn, string taskId, bool? isCloneable, Dictionary<string, BinaryData> rawData) : base(taskType, errors, state, commands, clientData, rawData)
         {
             Input = input;
             Output = output;

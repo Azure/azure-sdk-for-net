@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.NetworkTraversal
 {
     [JsonConverter(typeof(CommunicationRelayConfigurationConverter))]
-    public partial class CommunicationRelayConfiguration : IUtf8JsonSerializable
+    public partial class CommunicationRelayConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<CommunicationRelayConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommunicationRelayConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommunicationRelayConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("expiresOn"u8);
             writer.WriteStringValue(ExpiresOn, "O");
@@ -25,20 +31,42 @@ namespace Azure.Communication.NetworkTraversal
             writer.WriteStartArray();
             foreach (var item in IceServers)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommunicationIceServer>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommunicationRelayConfiguration DeserializeCommunicationRelayConfiguration(JsonElement element)
+        internal static CommunicationRelayConfiguration DeserializeCommunicationRelayConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset expiresOn = default;
             IList<CommunicationIceServer> iceServers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiresOn"u8))
@@ -56,8 +84,61 @@ namespace Azure.Communication.NetworkTraversal
                     iceServers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommunicationRelayConfiguration(expiresOn, iceServers);
+            return new CommunicationRelayConfiguration(expiresOn, iceServers, rawData);
+        }
+
+        CommunicationRelayConfiguration IModelJsonSerializable<CommunicationRelayConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationRelayConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommunicationRelayConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommunicationRelayConfiguration IModelSerializable<CommunicationRelayConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommunicationRelayConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommunicationRelayConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommunicationRelayConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(CommunicationRelayConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommunicationRelayConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommunicationRelayConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommunicationRelayConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CommunicationRelayConfigurationConverter : JsonConverter<CommunicationRelayConfiguration>

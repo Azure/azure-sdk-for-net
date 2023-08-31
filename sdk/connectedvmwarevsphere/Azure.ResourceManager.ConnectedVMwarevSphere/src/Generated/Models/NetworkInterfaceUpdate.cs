@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the network interface update. </summary>
     public partial class NetworkInterfaceUpdate
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceUpdate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceUpdate"/>. </summary>
         public NetworkInterfaceUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceUpdate"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the network interface. </param>
+        /// <param name="networkId"> Gets or sets the ARM Id of the network resource to connect the virtual machine. </param>
+        /// <param name="nicType"> NIC type. </param>
+        /// <param name="powerOnBoot"> Gets or sets the power on boot. </param>
+        /// <param name="deviceKey"> Gets or sets the device key value. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterfaceUpdate(string name, string networkId, NICType? nicType, PowerOnBootOption? powerOnBoot, int? deviceKey, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            NetworkId = networkId;
+            NicType = nicType;
+            PowerOnBoot = powerOnBoot;
+            DeviceKey = deviceKey;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>

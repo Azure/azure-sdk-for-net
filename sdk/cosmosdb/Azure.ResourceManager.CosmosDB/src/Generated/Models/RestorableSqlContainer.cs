@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> An Azure Cosmos DB SQL container event. </summary>
     public partial class RestorableSqlContainer : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableSqlContainer. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainer"/>. </summary>
         internal RestorableSqlContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainer"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB SQL container event. </param>
-        internal RestorableSqlContainer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableSqlContainerResourceInfo resource) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableSqlContainer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableSqlContainerResourceInfo resource, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
+            _rawData = rawData;
         }
 
         /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>

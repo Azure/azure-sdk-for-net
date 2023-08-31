@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Factory's GitHub repo information. </summary>
     public partial class FactoryGitHubConfiguration : FactoryRepoConfiguration
     {
-        /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryRepoConfigurationType = "FactoryGitHubConfiguration";
         }
 
-        /// <summary> Initializes a new instance of FactoryGitHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/>. </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
@@ -40,12 +41,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="hostName"> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </param>
         /// <param name="clientId"> GitHub bring your own app client id. </param>
         /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
-        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string hostName, string clientId, FactoryGitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string hostName, string clientId, FactoryGitHubClientSecret clientSecret, Dictionary<string, BinaryData> rawData) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish, rawData)
         {
             HostName = hostName;
             ClientId = clientId;
             ClientSecret = clientSecret;
             FactoryRepoConfigurationType = factoryRepoConfigurationType ?? "FactoryGitHubConfiguration";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FactoryGitHubConfiguration"/> for deserialization. </summary>
+        internal FactoryGitHubConfiguration()
+        {
         }
 
         /// <summary> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </summary>

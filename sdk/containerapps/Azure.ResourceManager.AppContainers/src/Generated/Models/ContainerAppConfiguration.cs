@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Non versioned Container App configuration properties that define the mutable settings of a Container app. </summary>
     public partial class ContainerAppConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         public ContainerAppConfiguration()
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
         /// <param name="activeRevisionsMode">
         /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
         /// <param name="service"> Container App to be a dev Container App Service. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, int? maxInactiveRevisions, Service service)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, int? maxInactiveRevisions, Service service, Dictionary<string, BinaryData> rawData)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
@@ -40,6 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Dapr = dapr;
             MaxInactiveRevisions = maxInactiveRevisions;
             Service = service;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of secrets used by a Container app. </summary>

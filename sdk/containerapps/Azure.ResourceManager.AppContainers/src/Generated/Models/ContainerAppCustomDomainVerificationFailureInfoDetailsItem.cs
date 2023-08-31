@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Detailed errors. </summary>
     public partial class ContainerAppCustomDomainVerificationFailureInfoDetailsItem
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
-        internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem(string code, string message, string target)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem(string code, string message, string target, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Target = target;
+            _rawData = rawData;
         }
 
         /// <summary> Standardized string to programmatically identify the error. </summary>

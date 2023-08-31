@@ -5,35 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput
+    internal partial class UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>
     {
-        internal static UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            Optional<string> id = default;
-            string resultType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"u8))
+                foreach (var property in _rawData)
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultType"u8))
-                {
-                    resultType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(id.Value, resultType);
+            writer.WriteEndObject();
+        }
+
+        internal static MigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element, ModelSerializerOptions options = default) => DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(element, options);
+
+        MigrateOracleAzureDBPostgreSqlSyncTaskOutput IModelJsonSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateOracleAzureDBPostgreSqlSyncTaskOutput IModelSerializable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(doc.RootElement, options);
         }
     }
 }

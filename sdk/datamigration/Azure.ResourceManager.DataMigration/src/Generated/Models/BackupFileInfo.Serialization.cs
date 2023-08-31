@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class BackupFileInfo
+    public partial class BackupFileInfo : IUtf8JsonSerializable, IModelJsonSerializable<BackupFileInfo>
     {
-        internal static BackupFileInfo DeserializeBackupFileInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackupFileInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackupFileInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FileLocation))
+            {
+                writer.WritePropertyName("fileLocation"u8);
+                writer.WriteStringValue(FileLocation);
+            }
+            if (Optional.IsDefined(FamilySequenceNumber))
+            {
+                writer.WritePropertyName("familySequenceNumber"u8);
+                writer.WriteNumberValue(FamilySequenceNumber.Value);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BackupFileInfo DeserializeBackupFileInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> fileLocation = default;
             Optional<int> familySequenceNumber = default;
             Optional<BackupFileStatus> status = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileLocation"u8))
@@ -46,8 +90,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     status = new BackupFileStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackupFileInfo(fileLocation.Value, Optional.ToNullable(familySequenceNumber), Optional.ToNullable(status));
+            return new BackupFileInfo(fileLocation.Value, Optional.ToNullable(familySequenceNumber), Optional.ToNullable(status), rawData);
+        }
+
+        BackupFileInfo IModelJsonSerializable<BackupFileInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupFileInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackupFileInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackupFileInfo IModelSerializable<BackupFileInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackupFileInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackupFileInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackupFileInfo"/> to convert. </param>
+        public static implicit operator RequestContent(BackupFileInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackupFileInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackupFileInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackupFileInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Server properties for MySQL type source. </summary>
     public partial class ServerProperties
     {
-        /// <summary> Initializes a new instance of ServerProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerProperties"/>. </summary>
         internal ServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerProperties"/>. </summary>
         /// <param name="serverPlatform"> Name of the server platform. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="serverVersion"> Version of the database server. </param>
         /// <param name="serverEdition"> Edition of the database server. </param>
         /// <param name="serverOperatingSystemVersion"> Version of the operating system. </param>
         /// <param name="serverDatabaseCount"> Number of databases in the server. </param>
-        internal ServerProperties(string serverPlatform, string serverName, string serverVersion, string serverEdition, string serverOperatingSystemVersion, int? serverDatabaseCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerProperties(string serverPlatform, string serverName, string serverVersion, string serverEdition, string serverOperatingSystemVersion, int? serverDatabaseCount, Dictionary<string, BinaryData> rawData)
         {
             ServerPlatform = serverPlatform;
             ServerName = serverName;
@@ -30,6 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ServerEdition = serverEdition;
             ServerOperatingSystemVersion = serverOperatingSystemVersion;
             ServerDatabaseCount = serverDatabaseCount;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the server platform. </summary>

@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Managed Identity used for CMK. </summary>
     internal partial class DataFactoryCmkIdentity
     {
-        /// <summary> Initializes a new instance of DataFactoryCmkIdentity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCmkIdentity"/>. </summary>
         public DataFactoryCmkIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryCmkIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCmkIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The resource id of the user assigned identity to authenticate to customer's key vault. </param>
-        internal DataFactoryCmkIdentity(string userAssignedIdentity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryCmkIdentity(string userAssignedIdentity, Dictionary<string, BinaryData> rawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
+            _rawData = rawData;
         }
 
         /// <summary> The resource id of the user assigned identity to authenticate to customer's key vault. </summary>

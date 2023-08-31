@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedGremlinGraphResourceInfo. </summary>
     public partial class ExtendedGremlinGraphResourceInfo : GremlinGraphResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedGremlinGraphResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedGremlinGraphResourceInfo"/>. </summary>
         /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="graphName"/> is null. </exception>
         public ExtendedGremlinGraphResourceInfo(string graphName) : base(graphName)
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(graphName, nameof(graphName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedGremlinGraphResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedGremlinGraphResourceInfo"/>. </summary>
         /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
@@ -35,11 +36,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedGremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string rid, float? timestamp, ETag? etag) : base(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl, restoreParameters, createMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedGremlinGraphResourceInfo(string graphName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string rid, float? timestamp, ETag? etag, Dictionary<string, BinaryData> rawData) : base(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, analyticalStorageTtl, restoreParameters, createMode, rawData)
         {
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedGremlinGraphResourceInfo"/> for deserialization. </summary>
+        internal ExtendedGremlinGraphResourceInfo()
+        {
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

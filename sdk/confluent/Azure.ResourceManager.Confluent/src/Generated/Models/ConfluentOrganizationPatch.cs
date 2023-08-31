@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Organization Resource update. </summary>
     public partial class ConfluentOrganizationPatch
     {
-        /// <summary> Initializes a new instance of ConfluentOrganizationPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationPatch"/>. </summary>
         public ConfluentOrganizationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationPatch"/>. </summary>
+        /// <param name="tags"> ARM resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfluentOrganizationPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> ARM resource tags. </summary>

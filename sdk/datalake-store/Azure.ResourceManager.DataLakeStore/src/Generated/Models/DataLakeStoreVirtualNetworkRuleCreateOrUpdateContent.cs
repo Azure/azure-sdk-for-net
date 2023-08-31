@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to create a new virtual network rule. </summary>
     public partial class DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="subnetId"> The resource identifier for the subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent(ResourceIdentifier subnetId)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             SubnetId = subnetId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent(ResourceIdentifier subnetId, Dictionary<string, BinaryData> rawData)
+        {
+            SubnetId = subnetId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent()
+        {
         }
 
         /// <summary> The resource identifier for the subnet. </summary>

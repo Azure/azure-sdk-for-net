@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Attaches a queue selector where the value is passed through from the job label with the same key. </summary>
     public partial class PassThroughQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -26,15 +27,21 @@ namespace Azure.Communication.JobRouter
             Kind = "pass-through";
         }
 
-        /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing the type of queue selector attachment. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        internal PassThroughQueueSelectorAttachment(string kind, string key, LabelOperator labelOperator) : base(kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PassThroughQueueSelectorAttachment(string kind, string key, LabelOperator labelOperator, Dictionary<string, BinaryData> rawData) : base(kind, rawData)
         {
             Key = key;
             LabelOperator = labelOperator;
             Kind = kind ?? "pass-through";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/> for deserialization. </summary>
+        internal PassThroughQueueSelectorAttachment()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

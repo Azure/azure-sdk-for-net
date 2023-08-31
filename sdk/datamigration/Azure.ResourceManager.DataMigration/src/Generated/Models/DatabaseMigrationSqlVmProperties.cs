@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Database Migration Resource properties for SQL Virtual Machine. </summary>
     public partial class DatabaseMigrationSqlVmProperties : DatabaseMigrationProperties
     {
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlVmProperties"/>. </summary>
         public DatabaseMigrationSqlVmProperties()
         {
             Kind = ResourceType.SqlVm;
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigrationSqlVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlVmProperties"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource (SQL VM or SQL Managed Instance). </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
-        internal DatabaseMigrationSqlVmProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError, MigrationStatusDetails migrationStatusDetails, BackupConfiguration backupConfiguration, OfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseMigrationSqlVmProperties(ResourceType kind, string scope, string provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string migrationService, string migrationOperationId, ErrorInfo migrationFailureError, string targetDatabaseCollation, string provisioningError, MigrationStatusDetails migrationStatusDetails, BackupConfiguration backupConfiguration, OfflineConfiguration offlineConfiguration, Dictionary<string, BinaryData> rawData) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, rawData)
         {
             MigrationStatusDetails = migrationStatusDetails;
             BackupConfiguration = backupConfiguration;

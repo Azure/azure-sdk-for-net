@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class OSOptionProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of OSOptionProfileData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/>. </summary>
         /// <param name="osOptionPropertyList"> The list of OS options. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osOptionPropertyList"/> is null. </exception>
         internal OSOptionProfileData(IEnumerable<ContainerServiceOSOptionProperty> osOptionPropertyList)
@@ -30,15 +32,22 @@ namespace Azure.ResourceManager.ContainerService
             OSOptionPropertyList = osOptionPropertyList.ToList();
         }
 
-        /// <summary> Initializes a new instance of OSOptionProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="osOptionPropertyList"> The list of OS options. </param>
-        internal OSOptionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSOptionProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             OSOptionPropertyList = osOptionPropertyList;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OSOptionProfileData"/> for deserialization. </summary>
+        internal OSOptionProfileData()
+        {
         }
 
         /// <summary> The list of OS options. </summary>

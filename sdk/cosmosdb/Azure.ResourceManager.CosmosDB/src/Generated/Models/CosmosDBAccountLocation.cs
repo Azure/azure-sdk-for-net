@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,19 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A region in which the Azure Cosmos DB database account is deployed. </summary>
     public partial class CosmosDBAccountLocation
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountLocation. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountLocation"/>. </summary>
         public CosmosDBAccountLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountLocation"/>. </summary>
         /// <param name="id"> The unique identifier of the region within the database account. Example: &lt;accountName&gt;-&lt;locationName&gt;. </param>
         /// <param name="locationName"> The name of the region. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the specific region. Example: https://&lt;accountName&gt;-&lt;locationName&gt;.documents.azure.com:443/. </param>
         /// <param name="provisioningState"> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. 'Creating' – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. 'Succeeded' – the Cosmos DB account is active for use. 'Updating' – the Cosmos DB account is being updated. 'Deleting' – the Cosmos DB account is being deleted. 'Failed' – the Cosmos DB account failed creation. 'DeletionFailed' – the Cosmos DB account deletion failed. </param>
         /// <param name="failoverPriority"> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </param>
         /// <param name="isZoneRedundant"> Flag to indicate whether or not this region is an AvailabilityZone region. </param>
-        internal CosmosDBAccountLocation(string id, AzureLocation? locationName, string documentEndpoint, string provisioningState, int? failoverPriority, bool? isZoneRedundant)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountLocation(string id, AzureLocation? locationName, string documentEndpoint, string provisioningState, int? failoverPriority, bool? isZoneRedundant, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             LocationName = locationName;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ProvisioningState = provisioningState;
             FailoverPriority = failoverPriority;
             IsZoneRedundant = isZoneRedundant;
+            _rawData = rawData;
         }
 
         /// <summary> The unique identifier of the region within the database account. Example: &lt;accountName&gt;-&lt;locationName&gt;. </summary>

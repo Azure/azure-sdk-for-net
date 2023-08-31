@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Job's execution template, containing container configuration for a job's execution. </summary>
     public partial class ContainerAppJobExecutionTemplate
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionTemplate"/>. </summary>
         public ContainerAppJobExecutionTemplate()
         {
             Containers = new ChangeTrackingList<JobExecutionContainer>();
             InitContainers = new ChangeTrackingList<JobExecutionContainer>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionTemplate"/>. </summary>
         /// <param name="containers"> List of container definitions for the Container Apps Job. </param>
         /// <param name="initContainers"> List of specialized containers that run before job containers. </param>
-        internal ContainerAppJobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers, Dictionary<string, BinaryData> rawData)
         {
             Containers = containers;
             InitContainers = initContainers;
+            _rawData = rawData;
         }
 
         /// <summary> List of container definitions for the Container Apps Job. </summary>

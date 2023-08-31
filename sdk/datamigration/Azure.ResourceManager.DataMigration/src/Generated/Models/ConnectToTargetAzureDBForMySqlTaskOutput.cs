@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,30 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to Azure Database for MySQL and target server requirements. </summary>
     public partial class ConnectToTargetAzureDBForMySqlTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskOutput"/>. </summary>
         internal ConnectToTargetAzureDBForMySqlTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetAzureDBForMySqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="serverVersion"> Version of the target server. </param>
         /// <param name="databases"> List of databases on target server. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
-        internal ConnectToTargetAzureDBForMySqlTaskOutput(string id, string serverVersion, IReadOnlyList<string> databases, string targetServerBrandVersion, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetAzureDBForMySqlTaskOutput(string id, string serverVersion, IReadOnlyList<string> databases, string targetServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ServerVersion = serverVersion;
             Databases = databases;
             TargetServerBrandVersion = targetServerBrandVersion;
             ValidationErrors = validationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> Result identifier. </summary>

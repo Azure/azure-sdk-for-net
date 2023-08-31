@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
     internal partial class VirtualMachineNetworkInterfaceDnsSettingsConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceDnsSettingsConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceDnsSettingsConfiguration"/>. </summary>
         public VirtualMachineNetworkInterfaceDnsSettingsConfiguration()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceDnsSettingsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceDnsSettingsConfiguration"/>. </summary>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
-        internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration(IList<string> dnsServers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration(IList<string> dnsServers, Dictionary<string, BinaryData> rawData)
         {
             DnsServers = dnsServers;
+            _rawData = rawData;
         }
 
         /// <summary> List of DNS servers IP addresses. </summary>

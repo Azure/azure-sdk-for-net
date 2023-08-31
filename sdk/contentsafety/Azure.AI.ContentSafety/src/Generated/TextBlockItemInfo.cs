@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -13,6 +14,8 @@ namespace Azure.AI.ContentSafety
     /// <summary> Block item info in text blocklist. </summary>
     public partial class TextBlockItemInfo
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TextBlockItemInfo. </summary>
         /// <param name="text"> Block item content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
@@ -26,10 +29,17 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of TextBlockItemInfo. </summary>
         /// <param name="description"> Block item description. </param>
         /// <param name="text"> Block item content. </param>
-        internal TextBlockItemInfo(string description, string text)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextBlockItemInfo(string description, string text, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
             Text = text;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlockItemInfo"/> for deserialization. </summary>
+        internal TextBlockItemInfo()
+        {
         }
 
         /// <summary> Block item description. </summary>

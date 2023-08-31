@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Detailed status of current Sql Db migration. </summary>
     public partial class SqlDBMigrationStatusDetails
     {
-        /// <summary> Initializes a new instance of SqlDBMigrationStatusDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlDBMigrationStatusDetails"/>. </summary>
         internal SqlDBMigrationStatusDetails()
         {
             SqlDataCopyErrors = new ChangeTrackingList<string>();
             ListOfCopyProgressDetails = new ChangeTrackingList<CopyProgressDetails>();
         }
 
-        /// <summary> Initializes a new instance of SqlDBMigrationStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBMigrationStatusDetails"/>. </summary>
         /// <param name="migrationState"> Current State of Migration. </param>
         /// <param name="sqlDataCopyErrors"> Sql Data Copy errors, if any. </param>
         /// <param name="listOfCopyProgressDetails"> Details on progress of ADF copy activities. </param>
-        internal SqlDBMigrationStatusDetails(string migrationState, IReadOnlyList<string> sqlDataCopyErrors, IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDBMigrationStatusDetails(string migrationState, IReadOnlyList<string> sqlDataCopyErrors, IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails, Dictionary<string, BinaryData> rawData)
         {
             MigrationState = migrationState;
             SqlDataCopyErrors = sqlDataCopyErrors;
             ListOfCopyProgressDetails = listOfCopyProgressDetails;
+            _rawData = rawData;
         }
 
         /// <summary> Current State of Migration. </summary>

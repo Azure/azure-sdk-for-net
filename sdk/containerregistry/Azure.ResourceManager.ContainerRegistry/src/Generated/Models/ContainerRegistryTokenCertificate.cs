@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of a certificate used for authenticating a token. </summary>
     public partial class ContainerRegistryTokenCertificate
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         public ContainerRegistryTokenCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         /// <param name="name"></param>
         /// <param name="expireOn"> The expiry datetime of the certificate. </param>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
         /// <param name="encodedPemCertificate"> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </param>
-        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expireOn, string thumbprint, string encodedPemCertificate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expireOn, string thumbprint, string encodedPemCertificate, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ExpireOn = expireOn;
             Thumbprint = thumbprint;
             EncodedPemCertificate = encodedPemCertificate;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Properties of Self-hosted integration runtime node. </summary>
     public partial class SelfHostedIntegrationRuntimeNode
     {
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeNode"/>. </summary>
         internal SelfHostedIntegrationRuntimeNode()
         {
             Capabilities = new ChangeTrackingDictionary<string, string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntimeNode"/>. </summary>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="machineName"> Machine name of the integration runtime node. </param>
         /// <param name="hostServiceUri"> URI for the host machine of the integration runtime. </param>

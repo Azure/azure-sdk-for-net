@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of data flow resources. </summary>
     internal partial class DataFactoryDataFlowListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowListResult"/>. </summary>
         /// <param name="value"> List of data flows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryDataFlowListResult(IEnumerable<DataFactoryDataFlowData> value)
@@ -26,13 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowListResult"/>. </summary>
         /// <param name="value"> List of data flows. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DataFactoryDataFlowListResult(IReadOnlyList<DataFactoryDataFlowData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowListResult(IReadOnlyList<DataFactoryDataFlowData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowListResult"/> for deserialization. </summary>
+        internal DataFactoryDataFlowListResult()
+        {
         }
 
         /// <summary> List of data flows. </summary>

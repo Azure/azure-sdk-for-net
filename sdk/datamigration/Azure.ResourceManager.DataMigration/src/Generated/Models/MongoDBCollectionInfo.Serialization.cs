@@ -5,15 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCollectionInfo
+    public partial class MongoDBCollectionInfo : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBCollectionInfo>
     {
-        internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBCollectionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBCollectionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<MongoDBCollectionInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("databaseName"u8);
+            writer.WriteStringValue(DatabaseName);
+            writer.WritePropertyName("isCapped"u8);
+            writer.WriteBooleanValue(IsCapped);
+            writer.WritePropertyName("isSystemCollection"u8);
+            writer.WriteBooleanValue(IsSystemCollection);
+            writer.WritePropertyName("isView"u8);
+            writer.WriteBooleanValue(IsView);
+            if (Optional.IsDefined(ShardKey))
+            {
+                writer.WritePropertyName("shardKey"u8);
+                if (ShardKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBShardKeyInfo>)ShardKey).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("supportsSharding"u8);
+            writer.WriteBooleanValue(SupportsSharding);
+            if (Optional.IsDefined(ViewOf))
+            {
+                writer.WritePropertyName("viewOf"u8);
+                writer.WriteStringValue(ViewOf);
+            }
+            writer.WritePropertyName("averageDocumentSize"u8);
+            writer.WriteNumberValue(AverageDocumentSize);
+            writer.WritePropertyName("dataSize"u8);
+            writer.WriteNumberValue(DataSize);
+            writer.WritePropertyName("documentCount"u8);
+            writer.WriteNumberValue(DocumentCount);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("qualifiedName"u8);
+            writer.WriteStringValue(QualifiedName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             long documentCount = default;
             string name = default;
             string qualifiedName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -96,8 +162,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     qualifiedName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value);
+            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value, rawData);
+        }
+
+        MongoDBCollectionInfo IModelJsonSerializable<MongoDBCollectionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBCollectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCollectionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBCollectionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBCollectionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBCollectionInfo IModelSerializable<MongoDBCollectionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<MongoDBCollectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBCollectionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBCollectionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBCollectionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBCollectionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBCollectionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBCollectionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBCollectionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class PhoneNumberOffering
+    public partial class PhoneNumberOffering : IUtf8JsonSerializable, IModelJsonSerializable<PhoneNumberOffering>
     {
-        internal static PhoneNumberOffering DeserializePhoneNumberOffering(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PhoneNumberOffering>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PhoneNumberOffering>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PhoneNumberType))
+            {
+                writer.WritePropertyName("phoneNumberType"u8);
+                writer.WriteStringValue(PhoneNumberType.Value.ToString());
+            }
+            if (Optional.IsDefined(AssignmentType))
+            {
+                writer.WritePropertyName("assignmentType"u8);
+                writer.WriteStringValue(AssignmentType.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailableCapabilities))
+            {
+                writer.WritePropertyName("availableCapabilities"u8);
+                if (AvailableCapabilities is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PhoneNumberCapabilities>)AvailableCapabilities).Serialize(writer, options);
+                }
+            }
+            writer.WritePropertyName("cost"u8);
+            if (Cost is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<PhoneNumberCost>)Cost).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PhoneNumberOffering DeserializePhoneNumberOffering(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +81,7 @@ namespace Azure.Communication.PhoneNumbers
             Optional<PhoneNumberAssignmentType> assignmentType = default;
             Optional<PhoneNumberCapabilities> availableCapabilities = default;
             PhoneNumberCost cost = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phoneNumberType"u8))
@@ -56,8 +116,61 @@ namespace Azure.Communication.PhoneNumbers
                     cost = PhoneNumberCost.DeserializePhoneNumberCost(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PhoneNumberOffering(Optional.ToNullable(phoneNumberType), Optional.ToNullable(assignmentType), availableCapabilities.Value, cost);
+            return new PhoneNumberOffering(Optional.ToNullable(phoneNumberType), Optional.ToNullable(assignmentType), availableCapabilities.Value, cost, rawData);
+        }
+
+        PhoneNumberOffering IModelJsonSerializable<PhoneNumberOffering>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePhoneNumberOffering(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PhoneNumberOffering>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PhoneNumberOffering IModelSerializable<PhoneNumberOffering>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePhoneNumberOffering(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PhoneNumberOffering"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PhoneNumberOffering"/> to convert. </param>
+        public static implicit operator RequestContent(PhoneNumberOffering model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PhoneNumberOffering"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PhoneNumberOffering(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePhoneNumberOffering(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

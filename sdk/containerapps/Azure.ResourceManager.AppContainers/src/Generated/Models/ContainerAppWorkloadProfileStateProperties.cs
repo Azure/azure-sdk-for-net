@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Workload Profile resource specific properties. </summary>
     public partial class ContainerAppWorkloadProfileStateProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileStateProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileStateProperties"/>. </summary>
         public ContainerAppWorkloadProfileStateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWorkloadProfileStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileStateProperties"/>. </summary>
         /// <param name="minimumCount"> Minimum count of instances. </param>
         /// <param name="maximumCount"> Maximum count of nodes. </param>
         /// <param name="currentCount"> Current count of nodes. </param>
-        internal ContainerAppWorkloadProfileStateProperties(int? minimumCount, int? maximumCount, int? currentCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppWorkloadProfileStateProperties(int? minimumCount, int? maximumCount, int? currentCount, Dictionary<string, BinaryData> rawData)
         {
             MinimumCount = minimumCount;
             MaximumCount = maximumCount;
             CurrentCount = currentCount;
+            _rawData = rawData;
         }
 
         /// <summary> Minimum count of instances. </summary>

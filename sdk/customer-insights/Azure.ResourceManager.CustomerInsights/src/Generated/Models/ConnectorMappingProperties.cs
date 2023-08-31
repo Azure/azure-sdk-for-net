@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The connector mapping properties. </summary>
     public partial class ConnectorMappingProperties
     {
-        /// <summary> Initializes a new instance of ConnectorMappingProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingProperties"/>. </summary>
         /// <param name="errorManagement"> The error management setting for the mapping. </param>
         /// <param name="format"> The format of mapping property. </param>
         /// <param name="availability"> The availability of mapping property. </param>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             CompleteOperation = completeOperation;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingProperties"/>. </summary>
         /// <param name="folderPath"> The folder path for the mapping. </param>
         /// <param name="fileFilter"> The file filter for the mapping. </param>
         /// <param name="hasHeader"> If the file contains a header or not. </param>
@@ -46,7 +48,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="availability"> The availability of mapping property. </param>
         /// <param name="structure"> Ingestion mapping information at property level. </param>
         /// <param name="completeOperation"> The operation after import is done. </param>
-        internal ConnectorMappingProperties(string folderPath, string fileFilter, bool? hasHeader, ConnectorMappingErrorManagement errorManagement, ConnectorMappingFormat format, ConnectorMappingAvailability availability, IList<ConnectorMappingStructure> structure, ConnectorMappingCompleteOperation completeOperation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorMappingProperties(string folderPath, string fileFilter, bool? hasHeader, ConnectorMappingErrorManagement errorManagement, ConnectorMappingFormat format, ConnectorMappingAvailability availability, IList<ConnectorMappingStructure> structure, ConnectorMappingCompleteOperation completeOperation, Dictionary<string, BinaryData> rawData)
         {
             FolderPath = folderPath;
             FileFilter = fileFilter;
@@ -56,6 +59,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Availability = availability;
             Structure = structure;
             CompleteOperation = completeOperation;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingProperties"/> for deserialization. </summary>
+        internal ConnectorMappingProperties()
+        {
         }
 
         /// <summary> The folder path for the mapping. </summary>

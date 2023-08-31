@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Shipment pick up request details. </summary>
     public partial class ShipmentPickUpContent
     {
-        /// <summary> Initializes a new instance of ShipmentPickUpContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShipmentPickUpContent"/>. </summary>
         /// <param name="startOn"> Minimum date after which the pick up should commence, this must be in local time of pick up area. </param>
         /// <param name="endOn"> Maximum date before which the pick up should commence, this must be in local time of pick up area. </param>
         /// <param name="shipmentLocation"> Shipment Location in the pickup place. Eg.front desk. </param>
@@ -25,6 +28,24 @@ namespace Azure.ResourceManager.DataBox.Models
             StartOn = startOn;
             EndOn = endOn;
             ShipmentLocation = shipmentLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShipmentPickUpContent"/>. </summary>
+        /// <param name="startOn"> Minimum date after which the pick up should commence, this must be in local time of pick up area. </param>
+        /// <param name="endOn"> Maximum date before which the pick up should commence, this must be in local time of pick up area. </param>
+        /// <param name="shipmentLocation"> Shipment Location in the pickup place. Eg.front desk. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShipmentPickUpContent(DateTimeOffset startOn, DateTimeOffset endOn, string shipmentLocation, Dictionary<string, BinaryData> rawData)
+        {
+            StartOn = startOn;
+            EndOn = endOn;
+            ShipmentLocation = shipmentLocation;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShipmentPickUpContent"/> for deserialization. </summary>
+        internal ShipmentPickUpContent()
+        {
         }
 
         /// <summary> Minimum date after which the pick up should commence, this must be in local time of pick up area. </summary>

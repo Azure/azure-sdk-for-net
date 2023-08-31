@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownGranularCopyLogDetails
+    internal partial class UnknownGranularCopyLogDetails : IUtf8JsonSerializable, IModelJsonSerializable<GranularCopyLogDetails>
     {
-        internal static UnknownGranularCopyLogDetails DeserializeUnknownGranularCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GranularCopyLogDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GranularCopyLogDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("copyLogDetailsType"u8);
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            DataBoxOrderType copyLogDetailsType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("copyLogDetailsType"u8))
+                foreach (var property in _rawData)
                 {
-                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownGranularCopyLogDetails(copyLogDetailsType);
+            writer.WriteEndObject();
+        }
+
+        internal static GranularCopyLogDetails DeserializeUnknownGranularCopyLogDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeGranularCopyLogDetails(element, options);
+
+        GranularCopyLogDetails IModelJsonSerializable<GranularCopyLogDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownGranularCopyLogDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GranularCopyLogDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GranularCopyLogDetails IModelSerializable<GranularCopyLogDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGranularCopyLogDetails(doc.RootElement, options);
         }
     }
 }

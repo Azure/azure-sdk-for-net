@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Request from client to check cluster name availability. </summary>
     public partial class CosmosDBForPostgreSqlClusterNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Cluster name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name)
@@ -22,6 +25,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
             Name = name;
             ResourceType = CosmosDBForPostgreSqlNameAvailabilityResourceType.ServerGroupsV2;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Cluster name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterNameAvailabilityContent(string name, CosmosDBForPostgreSqlNameAvailabilityResourceType resourceType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityContent"/> for deserialization. </summary>
+        internal CosmosDBForPostgreSqlClusterNameAvailabilityContent()
+        {
         }
 
         /// <summary> Cluster name to verify. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output of the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         internal GetUserTablesSqlSyncTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskOutput"/>. </summary>
         /// <param name="databasesToSourceTables"> Mapping from database name to list of source tables. </param>
         /// <param name="databasesToTargetTables"> Mapping from database name to list of target tables. </param>
         /// <param name="tableValidationErrors"> Mapping from database name to list of validation errors. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables, string databasesToTargetTables, string tableValidationErrors, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesSqlSyncTaskOutput(string databasesToSourceTables, string databasesToTargetTables, string tableValidationErrors, IReadOnlyList<ReportableException> validationErrors, Dictionary<string, BinaryData> rawData)
         {
             DatabasesToSourceTables = databasesToSourceTables;
             DatabasesToTargetTables = databasesToTargetTables;
             TableValidationErrors = tableValidationErrors;
             ValidationErrors = validationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> Mapping from database name to list of source tables. </summary>

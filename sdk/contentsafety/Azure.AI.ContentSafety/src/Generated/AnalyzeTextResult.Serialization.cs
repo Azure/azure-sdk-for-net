@@ -5,17 +5,108 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeTextResult
+    public partial class AnalyzeTextResult : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzeTextResult>
     {
-        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzeTextResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzeTextResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(BlocklistsMatchResults))
+            {
+                writer.WritePropertyName("blocklistsMatchResults"u8);
+                writer.WriteStartArray();
+                foreach (var item in BlocklistsMatchResults)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<TextBlocklistMatchResult>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HateResult))
+            {
+                writer.WritePropertyName("hateResult"u8);
+                if (HateResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextAnalyzeSeverityResult>)HateResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SelfHarmResult))
+            {
+                writer.WritePropertyName("selfHarmResult"u8);
+                if (SelfHarmResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextAnalyzeSeverityResult>)SelfHarmResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SexualResult))
+            {
+                writer.WritePropertyName("sexualResult"u8);
+                if (SexualResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextAnalyzeSeverityResult>)SexualResult).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ViolenceResult))
+            {
+                writer.WritePropertyName("violenceResult"u8);
+                if (ViolenceResult is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<TextAnalyzeSeverityResult>)ViolenceResult).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +116,7 @@ namespace Azure.AI.ContentSafety
             Optional<TextAnalyzeSeverityResult> selfHarmResult = default;
             Optional<TextAnalyzeSeverityResult> sexualResult = default;
             Optional<TextAnalyzeSeverityResult> violenceResult = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blocklistsMatchResults"u8))
@@ -77,16 +169,61 @@ namespace Azure.AI.ContentSafety
                     violenceResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalyzeTextResult(Optional.ToList(blocklistsMatchResults), hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
+            return new AnalyzeTextResult(Optional.ToList(blocklistsMatchResults), hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AnalyzeTextResult FromResponse(Response response)
+        AnalyzeTextResult IModelJsonSerializable<AnalyzeTextResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAnalyzeTextResult(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzeTextResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzeTextResult IModelSerializable<AnalyzeTextResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzeTextResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzeTextResult"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzeTextResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzeTextResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzeTextResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzeTextResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

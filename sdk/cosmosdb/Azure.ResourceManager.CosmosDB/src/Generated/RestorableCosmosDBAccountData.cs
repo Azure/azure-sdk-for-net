@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class RestorableCosmosDBAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableCosmosDBAccountData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableCosmosDBAccountData"/>. </summary>
         internal RestorableCosmosDBAccountData()
         {
             RestorableLocations = new ChangeTrackingList<RestorableLocationResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of RestorableCosmosDBAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableCosmosDBAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +39,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="deletedOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
         /// <param name="apiType"> The API type of the restorable database account. </param>
         /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
-        internal RestorableCosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string accountName, DateTimeOffset? createdOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableCosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string accountName, DateTimeOffset? createdOn, DateTimeOffset? oldestRestorableOn, DateTimeOffset? deletedOn, CosmosDBApiType? apiType, IReadOnlyList<RestorableLocationResourceInfo> restorableLocations, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             AccountName = accountName;
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.CosmosDB
             DeletedOn = deletedOn;
             ApiType = apiType;
             RestorableLocations = restorableLocations;
+            _rawData = rawData;
         }
 
         /// <summary> The location of the resource group to which the resource belongs. </summary>

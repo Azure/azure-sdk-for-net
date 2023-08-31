@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineExternalComputeScaleProperties : IUtf8JsonSerializable
+    public partial class PipelineExternalComputeScaleProperties : IUtf8JsonSerializable, IModelJsonSerializable<PipelineExternalComputeScaleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PipelineExternalComputeScaleProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PipelineExternalComputeScaleProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeToLive))
             {
@@ -34,8 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineExternalComputeScaleProperties DeserializePipelineExternalComputeScaleProperties(JsonElement element)
+        internal static PipelineExternalComputeScaleProperties DeserializePipelineExternalComputeScaleProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +66,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PipelineExternalComputeScaleProperties(Optional.ToNullable(timeToLive), additionalProperties);
+        }
+
+        PipelineExternalComputeScaleProperties IModelJsonSerializable<PipelineExternalComputeScaleProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineExternalComputeScaleProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PipelineExternalComputeScaleProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PipelineExternalComputeScaleProperties IModelSerializable<PipelineExternalComputeScaleProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePipelineExternalComputeScaleProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PipelineExternalComputeScaleProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PipelineExternalComputeScaleProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PipelineExternalComputeScaleProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PipelineExternalComputeScaleProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PipelineExternalComputeScaleProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePipelineExternalComputeScaleProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

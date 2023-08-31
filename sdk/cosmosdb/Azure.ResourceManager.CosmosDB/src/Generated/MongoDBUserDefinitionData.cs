@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class MongoDBUserDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionData"/>. </summary>
         public MongoDBUserDefinitionData()
         {
             Roles = new ChangeTrackingList<MongoDBRole>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="customData"> A custom definition for the USer Definition. </param>
         /// <param name="roles"> The set of roles inherited by the User Definition. </param>
         /// <param name="mechanisms"> The Mongo Auth mechanism. For now, we only support auth mechanism SCRAM-SHA-256. </param>
-        internal MongoDBUserDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string userName, string password, string databaseName, string customData, IList<MongoDBRole> roles, string mechanisms) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBUserDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string userName, string password, string databaseName, string customData, IList<MongoDBRole> roles, string mechanisms, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             UserName = userName;
             Password = password;
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.CosmosDB
             CustomData = customData;
             Roles = roles;
             Mechanisms = mechanisms;
+            _rawData = rawData;
         }
 
         /// <summary> The user name for User Definition. </summary>

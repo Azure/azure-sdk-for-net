@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> The Key Vault update information used for user managed key rotation. </summary>
     internal partial class UpdateKeyVaultMetaInfo
     {
-        /// <summary> Initializes a new instance of UpdateKeyVaultMetaInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateKeyVaultMetaInfo"/>. </summary>
         public UpdateKeyVaultMetaInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateKeyVaultMetaInfo"/>. </summary>
+        /// <param name="encryptionKeyVersion"> The version of the user managed encryption key to update through a key rotation. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateKeyVaultMetaInfo(string encryptionKeyVersion, Dictionary<string, BinaryData> rawData)
+        {
+            EncryptionKeyVersion = encryptionKeyVersion;
+            _rawData = rawData;
         }
 
         /// <summary> The version of the user managed encryption key to update through a key rotation. </summary>

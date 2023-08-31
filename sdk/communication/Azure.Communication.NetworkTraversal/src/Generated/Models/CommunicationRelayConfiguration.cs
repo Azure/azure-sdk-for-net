@@ -15,7 +15,9 @@ namespace Azure.Communication.NetworkTraversal
     /// <summary> A relay configuration containing the STUN/TURN URLs and credentials. </summary>
     public partial class CommunicationRelayConfiguration
     {
-        /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/>. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iceServers"/> is null. </exception>
@@ -27,13 +29,20 @@ namespace Azure.Communication.NetworkTraversal
             IceServers = iceServers.ToList();
         }
 
-        /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/>. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
-        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IList<CommunicationIceServer> iceServers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IList<CommunicationIceServer> iceServers, Dictionary<string, BinaryData> rawData)
         {
             ExpiresOn = expiresOn;
             IceServers = iceServers;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/> for deserialization. </summary>
+        internal CommunicationRelayConfiguration()
+        {
         }
 
         /// <summary> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </summary>

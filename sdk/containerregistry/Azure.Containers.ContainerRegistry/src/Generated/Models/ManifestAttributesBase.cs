@@ -14,7 +14,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest details. </summary>
     internal partial class ManifestAttributesBase
     {
-        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesBase"/>. </summary>
         /// <param name="digest"> Manifest. </param>
         /// <param name="createdOn"> Created time. </param>
         /// <param name="lastUpdatedOn"> Last update time. </param>
@@ -30,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesBase"/>. </summary>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
         /// <param name="createdOn"> Created time. </param>
@@ -43,7 +45,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, Dictionary<string, BinaryData> rawData)
         {
             Digest = digest;
             Size = size;
@@ -57,6 +60,12 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesBase"/> for deserialization. </summary>
+        internal ManifestAttributesBase()
+        {
         }
 
         /// <summary> Manifest. </summary>

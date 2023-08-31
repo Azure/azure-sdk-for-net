@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class WaitStatistics
+    public partial class WaitStatistics : IUtf8JsonSerializable, IModelJsonSerializable<WaitStatistics>
     {
-        internal static WaitStatistics DeserializeWaitStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WaitStatistics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WaitStatistics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(WaitType))
+            {
+                writer.WritePropertyName("waitType"u8);
+                writer.WriteStringValue(WaitType);
+            }
+            if (Optional.IsDefined(WaitTimeMs))
+            {
+                writer.WritePropertyName("waitTimeMs"u8);
+                writer.WriteNumberValue(WaitTimeMs.Value);
+            }
+            if (Optional.IsDefined(WaitCount))
+            {
+                writer.WritePropertyName("waitCount"u8);
+                writer.WriteNumberValue(WaitCount.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WaitStatistics DeserializeWaitStatistics(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> waitType = default;
             Optional<float> waitTimeMs = default;
             Optional<long> waitCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("waitType"u8))
@@ -46,8 +90,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     waitCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WaitStatistics(waitType.Value, Optional.ToNullable(waitTimeMs), Optional.ToNullable(waitCount));
+            return new WaitStatistics(waitType.Value, Optional.ToNullable(waitTimeMs), Optional.ToNullable(waitCount), rawData);
+        }
+
+        WaitStatistics IModelJsonSerializable<WaitStatistics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWaitStatistics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WaitStatistics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WaitStatistics IModelSerializable<WaitStatistics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWaitStatistics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WaitStatistics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WaitStatistics"/> to convert. </param>
+        public static implicit operator RequestContent(WaitStatistics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WaitStatistics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WaitStatistics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWaitStatistics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

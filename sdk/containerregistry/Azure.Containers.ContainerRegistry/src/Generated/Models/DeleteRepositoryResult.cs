@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,24 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Deleted repository. </summary>
     internal partial class DeleteRepositoryResult
     {
-        /// <summary> Initializes a new instance of DeleteRepositoryResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeleteRepositoryResult"/>. </summary>
         internal DeleteRepositoryResult()
         {
             DeletedManifests = new ChangeTrackingList<string>();
             DeletedTags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeleteRepositoryResult"/>. </summary>
+        /// <param name="deletedManifests"> SHA of the deleted image. </param>
+        /// <param name="deletedTags"> Tag of the deleted image. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeleteRepositoryResult(IReadOnlyList<string> deletedManifests, IReadOnlyList<string> deletedTags, Dictionary<string, BinaryData> rawData)
+        {
+            DeletedManifests = deletedManifests;
+            DeletedTags = deletedTags;
+            _rawData = rawData;
         }
 
         /// <summary> SHA of the deleted image. </summary>

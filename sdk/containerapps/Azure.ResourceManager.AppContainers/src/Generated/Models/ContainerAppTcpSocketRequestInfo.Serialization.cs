@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppTcpSocketRequestInfo : IUtf8JsonSerializable
+    public partial class ContainerAppTcpSocketRequestInfo : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppTcpSocketRequestInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppTcpSocketRequestInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppTcpSocketRequestInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Host))
             {
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppTcpSocketRequestInfo DeserializeContainerAppTcpSocketRequestInfo(JsonElement element)
+        internal static ContainerAppTcpSocketRequestInfo DeserializeContainerAppTcpSocketRequestInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> host = default;
             int port = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -45,8 +68,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     port = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppTcpSocketRequestInfo(host.Value, port);
+            return new ContainerAppTcpSocketRequestInfo(host.Value, port, rawData);
+        }
+
+        ContainerAppTcpSocketRequestInfo IModelJsonSerializable<ContainerAppTcpSocketRequestInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppTcpSocketRequestInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppTcpSocketRequestInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppTcpSocketRequestInfo IModelSerializable<ContainerAppTcpSocketRequestInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppTcpSocketRequestInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppTcpSocketRequestInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppTcpSocketRequestInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppTcpSocketRequestInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppTcpSocketRequestInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppTcpSocketRequestInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppTcpSocketRequestInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

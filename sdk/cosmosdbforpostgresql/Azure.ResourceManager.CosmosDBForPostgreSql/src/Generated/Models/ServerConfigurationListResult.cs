@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of server configurations. </summary>
     internal partial class ServerConfigurationListResult
     {
-        /// <summary> Initializes a new instance of ServerConfigurationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerConfigurationListResult"/>. </summary>
         internal ServerConfigurationListResult()
         {
             Value = new ChangeTrackingList<ServerConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ServerConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of server configurations. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ServerConfigurationListResult(IReadOnlyList<ServerConfigurationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerConfigurationListResult(IReadOnlyList<ServerConfigurationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of server configurations. </summary>

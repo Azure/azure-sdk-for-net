@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Definition of canonical profile. </summary>
     public partial class CanonicalProfileDefinition
     {
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinition"/>. </summary>
         internal CanonicalProfileDefinition()
         {
             Properties = new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>();
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinition"/>. </summary>
         /// <param name="canonicalProfileId"> Canonical profile ID. </param>
         /// <param name="properties"> Properties of the canonical profile. </param>
-        internal CanonicalProfileDefinition(int? canonicalProfileId, IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CanonicalProfileDefinition(int? canonicalProfileId, IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties, Dictionary<string, BinaryData> rawData)
         {
             CanonicalProfileId = canonicalProfileId;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Canonical profile ID. </summary>

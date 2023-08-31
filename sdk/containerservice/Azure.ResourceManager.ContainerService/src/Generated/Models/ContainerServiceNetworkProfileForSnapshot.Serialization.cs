@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfileForSnapshot
+    public partial class ContainerServiceNetworkProfileForSnapshot : IUtf8JsonSerializable, IModelJsonSerializable<ContainerServiceNetworkProfileForSnapshot>
     {
-        internal static ContainerServiceNetworkProfileForSnapshot DeserializeContainerServiceNetworkProfileForSnapshot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerServiceNetworkProfileForSnapshot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerServiceNetworkProfileForSnapshot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkPlugin))
+            {
+                writer.WritePropertyName("networkPlugin"u8);
+                writer.WriteStringValue(NetworkPlugin.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkPluginMode))
+            {
+                writer.WritePropertyName("networkPluginMode"u8);
+                writer.WriteStringValue(NetworkPluginMode.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkPolicy))
+            {
+                writer.WritePropertyName("networkPolicy"u8);
+                writer.WriteStringValue(NetworkPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(NetworkMode))
+            {
+                writer.WritePropertyName("networkMode"u8);
+                writer.WriteStringValue(NetworkMode.Value.ToString());
+            }
+            if (Optional.IsDefined(LoadBalancerSku))
+            {
+                writer.WritePropertyName("loadBalancerSku"u8);
+                writer.WriteStringValue(LoadBalancerSku.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerServiceNetworkProfileForSnapshot DeserializeContainerServiceNetworkProfileForSnapshot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
             Optional<ContainerServiceNetworkMode> networkMode = default;
             Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkPlugin"u8))
@@ -70,8 +124,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     loadBalancerSku = new ContainerServiceLoadBalancerSku(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerServiceNetworkProfileForSnapshot(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(loadBalancerSku));
+            return new ContainerServiceNetworkProfileForSnapshot(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(loadBalancerSku), rawData);
+        }
+
+        ContainerServiceNetworkProfileForSnapshot IModelJsonSerializable<ContainerServiceNetworkProfileForSnapshot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNetworkProfileForSnapshot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerServiceNetworkProfileForSnapshot>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerServiceNetworkProfileForSnapshot IModelSerializable<ContainerServiceNetworkProfileForSnapshot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerServiceNetworkProfileForSnapshot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerServiceNetworkProfileForSnapshot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerServiceNetworkProfileForSnapshot"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerServiceNetworkProfileForSnapshot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerServiceNetworkProfileForSnapshot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerServiceNetworkProfileForSnapshot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerServiceNetworkProfileForSnapshot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

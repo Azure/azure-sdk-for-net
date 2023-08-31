@@ -66,9 +66,7 @@ namespace Azure.Communication.Rooms
                 }
             }
             var model = createRoomRequest;
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 
@@ -259,9 +257,7 @@ namespace Azure.Communication.Rooms
                 ValidFrom = validFrom,
                 ValidUntil = validUntil
             };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
+            request.Content = model;
             return message;
         }
 

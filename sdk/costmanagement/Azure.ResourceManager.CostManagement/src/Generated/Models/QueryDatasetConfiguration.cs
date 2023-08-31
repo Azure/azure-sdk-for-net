@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The configuration of dataset in the query. </summary>
     internal partial class QueryDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of QueryDatasetConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryDatasetConfiguration"/>. </summary>
         public QueryDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryDatasetConfiguration"/>. </summary>
+        /// <param name="columns"> Array of column names to be included in the query. Any valid query column name is allowed. If not provided, then query includes all columns. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryDatasetConfiguration(IList<string> columns, Dictionary<string, BinaryData> rawData)
+        {
+            Columns = columns;
+            _rawData = rawData;
         }
 
         /// <summary> Array of column names to be included in the query. Any valid query column name is allowed. If not provided, then query includes all columns. </summary>

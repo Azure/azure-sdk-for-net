@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the paths HTTP requests. </summary>
     internal partial class HttpSettingsRoutes
     {
-        /// <summary> Initializes a new instance of HttpSettingsRoutes. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpSettingsRoutes"/>. </summary>
         public HttpSettingsRoutes()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpSettingsRoutes. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpSettingsRoutes"/>. </summary>
         /// <param name="apiPrefix"> The prefix that should precede all the authentication/authorization paths. </param>
-        internal HttpSettingsRoutes(string apiPrefix)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpSettingsRoutes(string apiPrefix, Dictionary<string, BinaryData> rawData)
         {
             ApiPrefix = apiPrefix;
+            _rawData = rawData;
         }
 
         /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>

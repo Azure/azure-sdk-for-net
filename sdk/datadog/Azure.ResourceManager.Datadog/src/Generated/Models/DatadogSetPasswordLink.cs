@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogSetPasswordLink. </summary>
     public partial class DatadogSetPasswordLink
     {
-        /// <summary> Initializes a new instance of DatadogSetPasswordLink. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogSetPasswordLink"/>. </summary>
         internal DatadogSetPasswordLink()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogSetPasswordLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSetPasswordLink"/>. </summary>
         /// <param name="setPasswordLink"></param>
-        internal DatadogSetPasswordLink(string setPasswordLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogSetPasswordLink(string setPasswordLink, Dictionary<string, BinaryData> rawData)
         {
             SetPasswordLink = setPasswordLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the set password link. </summary>

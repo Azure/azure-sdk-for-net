@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,16 +14,20 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeWriteableSubResourceData. </summary>
     public partial class ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of ComputeWriteableSubResourceData. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeWriteableSubResourceData"/>. </summary>
         public ComputeWriteableSubResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeWriteableSubResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeWriteableSubResourceData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        internal ComputeWriteableSubResourceData(ResourceIdentifier id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeWriteableSubResourceData(ResourceIdentifier id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
+            _rawData = rawData;
         }
     }
 }

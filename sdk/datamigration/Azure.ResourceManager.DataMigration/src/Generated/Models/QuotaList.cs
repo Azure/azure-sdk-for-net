@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of quota objects. </summary>
     internal partial class QuotaList
     {
-        /// <summary> Initializes a new instance of QuotaList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaList"/>. </summary>
         internal QuotaList()
         {
             Value = new ChangeTrackingList<Quota>();
         }
 
-        /// <summary> Initializes a new instance of QuotaList. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaList"/>. </summary>
         /// <param name="value"> List of quotas. </param>
         /// <param name="nextLink"> URL to load the next page of quotas, or null or missing if this is the last page. </param>
-        internal QuotaList(IReadOnlyList<Quota> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaList(IReadOnlyList<Quota> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of quotas. </summary>

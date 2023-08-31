@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HttpServerLocation : IUtf8JsonSerializable
+    public partial class HttpServerLocation : IUtf8JsonSerializable, IModelJsonSerializable<HttpServerLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HttpServerLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HttpServerLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<HttpServerLocation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RelativeUri))
             {
@@ -47,8 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element)
+        internal static HttpServerLocation DeserializeHttpServerLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +105,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HttpServerLocation(type, folderPath.Value, fileName.Value, additionalProperties, relativeUrl.Value);
+        }
+
+        HttpServerLocation IModelJsonSerializable<HttpServerLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HttpServerLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpServerLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HttpServerLocation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HttpServerLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HttpServerLocation IModelSerializable<HttpServerLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<HttpServerLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHttpServerLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HttpServerLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HttpServerLocation"/> to convert. </param>
+        public static implicit operator RequestContent(HttpServerLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HttpServerLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HttpServerLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHttpServerLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

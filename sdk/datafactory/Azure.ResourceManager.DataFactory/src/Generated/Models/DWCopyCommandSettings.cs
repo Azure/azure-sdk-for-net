@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> DW Copy Command settings. </summary>
     public partial class DWCopyCommandSettings
     {
-        /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandSettings"/>. </summary>
         public DWCopyCommandSettings()
         {
             DefaultValues = new ChangeTrackingList<DWCopyCommandDefaultValue>();
             AdditionalOptions = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DWCopyCommandSettings"/>. </summary>
         /// <param name="defaultValues"> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalOptions"> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalOptions": { "MAXERRORS": "1000", "DATEFORMAT": "'ymd'" }. </param>
-        internal DWCopyCommandSettings(IList<DWCopyCommandDefaultValue> defaultValues, IDictionary<string, string> additionalOptions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DWCopyCommandSettings(IList<DWCopyCommandDefaultValue> defaultValues, IDictionary<string, string> additionalOptions, Dictionary<string, BinaryData> rawData)
         {
             DefaultValues = defaultValues;
             AdditionalOptions = additionalOptions;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </summary>

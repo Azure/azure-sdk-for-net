@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class CanonicalProfileDefinitionPropertiesItem
+    public partial class CanonicalProfileDefinitionPropertiesItem : IUtf8JsonSerializable, IModelJsonSerializable<CanonicalProfileDefinitionPropertiesItem>
     {
-        internal static CanonicalProfileDefinitionPropertiesItem DeserializeCanonicalProfileDefinitionPropertiesItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CanonicalProfileDefinitionPropertiesItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CanonicalProfileDefinitionPropertiesItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProfileName))
+            {
+                writer.WritePropertyName("profileName"u8);
+                writer.WriteStringValue(ProfileName);
+            }
+            if (Optional.IsDefined(ProfilePropertyName))
+            {
+                writer.WritePropertyName("profilePropertyName"u8);
+                writer.WriteStringValue(ProfilePropertyName);
+            }
+            if (Optional.IsDefined(Rank))
+            {
+                writer.WritePropertyName("rank"u8);
+                writer.WriteNumberValue(Rank.Value);
+            }
+            if (Optional.IsDefined(ValueType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ValueType.Value.ToString());
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CanonicalProfileDefinitionPropertiesItem DeserializeCanonicalProfileDefinitionPropertiesItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<int> rank = default;
             Optional<CanonicalPropertyValueType> type = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileName"u8))
@@ -58,8 +112,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Optional.ToNullable(rank), Optional.ToNullable(type), value.Value);
+            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Optional.ToNullable(rank), Optional.ToNullable(type), value.Value, rawData);
+        }
+
+        CanonicalProfileDefinitionPropertiesItem IModelJsonSerializable<CanonicalProfileDefinitionPropertiesItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCanonicalProfileDefinitionPropertiesItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CanonicalProfileDefinitionPropertiesItem>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CanonicalProfileDefinitionPropertiesItem IModelSerializable<CanonicalProfileDefinitionPropertiesItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCanonicalProfileDefinitionPropertiesItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CanonicalProfileDefinitionPropertiesItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CanonicalProfileDefinitionPropertiesItem"/> to convert. </param>
+        public static implicit operator RequestContent(CanonicalProfileDefinitionPropertiesItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CanonicalProfileDefinitionPropertiesItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CanonicalProfileDefinitionPropertiesItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCanonicalProfileDefinitionPropertiesItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

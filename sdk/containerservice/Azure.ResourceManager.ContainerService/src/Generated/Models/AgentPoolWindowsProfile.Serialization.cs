@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class AgentPoolWindowsProfile : IUtf8JsonSerializable
+    internal partial class AgentPoolWindowsProfile : IUtf8JsonSerializable, IModelJsonSerializable<AgentPoolWindowsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AgentPoolWindowsProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AgentPoolWindowsProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisableOutboundNat))
             {
                 writer.WritePropertyName("disableOutboundNat"u8);
                 writer.WriteBooleanValue(DisableOutboundNat.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolWindowsProfile DeserializeAgentPoolWindowsProfile(JsonElement element)
+        internal static AgentPoolWindowsProfile DeserializeAgentPoolWindowsProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> disableOutboundNat = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableOutboundNat"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     disableOutboundNat = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AgentPoolWindowsProfile(Optional.ToNullable(disableOutboundNat));
+            return new AgentPoolWindowsProfile(Optional.ToNullable(disableOutboundNat), rawData);
+        }
+
+        AgentPoolWindowsProfile IModelJsonSerializable<AgentPoolWindowsProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolWindowsProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AgentPoolWindowsProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AgentPoolWindowsProfile IModelSerializable<AgentPoolWindowsProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAgentPoolWindowsProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AgentPoolWindowsProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AgentPoolWindowsProfile"/> to convert. </param>
+        public static implicit operator RequestContent(AgentPoolWindowsProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AgentPoolWindowsProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AgentPoolWindowsProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAgentPoolWindowsProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

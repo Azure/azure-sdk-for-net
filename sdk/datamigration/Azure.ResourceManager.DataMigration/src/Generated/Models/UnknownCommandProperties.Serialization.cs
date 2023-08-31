@@ -5,63 +5,62 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownCommandProperties : IUtf8JsonSerializable
+    internal partial class UnknownCommandProperties : IUtf8JsonSerializable, IModelJsonSerializable<CommandProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommandProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommandProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("commandType"u8);
             writer.WriteStringValue(CommandType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element)
+        internal static CommandProperties DeserializeUnknownCommandProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeCommandProperties(element, options);
+
+        CommandProperties IModelJsonSerializable<CommandProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            CommandType commandType = "Unknown";
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<CommandState> state = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("commandType"u8))
-                {
-                    commandType = new CommandType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("errors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ODataError> array = new List<ODataError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ODataError.DeserializeODataError(item));
-                    }
-                    errors = array;
-                    continue;
-                }
-                if (property.NameEquals("state"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new CommandState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state));
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCommandProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommandProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommandProperties IModelSerializable<CommandProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommandProperties(doc.RootElement, options);
         }
     }
 }

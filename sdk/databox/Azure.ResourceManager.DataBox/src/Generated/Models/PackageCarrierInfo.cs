@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> package carrier info. </summary>
     public partial class PackageCarrierInfo
     {
-        /// <summary> Initializes a new instance of PackageCarrierInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PackageCarrierInfo"/>. </summary>
         public PackageCarrierInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PackageCarrierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageCarrierInfo"/>. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
-        internal PackageCarrierInfo(string carrierName, string trackingId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PackageCarrierInfo(string carrierName, string trackingId, Dictionary<string, BinaryData> rawData)
         {
             CarrierName = carrierName;
             TrackingId = trackingId;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the carrier. </summary>

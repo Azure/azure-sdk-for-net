@@ -5,14 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Parameters to regenerate the authentication key. </summary>
     public partial class IntegrationRuntimeRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeRegenerateKeyContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeRegenerateKeyContent"/>. </summary>
         public IntegrationRuntimeRegenerateKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> The name of the authentication key to regenerate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeRegenerateKeyContent(IntegrationRuntimeAuthKeyName? keyName, Dictionary<string, BinaryData> rawData)
+        {
+            KeyName = keyName;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the authentication key to regenerate. </summary>

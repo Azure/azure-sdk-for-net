@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that uploads an OCI driver. </summary>
     public partial class UploadOciDriverTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of UploadOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskProperties"/>. </summary>
         public UploadOciDriverTaskProperties()
         {
             Output = new ChangeTrackingList<UploadOciDriverTaskOutput>();
             TaskType = TaskType.ServiceUploadOci;
         }
 
-        /// <summary> Initializes a new instance of UploadOciDriverTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Input for the service task to upload an OCI driver. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
-        internal UploadOciDriverTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, UploadOciDriverTaskInput input, IReadOnlyList<UploadOciDriverTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadOciDriverTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, UploadOciDriverTaskInput input, IReadOnlyList<UploadOciDriverTaskOutput> output, Dictionary<string, BinaryData> rawData) : base(taskType, errors, state, commands, clientData, rawData)
         {
             Input = input;
             Output = output;

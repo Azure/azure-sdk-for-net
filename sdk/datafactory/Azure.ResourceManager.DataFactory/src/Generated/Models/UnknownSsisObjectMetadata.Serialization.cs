@@ -5,51 +5,77 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownSsisObjectMetadata
+    internal partial class UnknownSsisObjectMetadata : IUtf8JsonSerializable, IModelJsonSerializable<SsisObjectMetadata>
     {
-        internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SsisObjectMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SsisObjectMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(MetadataType.ToString());
+            if (Optional.IsDefined(Id))
             {
-                return null;
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
             }
-            SsisObjectMetadataType type = "Unknown";
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            foreach (var property in element.EnumerateObject())
+            if (Optional.IsDefined(Name))
             {
-                if (property.NameEquals("type"u8))
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
                 {
-                    type = new SsisObjectMetadataType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownSsisObjectMetadata(type, Optional.ToNullable(id), name.Value, description.Value);
+            writer.WriteEndObject();
+        }
+
+        internal static SsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element, ModelSerializerOptions options = default) => DeserializeSsisObjectMetadata(element, options);
+
+        SsisObjectMetadata IModelJsonSerializable<SsisObjectMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownSsisObjectMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SsisObjectMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SsisObjectMetadata IModelSerializable<SsisObjectMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSsisObjectMetadata(doc.RootElement, options);
         }
     }
 }

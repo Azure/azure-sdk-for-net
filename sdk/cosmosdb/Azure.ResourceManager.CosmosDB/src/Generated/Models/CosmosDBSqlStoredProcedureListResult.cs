@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the storedProcedures and their properties. </summary>
     internal partial class CosmosDBSqlStoredProcedureListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureListResult"/>. </summary>
         internal CosmosDBSqlStoredProcedureListResult()
         {
             Value = new ChangeTrackingList<CosmosDBSqlStoredProcedureData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlStoredProcedureListResult"/>. </summary>
         /// <param name="value"> List of storedProcedures and their properties. </param>
-        internal CosmosDBSqlStoredProcedureListResult(IReadOnlyList<CosmosDBSqlStoredProcedureData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlStoredProcedureListResult(IReadOnlyList<CosmosDBSqlStoredProcedureData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of storedProcedures and their properties. </summary>

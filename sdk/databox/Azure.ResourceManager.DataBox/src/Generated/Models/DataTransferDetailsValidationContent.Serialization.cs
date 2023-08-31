@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataTransferDetailsValidationContent : IUtf8JsonSerializable
+    public partial class DataTransferDetailsValidationContent : IUtf8JsonSerializable, IModelJsonSerializable<DataTransferDetailsValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataTransferDetailsValidationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataTransferDetailsValidationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DataTransferDetailsValidationContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataExportDetails))
             {
@@ -21,7 +29,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataExportDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,7 +46,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataImportDetails>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +63,135 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(TransferType.ToSerialString());
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DataTransferDetailsValidationContent DeserializeDataTransferDetailsValidationContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<DataExportDetails>> dataExportDetails = default;
+            Optional<IList<DataImportDetails>> dataImportDetails = default;
+            DataBoxSkuName deviceType = default;
+            DataBoxJobTransferType transferType = default;
+            DataBoxValidationInputDiscriminator validationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dataExportDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataExportDetails> array = new List<DataExportDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                    }
+                    dataExportDetails = array;
+                    continue;
+                }
+                if (property.NameEquals("dataImportDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataImportDetails> array = new List<DataImportDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                    }
+                    dataImportDetails = array;
+                    continue;
+                }
+                if (property.NameEquals("deviceType"u8))
+                {
+                    deviceType = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("transferType"u8))
+                {
+                    transferType = property.Value.GetString().ToDataBoxJobTransferType();
+                    continue;
+                }
+                if (property.NameEquals("validationType"u8))
+                {
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataTransferDetailsValidationContent(validationType, Optional.ToList(dataExportDetails), Optional.ToList(dataImportDetails), deviceType, transferType, rawData);
+        }
+
+        DataTransferDetailsValidationContent IModelJsonSerializable<DataTransferDetailsValidationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataTransferDetailsValidationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataTransferDetailsValidationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataTransferDetailsValidationContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataTransferDetailsValidationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataTransferDetailsValidationContent IModelSerializable<DataTransferDetailsValidationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DataTransferDetailsValidationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataTransferDetailsValidationContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataTransferDetailsValidationContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataTransferDetailsValidationContent"/> to convert. </param>
+        public static implicit operator RequestContent(DataTransferDetailsValidationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataTransferDetailsValidationContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataTransferDetailsValidationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataTransferDetailsValidationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

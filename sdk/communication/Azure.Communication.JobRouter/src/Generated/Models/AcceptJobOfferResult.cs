@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -13,7 +14,9 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Response containing Id's for the worker, job, and assignment from an accepted offer. </summary>
     public partial class AcceptJobOfferResult
     {
-        /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
@@ -27,6 +30,24 @@ namespace Azure.Communication.JobRouter.Models
             AssignmentId = assignmentId;
             JobId = jobId;
             WorkerId = workerId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/>. </summary>
+        /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> The Id of the job assigned. </param>
+        /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId, Dictionary<string, BinaryData> rawData)
+        {
+            AssignmentId = assignmentId;
+            JobId = jobId;
+            WorkerId = workerId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptJobOfferResult"/> for deserialization. </summary>
+        internal AcceptJobOfferResult()
+        {
         }
 
         /// <summary> The assignment Id that assigns a worker that has accepted an offer to a job. </summary>

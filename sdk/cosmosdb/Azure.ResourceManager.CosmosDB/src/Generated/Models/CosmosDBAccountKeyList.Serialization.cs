@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBAccountKeyList
+    public partial class CosmosDBAccountKeyList : IUtf8JsonSerializable, IModelJsonSerializable<CosmosDBAccountKeyList>
     {
-        internal static CosmosDBAccountKeyList DeserializeCosmosDBAccountKeyList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CosmosDBAccountKeyList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CosmosDBAccountKeyList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<CosmosDBAccountKeyList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CosmosDBAccountKeyList DeserializeCosmosDBAccountKeyList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> secondaryMasterKey = default;
             Optional<string> primaryReadonlyMasterKey = default;
             Optional<string> secondaryReadonlyMasterKey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMasterKey"u8))
@@ -44,8 +73,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     secondaryReadonlyMasterKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CosmosDBAccountKeyList(primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, primaryMasterKey.Value, secondaryMasterKey.Value);
+            return new CosmosDBAccountKeyList(primaryReadonlyMasterKey.Value, secondaryReadonlyMasterKey.Value, primaryMasterKey.Value, secondaryMasterKey.Value, rawData);
+        }
+
+        CosmosDBAccountKeyList IModelJsonSerializable<CosmosDBAccountKeyList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDBAccountKeyList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBAccountKeyList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CosmosDBAccountKeyList>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDBAccountKeyList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CosmosDBAccountKeyList IModelSerializable<CosmosDBAccountKeyList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<CosmosDBAccountKeyList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCosmosDBAccountKeyList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CosmosDBAccountKeyList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CosmosDBAccountKeyList"/> to convert. </param>
+        public static implicit operator RequestContent(CosmosDBAccountKeyList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CosmosDBAccountKeyList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CosmosDBAccountKeyList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCosmosDBAccountKeyList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

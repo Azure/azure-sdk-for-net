@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The metric counter set. </summary>
     public partial class DataBoxEdgeMetricCounterSet
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounterSet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounterSet"/>. </summary>
         /// <param name="counters"> The counters that should be collected in this set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="counters"/> is null. </exception>
         public DataBoxEdgeMetricCounterSet(IEnumerable<DataBoxEdgeMetricCounter> counters)
@@ -25,11 +27,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Counters = counters.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeMetricCounterSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounterSet"/>. </summary>
         /// <param name="counters"> The counters that should be collected in this set. </param>
-        internal DataBoxEdgeMetricCounterSet(IList<DataBoxEdgeMetricCounter> counters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeMetricCounterSet(IList<DataBoxEdgeMetricCounter> counters, Dictionary<string, BinaryData> rawData)
         {
             Counters = counters;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeMetricCounterSet"/> for deserialization. </summary>
+        internal DataBoxEdgeMetricCounterSet()
+        {
         }
 
         /// <summary> The counters that should be collected in this set. </summary>

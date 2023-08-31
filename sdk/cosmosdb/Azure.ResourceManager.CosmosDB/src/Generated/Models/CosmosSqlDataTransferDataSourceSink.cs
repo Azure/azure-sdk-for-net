@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
     public partial class CosmosSqlDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of CosmosSqlDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
@@ -27,15 +28,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Component = DataTransferComponent.CosmosDBSql;
         }
 
-        /// <summary> Initializes a new instance of CosmosSqlDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
-        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string containerName) : base(component)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string containerName, Dictionary<string, BinaryData> rawData) : base(component, rawData)
         {
             DatabaseName = databaseName;
             ContainerName = containerName;
             Component = component;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosSqlDataTransferDataSourceSink()
+        {
         }
 
         /// <summary> Gets or sets the database name. </summary>

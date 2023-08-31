@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The publishing profile of a gallery image version. </summary>
     public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase
     {
-        /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPublishingProfile"/>. </summary>
         /// <param name="source"> The source image from which the Image Version is going to be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public GalleryApplicationVersionPublishingProfile(UserArtifactSource source)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPublishingProfile"/>. </summary>
         /// <param name="targetRegions"> The target regions where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="replicaCount"> The number of replicas of the Image Version to be created per region. This property would take effect for a region when regionalReplicaCount is not specified. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
@@ -41,7 +41,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="advancedSettings"> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </param>
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
         /// <param name="customActions"> A list of custom actions that can be performed with this Gallery Application Version. </param>
-        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck, IList<GalleryApplicationCustomAction> customActions) : base(targetRegions, replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? isExcludedFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck, IList<GalleryApplicationCustomAction> customActions, Dictionary<string, BinaryData> rawData) : base(targetRegions, replicaCount, isExcludedFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations, rawData)
         {
             Source = source;
             ManageActions = manageActions;
@@ -49,6 +50,11 @@ namespace Azure.ResourceManager.Compute.Models
             AdvancedSettings = advancedSettings;
             EnableHealthCheck = enableHealthCheck;
             CustomActions = customActions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPublishingProfile"/> for deserialization. </summary>
+        internal GalleryApplicationVersionPublishingProfile()
+        {
         }
 
         /// <summary> The source image from which the Image Version is going to be created. </summary>

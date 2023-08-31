@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
@@ -19,7 +20,9 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryPrivateEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointData"/>. </summary>
         /// <param name="properties"> Managed private endpoint properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryPrivateEndpointData(DataFactoryPrivateEndpointProperties properties)
@@ -29,17 +32,24 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed private endpoint properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointProperties properties, ETag? eTag, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointData"/> for deserialization. </summary>
+        internal DataFactoryPrivateEndpointData()
+        {
         }
 
         /// <summary> Managed private endpoint properties. </summary>

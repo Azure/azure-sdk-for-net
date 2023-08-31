@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Image layer information. </summary>
     internal partial class FsLayer
     {
-        /// <summary> Initializes a new instance of FsLayer. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FsLayer"/>. </summary>
         internal FsLayer()
         {
         }
 
-        /// <summary> Initializes a new instance of FsLayer. </summary>
+        /// <summary> Initializes a new instance of <see cref="FsLayer"/>. </summary>
         /// <param name="blobSum"> SHA of an image layer. </param>
-        internal FsLayer(string blobSum)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FsLayer(string blobSum, Dictionary<string, BinaryData> rawData)
         {
             BlobSum = blobSum;
+            _rawData = rawData;
         }
 
         /// <summary> SHA of an image layer. </summary>

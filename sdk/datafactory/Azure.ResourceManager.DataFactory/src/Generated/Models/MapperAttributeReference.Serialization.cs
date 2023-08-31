@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperAttributeReference : IUtf8JsonSerializable
+    public partial class MapperAttributeReference : IUtf8JsonSerializable, IModelJsonSerializable<MapperAttributeReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MapperAttributeReference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MapperAttributeReference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -28,13 +36,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
-                writer.WriteObjectValue(EntityConnectionReference);
+                if (EntityConnectionReference is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MapperConnectionReference>)EntityConnectionReference).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MapperAttributeReference DeserializeMapperAttributeReference(JsonElement element)
+        internal static MapperAttributeReference DeserializeMapperAttributeReference(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> name = default;
             Optional<string> entity = default;
             Optional<MapperConnectionReference> entityConnectionReference = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,8 +93,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     entityConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MapperAttributeReference(name.Value, entity.Value, entityConnectionReference.Value);
+            return new MapperAttributeReference(name.Value, entity.Value, entityConnectionReference.Value, rawData);
+        }
+
+        MapperAttributeReference IModelJsonSerializable<MapperAttributeReference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperAttributeReference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MapperAttributeReference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MapperAttributeReference IModelSerializable<MapperAttributeReference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMapperAttributeReference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MapperAttributeReference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MapperAttributeReference"/> to convert. </param>
+        public static implicit operator RequestContent(MapperAttributeReference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MapperAttributeReference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MapperAttributeReference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMapperAttributeReference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

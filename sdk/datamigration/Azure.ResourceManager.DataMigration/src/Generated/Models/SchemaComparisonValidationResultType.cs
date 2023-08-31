@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Description about the errors happen while performing migration validation. </summary>
     public partial class SchemaComparisonValidationResultType
     {
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResultType. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SchemaComparisonValidationResultType"/>. </summary>
         internal SchemaComparisonValidationResultType()
         {
         }
 
-        /// <summary> Initializes a new instance of SchemaComparisonValidationResultType. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaComparisonValidationResultType"/>. </summary>
         /// <param name="objectName"> Name of the object that has the difference. </param>
         /// <param name="objectType"> Type of the object that has the difference. e.g (Table/View/StoredProcedure). </param>
         /// <param name="updateAction"> Update action type with respect to target. </param>
-        internal SchemaComparisonValidationResultType(string objectName, ObjectType? objectType, UpdateActionType? updateAction)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaComparisonValidationResultType(string objectName, ObjectType? objectType, UpdateActionType? updateAction, Dictionary<string, BinaryData> rawData)
         {
             ObjectName = objectName;
             ObjectType = objectType;
             UpdateAction = updateAction;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the object that has the difference. </summary>

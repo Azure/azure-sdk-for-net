@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,14 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionData"/>. </summary>
         public CosmosDBPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
-        internal CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointProperty privateEndpoint, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState, string groupId, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointProperty privateEndpoint, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState, string groupId, string provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             GroupId = groupId;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>

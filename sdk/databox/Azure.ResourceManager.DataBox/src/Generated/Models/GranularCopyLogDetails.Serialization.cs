@@ -5,14 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class GranularCopyLogDetails
+    public partial class GranularCopyLogDetails : IUtf8JsonSerializable, IModelJsonSerializable<GranularCopyLogDetails>
     {
-        internal static GranularCopyLogDetails DeserializeGranularCopyLogDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GranularCopyLogDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GranularCopyLogDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("copyLogDetailsType"u8);
+            writer.WriteStringValue(CopyLogDetailsType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GranularCopyLogDetails DeserializeGranularCopyLogDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,7 +55,72 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxCustomerDisk": return DataBoxDiskGranularCopyLogDetails.DeserializeDataBoxDiskGranularCopyLogDetails(element);
                 }
             }
-            return UnknownGranularCopyLogDetails.DeserializeUnknownGranularCopyLogDetails(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            DataBoxOrderType copyLogDetailsType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("copyLogDetailsType"u8))
+                {
+                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownGranularCopyLogDetails(copyLogDetailsType, rawData);
+        }
+
+        GranularCopyLogDetails IModelJsonSerializable<GranularCopyLogDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGranularCopyLogDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GranularCopyLogDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GranularCopyLogDetails IModelSerializable<GranularCopyLogDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGranularCopyLogDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GranularCopyLogDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GranularCopyLogDetails"/> to convert. </param>
+        public static implicit operator RequestContent(GranularCopyLogDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GranularCopyLogDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GranularCopyLogDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGranularCopyLogDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

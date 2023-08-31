@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class AssignmentPrincipal : IUtf8JsonSerializable
+    public partial class AssignmentPrincipal : IUtf8JsonSerializable, IModelJsonSerializable<AssignmentPrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AssignmentPrincipal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AssignmentPrincipal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentPrincipal DeserializeAssignmentPrincipal(JsonElement element)
+        internal static AssignmentPrincipal DeserializeAssignmentPrincipal(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string principalId = default;
             string principalType = default;
             Optional<IDictionary<string, string>> principalMetadata = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -69,8 +91,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     principalMetadata = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AssignmentPrincipal(principalId, principalType, Optional.ToDictionary(principalMetadata));
+            return new AssignmentPrincipal(principalId, principalType, Optional.ToDictionary(principalMetadata), rawData);
+        }
+
+        AssignmentPrincipal IModelJsonSerializable<AssignmentPrincipal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssignmentPrincipal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AssignmentPrincipal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AssignmentPrincipal IModelSerializable<AssignmentPrincipal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAssignmentPrincipal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AssignmentPrincipal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AssignmentPrincipal"/> to convert. </param>
+        public static implicit operator RequestContent(AssignmentPrincipal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AssignmentPrincipal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AssignmentPrincipal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAssignmentPrincipal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

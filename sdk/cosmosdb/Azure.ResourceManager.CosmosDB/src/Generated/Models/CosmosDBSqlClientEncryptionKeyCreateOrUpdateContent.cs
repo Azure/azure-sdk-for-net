@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update ClientEncryptionKey. </summary>
     public partial class CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/>. </summary>
         /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
         public CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(resource, nameof(resource));
 
             Resource = resource;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/>. </summary>
+        /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource, Dictionary<string, BinaryData> rawData)
+        {
+            Resource = resource;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/> for deserialization. </summary>
+        internal CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent()
+        {
         }
 
         /// <summary> The standard JSON format of a ClientEncryptionKey. </summary>
