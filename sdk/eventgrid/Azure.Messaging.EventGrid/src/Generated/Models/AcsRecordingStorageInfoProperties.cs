@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema for all properties of Recording Storage Information. </summary>
     public partial class AcsRecordingStorageInfoProperties
     {
-        /// <summary> Initializes a new instance of AcsRecordingStorageInfoProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/>. </summary>
         internal AcsRecordingStorageInfoProperties()
         {
             RecordingChunks = new ChangeTrackingList<AcsRecordingChunkInfoProperties>();
         }
 
-        /// <summary> Initializes a new instance of AcsRecordingStorageInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/>. </summary>
         /// <param name="recordingChunks"> List of details of recording chunks information. </param>
-        internal AcsRecordingStorageInfoProperties(IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRecordingStorageInfoProperties(IReadOnlyList<AcsRecordingChunkInfoProperties> recordingChunks, Dictionary<string, BinaryData> rawData)
         {
             RecordingChunks = recordingChunks;
+            _rawData = rawData;
         }
 
         /// <summary> List of details of recording chunks information. </summary>

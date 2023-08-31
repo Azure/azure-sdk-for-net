@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The kafka rest proxy configuration which contains AAD security group information. </summary>
     public partial class KafkaRestProperties
     {
-        /// <summary> Initializes a new instance of KafkaRestProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KafkaRestProperties"/>. </summary>
         public KafkaRestProperties()
         {
             ConfigurationOverride = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KafkaRestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KafkaRestProperties"/>. </summary>
         /// <param name="clientGroupInfo"> The information of AAD security group. </param>
         /// <param name="configurationOverride"> The configurations that need to be overriden. </param>
-        internal KafkaRestProperties(ClientGroupInfo clientGroupInfo, IDictionary<string, string> configurationOverride)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KafkaRestProperties(ClientGroupInfo clientGroupInfo, IDictionary<string, string> configurationOverride, Dictionary<string, BinaryData> rawData)
         {
             ClientGroupInfo = clientGroupInfo;
             ConfigurationOverride = configurationOverride;
+            _rawData = rawData;
         }
 
         /// <summary> The information of AAD security group. </summary>

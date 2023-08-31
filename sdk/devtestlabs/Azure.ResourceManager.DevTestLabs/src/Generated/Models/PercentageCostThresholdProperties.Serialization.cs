@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class PercentageCostThresholdProperties : IUtf8JsonSerializable
+    internal partial class PercentageCostThresholdProperties : IUtf8JsonSerializable, IModelJsonSerializable<PercentageCostThresholdProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PercentageCostThresholdProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PercentageCostThresholdProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ThresholdValue))
             {
                 writer.WritePropertyName("thresholdValue"u8);
                 writer.WriteNumberValue(ThresholdValue.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PercentageCostThresholdProperties DeserializePercentageCostThresholdProperties(JsonElement element)
+        internal static PercentageCostThresholdProperties DeserializePercentageCostThresholdProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<double> thresholdValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thresholdValue"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     thresholdValue = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PercentageCostThresholdProperties(Optional.ToNullable(thresholdValue));
+            return new PercentageCostThresholdProperties(Optional.ToNullable(thresholdValue), rawData);
+        }
+
+        PercentageCostThresholdProperties IModelJsonSerializable<PercentageCostThresholdProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePercentageCostThresholdProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PercentageCostThresholdProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PercentageCostThresholdProperties IModelSerializable<PercentageCostThresholdProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePercentageCostThresholdProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PercentageCostThresholdProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PercentageCostThresholdProperties"/> to convert. </param>
+        public static implicit operator RequestContent(PercentageCostThresholdProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PercentageCostThresholdProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PercentageCostThresholdProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePercentageCostThresholdProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

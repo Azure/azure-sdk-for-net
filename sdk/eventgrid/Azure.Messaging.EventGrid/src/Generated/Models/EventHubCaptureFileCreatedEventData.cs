@@ -6,18 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventHub.CaptureFileCreated event. </summary>
     public partial class EventHubCaptureFileCreatedEventData
     {
-        /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
         internal EventHubCaptureFileCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubCaptureFileCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
         /// <param name="partitionId"> The shard ID. </param>
@@ -27,7 +30,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="lastSequenceNumber"> The last sequence number from the queue. </param>
         /// <param name="firstEnqueueTime"> The first time from the queue. </param>
         /// <param name="lastEnqueueTime"> The last time from the queue. </param>
-        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, Dictionary<string, BinaryData> rawData)
         {
             Fileurl = fileurl;
             FileType = fileType;
@@ -38,6 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             LastSequenceNumber = lastSequenceNumber;
             FirstEnqueueTime = firstEnqueueTime;
             LastEnqueueTime = lastEnqueueTime;
+            _rawData = rawData;
         }
 
         /// <summary> The path to the capture file. </summary>

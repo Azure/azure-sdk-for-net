@@ -5,16 +5,118 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightVmSizeCompatibilityFilterV2
+    public partial class HDInsightVmSizeCompatibilityFilterV2 : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightVmSizeCompatibilityFilterV2>
     {
-        internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightVmSizeCompatibilityFilterV2>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightVmSizeCompatibilityFilterV2>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FilterMode))
+            {
+                writer.WritePropertyName("filterMode"u8);
+                writer.WriteStringValue(FilterMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                writer.WritePropertyName("regions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Regions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ClusterFlavors))
+            {
+                writer.WritePropertyName("clusterFlavors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ClusterFlavors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NodeTypes))
+            {
+                writer.WritePropertyName("nodeTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in NodeTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ClusterVersions))
+            {
+                writer.WritePropertyName("clusterVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ClusterVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStartArray();
+                foreach (var item in OSType)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmSizes))
+            {
+                writer.WritePropertyName("vmSizes"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EspApplied))
+            {
+                writer.WritePropertyName("espApplied"u8);
+                writer.WriteStringValue(EspApplied);
+            }
+            if (Optional.IsDefined(IsComputeIsolationSupported))
+            {
+                writer.WritePropertyName("computeIsolationSupported"u8);
+                writer.WriteStringValue(IsComputeIsolationSupported);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyList<string>> vmSizes = default;
             Optional<string> espApplied = default;
             Optional<string> computeIsolationSupported = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterMode"u8))
@@ -133,8 +236,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     computeIsolationSupported = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), Optional.ToList(regions), Optional.ToList(clusterFlavors), Optional.ToList(nodeTypes), Optional.ToList(clusterVersions), Optional.ToList(osType), Optional.ToList(vmSizes), espApplied.Value, computeIsolationSupported.Value);
+            return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), Optional.ToList(regions), Optional.ToList(clusterFlavors), Optional.ToList(nodeTypes), Optional.ToList(clusterVersions), Optional.ToList(osType), Optional.ToList(vmSizes), espApplied.Value, computeIsolationSupported.Value, rawData);
+        }
+
+        HDInsightVmSizeCompatibilityFilterV2 IModelJsonSerializable<HDInsightVmSizeCompatibilityFilterV2>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightVmSizeCompatibilityFilterV2(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightVmSizeCompatibilityFilterV2>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightVmSizeCompatibilityFilterV2 IModelSerializable<HDInsightVmSizeCompatibilityFilterV2>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightVmSizeCompatibilityFilterV2(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightVmSizeCompatibilityFilterV2"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightVmSizeCompatibilityFilterV2"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightVmSizeCompatibilityFilterV2 model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightVmSizeCompatibilityFilterV2"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightVmSizeCompatibilityFilterV2(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightVmSizeCompatibilityFilterV2(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

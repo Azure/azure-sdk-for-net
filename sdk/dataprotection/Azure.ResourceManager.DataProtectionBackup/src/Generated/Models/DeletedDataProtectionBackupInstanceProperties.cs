@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Deleted Backup Instance. </summary>
     public partial class DeletedDataProtectionBackupInstanceProperties : DataProtectionBackupInstanceProperties
     {
-        /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="policyInfo"> Gets or sets the policy information. </param>
         /// <param name="objectType"></param>
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(objectType, nameof(objectType));
         }
 
-        /// <summary> Initializes a new instance of DeletedDataProtectionBackupInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceProperties"/>. </summary>
         /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
         /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
         /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
@@ -43,9 +44,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
-        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, BackupInstanceDeletionInfo deletionInfo, Dictionary<string, BinaryData> rawData) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, objectType, rawData)
         {
             DeletionInfo = deletionInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceProperties"/> for deserialization. </summary>
+        internal DeletedDataProtectionBackupInstanceProperties()
+        {
         }
 
         /// <summary> Deletion info of Backup Instance. </summary>

@@ -5,14 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A query specification containing either a query statement or a continuation token from a previous query result. </summary>
     internal partial class QuerySpecification
     {
-        /// <summary> Initializes a new instance of QuerySpecification. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuerySpecification"/>. </summary>
         public QuerySpecification()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuerySpecification"/>. </summary>
+        /// <param name="query"> The query to execute. This value is ignored if a continuation token is provided. </param>
+        /// <param name="continuationToken"> A token which is used to retrieve the next set of results from a previous query. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuerySpecification(string query, string continuationToken, Dictionary<string, BinaryData> rawData)
+        {
+            Query = query;
+            ContinuationToken = continuationToken;
+            _rawData = rawData;
         }
 
         /// <summary> The query to execute. This value is ignored if a continuation token is provided. </summary>

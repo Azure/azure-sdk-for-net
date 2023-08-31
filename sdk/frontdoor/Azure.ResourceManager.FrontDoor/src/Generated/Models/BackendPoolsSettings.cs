@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Settings that apply to all backend pools. </summary>
     public partial class BackendPoolsSettings
     {
-        /// <summary> Initializes a new instance of BackendPoolsSettings. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendPoolsSettings"/>. </summary>
         public BackendPoolsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackendPoolsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendPoolsSettings"/>. </summary>
         /// <param name="enforceCertificateNameCheck"> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </param>
         /// <param name="sendRecvTimeoutInSeconds"> Send and receive timeout on forwarding request to the backend. When timeout is reached, the request fails and returns. </param>
-        internal BackendPoolsSettings(EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck, int? sendRecvTimeoutInSeconds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendPoolsSettings(EnforceCertificateNameCheckEnabledState? enforceCertificateNameCheck, int? sendRecvTimeoutInSeconds, Dictionary<string, BinaryData> rawData)
         {
             EnforceCertificateNameCheck = enforceCertificateNameCheck;
             SendRecvTimeoutInSeconds = sendRecvTimeoutInSeconds;
+            _rawData = rawData;
         }
 
         /// <summary> Whether to enforce certificate name check on HTTPS requests to all backend pools. No effect on non-HTTPS requests. </summary>

@@ -6,17 +6,64 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(HealthcareFhirResourceDeletedEventDataConverter))]
-    public partial class HealthcareFhirResourceDeletedEventData
+    public partial class HealthcareFhirResourceDeletedEventData : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareFhirResourceDeletedEventData>
     {
-        internal static HealthcareFhirResourceDeletedEventData DeserializeHealthcareFhirResourceDeletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareFhirResourceDeletedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareFhirResourceDeletedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FhirResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(FhirResourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(FhirServiceHostName))
+            {
+                writer.WritePropertyName("resourceFhirAccount"u8);
+                writer.WriteStringValue(FhirServiceHostName);
+            }
+            if (Optional.IsDefined(FhirResourceId))
+            {
+                writer.WritePropertyName("resourceFhirId"u8);
+                writer.WriteStringValue(FhirResourceId);
+            }
+            if (Optional.IsDefined(FhirResourceVersionId))
+            {
+                writer.WritePropertyName("resourceVersionId"u8);
+                writer.WriteNumberValue(FhirResourceVersionId.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthcareFhirResourceDeletedEventData DeserializeHealthcareFhirResourceDeletedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> resourceFhirAccount = default;
             Optional<string> resourceFhirId = default;
             Optional<long> resourceVersionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -55,15 +103,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     resourceVersionId = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareFhirResourceDeletedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId));
+            return new HealthcareFhirResourceDeletedEventData(Optional.ToNullable(resourceType), resourceFhirAccount.Value, resourceFhirId.Value, Optional.ToNullable(resourceVersionId), rawData);
+        }
+
+        HealthcareFhirResourceDeletedEventData IModelJsonSerializable<HealthcareFhirResourceDeletedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareFhirResourceDeletedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareFhirResourceDeletedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareFhirResourceDeletedEventData IModelSerializable<HealthcareFhirResourceDeletedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareFhirResourceDeletedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareFhirResourceDeletedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareFhirResourceDeletedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareFhirResourceDeletedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareFhirResourceDeletedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareFhirResourceDeletedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareFhirResourceDeletedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class HealthcareFhirResourceDeletedEventDataConverter : JsonConverter<HealthcareFhirResourceDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, HealthcareFhirResourceDeletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override HealthcareFhirResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

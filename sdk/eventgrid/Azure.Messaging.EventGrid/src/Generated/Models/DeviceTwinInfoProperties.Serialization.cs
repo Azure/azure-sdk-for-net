@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class DeviceTwinInfoProperties
+    public partial class DeviceTwinInfoProperties : IUtf8JsonSerializable, IModelJsonSerializable<DeviceTwinInfoProperties>
     {
-        internal static DeviceTwinInfoProperties DeserializeDeviceTwinInfoProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceTwinInfoProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceTwinInfoProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Desired))
+            {
+                writer.WritePropertyName("desired"u8);
+                if (Desired is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeviceTwinProperties>)Desired).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Reported))
+            {
+                writer.WritePropertyName("reported"u8);
+                if (Reported is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeviceTwinProperties>)Reported).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceTwinInfoProperties DeserializeDeviceTwinInfoProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DeviceTwinProperties> desired = default;
             Optional<DeviceTwinProperties> reported = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"u8))
@@ -40,8 +93,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     reported = DeviceTwinProperties.DeserializeDeviceTwinProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceTwinInfoProperties(desired.Value, reported.Value);
+            return new DeviceTwinInfoProperties(desired.Value, reported.Value, rawData);
+        }
+
+        DeviceTwinInfoProperties IModelJsonSerializable<DeviceTwinInfoProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceTwinInfoProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceTwinInfoProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceTwinInfoProperties IModelSerializable<DeviceTwinInfoProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceTwinInfoProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceTwinInfoProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceTwinInfoProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceTwinInfoProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceTwinInfoProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceTwinInfoProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceTwinInfoProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

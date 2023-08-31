@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterGitCatalog : IUtf8JsonSerializable
+    public partial class DevCenterGitCatalog : IUtf8JsonSerializable, IModelJsonSerializable<DevCenterGitCatalog>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevCenterGitCatalog>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevCenterGitCatalog>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevCenterGitCatalog DeserializeDevCenterGitCatalog(JsonElement element)
+        internal static DevCenterGitCatalog DeserializeDevCenterGitCatalog(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             Optional<string> branch = default;
             Optional<string> secretIdentifier = default;
             Optional<string> path = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -75,8 +97,61 @@ namespace Azure.ResourceManager.DevCenter.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevCenterGitCatalog(uri.Value, branch.Value, secretIdentifier.Value, path.Value);
+            return new DevCenterGitCatalog(uri.Value, branch.Value, secretIdentifier.Value, path.Value, rawData);
+        }
+
+        DevCenterGitCatalog IModelJsonSerializable<DevCenterGitCatalog>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterGitCatalog(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevCenterGitCatalog>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevCenterGitCatalog IModelSerializable<DevCenterGitCatalog>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevCenterGitCatalog(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevCenterGitCatalog"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevCenterGitCatalog"/> to convert. </param>
+        public static implicit operator RequestContent(DevCenterGitCatalog model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevCenterGitCatalog"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevCenterGitCatalog(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevCenterGitCatalog(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

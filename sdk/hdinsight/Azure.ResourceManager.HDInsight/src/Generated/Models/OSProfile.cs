@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The Linux operation systems profile. </summary>
     internal partial class OSProfile
     {
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         public OSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="linuxProfile"> The Linux OS profile. </param>
-        internal OSProfile(HDInsightLinuxOSProfile linuxProfile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfile(HDInsightLinuxOSProfile linuxProfile, Dictionary<string, BinaryData> rawData)
         {
             LinuxProfile = linuxProfile;
+            _rawData = rawData;
         }
 
         /// <summary> The Linux OS profile. </summary>

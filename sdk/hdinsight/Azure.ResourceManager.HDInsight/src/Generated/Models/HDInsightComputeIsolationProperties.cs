@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The compute isolation properties. </summary>
     public partial class HDInsightComputeIsolationProperties
     {
-        /// <summary> Initializes a new instance of HDInsightComputeIsolationProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightComputeIsolationProperties"/>. </summary>
         public HDInsightComputeIsolationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightComputeIsolationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightComputeIsolationProperties"/>. </summary>
         /// <param name="enableComputeIsolation"> The flag indicates whether enable compute isolation or not. </param>
         /// <param name="hostSku"> The host sku. </param>
-        internal HDInsightComputeIsolationProperties(bool? enableComputeIsolation, string hostSku)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightComputeIsolationProperties(bool? enableComputeIsolation, string hostSku, Dictionary<string, BinaryData> rawData)
         {
             EnableComputeIsolation = enableComputeIsolation;
             HostSku = hostSku;
+            _rawData = rawData;
         }
 
         /// <summary> The flag indicates whether enable compute isolation or not. </summary>

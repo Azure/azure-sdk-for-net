@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An SRV record. </summary>
     public partial class DnsSrvRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsSrvRecordInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsSrvRecordInfo"/>. </summary>
         public DnsSrvRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsSrvRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSrvRecordInfo"/>. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
         /// <param name="target"> The target domain name for this SRV record. </param>
-        internal DnsSrvRecordInfo(int? priority, int? weight, int? port, string target)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsSrvRecordInfo(int? priority, int? weight, int? port, string target, Dictionary<string, BinaryData> rawData)
         {
             Priority = priority;
             Weight = weight;
             Port = port;
             Target = target;
+            _rawData = rawData;
         }
 
         /// <summary> The priority value for this SRV record. </summary>

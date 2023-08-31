@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster service configs. </summary>
     public partial class ClusterServiceConfigsProfile
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigsProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigsProfile"/>. </summary>
         /// <param name="serviceName"> Name of the service the configurations should apply to. </param>
         /// <param name="configs"> List of service configs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="configs"/> is null. </exception>
@@ -28,13 +30,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Configs = configs.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigsProfile"/>. </summary>
         /// <param name="serviceName"> Name of the service the configurations should apply to. </param>
         /// <param name="configs"> List of service configs. </param>
-        internal ClusterServiceConfigsProfile(string serviceName, IList<ClusterServiceConfig> configs)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServiceConfigsProfile(string serviceName, IList<ClusterServiceConfig> configs, Dictionary<string, BinaryData> rawData)
         {
             ServiceName = serviceName;
             Configs = configs;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigsProfile"/> for deserialization. </summary>
+        internal ClusterServiceConfigsProfile()
+        {
         }
 
         /// <summary> Name of the service the configurations should apply to. </summary>

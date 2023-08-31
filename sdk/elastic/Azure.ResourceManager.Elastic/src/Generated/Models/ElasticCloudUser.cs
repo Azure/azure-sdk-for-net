@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Details of the user's elastic account. </summary>
     public partial class ElasticCloudUser
     {
-        /// <summary> Initializes a new instance of ElasticCloudUser. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticCloudUser"/>. </summary>
         public ElasticCloudUser()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticCloudUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticCloudUser"/>. </summary>
         /// <param name="emailAddress"> Email of the Elastic User Account. </param>
         /// <param name="id"> User Id of the elastic account of the User. </param>
         /// <param name="elasticCloudSsoDefaultUri"> Elastic cloud default dashboard sso URL of the Elastic user account. </param>
-        internal ElasticCloudUser(string emailAddress, string id, Uri elasticCloudSsoDefaultUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticCloudUser(string emailAddress, string id, Uri elasticCloudSsoDefaultUri, Dictionary<string, BinaryData> rawData)
         {
             EmailAddress = emailAddress;
             Id = id;
             ElasticCloudSsoDefaultUri = elasticCloudSsoDefaultUri;
+            _rawData = rawData;
         }
 
         /// <summary> Email of the Elastic User Account. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> SessionHost properties that can be patched. </summary>
     public partial class SessionHostPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of SessionHostPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SessionHostPatch"/>. </summary>
         public SessionHostPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of SessionHostPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +30,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="allowNewSession"> Allow a new session. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="friendlyName"> Friendly name of SessionHost. </param>
-        internal SessionHostPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? allowNewSession, string assignedUser, string friendlyName) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionHostPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? allowNewSession, string assignedUser, string friendlyName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AllowNewSession = allowNewSession;
             AssignedUser = assignedUser;
             FriendlyName = friendlyName;
+            _rawData = rawData;
         }
 
         /// <summary> Allow a new session. </summary>

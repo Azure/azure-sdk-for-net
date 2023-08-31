@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class HDInsightPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/>. </summary>
         internal HDInsightPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<HDInsightPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal HDInsightPrivateLinkResourceListResult(IReadOnlyList<HDInsightPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightPrivateLinkResourceListResult(IReadOnlyList<HDInsightPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

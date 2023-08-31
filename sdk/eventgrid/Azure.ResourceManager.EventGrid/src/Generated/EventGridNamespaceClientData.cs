@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridNamespaceClientData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientData"/>. </summary>
         public EventGridNamespaceClientData()
         {
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of EventGridNamespaceClientData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.EventGrid
         /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
         /// </param>
         /// <param name="provisioningState"> Provisioning state of the Client resource. </param>
-        internal EventGridNamespaceClientData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string authenticationName, EventGridNamespaceClientAuthentication authentication, ClientCertificateAuthentication clientCertificateAuthentication, EventGridNamespaceClientState? state, IDictionary<string, BinaryData> attributes, EventGridNamespaceClientProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridNamespaceClientData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string authenticationName, EventGridNamespaceClientAuthentication authentication, ClientCertificateAuthentication clientCertificateAuthentication, EventGridNamespaceClientState? state, IDictionary<string, BinaryData> attributes, EventGridNamespaceClientProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthenticationName = authenticationName;
@@ -50,6 +53,7 @@ namespace Azure.ResourceManager.EventGrid
             State = state;
             Attributes = attributes;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> Description for the Client resource. </summary>

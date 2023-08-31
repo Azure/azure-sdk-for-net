@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The UnknownDeadLetterDestination. </summary>
     internal partial class UnknownDeadLetterDestination : DeadLetterDestination
     {
-        /// <summary> Initializes a new instance of UnknownDeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
-        internal UnknownDeadLetterDestination(DeadLetterEndPointType endpointType) : base(endpointType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDeadLetterDestination(DeadLetterEndPointType endpointType, Dictionary<string, BinaryData> rawData) : base(endpointType, rawData)
         {
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDeadLetterDestination"/> for deserialization. </summary>
+        internal UnknownDeadLetterDestination()
+        {
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A table object consisting table cells arranged in a rectangular layout. </summary>
     public partial class DocumentTable
     {
-        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
@@ -33,19 +35,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTable"/>. </summary>
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table. </param>
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
-        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentTable(int rowCount, int columnCount, IReadOnlyList<DocumentTableCell> cells, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, Dictionary<string, BinaryData> rawData)
         {
             RowCount = rowCount;
             ColumnCount = columnCount;
             Cells = cells;
             BoundingRegions = boundingRegions;
             Spans = spans;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTable"/> for deserialization. </summary>
+        internal DocumentTable()
+        {
         }
 
         /// <summary> Number of rows in the table. </summary>

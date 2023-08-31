@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabEnvironmentDeployment : IUtf8JsonSerializable
+    public partial class DevTestLabEnvironmentDeployment : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabEnvironmentDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabEnvironmentDeployment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabEnvironmentDeployment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArmTemplateId))
             {
@@ -27,21 +34,43 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevTestLabArmTemplateParameter>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabEnvironmentDeployment DeserializeDevTestLabEnvironmentDeployment(JsonElement element)
+        internal static DevTestLabEnvironmentDeployment DeserializeDevTestLabEnvironmentDeployment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> armTemplateId = default;
             Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("armTemplateId"u8))
@@ -67,8 +96,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     parameters = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, Optional.ToList(parameters));
+            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, Optional.ToList(parameters), rawData);
+        }
+
+        DevTestLabEnvironmentDeployment IModelJsonSerializable<DevTestLabEnvironmentDeployment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabEnvironmentDeployment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabEnvironmentDeployment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabEnvironmentDeployment IModelSerializable<DevTestLabEnvironmentDeployment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabEnvironmentDeployment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabEnvironmentDeployment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabEnvironmentDeployment"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabEnvironmentDeployment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabEnvironmentDeployment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabEnvironmentDeployment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabEnvironmentDeployment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

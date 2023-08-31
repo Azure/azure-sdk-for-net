@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,8 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Configuration affecting the Onco Phenotype model's inference. </summary>
     public partial class OncoPhenotypeModelConfiguration
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of OncoPhenotypeModelConfiguration. </summary>
         public OncoPhenotypeModelConfiguration()
         {
@@ -28,12 +31,14 @@ namespace Azure.Health.Insights.CancerProfiling
         /// If this list is omitted or empty, the model will return all the inference types.
         /// </param>
         /// <param name="checkForCancerCase"> An indication whether to perform a preliminary step on the patient's documents to determine whether they relate to a Cancer case. </param>
-        internal OncoPhenotypeModelConfiguration(bool? verbose, bool? includeEvidence, IList<OncoPhenotypeInferenceType> inferenceTypes, bool? checkForCancerCase)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypeModelConfiguration(bool? verbose, bool? includeEvidence, IList<OncoPhenotypeInferenceType> inferenceTypes, bool? checkForCancerCase, Dictionary<string, BinaryData> rawData)
         {
             Verbose = verbose;
             IncludeEvidence = includeEvidence;
             InferenceTypes = inferenceTypes;
             CheckForCancerCase = checkForCancerCase;
+            _rawData = rawData;
         }
 
         /// <summary> An indication whether the model should produce verbose output. </summary>

@@ -15,7 +15,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request contract for compose operation. </summary>
     internal partial class ComposeRequest
     {
-        /// <summary> Initializes a new instance of ComposeRequest. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComposeRequest"/>. </summary>
         /// <param name="modelIds"> List of model ids to compose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelIds"/> is null. </exception>
         public ComposeRequest(IEnumerable<Guid> modelIds)
@@ -23,6 +25,22 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(modelIds, nameof(modelIds));
 
             ModelIds = modelIds.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComposeRequest"/>. </summary>
+        /// <param name="modelIds"> List of model ids to compose. </param>
+        /// <param name="modelName"> Optional user defined model name (max length: 1024). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComposeRequest(IList<Guid> modelIds, string modelName, Dictionary<string, BinaryData> rawData)
+        {
+            ModelIds = modelIds;
+            ModelName = modelName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComposeRequest"/> for deserialization. </summary>
+        internal ComposeRequest()
+        {
         }
 
         /// <summary> List of model ids to compose. </summary>

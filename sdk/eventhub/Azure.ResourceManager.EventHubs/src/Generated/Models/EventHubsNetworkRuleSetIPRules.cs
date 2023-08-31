@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
     public partial class EventHubsNetworkRuleSetIPRules
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetIPRules. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetIPRules"/>. </summary>
         public EventHubsNetworkRuleSetIPRules()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetIPRules"/>. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
-        internal EventHubsNetworkRuleSetIPRules(string ipMask, EventHubsNetworkRuleIPAction? action)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkRuleSetIPRules(string ipMask, EventHubsNetworkRuleIPAction? action, Dictionary<string, BinaryData> rawData)
         {
             IPMask = ipMask;
             Action = action;
+            _rawData = rawData;
         }
 
         /// <summary> IP Mask. </summary>

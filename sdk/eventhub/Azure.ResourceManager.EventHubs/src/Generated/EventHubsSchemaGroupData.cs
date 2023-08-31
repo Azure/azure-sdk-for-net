@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsSchemaGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsSchemaGroupData"/>. </summary>
         public EventHubsSchemaGroupData()
         {
             GroupProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsSchemaGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +40,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
@@ -47,6 +50,7 @@ namespace Azure.ResourceManager.EventHubs
             SchemaCompatibility = schemaCompatibility;
             SchemaType = schemaType;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> Exact time the Schema Group was updated. </summary>

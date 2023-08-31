@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -12,18 +16,23 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownPartnerClientAuthentication))]
     public abstract partial class PartnerClientAuthentication
     {
-        /// <summary> Initializes a new instance of PartnerClientAuthentication. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerClientAuthentication"/>. </summary>
         protected PartnerClientAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
-        internal PartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType, Dictionary<string, BinaryData> rawData)
         {
             ClientAuthenticationType = clientAuthenticationType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of client authentication. </summary>

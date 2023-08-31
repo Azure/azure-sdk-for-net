@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Properties for a recommended machine configuration. </summary>
     public partial class RecommendedMachineConfiguration
     {
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         internal RecommendedMachineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         /// <param name="memory"> Recommended memory range. </param>
         /// <param name="vCpus"> Recommended vCPU range. </param>
-        internal RecommendedMachineConfiguration(DevCenterResourceRange memory, DevCenterResourceRange vCpus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedMachineConfiguration(DevCenterResourceRange memory, DevCenterResourceRange vCpus, Dictionary<string, BinaryData> rawData)
         {
             Memory = memory;
             VCpus = vCpus;
+            _rawData = rawData;
         }
 
         /// <summary> Recommended memory range. </summary>

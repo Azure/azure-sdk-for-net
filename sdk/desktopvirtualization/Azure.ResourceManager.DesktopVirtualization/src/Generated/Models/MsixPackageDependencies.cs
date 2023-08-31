@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Schema for MSIX Package Dependencies properties. </summary>
     public partial class MsixPackageDependencies
     {
-        /// <summary> Initializes a new instance of MsixPackageDependencies. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MsixPackageDependencies"/>. </summary>
         public MsixPackageDependencies()
         {
         }
 
-        /// <summary> Initializes a new instance of MsixPackageDependencies. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageDependencies"/>. </summary>
         /// <param name="dependencyName"> Name of package dependency. </param>
         /// <param name="publisher"> Name of dependency publisher. </param>
         /// <param name="minVersion"> Dependency version required. </param>
-        internal MsixPackageDependencies(string dependencyName, string publisher, string minVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MsixPackageDependencies(string dependencyName, string publisher, string minVersion, Dictionary<string, BinaryData> rawData)
         {
             DependencyName = dependencyName;
             Publisher = publisher;
             MinVersion = minVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Name of package dependency. </summary>

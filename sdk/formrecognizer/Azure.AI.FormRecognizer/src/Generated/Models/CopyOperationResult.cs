@@ -6,13 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status and result of the queued copy operation. </summary>
     internal partial class CopyOperationResult
     {
-        /// <summary> Initializes a new instance of CopyOperationResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyOperationResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the copy operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
@@ -23,17 +26,24 @@ namespace Azure.AI.FormRecognizer.Models
             LastUpdatedDateTime = lastUpdatedDateTime;
         }
 
-        /// <summary> Initializes a new instance of CopyOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyOperationResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the copy operation was submitted. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="copyResult"> Results of the copy operation. </param>
-        internal CopyOperationResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, CopyResult copyResult)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyOperationResult(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, CopyResult copyResult, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;
             CopyResult = copyResult;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyOperationResult"/> for deserialization. </summary>
+        internal CopyOperationResult()
+        {
         }
 
         /// <summary> Operation status. </summary>

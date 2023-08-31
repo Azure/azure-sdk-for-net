@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterAutoscaleProfile : IUtf8JsonSerializable
+    public partial class ClusterAutoscaleProfile : IUtf8JsonSerializable, IModelJsonSerializable<ClusterAutoscaleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterAutoscaleProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterAutoscaleProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -30,18 +38,46 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ScheduleBasedConfig))
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
-                writer.WriteObjectValue(ScheduleBasedConfig);
+                if (ScheduleBasedConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ScheduleBasedConfig>)ScheduleBasedConfig).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(LoadBasedConfig))
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
-                writer.WriteObjectValue(LoadBasedConfig);
+                if (LoadBasedConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LoadBasedConfig>)LoadBasedConfig).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ClusterAutoscaleProfile DeserializeClusterAutoscaleProfile(JsonElement element)
+        internal static ClusterAutoscaleProfile DeserializeClusterAutoscaleProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +87,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<ClusterAutoscaleType> autoscaleType = default;
             Optional<ScheduleBasedConfig> scheduleBasedConfig = default;
             Optional<LoadBasedConfig> loadBasedConfig = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -94,8 +131,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     loadBasedConfig = LoadBasedConfig.DeserializeLoadBasedConfig(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterAutoscaleProfile(enabled, Optional.ToNullable(gracefulDecommissionTimeout), Optional.ToNullable(autoscaleType), scheduleBasedConfig.Value, loadBasedConfig.Value);
+            return new ClusterAutoscaleProfile(enabled, Optional.ToNullable(gracefulDecommissionTimeout), Optional.ToNullable(autoscaleType), scheduleBasedConfig.Value, loadBasedConfig.Value, rawData);
+        }
+
+        ClusterAutoscaleProfile IModelJsonSerializable<ClusterAutoscaleProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterAutoscaleProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterAutoscaleProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterAutoscaleProfile IModelSerializable<ClusterAutoscaleProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterAutoscaleProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterAutoscaleProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterAutoscaleProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterAutoscaleProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterAutoscaleProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterAutoscaleProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterAutoscaleProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

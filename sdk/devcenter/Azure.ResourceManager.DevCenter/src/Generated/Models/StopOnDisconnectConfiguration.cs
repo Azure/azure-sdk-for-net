@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Stop on disconnect configuration settings for Dev Boxes created in this pool. </summary>
     public partial class StopOnDisconnectConfiguration
     {
-        /// <summary> Initializes a new instance of StopOnDisconnectConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectConfiguration"/>. </summary>
         public StopOnDisconnectConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of StopOnDisconnectConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectConfiguration"/>. </summary>
         /// <param name="status"> Whether the feature to stop the Dev Box on disconnect once the grace period has lapsed is enabled. </param>
         /// <param name="gracePeriodMinutes"> The specified time in minutes to wait before stopping a Dev Box once disconnect is detected. </param>
-        internal StopOnDisconnectConfiguration(StopOnDisconnectEnableStatus? status, int? gracePeriodMinutes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StopOnDisconnectConfiguration(StopOnDisconnectEnableStatus? status, int? gracePeriodMinutes, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             GracePeriodMinutes = gracePeriodMinutes;
+            _rawData = rawData;
         }
 
         /// <summary> Whether the feature to stop the Dev Box on disconnect once the grace period has lapsed is enabled. </summary>

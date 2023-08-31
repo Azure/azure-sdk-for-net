@@ -5,24 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageCreated event. </summary>
     public partial class HealthcareDicomImageCreatedEventData
     {
-        /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageCreatedEventData"/>. </summary>
         internal HealthcareDicomImageCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageCreatedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
         /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
         /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
         /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
-        internal HealthcareDicomImageCreatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareDicomImageCreatedEventData(string partitionName, string imageStudyInstanceUid, string imageSeriesInstanceUid, string imageSopInstanceUid, string serviceHostName, long? sequenceNumber, Dictionary<string, BinaryData> rawData)
         {
             PartitionName = partitionName;
             ImageStudyInstanceUid = imageStudyInstanceUid;
@@ -30,6 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ImageSopInstanceUid = imageSopInstanceUid;
             ServiceHostName = serviceHostName;
             SequenceNumber = sequenceNumber;
+            _rawData = rawData;
         }
 
         /// <summary> Data partition name. </summary>

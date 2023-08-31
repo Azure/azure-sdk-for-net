@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostMaintenanceWindowProperties : IUtf8JsonSerializable
+    public partial class SessionHostMaintenanceWindowProperties : IUtf8JsonSerializable, IModelJsonSerializable<SessionHostMaintenanceWindowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SessionHostMaintenanceWindowProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SessionHostMaintenanceWindowProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Hour))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SessionHostMaintenanceWindowProperties DeserializeSessionHostMaintenanceWindowProperties(JsonElement element)
+        internal static SessionHostMaintenanceWindowProperties DeserializeSessionHostMaintenanceWindowProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> hour = default;
             Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hour"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     dayOfWeek = property.Value.GetString().ToDesktopVirtualizationDayOfWeek();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SessionHostMaintenanceWindowProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek));
+            return new SessionHostMaintenanceWindowProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek), rawData);
+        }
+
+        SessionHostMaintenanceWindowProperties IModelJsonSerializable<SessionHostMaintenanceWindowProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSessionHostMaintenanceWindowProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SessionHostMaintenanceWindowProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SessionHostMaintenanceWindowProperties IModelSerializable<SessionHostMaintenanceWindowProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSessionHostMaintenanceWindowProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SessionHostMaintenanceWindowProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SessionHostMaintenanceWindowProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SessionHostMaintenanceWindowProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SessionHostMaintenanceWindowProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SessionHostMaintenanceWindowProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSessionHostMaintenanceWindowProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

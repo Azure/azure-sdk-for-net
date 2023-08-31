@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Private endpoint connection proxy object properties. </summary>
     public partial class ConnectionDetails
     {
-        /// <summary> Initializes a new instance of ConnectionDetails. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetails"/>. </summary>
         public ConnectionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetails"/>. </summary>
         /// <param name="id"> Connection details ID. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="linkIdentifier"> Link ID. </param>
         /// <param name="groupId"> Group ID. </param>
         /// <param name="memberName"> Member name. </param>
-        internal ConnectionDetails(string id, string privateIPAddress, string linkIdentifier, string groupId, string memberName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionDetails(string id, string privateIPAddress, string linkIdentifier, string groupId, string memberName, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             PrivateIPAddress = privateIPAddress;
             LinkIdentifier = linkIdentifier;
             GroupId = groupId;
             MemberName = memberName;
+            _rawData = rawData;
         }
 
         /// <summary> Connection details ID. </summary>

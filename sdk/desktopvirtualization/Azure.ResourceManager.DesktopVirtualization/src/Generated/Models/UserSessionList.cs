@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of UserSession definitions. </summary>
     internal partial class UserSessionList
     {
-        /// <summary> Initializes a new instance of UserSessionList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserSessionList"/>. </summary>
         internal UserSessionList()
         {
             Value = new ChangeTrackingList<UserSessionData>();
         }
 
-        /// <summary> Initializes a new instance of UserSessionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionList"/>. </summary>
         /// <param name="value"> List of UserSession definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal UserSessionList(IReadOnlyList<UserSessionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserSessionList(IReadOnlyList<UserSessionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of UserSession definitions. </summary>

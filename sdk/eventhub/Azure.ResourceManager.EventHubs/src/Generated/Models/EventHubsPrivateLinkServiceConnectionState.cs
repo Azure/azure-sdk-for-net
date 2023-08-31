@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> ConnectionState information. </summary>
     public partial class EventHubsPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkServiceConnectionState. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateLinkServiceConnectionState"/>. </summary>
         public EventHubsPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
-        internal EventHubsPrivateLinkServiceConnectionState(EventHubsPrivateLinkConnectionStatus? status, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsPrivateLinkServiceConnectionState(EventHubsPrivateLinkConnectionStatus? status, string description, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Status of the connection. </summary>

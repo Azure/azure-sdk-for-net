@@ -6,19 +6,20 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> Properties related to ServiceBus. </summary>
     public partial class DigitalTwinsServiceBusProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsServiceBusProperties"/>. </summary>
         public DigitalTwinsServiceBusProperties()
         {
             EndpointType = EndpointType.ServiceBus;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsServiceBusProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the ServiceBus namespace for identity-based authentication. It must include the protocol 'sb://'. </param>
         /// <param name="entityPath"> The ServiceBus Topic name for identity-based authentication. </param>
-        internal DigitalTwinsServiceBusProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string primaryConnectionString, string secondaryConnectionString, Uri endpointUri, string entityPath) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsServiceBusProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, string primaryConnectionString, string secondaryConnectionString, Uri endpointUri, string entityPath, Dictionary<string, BinaryData> rawData) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, rawData)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;

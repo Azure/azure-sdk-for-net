@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Defines the properties of a Wait step. </summary>
     public partial class WaitStepProperties : StepProperties
     {
-        /// <summary> Initializes a new instance of WaitStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitStepProperties"/>. </summary>
         /// <param name="attributes"> The Wait attributes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="attributes"/> is null. </exception>
         public WaitStepProperties(WaitStepAttributes attributes)
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             StepType = StepType.Wait;
         }
 
-        /// <summary> Initializes a new instance of WaitStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitStepProperties"/>. </summary>
         /// <param name="stepType"> The type of step. </param>
         /// <param name="attributes"> The Wait attributes. </param>
-        internal WaitStepProperties(StepType stepType, WaitStepAttributes attributes) : base(stepType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WaitStepProperties(StepType stepType, WaitStepAttributes attributes, Dictionary<string, BinaryData> rawData) : base(stepType, rawData)
         {
             Attributes = attributes;
             StepType = stepType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WaitStepProperties"/> for deserialization. </summary>
+        internal WaitStepProperties()
+        {
         }
 
         /// <summary> The Wait attributes. </summary>

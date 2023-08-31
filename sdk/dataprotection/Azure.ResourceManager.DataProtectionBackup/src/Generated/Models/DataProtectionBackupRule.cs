@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Azure backup rule. </summary>
     public partial class DataProtectionBackupRule : DataProtectionBasePolicyRule
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="dataStore"> DataStoreInfo base. </param>
         /// <param name="trigger">
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "AzureBackupRule";
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
         /// <param name="backupParameters">
@@ -47,12 +48,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Please note <see cref="DataProtectionBackupTriggerContext"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AdhocBasedBackupTriggerContext"/> and <see cref="ScheduleBasedBackupTriggerContext"/>.
         /// </param>
-        internal DataProtectionBackupRule(string name, string objectType, DataProtectionBackupSettingsBase backupParameters, DataStoreInfoBase dataStore, DataProtectionBackupTriggerContext trigger) : base(name, objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupRule(string name, string objectType, DataProtectionBackupSettingsBase backupParameters, DataStoreInfoBase dataStore, DataProtectionBackupTriggerContext trigger, Dictionary<string, BinaryData> rawData) : base(name, objectType, rawData)
         {
             BackupParameters = backupParameters;
             DataStore = dataStore;
             Trigger = trigger;
             ObjectType = objectType ?? "AzureBackupRule";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRule"/> for deserialization. </summary>
+        internal DataProtectionBackupRule()
+        {
         }
 
         /// <summary>

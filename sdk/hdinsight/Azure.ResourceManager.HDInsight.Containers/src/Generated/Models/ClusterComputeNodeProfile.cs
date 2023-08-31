@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The node profile. </summary>
     public partial class ClusterComputeNodeProfile
     {
-        /// <summary> Initializes a new instance of ClusterComputeNodeProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeNodeProfile"/>. </summary>
         /// <param name="nodeProfileType"> The node type. </param>
         /// <param name="vmSize"> The virtual machine SKU. </param>
         /// <param name="count"> The number of virtual machines. </param>
@@ -26,6 +29,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             NodeProfileType = nodeProfileType;
             VmSize = vmSize;
             Count = count;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeNodeProfile"/>. </summary>
+        /// <param name="nodeProfileType"> The node type. </param>
+        /// <param name="vmSize"> The virtual machine SKU. </param>
+        /// <param name="count"> The number of virtual machines. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterComputeNodeProfile(string nodeProfileType, string vmSize, int count, Dictionary<string, BinaryData> rawData)
+        {
+            NodeProfileType = nodeProfileType;
+            VmSize = vmSize;
+            Count = count;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterComputeNodeProfile"/> for deserialization. </summary>
+        internal ClusterComputeNodeProfile()
+        {
         }
 
         /// <summary> The node type. </summary>

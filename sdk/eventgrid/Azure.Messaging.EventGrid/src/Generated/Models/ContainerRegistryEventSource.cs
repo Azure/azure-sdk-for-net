@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
     public partial class ContainerRegistryEventSource
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventSource. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventSource"/>. </summary>
         internal ContainerRegistryEventSource()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventSource"/>. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
         /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
-        internal ContainerRegistryEventSource(string addr, string instanceID)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEventSource(string addr, string instanceID, Dictionary<string, BinaryData> rawData)
         {
             Addr = addr;
             InstanceID = instanceID;
+            _rawData = rawData;
         }
 
         /// <summary> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </summary>

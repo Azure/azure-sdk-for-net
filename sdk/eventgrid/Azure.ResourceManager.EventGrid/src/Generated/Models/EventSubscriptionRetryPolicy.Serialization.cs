@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventSubscriptionRetryPolicy : IUtf8JsonSerializable
+    public partial class EventSubscriptionRetryPolicy : IUtf8JsonSerializable, IModelJsonSerializable<EventSubscriptionRetryPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventSubscriptionRetryPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventSubscriptionRetryPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxDeliveryAttempts))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventSubscriptionRetryPolicy DeserializeEventSubscriptionRetryPolicy(JsonElement element)
+        internal static EventSubscriptionRetryPolicy DeserializeEventSubscriptionRetryPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> maxDeliveryAttempts = default;
             Optional<int> eventTimeToLiveInMinutes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxDeliveryAttempts"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     eventTimeToLiveInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventSubscriptionRetryPolicy(Optional.ToNullable(maxDeliveryAttempts), Optional.ToNullable(eventTimeToLiveInMinutes));
+            return new EventSubscriptionRetryPolicy(Optional.ToNullable(maxDeliveryAttempts), Optional.ToNullable(eventTimeToLiveInMinutes), rawData);
+        }
+
+        EventSubscriptionRetryPolicy IModelJsonSerializable<EventSubscriptionRetryPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventSubscriptionRetryPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventSubscriptionRetryPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventSubscriptionRetryPolicy IModelSerializable<EventSubscriptionRetryPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventSubscriptionRetryPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventSubscriptionRetryPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventSubscriptionRetryPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(EventSubscriptionRetryPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventSubscriptionRetryPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventSubscriptionRetryPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventSubscriptionRetryPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

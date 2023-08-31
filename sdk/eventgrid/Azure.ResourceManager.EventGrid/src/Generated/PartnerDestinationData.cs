@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerDestinationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PartnerDestinationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PartnerDestinationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerDestinationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +44,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="activationState"> Activation state of the partner destination. </param>
         /// <param name="endpointBaseUri"> Endpoint Base URL of the partner destination. </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process. </param>
-        internal PartnerDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? partnerRegistrationImmutableId, string endpointServiceContext, DateTimeOffset? expirationTimeIfNotActivatedUtc, PartnerDestinationProvisioningState? provisioningState, PartnerDestinationActivationState? activationState, Uri endpointBaseUri, string messageForActivation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? partnerRegistrationImmutableId, string endpointServiceContext, DateTimeOffset? expirationTimeIfNotActivatedUtc, PartnerDestinationProvisioningState? provisioningState, PartnerDestinationActivationState? activationState, Uri endpointBaseUri, string messageForActivation, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             EndpointServiceContext = endpointServiceContext;
@@ -51,6 +54,12 @@ namespace Azure.ResourceManager.EventGrid
             ActivationState = activationState;
             EndpointBaseUri = endpointBaseUri;
             MessageForActivation = messageForActivation;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerDestinationData"/> for deserialization. </summary>
+        internal PartnerDestinationData()
+        {
         }
 
         /// <summary> The immutable Id of the corresponding partner registration. </summary>

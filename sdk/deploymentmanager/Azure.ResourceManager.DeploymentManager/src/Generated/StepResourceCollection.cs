@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual AsyncPageable<StepResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DeploymentManager
         public virtual Pageable<StepResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _stepResourceStepsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new StepResource(Client, StepResourceData.DeserializeStepResourceData(e)), _stepResourceStepsClientDiagnostics, Pipeline, "StepResourceCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

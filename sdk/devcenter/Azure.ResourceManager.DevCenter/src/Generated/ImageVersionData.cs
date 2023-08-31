@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class ImageVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ImageVersionData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageVersionData"/>. </summary>
         public ImageVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +36,15 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="isExcludedFromLatest"> If the version should be excluded from being treated as the latest version. </param>
         /// <param name="osDiskImageSizeInGB"> The size of the OS disk image, in GB. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, DateTimeOffset? publishedOn, bool? isExcludedFromLatest, int? osDiskImageSizeInGB, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, DateTimeOffset? publishedOn, bool? isExcludedFromLatest, int? osDiskImageSizeInGB, DevCenterProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             NamePropertiesName = namePropertiesName;
             PublishedOn = publishedOn;
             IsExcludedFromLatest = isExcludedFromLatest;
             OSDiskImageSizeInGB = osDiskImageSizeInGB;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The semantic version string. </summary>

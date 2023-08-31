@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Response body for generating an upload URI. </summary>
     public partial class DevTestLabGenerateUploadUriResult
     {
-        /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriResult"/>. </summary>
         internal DevTestLabGenerateUploadUriResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriResult"/>. </summary>
         /// <param name="uploadUri"> The upload URI for the VHD. </param>
-        internal DevTestLabGenerateUploadUriResult(Uri uploadUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabGenerateUploadUriResult(Uri uploadUri, Dictionary<string, BinaryData> rawData)
         {
             UploadUri = uploadUri;
+            _rawData = rawData;
         }
 
         /// <summary> The upload URI for the VHD. </summary>

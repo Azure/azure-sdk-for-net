@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Status information about a virtual machine. </summary>
     public partial class ComputeVmInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeVmInstanceViewStatus"/>. </summary>
         internal ComputeVmInstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeVmInstanceViewStatus"/>. </summary>
         /// <param name="code"> Gets the status Code. </param>
         /// <param name="displayStatus"> Gets the short localizable label for the status. </param>
         /// <param name="message"> Gets the message associated with the status. </param>
-        internal ComputeVmInstanceViewStatus(string code, string displayStatus, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeVmInstanceViewStatus(string code, string displayStatus, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             DisplayStatus = displayStatus;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the status Code. </summary>

@@ -5,17 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    public partial class DeviceProvisioningServicesPrivateLinkResourceData
+    public partial class DeviceProvisioningServicesPrivateLinkResourceData : IUtf8JsonSerializable, IModelJsonSerializable<DeviceProvisioningServicesPrivateLinkResourceData>
     {
-        internal static DeviceProvisioningServicesPrivateLinkResourceData DeserializeDeviceProvisioningServicesPrivateLinkResourceData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceProvisioningServicesPrivateLinkResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceProvisioningServicesPrivateLinkResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DeviceProvisioningServicesPrivateLinkResourceProperties>)Properties).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceProvisioningServicesPrivateLinkResourceData DeserializeDeviceProvisioningServicesPrivateLinkResourceData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +62,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -56,8 +94,61 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceProvisioningServicesPrivateLinkResourceData(id, name, type, systemData.Value, properties);
+            return new DeviceProvisioningServicesPrivateLinkResourceData(id, name, type, systemData.Value, properties, rawData);
+        }
+
+        DeviceProvisioningServicesPrivateLinkResourceData IModelJsonSerializable<DeviceProvisioningServicesPrivateLinkResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceProvisioningServicesPrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceProvisioningServicesPrivateLinkResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceProvisioningServicesPrivateLinkResourceData IModelSerializable<DeviceProvisioningServicesPrivateLinkResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceProvisioningServicesPrivateLinkResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceProvisioningServicesPrivateLinkResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceProvisioningServicesPrivateLinkResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceProvisioningServicesPrivateLinkResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceProvisioningServicesPrivateLinkResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

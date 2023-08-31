@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -13,7 +14,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> An object representing the appearance of the text line. </summary>
     public partial class TextAppearance
     {
-        /// <summary> Initializes a new instance of TextAppearance. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextAppearance"/>. </summary>
         /// <param name="style"> An object representing the style of the text line. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="style"/> is null. </exception>
         internal TextAppearance(Style style)
@@ -21,6 +24,20 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(style, nameof(style));
 
             Style = style;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextAppearance"/>. </summary>
+        /// <param name="style"> An object representing the style of the text line. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextAppearance(Style style, Dictionary<string, BinaryData> rawData)
+        {
+            Style = style;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextAppearance"/> for deserialization. </summary>
+        internal TextAppearance()
+        {
         }
     }
 }

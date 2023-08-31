@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
     public partial class DynatraceMonitorResourceFilteringTag
     {
-        /// <summary> Initializes a new instance of DynatraceMonitorResourceFilteringTag. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorResourceFilteringTag"/>. </summary>
         public DynatraceMonitorResourceFilteringTag()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceMonitorResourceFilteringTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorResourceFilteringTag"/>. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
-        internal DynatraceMonitorResourceFilteringTag(string name, string value, DynatraceMonitorResourceTagAction? action)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceMonitorResourceFilteringTag(string name, string value, DynatraceMonitorResourceTagAction? action, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
             Action = action;
+            _rawData = rawData;
         }
 
         /// <summary> The name (also known as the key) of the tag. </summary>

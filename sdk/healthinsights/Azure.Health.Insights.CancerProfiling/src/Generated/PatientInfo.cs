@@ -14,6 +14,8 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Patient structured information, including demographics and known structured clinical information. </summary>
     public partial class PatientInfo
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of PatientInfo. </summary>
         public PatientInfo()
         {
@@ -24,11 +26,13 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <param name="sex"> The patient's sex. </param>
         /// <param name="birthDate"> The patient's date of birth. </param>
         /// <param name="clinicalInfo"> Known clinical information for the patient, structured. </param>
-        internal PatientInfo(PatientInfoSex? sex, DateTimeOffset? birthDate, IList<ClinicalCodedElement> clinicalInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PatientInfo(PatientInfoSex? sex, DateTimeOffset? birthDate, IList<ClinicalCodedElement> clinicalInfo, Dictionary<string, BinaryData> rawData)
         {
             Sex = sex;
             BirthDate = birthDate;
             ClinicalInfo = clinicalInfo;
+            _rawData = rawData;
         }
 
         /// <summary> The patient's sex. </summary>

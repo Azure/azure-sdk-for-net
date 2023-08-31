@@ -5,25 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The SKU name. Required for account creation; optional for update. </summary>
     public partial class ElasticSanSku
     {
-        /// <summary> Initializes a new instance of ElasticSanSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         public ElasticSanSku(ElasticSanSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
-        internal ElasticSanSku(ElasticSanSkuName name, ElasticSanSkuTier? tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanSku(ElasticSanSkuName name, ElasticSanSkuTier? tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSku"/> for deserialization. </summary>
+        internal ElasticSanSku()
+        {
         }
 
         /// <summary> The sku name. </summary>

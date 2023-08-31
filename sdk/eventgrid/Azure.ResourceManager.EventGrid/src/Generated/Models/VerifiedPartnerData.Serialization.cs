@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class VerifiedPartnerData : IUtf8JsonSerializable
+    public partial class VerifiedPartnerData : IUtf8JsonSerializable, IModelJsonSerializable<VerifiedPartnerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VerifiedPartnerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VerifiedPartnerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -38,12 +45,26 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicDetails))
             {
                 writer.WritePropertyName("partnerTopicDetails"u8);
-                writer.WriteObjectValue(PartnerTopicDetails);
+                if (PartnerTopicDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PartnerDetails>)PartnerTopicDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PartnerDestinationDetails))
             {
                 writer.WritePropertyName("partnerDestinationDetails"u8);
-                writer.WriteObjectValue(PartnerDestinationDetails);
+                if (PartnerDestinationDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PartnerDetails>)PartnerDestinationDetails).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -51,11 +72,25 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VerifiedPartnerData DeserializeVerifiedPartnerData(JsonElement element)
+        internal static VerifiedPartnerData DeserializeVerifiedPartnerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +105,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<PartnerDetails> partnerTopicDetails = default;
             Optional<PartnerDetails> partnerDestinationDetails = default;
             Optional<VerifiedPartnerProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,8 +190,61 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VerifiedPartnerData(id, name, type, systemData.Value, Optional.ToNullable(partnerRegistrationImmutableId), organizationName.Value, partnerDisplayName.Value, partnerTopicDetails.Value, partnerDestinationDetails.Value, Optional.ToNullable(provisioningState));
+            return new VerifiedPartnerData(id, name, type, systemData.Value, Optional.ToNullable(partnerRegistrationImmutableId), organizationName.Value, partnerDisplayName.Value, partnerTopicDetails.Value, partnerDestinationDetails.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        VerifiedPartnerData IModelJsonSerializable<VerifiedPartnerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVerifiedPartnerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VerifiedPartnerData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VerifiedPartnerData IModelSerializable<VerifiedPartnerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVerifiedPartnerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VerifiedPartnerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VerifiedPartnerData"/> to convert. </param>
+        public static implicit operator RequestContent(VerifiedPartnerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VerifiedPartnerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VerifiedPartnerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVerifiedPartnerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

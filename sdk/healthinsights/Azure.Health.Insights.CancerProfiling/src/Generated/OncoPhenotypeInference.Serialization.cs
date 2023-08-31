@@ -5,17 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
-    public partial class OncoPhenotypeInference
+    public partial class OncoPhenotypeInference : IUtf8JsonSerializable, IModelJsonSerializable<OncoPhenotypeInference>
     {
-        internal static OncoPhenotypeInference DeserializeOncoPhenotypeInference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OncoPhenotypeInference>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OncoPhenotypeInference>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Value);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ConfidenceScore))
+            {
+                writer.WritePropertyName("confidenceScore"u8);
+                writer.WriteNumberValue(ConfidenceScore.Value);
+            }
+            if (Optional.IsCollectionDefined(Evidence))
+            {
+                writer.WritePropertyName("evidence"u8);
+                writer.WriteStartArray();
+                foreach (var item in Evidence)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InferenceEvidence>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CaseId))
+            {
+                writer.WritePropertyName("caseId"u8);
+                writer.WriteStringValue(CaseId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OncoPhenotypeInference DeserializeOncoPhenotypeInference(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +88,7 @@ namespace Azure.Health.Insights.CancerProfiling
             Optional<float> confidenceScore = default;
             Optional<IReadOnlyList<InferenceEvidence>> evidence = default;
             Optional<string> caseId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -71,16 +134,61 @@ namespace Azure.Health.Insights.CancerProfiling
                     caseId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OncoPhenotypeInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), caseId.Value);
+            return new OncoPhenotypeInference(type, value, description.Value, Optional.ToNullable(confidenceScore), Optional.ToList(evidence), caseId.Value, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OncoPhenotypeInference FromResponse(Response response)
+        OncoPhenotypeInference IModelJsonSerializable<OncoPhenotypeInference>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOncoPhenotypeInference(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOncoPhenotypeInference(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OncoPhenotypeInference>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OncoPhenotypeInference IModelSerializable<OncoPhenotypeInference>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOncoPhenotypeInference(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OncoPhenotypeInference"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OncoPhenotypeInference"/> to convert. </param>
+        public static implicit operator RequestContent(OncoPhenotypeInference model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OncoPhenotypeInference"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OncoPhenotypeInference(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOncoPhenotypeInference(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

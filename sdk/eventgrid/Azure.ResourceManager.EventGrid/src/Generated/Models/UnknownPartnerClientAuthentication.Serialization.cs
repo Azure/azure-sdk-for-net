@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownPartnerClientAuthentication : IUtf8JsonSerializable
+    internal partial class UnknownPartnerClientAuthentication : IUtf8JsonSerializable, IModelJsonSerializable<PartnerClientAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerClientAuthentication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerClientAuthentication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("clientAuthenticationType"u8);
             writer.WriteStringValue(ClientAuthenticationType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownPartnerClientAuthentication DeserializeUnknownPartnerClientAuthentication(JsonElement element)
+        internal static PartnerClientAuthentication DeserializeUnknownPartnerClientAuthentication(JsonElement element, ModelSerializerOptions options = default) => DeserializePartnerClientAuthentication(element, options);
+
+        PartnerClientAuthentication IModelJsonSerializable<PartnerClientAuthentication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            PartnerClientAuthenticationType clientAuthenticationType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("clientAuthenticationType"u8))
-                {
-                    clientAuthenticationType = new PartnerClientAuthenticationType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownPartnerClientAuthentication(clientAuthenticationType);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownPartnerClientAuthentication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerClientAuthentication>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerClientAuthentication IModelSerializable<PartnerClientAuthentication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerClientAuthentication(doc.RootElement, options);
         }
     }
 }

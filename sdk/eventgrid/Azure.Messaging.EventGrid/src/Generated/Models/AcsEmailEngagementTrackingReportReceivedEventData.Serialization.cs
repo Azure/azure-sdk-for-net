@@ -6,17 +6,74 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsEmailEngagementTrackingReportReceivedEventDataConverter))]
-    public partial class AcsEmailEngagementTrackingReportReceivedEventData
+    public partial class AcsEmailEngagementTrackingReportReceivedEventData : IUtf8JsonSerializable, IModelJsonSerializable<AcsEmailEngagementTrackingReportReceivedEventData>
     {
-        internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsEmailEngagementTrackingReportReceivedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsEmailEngagementTrackingReportReceivedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sender))
+            {
+                writer.WritePropertyName("sender"u8);
+                writer.WriteStringValue(Sender);
+            }
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(UserActionTimestamp))
+            {
+                writer.WritePropertyName("userActionTimeStamp"u8);
+                writer.WriteStringValue(UserActionTimestamp.Value, "O");
+            }
+            if (Optional.IsDefined(EngagementContext))
+            {
+                writer.WritePropertyName("engagementContext"u8);
+                writer.WriteStringValue(EngagementContext);
+            }
+            if (Optional.IsDefined(UserAgent))
+            {
+                writer.WritePropertyName("userAgent"u8);
+                writer.WriteStringValue(UserAgent);
+            }
+            if (Optional.IsDefined(Engagement))
+            {
+                writer.WritePropertyName("engagementType"u8);
+                writer.WriteStringValue(Engagement.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsEmailEngagementTrackingReportReceivedEventData DeserializeAcsEmailEngagementTrackingReportReceivedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +84,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> engagementContext = default;
             Optional<string> userAgent = default;
             Optional<AcsUserEngagement> engagementType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -67,15 +125,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     engagementType = new AcsUserEngagement(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType));
+            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType), rawData);
+        }
+
+        AcsEmailEngagementTrackingReportReceivedEventData IModelJsonSerializable<AcsEmailEngagementTrackingReportReceivedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsEmailEngagementTrackingReportReceivedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsEmailEngagementTrackingReportReceivedEventData IModelSerializable<AcsEmailEngagementTrackingReportReceivedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(AcsEmailEngagementTrackingReportReceivedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsEmailEngagementTrackingReportReceivedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsEmailEngagementTrackingReportReceivedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsEmailEngagementTrackingReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

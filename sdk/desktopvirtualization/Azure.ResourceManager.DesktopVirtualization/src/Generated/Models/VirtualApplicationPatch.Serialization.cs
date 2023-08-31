@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class VirtualApplicationPatch : IUtf8JsonSerializable
+    public partial class VirtualApplicationPatch : IUtf8JsonSerializable, IModelJsonSerializable<VirtualApplicationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualApplicationPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualApplicationPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -98,7 +106,206 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VirtualApplicationPatch DeserializeVirtualApplicationPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> description = default;
+            Optional<string> friendlyName = default;
+            Optional<string> filePath = default;
+            Optional<VirtualApplicationCommandLineSetting> commandLineSetting = default;
+            Optional<string> commandLineArguments = default;
+            Optional<bool> showInPortal = default;
+            Optional<string> iconPath = default;
+            Optional<int> iconIndex = default;
+            Optional<string> msixPackageFamilyName = default;
+            Optional<string> msixPackageApplicationId = default;
+            Optional<RemoteApplicationType> applicationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("friendlyName"u8))
+                        {
+                            friendlyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("filePath"u8))
+                        {
+                            filePath = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("commandLineSetting"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            commandLineSetting = new VirtualApplicationCommandLineSetting(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("commandLineArguments"u8))
+                        {
+                            commandLineArguments = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("showInPortal"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            showInPortal = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("iconPath"u8))
+                        {
+                            iconPath = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("iconIndex"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            iconIndex = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("msixPackageFamilyName"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                msixPackageFamilyName = null;
+                                continue;
+                            }
+                            msixPackageFamilyName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("msixPackageApplicationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                msixPackageApplicationId = null;
+                                continue;
+                            }
+                            msixPackageApplicationId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("applicationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationType = new RemoteApplicationType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VirtualApplicationPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, filePath.Value, Optional.ToNullable(commandLineSetting), commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), rawData);
+        }
+
+        VirtualApplicationPatch IModelJsonSerializable<VirtualApplicationPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualApplicationPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualApplicationPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualApplicationPatch IModelSerializable<VirtualApplicationPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualApplicationPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualApplicationPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualApplicationPatch"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualApplicationPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualApplicationPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualApplicationPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualApplicationPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

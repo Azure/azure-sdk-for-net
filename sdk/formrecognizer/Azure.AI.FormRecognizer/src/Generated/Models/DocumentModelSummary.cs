@@ -14,7 +14,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document model summary. </summary>
     public partial class DocumentModelSummary
     {
-        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelSummary"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -27,14 +29,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelSummary"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document model will expire. </param>
         /// <param name="serviceVersion"> API version used to create this document model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        internal DocumentModelSummary(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, string> tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentModelSummary(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
         {
             ModelId = modelId;
             Description = description;
@@ -42,6 +45,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ExpiresOn = expiresOn;
             ServiceVersion = serviceVersion;
             Tags = tags;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelSummary"/> for deserialization. </summary>
+        internal DocumentModelSummary()
+        {
         }
 
         /// <summary> Unique document model name. </summary>

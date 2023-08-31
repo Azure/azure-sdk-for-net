@@ -6,17 +6,84 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(StorageDirectoryRenamedEventDataConverter))]
-    public partial class StorageDirectoryRenamedEventData
+    public partial class StorageDirectoryRenamedEventData : IUtf8JsonSerializable, IModelJsonSerializable<StorageDirectoryRenamedEventData>
     {
-        internal static StorageDirectoryRenamedEventData DeserializeStorageDirectoryRenamedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageDirectoryRenamedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageDirectoryRenamedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Api))
+            {
+                writer.WritePropertyName("api"u8);
+                writer.WriteStringValue(Api);
+            }
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                writer.WritePropertyName("clientRequestId"u8);
+                writer.WriteStringValue(ClientRequestId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(SourceUrl))
+            {
+                writer.WritePropertyName("sourceUrl"u8);
+                writer.WriteStringValue(SourceUrl);
+            }
+            if (Optional.IsDefined(DestinationUrl))
+            {
+                writer.WritePropertyName("destinationUrl"u8);
+                writer.WriteStringValue(DestinationUrl);
+            }
+            if (Optional.IsDefined(Sequencer))
+            {
+                writer.WritePropertyName("sequencer"u8);
+                writer.WriteStringValue(Sequencer);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
+            }
+            if (Optional.IsDefined(StorageDiagnostics))
+            {
+                writer.WritePropertyName("storageDiagnostics"u8);
+                writer.WriteObjectValue(StorageDiagnostics);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StorageDirectoryRenamedEventData DeserializeStorageDirectoryRenamedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> sequencer = default;
             Optional<string> identity = default;
             Optional<object> storageDiagnostics = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"u8))
@@ -75,15 +143,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageDirectoryRenamedEventData(api.Value, clientRequestId.Value, requestId.Value, sourceUrl.Value, destinationUrl.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageDirectoryRenamedEventData(api.Value, clientRequestId.Value, requestId.Value, sourceUrl.Value, destinationUrl.Value, sequencer.Value, identity.Value, storageDiagnostics.Value, rawData);
+        }
+
+        StorageDirectoryRenamedEventData IModelJsonSerializable<StorageDirectoryRenamedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageDirectoryRenamedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageDirectoryRenamedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageDirectoryRenamedEventData IModelSerializable<StorageDirectoryRenamedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageDirectoryRenamedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageDirectoryRenamedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageDirectoryRenamedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(StorageDirectoryRenamedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageDirectoryRenamedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageDirectoryRenamedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageDirectoryRenamedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class StorageDirectoryRenamedEventDataConverter : JsonConverter<StorageDirectoryRenamedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageDirectoryRenamedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override StorageDirectoryRenamedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

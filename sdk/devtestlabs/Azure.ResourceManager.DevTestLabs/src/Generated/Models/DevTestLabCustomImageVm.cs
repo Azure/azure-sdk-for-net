@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for creating a custom image from a virtual machine. </summary>
     public partial class DevTestLabCustomImageVm
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVm. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVm"/>. </summary>
         public DevTestLabCustomImageVm()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageVm. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVm"/>. </summary>
         /// <param name="sourceVmId"> The source vm identifier. </param>
         /// <param name="windowsOSInfo"> The Windows OS information of the VM. </param>
         /// <param name="linuxOSInfo"> The Linux OS information of the VM. </param>
-        internal DevTestLabCustomImageVm(string sourceVmId, WindowsOSInfo windowsOSInfo, LinuxOSInfo linuxOSInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCustomImageVm(string sourceVmId, WindowsOSInfo windowsOSInfo, LinuxOSInfo linuxOSInfo, Dictionary<string, BinaryData> rawData)
         {
             SourceVmId = sourceVmId;
             WindowsOSInfo = windowsOSInfo;
             LinuxOSInfo = linuxOSInfo;
+            _rawData = rawData;
         }
 
         /// <summary> The source vm identifier. </summary>

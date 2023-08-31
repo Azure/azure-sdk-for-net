@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,26 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The billing resources. </summary>
     public partial class HDInsightBillingResources
     {
-        /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingResources"/>. </summary>
         internal HDInsightBillingResources()
         {
             BillingMeters = new ChangeTrackingList<HDInsightBillingMeters>();
             DiskBillingMeters = new ChangeTrackingList<HDInsightDiskBillingMeters>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightBillingResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightBillingResources"/>. </summary>
         /// <param name="region"> The region or location. </param>
         /// <param name="billingMeters"> The billing meter information. </param>
         /// <param name="diskBillingMeters"> The managed disk billing information. </param>
-        internal HDInsightBillingResources(AzureLocation? region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightBillingResources(AzureLocation? region, IReadOnlyList<HDInsightBillingMeters> billingMeters, IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters, Dictionary<string, BinaryData> rawData)
         {
             Region = region;
             BillingMeters = billingMeters;
             DiskBillingMeters = diskBillingMeters;
+            _rawData = rawData;
         }
 
         /// <summary> The region or location. </summary>

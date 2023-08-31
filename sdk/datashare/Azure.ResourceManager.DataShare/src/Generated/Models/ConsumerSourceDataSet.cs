@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A consumer side dataSet data transfer object. </summary>
     public partial class ConsumerSourceDataSet : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumerSourceDataSet. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSet"/>. </summary>
         public ConsumerSourceDataSet()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerSourceDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,13 +32,15 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="dataSetName"> DataSet name. </param>
         /// <param name="dataSetPath"> DataSet path. </param>
         /// <param name="dataSetType"> Type of data set. </param>
-        internal ConsumerSourceDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataSetId, AzureLocation? dataSetLocation, string dataSetName, string dataSetPath, ShareDataSetType? dataSetType) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumerSourceDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataSetId, AzureLocation? dataSetLocation, string dataSetName, string dataSetPath, ShareDataSetType? dataSetType, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DataSetId = dataSetId;
             DataSetLocation = dataSetLocation;
             DataSetName = dataSetName;
             DataSetPath = dataSetPath;
             DataSetType = dataSetType;
+            _rawData = rawData;
         }
 
         /// <summary> DataSet Id. </summary>

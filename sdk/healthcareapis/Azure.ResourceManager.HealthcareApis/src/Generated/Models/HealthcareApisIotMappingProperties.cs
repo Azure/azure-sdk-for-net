@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> The mapping content. </summary>
     public partial class HealthcareApisIotMappingProperties
     {
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotMappingProperties"/>. </summary>
         public HealthcareApisIotMappingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisIotMappingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisIotMappingProperties"/>. </summary>
         /// <param name="content"> The mapping. </param>
-        internal HealthcareApisIotMappingProperties(BinaryData content)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisIotMappingProperties(BinaryData content, Dictionary<string, BinaryData> rawData)
         {
             Content = content;
+            _rawData = rawData;
         }
 
         /// <summary>

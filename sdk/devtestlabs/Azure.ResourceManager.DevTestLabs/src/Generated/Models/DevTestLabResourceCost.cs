@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The properties of a resource cost item. </summary>
     public partial class DevTestLabResourceCost
     {
-        /// <summary> Initializes a new instance of DevTestLabResourceCost. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabResourceCost"/>. </summary>
         internal DevTestLabResourceCost()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabResourceCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabResourceCost"/>. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceUniqueId"> The unique identifier of the resource. </param>
         /// <param name="resourceCost"> The cost component of the resource cost item. </param>
@@ -25,7 +30,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="resourceStatus"> The status of the resource (ex. Active). </param>
         /// <param name="resourceId"> The ID of the resource. </param>
         /// <param name="externalResourceId"> The ID of the external resource. </param>
-        internal DevTestLabResourceCost(string resourceName, string resourceUniqueId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabResourceCost(string resourceName, string resourceUniqueId, double? resourceCost, string resourceType, string resourceOwner, string resourcePricingTier, string resourceStatus, string resourceId, string externalResourceId, Dictionary<string, BinaryData> rawData)
         {
             ResourceName = resourceName;
             ResourceUniqueId = resourceUniqueId;
@@ -36,6 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             ResourceStatus = resourceStatus;
             ResourceId = resourceId;
             ExternalResourceId = externalResourceId;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the resource. </summary>

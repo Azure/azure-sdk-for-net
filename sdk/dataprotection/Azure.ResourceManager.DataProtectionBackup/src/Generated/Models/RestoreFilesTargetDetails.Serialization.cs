@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable
+    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable, IModelJsonSerializable<RestoreFilesTargetDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestoreFilesTargetDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestoreFilesTargetDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("filePrefix"u8);
             writer.WriteStringValue(FilePrefix);
@@ -26,7 +34,115 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RestoreFilesTargetDetails DeserializeRestoreFilesTargetDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string filePrefix = default;
+            RestoreTargetLocationType restoreTargetLocationType = default;
+            Uri url = default;
+            Optional<ResourceIdentifier> targetResourceArmId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filePrefix"u8))
+                {
+                    filePrefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreTargetLocationType"u8))
+                {
+                    restoreTargetLocationType = new RestoreTargetLocationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("url"u8))
+                {
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetResourceArmId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, url, targetResourceArmId.Value, rawData);
+        }
+
+        RestoreFilesTargetDetails IModelJsonSerializable<RestoreFilesTargetDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreFilesTargetDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestoreFilesTargetDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestoreFilesTargetDetails IModelSerializable<RestoreFilesTargetDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestoreFilesTargetDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestoreFilesTargetDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestoreFilesTargetDetails"/> to convert. </param>
+        public static implicit operator RequestContent(RestoreFilesTargetDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestoreFilesTargetDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestoreFilesTargetDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestoreFilesTargetDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabNotificationChannelNotifyContent : IUtf8JsonSerializable
+    public partial class DevTestLabNotificationChannelNotifyContent : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabNotificationChannelNotifyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabNotificationChannelNotifyContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabNotificationChannelNotifyContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventName))
             {
@@ -25,7 +33,103 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("jsonPayload"u8);
                 writer.WriteStringValue(JsonPayload);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DevTestLabNotificationChannelNotifyContent DeserializeDevTestLabNotificationChannelNotifyContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DevTestLabNotificationChannelEventType> eventName = default;
+            Optional<string> jsonPayload = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("eventName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventName = new DevTestLabNotificationChannelEventType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("jsonPayload"u8))
+                {
+                    jsonPayload = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DevTestLabNotificationChannelNotifyContent(Optional.ToNullable(eventName), jsonPayload.Value, rawData);
+        }
+
+        DevTestLabNotificationChannelNotifyContent IModelJsonSerializable<DevTestLabNotificationChannelNotifyContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabNotificationChannelNotifyContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabNotificationChannelNotifyContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabNotificationChannelNotifyContent IModelSerializable<DevTestLabNotificationChannelNotifyContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabNotificationChannelNotifyContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabNotificationChannelNotifyContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabNotificationChannelNotifyContent"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabNotificationChannelNotifyContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabNotificationChannelNotifyContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabNotificationChannelNotifyContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabNotificationChannelNotifyContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

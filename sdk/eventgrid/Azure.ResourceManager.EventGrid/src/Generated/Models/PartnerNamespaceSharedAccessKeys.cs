@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Shared access keys of the partner namespace. </summary>
     public partial class PartnerNamespaceSharedAccessKeys
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceSharedAccessKeys. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceSharedAccessKeys"/>. </summary>
         internal PartnerNamespaceSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerNamespaceSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the partner namespace. </param>
         /// <param name="key2"> Shared access key2 for the partner namespace. </param>
-        internal PartnerNamespaceSharedAccessKeys(string key1, string key2)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerNamespaceSharedAccessKeys(string key1, string key2, Dictionary<string, BinaryData> rawData)
         {
             Key1 = key1;
             Key2 = key2;
+            _rawData = rawData;
         }
 
         /// <summary> Shared access key1 for the partner namespace. </summary>

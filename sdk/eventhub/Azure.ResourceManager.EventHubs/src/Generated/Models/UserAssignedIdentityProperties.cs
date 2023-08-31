@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The UserAssignedIdentityProperties. </summary>
     internal partial class UserAssignedIdentityProperties
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentityProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityProperties"/>. </summary>
         public UserAssignedIdentityProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityProperties"/>. </summary>
         /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
-        internal UserAssignedIdentityProperties(string userAssignedIdentity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserAssignedIdentityProperties(string userAssignedIdentity, Dictionary<string, BinaryData> rawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
+            _rawData = rawData;
         }
 
         /// <summary> ARM ID of user Identity selected for encryption. </summary>

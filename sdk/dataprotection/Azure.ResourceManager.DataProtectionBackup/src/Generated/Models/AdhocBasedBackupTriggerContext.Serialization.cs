@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class AdhocBasedBackupTriggerContext : IUtf8JsonSerializable
+    public partial class AdhocBasedBackupTriggerContext : IUtf8JsonSerializable, IModelJsonSerializable<AdhocBasedBackupTriggerContext>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdhocBasedBackupTriggerContext>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdhocBasedBackupTriggerContext>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AdhocBasedBackupTriggerContext>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("taggingCriteria"u8);
-            writer.WriteObjectValue(AdhocBackupRetention);
+            if (AdhocBackupRetention is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<AdhocBasedBackupTaggingCriteria>)AdhocBackupRetention).Serialize(writer, options);
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdhocBasedBackupTriggerContext DeserializeAdhocBasedBackupTriggerContext(JsonElement element)
+        internal static AdhocBasedBackupTriggerContext DeserializeAdhocBasedBackupTriggerContext(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AdhocBasedBackupTaggingCriteria taggingCriteria = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taggingCriteria"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdhocBasedBackupTriggerContext(objectType, taggingCriteria);
+            return new AdhocBasedBackupTriggerContext(objectType, taggingCriteria, rawData);
+        }
+
+        AdhocBasedBackupTriggerContext IModelJsonSerializable<AdhocBasedBackupTriggerContext>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AdhocBasedBackupTriggerContext>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdhocBasedBackupTriggerContext(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdhocBasedBackupTriggerContext>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AdhocBasedBackupTriggerContext>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdhocBasedBackupTriggerContext IModelSerializable<AdhocBasedBackupTriggerContext>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AdhocBasedBackupTriggerContext>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdhocBasedBackupTriggerContext(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdhocBasedBackupTriggerContext"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdhocBasedBackupTriggerContext"/> to convert. </param>
+        public static implicit operator RequestContent(AdhocBasedBackupTriggerContext model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdhocBasedBackupTriggerContext"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdhocBasedBackupTriggerContext(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdhocBasedBackupTriggerContext(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes a managed rule definition. </summary>
     public partial class ManagedRuleDefinition
     {
-        /// <summary> Initializes a new instance of ManagedRuleDefinition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleDefinition"/>. </summary>
         internal ManagedRuleDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleDefinition"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
-        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleDefinition(string ruleId, ManagedRuleEnabledState? defaultState, RuleMatchActionType? defaultAction, string description, Dictionary<string, BinaryData> rawData)
         {
             RuleId = ruleId;
             DefaultState = defaultState;
             DefaultAction = defaultAction;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Identifier for the managed rule. </summary>

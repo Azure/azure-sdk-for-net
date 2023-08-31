@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Pool health status detail. </summary>
     public partial class DevCenterHealthStatusDetail
     {
-        /// <summary> Initializes a new instance of DevCenterHealthStatusDetail. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthStatusDetail"/>. </summary>
         internal DevCenterHealthStatusDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterHealthStatusDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterHealthStatusDetail"/>. </summary>
         /// <param name="code"> An identifier for the issue. </param>
         /// <param name="message"> A message describing the issue, intended to be suitable for display in a user interface. </param>
-        internal DevCenterHealthStatusDetail(string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterHealthStatusDetail(string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> An identifier for the issue. </summary>

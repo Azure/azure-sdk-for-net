@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorBackendPool : IUtf8JsonSerializable
+    public partial class FrontDoorBackendPool : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorBackendPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorBackendPool>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorBackendPool>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FrontDoorBackendPool>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -35,7 +42,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Backends)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FrontDoorBackend>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -50,11 +64,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 JsonSerializer.Serialize(writer, HealthProbeSettings);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorBackendPool DeserializeFrontDoorBackendPool(JsonElement element)
+        internal static FrontDoorBackendPool DeserializeFrontDoorBackendPool(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<WritableSubResource> loadBalancingSettings = default;
             Optional<WritableSubResource> healthProbeSettings = default;
             Optional<FrontDoorResourceState> resourceState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,8 +173,61 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState), rawData);
+        }
+
+        FrontDoorBackendPool IModelJsonSerializable<FrontDoorBackendPool>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FrontDoorBackendPool>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorBackendPool(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorBackendPool>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FrontDoorBackendPool>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorBackendPool IModelSerializable<FrontDoorBackendPool>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FrontDoorBackendPool>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorBackendPool(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorBackendPool"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorBackendPool"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorBackendPool model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorBackendPool"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorBackendPool(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorBackendPool(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

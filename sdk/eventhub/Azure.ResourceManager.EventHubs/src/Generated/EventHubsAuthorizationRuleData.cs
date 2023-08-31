@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
@@ -18,23 +19,27 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsAuthorizationRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsAuthorizationRuleData"/>. </summary>
         public EventHubsAuthorizationRuleData()
         {
             Rights = new ChangeTrackingList<EventHubsAccessRight>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsAuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsAuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EventHubsAccessRight> rights, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EventHubsAccessRight> rights, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Rights = rights;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The rights associated with the rule. </summary>

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Collection of logs to be enabled or disabled for log analytics. </summary>
     public partial class ClusterLogAnalyticsApplicationLogs
     {
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsApplicationLogs. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsApplicationLogs"/>. </summary>
         public ClusterLogAnalyticsApplicationLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterLogAnalyticsApplicationLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterLogAnalyticsApplicationLogs"/>. </summary>
         /// <param name="isStdOutEnabled"> True if stdout is enabled, otherwise false. </param>
         /// <param name="isStdErrorEnabled"> True if stderror is enabled, otherwise false. </param>
-        internal ClusterLogAnalyticsApplicationLogs(bool? isStdOutEnabled, bool? isStdErrorEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterLogAnalyticsApplicationLogs(bool? isStdOutEnabled, bool? isStdErrorEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsStdOutEnabled = isStdOutEnabled;
             IsStdErrorEnabled = isStdErrorEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> True if stdout is enabled, otherwise false. </summary>

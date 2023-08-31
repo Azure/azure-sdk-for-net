@@ -5,16 +5,105 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterServiceConfigResult
+    public partial class ClusterServiceConfigResult : IUtf8JsonSerializable, IModelJsonSerializable<ClusterServiceConfigResult>
     {
-        internal static ClusterServiceConfigResult DeserializeClusterServiceConfigResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterServiceConfigResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterServiceConfigResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServiceName))
+            {
+                writer.WritePropertyName("serviceName"u8);
+                writer.WriteStringValue(ServiceName);
+            }
+            if (Optional.IsDefined(FileName))
+            {
+                writer.WritePropertyName("fileName"u8);
+                writer.WriteStringValue(FileName);
+            }
+            if (Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            if (Optional.IsDefined(ComponentName))
+            {
+                writer.WritePropertyName("componentName"u8);
+                writer.WriteStringValue(ComponentName);
+            }
+            if (Optional.IsDefined(ServiceConfigListResultPropertiesType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ServiceConfigListResultPropertiesType);
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (Optional.IsCollectionDefined(CustomKeys))
+            {
+                writer.WritePropertyName("customKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(DefaultKeys))
+            {
+                writer.WritePropertyName("defaultKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in DefaultKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ClusterServiceConfigValueEntity>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ClusterServiceConfigResult DeserializeClusterServiceConfigResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> path = default;
             Optional<IReadOnlyDictionary<string, string>> customKeys = default;
             Optional<IReadOnlyDictionary<string, ClusterServiceConfigValueEntity>> defaultKeys = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -99,8 +189,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, Optional.ToDictionary(customKeys), Optional.ToDictionary(defaultKeys));
+            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, Optional.ToDictionary(customKeys), Optional.ToDictionary(defaultKeys), rawData);
+        }
+
+        ClusterServiceConfigResult IModelJsonSerializable<ClusterServiceConfigResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterServiceConfigResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterServiceConfigResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterServiceConfigResult IModelSerializable<ClusterServiceConfigResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterServiceConfigResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterServiceConfigResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterServiceConfigResult"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterServiceConfigResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterServiceConfigResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterServiceConfigResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterServiceConfigResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

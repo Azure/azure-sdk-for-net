@@ -6,28 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Dynatrace Environment Information. </summary>
     public partial class DynatraceEnvironmentInfo
     {
-        /// <summary> Initializes a new instance of DynatraceEnvironmentInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceEnvironmentInfo"/>. </summary>
         public DynatraceEnvironmentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceEnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceEnvironmentInfo"/>. </summary>
         /// <param name="environmentId"> Id of the environment created. </param>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="logsIngestionEndpoint"> Ingestion endpoint used for sending logs. </param>
         /// <param name="landingUri"> Landing URL for Dynatrace environment. </param>
-        internal DynatraceEnvironmentInfo(string environmentId, string ingestionKey, Uri logsIngestionEndpoint, Uri landingUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceEnvironmentInfo(string environmentId, string ingestionKey, Uri logsIngestionEndpoint, Uri landingUri, Dictionary<string, BinaryData> rawData)
         {
             EnvironmentId = environmentId;
             IngestionKey = ingestionKey;
             LogsIngestionEndpoint = logsIngestionEndpoint;
             LandingUri = landingUri;
+            _rawData = rawData;
         }
 
         /// <summary> Id of the environment created. </summary>

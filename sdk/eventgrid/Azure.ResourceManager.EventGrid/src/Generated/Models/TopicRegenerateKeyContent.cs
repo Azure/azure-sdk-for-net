@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Topic regenerate share access key request. </summary>
     public partial class TopicRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of TopicRegenerateKeyContent. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public TopicRegenerateKeyContent(string keyName)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.EventGrid.Models
             Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopicRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> Key name to regenerate key1 or key2. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicRegenerateKeyContent(string keyName, Dictionary<string, BinaryData> rawData)
+        {
+            KeyName = keyName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopicRegenerateKeyContent"/> for deserialization. </summary>
+        internal TopicRegenerateKeyContent()
+        {
         }
 
         /// <summary> Key name to regenerate key1 or key2. </summary>

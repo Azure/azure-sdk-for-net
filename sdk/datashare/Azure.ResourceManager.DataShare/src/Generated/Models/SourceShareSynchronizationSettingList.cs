@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get source share Synchronization settings. </summary>
     internal partial class SourceShareSynchronizationSettingList
     {
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSettingList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSettingList"/>. </summary>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
         /// Please note <see cref="SourceShareSynchronizationSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,17 +31,24 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSettingList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value">
         /// Collection of items of type DataTransferObjects.
         /// Please note <see cref="SourceShareSynchronizationSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ScheduledSourceSynchronizationSetting"/>.
         /// </param>
-        internal SourceShareSynchronizationSettingList(string nextLink, IReadOnlyList<SourceShareSynchronizationSetting> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceShareSynchronizationSettingList(string nextLink, IReadOnlyList<SourceShareSynchronizationSetting> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSettingList"/> for deserialization. </summary>
+        internal SourceShareSynchronizationSettingList()
+        {
         }
 
         /// <summary> The Url of next result page. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class VerifiedPartnerData : ResourceData
     {
-        /// <summary> Initializes a new instance of VerifiedPartnerData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VerifiedPartnerData"/>. </summary>
         public VerifiedPartnerData()
         {
         }
 
-        /// <summary> Initializes a new instance of VerifiedPartnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerifiedPartnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerTopicDetails"> Details of the partner topic scenario. </param>
         /// <param name="partnerDestinationDetails"> Details of the partner destination scenario. </param>
         /// <param name="provisioningState"> Provisioning state of the verified partner. </param>
-        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             OrganizationName = organizationName;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.EventGrid
             PartnerTopicDetails = partnerTopicDetails;
             PartnerDestinationDetails = partnerDestinationDetails;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> ImmutableId of the corresponding partner registration. </summary>

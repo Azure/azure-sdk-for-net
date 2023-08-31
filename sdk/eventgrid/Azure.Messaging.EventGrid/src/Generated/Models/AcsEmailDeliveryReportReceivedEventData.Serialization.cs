@@ -6,17 +6,81 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsEmailDeliveryReportReceivedEventDataConverter))]
-    public partial class AcsEmailDeliveryReportReceivedEventData
+    public partial class AcsEmailDeliveryReportReceivedEventData : IUtf8JsonSerializable, IModelJsonSerializable<AcsEmailDeliveryReportReceivedEventData>
     {
-        internal static AcsEmailDeliveryReportReceivedEventData DeserializeAcsEmailDeliveryReportReceivedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsEmailDeliveryReportReceivedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsEmailDeliveryReportReceivedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sender))
+            {
+                writer.WritePropertyName("sender"u8);
+                writer.WriteStringValue(Sender);
+            }
+            if (Optional.IsDefined(Recipient))
+            {
+                writer.WritePropertyName("recipient"u8);
+                writer.WriteStringValue(Recipient);
+            }
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(DeliveryStatusDetails))
+            {
+                writer.WritePropertyName("deliveryStatusDetails"u8);
+                if (DeliveryStatusDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AcsEmailDeliveryReportStatusDetails>)DeliveryStatusDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(DeliveryAttemptTimestamp))
+            {
+                writer.WritePropertyName("deliveryAttemptTimeStamp"u8);
+                writer.WriteStringValue(DeliveryAttemptTimestamp.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsEmailDeliveryReportReceivedEventData DeserializeAcsEmailDeliveryReportReceivedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +91,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<AcsEmailDeliveryReportStatus> status = default;
             Optional<AcsEmailDeliveryReportStatusDetails> deliveryStatusDetails = default;
             Optional<DateTimeOffset> deliveryAttemptTimeStamp = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -71,15 +136,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     deliveryAttemptTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsEmailDeliveryReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(status), deliveryStatusDetails.Value, Optional.ToNullable(deliveryAttemptTimeStamp));
+            return new AcsEmailDeliveryReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(status), deliveryStatusDetails.Value, Optional.ToNullable(deliveryAttemptTimeStamp), rawData);
+        }
+
+        AcsEmailDeliveryReportReceivedEventData IModelJsonSerializable<AcsEmailDeliveryReportReceivedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsEmailDeliveryReportReceivedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsEmailDeliveryReportReceivedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsEmailDeliveryReportReceivedEventData IModelSerializable<AcsEmailDeliveryReportReceivedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsEmailDeliveryReportReceivedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsEmailDeliveryReportReceivedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsEmailDeliveryReportReceivedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(AcsEmailDeliveryReportReceivedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsEmailDeliveryReportReceivedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsEmailDeliveryReportReceivedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AcsEmailDeliveryReportReceivedEventDataConverter : JsonConverter<AcsEmailDeliveryReportReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsEmailDeliveryReportReceivedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsEmailDeliveryReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

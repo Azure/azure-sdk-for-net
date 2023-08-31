@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> The available private link resources for a provisioning service. </summary>
     internal partial class PrivateLinkResources
     {
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResources"/>. </summary>
         internal PrivateLinkResources()
         {
             Value = new ChangeTrackingList<DeviceProvisioningServicesPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResources"/>. </summary>
         /// <param name="value"> The list of available private link resources for a provisioning service. </param>
-        internal PrivateLinkResources(IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkResources(IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of available private link resources for a provisioning service. </summary>

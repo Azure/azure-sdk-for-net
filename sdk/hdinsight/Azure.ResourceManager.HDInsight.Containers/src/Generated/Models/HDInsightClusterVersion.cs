@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Available cluster version. </summary>
     public partial class HDInsightClusterVersion : ResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightClusterVersion. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersion"/>. </summary>
         public HDInsightClusterVersion()
         {
             Components = new ChangeTrackingList<ClusterComponentItem>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterVersion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="clusterPoolVersion"> The two part cluster pool version. If the cluster version is before cluster pool version on-board, the return value will be empty string. </param>
         /// <param name="isPreview"> Indicate if this version is in preview or not. </param>
         /// <param name="components"> Component list of this cluster type and version. </param>
-        internal HDInsightClusterVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterType, string clusterVersion, string ossVersion, string clusterPoolVersion, bool? isPreview, IReadOnlyList<ClusterComponentItem> components) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterType, string clusterVersion, string ossVersion, string clusterPoolVersion, bool? isPreview, IReadOnlyList<ClusterComponentItem> components, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ClusterType = clusterType;
             ClusterVersion = clusterVersion;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ClusterPoolVersion = clusterPoolVersion;
             IsPreview = isPreview;
             Components = components;
+            _rawData = rawData;
         }
 
         /// <summary> The type of cluster. </summary>

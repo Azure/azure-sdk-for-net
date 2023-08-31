@@ -6,22 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ContainerServiceNodePoolRollingFailedEventDataConverter))]
-    public partial class ContainerServiceNodePoolRollingFailedEventData
+    public partial class ContainerServiceNodePoolRollingFailedEventData : IUtf8JsonSerializable, IModelJsonSerializable<ContainerServiceNodePoolRollingFailedEventData>
     {
-        internal static ContainerServiceNodePoolRollingFailedEventData DeserializeContainerServiceNodePoolRollingFailedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerServiceNodePoolRollingFailedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerServiceNodePoolRollingFailedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ContainerServiceNodePoolRollingFailedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NodePoolName))
+            {
+                writer.WritePropertyName("nodePoolName"u8);
+                writer.WriteStringValue(NodePoolName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerServiceNodePoolRollingFailedEventData DeserializeContainerServiceNodePoolRollingFailedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nodePoolName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodePoolName"u8))
@@ -29,15 +62,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     nodePoolName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName.Value);
+            return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName.Value, rawData);
+        }
+
+        ContainerServiceNodePoolRollingFailedEventData IModelJsonSerializable<ContainerServiceNodePoolRollingFailedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContainerServiceNodePoolRollingFailedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNodePoolRollingFailedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerServiceNodePoolRollingFailedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContainerServiceNodePoolRollingFailedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerServiceNodePoolRollingFailedEventData IModelSerializable<ContainerServiceNodePoolRollingFailedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ContainerServiceNodePoolRollingFailedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerServiceNodePoolRollingFailedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerServiceNodePoolRollingFailedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerServiceNodePoolRollingFailedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerServiceNodePoolRollingFailedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerServiceNodePoolRollingFailedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerServiceNodePoolRollingFailedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerServiceNodePoolRollingFailedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ContainerServiceNodePoolRollingFailedEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingFailedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ContainerServiceNodePoolRollingFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

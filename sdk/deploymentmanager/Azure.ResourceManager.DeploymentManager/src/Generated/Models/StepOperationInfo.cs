@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,19 +14,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Detailed information of a specific step run. </summary>
     public partial class StepOperationInfo
     {
-        /// <summary> Initializes a new instance of StepOperationInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StepOperationInfo"/>. </summary>
         internal StepOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of StepOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepOperationInfo"/>. </summary>
         /// <param name="deploymentName"> The name of the ARM deployment initiated as part of the step. </param>
         /// <param name="correlationId"> Unique identifier to track the request for ARM-based resources. </param>
         /// <param name="startOn"> Start time of the action in UTC. </param>
         /// <param name="endOn"> End time of the action in UTC. </param>
         /// <param name="lastUpdatedOn"> Last time in UTC this operation was updated. </param>
         /// <param name="error"> The errors, if any, for the action. </param>
-        internal StepOperationInfo(string deploymentName, string correlationId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastUpdatedOn, ResponseError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepOperationInfo(string deploymentName, string correlationId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastUpdatedOn, ResponseError error, Dictionary<string, BinaryData> rawData)
         {
             DeploymentName = deploymentName;
             CorrelationId = correlationId;
@@ -33,6 +37,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             EndOn = endOn;
             LastUpdatedOn = lastUpdatedOn;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the ARM deployment initiated as part of the step. </summary>

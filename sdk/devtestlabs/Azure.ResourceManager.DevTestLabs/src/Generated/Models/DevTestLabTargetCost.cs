@@ -14,20 +14,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a cost target. </summary>
     public partial class DevTestLabTargetCost
     {
-        /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabTargetCost"/>. </summary>
         public DevTestLabTargetCost()
         {
             CostThresholds = new ChangeTrackingList<DevTestLabCostThreshold>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabTargetCost"/>. </summary>
         /// <param name="status"> Target cost status. </param>
         /// <param name="target"> Lab target cost. </param>
         /// <param name="costThresholds"> Cost thresholds. </param>
         /// <param name="cycleStartOn"> Reporting cycle start date. </param>
         /// <param name="cycleEndOn"> Reporting cycle end date. </param>
         /// <param name="cycleType"> Reporting cycle type. </param>
-        internal DevTestLabTargetCost(DevTestLabTargetCostStatus? status, int? target, IList<DevTestLabCostThreshold> costThresholds, DateTimeOffset? cycleStartOn, DateTimeOffset? cycleEndOn, DevTestLabReportingCycleType? cycleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabTargetCost(DevTestLabTargetCostStatus? status, int? target, IList<DevTestLabCostThreshold> costThresholds, DateTimeOffset? cycleStartOn, DateTimeOffset? cycleEndOn, DevTestLabReportingCycleType? cycleType, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Target = target;
@@ -35,6 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             CycleStartOn = cycleStartOn;
             CycleEndOn = cycleEndOn;
             CycleType = cycleType;
+            _rawData = rawData;
         }
 
         /// <summary> Target cost status. </summary>

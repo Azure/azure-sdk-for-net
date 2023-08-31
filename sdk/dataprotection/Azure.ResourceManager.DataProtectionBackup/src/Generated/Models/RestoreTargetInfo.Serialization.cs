@@ -5,27 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreTargetInfo : IUtf8JsonSerializable
+    public partial class RestoreTargetInfo : IUtf8JsonSerializable, IModelJsonSerializable<RestoreTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RestoreTargetInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RestoreTargetInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RestoreTargetInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
+            if (DataSourceInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataSourceInfo>)DataSourceInfo).Serialize(writer, options);
+            }
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                if (DataSourceSetInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataSourceSetInfo>)DataSourceSetInfo).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                if (DataSourceAuthCredentials is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataProtectionBackupAuthCredentials>)DataSourceAuthCredentials).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -36,7 +65,135 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static RestoreTargetInfo DeserializeRestoreTargetInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataSourceInfo datasourceInfo = default;
+            Optional<DataSourceSetInfo> datasourceSetInfo = default;
+            Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
+            string objectType = default;
+            RecoverySetting recoveryOption = default;
+            Optional<AzureLocation> restoreLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("datasourceInfo"u8))
+                {
+                    datasourceInfo = DataSourceInfo.DeserializeDataSourceInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("datasourceSetInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    datasourceSetInfo = DataSourceSetInfo.DeserializeDataSourceSetInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("datasourceAuthCredentials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    datasourceAuthCredentials = DataProtectionBackupAuthCredentials.DeserializeDataProtectionBackupAuthCredentials(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryOption"u8))
+                {
+                    recoveryOption = new RecoverySetting(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("restoreLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new RestoreTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), datasourceInfo, datasourceSetInfo.Value, datasourceAuthCredentials.Value, rawData);
+        }
+
+        RestoreTargetInfo IModelJsonSerializable<RestoreTargetInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RestoreTargetInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreTargetInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RestoreTargetInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RestoreTargetInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RestoreTargetInfo IModelSerializable<RestoreTargetInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RestoreTargetInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRestoreTargetInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RestoreTargetInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RestoreTargetInfo"/> to convert. </param>
+        public static implicit operator RequestContent(RestoreTargetInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RestoreTargetInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RestoreTargetInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRestoreTargetInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

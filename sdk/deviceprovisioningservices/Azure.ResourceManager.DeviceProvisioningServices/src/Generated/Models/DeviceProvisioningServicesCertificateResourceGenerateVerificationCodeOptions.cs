@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IfMatch = ifMatch;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions()
+        {
+        }
+
         /// <summary> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </summary>
         public string IfMatch { get; }
         /// <summary> Common Name for the certificate. </summary>

@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class DeviceLifeCycleEventProperties
+    public partial class DeviceLifeCycleEventProperties : IUtf8JsonSerializable, IModelJsonSerializable<DeviceLifeCycleEventProperties>
     {
-        internal static DeviceLifeCycleEventProperties DeserializeDeviceLifeCycleEventProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceLifeCycleEventProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceLifeCycleEventProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(HubName))
+            {
+                writer.WritePropertyName("hubName"u8);
+                writer.WriteStringValue(HubName);
+            }
+            if (Optional.IsDefined(Twin))
+            {
+                writer.WritePropertyName("twin"u8);
+                if (Twin is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeviceTwinInfo>)Twin).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceLifeCycleEventProperties DeserializeDeviceLifeCycleEventProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +71,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> deviceId = default;
             Optional<string> hubName = default;
             Optional<DeviceTwinInfo> twin = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -42,8 +93,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceLifeCycleEventProperties(deviceId.Value, hubName.Value, twin.Value);
+            return new DeviceLifeCycleEventProperties(deviceId.Value, hubName.Value, twin.Value, rawData);
+        }
+
+        DeviceLifeCycleEventProperties IModelJsonSerializable<DeviceLifeCycleEventProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceLifeCycleEventProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceLifeCycleEventProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceLifeCycleEventProperties IModelSerializable<DeviceLifeCycleEventProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceLifeCycleEventProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceLifeCycleEventProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceLifeCycleEventProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceLifeCycleEventProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceLifeCycleEventProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceLifeCycleEventProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceLifeCycleEventProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

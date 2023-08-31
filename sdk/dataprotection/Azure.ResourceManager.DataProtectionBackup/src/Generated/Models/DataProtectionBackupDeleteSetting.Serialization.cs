@@ -5,25 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDeleteSetting : IUtf8JsonSerializable
+    public partial class DataProtectionBackupDeleteSetting : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupDeleteSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupDeleteSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupDeleteSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupDeleteSetting DeserializeDataProtectionBackupDeleteSetting(JsonElement element)
+        internal static DataProtectionBackupDeleteSetting DeserializeDataProtectionBackupDeleteSetting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,7 +57,78 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "AbsoluteDeleteOption": return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element);
                 }
             }
-            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            TimeSpan duration = default;
+            string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("duration"u8))
+                {
+                    duration = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownDeleteOption(duration, objectType, rawData);
+        }
+
+        DataProtectionBackupDeleteSetting IModelJsonSerializable<DataProtectionBackupDeleteSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupDeleteSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupDeleteSetting>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupDeleteSetting IModelSerializable<DataProtectionBackupDeleteSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupDeleteSetting(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataProtectionBackupDeleteSetting"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataProtectionBackupDeleteSetting"/> to convert. </param>
+        public static implicit operator RequestContent(DataProtectionBackupDeleteSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataProtectionBackupDeleteSetting"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataProtectionBackupDeleteSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupDeleteSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

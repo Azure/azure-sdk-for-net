@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class RuntimeScriptActionDetail : IUtf8JsonSerializable
+    public partial class RuntimeScriptActionDetail : IUtf8JsonSerializable, IModelJsonSerializable<RuntimeScriptActionDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuntimeScriptActionDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuntimeScriptActionDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RuntimeScriptActionDetail>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -33,11 +39,25 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element)
+        internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> parameters = default;
             IList<string> roles = default;
             Optional<string> applicationName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scriptExecutionId"u8))
@@ -142,8 +163,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     applicationName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value);
+            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, Optional.ToList(executionSummary), debugInformation.Value, rawData);
+        }
+
+        RuntimeScriptActionDetail IModelJsonSerializable<RuntimeScriptActionDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuntimeScriptActionDetail>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuntimeScriptActionDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuntimeScriptActionDetail>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuntimeScriptActionDetail>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuntimeScriptActionDetail IModelSerializable<RuntimeScriptActionDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RuntimeScriptActionDetail>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuntimeScriptActionDetail(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RuntimeScriptActionDetail"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RuntimeScriptActionDetail"/> to convert. </param>
+        public static implicit operator RequestContent(RuntimeScriptActionDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RuntimeScriptActionDetail"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RuntimeScriptActionDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuntimeScriptActionDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Reason and code for the compliance of the guest configuration assignment resource. </summary>
     public partial class AssignmentReportResourceComplianceReason
     {
-        /// <summary> Initializes a new instance of AssignmentReportResourceComplianceReason. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentReportResourceComplianceReason"/>. </summary>
         public AssignmentReportResourceComplianceReason()
         {
         }
 
-        /// <summary> Initializes a new instance of AssignmentReportResourceComplianceReason. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentReportResourceComplianceReason"/>. </summary>
         /// <param name="phrase"> Reason for the compliance of the guest configuration assignment resource. </param>
         /// <param name="code"> Code for the compliance of the guest configuration assignment resource. </param>
-        internal AssignmentReportResourceComplianceReason(string phrase, string code)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentReportResourceComplianceReason(string phrase, string code, Dictionary<string, BinaryData> rawData)
         {
             Phrase = phrase;
             Code = code;
+            _rawData = rawData;
         }
 
         /// <summary> Reason for the compliance of the guest configuration assignment resource. </summary>

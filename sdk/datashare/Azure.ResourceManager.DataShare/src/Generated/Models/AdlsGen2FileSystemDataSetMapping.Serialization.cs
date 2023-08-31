@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen2FileSystemDataSetMapping : IUtf8JsonSerializable
+    public partial class AdlsGen2FileSystemDataSetMapping : IUtf8JsonSerializable, IModelJsonSerializable<AdlsGen2FileSystemDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdlsGen2FileSystemDataSetMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdlsGen2FileSystemDataSetMapping>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<AdlsGen2FileSystemDataSetMapping>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdlsGen2FileSystemDataSetMapping DeserializeAdlsGen2FileSystemDataSetMapping(JsonElement element)
+        internal static AdlsGen2FileSystemDataSetMapping DeserializeAdlsGen2FileSystemDataSetMapping(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -139,8 +161,61 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdlsGen2FileSystemDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), fileSystem, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), fileSystem, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId, rawData);
+        }
+
+        AdlsGen2FileSystemDataSetMapping IModelJsonSerializable<AdlsGen2FileSystemDataSetMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AdlsGen2FileSystemDataSetMapping>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdlsGen2FileSystemDataSetMapping(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdlsGen2FileSystemDataSetMapping>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AdlsGen2FileSystemDataSetMapping>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdlsGen2FileSystemDataSetMapping IModelSerializable<AdlsGen2FileSystemDataSetMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<AdlsGen2FileSystemDataSetMapping>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdlsGen2FileSystemDataSetMapping(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AdlsGen2FileSystemDataSetMapping"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AdlsGen2FileSystemDataSetMapping"/> to convert. </param>
+        public static implicit operator RequestContent(AdlsGen2FileSystemDataSetMapping model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AdlsGen2FileSystemDataSetMapping"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AdlsGen2FileSystemDataSetMapping(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdlsGen2FileSystemDataSetMapping(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

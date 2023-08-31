@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventTypeUnderTopic : IUtf8JsonSerializable
+    public partial class EventTypeUnderTopic : IUtf8JsonSerializable, IModelJsonSerializable<EventTypeUnderTopic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventTypeUnderTopic>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventTypeUnderTopic>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteBooleanValue(IsInDefaultSet.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventTypeUnderTopic DeserializeEventTypeUnderTopic(JsonElement element)
+        internal static EventTypeUnderTopic DeserializeEventTypeUnderTopic(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> description = default;
             Optional<Uri> schemaUri = default;
             Optional<bool> isInDefaultSet = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,8 +145,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventTypeUnderTopic(id, name, type, systemData.Value, displayName.Value, description.Value, schemaUri.Value, Optional.ToNullable(isInDefaultSet));
+            return new EventTypeUnderTopic(id, name, type, systemData.Value, displayName.Value, description.Value, schemaUri.Value, Optional.ToNullable(isInDefaultSet), rawData);
+        }
+
+        EventTypeUnderTopic IModelJsonSerializable<EventTypeUnderTopic>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventTypeUnderTopic(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventTypeUnderTopic>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventTypeUnderTopic IModelSerializable<EventTypeUnderTopic>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventTypeUnderTopic(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventTypeUnderTopic"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventTypeUnderTopic"/> to convert. </param>
+        public static implicit operator RequestContent(EventTypeUnderTopic model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventTypeUnderTopic"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventTypeUnderTopic(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventTypeUnderTopic(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

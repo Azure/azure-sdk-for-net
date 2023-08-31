@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Update parameters for accounts. </summary>
     public partial class DataShareAccountPatch
     {
-        /// <summary> Initializes a new instance of DataShareAccountPatch. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountPatch"/>. </summary>
         public DataShareAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataShareAccountPatch"/>. </summary>
+        /// <param name="tags"> Tags on the azure resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareAccountPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Tags on the azure resource. </summary>

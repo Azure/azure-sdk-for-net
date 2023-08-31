@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ElasticSanPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResourceListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/>. </summary>
         internal ElasticSanPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ElasticSanPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal ElasticSanPrivateLinkResourceListResult(IReadOnlyList<ElasticSanPrivateLinkResource> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPrivateLinkResourceListResult(IReadOnlyList<ElasticSanPrivateLinkResource> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

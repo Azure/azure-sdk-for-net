@@ -6,17 +6,86 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(WebSlotSwapWithPreviewStartedEventDataConverter))]
-    public partial class WebSlotSwapWithPreviewStartedEventData
+    public partial class WebSlotSwapWithPreviewStartedEventData : IUtf8JsonSerializable, IModelJsonSerializable<WebSlotSwapWithPreviewStartedEventData>
     {
-        internal static WebSlotSwapWithPreviewStartedEventData DeserializeWebSlotSwapWithPreviewStartedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebSlotSwapWithPreviewStartedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebSlotSwapWithPreviewStartedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AppEventTypeDetail))
+            {
+                writer.WritePropertyName("appEventTypeDetail"u8);
+                if (AppEventTypeDetail is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppEventTypeDetail>)AppEventTypeDetail).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                writer.WritePropertyName("clientRequestId"u8);
+                writer.WriteStringValue(ClientRequestId);
+            }
+            if (Optional.IsDefined(CorrelationRequestId))
+            {
+                writer.WritePropertyName("correlationRequestId"u8);
+                writer.WriteStringValue(CorrelationRequestId);
+            }
+            if (Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId);
+            }
+            if (Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
+            if (Optional.IsDefined(Verb))
+            {
+                writer.WritePropertyName("verb"u8);
+                writer.WriteStringValue(Verb);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static WebSlotSwapWithPreviewStartedEventData DeserializeWebSlotSwapWithPreviewStartedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> requestId = default;
             Optional<string> address = default;
             Optional<string> verb = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
@@ -69,15 +139,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     verb = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebSlotSwapWithPreviewStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebSlotSwapWithPreviewStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value, rawData);
+        }
+
+        WebSlotSwapWithPreviewStartedEventData IModelJsonSerializable<WebSlotSwapWithPreviewStartedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebSlotSwapWithPreviewStartedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebSlotSwapWithPreviewStartedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebSlotSwapWithPreviewStartedEventData IModelSerializable<WebSlotSwapWithPreviewStartedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebSlotSwapWithPreviewStartedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebSlotSwapWithPreviewStartedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebSlotSwapWithPreviewStartedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(WebSlotSwapWithPreviewStartedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebSlotSwapWithPreviewStartedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebSlotSwapWithPreviewStartedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebSlotSwapWithPreviewStartedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class WebSlotSwapWithPreviewStartedEventDataConverter : JsonConverter<WebSlotSwapWithPreviewStartedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebSlotSwapWithPreviewStartedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override WebSlotSwapWithPreviewStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

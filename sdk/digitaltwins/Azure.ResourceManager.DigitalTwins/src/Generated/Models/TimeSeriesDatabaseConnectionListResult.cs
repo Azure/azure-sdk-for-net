@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DigitalTwins;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> A pageable list of time series database connection resources. </summary>
     internal partial class TimeSeriesDatabaseConnectionListResult
     {
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionListResult"/>. </summary>
         internal TimeSeriesDatabaseConnectionListResult()
         {
             Value = new ChangeTrackingList<TimeSeriesDatabaseConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesDatabaseConnectionListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="value"> A list of time series database connection resources. </param>
-        internal TimeSeriesDatabaseConnectionListResult(string nextLink, IReadOnlyList<TimeSeriesDatabaseConnectionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesDatabaseConnectionListResult(string nextLink, IReadOnlyList<TimeSeriesDatabaseConnectionData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of results. </summary>

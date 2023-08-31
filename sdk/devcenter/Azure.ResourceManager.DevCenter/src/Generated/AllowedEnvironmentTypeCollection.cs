@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AllowedEnvironmentTypeResource(Client, AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(e)), _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics, Pipeline, "AllowedEnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AllowedEnvironmentTypeResource(Client, AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(e)), _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics, Pipeline, "AllowedEnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AllowedEnvironmentTypeResource(Client, AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(e)), _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics, Pipeline, "AllowedEnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AllowedEnvironmentTypeResource(Client, AllowedEnvironmentTypeData.DeserializeAllowedEnvironmentTypeData(e)), _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics, Pipeline, "AllowedEnvironmentTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

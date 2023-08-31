@@ -8,14 +8,75 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceSsoDetailsResult
+    public partial class DynatraceSsoDetailsResult : IUtf8JsonSerializable, IModelJsonSerializable<DynatraceSsoDetailsResult>
     {
-        internal static DynatraceSsoDetailsResult DeserializeDynatraceSsoDetailsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynatraceSsoDetailsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynatraceSsoDetailsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsSsoEnabled))
+            {
+                writer.WritePropertyName("isSsoEnabled"u8);
+                writer.WriteStringValue(IsSsoEnabled.Value.ToString());
+            }
+            if (Optional.IsDefined(MetadataUri))
+            {
+                writer.WritePropertyName("metadataUrl"u8);
+                writer.WriteStringValue(MetadataUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SingleSignOnUri))
+            {
+                writer.WritePropertyName("singleSignOnUrl"u8);
+                writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(AadDomains))
+            {
+                writer.WritePropertyName("aadDomains"u8);
+                writer.WriteStartArray();
+                foreach (var item in AadDomains)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdminUsers))
+            {
+                writer.WritePropertyName("adminUsers"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdminUsers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DynatraceSsoDetailsResult DeserializeDynatraceSsoDetailsResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +86,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<Uri> singleSignOnUrl = default;
             Optional<IReadOnlyList<string>> aadDomains = default;
             Optional<IReadOnlyList<string>> adminUsers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSsoEnabled"u8))
@@ -82,8 +144,61 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     adminUsers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers));
+            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers), rawData);
+        }
+
+        DynatraceSsoDetailsResult IModelJsonSerializable<DynatraceSsoDetailsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceSsoDetailsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynatraceSsoDetailsResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynatraceSsoDetailsResult IModelSerializable<DynatraceSsoDetailsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynatraceSsoDetailsResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynatraceSsoDetailsResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynatraceSsoDetailsResult"/> to convert. </param>
+        public static implicit operator RequestContent(DynatraceSsoDetailsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynatraceSsoDetailsResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynatraceSsoDetailsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynatraceSsoDetailsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

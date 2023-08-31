@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class UserSessionMessage : IUtf8JsonSerializable
+    public partial class UserSessionMessage : IUtf8JsonSerializable, IModelJsonSerializable<UserSessionMessage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UserSessionMessage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UserSessionMessage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MessageTitle))
             {
@@ -25,7 +33,99 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static UserSessionMessage DeserializeUserSessionMessage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> messageTitle = default;
+            Optional<string> messageBody = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("messageTitle"u8))
+                {
+                    messageTitle = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("messageBody"u8))
+                {
+                    messageBody = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UserSessionMessage(messageTitle.Value, messageBody.Value, rawData);
+        }
+
+        UserSessionMessage IModelJsonSerializable<UserSessionMessage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserSessionMessage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UserSessionMessage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UserSessionMessage IModelSerializable<UserSessionMessage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUserSessionMessage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UserSessionMessage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserSessionMessage"/> to convert. </param>
+        public static implicit operator RequestContent(UserSessionMessage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserSessionMessage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserSessionMessage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUserSessionMessage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

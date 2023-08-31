@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StorageQueueEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class StorageQueueEventSubscriptionDestination : IUtf8JsonSerializable, IModelJsonSerializable<StorageQueueEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageQueueEventSubscriptionDestination>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageQueueEventSubscriptionDestination>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<StorageQueueEventSubscriptionDestination>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteNumberValue(QueueMessageTimeToLiveInSeconds.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageQueueEventSubscriptionDestination DeserializeStorageQueueEventSubscriptionDestination(JsonElement element)
+        internal static StorageQueueEventSubscriptionDestination DeserializeStorageQueueEventSubscriptionDestination(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> queueName = default;
             Optional<long> queueMessageTimeToLiveInSeconds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -90,8 +113,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageQueueEventSubscriptionDestination(endpointType, resourceId.Value, queueName.Value, Optional.ToNullable(queueMessageTimeToLiveInSeconds));
+            return new StorageQueueEventSubscriptionDestination(endpointType, resourceId.Value, queueName.Value, Optional.ToNullable(queueMessageTimeToLiveInSeconds), rawData);
+        }
+
+        StorageQueueEventSubscriptionDestination IModelJsonSerializable<StorageQueueEventSubscriptionDestination>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StorageQueueEventSubscriptionDestination>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageQueueEventSubscriptionDestination(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageQueueEventSubscriptionDestination>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StorageQueueEventSubscriptionDestination>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageQueueEventSubscriptionDestination IModelSerializable<StorageQueueEventSubscriptionDestination>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<StorageQueueEventSubscriptionDestination>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageQueueEventSubscriptionDestination(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageQueueEventSubscriptionDestination"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageQueueEventSubscriptionDestination"/> to convert. </param>
+        public static implicit operator RequestContent(StorageQueueEventSubscriptionDestination model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageQueueEventSubscriptionDestination(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageQueueEventSubscriptionDestination(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

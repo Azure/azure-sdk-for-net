@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    internal partial class ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment : IUtf8JsonSerializable
+    internal partial class ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment : IUtf8JsonSerializable, IModelJsonSerializable<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Roles))
             {
@@ -23,20 +30,42 @@ namespace Azure.ResourceManager.DevCenter.Models
                 foreach (var item in Roles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevCenterEnvironmentRole>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(JsonElement element)
+        internal static ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roles"u8))
@@ -53,8 +82,61 @@ namespace Azure.ResourceManager.DevCenter.Models
                     roles = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Optional.ToDictionary(roles));
+            return new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Optional.ToDictionary(roles), rawData);
+        }
+
+        ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment IModelJsonSerializable<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment IModelSerializable<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/> to convert. </param>
+        public static implicit operator RequestContent(ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

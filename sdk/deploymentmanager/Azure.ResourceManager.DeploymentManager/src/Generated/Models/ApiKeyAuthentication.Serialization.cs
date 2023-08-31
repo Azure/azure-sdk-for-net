@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class ApiKeyAuthentication : IUtf8JsonSerializable
+    public partial class ApiKeyAuthentication : IUtf8JsonSerializable, IModelJsonSerializable<ApiKeyAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiKeyAuthentication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiKeyAuthentication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ApiKeyAuthentication>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStringValue(Value);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AuthType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiKeyAuthentication DeserializeApiKeyAuthentication(JsonElement element)
+        internal static ApiKeyAuthentication DeserializeApiKeyAuthentication(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             RestAuthLocation @in = default;
             string value = default;
             RestAuthType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     type = property.Value.GetString().ToRestAuthType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiKeyAuthentication(type, name, @in, value);
+            return new ApiKeyAuthentication(type, name, @in, value, rawData);
+        }
+
+        ApiKeyAuthentication IModelJsonSerializable<ApiKeyAuthentication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApiKeyAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiKeyAuthentication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiKeyAuthentication>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApiKeyAuthentication>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiKeyAuthentication IModelSerializable<ApiKeyAuthentication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApiKeyAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiKeyAuthentication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiKeyAuthentication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiKeyAuthentication"/> to convert. </param>
+        public static implicit operator RequestContent(ApiKeyAuthentication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiKeyAuthentication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiKeyAuthentication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiKeyAuthentication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

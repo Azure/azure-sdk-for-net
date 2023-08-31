@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The list script execution history response. </summary>
     internal partial class ScriptActionExecutionHistoryList
     {
-        /// <summary> Initializes a new instance of ScriptActionExecutionHistoryList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionHistoryList"/>. </summary>
         internal ScriptActionExecutionHistoryList()
         {
             Value = new ChangeTrackingList<RuntimeScriptActionDetail>();
         }
 
-        /// <summary> Initializes a new instance of ScriptActionExecutionHistoryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionHistoryList"/>. </summary>
         /// <param name="value"> The list of persisted script action details for the cluster. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ScriptActionExecutionHistoryList(IReadOnlyList<RuntimeScriptActionDetail> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActionExecutionHistoryList(IReadOnlyList<RuntimeScriptActionDetail> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of persisted script action details for the cluster. </summary>

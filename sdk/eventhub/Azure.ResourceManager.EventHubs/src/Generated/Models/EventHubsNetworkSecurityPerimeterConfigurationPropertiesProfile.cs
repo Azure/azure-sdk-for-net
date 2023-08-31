@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Information about current network profile. </summary>
     public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile()
         {
             AccessRules = new ChangeTrackingList<EventHubsNspAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
-        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<EventHubsNspAccessRule> accessRules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<EventHubsNspAccessRule> accessRules, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
             AccessRules = accessRules;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the resource. </summary>

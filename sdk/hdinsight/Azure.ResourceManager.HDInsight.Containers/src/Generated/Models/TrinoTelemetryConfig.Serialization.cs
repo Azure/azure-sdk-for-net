@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class TrinoTelemetryConfig : IUtf8JsonSerializable
+    public partial class TrinoTelemetryConfig : IUtf8JsonSerializable, IModelJsonSerializable<TrinoTelemetryConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrinoTelemetryConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrinoTelemetryConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HivecatalogName))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrinoTelemetryConfig DeserializeTrinoTelemetryConfig(JsonElement element)
+        internal static TrinoTelemetryConfig DeserializeTrinoTelemetryConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> hivecatalogSchema = default;
             Optional<int> partitionRetentionInDays = default;
             Optional<string> path = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hivecatalogName"u8))
@@ -74,8 +97,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrinoTelemetryConfig(hivecatalogName.Value, hivecatalogSchema.Value, Optional.ToNullable(partitionRetentionInDays), path.Value);
+            return new TrinoTelemetryConfig(hivecatalogName.Value, hivecatalogSchema.Value, Optional.ToNullable(partitionRetentionInDays), path.Value, rawData);
+        }
+
+        TrinoTelemetryConfig IModelJsonSerializable<TrinoTelemetryConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrinoTelemetryConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrinoTelemetryConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrinoTelemetryConfig IModelSerializable<TrinoTelemetryConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrinoTelemetryConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrinoTelemetryConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrinoTelemetryConfig"/> to convert. </param>
+        public static implicit operator RequestContent(TrinoTelemetryConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrinoTelemetryConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrinoTelemetryConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrinoTelemetryConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
