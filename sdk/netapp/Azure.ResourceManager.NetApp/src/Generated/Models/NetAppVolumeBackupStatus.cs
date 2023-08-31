@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Backup status. </summary>
     public partial class NetAppVolumeBackupStatus
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupStatus"/>. </summary>
         internal NetAppVolumeBackupStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupStatus"/>. </summary>
         /// <param name="isHealthy"> Backup health status. </param>
         /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
         /// <param name="mirrorState"> The status of the backup. </param>
@@ -24,7 +29,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="lastTransferSize"> Displays the last transfer size. </param>
         /// <param name="lastTransferType"> Displays the last transfer type. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        internal NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, Dictionary<string, BinaryData> rawData)
         {
             IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
@@ -34,6 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
             LastTransferSize = lastTransferSize;
             LastTransferType = lastTransferType;
             TotalTransferBytes = totalTransferBytes;
+            _rawData = rawData;
         }
 
         /// <summary> Backup health status. </summary>

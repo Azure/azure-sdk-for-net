@@ -5,23 +5,71 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactAntennaConfiguration
+    public partial class OrbitalContactAntennaConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<OrbitalContactAntennaConfiguration>
     {
-        internal static OrbitalContactAntennaConfiguration DeserializeOrbitalContactAntennaConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrbitalContactAntennaConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrbitalContactAntennaConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DestinationIP))
+            {
+                writer.WritePropertyName("destinationIp"u8);
+                writer.WriteStringValue(DestinationIP.ToString());
+            }
+            if (Optional.IsCollectionDefined(SourceIPs))
+            {
+                writer.WritePropertyName("sourceIps"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourceIPs)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OrbitalContactAntennaConfiguration DeserializeOrbitalContactAntennaConfiguration(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IPAddress> destinationIP = default;
             Optional<IReadOnlyList<IPAddress>> sourceIPs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationIp"u8))
@@ -54,8 +102,57 @@ namespace Azure.ResourceManager.Orbital.Models
                     sourceIPs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrbitalContactAntennaConfiguration(destinationIP.Value, Optional.ToList(sourceIPs));
+            return new OrbitalContactAntennaConfiguration(destinationIP.Value, Optional.ToList(sourceIPs), rawData);
+        }
+
+        OrbitalContactAntennaConfiguration IModelJsonSerializable<OrbitalContactAntennaConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalContactAntennaConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrbitalContactAntennaConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrbitalContactAntennaConfiguration IModelSerializable<OrbitalContactAntennaConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrbitalContactAntennaConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OrbitalContactAntennaConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OrbitalContactAntennaConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrbitalContactAntennaConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

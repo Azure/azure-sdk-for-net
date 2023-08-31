@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileAttachedDataNetworkData : IUtf8JsonSerializable
+    public partial class MobileAttachedDataNetworkData : IUtf8JsonSerializable, IModelJsonSerializable<MobileAttachedDataNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileAttachedDataNetworkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileAttachedDataNetworkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -68,11 +75,25 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileAttachedDataNetworkData DeserializeMobileAttachedDataNetworkData(JsonElement element)
+        internal static MobileAttachedDataNetworkData DeserializeMobileAttachedDataNetworkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<NaptConfiguration> naptConfiguration = default;
             Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
             Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -207,8 +229,57 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Optional.ToList(userEquipmentAddressPoolPrefix), Optional.ToList(userEquipmentStaticAddressPoolPrefix));
+            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Optional.ToList(userEquipmentAddressPoolPrefix), Optional.ToList(userEquipmentStaticAddressPoolPrefix), rawData);
+        }
+
+        MobileAttachedDataNetworkData IModelJsonSerializable<MobileAttachedDataNetworkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileAttachedDataNetworkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileAttachedDataNetworkData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileAttachedDataNetworkData IModelSerializable<MobileAttachedDataNetworkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileAttachedDataNetworkData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MobileAttachedDataNetworkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MobileAttachedDataNetworkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileAttachedDataNetworkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

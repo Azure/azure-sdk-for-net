@@ -8,14 +8,75 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkManagerDeploymentStatus
+    public partial class NetworkManagerDeploymentStatus : IUtf8JsonSerializable, IModelJsonSerializable<NetworkManagerDeploymentStatus>
     {
-        internal static NetworkManagerDeploymentStatus DeserializeNetworkManagerDeploymentStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkManagerDeploymentStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkManagerDeploymentStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CommitOn))
+            {
+                writer.WritePropertyName("commitTime"u8);
+                writer.WriteStringValue(CommitOn.Value, "O");
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (Optional.IsDefined(DeploymentState))
+            {
+                writer.WritePropertyName("deploymentStatus"u8);
+                writer.WriteStringValue(DeploymentState.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ConfigurationIds))
+            {
+                writer.WritePropertyName("configurationIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConfigurationIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DeploymentType))
+            {
+                writer.WritePropertyName("deploymentType"u8);
+                writer.WriteStringValue(DeploymentType.Value.ToString());
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NetworkManagerDeploymentStatus DeserializeNetworkManagerDeploymentStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> configurationIds = default;
             Optional<NetworkConfigurationDeploymentType> deploymentType = default;
             Optional<string> errorMessage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitTime"u8))
@@ -79,8 +141,57 @@ namespace Azure.ResourceManager.Network.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value);
+            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value, rawData);
+        }
+
+        NetworkManagerDeploymentStatus IModelJsonSerializable<NetworkManagerDeploymentStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerDeploymentStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkManagerDeploymentStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkManagerDeploymentStatus IModelSerializable<NetworkManagerDeploymentStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkManagerDeploymentStatus(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetworkManagerDeploymentStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetworkManagerDeploymentStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkManagerDeploymentStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

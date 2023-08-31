@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundSecurityRules : IUtf8JsonSerializable
+    public partial class InboundSecurityRules : IUtf8JsonSerializable, IModelJsonSerializable<InboundSecurityRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InboundSecurityRules>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<InboundSecurityRules>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteNumberValue(DestinationPortRange.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InboundSecurityRules DeserializeInboundSecurityRules(JsonElement element)
+        internal static InboundSecurityRules DeserializeInboundSecurityRules(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<InboundSecurityRulesProtocol> protocol = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<int> destinationPortRange = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -67,8 +90,57 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPortRange = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new InboundSecurityRules(Optional.ToNullable(protocol), sourceAddressPrefix.Value, Optional.ToNullable(destinationPortRange));
+            return new InboundSecurityRules(Optional.ToNullable(protocol), sourceAddressPrefix.Value, Optional.ToNullable(destinationPortRange), rawData);
+        }
+
+        InboundSecurityRules IModelJsonSerializable<InboundSecurityRules>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInboundSecurityRules(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<InboundSecurityRules>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        InboundSecurityRules IModelSerializable<InboundSecurityRules>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeInboundSecurityRules(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(InboundSecurityRules model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator InboundSecurityRules(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeInboundSecurityRules(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

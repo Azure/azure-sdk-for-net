@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DscpQosDefinition : IUtf8JsonSerializable
+    public partial class DscpQosDefinition : IUtf8JsonSerializable, IModelJsonSerializable<DscpQosDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DscpQosDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DscpQosDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Markings))
             {
@@ -71,11 +78,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DscpQosDefinition DeserializeDscpQosDefinition(JsonElement element)
+        internal static DscpQosDefinition DeserializeDscpQosDefinition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +107,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<QosPortRange>> sourcePortRanges = default;
             Optional<IList<QosPortRange>> destinationPortRanges = default;
             Optional<ProtocolType> protocol = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("markings"u8))
@@ -167,8 +189,57 @@ namespace Azure.ResourceManager.Network.Models
                     protocol = new ProtocolType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DscpQosDefinition(Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol));
+            return new DscpQosDefinition(Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), rawData);
+        }
+
+        DscpQosDefinition IModelJsonSerializable<DscpQosDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscpQosDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DscpQosDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DscpQosDefinition IModelSerializable<DscpQosDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDscpQosDefinition(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DscpQosDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DscpQosDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDscpQosDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

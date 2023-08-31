@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<EmbeddingItem>();
 
-            return new Embeddings(data?.ToList(), usage);
+            return new Embeddings(data?.ToList(), usage, default);
         }
 
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
         {
             embedding ??= new List<float>();
 
-            return new EmbeddingItem(embedding?.ToList(), index);
+            return new EmbeddingItem(embedding?.ToList(), index, default);
         }
 
         /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.EmbeddingsUsage"/> instance for mocking. </returns>
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
-            return new EmbeddingsUsage(promptTokens, totalTokens);
+            return new EmbeddingsUsage(promptTokens, totalTokens, default);
         }
 
         /// <summary> Initializes a new instance of Completions. </summary>
@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI
             promptFilterResults ??= new List<PromptFilterResult>();
             choices ??= new List<Choice>();
 
-            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage, default);
         }
 
         /// <summary> Initializes a new instance of PromptFilterResult. </summary>
@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.PromptFilterResult"/> instance for mocking. </returns>
         public static PromptFilterResult PromptFilterResult(int promptIndex = default, ContentFilterResults contentFilterResults = null)
         {
-            return new PromptFilterResult(promptIndex, contentFilterResults);
+            return new PromptFilterResult(promptIndex, contentFilterResults, default);
         }
 
         /// <summary> Initializes a new instance of ContentFilterResults. </summary>
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
         public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null)
         {
-            return new ContentFilterResults(sexual, violence, hate, selfHarm);
+            return new ContentFilterResults(sexual, violence, hate, selfHarm, default);
         }
 
         /// <summary> Initializes a new instance of ContentFilterResult. </summary>
@@ -117,7 +117,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
         public static ContentFilterResult ContentFilterResult(ContentFilterSeverity severity = default, bool filtered = default)
         {
-            return new ContentFilterResult(severity, filtered);
+            return new ContentFilterResult(severity, filtered, default);
         }
 
         /// <summary> Initializes a new instance of Choice. </summary>
@@ -133,7 +133,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
         public static Choice Choice(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason, default);
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
             topLogProbabilities ??= new List<IDictionary<string, float?>>();
             textOffsets ??= new List<int>();
 
-            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList());
+            return new CompletionsLogProbabilityModel(tokens?.ToList(), tokenLogProbabilities?.ToList(), topLogProbabilities?.ToList(), textOffsets?.ToList(), default);
         }
 
         /// <summary> Initializes a new instance of CompletionsUsage. </summary>
@@ -159,7 +159,7 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.CompletionsUsage"/> instance for mocking. </returns>
         public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
         {
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, default);
         }
 
         /// <summary> Initializes a new instance of ChatCompletions. </summary>
@@ -184,7 +184,7 @@ namespace Azure.AI.OpenAI
             choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<PromptFilterResult>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
+            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage, default);
         }
 
         /// <summary> Initializes a new instance of ImageGenerations. </summary>
@@ -195,21 +195,15 @@ namespace Azure.AI.OpenAI
         {
             data ??= new List<ImageLocation>();
 
-            return new ImageGenerations(created, data?.ToList());
+            return new ImageGenerations(created, data?.ToList(), default);
         }
 
         /// <summary> Initializes a new instance of ImageLocation. </summary>
         /// <param name="url"> The URL that provides temporary access to download the generated image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         /// <returns> A new <see cref="OpenAI.ImageLocation"/> instance for mocking. </returns>
         public static ImageLocation ImageLocation(Uri url = null)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-
-            return new ImageLocation(url);
+            return new ImageLocation(url, default);
         }
     }
 }

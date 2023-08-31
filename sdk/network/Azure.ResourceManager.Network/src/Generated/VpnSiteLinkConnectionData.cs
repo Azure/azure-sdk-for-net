@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnSiteLinkConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         public VpnSiteLinkConnectionData()
         {
             VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
             EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -51,7 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the VPN site link connection resource. </param>
         /// <param name="ingressNatRules"> List of ingress NatRules. </param>
         /// <param name="egressNatRules"> List of egress NatRules. </param>
-        internal VpnSiteLinkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnSiteLinkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource vpnSiteLink, int? routingWeight, VpnLinkConnectionMode? vpnLinkConnectionMode, VpnConnectionStatus? connectionStatus, VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType, long? ingressBytesTransferred, long? egressBytesTransferred, int? connectionBandwidth, string sharedKey, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, bool? enableRateLimiting, bool? useLocalAzureIPAddress, NetworkProvisioningState? provisioningState, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             VpnSiteLink = vpnSiteLink;

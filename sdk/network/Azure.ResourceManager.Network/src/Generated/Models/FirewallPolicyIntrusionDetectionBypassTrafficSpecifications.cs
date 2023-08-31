@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Intrusion detection bypass traffic specification. </summary>
     public partial class FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
         public FirewallPolicyIntrusionDetectionBypassTrafficSpecifications()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
         /// <param name="name"> Name of the bypass traffic rule. </param>
         /// <param name="description"> Description of the bypass traffic rule. </param>
         /// <param name="protocol"> The rule bypass protocol. </param>
@@ -32,7 +35,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPorts"> List of destination ports or ranges. </param>
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
-        internal FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name, string description, FirewallPolicyIntrusionDetectionProtocol? protocol, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name, string description, FirewallPolicyIntrusionDetectionProtocol? protocol, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Description = description;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationPorts = destinationPorts;
             SourceIPGroups = sourceIPGroups;
             DestinationIPGroups = destinationIPGroups;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the bypass traffic rule. </summary>

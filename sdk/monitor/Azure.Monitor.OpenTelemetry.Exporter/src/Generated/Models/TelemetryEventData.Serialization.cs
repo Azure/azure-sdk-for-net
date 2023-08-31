@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryEventData : IUtf8JsonSerializable
+    internal partial class TelemetryEventData : IUtf8JsonSerializable, IModelJsonSerializable<TelemetryEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TelemetryEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TelemetryEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<TelemetryEventData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -47,6 +55,110 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        internal static TelemetryEventData DeserializeTelemetryEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<IDictionary<string, double>> measurements = default;
+            int ver = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("measurements"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetDouble());
+                    }
+                    measurements = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("ver"u8))
+                {
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new TelemetryEventData(ver, additionalProperties, name, Optional.ToDictionary(properties), Optional.ToDictionary(measurements));
+        }
+
+        TelemetryEventData IModelJsonSerializable<TelemetryEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TelemetryEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelemetryEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TelemetryEventData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TelemetryEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TelemetryEventData IModelSerializable<TelemetryEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<TelemetryEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTelemetryEventData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TelemetryEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TelemetryEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTelemetryEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

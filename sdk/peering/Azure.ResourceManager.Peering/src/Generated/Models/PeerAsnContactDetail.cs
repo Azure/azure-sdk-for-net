@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The contact detail class. </summary>
     public partial class PeerAsnContactDetail
     {
-        /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeerAsnContactDetail"/>. </summary>
         public PeerAsnContactDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnContactDetail"/>. </summary>
         /// <param name="role"> The role of the contact. </param>
         /// <param name="email"> The e-mail address of the contact. </param>
         /// <param name="phone"> The phone number of the contact. </param>
-        internal PeerAsnContactDetail(PeeringRole? role, string email, string phone)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeerAsnContactDetail(PeeringRole? role, string email, string phone, Dictionary<string, BinaryData> rawData)
         {
             Role = role;
             Email = email;
             Phone = phone;
+            _rawData = rawData;
         }
 
         /// <summary> The role of the contact. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,27 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> PeeringService provider. </summary>
     public partial class PeeringServiceProvider : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringServiceProvider. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceProvider"/>. </summary>
         public PeeringServiceProvider()
         {
             PeeringLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PeeringServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceProvider"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="serviceProviderName"> The name of the service provider. </param>
         /// <param name="peeringLocations"> The list of locations at which the service provider peers with Microsoft. </param>
-        internal PeeringServiceProvider(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceProviderName, IList<string> peeringLocations) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServiceProvider(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceProviderName, IList<string> peeringLocations, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ServiceProviderName = serviceProviderName;
             PeeringLocations = peeringLocations;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the service provider. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
     public partial class SlimPolicyMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
         internal SlimPolicyMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of SlimPolicyMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="owner"> The owner of the policy metadata. </param>
         /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
         /// <param name="metadata"> Additional metadata. </param>
-        internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             MetadataId = metadataId;
             Category = category;
@@ -38,6 +42,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Owner = owner;
             AdditionalContentUri = additionalContentUri;
             Metadata = metadata;
+            _rawData = rawData;
         }
 
         /// <summary> The policy metadata identifier. </summary>

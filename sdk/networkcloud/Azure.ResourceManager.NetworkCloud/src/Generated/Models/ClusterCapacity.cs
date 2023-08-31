@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterCapacity represents various details regarding compute capacity. </summary>
     public partial class ClusterCapacity
     {
-        /// <summary> Initializes a new instance of ClusterCapacity. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterCapacity"/>. </summary>
         internal ClusterCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCapacity"/>. </summary>
         /// <param name="availableApplianceStorageGB"> The remaining appliance-based storage in GB available for workload use. </param>
         /// <param name="availableCoreCount"> The remaining number of cores that are available in this cluster for workload use. </param>
         /// <param name="availableHostStorageGB"> The remaining machine or host-based storage in GB available for workload use. </param>
@@ -24,7 +29,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="totalCoreCount"> The total number of cores that are supported by this cluster for workload use. </param>
         /// <param name="totalHostStorageGB"> The total machine or host-based storage in GB supported by this cluster for workload use. </param>
         /// <param name="totalMemoryGB"> The total memory supported by this cluster for workload use. </param>
-        internal ClusterCapacity(long? availableApplianceStorageGB, long? availableCoreCount, long? availableHostStorageGB, long? availableMemoryGB, long? totalApplianceStorageGB, long? totalCoreCount, long? totalHostStorageGB, long? totalMemoryGB)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterCapacity(long? availableApplianceStorageGB, long? availableCoreCount, long? availableHostStorageGB, long? availableMemoryGB, long? totalApplianceStorageGB, long? totalCoreCount, long? totalHostStorageGB, long? totalMemoryGB, Dictionary<string, BinaryData> rawData)
         {
             AvailableApplianceStorageGB = availableApplianceStorageGB;
             AvailableCoreCount = availableCoreCount;
@@ -34,6 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             TotalCoreCount = totalCoreCount;
             TotalHostStorageGB = totalHostStorageGB;
             TotalMemoryGB = totalMemoryGB;
+            _rawData = rawData;
         }
 
         /// <summary> The remaining appliance-based storage in GB available for workload use. </summary>

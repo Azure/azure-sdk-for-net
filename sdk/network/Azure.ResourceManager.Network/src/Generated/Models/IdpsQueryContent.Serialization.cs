@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IdpsQueryContent : IUtf8JsonSerializable
+    public partial class IdpsQueryContent : IUtf8JsonSerializable, IModelJsonSerializable<IdpsQueryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IdpsQueryContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IdpsQueryContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Filters))
             {
@@ -45,7 +53,134 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IdpsQueryContent DeserializeIdpsQueryContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<IdpsQueryFilterItems>> filters = default;
+            Optional<string> search = default;
+            Optional<IdpsQueryOrderBy> orderBy = default;
+            Optional<int> resultsPerPage = default;
+            Optional<int> skip = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IdpsQueryFilterItems> array = new List<IdpsQueryFilterItems>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item));
+                    }
+                    filters = array;
+                    continue;
+                }
+                if (property.NameEquals("search"u8))
+                {
+                    search = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("orderBy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    orderBy = IdpsQueryOrderBy.DeserializeIdpsQueryOrderBy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("resultsPerPage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsPerPage = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("skip"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skip = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IdpsQueryContent(Optional.ToList(filters), search.Value, orderBy.Value, Optional.ToNullable(resultsPerPage), Optional.ToNullable(skip), rawData);
+        }
+
+        IdpsQueryContent IModelJsonSerializable<IdpsQueryContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdpsQueryContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IdpsQueryContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IdpsQueryContent IModelSerializable<IdpsQueryContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIdpsQueryContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IdpsQueryContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IdpsQueryContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIdpsQueryContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

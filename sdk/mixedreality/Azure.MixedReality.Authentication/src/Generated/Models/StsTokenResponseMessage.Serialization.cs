@@ -5,20 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.Authentication
 {
-    internal partial class StsTokenResponseMessage
+    internal partial class StsTokenResponseMessage : IUtf8JsonSerializable, IModelJsonSerializable<StsTokenResponseMessage>
     {
-        internal static StsTokenResponseMessage DeserializeStsTokenResponseMessage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StsTokenResponseMessage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StsTokenResponseMessage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("AccessToken"u8);
+            writer.WriteStringValue(AccessToken);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static StsTokenResponseMessage DeserializeStsTokenResponseMessage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string accessToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("AccessToken"u8))
@@ -26,8 +57,57 @@ namespace Azure.MixedReality.Authentication
                     accessToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StsTokenResponseMessage(accessToken);
+            return new StsTokenResponseMessage(accessToken, rawData);
+        }
+
+        StsTokenResponseMessage IModelJsonSerializable<StsTokenResponseMessage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStsTokenResponseMessage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StsTokenResponseMessage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StsTokenResponseMessage IModelSerializable<StsTokenResponseMessage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStsTokenResponseMessage(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(StsTokenResponseMessage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator StsTokenResponseMessage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStsTokenResponseMessage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies the metric alert criteria for a single resource that has multiple metric criteria. </summary>
     public partial class MetricAlertSingleResourceMultipleMetricCriteria : MetricAlertCriteria
     {
-        /// <summary> Initializes a new instance of MetricAlertSingleResourceMultipleMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>. </summary>
         public MetricAlertSingleResourceMultipleMetricCriteria()
         {
             AllOf = new ChangeTrackingList<MetricCriteria>();
             OdataType = MonitorOdataType.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria;
         }
 
-        /// <summary> Initializes a new instance of MetricAlertSingleResourceMultipleMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="allOf"> The list of metric criteria for this 'all of' operation. </param>

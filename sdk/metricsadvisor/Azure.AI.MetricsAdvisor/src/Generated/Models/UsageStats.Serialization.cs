@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UsageStats
+    internal partial class UsageStats : IUtf8JsonSerializable, IModelJsonSerializable<UsageStats>
     {
-        internal static UsageStats DeserializeUsageStats(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UsageStats>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UsageStats>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static UsageStats DeserializeUsageStats(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<int> allSeriesCount = default;
             Optional<int> metricsCount = default;
             Optional<int> dataFeedCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -71,8 +99,57 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dataFeedCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount));
+            return new UsageStats(Optional.ToNullable(timestamp), Optional.ToNullable(activeSeriesCount), Optional.ToNullable(allSeriesCount), Optional.ToNullable(metricsCount), Optional.ToNullable(dataFeedCount), rawData);
+        }
+
+        UsageStats IModelJsonSerializable<UsageStats>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUsageStats(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UsageStats>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UsageStats IModelSerializable<UsageStats>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUsageStats(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(UsageStats model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator UsageStats(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUsageStats(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable
+    public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IModelJsonSerializable<IPv6ExpressRouteCircuitPeeringConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPv6ExpressRouteCircuitPeeringConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPv6ExpressRouteCircuitPeeringConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
@@ -41,11 +49,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element)
+        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
             Optional<WritableSubResource> routeFilter = default;
             Optional<ExpressRouteCircuitPeeringState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryPeerAddressPrefix"u8))
@@ -94,8 +117,57 @@ namespace Azure.ResourceManager.Network.Models
                     state = new ExpressRouteCircuitPeeringState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state));
+            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state), rawData);
+        }
+
+        IPv6ExpressRouteCircuitPeeringConfig IModelJsonSerializable<IPv6ExpressRouteCircuitPeeringConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPv6ExpressRouteCircuitPeeringConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPv6ExpressRouteCircuitPeeringConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPv6ExpressRouteCircuitPeeringConfig IModelSerializable<IPv6ExpressRouteCircuitPeeringConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPv6ExpressRouteCircuitPeeringConfig(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(IPv6ExpressRouteCircuitPeeringConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator IPv6ExpressRouteCircuitPeeringConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPv6ExpressRouteCircuitPeeringConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

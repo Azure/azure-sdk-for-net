@@ -8,14 +8,69 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricsQueryResult
+    public partial class MetricsQueryResult : IUtf8JsonSerializable, IModelJsonSerializable<MetricsQueryResult>
     {
-        internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricsQueryResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricsQueryResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Cost))
+            {
+                writer.WritePropertyName("cost"u8);
+                writer.WriteNumberValue(Cost.Value);
+            }
+            writer.WritePropertyName("timespan"u8);
+            writer.WriteStringValue(_timespan);
+            if (Optional.IsDefined(Granularity))
+            {
+                writer.WritePropertyName("interval"u8);
+                writer.WriteStringValue(Granularity.Value, "P");
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(ResourceRegion))
+            {
+                writer.WritePropertyName("resourceregion"u8);
+                writer.WriteStringValue(ResourceRegion);
+            }
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Metrics)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetricsQueryResult DeserializeMetricsQueryResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +81,7 @@ namespace Azure.Monitor.Query.Models
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
             IReadOnlyList<MetricResult> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cost"u8))
@@ -71,8 +127,57 @@ namespace Azure.Monitor.Query.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, rawData);
+        }
+
+        MetricsQueryResult IModelJsonSerializable<MetricsQueryResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricsQueryResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricsQueryResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricsQueryResult IModelSerializable<MetricsQueryResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricsQueryResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MetricsQueryResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MetricsQueryResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricsQueryResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

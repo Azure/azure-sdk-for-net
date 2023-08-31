@@ -6,22 +6,27 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> An Azure key vault key. </summary>
     internal partial class KeyVaultKey
     {
-        /// <summary> Initializes a new instance of KeyVaultKey. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKey"/>. </summary>
         public KeyVaultKey()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKey"/>. </summary>
         /// <param name="keyUri"> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </param>
-        internal KeyVaultKey(Uri keyUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultKey(Uri keyUri, Dictionary<string, BinaryData> rawData)
         {
             KeyUri = keyUri;
+            _rawData = rawData;
         }
 
         /// <summary> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </summary>

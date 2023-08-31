@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SConnectionConfiguration : IUtf8JsonSerializable
+    public partial class P2SConnectionConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<P2SConnectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<P2SConnectionConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<P2SConnectionConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<P2SConnectionConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -47,11 +53,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static P2SConnectionConfiguration DeserializeP2SConnectionConfiguration(JsonElement element)
+        internal static P2SConnectionConfiguration DeserializeP2SConnectionConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<WritableSubResource>> configurationPolicyGroupAssociations = default;
             Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> previousConfigurationPolicyGroupAssociations = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -176,8 +197,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState));
+            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        P2SConnectionConfiguration IModelJsonSerializable<P2SConnectionConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<P2SConnectionConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeP2SConnectionConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<P2SConnectionConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<P2SConnectionConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        P2SConnectionConfiguration IModelSerializable<P2SConnectionConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<P2SConnectionConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeP2SConnectionConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(P2SConnectionConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator P2SConnectionConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeP2SConnectionConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

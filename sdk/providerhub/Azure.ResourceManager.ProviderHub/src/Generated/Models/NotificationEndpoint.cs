@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The NotificationEndpoint. </summary>
     public partial class NotificationEndpoint
     {
-        /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationEndpoint"/>. </summary>
         public NotificationEndpoint()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationEndpoint"/>. </summary>
         /// <param name="notificationDestination"></param>
         /// <param name="locations"></param>
-        internal NotificationEndpoint(ResourceIdentifier notificationDestination, IList<AzureLocation> locations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationEndpoint(ResourceIdentifier notificationDestination, IList<AzureLocation> locations, Dictionary<string, BinaryData> rawData)
         {
             NotificationDestination = notificationDestination;
             Locations = locations;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the notification destination. </summary>

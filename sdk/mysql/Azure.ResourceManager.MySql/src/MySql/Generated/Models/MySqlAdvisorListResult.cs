@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of query statistics. </summary>
     internal partial class MySqlAdvisorListResult
     {
-        /// <summary> Initializes a new instance of MySqlAdvisorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlAdvisorListResult"/>. </summary>
         internal MySqlAdvisorListResult()
         {
             Value = new ChangeTrackingList<MySqlAdvisorData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlAdvisorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlAdvisorListResult"/>. </summary>
         /// <param name="value"> The list of recommendation action advisors. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MySqlAdvisorListResult(IReadOnlyList<MySqlAdvisorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlAdvisorListResult(IReadOnlyList<MySqlAdvisorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of recommendation action advisors. </summary>

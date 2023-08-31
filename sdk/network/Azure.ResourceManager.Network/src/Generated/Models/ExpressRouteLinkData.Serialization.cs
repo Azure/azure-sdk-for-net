@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteLinkData : IUtf8JsonSerializable
+    public partial class ExpressRouteLinkData : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteLinkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteLinkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ExpressRouteLinkData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteObjectValue(MacSecConfig);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteLinkData DeserializeExpressRouteLinkData(JsonElement element)
+        internal static ExpressRouteLinkData DeserializeExpressRouteLinkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.Network
             Optional<ExpressRouteLinkAdminState> adminState = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<ExpressRouteLinkMacSecConfig> macSecConfig = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -169,8 +191,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, coloLocation.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, coloLocation.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value, rawData);
+        }
+
+        ExpressRouteLinkData IModelJsonSerializable<ExpressRouteLinkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExpressRouteLinkData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteLinkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteLinkData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExpressRouteLinkData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteLinkData IModelSerializable<ExpressRouteLinkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ExpressRouteLinkData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteLinkData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExpressRouteLinkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExpressRouteLinkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteLinkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

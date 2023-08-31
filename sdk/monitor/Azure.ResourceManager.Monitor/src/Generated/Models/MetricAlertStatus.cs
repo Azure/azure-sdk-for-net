@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An alert status. </summary>
     public partial class MetricAlertStatus : ResourceData
     {
-        /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatus"/>. </summary>
         internal MetricAlertStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatus"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The alert status properties of the metric alert status. </param>
-        internal MetricAlertStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricAlertStatusProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAlertStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricAlertStatusProperties properties, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The alert status properties of the metric alert status. </summary>

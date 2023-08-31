@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlWaitStatisticData : IUtf8JsonSerializable
+    public partial class MySqlWaitStatisticData : IUtf8JsonSerializable, IModelJsonSerializable<MySqlWaitStatisticData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlWaitStatisticData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlWaitStatisticData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -65,11 +72,25 @@ namespace Azure.ResourceManager.MySql
                 writer.WriteNumberValue(TotalTimeInMinutes.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlWaitStatisticData DeserializeMySqlWaitStatisticData(JsonElement element)
+        internal static MySqlWaitStatisticData DeserializeMySqlWaitStatisticData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +108,7 @@ namespace Azure.ResourceManager.MySql
             Optional<long> userId = default;
             Optional<long> count = default;
             Optional<double> totalTimeInMs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -194,8 +216,57 @@ namespace Azure.ResourceManager.MySql
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MySqlWaitStatisticData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), eventName.Value, eventTypeName.Value, Optional.ToNullable(queryId), databaseName.Value, Optional.ToNullable(userId), Optional.ToNullable(count), Optional.ToNullable(totalTimeInMs));
+            return new MySqlWaitStatisticData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), eventName.Value, eventTypeName.Value, Optional.ToNullable(queryId), databaseName.Value, Optional.ToNullable(userId), Optional.ToNullable(count), Optional.ToNullable(totalTimeInMs), rawData);
+        }
+
+        MySqlWaitStatisticData IModelJsonSerializable<MySqlWaitStatisticData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlWaitStatisticData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlWaitStatisticData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlWaitStatisticData IModelSerializable<MySqlWaitStatisticData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlWaitStatisticData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MySqlWaitStatisticData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MySqlWaitStatisticData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlWaitStatisticData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

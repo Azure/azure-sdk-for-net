@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,21 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Response to a batch query. </summary>
     internal partial class BatchResponse
     {
-        /// <summary> Initializes a new instance of BatchResponse. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchResponse"/>. </summary>
         internal BatchResponse()
         {
             Responses = new ChangeTrackingList<BatchQueryResponse>();
         }
 
-        /// <summary> Initializes a new instance of BatchResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResponse"/>. </summary>
         /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
-        internal BatchResponse(IReadOnlyList<BatchQueryResponse> responses)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchResponse(IReadOnlyList<BatchQueryResponse> responses, Dictionary<string, BinaryData> rawData)
         {
             Responses = responses;
+            _rawData = rawData;
         }
 
         /// <summary> An array of responses corresponding to each individual request in a batch. </summary>

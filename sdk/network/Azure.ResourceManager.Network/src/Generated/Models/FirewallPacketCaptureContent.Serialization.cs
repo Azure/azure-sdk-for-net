@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPacketCaptureContent : IUtf8JsonSerializable
+    public partial class FirewallPacketCaptureContent : IUtf8JsonSerializable, IModelJsonSerializable<FirewallPacketCaptureContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallPacketCaptureContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallPacketCaptureContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<FirewallPacketCaptureContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -70,11 +76,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallPacketCaptureContent DeserializeFirewallPacketCaptureContent(JsonElement element)
+        internal static FirewallPacketCaptureContent DeserializeFirewallPacketCaptureContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +107,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<AzureFirewallNetworkRuleProtocol> protocol = default;
             Optional<IList<AzureFirewallPacketCaptureFlags>> flags = default;
             Optional<IList<AzureFirewallPacketCaptureRule>> filters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,8 +200,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallPacketCaptureContent(id.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Optional.ToNullable(protocol), Optional.ToList(flags), Optional.ToList(filters));
+            return new FirewallPacketCaptureContent(id.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Optional.ToNullable(protocol), Optional.ToList(flags), Optional.ToList(filters), rawData);
+        }
+
+        FirewallPacketCaptureContent IModelJsonSerializable<FirewallPacketCaptureContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FirewallPacketCaptureContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPacketCaptureContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallPacketCaptureContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FirewallPacketCaptureContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallPacketCaptureContent IModelSerializable<FirewallPacketCaptureContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<FirewallPacketCaptureContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallPacketCaptureContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FirewallPacketCaptureContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FirewallPacketCaptureContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallPacketCaptureContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

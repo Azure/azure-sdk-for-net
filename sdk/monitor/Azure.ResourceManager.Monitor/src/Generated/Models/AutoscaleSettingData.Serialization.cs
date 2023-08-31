@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class AutoscaleSettingData : IUtf8JsonSerializable
+    public partial class AutoscaleSettingData : IUtf8JsonSerializable, IModelJsonSerializable<AutoscaleSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoscaleSettingData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoscaleSettingData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -90,11 +97,25 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStringValue(TargetResourceLocation.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutoscaleSettingData DeserializeAutoscaleSettingData(JsonElement element)
+        internal static AutoscaleSettingData DeserializeAutoscaleSettingData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,6 +133,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> name0 = default;
             Optional<ResourceIdentifier> targetResourceUri = default;
             Optional<AzureLocation> targetResourceLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -236,8 +258,57 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation));
+            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation), rawData);
+        }
+
+        AutoscaleSettingData IModelJsonSerializable<AutoscaleSettingData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoscaleSettingData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoscaleSettingData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoscaleSettingData IModelSerializable<AutoscaleSettingData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoscaleSettingData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AutoscaleSettingData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AutoscaleSettingData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutoscaleSettingData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

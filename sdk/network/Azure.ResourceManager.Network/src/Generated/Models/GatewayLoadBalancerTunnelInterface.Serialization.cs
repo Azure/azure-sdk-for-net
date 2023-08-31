@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayLoadBalancerTunnelInterface : IUtf8JsonSerializable
+    public partial class GatewayLoadBalancerTunnelInterface : IUtf8JsonSerializable, IModelJsonSerializable<GatewayLoadBalancerTunnelInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GatewayLoadBalancerTunnelInterface>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GatewayLoadBalancerTunnelInterface>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GatewayLoadBalancerTunnelInterface DeserializeGatewayLoadBalancerTunnelInterface(JsonElement element)
+        internal static GatewayLoadBalancerTunnelInterface DeserializeGatewayLoadBalancerTunnelInterface(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> identifier = default;
             Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
             Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -86,8 +109,57 @@ namespace Azure.ResourceManager.Network.Models
                     type = new GatewayLoadBalancerTunnelInterfaceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GatewayLoadBalancerTunnelInterface(Optional.ToNullable(port), Optional.ToNullable(identifier), Optional.ToNullable(protocol), Optional.ToNullable(type));
+            return new GatewayLoadBalancerTunnelInterface(Optional.ToNullable(port), Optional.ToNullable(identifier), Optional.ToNullable(protocol), Optional.ToNullable(type), rawData);
+        }
+
+        GatewayLoadBalancerTunnelInterface IModelJsonSerializable<GatewayLoadBalancerTunnelInterface>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGatewayLoadBalancerTunnelInterface(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GatewayLoadBalancerTunnelInterface>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GatewayLoadBalancerTunnelInterface IModelSerializable<GatewayLoadBalancerTunnelInterface>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGatewayLoadBalancerTunnelInterface(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GatewayLoadBalancerTunnelInterface model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GatewayLoadBalancerTunnelInterface(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGatewayLoadBalancerTunnelInterface(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

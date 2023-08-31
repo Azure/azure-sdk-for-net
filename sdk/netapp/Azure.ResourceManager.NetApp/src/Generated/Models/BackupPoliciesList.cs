@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Backup Policies. </summary>
     internal partial class BackupPoliciesList
     {
-        /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
         internal BackupPoliciesList()
         {
             Value = new ChangeTrackingList<NetAppBackupPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPoliciesList"/>. </summary>
         /// <param name="value"> A list of backup policies. </param>
-        internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A list of backup policies. </summary>

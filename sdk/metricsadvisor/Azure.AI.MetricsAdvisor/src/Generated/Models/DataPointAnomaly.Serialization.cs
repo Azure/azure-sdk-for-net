@@ -8,14 +8,52 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataPointAnomaly
+    public partial class DataPointAnomaly : IUtf8JsonSerializable, IModelJsonSerializable<DataPointAnomaly>
     {
-        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataPointAnomaly>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataPointAnomaly>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("timestamp"u8);
+            writer.WriteStringValue(Timestamp, "O");
+            writer.WritePropertyName("dimension"u8);
+            writer.WriteStartObject();
+            foreach (var item in Dimension)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("property"u8);
+            writer.WriteObjectValue(Property);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataPointAnomaly DeserializeDataPointAnomaly(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +66,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<DateTimeOffset> modifiedTime = default;
             IReadOnlyDictionary<string, string> dimension = default;
             AnomalyProperty property = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("dataFeedId"u8))
@@ -83,8 +122,57 @@ namespace Azure.AI.MetricsAdvisor.Models
                     property = AnomalyProperty.DeserializeAnomalyProperty(property0.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
+            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property, rawData);
+        }
+
+        DataPointAnomaly IModelJsonSerializable<DataPointAnomaly>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataPointAnomaly(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataPointAnomaly>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataPointAnomaly IModelSerializable<DataPointAnomaly>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataPointAnomaly(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataPointAnomaly model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataPointAnomaly(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataPointAnomaly(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

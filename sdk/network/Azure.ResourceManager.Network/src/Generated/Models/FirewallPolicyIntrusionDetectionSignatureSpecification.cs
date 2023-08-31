@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Intrusion detection signatures specification states. </summary>
     public partial class FirewallPolicyIntrusionDetectionSignatureSpecification
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionSignatureSpecification"/>. </summary>
         public FirewallPolicyIntrusionDetectionSignatureSpecification()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionSignatureSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionSignatureSpecification"/>. </summary>
         /// <param name="id"> Signature id. </param>
         /// <param name="mode"> The signature state. </param>
-        internal FirewallPolicyIntrusionDetectionSignatureSpecification(string id, FirewallPolicyIntrusionDetectionStateType? mode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyIntrusionDetectionSignatureSpecification(string id, FirewallPolicyIntrusionDetectionStateType? mode, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Mode = mode;
+            _rawData = rawData;
         }
 
         /// <summary> Signature id. </summary>

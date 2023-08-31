@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListLoadBalancers API service call. </summary>
     internal partial class LoadBalancerListResult
     {
-        /// <summary> Initializes a new instance of LoadBalancerListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
         internal LoadBalancerListResult()
         {
             Value = new ChangeTrackingList<LoadBalancerData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerListResult"/>. </summary>
         /// <param name="value"> A list of load balancers in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of load balancers in a resource group. </summary>

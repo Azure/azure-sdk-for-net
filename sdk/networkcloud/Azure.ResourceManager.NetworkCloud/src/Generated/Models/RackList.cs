@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> RackList represents a list of racks. </summary>
     internal partial class RackList
     {
-        /// <summary> Initializes a new instance of RackList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RackList"/>. </summary>
         internal RackList()
         {
             Value = new ChangeTrackingList<NetworkCloudRackData>();
         }
 
-        /// <summary> Initializes a new instance of RackList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RackList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of racks. </param>
-        internal RackList(string nextLink, IReadOnlyList<NetworkCloudRackData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RackList(string nextLink, IReadOnlyList<NetworkCloudRackData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

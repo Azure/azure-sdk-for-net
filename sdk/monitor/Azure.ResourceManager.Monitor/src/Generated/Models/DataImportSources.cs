@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataImportSources. </summary>
     internal partial class DataImportSources
     {
-        /// <summary> Initializes a new instance of DataImportSources. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataImportSources"/>. </summary>
         public DataImportSources()
         {
         }
 
-        /// <summary> Initializes a new instance of DataImportSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportSources"/>. </summary>
         /// <param name="eventHub"> Definition of Event Hub configuration. </param>
-        internal DataImportSources(DataImportSourcesEventHub eventHub)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataImportSources(DataImportSourcesEventHub eventHub, Dictionary<string, BinaryData> rawData)
         {
             EventHub = eventHub;
+            _rawData = rawData;
         }
 
         /// <summary> Definition of Event Hub configuration. </summary>

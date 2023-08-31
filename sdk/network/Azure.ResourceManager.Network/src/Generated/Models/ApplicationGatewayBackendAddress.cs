@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend address of an application gateway. </summary>
     public partial class ApplicationGatewayBackendAddress
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendAddress. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendAddress"/>. </summary>
         public ApplicationGatewayBackendAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendAddress"/>. </summary>
         /// <param name="fqdn"> Fully qualified domain name (FQDN). </param>
         /// <param name="ipAddress"> IP address. </param>
-        internal ApplicationGatewayBackendAddress(string fqdn, string ipAddress)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayBackendAddress(string fqdn, string ipAddress, Dictionary<string, BinaryData> rawData)
         {
             Fqdn = fqdn;
             IPAddress = ipAddress;
+            _rawData = rawData;
         }
 
         /// <summary> Fully qualified domain name (FQDN). </summary>

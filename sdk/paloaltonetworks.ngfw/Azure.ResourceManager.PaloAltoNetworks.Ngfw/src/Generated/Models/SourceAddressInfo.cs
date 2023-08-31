@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Address properties. </summary>
     public partial class SourceAddressInfo
     {
-        /// <summary> Initializes a new instance of SourceAddressInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceAddressInfo"/>. </summary>
         public SourceAddressInfo()
         {
             Cidrs = new ChangeTrackingList<string>();
@@ -22,17 +25,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PrefixLists = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SourceAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceAddressInfo"/>. </summary>
         /// <param name="cidrs"> special value 'any'. </param>
         /// <param name="countries"> list of countries. </param>
         /// <param name="feeds"> list of feeds. </param>
         /// <param name="prefixLists"> prefix list. </param>
-        internal SourceAddressInfo(IList<string> cidrs, IList<string> countries, IList<string> feeds, IList<string> prefixLists)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceAddressInfo(IList<string> cidrs, IList<string> countries, IList<string> feeds, IList<string> prefixLists, Dictionary<string, BinaryData> rawData)
         {
             Cidrs = cidrs;
             Countries = countries;
             Feeds = feeds;
             PrefixLists = prefixLists;
+            _rawData = rawData;
         }
 
         /// <summary> special value 'any'. </summary>

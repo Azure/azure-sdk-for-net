@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Swap resource properties. </summary>
     internal partial class CloudServiceSwapProperties
     {
-        /// <summary> Initializes a new instance of CloudServiceSwapProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapProperties"/>. </summary>
         public CloudServiceSwapProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceSwapProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceSwapProperties"/>. </summary>
         /// <param name="slotType"> Specifies slot info on a cloud service. </param>
-        internal CloudServiceSwapProperties(SwapSlotType? slotType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceSwapProperties(SwapSlotType? slotType, Dictionary<string, BinaryData> rawData)
         {
             SlotType = slotType;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies slot info on a cloud service. </summary>

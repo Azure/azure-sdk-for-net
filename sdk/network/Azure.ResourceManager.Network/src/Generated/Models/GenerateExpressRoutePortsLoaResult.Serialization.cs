@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GenerateExpressRoutePortsLoaResult
+    public partial class GenerateExpressRoutePortsLoaResult : IUtf8JsonSerializable, IModelJsonSerializable<GenerateExpressRoutePortsLoaResult>
     {
-        internal static GenerateExpressRoutePortsLoaResult DeserializeGenerateExpressRoutePortsLoaResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GenerateExpressRoutePortsLoaResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GenerateExpressRoutePortsLoaResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EncodedContent))
+            {
+                writer.WritePropertyName("encodedContent"u8);
+                writer.WriteStringValue(EncodedContent);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GenerateExpressRoutePortsLoaResult DeserializeGenerateExpressRoutePortsLoaResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> encodedContent = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedContent"u8))
@@ -26,8 +60,57 @@ namespace Azure.ResourceManager.Network.Models
                     encodedContent = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GenerateExpressRoutePortsLoaResult(encodedContent.Value);
+            return new GenerateExpressRoutePortsLoaResult(encodedContent.Value, rawData);
+        }
+
+        GenerateExpressRoutePortsLoaResult IModelJsonSerializable<GenerateExpressRoutePortsLoaResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenerateExpressRoutePortsLoaResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GenerateExpressRoutePortsLoaResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GenerateExpressRoutePortsLoaResult IModelSerializable<GenerateExpressRoutePortsLoaResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGenerateExpressRoutePortsLoaResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(GenerateExpressRoutePortsLoaResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator GenerateExpressRoutePortsLoaResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGenerateExpressRoutePortsLoaResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

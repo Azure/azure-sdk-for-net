@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class NetworkManagerEffectiveConnectivityConfigurationListResult
+    internal partial class NetworkManagerEffectiveConnectivityConfigurationListResult : IUtf8JsonSerializable, IModelJsonSerializable<NetworkManagerEffectiveConnectivityConfigurationListResult>
     {
-        internal static NetworkManagerEffectiveConnectivityConfigurationListResult DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkManagerEffectiveConnectivityConfigurationListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkManagerEffectiveConnectivityConfigurationListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SkipToken))
+            {
+                writer.WritePropertyName("skipToken"u8);
+                writer.WriteStringValue(SkipToken);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NetworkManagerEffectiveConnectivityConfigurationListResult DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<EffectiveConnectivityConfiguration>> value = default;
             Optional<string> skipToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +85,57 @@ namespace Azure.ResourceManager.Network.Models
                     skipToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkManagerEffectiveConnectivityConfigurationListResult(Optional.ToList(value), skipToken.Value);
+            return new NetworkManagerEffectiveConnectivityConfigurationListResult(Optional.ToList(value), skipToken.Value, rawData);
+        }
+
+        NetworkManagerEffectiveConnectivityConfigurationListResult IModelJsonSerializable<NetworkManagerEffectiveConnectivityConfigurationListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkManagerEffectiveConnectivityConfigurationListResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkManagerEffectiveConnectivityConfigurationListResult IModelSerializable<NetworkManagerEffectiveConnectivityConfigurationListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetworkManagerEffectiveConnectivityConfigurationListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetworkManagerEffectiveConnectivityConfigurationListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

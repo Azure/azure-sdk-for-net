@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicSingleSignOnProperties : IUtf8JsonSerializable
+    public partial class NewRelicSingleSignOnProperties : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicSingleSignOnProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicSingleSignOnProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicSingleSignOnProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicSingleSignOnProperties DeserializeNewRelicSingleSignOnProperties(JsonElement element)
+        internal static NewRelicSingleSignOnProperties DeserializeNewRelicSingleSignOnProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Optional<string> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
             Optional<NewRelicProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("singleSignOnState"u8))
@@ -83,8 +105,57 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     provisioningState = new NewRelicProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NewRelicSingleSignOnProperties(Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Optional.ToNullable(provisioningState));
+            return new NewRelicSingleSignOnProperties(Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        NewRelicSingleSignOnProperties IModelJsonSerializable<NewRelicSingleSignOnProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicSingleSignOnProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicSingleSignOnProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicSingleSignOnProperties IModelSerializable<NewRelicSingleSignOnProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicSingleSignOnProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NewRelicSingleSignOnProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NewRelicSingleSignOnProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicSingleSignOnProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

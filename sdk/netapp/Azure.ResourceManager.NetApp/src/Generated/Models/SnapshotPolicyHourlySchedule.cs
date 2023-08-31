@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Hourly Schedule properties. </summary>
     public partial class SnapshotPolicyHourlySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
         public SnapshotPolicyHourlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        internal SnapshotPolicyHourlySchedule(int? snapshotsToKeep, int? minute, long? usedBytes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyHourlySchedule(int? snapshotsToKeep, int? minute, long? usedBytes, Dictionary<string, BinaryData> rawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             Minute = minute;
             UsedBytes = usedBytes;
+            _rawData = rawData;
         }
 
         /// <summary> Hourly snapshot count to keep. </summary>

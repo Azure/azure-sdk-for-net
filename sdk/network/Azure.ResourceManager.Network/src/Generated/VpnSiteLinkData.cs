@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnSiteLinkData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnSiteLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkData"/>. </summary>
         public VpnSiteLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnSiteLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -32,7 +34,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="fqdn"> FQDN of vpn-site-link. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnSiteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             LinkProperties = linkProperties;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the network rule. </summary>
     public partial class AzureFirewallNetworkRule
     {
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRule"/>. </summary>
         public AzureFirewallNetworkRule()
         {
             Protocols = new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNetworkRule"/>. </summary>
         /// <param name="name"> Name of the network rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="protocols"> Array of AzureFirewallNetworkRuleProtocols. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationFqdns"> List of destination FQDNs. </param>
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
-        internal AzureFirewallNetworkRule(string name, string description, IList<AzureFirewallNetworkRuleProtocol> protocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> destinationFqdns, IList<string> sourceIPGroups, IList<string> destinationIPGroups)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallNetworkRule(string name, string description, IList<AzureFirewallNetworkRuleProtocol> protocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> destinationFqdns, IList<string> sourceIPGroups, IList<string> destinationIPGroups, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Description = description;
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             DestinationFqdns = destinationFqdns;
             SourceIPGroups = sourceIPGroups;
             DestinationIPGroups = destinationIPGroups;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the network rule. </summary>

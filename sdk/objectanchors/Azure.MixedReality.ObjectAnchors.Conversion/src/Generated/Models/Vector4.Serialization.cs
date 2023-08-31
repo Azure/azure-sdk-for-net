@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    internal partial class Vector4 : IUtf8JsonSerializable
+    internal partial class Vector4 : IUtf8JsonSerializable, IModelJsonSerializable<Vector4>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Vector4>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Vector4>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);
             writer.WriteNumberValue(X);
@@ -23,11 +31,25 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             writer.WriteNumberValue(Z);
             writer.WritePropertyName("w"u8);
             writer.WriteNumberValue(W);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Vector4 DeserializeVector4(JsonElement element)
+        internal static Vector4 DeserializeVector4(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             float y = default;
             float z = default;
             float w = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x"u8))
@@ -58,8 +81,57 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     w = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Vector4(x, y, z, w);
+            return new Vector4(x, y, z, w, rawData);
+        }
+
+        Vector4 IModelJsonSerializable<Vector4>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVector4(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Vector4>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Vector4 IModelSerializable<Vector4>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVector4(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(Vector4 model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator Vector4(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVector4(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

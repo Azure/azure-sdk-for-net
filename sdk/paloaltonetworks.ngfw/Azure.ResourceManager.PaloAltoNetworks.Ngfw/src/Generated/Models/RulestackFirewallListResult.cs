@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> List firewalls response. </summary>
     internal partial class RulestackFirewallListResult
     {
-        /// <summary> Initializes a new instance of RulestackFirewallListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackFirewallListResult"/>. </summary>
         /// <param name="value"> firewalls list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackFirewallListResult(IEnumerable<string> value)
@@ -25,13 +27,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RulestackFirewallListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackFirewallListResult"/>. </summary>
         /// <param name="value"> firewalls list. </param>
         /// <param name="nextLink"> next link. </param>
-        internal RulestackFirewallListResult(IReadOnlyList<string> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackFirewallListResult(IReadOnlyList<string> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackFirewallListResult"/> for deserialization. </summary>
+        internal RulestackFirewallListResult()
+        {
         }
 
         /// <summary> firewalls list. </summary>

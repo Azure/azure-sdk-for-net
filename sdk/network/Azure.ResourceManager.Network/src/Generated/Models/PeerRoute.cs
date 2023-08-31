@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Peer routing details. </summary>
     public partial class PeerRoute
     {
-        /// <summary> Initializes a new instance of PeerRoute. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
         internal PeerRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of PeerRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
         /// <param name="localAddress"> The peer's local address. </param>
         /// <param name="network"> The route's network prefix. </param>
         /// <param name="nextHop"> The route's next hop. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="origin"> The source this route was learned from. </param>
         /// <param name="asPath"> The route's AS path sequence. </param>
         /// <param name="weight"> The route's weight. </param>
-        internal PeerRoute(string localAddress, string network, string nextHop, string sourcePeer, string origin, string asPath, int? weight)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeerRoute(string localAddress, string network, string nextHop, string sourcePeer, string origin, string asPath, int? weight, Dictionary<string, BinaryData> rawData)
         {
             LocalAddress = localAddress;
             Network = network;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             Origin = origin;
             AsPath = asPath;
             Weight = weight;
+            _rawData = rawData;
         }
 
         /// <summary> The peer's local address. </summary>

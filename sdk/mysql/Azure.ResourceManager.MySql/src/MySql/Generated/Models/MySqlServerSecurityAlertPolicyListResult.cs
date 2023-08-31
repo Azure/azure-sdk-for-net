@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of the server's security alert policies. </summary>
     internal partial class MySqlServerSecurityAlertPolicyListResult
     {
-        /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerSecurityAlertPolicyListResult"/>. </summary>
         internal MySqlServerSecurityAlertPolicyListResult()
         {
             Value = new ChangeTrackingList<MySqlServerSecurityAlertPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerSecurityAlertPolicyListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MySqlServerSecurityAlertPolicyListResult(IReadOnlyList<MySqlServerSecurityAlertPolicyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerSecurityAlertPolicyListResult(IReadOnlyList<MySqlServerSecurityAlertPolicyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of results. </summary>

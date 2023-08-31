@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorArmRoleReceiver : IUtf8JsonSerializable
+    public partial class MonitorArmRoleReceiver : IUtf8JsonSerializable, IModelJsonSerializable<MonitorArmRoleReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorArmRoleReceiver>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorArmRoleReceiver>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorArmRoleReceiver DeserializeMonitorArmRoleReceiver(JsonElement element)
+        internal static MonitorArmRoleReceiver DeserializeMonitorArmRoleReceiver(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string roleId = default;
             Optional<bool> useCommonAlertSchema = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,8 +80,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     useCommonAlertSchema = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorArmRoleReceiver(name, roleId, Optional.ToNullable(useCommonAlertSchema));
+            return new MonitorArmRoleReceiver(name, roleId, Optional.ToNullable(useCommonAlertSchema), rawData);
+        }
+
+        MonitorArmRoleReceiver IModelJsonSerializable<MonitorArmRoleReceiver>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorArmRoleReceiver(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorArmRoleReceiver>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorArmRoleReceiver IModelSerializable<MonitorArmRoleReceiver>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorArmRoleReceiver(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MonitorArmRoleReceiver model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MonitorArmRoleReceiver(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorArmRoleReceiver(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Request routing rule of an application gateway. </summary>
     public partial class ApplicationGatewayRequestRoutingRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRule"/>. </summary>
         public ApplicationGatewayRequestRoutingRule()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -34,7 +36,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
         /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             RuleType = ruleType;

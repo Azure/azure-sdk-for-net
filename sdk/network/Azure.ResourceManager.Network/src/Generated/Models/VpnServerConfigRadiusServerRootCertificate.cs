@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of Radius Server root certificate of VpnServerConfiguration. </summary>
     public partial class VpnServerConfigRadiusServerRootCertificate
     {
-        /// <summary> Initializes a new instance of VpnServerConfigRadiusServerRootCertificate. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigRadiusServerRootCertificate"/>. </summary>
         public VpnServerConfigRadiusServerRootCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigRadiusServerRootCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigRadiusServerRootCertificate"/>. </summary>
         /// <param name="name"> The certificate name. </param>
         /// <param name="publicCertData"> The certificate public data. </param>
-        internal VpnServerConfigRadiusServerRootCertificate(string name, BinaryData publicCertData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnServerConfigRadiusServerRootCertificate(string name, BinaryData publicCertData, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             PublicCertData = publicCertData;
+            _rawData = rawData;
         }
 
         /// <summary> The certificate name. </summary>

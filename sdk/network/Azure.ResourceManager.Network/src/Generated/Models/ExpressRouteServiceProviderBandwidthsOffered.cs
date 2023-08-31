@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains bandwidths offered in ExpressRouteServiceProvider resources. </summary>
     public partial class ExpressRouteServiceProviderBandwidthsOffered
     {
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderBandwidthsOffered. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         public ExpressRouteServiceProviderBandwidthsOffered()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteServiceProviderBandwidthsOffered. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         /// <param name="offerName"> The OfferName. </param>
         /// <param name="valueInMbps"> The ValueInMbps. </param>
-        internal ExpressRouteServiceProviderBandwidthsOffered(string offerName, int? valueInMbps)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteServiceProviderBandwidthsOffered(string offerName, int? valueInMbps, Dictionary<string, BinaryData> rawData)
         {
             OfferName = offerName;
             ValueInMbps = valueInMbps;
+            _rawData = rawData;
         }
 
         /// <summary> The OfferName. </summary>

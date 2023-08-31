@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyEvaluationDetails
+    public partial class PolicyEvaluationDetails : IUtf8JsonSerializable, IModelJsonSerializable<PolicyEvaluationDetails>
     {
-        internal static PolicyEvaluationDetails DeserializePolicyEvaluationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyEvaluationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyEvaluationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(EvaluatedExpressions))
+            {
+                writer.WritePropertyName("evaluatedExpressions"u8);
+                writer.WriteStartArray();
+                foreach (var item in EvaluatedExpressions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IfNotExistsDetails))
+            {
+                writer.WritePropertyName("ifNotExistsDetails"u8);
+                writer.WriteObjectValue(IfNotExistsDetails);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyEvaluationDetails DeserializePolicyEvaluationDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ExpressionEvaluationDetails>> evaluatedExpressions = default;
             Optional<IfNotExistsEvaluationDetails> ifNotExistsDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("evaluatedExpressions"u8))
@@ -46,8 +89,57 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     ifNotExistsDetails = IfNotExistsEvaluationDetails.DeserializeIfNotExistsEvaluationDetails(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyEvaluationDetails(Optional.ToList(evaluatedExpressions), ifNotExistsDetails.Value);
+            return new PolicyEvaluationDetails(Optional.ToList(evaluatedExpressions), ifNotExistsDetails.Value, rawData);
+        }
+
+        PolicyEvaluationDetails IModelJsonSerializable<PolicyEvaluationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyEvaluationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyEvaluationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyEvaluationDetails IModelSerializable<PolicyEvaluationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyEvaluationDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PolicyEvaluationDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PolicyEvaluationDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyEvaluationDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

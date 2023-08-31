@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class NotificationHubCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<NotificationHubCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationHubCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationHubCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -89,11 +95,25 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteObjectValue(BaiduCredential);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubCreateOrUpdateContent DeserializeNotificationHubCreateOrUpdateContent(JsonElement element)
+        internal static NotificationHubCreateOrUpdateContent DeserializeNotificationHubCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +134,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<NotificationHubMpnsCredential> mpnsCredential = default;
             Optional<NotificationHubAdmCredential> admCredential = default;
             Optional<NotificationHubBaiduCredential> baiduCredential = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -262,8 +283,57 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationHubCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), Optional.ToList(authorizationRules), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value);
+            return new NotificationHubCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToNullable(registrationTtl), Optional.ToList(authorizationRules), apnsCredential.Value, wnsCredential.Value, gcmCredential.Value, mpnsCredential.Value, admCredential.Value, baiduCredential.Value, sku.Value, rawData);
+        }
+
+        NotificationHubCreateOrUpdateContent IModelJsonSerializable<NotificationHubCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationHubCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationHubCreateOrUpdateContent IModelSerializable<NotificationHubCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationHubCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NotificationHubCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NotificationHubCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationHubCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

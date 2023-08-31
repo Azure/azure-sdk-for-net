@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of on demand test probe. </summary>
     public partial class ApplicationGatewayBackendHealthOnDemand
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthOnDemand. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthOnDemand"/>. </summary>
         internal ApplicationGatewayBackendHealthOnDemand()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthOnDemand. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthOnDemand"/>. </summary>
         /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>
-        internal ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings, Dictionary<string, BinaryData> rawData)
         {
             BackendAddressPool = backendAddressPool;
             BackendHealthHttpSettings = backendHealthHttpSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendAddressPool resource. </summary>

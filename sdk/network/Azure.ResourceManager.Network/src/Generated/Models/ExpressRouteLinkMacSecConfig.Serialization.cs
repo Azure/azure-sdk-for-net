@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteLinkMacSecConfig : IUtf8JsonSerializable
+    public partial class ExpressRouteLinkMacSecConfig : IUtf8JsonSerializable, IModelJsonSerializable<ExpressRouteLinkMacSecConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExpressRouteLinkMacSecConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExpressRouteLinkMacSecConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CknSecretIdentifier))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sciState"u8);
                 writer.WriteStringValue(SciState.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteLinkMacSecConfig DeserializeExpressRouteLinkMacSecConfig(JsonElement element)
+        internal static ExpressRouteLinkMacSecConfig DeserializeExpressRouteLinkMacSecConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> cakSecretIdentifier = default;
             Optional<ExpressRouteLinkMacSecCipher> cipher = default;
             Optional<ExpressRouteLinkMacSecSciState> sciState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cknSecretIdentifier"u8))
@@ -78,8 +101,57 @@ namespace Azure.ResourceManager.Network.Models
                     sciState = new ExpressRouteLinkMacSecSciState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState));
+            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState), rawData);
+        }
+
+        ExpressRouteLinkMacSecConfig IModelJsonSerializable<ExpressRouteLinkMacSecConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteLinkMacSecConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExpressRouteLinkMacSecConfig>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExpressRouteLinkMacSecConfig IModelSerializable<ExpressRouteLinkMacSecConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExpressRouteLinkMacSecConfig(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExpressRouteLinkMacSecConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExpressRouteLinkMacSecConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExpressRouteLinkMacSecConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

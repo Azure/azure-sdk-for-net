@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class RouteData : IUtf8JsonSerializable
+    public partial class RouteData : IUtf8JsonSerializable, IModelJsonSerializable<RouteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouteData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouteData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<RouteData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -55,11 +62,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteBooleanValue(HasBgpOverride.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RouteData DeserializeRouteData(JsonElement element)
+        internal static RouteData DeserializeRouteData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +94,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> nextHopIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> hasBgpOverride = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -156,8 +178,57 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
+            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride), rawData);
+        }
+
+        RouteData IModelJsonSerializable<RouteData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouteData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouteData IModelSerializable<RouteData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<RouteData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouteData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RouteData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RouteData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouteData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

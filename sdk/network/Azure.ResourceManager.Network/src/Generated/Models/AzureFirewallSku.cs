@@ -5,23 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SKU of an Azure Firewall. </summary>
     public partial class AzureFirewallSku
     {
-        /// <summary> Initializes a new instance of AzureFirewallSku. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallSku"/>. </summary>
         public AzureFirewallSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallSku"/>. </summary>
         /// <param name="name"> Name of an Azure Firewall SKU. </param>
         /// <param name="tier"> Tier of an Azure Firewall. </param>
-        internal AzureFirewallSku(AzureFirewallSkuName? name, AzureFirewallSkuTier? tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallSku(AzureFirewallSkuName? name, AzureFirewallSkuTier? tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
         }
 
         /// <summary> Name of an Azure Firewall SKU. </summary>

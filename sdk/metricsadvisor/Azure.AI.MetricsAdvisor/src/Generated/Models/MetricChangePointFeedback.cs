@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> The ChangePointFeedback. </summary>
     public partial class MetricChangePointFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricChangePointFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricChangePointFeedback"/>. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>
@@ -24,12 +25,18 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="startsOn"> the start timestamp of feedback time range. </param>
         /// <param name="endsOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"></param>
-        internal MetricChangePointFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricChangePointFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointFeedbackValue valueInternal, Dictionary<string, BinaryData> rawData) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter, rawData)
         {
             StartsOn = startsOn;
             EndsOn = endsOn;
             ValueInternal = valueInternal;
             FeedbackKind = feedbackKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricChangePointFeedback"/> for deserialization. </summary>
+        internal MetricChangePointFeedback()
+        {
         }
     }
 }

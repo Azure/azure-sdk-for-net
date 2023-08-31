@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of available countries with details. </summary>
     public partial class AvailableProvidersList
     {
-        /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersList"/>. </summary>
         /// <param name="countries"> List of available countries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countries"/> is null. </exception>
         internal AvailableProvidersList(IEnumerable<AvailableProvidersListCountry> countries)
@@ -25,11 +27,18 @@ namespace Azure.ResourceManager.Network.Models
             Countries = countries.ToList();
         }
 
-        /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersList"/>. </summary>
         /// <param name="countries"> List of available countries. </param>
-        internal AvailableProvidersList(IReadOnlyList<AvailableProvidersListCountry> countries)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableProvidersList(IReadOnlyList<AvailableProvidersListCountry> countries, Dictionary<string, BinaryData> rawData)
         {
             Countries = countries;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersList"/> for deserialization. </summary>
+        internal AvailableProvidersList()
+        {
         }
 
         /// <summary> List of available countries. </summary>

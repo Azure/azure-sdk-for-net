@@ -5,16 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualHubEffectiveRoute
+    public partial class VirtualHubEffectiveRoute : IUtf8JsonSerializable, IModelJsonSerializable<VirtualHubEffectiveRoute>
     {
-        internal static VirtualHubEffectiveRoute DeserializeVirtualHubEffectiveRoute(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualHubEffectiveRoute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualHubEffectiveRoute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AddressPrefixes))
+            {
+                writer.WritePropertyName("addressPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressPrefixes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NextHops))
+            {
+                writer.WritePropertyName("nextHops"u8);
+                writer.WriteStartArray();
+                foreach (var item in NextHops)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextHopType))
+            {
+                writer.WritePropertyName("nextHopType"u8);
+                writer.WriteStringValue(NextHopType);
+            }
+            if (Optional.IsDefined(AsPath))
+            {
+                writer.WritePropertyName("asPath"u8);
+                writer.WriteStringValue(AsPath);
+            }
+            if (Optional.IsDefined(RouteOrigin))
+            {
+                writer.WritePropertyName("routeOrigin"u8);
+                writer.WriteStringValue(RouteOrigin);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VirtualHubEffectiveRoute DeserializeVirtualHubEffectiveRoute(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> nextHopType = default;
             Optional<string> asPath = default;
             Optional<string> routeOrigin = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefixes"u8))
@@ -69,8 +132,57 @@ namespace Azure.ResourceManager.Network.Models
                     routeOrigin = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualHubEffectiveRoute(Optional.ToList(addressPrefixes), Optional.ToList(nextHops), nextHopType.Value, asPath.Value, routeOrigin.Value);
+            return new VirtualHubEffectiveRoute(Optional.ToList(addressPrefixes), Optional.ToList(nextHops), nextHopType.Value, asPath.Value, routeOrigin.Value, rawData);
+        }
+
+        VirtualHubEffectiveRoute IModelJsonSerializable<VirtualHubEffectiveRoute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHubEffectiveRoute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualHubEffectiveRoute>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualHubEffectiveRoute IModelSerializable<VirtualHubEffectiveRoute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualHubEffectiveRoute(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualHubEffectiveRoute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualHubEffectiveRoute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualHubEffectiveRoute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

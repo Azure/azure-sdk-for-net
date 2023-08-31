@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalParam : IUtf8JsonSerializable
+    internal partial class ServicePrincipalParam : IUtf8JsonSerializable, IModelJsonSerializable<ServicePrincipalParam>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServicePrincipalParam>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServicePrincipalParam>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
@@ -24,11 +32,25 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalParam DeserializeServicePrincipalParam(JsonElement element)
+        internal static ServicePrincipalParam DeserializeServicePrincipalParam(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string clientId = default;
             Optional<string> clientSecret = default;
             string tenantId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -53,8 +76,57 @@ namespace Azure.AI.MetricsAdvisor.Models
                     tenantId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServicePrincipalParam(clientId, clientSecret.Value, tenantId);
+            return new ServicePrincipalParam(clientId, clientSecret.Value, tenantId, rawData);
+        }
+
+        ServicePrincipalParam IModelJsonSerializable<ServicePrincipalParam>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalParam(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePrincipalParam>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePrincipalParam IModelSerializable<ServicePrincipalParam>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalParam(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServicePrincipalParam model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServicePrincipalParam(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServicePrincipalParam(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

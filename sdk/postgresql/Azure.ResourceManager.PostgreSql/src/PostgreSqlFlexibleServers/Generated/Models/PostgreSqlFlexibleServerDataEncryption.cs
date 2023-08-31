@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -13,12 +14,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Data encryption properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerDataEncryption
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDataEncryption. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDataEncryption"/>. </summary>
         public PostgreSqlFlexibleServerDataEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDataEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDataEncryption"/>. </summary>
         /// <param name="primaryKeyUri"> URI for the key in keyvault for data encryption of the primary server. </param>
         /// <param name="primaryUserAssignedIdentityId"> Resource Id for the User assigned identity to be used for data encryption of the primary server. </param>
         /// <param name="geoBackupKeyUri"> URI for the key in keyvault for data encryption for geo-backup of server. </param>
@@ -26,7 +29,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="keyType"> Data encryption type to depict if it is System Managed vs Azure Key vault. </param>
         /// <param name="primaryEncryptionKeyStatus"> Primary encryption key status for Data encryption enabled server. </param>
         /// <param name="geoBackupEncryptionKeyStatus"> Geo-backup encryption key status for Data encryption enabled server. </param>
-        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus, Dictionary<string, BinaryData> rawData)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             KeyType = keyType;
             PrimaryEncryptionKeyStatus = primaryEncryptionKeyStatus;
             GeoBackupEncryptionKeyStatus = geoBackupEncryptionKeyStatus;
+            _rawData = rawData;
         }
 
         /// <summary> URI for the key in keyvault for data encryption of the primary server. </summary>

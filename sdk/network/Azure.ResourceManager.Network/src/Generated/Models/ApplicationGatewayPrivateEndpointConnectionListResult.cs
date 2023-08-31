@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListApplicationGatewayPrivateEndpointConnection API service call. Gets all private endpoint connections for an application gateway. </summary>
     internal partial class ApplicationGatewayPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/>. </summary>
         internal ApplicationGatewayPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> List of private endpoint connections on an application gateway. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionListResult(IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayPrivateEndpointConnectionListResult(IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of private endpoint connections on an application gateway. </summary>

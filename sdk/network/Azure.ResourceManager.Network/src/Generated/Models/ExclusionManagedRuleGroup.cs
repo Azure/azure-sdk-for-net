@@ -14,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines a managed rule group to use for exclusion. </summary>
     public partial class ExclusionManagedRuleGroup
     {
-        /// <summary> Initializes a new instance of ExclusionManagedRuleGroup. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExclusionManagedRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The managed rule group for exclusion. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ExclusionManagedRuleGroup(string ruleGroupName)
@@ -25,13 +27,20 @@ namespace Azure.ResourceManager.Network.Models
             Rules = new ChangeTrackingList<ExclusionManagedRule>();
         }
 
-        /// <summary> Initializes a new instance of ExclusionManagedRuleGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExclusionManagedRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The managed rule group for exclusion. </param>
         /// <param name="rules"> List of rules that will be excluded. If none specified, all rules in the group will be excluded. </param>
-        internal ExclusionManagedRuleGroup(string ruleGroupName, IList<ExclusionManagedRule> rules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExclusionManagedRuleGroup(string ruleGroupName, IList<ExclusionManagedRule> rules, Dictionary<string, BinaryData> rawData)
         {
             RuleGroupName = ruleGroupName;
             Rules = rules;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExclusionManagedRuleGroup"/> for deserialization. </summary>
+        internal ExclusionManagedRuleGroup()
+        {
         }
 
         /// <summary> The managed rule group for exclusion. </summary>

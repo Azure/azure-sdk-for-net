@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHealthHttpSettings
+    public partial class ApplicationGatewayBackendHealthHttpSettings : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayBackendHealthHttpSettings>
     {
-        internal static ApplicationGatewayBackendHealthHttpSettings DeserializeApplicationGatewayBackendHealthHttpSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayBackendHealthHttpSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayBackendHealthHttpSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BackendHttpSettings))
+            {
+                writer.WritePropertyName("backendHttpSettings"u8);
+                writer.WriteObjectValue(BackendHttpSettings);
+            }
+            if (Optional.IsCollectionDefined(Servers))
+            {
+                writer.WritePropertyName("servers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Servers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationGatewayBackendHealthHttpSettings DeserializeApplicationGatewayBackendHealthHttpSettings(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
             Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendHttpSettings"u8))
@@ -46,8 +89,57 @@ namespace Azure.ResourceManager.Network.Models
                     servers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Optional.ToList(servers));
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Optional.ToList(servers), rawData);
+        }
+
+        ApplicationGatewayBackendHealthHttpSettings IModelJsonSerializable<ApplicationGatewayBackendHealthHttpSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayBackendHealthHttpSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayBackendHealthHttpSettings>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayBackendHealthHttpSettings IModelSerializable<ApplicationGatewayBackendHealthHttpSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayBackendHealthHttpSettings(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApplicationGatewayBackendHealthHttpSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApplicationGatewayBackendHealthHttpSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayBackendHealthHttpSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

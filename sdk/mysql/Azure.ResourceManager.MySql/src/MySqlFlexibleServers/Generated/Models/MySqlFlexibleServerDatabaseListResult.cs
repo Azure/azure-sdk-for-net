@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A List of databases. </summary>
     internal partial class MySqlFlexibleServerDatabaseListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDatabaseListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDatabaseListResult"/>. </summary>
         internal MySqlFlexibleServerDatabaseListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDatabaseListResult"/>. </summary>
         /// <param name="value"> The list of databases housed in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal MySqlFlexibleServerDatabaseListResult(IReadOnlyList<MySqlFlexibleServerDatabaseData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerDatabaseListResult(IReadOnlyList<MySqlFlexibleServerDatabaseData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of databases housed in a server. </summary>

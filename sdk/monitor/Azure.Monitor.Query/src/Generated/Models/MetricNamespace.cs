@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
     public partial class MetricNamespace
     {
-        /// <summary> Initializes a new instance of MetricNamespace. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricNamespace"/>. </summary>
         internal MetricNamespace()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricNamespace. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespace"/>. </summary>
         /// <param name="id"> The ID of the metric namespace. </param>
         /// <param name="type"> The type of the namespace. </param>
         /// <param name="name"> The escaped name of the namespace. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="properties"> Properties which include the fully qualified namespace name. </param>
-        internal MetricNamespace(string id, string type, string name, MetricNamespaceClassification? classification, MetricNamespaceName properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricNamespace(string id, string type, string name, MetricNamespaceClassification? classification, MetricNamespaceName properties, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Type = type;
             Name = name;
             Classification = classification;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of the metric namespace. </summary>

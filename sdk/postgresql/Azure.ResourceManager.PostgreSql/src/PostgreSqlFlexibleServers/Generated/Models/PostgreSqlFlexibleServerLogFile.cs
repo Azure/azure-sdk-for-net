@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a logFile. </summary>
     public partial class PostgreSqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
         public PostgreSqlFlexibleServerLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,13 +32,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="sizeInKb"> The size in kb of the logFile. </param>
         /// <param name="typePropertiesType"> Type of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        internal PostgreSqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             SizeInKb = sizeInKb;
             TypePropertiesType = typePropertiesType;
             Uri = uri;
+            _rawData = rawData;
         }
 
         /// <summary> Creation timestamp of the log file. </summary>

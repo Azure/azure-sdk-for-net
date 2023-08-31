@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPortReuseHoldTimes : IUtf8JsonSerializable
+    public partial class MobileNetworkPortReuseHoldTimes : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkPortReuseHoldTimes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkPortReuseHoldTimes>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkPortReuseHoldTimes>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Tcp))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkPortReuseHoldTimes DeserializeMobileNetworkPortReuseHoldTimes(JsonElement element)
+        internal static MobileNetworkPortReuseHoldTimes DeserializeMobileNetworkPortReuseHoldTimes(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> tcp = default;
             Optional<int> udp = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tcp"u8))
@@ -56,8 +79,57 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     udp = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkPortReuseHoldTimes(Optional.ToNullable(tcp), Optional.ToNullable(udp));
+            return new MobileNetworkPortReuseHoldTimes(Optional.ToNullable(tcp), Optional.ToNullable(udp), rawData);
+        }
+
+        MobileNetworkPortReuseHoldTimes IModelJsonSerializable<MobileNetworkPortReuseHoldTimes>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkPortReuseHoldTimes(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkPortReuseHoldTimes>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkPortReuseHoldTimes IModelSerializable<MobileNetworkPortReuseHoldTimes>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkPortReuseHoldTimes(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MobileNetworkPortReuseHoldTimes model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MobileNetworkPortReuseHoldTimes(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkPortReuseHoldTimes(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

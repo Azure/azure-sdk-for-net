@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class FrontendIPConfigurationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationData"/>. </summary>
         public FrontendIPConfigurationData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -47,7 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="publicIPPrefix"> The reference to the Public IP Prefix resource. </param>
         /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
         /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal FrontendIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontendIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             Zones = zones;

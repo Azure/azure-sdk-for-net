@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of network manager connections. </summary>
     internal partial class NetworkManagerConnectionListResult
     {
-        /// <summary> Initializes a new instance of NetworkManagerConnectionListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionListResult"/>. </summary>
         internal NetworkManagerConnectionListResult()
         {
             Value = new ChangeTrackingList<NetworkManagerConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionListResult"/>. </summary>
         /// <param name="value"> List of network manager connections. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
-        internal NetworkManagerConnectionListResult(IReadOnlyList<NetworkManagerConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerConnectionListResult(IReadOnlyList<NetworkManagerConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of network manager connections. </summary>

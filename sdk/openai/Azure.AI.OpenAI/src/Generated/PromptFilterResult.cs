@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Content filtering results for a single prompt in the request. </summary>
     public partial class PromptFilterResult
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of PromptFilterResult. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         internal PromptFilterResult(int promptIndex)
@@ -20,10 +25,17 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of PromptFilterResult. </summary>
         /// <param name="promptIndex"> The index of this prompt in the set of prompt results. </param>
         /// <param name="contentFilterResults"> Content filtering results for this prompt. </param>
-        internal PromptFilterResult(int promptIndex, ContentFilterResults contentFilterResults)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PromptFilterResult(int promptIndex, ContentFilterResults contentFilterResults, Dictionary<string, BinaryData> rawData)
         {
             PromptIndex = promptIndex;
             ContentFilterResults = contentFilterResults;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PromptFilterResult"/> for deserialization. </summary>
+        internal PromptFilterResult()
+        {
         }
 
         /// <summary> The index of this prompt in the set of prompt results. </summary>

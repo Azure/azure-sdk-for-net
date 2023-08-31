@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network default admin rule. </summary>
     public partial class EffectiveDefaultSecurityAdminRule : EffectiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of EffectiveDefaultSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveDefaultSecurityAdminRule"/>. </summary>
         internal EffectiveDefaultSecurityAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = EffectiveAdminRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of EffectiveDefaultSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveDefaultSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal EffectiveDefaultSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveDefaultSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> rawData) : base(resourceId, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind, rawData)
         {
             Description = description;
             Flag = flag;

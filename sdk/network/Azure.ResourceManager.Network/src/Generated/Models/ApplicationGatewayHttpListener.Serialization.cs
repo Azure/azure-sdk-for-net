@@ -5,18 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayHttpListener : IUtf8JsonSerializable
+    public partial class ApplicationGatewayHttpListener : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayHttpListener>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayHttpListener>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayHttpListener>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayHttpListener>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -91,11 +97,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element)
+        internal static ApplicationGatewayHttpListener DeserializeApplicationGatewayHttpListener(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,6 +135,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
             Optional<WritableSubResource> firewallPolicy = default;
             Optional<IList<string>> hostNames = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -266,8 +287,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
+            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames), rawData);
+        }
+
+        ApplicationGatewayHttpListener IModelJsonSerializable<ApplicationGatewayHttpListener>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayHttpListener>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayHttpListener(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayHttpListener>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayHttpListener>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayHttpListener IModelSerializable<ApplicationGatewayHttpListener>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ApplicationGatewayHttpListener>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayHttpListener(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ApplicationGatewayHttpListener model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ApplicationGatewayHttpListener(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayHttpListener(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

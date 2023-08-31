@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlPrivateEndpointConnectionResource(Client, PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(e)), _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "PostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlPrivateEndpointConnectionResource(Client, PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(e)), _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "PostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlPrivateEndpointConnectionResource(Client, PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(e)), _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "PostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PostgreSqlPrivateEndpointConnectionResource(Client, PostgreSqlPrivateEndpointConnectionData.DeserializePostgreSqlPrivateEndpointConnectionData(e)), _postgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "PostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

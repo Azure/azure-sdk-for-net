@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesLabel represents a single entry for a Kubernetes label or taint such as those used on a node or pod. </summary>
     public partial class KubernetesLabel
     {
-        /// <summary> Initializes a new instance of KubernetesLabel. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesLabel"/>. </summary>
         /// <param name="key"> The name of the label or taint. </param>
         /// <param name="value"> The value of the label or taint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             Key = key;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesLabel"/>. </summary>
+        /// <param name="key"> The name of the label or taint. </param>
+        /// <param name="value"> The value of the label or taint. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesLabel(string key, string value, Dictionary<string, BinaryData> rawData)
+        {
+            Key = key;
+            Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesLabel"/> for deserialization. </summary>
+        internal KubernetesLabel()
+        {
         }
 
         /// <summary> The name of the label or taint. </summary>

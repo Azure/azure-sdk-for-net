@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class PolicyRemediationData : IUtf8JsonSerializable
+    public partial class PolicyRemediationData : IUtf8JsonSerializable, IModelJsonSerializable<PolicyRemediationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyRemediationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyRemediationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WriteObjectValue(FailureThreshold);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PolicyRemediationData DeserializePolicyRemediationData(JsonElement element)
+        internal static PolicyRemediationData DeserializePolicyRemediationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +103,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Optional<int> resourceCount = default;
             Optional<int> parallelDeployments = default;
             Optional<RemediationPropertiesFailureThreshold> failureThreshold = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -221,8 +243,57 @@ namespace Azure.ResourceManager.PolicyInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value);
+            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value, rawData);
+        }
+
+        PolicyRemediationData IModelJsonSerializable<PolicyRemediationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyRemediationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyRemediationData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyRemediationData IModelSerializable<PolicyRemediationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyRemediationData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PolicyRemediationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PolicyRemediationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyRemediationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

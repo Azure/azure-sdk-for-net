@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
@@ -18,12 +19,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlLtrServerBackupOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
         public PostgreSqlLtrServerBackupOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="percentComplete"> PercentageCompleted. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="errorMessage"> The error message. </param>
-        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;
@@ -50,6 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PercentComplete = percentComplete;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
+            _rawData = rawData;
         }
 
         /// <summary> Size of datasource in bytes. </summary>

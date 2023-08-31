@@ -5,22 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class AdvancedSecurityObject
+    public partial class AdvancedSecurityObject : IUtf8JsonSerializable, IModelJsonSerializable<AdvancedSecurityObject>
     {
-        internal static AdvancedSecurityObject DeserializeAdvancedSecurityObject(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdvancedSecurityObject>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdvancedSecurityObject>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AdvSecurityObjectModelType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(AdvSecurityObjectModelType);
+            }
+            writer.WritePropertyName("entry"u8);
+            writer.WriteStartArray();
+            foreach (var item in Entry)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AdvancedSecurityObject DeserializeAdvancedSecurityObject(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> type = default;
             IReadOnlyList<NameDescriptionObject> entry = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -38,8 +78,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     entry = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AdvancedSecurityObject(type.Value, entry);
+            return new AdvancedSecurityObject(type.Value, entry, rawData);
+        }
+
+        AdvancedSecurityObject IModelJsonSerializable<AdvancedSecurityObject>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdvancedSecurityObject(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdvancedSecurityObject>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdvancedSecurityObject IModelSerializable<AdvancedSecurityObject>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdvancedSecurityObject(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AdvancedSecurityObject model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AdvancedSecurityObject(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAdvancedSecurityObject(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,22 +5,65 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
+    public partial class DataCollectionRuleBcdrFailoverConfigurationSpec : IUtf8JsonSerializable, IModelJsonSerializable<DataCollectionRuleBcdrFailoverConfigurationSpec>
     {
-        internal static DataCollectionRuleBcdrFailoverConfigurationSpec DeserializeDataCollectionRuleBcdrFailoverConfigurationSpec(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataCollectionRuleBcdrFailoverConfigurationSpec>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataCollectionRuleBcdrFailoverConfigurationSpec>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ActiveLocation))
+            {
+                writer.WritePropertyName("activeLocation"u8);
+                writer.WriteStringValue(ActiveLocation);
+            }
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataCollectionRuleBcdrFailoverConfigurationSpec DeserializeDataCollectionRuleBcdrFailoverConfigurationSpec(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> activeLocation = default;
             Optional<IReadOnlyList<DataCollectionRuleBcdrLocationSpec>> locations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeLocation"u8))
@@ -42,8 +85,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     locations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, Optional.ToList(locations));
+            return new DataCollectionRuleBcdrFailoverConfigurationSpec(activeLocation.Value, Optional.ToList(locations), rawData);
+        }
+
+        DataCollectionRuleBcdrFailoverConfigurationSpec IModelJsonSerializable<DataCollectionRuleBcdrFailoverConfigurationSpec>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionRuleBcdrFailoverConfigurationSpec(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataCollectionRuleBcdrFailoverConfigurationSpec>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataCollectionRuleBcdrFailoverConfigurationSpec IModelSerializable<DataCollectionRuleBcdrFailoverConfigurationSpec>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataCollectionRuleBcdrFailoverConfigurationSpec(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DataCollectionRuleBcdrFailoverConfigurationSpec model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DataCollectionRuleBcdrFailoverConfigurationSpec(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataCollectionRuleBcdrFailoverConfigurationSpec(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

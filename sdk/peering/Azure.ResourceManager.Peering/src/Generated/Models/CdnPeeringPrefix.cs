@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,14 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The CDN peering prefix. </summary>
     public partial class CdnPeeringPrefix : ResourceData
     {
-        /// <summary> Initializes a new instance of CdnPeeringPrefix. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefix"/>. </summary>
         public CdnPeeringPrefix()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnPeeringPrefix. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefix"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,13 +32,15 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="azureService"> The Azure service. </param>
         /// <param name="isPrimaryRegion"> The flag that indicates whether or not this is the primary region. </param>
         /// <param name="bgpCommunity"> The BGP Community. </param>
-        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, AzureLocation? azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnPeeringPrefix(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, AzureLocation? azureRegion, string azureService, bool? isPrimaryRegion, string bgpCommunity, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             AzureRegion = azureRegion;
             AzureService = azureService;
             IsPrimaryRegion = isPrimaryRegion;
             BgpCommunity = bgpCommunity;
+            _rawData = rawData;
         }
 
         /// <summary> The prefix. </summary>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkTapData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapData"/>. </summary>
         public VirtualNetworkTapData()
         {
             NetworkInterfaceTapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="destinationNetworkInterfaceIPConfiguration"> The reference to the private IP Address of the collector nic that will receive the tap. </param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
-        internal VirtualNetworkTapData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkTapData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;

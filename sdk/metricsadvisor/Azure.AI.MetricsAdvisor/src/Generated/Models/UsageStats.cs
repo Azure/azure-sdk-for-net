@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The UsageStats. </summary>
     internal partial class UsageStats
     {
-        /// <summary> Initializes a new instance of UsageStats. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UsageStats"/>. </summary>
         internal UsageStats()
         {
         }
 
-        /// <summary> Initializes a new instance of UsageStats. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageStats"/>. </summary>
         /// <param name="timestamp"> The timestamp of the stats. </param>
         /// <param name="activeSeriesCount"> The active series count. </param>
         /// <param name="allSeriesCount"> All series count under non deleted data feed. </param>
         /// <param name="metricsCount"> The metrics count under non deleted data feed. </param>
         /// <param name="dataFeedCount"> The count of non deleted data feed. </param>
-        internal UsageStats(DateTimeOffset? timestamp, int? activeSeriesCount, int? allSeriesCount, int? metricsCount, int? dataFeedCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UsageStats(DateTimeOffset? timestamp, int? activeSeriesCount, int? allSeriesCount, int? metricsCount, int? dataFeedCount, Dictionary<string, BinaryData> rawData)
         {
             Timestamp = timestamp;
             ActiveSeriesCount = activeSeriesCount;
             AllSeriesCount = allSeriesCount;
             MetricsCount = metricsCount;
             DataFeedCount = dataFeedCount;
+            _rawData = rawData;
         }
 
         /// <summary> The timestamp of the stats. </summary>

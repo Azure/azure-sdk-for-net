@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CanaryTrafficRegionRolloutConfiguration. </summary>
     public partial class CanaryTrafficRegionRolloutConfiguration
     {
-        /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CanaryTrafficRegionRolloutConfiguration"/>. </summary>
         public CanaryTrafficRegionRolloutConfiguration()
         {
             SkipRegions = new ChangeTrackingList<AzureLocation>();
             Regions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanaryTrafficRegionRolloutConfiguration"/>. </summary>
         /// <param name="skipRegions"></param>
         /// <param name="regions"></param>
-        internal CanaryTrafficRegionRolloutConfiguration(IList<AzureLocation> skipRegions, IList<AzureLocation> regions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CanaryTrafficRegionRolloutConfiguration(IList<AzureLocation> skipRegions, IList<AzureLocation> regions, Dictionary<string, BinaryData> rawData)
         {
             SkipRegions = skipRegions;
             Regions = regions;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the skip regions. </summary>

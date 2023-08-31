@@ -8,14 +8,67 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationStatus
+    public partial class NotificationStatus : IUtf8JsonSerializable, IModelJsonSerializable<NotificationStatus>
     {
-        internal static NotificationStatus DeserializeNotificationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NotificationStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NotificationStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Context))
+            {
+                writer.WritePropertyName("context"u8);
+                writer.WriteObjectValue(Context);
+            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State);
+            if (Optional.IsDefined(CompletedOn))
+            {
+                writer.WritePropertyName("completedTime"u8);
+                writer.WriteStringValue(CompletedOn.Value, "O");
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(ActionDetails))
+            {
+                writer.WritePropertyName("actionDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ActionDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NotificationStatus DeserializeNotificationStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<DateTimeOffset> completedTime = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("context"u8))
@@ -73,8 +127,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     actionDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails));
+            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails), rawData);
+        }
+
+        NotificationStatus IModelJsonSerializable<NotificationStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NotificationStatus>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NotificationStatus IModelSerializable<NotificationStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNotificationStatus(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NotificationStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NotificationStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNotificationStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

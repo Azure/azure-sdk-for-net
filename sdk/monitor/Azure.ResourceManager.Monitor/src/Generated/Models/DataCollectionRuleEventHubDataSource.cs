@@ -5,28 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionRuleEventHubDataSource. </summary>
     public partial class DataCollectionRuleEventHubDataSource
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         public DataCollectionRuleEventHubDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleEventHubDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <param name="consumerGroup"> Event Hub consumer group name. </param>
         /// <param name="stream"> The stream to collect from EventHub. </param>
-        internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ConsumerGroup = consumerGroup;
             Stream = stream;
+            _rawData = rawData;
         }
 
         /// <summary>

@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub WnsCredential. </summary>
     public partial class NotificationHubWnsCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubWnsCredential. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubWnsCredential"/>. </summary>
         public NotificationHubWnsCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubWnsCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubWnsCredential"/>. </summary>
         /// <param name="packageSid"> The package ID for this credential. </param>
         /// <param name="secretKey"> The secret key. </param>
         /// <param name="windowsLiveEndpoint"> The Windows Live endpoint. </param>
-        internal NotificationHubWnsCredential(string packageSid, string secretKey, Uri windowsLiveEndpoint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubWnsCredential(string packageSid, string secretKey, Uri windowsLiveEndpoint, Dictionary<string, BinaryData> rawData)
         {
             PackageSid = packageSid;
             SecretKey = secretKey;
             WindowsLiveEndpoint = windowsLiveEndpoint;
+            _rawData = rawData;
         }
 
         /// <summary> The package ID for this credential. </summary>

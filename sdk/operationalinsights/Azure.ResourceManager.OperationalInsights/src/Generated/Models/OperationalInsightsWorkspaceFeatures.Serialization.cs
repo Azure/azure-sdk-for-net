@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsWorkspaceFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsWorkspaceFeatures>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsWorkspaceFeatures>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsDataExportEnabled))
             {
@@ -89,8 +95,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element)
+        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -158,6 +166,50 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new OperationalInsightsWorkspaceFeatures(Optional.ToNullable(enableDataExport), Optional.ToNullable(immediatePurgeDataOn30Days), Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions), clusterResourceId.Value, Optional.ToNullable(disableLocalAuth), additionalProperties);
+        }
+
+        OperationalInsightsWorkspaceFeatures IModelJsonSerializable<OperationalInsightsWorkspaceFeatures>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspaceFeatures(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsWorkspaceFeatures>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsWorkspaceFeatures IModelSerializable<OperationalInsightsWorkspaceFeatures>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsWorkspaceFeatures(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OperationalInsightsWorkspaceFeatures model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OperationalInsightsWorkspaceFeatures(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsWorkspaceFeatures(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

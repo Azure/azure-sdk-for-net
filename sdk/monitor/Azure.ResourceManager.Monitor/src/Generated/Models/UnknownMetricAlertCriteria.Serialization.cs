@@ -6,16 +6,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class UnknownMetricAlertCriteria : IUtf8JsonSerializable
+    internal partial class UnknownMetricAlertCriteria : IUtf8JsonSerializable, IModelJsonSerializable<MetricAlertCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricAlertCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricAlertCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType.ToString());
@@ -31,26 +35,29 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownMetricAlertCriteria DeserializeUnknownMetricAlertCriteria(JsonElement element)
+        internal static MetricAlertCriteria DeserializeUnknownMetricAlertCriteria(JsonElement element, ModelSerializerOptions options = default) => DeserializeMetricAlertCriteria(element, options);
+
+        MetricAlertCriteria IModelJsonSerializable<MetricAlertCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            MonitorOdataType odataType = "Unknown";
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("odata.type"u8))
-                {
-                    odataType = new MonitorOdataType(property.Value.GetString());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new UnknownMetricAlertCriteria(odataType, additionalProperties);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMetricAlertCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricAlertCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricAlertCriteria IModelSerializable<MetricAlertCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricAlertCriteria(doc.RootElement, options);
         }
     }
 }

@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The WholeMetricConfiguration. </summary>
     public partial class MetricWholeSeriesDetectionCondition
     {
-        /// <summary> Initializes a new instance of MetricWholeSeriesDetectionCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricWholeSeriesDetectionCondition"/>. </summary>
         /// <param name="conditionOperator">
         /// condition operator
         ///
@@ -19,12 +24,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="smartDetectionCondition"></param>
         /// <param name="hardThresholdCondition"></param>
         /// <param name="changeThresholdCondition"></param>
-        internal MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, Dictionary<string, BinaryData> rawData)
         {
             ConditionOperator = conditionOperator;
             SmartDetectionCondition = smartDetectionCondition;
             HardThresholdCondition = hardThresholdCondition;
             ChangeThresholdCondition = changeThresholdCondition;
+            _rawData = rawData;
         }
     }
 }

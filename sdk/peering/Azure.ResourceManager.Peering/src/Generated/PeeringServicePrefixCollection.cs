@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PeeringServicePrefixResource(Client, PeeringServicePrefixData.DeserializePeeringServicePrefixData(e)), _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PeeringServicePrefixResource(Client, PeeringServicePrefixData.DeserializePeeringServicePrefixData(e)), _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _peeringServicePrefixPrefixesRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PeeringServicePrefixResource(Client, PeeringServicePrefixData.DeserializePeeringServicePrefixData(e)), _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PeeringServicePrefixResource(Client, PeeringServicePrefixData.DeserializePeeringServicePrefixData(e)), _peeringServicePrefixPrefixesClientDiagnostics, Pipeline, "PeeringServicePrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

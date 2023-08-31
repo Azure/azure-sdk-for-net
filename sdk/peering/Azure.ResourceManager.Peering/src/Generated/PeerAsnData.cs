@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,15 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeerAsnData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeerAsnData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeerAsnData"/>. </summary>
         public PeerAsnData()
         {
             PeerContactDetail = new ChangeTrackingList<PeerAsnContactDetail>();
         }
 
-        /// <summary> Initializes a new instance of PeerAsnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +37,15 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peerName"> The name of the peer. </param>
         /// <param name="validationState"> The validation state of the ASN associated with the peer. </param>
         /// <param name="errorMessage"> The error message for the validation state. </param>
-        internal PeerAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? peerAsn, IList<PeerAsnContactDetail> peerContactDetail, string peerName, PeerAsnValidationState? validationState, string errorMessage) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeerAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? peerAsn, IList<PeerAsnContactDetail> peerContactDetail, string peerName, PeerAsnValidationState? validationState, string errorMessage, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PeerAsn = peerAsn;
             PeerContactDetail = peerContactDetail;
             PeerName = peerName;
             ValidationState = validationState;
             ErrorMessage = errorMessage;
+            _rawData = rawData;
         }
 
         /// <summary> The Autonomous System Number (ASN) of the peer. </summary>

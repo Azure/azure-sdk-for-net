@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListServiceCommunity API service call. </summary>
     internal partial class BgpServiceCommunityListResult
     {
-        /// <summary> Initializes a new instance of BgpServiceCommunityListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityListResult"/>. </summary>
         internal BgpServiceCommunityListResult()
         {
             Value = new ChangeTrackingList<BgpServiceCommunity>();
         }
 
-        /// <summary> Initializes a new instance of BgpServiceCommunityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunityListResult"/>. </summary>
         /// <param name="value"> A list of service community resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal BgpServiceCommunityListResult(IReadOnlyList<BgpServiceCommunity> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BgpServiceCommunityListResult(IReadOnlyList<BgpServiceCommunity> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of service community resources. </summary>

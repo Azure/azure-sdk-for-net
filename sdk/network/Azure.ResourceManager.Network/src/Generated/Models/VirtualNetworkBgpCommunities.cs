@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
     public partial class VirtualNetworkBgpCommunities
     {
-        /// <summary> Initializes a new instance of VirtualNetworkBgpCommunities. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkBgpCommunities"/>. </summary>
         /// <param name="virtualNetworkCommunity"> The BGP community associated with the virtual network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkCommunity"/> is null. </exception>
         public VirtualNetworkBgpCommunities(string virtualNetworkCommunity)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkCommunity = virtualNetworkCommunity;
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkBgpCommunities. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkBgpCommunities"/>. </summary>
         /// <param name="virtualNetworkCommunity"> The BGP community associated with the virtual network. </param>
         /// <param name="regionalCommunity"> The BGP community associated with the region of the virtual network. </param>
-        internal VirtualNetworkBgpCommunities(string virtualNetworkCommunity, string regionalCommunity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkBgpCommunities(string virtualNetworkCommunity, string regionalCommunity, Dictionary<string, BinaryData> rawData)
         {
             VirtualNetworkCommunity = virtualNetworkCommunity;
             RegionalCommunity = regionalCommunity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkBgpCommunities"/> for deserialization. </summary>
+        internal VirtualNetworkBgpCommunities()
+        {
         }
 
         /// <summary> The BGP community associated with the virtual network. </summary>

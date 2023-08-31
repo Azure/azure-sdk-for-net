@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsClusterData : IUtf8JsonSerializable
+    public partial class OperationalInsightsClusterData : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsClusterData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsClusterData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -80,11 +86,25 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteObjectValue(CapacityReservationProperties);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsClusterData DeserializeOperationalInsightsClusterData(JsonElement element)
+        internal static OperationalInsightsClusterData DeserializeOperationalInsightsClusterData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,6 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<DateTimeOffset> createdDate = default;
             Optional<IList<OperationalInsightsClusterAssociatedWorkspace>> associatedWorkspaces = default;
             Optional<OperationalInsightsCapacityReservationProperties> capacityReservationProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -277,8 +298,57 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(isDoubleEncryptionEnabled), Optional.ToNullable(isAvailabilityZonesEnabled), Optional.ToNullable(billingType), keyVaultProperties.Value, Optional.ToNullable(lastModifiedDate), Optional.ToNullable(createdDate), Optional.ToList(associatedWorkspaces), capacityReservationProperties.Value);
+            return new OperationalInsightsClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(isDoubleEncryptionEnabled), Optional.ToNullable(isAvailabilityZonesEnabled), Optional.ToNullable(billingType), keyVaultProperties.Value, Optional.ToNullable(lastModifiedDate), Optional.ToNullable(createdDate), Optional.ToList(associatedWorkspaces), capacityReservationProperties.Value, rawData);
+        }
+
+        OperationalInsightsClusterData IModelJsonSerializable<OperationalInsightsClusterData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsClusterData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsClusterData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsClusterData IModelSerializable<OperationalInsightsClusterData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsClusterData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(OperationalInsightsClusterData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator OperationalInsightsClusterData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsClusterData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

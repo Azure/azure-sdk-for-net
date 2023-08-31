@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallNetworkProfile : IUtf8JsonSerializable
+    public partial class FirewallNetworkProfile : IUtf8JsonSerializable, IModelJsonSerializable<FirewallNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallNetworkProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallNetworkProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VnetConfiguration))
             {
@@ -47,11 +54,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element)
+        internal static FirewallNetworkProfile DeserializeFirewallNetworkProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +83,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IList<IPAddressInfo> publicIPs = default;
             AllowEgressNatType enableEgressNat = default;
             Optional<IList<IPAddressInfo>> egressNatIP = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetConfiguration"u8))
@@ -116,8 +138,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     egressNatIP = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP));
+            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP), rawData);
+        }
+
+        FirewallNetworkProfile IModelJsonSerializable<FirewallNetworkProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallNetworkProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallNetworkProfile>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallNetworkProfile IModelSerializable<FirewallNetworkProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallNetworkProfile(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FirewallNetworkProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FirewallNetworkProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallNetworkProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

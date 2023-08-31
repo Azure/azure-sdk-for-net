@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualApplianceSkuProperties : IUtf8JsonSerializable
+    public partial class VirtualApplianceSkuProperties : IUtf8JsonSerializable, IModelJsonSerializable<VirtualApplianceSkuProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualApplianceSkuProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualApplianceSkuProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Vendor))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("marketPlaceVersion"u8);
                 writer.WriteStringValue(MarketPlaceVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualApplianceSkuProperties DeserializeVirtualApplianceSkuProperties(JsonElement element)
+        internal static VirtualApplianceSkuProperties DeserializeVirtualApplianceSkuProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> vendor = default;
             Optional<string> bundledScaleUnit = default;
             Optional<string> marketPlaceVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vendor"u8))
@@ -59,8 +82,57 @@ namespace Azure.ResourceManager.Network.Models
                     marketPlaceVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualApplianceSkuProperties(vendor.Value, bundledScaleUnit.Value, marketPlaceVersion.Value);
+            return new VirtualApplianceSkuProperties(vendor.Value, bundledScaleUnit.Value, marketPlaceVersion.Value, rawData);
+        }
+
+        VirtualApplianceSkuProperties IModelJsonSerializable<VirtualApplianceSkuProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualApplianceSkuProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualApplianceSkuProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualApplianceSkuProperties IModelSerializable<VirtualApplianceSkuProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualApplianceSkuProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualApplianceSkuProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualApplianceSkuProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualApplianceSkuProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

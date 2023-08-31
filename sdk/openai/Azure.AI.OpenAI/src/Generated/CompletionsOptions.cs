@@ -19,6 +19,8 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsOptions
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         /// <param name="prompts"> The prompts to generate completions from. </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
@@ -89,7 +91,8 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string internalNonAzureModelName, Dictionary<string, BinaryData> rawData)
         {
             Prompts = prompts;
             MaxTokens = maxTokens;
@@ -106,6 +109,7 @@ namespace Azure.AI.OpenAI
             GenerationSampleCount = generationSampleCount;
             InternalShouldStreamResponse = internalShouldStreamResponse;
             InternalNonAzureModelName = internalNonAzureModelName;
+            _rawData = rawData;
         }
         /// <summary>
         /// An identifier for the caller or end user of the operation. This may be used for tracking

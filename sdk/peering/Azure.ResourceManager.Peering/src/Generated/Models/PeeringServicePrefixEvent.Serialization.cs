@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringServicePrefixEvent
+    public partial class PeeringServicePrefixEvent : IUtf8JsonSerializable, IModelJsonSerializable<PeeringServicePrefixEvent>
     {
-        internal static PeeringServicePrefixEvent DeserializePeeringServicePrefixEvent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeeringServicePrefixEvent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeeringServicePrefixEvent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PeeringServicePrefixEvent DeserializePeeringServicePrefixEvent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<string> eventSummary = default;
             Optional<string> eventLevel = default;
             Optional<string> eventDescription = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventTimestamp"u8))
@@ -55,8 +83,57 @@ namespace Azure.ResourceManager.Peering.Models
                     eventDescription = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeeringServicePrefixEvent(Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value);
+            return new PeeringServicePrefixEvent(Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value, rawData);
+        }
+
+        PeeringServicePrefixEvent IModelJsonSerializable<PeeringServicePrefixEvent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringServicePrefixEvent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeeringServicePrefixEvent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeeringServicePrefixEvent IModelSerializable<PeeringServicePrefixEvent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeeringServicePrefixEvent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PeeringServicePrefixEvent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PeeringServicePrefixEvent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeeringServicePrefixEvent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

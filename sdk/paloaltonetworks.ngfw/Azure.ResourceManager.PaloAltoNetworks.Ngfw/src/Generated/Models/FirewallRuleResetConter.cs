@@ -5,29 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Rule counter reset. </summary>
     public partial class FirewallRuleResetConter
     {
-        /// <summary> Initializes a new instance of FirewallRuleResetConter. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleResetConter"/>. </summary>
         internal FirewallRuleResetConter()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleResetConter. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleResetConter"/>. </summary>
         /// <param name="priority"> priority number. </param>
         /// <param name="ruleStackName"> rule Stack Name. </param>
         /// <param name="ruleListName"> rule list name. </param>
         /// <param name="firewallName"> firewall name. </param>
         /// <param name="ruleName"> rule name. </param>
-        internal FirewallRuleResetConter(string priority, string ruleStackName, string ruleListName, string firewallName, string ruleName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallRuleResetConter(string priority, string ruleStackName, string ruleListName, string firewallName, string ruleName, Dictionary<string, BinaryData> rawData)
         {
             Priority = priority;
             RuleStackName = ruleStackName;
             RuleListName = ruleListName;
             FirewallName = firewallName;
             RuleName = ruleName;
+            _rawData = rawData;
         }
 
         /// <summary> priority number. </summary>

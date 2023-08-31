@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable
+    public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable, IModelJsonSerializable<NetAppVolumeGroupVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppVolumeGroupVolume>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppVolumeGroupVolume>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -250,11 +256,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteBooleanValue(IsLargeVolume.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element)
+        internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -316,6 +336,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> provisionedAvailabilityZone = default;
             Optional<bool> isLargeVolume = default;
             Optional<ResourceIdentifier> originatingResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -842,8 +863,57 @@ namespace Azure.ResourceManager.NetApp.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value);
+            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, rawData);
+        }
+
+        NetAppVolumeGroupVolume IModelJsonSerializable<NetAppVolumeGroupVolume>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeGroupVolume(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppVolumeGroupVolume>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppVolumeGroupVolume IModelSerializable<NetAppVolumeGroupVolume>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumeGroupVolume(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetAppVolumeGroupVolume model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetAppVolumeGroupVolume(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppVolumeGroupVolume(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

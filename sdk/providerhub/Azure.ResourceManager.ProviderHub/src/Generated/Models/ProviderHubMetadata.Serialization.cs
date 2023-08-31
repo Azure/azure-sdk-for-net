@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderHubMetadata : IUtf8JsonSerializable
+    public partial class ProviderHubMetadata : IUtf8JsonSerializable, IModelJsonSerializable<ProviderHubMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderHubMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ProviderHubMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
@@ -36,11 +43,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
                 writer.WriteObjectValue(ThirdPartyProviderAuthorization);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProviderHubMetadata DeserializeProviderHubMetadata(JsonElement element)
+        internal static ProviderHubMetadata DeserializeProviderHubMetadata(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
             Optional<ResourceProviderAuthentication> providerAuthentication = default;
             Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerAuthorizations"u8))
@@ -82,8 +104,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ProviderHubMetadata(Optional.ToList(providerAuthorizations), providerAuthentication.Value, thirdPartyProviderAuthorization.Value);
+            return new ProviderHubMetadata(Optional.ToList(providerAuthorizations), providerAuthentication.Value, thirdPartyProviderAuthorization.Value, rawData);
+        }
+
+        ProviderHubMetadata IModelJsonSerializable<ProviderHubMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderHubMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ProviderHubMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ProviderHubMetadata IModelSerializable<ProviderHubMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeProviderHubMetadata(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ProviderHubMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ProviderHubMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeProviderHubMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

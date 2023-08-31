@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FlowLogInformation : IUtf8JsonSerializable
+    public partial class FlowLogInformation : IUtf8JsonSerializable, IModelJsonSerializable<FlowLogInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FlowLogInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FlowLogInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
@@ -39,11 +47,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(Format);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element)
+        internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             bool enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
             Optional<FlowLogProperties> format = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"u8))
@@ -110,8 +133,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration.Value, storageId, enabled, retentionPolicy.Value, format.Value);
+            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration.Value, storageId, enabled, retentionPolicy.Value, format.Value, rawData);
+        }
+
+        FlowLogInformation IModelJsonSerializable<FlowLogInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowLogInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FlowLogInformation>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FlowLogInformation IModelSerializable<FlowLogInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFlowLogInformation(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(FlowLogInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator FlowLogInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFlowLogInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

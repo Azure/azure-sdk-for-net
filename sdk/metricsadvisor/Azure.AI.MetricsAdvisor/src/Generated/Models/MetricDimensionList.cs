@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDimensionList. </summary>
     internal partial class MetricDimensionList
     {
-        /// <summary> Initializes a new instance of MetricDimensionList. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionList"/>. </summary>
         internal MetricDimensionList()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MetricDimensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
-        internal MetricDimensionList(string nextLink, IReadOnlyList<string> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDimensionList(string nextLink, IReadOnlyList<string> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the next link. </summary>

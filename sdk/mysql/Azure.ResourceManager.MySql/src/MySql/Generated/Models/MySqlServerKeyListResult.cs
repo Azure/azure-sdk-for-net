@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of MySQL Server keys. </summary>
     internal partial class MySqlServerKeyListResult
     {
-        /// <summary> Initializes a new instance of MySqlServerKeyListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerKeyListResult"/>. </summary>
         internal MySqlServerKeyListResult()
         {
             Value = new ChangeTrackingList<MySqlServerKeyData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlServerKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerKeyListResult"/>. </summary>
         /// <param name="value"> A list of MySQL Server keys. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MySqlServerKeyListResult(IReadOnlyList<MySqlServerKeyData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerKeyListResult(IReadOnlyList<MySqlServerKeyData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of MySQL Server keys. </summary>

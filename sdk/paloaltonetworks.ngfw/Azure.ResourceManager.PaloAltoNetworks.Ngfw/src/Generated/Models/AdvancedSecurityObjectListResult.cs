@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> advanced security object. </summary>
     public partial class AdvancedSecurityObjectListResult
     {
-        /// <summary> Initializes a new instance of AdvancedSecurityObjectListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObjectListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AdvancedSecurityObjectListResult(AdvancedSecurityObject value)
@@ -23,13 +26,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of AdvancedSecurityObjectListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObjectListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
-        internal AdvancedSecurityObjectListResult(AdvancedSecurityObject value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdvancedSecurityObjectListResult(AdvancedSecurityObject value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdvancedSecurityObjectListResult"/> for deserialization. </summary>
+        internal AdvancedSecurityObjectListResult()
+        {
         }
 
         /// <summary> response value. </summary>

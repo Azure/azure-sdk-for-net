@@ -21,7 +21,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackFqdnData : ResourceData
     {
-        /// <summary> Initializes a new instance of LocalRulestackFqdnData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnData"/>. </summary>
         /// <param name="fqdnList"> fqdn list. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdnList"/> is null. </exception>
         public LocalRulestackFqdnData(IEnumerable<string> fqdnList)
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             FqdnList = fqdnList.ToList();
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackFqdnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,13 +43,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="etag"> etag info. </param>
         /// <param name="auditComment"> comment for this object. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal LocalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackFqdnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<string> fqdnList, ETag? etag, string auditComment, FirewallProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             FqdnList = fqdnList;
             ETag = etag;
             AuditComment = auditComment;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnData"/> for deserialization. </summary>
+        internal LocalRulestackFqdnData()
+        {
         }
 
         /// <summary> fqdn object description. </summary>

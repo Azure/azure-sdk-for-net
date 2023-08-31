@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuSetting : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuSetting : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeSkuSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeSkuSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceTypeSkuSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -103,11 +110,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeSkuSetting DeserializeResourceTypeSkuSetting(JsonElement element)
+        internal static ResourceTypeSkuSetting DeserializeResourceTypeSkuSetting(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,6 +145,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ResourceTypeSkuCapacity> capacity = default;
             Optional<IList<ResourceTypeSkuCost>> costs = default;
             Optional<IList<ResourceSkuCapability>> capabilities = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -244,8 +266,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     capabilities = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(requiredQuotaIds), Optional.ToList(requiredFeatures), capacity.Value, Optional.ToList(costs), Optional.ToList(capabilities));
+            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(requiredQuotaIds), Optional.ToList(requiredFeatures), capacity.Value, Optional.ToList(costs), Optional.ToList(capabilities), rawData);
+        }
+
+        ResourceTypeSkuSetting IModelJsonSerializable<ResourceTypeSkuSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeSkuSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceTypeSkuSetting>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceTypeSkuSetting IModelSerializable<ResourceTypeSkuSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeSkuSetting(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ResourceTypeSkuSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ResourceTypeSkuSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceTypeSkuSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

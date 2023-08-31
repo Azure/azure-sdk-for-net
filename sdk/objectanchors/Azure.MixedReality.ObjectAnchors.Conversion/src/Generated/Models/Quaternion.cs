@@ -5,10 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
     /// <summary> Represents a vector that is used to encode three-dimensional physical rotations. </summary>
     internal partial class Quaternion
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Quaternion"/>. </summary>
+        /// <param name="x"> The x value of the vector component of the quaternion. </param>
+        /// <param name="y"> The y value of the vector component of the quaternion. </param>
+        /// <param name="z"> The z value of the vector component of the quaternion. </param>
+        /// <param name="w"> The rotation component of the quaternion. </param>
+        /// <param name="isIdentity"> Gets a value that indicates whether the current instance is the identity quaternion. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Quaternion(float x, float y, float z, float w, bool isIdentity, Dictionary<string, BinaryData> rawData)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+            IsIdentity = isIdentity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Quaternion"/> for deserialization. </summary>
+        internal Quaternion()
+        {
+        }
     }
 }

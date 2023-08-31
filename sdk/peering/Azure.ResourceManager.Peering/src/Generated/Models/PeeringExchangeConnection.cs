@@ -6,30 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define an exchange connection. </summary>
     public partial class PeeringExchangeConnection
     {
-        /// <summary> Initializes a new instance of PeeringExchangeConnection. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringExchangeConnection"/>. </summary>
         public PeeringExchangeConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringExchangeConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringExchangeConnection"/>. </summary>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
         /// <param name="connectionState"> The state of the connection. </param>
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
         /// <param name="connectionIdentifier"> The unique identifier (GUID) for the connection. </param>
         /// <param name="errorMessage"> The error message related to the connection state, if any. </param>
-        internal PeeringExchangeConnection(int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, Guid? connectionIdentifier, string errorMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringExchangeConnection(int? peeringDBFacilityId, PeeringConnectionState? connectionState, PeeringBgpSession bgpSession, Guid? connectionIdentifier, string errorMessage, Dictionary<string, BinaryData> rawData)
         {
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
             BgpSession = bgpSession;
             ConnectionIdentifier = connectionIdentifier;
             ErrorMessage = errorMessage;
+            _rawData = rawData;
         }
 
         /// <summary> The PeeringDB.com ID of the facility at which the connection has to be set up. </summary>

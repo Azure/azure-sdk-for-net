@@ -6,16 +6,50 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeMountTarget
+    public partial class NetAppVolumeMountTarget : IUtf8JsonSerializable, IModelJsonSerializable<NetAppVolumeMountTarget>
     {
-        internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppVolumeMountTarget>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppVolumeMountTarget>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("fileSystemId"u8);
+            writer.WriteStringValue(FileSystemId);
+            if (Optional.IsDefined(SmbServerFqdn))
+            {
+                writer.WritePropertyName("smbServerFqdn"u8);
+                writer.WriteStringValue(SmbServerFqdn);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Guid fileSystemId = default;
             Optional<IPAddress> ipAddress = default;
             Optional<string> smbServerFqdn = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mountTargetId"u8))
@@ -54,8 +89,57 @@ namespace Azure.ResourceManager.NetApp.Models
                     smbServerFqdn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppVolumeMountTarget(Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value);
+            return new NetAppVolumeMountTarget(Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value, rawData);
+        }
+
+        NetAppVolumeMountTarget IModelJsonSerializable<NetAppVolumeMountTarget>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeMountTarget(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppVolumeMountTarget>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppVolumeMountTarget IModelSerializable<NetAppVolumeMountTarget>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumeMountTarget(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetAppVolumeMountTarget model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetAppVolumeMountTarget(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppVolumeMountTarget(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

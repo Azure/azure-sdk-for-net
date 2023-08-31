@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MixedReality.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MixedReality
 {
-    public partial class RemoteRenderingAccountData : IUtf8JsonSerializable
+    public partial class RemoteRenderingAccountData : IUtf8JsonSerializable, IModelJsonSerializable<RemoteRenderingAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemoteRenderingAccountData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemoteRenderingAccountData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -60,11 +66,25 @@ namespace Azure.ResourceManager.MixedReality
                 writer.WriteStringValue(StorageAccountName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemoteRenderingAccountData DeserializeRemoteRenderingAccountData(JsonElement element)
+        internal static RemoteRenderingAccountData DeserializeRemoteRenderingAccountData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +102,7 @@ namespace Azure.ResourceManager.MixedReality
             Optional<string> storageAccountName = default;
             Optional<Guid> accountId = default;
             Optional<string> accountDomain = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -194,8 +215,57 @@ namespace Azure.ResourceManager.MixedReality
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemoteRenderingAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value);
+            return new RemoteRenderingAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, plan, sku.Value, kind.Value, storageAccountName.Value, Optional.ToNullable(accountId), accountDomain.Value, rawData);
+        }
+
+        RemoteRenderingAccountData IModelJsonSerializable<RemoteRenderingAccountData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoteRenderingAccountData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemoteRenderingAccountData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemoteRenderingAccountData IModelSerializable<RemoteRenderingAccountData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemoteRenderingAccountData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(RemoteRenderingAccountData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator RemoteRenderingAccountData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemoteRenderingAccountData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

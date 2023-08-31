@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SSL profile of an application gateway. </summary>
     public partial class ApplicationGatewaySslProfile : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProfile"/>. </summary>
         public ApplicationGatewaySslProfile()
         {
             TrustedClientCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProfile"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             TrustedClientCertificates = trustedClientCertificates;

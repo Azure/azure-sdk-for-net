@@ -5,21 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Settings for different log file formats. </summary>
     internal partial class LogFileSettings
     {
-        /// <summary> Initializes a new instance of LogFileSettings. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogFileSettings"/>. </summary>
         public LogFileSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LogFileSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogFileSettings"/>. </summary>
         /// <param name="text"> Text settings. </param>
-        internal LogFileSettings(LogFileSettingsText text)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogFileSettings(LogFileSettingsText text, Dictionary<string, BinaryData> rawData)
         {
             Text = text;
+            _rawData = rawData;
         }
 
         /// <summary> Text settings. </summary>

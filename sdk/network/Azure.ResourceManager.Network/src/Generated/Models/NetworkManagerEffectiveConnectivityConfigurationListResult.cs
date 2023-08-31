@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list networkManagerEffectiveConnectivityConfiguration. It contains a list of groups and a skiptoken to get the next set of results. </summary>
     internal partial class NetworkManagerEffectiveConnectivityConfigurationListResult
     {
-        /// <summary> Initializes a new instance of NetworkManagerEffectiveConnectivityConfigurationListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerEffectiveConnectivityConfigurationListResult"/>. </summary>
         internal NetworkManagerEffectiveConnectivityConfigurationListResult()
         {
             Value = new ChangeTrackingList<EffectiveConnectivityConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerEffectiveConnectivityConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerEffectiveConnectivityConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets a page of NetworkManagerEffectiveConnectivityConfiguration. </param>
         /// <param name="skipToken"> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </param>
-        internal NetworkManagerEffectiveConnectivityConfigurationListResult(IReadOnlyList<EffectiveConnectivityConfiguration> value, string skipToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerEffectiveConnectivityConfigurationListResult(IReadOnlyList<EffectiveConnectivityConfiguration> value, string skipToken, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             SkipToken = skipToken;
+            _rawData = rawData;
         }
 
         /// <summary> Gets a page of NetworkManagerEffectiveConnectivityConfiguration. </summary>

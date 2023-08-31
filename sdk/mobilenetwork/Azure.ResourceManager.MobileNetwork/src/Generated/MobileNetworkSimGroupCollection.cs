@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

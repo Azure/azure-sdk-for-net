@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxDeploymentProperties. </summary>
     public partial class NginxDeploymentProperties
     {
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentProperties"/>. </summary>
         public NginxDeploymentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="nginxVersion"></param>
         /// <param name="managedResourceGroup"> The managed resource group to deploy VNet injection related network resources. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="ipAddress"> The IP address of the deployment. </param>
         /// <param name="enableDiagnosticsSupport"></param>
         /// <param name="logging"></param>
-        internal NginxDeploymentProperties(ProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentProperties(ProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxLogging logging, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             NginxVersion = nginxVersion;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.Nginx.Models
             IPAddress = ipAddress;
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>

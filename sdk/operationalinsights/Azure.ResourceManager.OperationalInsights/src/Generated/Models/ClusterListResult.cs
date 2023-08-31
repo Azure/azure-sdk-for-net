@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list clusters operation response. </summary>
     internal partial class ClusterListResult
     {
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         internal ClusterListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="value"> A list of Log Analytics clusters. </param>
-        internal ClusterListResult(string nextLink, IReadOnlyList<OperationalInsightsClusterData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterListResult(string nextLink, IReadOnlyList<OperationalInsightsClusterData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of recommendations. </summary>

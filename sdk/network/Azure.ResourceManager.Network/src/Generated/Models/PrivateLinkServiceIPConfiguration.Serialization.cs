@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServiceIPConfiguration : IUtf8JsonSerializable
+    public partial class PrivateLinkServiceIPConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<PrivateLinkServiceIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateLinkServiceIPConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateLinkServiceIPConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<PrivateLinkServiceIPConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -55,11 +62,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateLinkServiceIPConfiguration DeserializePrivateLinkServiceIPConfiguration(JsonElement element)
+        internal static PrivateLinkServiceIPConfiguration DeserializePrivateLinkServiceIPConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> primary = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<NetworkIPVersion> privateIPAddressVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -170,8 +192,57 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateLinkServiceIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAddressVersion));
+            return new PrivateLinkServiceIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAddressVersion), rawData);
+        }
+
+        PrivateLinkServiceIPConfiguration IModelJsonSerializable<PrivateLinkServiceIPConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrivateLinkServiceIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateLinkServiceIPConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateLinkServiceIPConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrivateLinkServiceIPConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateLinkServiceIPConfiguration IModelSerializable<PrivateLinkServiceIPConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<PrivateLinkServiceIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateLinkServiceIPConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PrivateLinkServiceIPConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PrivateLinkServiceIPConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateLinkServiceIPConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,12 +5,165 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalInKVParamPatch : IUtf8JsonSerializable
+    internal partial class ServicePrincipalInKVParamPatch : IUtf8JsonSerializable, IModelJsonSerializable<ServicePrincipalInKVParamPatch>
     {
+        void IModelJsonSerializable<ServicePrincipalInKVParamPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KeyVaultEndpoint))
+            {
+                writer.WritePropertyName("keyVaultEndpoint"u8);
+                writer.WriteStringValue(KeyVaultEndpoint);
+            }
+            if (Optional.IsDefined(KeyVaultClientId))
+            {
+                writer.WritePropertyName("keyVaultClientId"u8);
+                writer.WriteStringValue(KeyVaultClientId);
+            }
+            if (Optional.IsDefined(KeyVaultClientSecret))
+            {
+                writer.WritePropertyName("keyVaultClientSecret"u8);
+                writer.WriteStringValue(KeyVaultClientSecret);
+            }
+            if (Optional.IsDefined(ServicePrincipalIdNameInKV))
+            {
+                writer.WritePropertyName("servicePrincipalIdNameInKV"u8);
+                writer.WriteStringValue(ServicePrincipalIdNameInKV);
+            }
+            if (Optional.IsDefined(ServicePrincipalSecretNameInKV))
+            {
+                writer.WritePropertyName("servicePrincipalSecretNameInKV"u8);
+                writer.WriteStringValue(ServicePrincipalSecretNameInKV);
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServicePrincipalInKVParamPatch DeserializeServicePrincipalInKVParamPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> keyVaultEndpoint = default;
+            Optional<string> keyVaultClientId = default;
+            Optional<string> keyVaultClientSecret = default;
+            Optional<string> servicePrincipalIdNameInKV = default;
+            Optional<string> servicePrincipalSecretNameInKV = default;
+            Optional<string> tenantId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("keyVaultEndpoint"u8))
+                {
+                    keyVaultEndpoint = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultClientId"u8))
+                {
+                    keyVaultClientId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultClientSecret"u8))
+                {
+                    keyVaultClientSecret = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("servicePrincipalIdNameInKV"u8))
+                {
+                    servicePrincipalIdNameInKV = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("servicePrincipalSecretNameInKV"u8))
+                {
+                    servicePrincipalSecretNameInKV = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tenantId"u8))
+                {
+                    tenantId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ServicePrincipalInKVParamPatch(keyVaultEndpoint.Value, keyVaultClientId.Value, keyVaultClientSecret.Value, servicePrincipalIdNameInKV.Value, servicePrincipalSecretNameInKV.Value, tenantId.Value, rawData);
+        }
+
+        ServicePrincipalInKVParamPatch IModelJsonSerializable<ServicePrincipalInKVParamPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalInKVParamPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePrincipalInKVParamPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePrincipalInKVParamPatch IModelSerializable<ServicePrincipalInKVParamPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalInKVParamPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServicePrincipalInKVParamPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServicePrincipalInKVParamPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServicePrincipalInKVParamPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

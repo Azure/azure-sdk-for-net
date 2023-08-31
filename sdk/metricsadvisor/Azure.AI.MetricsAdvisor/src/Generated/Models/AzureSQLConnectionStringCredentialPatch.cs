@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureSQLConnectionStringCredentialPatch. </summary>
     internal partial class AzureSQLConnectionStringCredentialPatch : DataSourceCredentialPatch
     {
-        /// <summary> Initializes a new instance of AzureSQLConnectionStringCredentialPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringCredentialPatch"/>. </summary>
         public AzureSQLConnectionStringCredentialPatch()
         {
             DataSourceCredentialType = DataSourceCredentialKind.SqlConnectionString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringCredentialPatch"/>. </summary>
+        /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
+        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="parameters"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureSQLConnectionStringCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, AzureSQLConnectionStringParamPatch parameters, Dictionary<string, BinaryData> rawData) : base(dataSourceCredentialType, dataSourceCredentialName, dataSourceCredentialDescription, rawData)
+        {
+            Parameters = parameters;
+            DataSourceCredentialType = dataSourceCredentialType;
         }
 
         /// <summary> Gets or sets the parameters. </summary>

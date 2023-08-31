@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure Firewall Packet Capture Parameters resource. </summary>
     public partial class FirewallPacketCaptureContent : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of FirewallPacketCaptureContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
         public FirewallPacketCaptureContent()
         {
             Flags = new ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
             Filters = new ChangeTrackingList<AzureFirewallPacketCaptureRule>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPacketCaptureContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPacketCaptureContent"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="durationInSeconds"> Duration of packet capture in seconds. </param>
         /// <param name="numberOfPacketsToCapture"> Number of packets to be captured. </param>
@@ -30,7 +30,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> The protocol of packets to capture. </param>
         /// <param name="flags"> The tcp-flag type to be captured. Used with protocol TCP. </param>
         /// <param name="filters"> Rules to filter packet captures. </param>
-        internal FirewallPacketCaptureContent(ResourceIdentifier id, int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters) : base(id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPacketCaptureContent(ResourceIdentifier id, int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, Dictionary<string, BinaryData> rawData) : base(id, rawData)
         {
             DurationInSeconds = durationInSeconds;
             NumberOfPacketsToCapture = numberOfPacketsToCapture;

@@ -6,16 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    public partial class AssetConversionProperties : IUtf8JsonSerializable
+    public partial class AssetConversionProperties : IUtf8JsonSerializable, IModelJsonSerializable<AssetConversionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AssetConversionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AssetConversionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConversionStatus))
             {
@@ -37,11 +44,25 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 writer.WritePropertyName("ingestionConfiguration"u8);
                 writer.WriteObjectValue(ConversionConfiguration);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssetConversionProperties DeserializeAssetConversionProperties(JsonElement element)
+        internal static AssetConversionProperties DeserializeAssetConversionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +78,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<Guid> accountId = default;
             Optional<AssetConversionConfiguration> ingestionConfiguration = default;
             Optional<Vector3> scaledAssetDimensions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientErrorDetails"u8))
@@ -139,8 +161,57 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     scaledAssetDimensions = Vector3.DeserializeVector3(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value, rawData);
+        }
+
+        AssetConversionProperties IModelJsonSerializable<AssetConversionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssetConversionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AssetConversionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AssetConversionProperties IModelSerializable<AssetConversionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAssetConversionProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AssetConversionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AssetConversionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAssetConversionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

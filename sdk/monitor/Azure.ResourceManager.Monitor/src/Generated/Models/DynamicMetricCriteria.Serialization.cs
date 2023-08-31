@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DynamicMetricCriteria : IUtf8JsonSerializable
+    public partial class DynamicMetricCriteria : IUtf8JsonSerializable, IModelJsonSerializable<DynamicMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynamicMetricCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynamicMetricCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
@@ -68,8 +74,10 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element)
+        internal static DynamicMetricCriteria DeserializeDynamicMetricCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,6 +173,50 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, Optional.ToList(dimensions), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, alertSensitivity, failingPeriods, Optional.ToNullable(ignoreDataBefore));
+        }
+
+        DynamicMetricCriteria IModelJsonSerializable<DynamicMetricCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicMetricCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynamicMetricCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynamicMetricCriteria IModelSerializable<DynamicMetricCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<DynamicMetricCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynamicMetricCriteria(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DynamicMetricCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DynamicMetricCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynamicMetricCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

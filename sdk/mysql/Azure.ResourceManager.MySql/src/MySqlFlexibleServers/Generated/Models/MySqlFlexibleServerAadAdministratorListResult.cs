@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A List of azure ad administrators. </summary>
     internal partial class MySqlFlexibleServerAadAdministratorListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorListResult"/>. </summary>
         internal MySqlFlexibleServerAadAdministratorListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerAadAdministratorData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorListResult"/>. </summary>
         /// <param name="value"> The list of azure ad administrator of a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal MySqlFlexibleServerAadAdministratorListResult(IReadOnlyList<MySqlFlexibleServerAadAdministratorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerAadAdministratorListResult(IReadOnlyList<MySqlFlexibleServerAadAdministratorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of azure ad administrator of a server. </summary>

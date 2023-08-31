@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Network configuration of customer virtual network. </summary>
     internal partial class ContactProfilesPropertiesNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of ContactProfilesPropertiesNetworkConfiguration. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContactProfilesPropertiesNetworkConfiguration"/>. </summary>
         /// <param name="networkSubnetId"> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSubnetId"/> is null. </exception>
         public ContactProfilesPropertiesNetworkConfiguration(ResourceIdentifier networkSubnetId)
@@ -21,6 +24,20 @@ namespace Azure.ResourceManager.Orbital.Models
             Argument.AssertNotNull(networkSubnetId, nameof(networkSubnetId));
 
             NetworkSubnetId = networkSubnetId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContactProfilesPropertiesNetworkConfiguration"/>. </summary>
+        /// <param name="networkSubnetId"> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContactProfilesPropertiesNetworkConfiguration(ResourceIdentifier networkSubnetId, Dictionary<string, BinaryData> rawData)
+        {
+            NetworkSubnetId = networkSubnetId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContactProfilesPropertiesNetworkConfiguration"/> for deserialization. </summary>
+        internal ContactProfilesPropertiesNetworkConfiguration()
+        {
         }
 
         /// <summary> ARM resource identifier of the subnet delegated to the Microsoft.Orbital/orbitalGateways. Needs to be at least a class C subnet, and should not have any IP created in it. </summary>

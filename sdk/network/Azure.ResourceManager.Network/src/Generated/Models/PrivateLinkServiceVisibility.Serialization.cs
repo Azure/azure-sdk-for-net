@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServiceVisibility
+    public partial class PrivateLinkServiceVisibility : IUtf8JsonSerializable, IModelJsonSerializable<PrivateLinkServiceVisibility>
     {
-        internal static PrivateLinkServiceVisibility DeserializePrivateLinkServiceVisibility(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateLinkServiceVisibility>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateLinkServiceVisibility>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Visible))
+            {
+                writer.WritePropertyName("visible"u8);
+                writer.WriteBooleanValue(Visible.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PrivateLinkServiceVisibility DeserializePrivateLinkServiceVisibility(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> visible = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("visible"u8))
@@ -30,8 +64,57 @@ namespace Azure.ResourceManager.Network.Models
                     visible = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateLinkServiceVisibility(Optional.ToNullable(visible));
+            return new PrivateLinkServiceVisibility(Optional.ToNullable(visible), rawData);
+        }
+
+        PrivateLinkServiceVisibility IModelJsonSerializable<PrivateLinkServiceVisibility>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateLinkServiceVisibility(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateLinkServiceVisibility>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateLinkServiceVisibility IModelSerializable<PrivateLinkServiceVisibility>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateLinkServiceVisibility(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PrivateLinkServiceVisibility model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PrivateLinkServiceVisibility(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateLinkServiceVisibility(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

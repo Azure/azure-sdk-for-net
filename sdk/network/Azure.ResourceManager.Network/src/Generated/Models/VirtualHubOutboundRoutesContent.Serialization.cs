@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualHubOutboundRoutesContent : IUtf8JsonSerializable
+    public partial class VirtualHubOutboundRoutesContent : IUtf8JsonSerializable, IModelJsonSerializable<VirtualHubOutboundRoutesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualHubOutboundRoutesContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualHubOutboundRoutesContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceUri))
             {
@@ -25,7 +33,99 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static VirtualHubOutboundRoutesContent DeserializeVirtualHubOutboundRoutesContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Uri> resourceUri = default;
+            Optional<string> connectionType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceUri"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("connectionType"u8))
+                {
+                    connectionType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new VirtualHubOutboundRoutesContent(resourceUri.Value, connectionType.Value, rawData);
+        }
+
+        VirtualHubOutboundRoutesContent IModelJsonSerializable<VirtualHubOutboundRoutesContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualHubOutboundRoutesContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualHubOutboundRoutesContent IModelSerializable<VirtualHubOutboundRoutesContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualHubOutboundRoutesContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualHubOutboundRoutesContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

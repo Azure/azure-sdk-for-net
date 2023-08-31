@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "NetworkCloudKubernetesClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

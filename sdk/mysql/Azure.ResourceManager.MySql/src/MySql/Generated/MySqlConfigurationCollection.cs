@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlConfigurationResource(Client, MySqlConfigurationData.DeserializeMySqlConfigurationData(e)), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new MySqlConfigurationResource(Client, MySqlConfigurationData.DeserializeMySqlConfigurationData(e)), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlConfigurationResource(Client, MySqlConfigurationData.DeserializeMySqlConfigurationData(e)), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new MySqlConfigurationResource(Client, MySqlConfigurationData.DeserializeMySqlConfigurationData(e)), _mySqlConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

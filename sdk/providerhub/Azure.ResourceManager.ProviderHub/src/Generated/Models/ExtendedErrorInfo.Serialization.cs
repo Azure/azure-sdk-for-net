@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtendedErrorInfo : IUtf8JsonSerializable
+    public partial class ExtendedErrorInfo : IUtf8JsonSerializable, IModelJsonSerializable<ExtendedErrorInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExtendedErrorInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExtendedErrorInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element)
+        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +86,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> message = default;
             Optional<IList<ExtendedErrorInfo>> details = default;
             Optional<IList<TypedErrorInfo>> additionalInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -110,8 +132,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalInfo = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), rawData);
+        }
+
+        ExtendedErrorInfo IModelJsonSerializable<ExtendedErrorInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedErrorInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExtendedErrorInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExtendedErrorInfo IModelSerializable<ExtendedErrorInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExtendedErrorInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ExtendedErrorInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ExtendedErrorInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExtendedErrorInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

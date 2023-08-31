@@ -6,24 +6,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> A piece of evidence supporting the compliance state set in the attestation. </summary>
     public partial class AttestationEvidence
     {
-        /// <summary> Initializes a new instance of AttestationEvidence. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationEvidence"/>. </summary>
         public AttestationEvidence()
         {
         }
 
-        /// <summary> Initializes a new instance of AttestationEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationEvidence"/>. </summary>
         /// <param name="description"> The description for this piece of evidence. </param>
         /// <param name="sourceUri"> The URI location of the evidence. </param>
-        internal AttestationEvidence(string description, Uri sourceUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationEvidence(string description, Uri sourceUri, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
             SourceUri = sourceUri;
+            _rawData = rawData;
         }
 
         /// <summary> The description for this piece of evidence. </summary>

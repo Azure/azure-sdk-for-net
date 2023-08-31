@@ -5,20 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    public partial class AzureTrafficCollectorData : IUtf8JsonSerializable
+    public partial class AzureTrafficCollectorData : IUtf8JsonSerializable, IModelJsonSerializable<AzureTrafficCollectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AzureTrafficCollectorData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AzureTrafficCollectorData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,11 +47,25 @@ namespace Azure.ResourceManager.NetworkFunction
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element)
+        internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +80,7 @@ namespace Azure.ResourceManager.NetworkFunction
             Optional<IReadOnlyList<SubResource>> collectorPolicies = default;
             Optional<SubResource> virtualHub = default;
             Optional<CollectorProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -158,8 +179,57 @@ namespace Azure.ResourceManager.NetworkFunction
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState));
+            return new AzureTrafficCollectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState), rawData);
+        }
+
+        AzureTrafficCollectorData IModelJsonSerializable<AzureTrafficCollectorData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureTrafficCollectorData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureTrafficCollectorData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureTrafficCollectorData IModelSerializable<AzureTrafficCollectorData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureTrafficCollectorData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureTrafficCollectorData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureTrafficCollectorData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureTrafficCollectorData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

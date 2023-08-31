@@ -5,10 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
     /// <summary> Represents a vector with four single-precision floating-point values. </summary>
     internal partial class Vector4
     {
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Vector4"/>. </summary>
+        /// <param name="x"> The x component of the vector. </param>
+        /// <param name="y"> The y component of the vector. </param>
+        /// <param name="z"> The z component of the vector. </param>
+        /// <param name="w"> The w component of the vector. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Vector4(float x, float y, float z, float w, Dictionary<string, BinaryData> rawData)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Vector4"/> for deserialization. </summary>
+        internal Vector4()
+        {
+        }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListVirtualRouterPeerings API service call. </summary>
     internal partial class VirtualRouterPeeringListResult
     {
-        /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringListResult"/>. </summary>
         internal VirtualRouterPeeringListResult()
         {
             Value = new ChangeTrackingList<VirtualRouterPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringListResult"/>. </summary>
         /// <param name="value"> List of VirtualRouterPeerings in a VirtualRouter. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal VirtualRouterPeeringListResult(IReadOnlyList<VirtualRouterPeeringData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualRouterPeeringListResult(IReadOnlyList<VirtualRouterPeeringData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of VirtualRouterPeerings in a VirtualRouter. </summary>

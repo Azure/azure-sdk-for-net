@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Criterion for dynamic threshold. </summary>
     public partial class DynamicMetricCriteria : MultiMetricCriteria
     {
-        /// <summary> Initializes a new instance of DynamicMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             CriterionType = CriterionType.DynamicThresholdCriterion;
         }
 
-        /// <summary> Initializes a new instance of DynamicMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Monitor.Models
             FailingPeriods = failingPeriods;
             IgnoreDataBefore = ignoreDataBefore;
             CriterionType = criterionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/> for deserialization. </summary>
+        internal DynamicMetricCriteria()
+        {
         }
 
         /// <summary> The operator used to compare the metric value against the threshold. </summary>

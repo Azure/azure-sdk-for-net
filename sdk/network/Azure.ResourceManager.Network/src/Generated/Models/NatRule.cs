@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rule of type nat. </summary>
     public partial class NatRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of NatRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatRule"/>. </summary>
         public NatRule()
         {
             IPProtocols = new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleType = FirewallPolicyRuleType.NatRule;
         }
 
-        /// <summary> Initializes a new instance of NatRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="translatedPort"> The translated port for this NAT rule. </param>
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
         /// <param name="translatedFqdn"> The translated FQDN for this NAT rule. </param>
-        internal NatRule(string name, string description, FirewallPolicyRuleType ruleType, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, string translatedAddress, string translatedPort, IList<string> sourceIPGroups, string translatedFqdn) : base(name, description, ruleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NatRule(string name, string description, FirewallPolicyRuleType ruleType, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, string translatedAddress, string translatedPort, IList<string> sourceIPGroups, string translatedFqdn, Dictionary<string, BinaryData> rawData) : base(name, description, ruleType, rawData)
         {
             IPProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;

@@ -5,16 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TroubleshootingDetails
+    public partial class TroubleshootingDetails : IUtf8JsonSerializable, IModelJsonSerializable<TroubleshootingDetails>
     {
-        internal static TroubleshootingDetails DeserializeTroubleshootingDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TroubleshootingDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TroubleshootingDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ReasonType))
+            {
+                writer.WritePropertyName("reasonType"u8);
+                writer.WriteStringValue(ReasonType);
+            }
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStringValue(Summary);
+            }
+            if (Optional.IsDefined(Detail))
+            {
+                writer.WritePropertyName("detail"u8);
+                writer.WriteStringValue(Detail);
+            }
+            if (Optional.IsCollectionDefined(RecommendedActions))
+            {
+                writer.WritePropertyName("recommendedActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecommendedActions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TroubleshootingDetails DeserializeTroubleshootingDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +81,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> summary = default;
             Optional<string> detail = default;
             Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -60,8 +118,57 @@ namespace Azure.ResourceManager.Network.Models
                     recommendedActions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions));
+            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions), rawData);
+        }
+
+        TroubleshootingDetails IModelJsonSerializable<TroubleshootingDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTroubleshootingDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TroubleshootingDetails>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TroubleshootingDetails IModelSerializable<TroubleshootingDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTroubleshootingDetails(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(TroubleshootingDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator TroubleshootingDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTroubleshootingDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

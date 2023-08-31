@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Define user session identifier group by clauses. </summary>
     public partial class GroupByUserSession
     {
-        /// <summary> Initializes a new instance of GroupByUserSession. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GroupByUserSession"/>. </summary>
         /// <param name="groupByVariables"> List of group by clause variables. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupByVariables"/> is null. </exception>
         public GroupByUserSession(IEnumerable<GroupByVariable> groupByVariables)
@@ -25,11 +27,18 @@ namespace Azure.ResourceManager.Network.Models
             GroupByVariables = groupByVariables.ToList();
         }
 
-        /// <summary> Initializes a new instance of GroupByUserSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupByUserSession"/>. </summary>
         /// <param name="groupByVariables"> List of group by clause variables. </param>
-        internal GroupByUserSession(IList<GroupByVariable> groupByVariables)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GroupByUserSession(IList<GroupByVariable> groupByVariables, Dictionary<string, BinaryData> rawData)
         {
             GroupByVariables = groupByVariables;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GroupByUserSession"/> for deserialization. </summary>
+        internal GroupByUserSession()
+        {
         }
 
         /// <summary> List of group by clause variables. </summary>

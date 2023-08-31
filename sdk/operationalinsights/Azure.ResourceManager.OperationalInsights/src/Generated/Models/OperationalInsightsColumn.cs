@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Table column. </summary>
     public partial class OperationalInsightsColumn
     {
-        /// <summary> Initializes a new instance of OperationalInsightsColumn. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumn"/>. </summary>
         public OperationalInsightsColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumn"/>. </summary>
         /// <param name="name"> Column name. </param>
         /// <param name="columnType"> Column data type. </param>
         /// <param name="dataTypeHint"> Column data type logical hint. </param>
@@ -23,7 +28,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="description"> Column description. </param>
         /// <param name="isDefaultDisplay"> Is displayed by default. </param>
         /// <param name="isHidden"> Is column hidden. </param>
-        internal OperationalInsightsColumn(string name, OperationalInsightsColumnType? columnType, OperationalInsightsColumnDataTypeHint? dataTypeHint, string displayName, string description, bool? isDefaultDisplay, bool? isHidden)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsColumn(string name, OperationalInsightsColumnType? columnType, OperationalInsightsColumnDataTypeHint? dataTypeHint, string displayName, string description, bool? isDefaultDisplay, bool? isHidden, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             ColumnType = columnType;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Description = description;
             IsDefaultDisplay = isDefaultDisplay;
             IsHidden = isHidden;
+            _rawData = rawData;
         }
 
         /// <summary> Column name. </summary>

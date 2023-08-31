@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable
+    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable, IModelJsonSerializable<DirectPeeringLocationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DirectPeeringLocationProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DirectPeeringLocationProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PeeringFacilities))
             {
@@ -36,17 +43,32 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DirectPeeringLocationProperties DeserializeDirectPeeringLocationProperties(JsonElement element)
+        internal static DirectPeeringLocationProperties DeserializeDirectPeeringLocationProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<DirectPeeringFacility>> peeringFacilities = default;
             Optional<IList<PeeringBandwidthOffer>> bandwidthOffers = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peeringFacilities"u8))
@@ -77,8 +99,57 @@ namespace Azure.ResourceManager.Peering.Models
                     bandwidthOffers = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers));
+            return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers), rawData);
+        }
+
+        DirectPeeringLocationProperties IModelJsonSerializable<DirectPeeringLocationProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDirectPeeringLocationProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DirectPeeringLocationProperties>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DirectPeeringLocationProperties IModelSerializable<DirectPeeringLocationProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDirectPeeringLocationProperties(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(DirectPeeringLocationProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator DirectPeeringLocationProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDirectPeeringLocationProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

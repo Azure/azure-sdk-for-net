@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The network resource topology information for the given resource group. </summary>
     public partial class TopologyResourceInfo
     {
-        /// <summary> Initializes a new instance of TopologyResourceInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopologyResourceInfo"/>. </summary>
         internal TopologyResourceInfo()
         {
             Associations = new ChangeTrackingList<TopologyAssociation>();
         }
 
-        /// <summary> Initializes a new instance of TopologyResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyResourceInfo"/>. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="id"> ID of the resource. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="associations"> Holds the associations the resource has with other resources in the resource group. </param>
-        internal TopologyResourceInfo(string name, string id, AzureLocation? location, IReadOnlyList<TopologyAssociation> associations)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopologyResourceInfo(string name, string id, AzureLocation? location, IReadOnlyList<TopologyAssociation> associations, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Id = id;
             Location = location;
             Associations = associations;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the resource. </summary>

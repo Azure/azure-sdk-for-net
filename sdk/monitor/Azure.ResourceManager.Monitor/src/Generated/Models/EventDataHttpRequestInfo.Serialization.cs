@@ -6,16 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventDataHttpRequestInfo
+    public partial class EventDataHttpRequestInfo : IUtf8JsonSerializable, IModelJsonSerializable<EventDataHttpRequestInfo>
     {
-        internal static EventDataHttpRequestInfo DeserializeEventDataHttpRequestInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventDataHttpRequestInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventDataHttpRequestInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ClientRequestId))
+            {
+                writer.WritePropertyName("clientRequestId"u8);
+                writer.WriteStringValue(ClientRequestId);
+            }
+            if (Optional.IsDefined(ClientIPAddress))
+            {
+                writer.WritePropertyName("clientIpAddress"u8);
+                writer.WriteStringValue(ClientIPAddress.ToString());
+            }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WritePropertyName("method"u8);
+                writer.WriteStringValue(Method);
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EventDataHttpRequestInfo DeserializeEventDataHttpRequestInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IPAddress> clientIPAddress = default;
             Optional<string> method = default;
             Optional<Uri> uri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientRequestId"u8))
@@ -54,8 +102,57 @@ namespace Azure.ResourceManager.Monitor.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventDataHttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value);
+            return new EventDataHttpRequestInfo(clientRequestId.Value, clientIPAddress.Value, method.Value, uri.Value, rawData);
+        }
+
+        EventDataHttpRequestInfo IModelJsonSerializable<EventDataHttpRequestInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventDataHttpRequestInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventDataHttpRequestInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventDataHttpRequestInfo IModelSerializable<EventDataHttpRequestInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventDataHttpRequestInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(EventDataHttpRequestInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator EventDataHttpRequestInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventDataHttpRequestInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

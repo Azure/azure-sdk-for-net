@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupMetadata : IUtf8JsonSerializable
+    public partial class NetAppVolumeGroupMetadata : IUtf8JsonSerializable, IModelJsonSerializable<NetAppVolumeGroupMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppVolumeGroupMetadata>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppVolumeGroupMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupDescription))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("deploymentSpecId"u8);
                 writer.WriteStringValue(DeploymentSpecId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeGroupMetadata DeserializeNetAppVolumeGroupMetadata(JsonElement element)
+        internal static NetAppVolumeGroupMetadata DeserializeNetAppVolumeGroupMetadata(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +82,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<IList<NetAppVolumePlacementRule>> globalPlacementRules = default;
             Optional<string> deploymentSpecId = default;
             Optional<long> volumesCount = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupDescription"u8))
@@ -110,8 +132,57 @@ namespace Azure.ResourceManager.NetApp.Models
                     volumesCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), deploymentSpecId.Value, Optional.ToNullable(volumesCount));
+            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), deploymentSpecId.Value, Optional.ToNullable(volumesCount), rawData);
+        }
+
+        NetAppVolumeGroupMetadata IModelJsonSerializable<NetAppVolumeGroupMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeGroupMetadata(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppVolumeGroupMetadata>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppVolumeGroupMetadata IModelSerializable<NetAppVolumeGroupMetadata>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumeGroupMetadata(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NetAppVolumeGroupMetadata model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NetAppVolumeGroupMetadata(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppVolumeGroupMetadata(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

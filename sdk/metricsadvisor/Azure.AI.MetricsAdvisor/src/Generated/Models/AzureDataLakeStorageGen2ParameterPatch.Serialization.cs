@@ -5,12 +5,154 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureDataLakeStorageGen2ParameterPatch : IUtf8JsonSerializable
+    internal partial class AzureDataLakeStorageGen2ParameterPatch : IUtf8JsonSerializable, IModelJsonSerializable<AzureDataLakeStorageGen2ParameterPatch>
     {
+        void IModelJsonSerializable<AzureDataLakeStorageGen2ParameterPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AccountName))
+            {
+                writer.WritePropertyName("accountName"u8);
+                writer.WriteStringValue(AccountName);
+            }
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey"u8);
+                writer.WriteStringValue(AccountKey);
+            }
+            if (Optional.IsDefined(FileSystemName))
+            {
+                writer.WritePropertyName("fileSystemName"u8);
+                writer.WriteStringValue(FileSystemName);
+            }
+            if (Optional.IsDefined(DirectoryTemplate))
+            {
+                writer.WritePropertyName("directoryTemplate"u8);
+                writer.WriteStringValue(DirectoryTemplate);
+            }
+            if (Optional.IsDefined(FileTemplate))
+            {
+                writer.WritePropertyName("fileTemplate"u8);
+                writer.WriteStringValue(FileTemplate);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AzureDataLakeStorageGen2ParameterPatch DeserializeAzureDataLakeStorageGen2ParameterPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> accountName = default;
+            Optional<string> accountKey = default;
+            Optional<string> fileSystemName = default;
+            Optional<string> directoryTemplate = default;
+            Optional<string> fileTemplate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("accountName"u8))
+                {
+                    accountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountKey"u8))
+                {
+                    accountKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileSystemName"u8))
+                {
+                    fileSystemName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("directoryTemplate"u8))
+                {
+                    directoryTemplate = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileTemplate"u8))
+                {
+                    fileTemplate = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AzureDataLakeStorageGen2ParameterPatch(accountName.Value, accountKey.Value, fileSystemName.Value, directoryTemplate.Value, fileTemplate.Value, rawData);
+        }
+
+        AzureDataLakeStorageGen2ParameterPatch IModelJsonSerializable<AzureDataLakeStorageGen2ParameterPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataLakeStorageGen2ParameterPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AzureDataLakeStorageGen2ParameterPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AzureDataLakeStorageGen2ParameterPatch IModelSerializable<AzureDataLakeStorageGen2ParameterPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAzureDataLakeStorageGen2ParameterPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AzureDataLakeStorageGen2ParameterPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AzureDataLakeStorageGen2ParameterPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAzureDataLakeStorageGen2ParameterPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

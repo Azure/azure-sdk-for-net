@@ -6,16 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class BatchImageGenerationOperationResponse
+    internal partial class BatchImageGenerationOperationResponse : IUtf8JsonSerializable, IModelJsonSerializable<BatchImageGenerationOperationResponse>
     {
-        internal static BatchImageGenerationOperationResponse DeserializeBatchImageGenerationOperationResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchImageGenerationOperationResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchImageGenerationOperationResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("created"u8);
+            writer.WriteNumberValue(Created, "U");
+            if (Optional.IsDefined(Expires))
+            {
+                writer.WritePropertyName("expires"u8);
+                writer.WriteNumberValue(Expires.Value);
+            }
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteObjectValue(Result);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BatchImageGenerationOperationResponse DeserializeBatchImageGenerationOperationResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +73,7 @@ namespace Azure.AI.OpenAI
             Optional<ImageGenerations> result = default;
             AzureOpenAIOperationState status = default;
             Optional<ResponseError> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,16 +118,57 @@ namespace Azure.AI.OpenAI
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchImageGenerationOperationResponse(id, created, Optional.ToNullable(expires), result.Value, status, error.Value);
+            return new BatchImageGenerationOperationResponse(id, created, Optional.ToNullable(expires), result.Value, status, error.Value, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchImageGenerationOperationResponse FromResponse(Response response)
+        BatchImageGenerationOperationResponse IModelJsonSerializable<BatchImageGenerationOperationResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBatchImageGenerationOperationResponse(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchImageGenerationOperationResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchImageGenerationOperationResponse>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchImageGenerationOperationResponse IModelSerializable<BatchImageGenerationOperationResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchImageGenerationOperationResponse(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(BatchImageGenerationOperationResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BatchImageGenerationOperationResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchImageGenerationOperationResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

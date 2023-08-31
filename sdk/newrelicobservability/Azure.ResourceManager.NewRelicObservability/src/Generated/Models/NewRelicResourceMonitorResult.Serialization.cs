@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicResourceMonitorResult
+    public partial class NewRelicResourceMonitorResult : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicResourceMonitorResult>
     {
-        internal static NewRelicResourceMonitorResult DeserializeNewRelicResourceMonitorResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicResourceMonitorResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicResourceMonitorResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(SendingMetrics))
+            {
+                writer.WritePropertyName("sendingMetrics"u8);
+                writer.WriteStringValue(SendingMetrics.Value.ToString());
+            }
+            if (Optional.IsDefined(ReasonForMetricsStatus))
+            {
+                writer.WritePropertyName("reasonForMetricsStatus"u8);
+                writer.WriteStringValue(ReasonForMetricsStatus);
+            }
+            if (Optional.IsDefined(SendingLogs))
+            {
+                writer.WritePropertyName("sendingLogs"u8);
+                writer.WriteStringValue(SendingLogs.Value.ToString());
+            }
+            if (Optional.IsDefined(ReasonForLogsStatus))
+            {
+                writer.WritePropertyName("reasonForLogsStatus"u8);
+                writer.WriteStringValue(ReasonForLogsStatus);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static NewRelicResourceMonitorResult DeserializeNewRelicResourceMonitorResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Optional<string> reasonForMetricsStatus = default;
             Optional<NewRelicObservabilitySendingLogsStatus> sendingLogs = default;
             Optional<string> reasonForLogsStatus = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -62,8 +116,57 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     reasonForLogsStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, rawData);
+        }
+
+        NewRelicResourceMonitorResult IModelJsonSerializable<NewRelicResourceMonitorResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicResourceMonitorResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicResourceMonitorResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicResourceMonitorResult IModelSerializable<NewRelicResourceMonitorResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicResourceMonitorResult(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(NewRelicResourceMonitorResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator NewRelicResourceMonitorResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicResourceMonitorResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

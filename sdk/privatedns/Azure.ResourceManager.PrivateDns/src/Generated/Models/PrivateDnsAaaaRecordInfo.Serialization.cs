@@ -5,32 +5,55 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class PrivateDnsAaaaRecordInfo : IUtf8JsonSerializable
+    public partial class PrivateDnsAaaaRecordInfo : IUtf8JsonSerializable, IModelJsonSerializable<PrivateDnsAaaaRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateDnsAaaaRecordInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateDnsAaaaRecordInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsAaaaRecordInfo DeserializePrivateDnsAaaaRecordInfo(JsonElement element)
+        internal static PrivateDnsAaaaRecordInfo DeserializePrivateDnsAaaaRecordInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IPAddress> ipv6Address = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv6Address"u8))
@@ -42,8 +65,57 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     ipv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateDnsAaaaRecordInfo(ipv6Address.Value);
+            return new PrivateDnsAaaaRecordInfo(ipv6Address.Value, rawData);
+        }
+
+        PrivateDnsAaaaRecordInfo IModelJsonSerializable<PrivateDnsAaaaRecordInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateDnsAaaaRecordInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateDnsAaaaRecordInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateDnsAaaaRecordInfo IModelSerializable<PrivateDnsAaaaRecordInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateDnsAaaaRecordInfo(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PrivateDnsAaaaRecordInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PrivateDnsAaaaRecordInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateDnsAaaaRecordInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

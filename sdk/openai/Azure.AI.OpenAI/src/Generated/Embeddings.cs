@@ -19,6 +19,8 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Embeddings
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
@@ -35,10 +37,17 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of Embeddings. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
-        internal Embeddings(IReadOnlyList<EmbeddingItem> data, EmbeddingsUsage usage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Embeddings(IReadOnlyList<EmbeddingItem> data, EmbeddingsUsage usage, Dictionary<string, BinaryData> rawData)
         {
             Data = data;
             Usage = usage;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Embeddings"/> for deserialization. </summary>
+        internal Embeddings()
+        {
         }
 
         /// <summary> Embedding values for the prompts submitted in the request. </summary>

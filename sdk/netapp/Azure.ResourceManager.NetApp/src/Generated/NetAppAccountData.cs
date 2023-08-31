@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,14 +20,16 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppAccountData. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppAccountData(AzureLocation location) : base(location)
         {
             ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
-        /// <summary> Initializes a new instance of NetAppAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
@@ -47,6 +51,12 @@ namespace Azure.ResourceManager.NetApp
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
             DisableShowmount = disableShowmount;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppAccountData"/> for deserialization. </summary>
+        internal NetAppAccountData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

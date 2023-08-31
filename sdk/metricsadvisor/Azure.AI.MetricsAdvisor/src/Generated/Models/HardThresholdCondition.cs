@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,9 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The HardThresholdCondition. </summary>
     public partial class HardThresholdCondition
     {
-        /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardThresholdCondition"/>. </summary>
         /// <param name="lowerBound">
         /// lower bound
         ///
@@ -26,12 +29,19 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// </param>
         /// <param name="anomalyDetectorDirection"> detection direction. </param>
         /// <param name="suppressCondition"></param>
-        internal HardThresholdCondition(double? lowerBound, double? upperBound, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardThresholdCondition(double? lowerBound, double? upperBound, AnomalyDetectorDirection anomalyDetectorDirection, SuppressCondition suppressCondition, Dictionary<string, BinaryData> rawData)
         {
             LowerBound = lowerBound;
             UpperBound = upperBound;
             AnomalyDetectorDirection = anomalyDetectorDirection;
             SuppressCondition = suppressCondition;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HardThresholdCondition"/> for deserialization. </summary>
+        internal HardThresholdCondition()
+        {
         }
     }
 }

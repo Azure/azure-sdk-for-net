@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication properties. </summary>
     public partial class NetAppReplicationObject
     {
-        /// <summary> Initializes a new instance of NetAppReplicationObject. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
@@ -23,19 +26,26 @@ namespace Azure.ResourceManager.NetApp.Models
             RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
-        /// <summary> Initializes a new instance of NetAppReplicationObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
         /// <param name="replicationId"> Id. </param>
         /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
         /// <param name="replicationSchedule"> Schedule. </param>
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion, Dictionary<string, BinaryData> rawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
             ReplicationSchedule = replicationSchedule;
             RemoteVolumeResourceId = remoteVolumeResourceId;
             RemoteVolumeRegion = remoteVolumeRegion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/> for deserialization. </summary>
+        internal NetAppReplicationObject()
+        {
         }
 
         /// <summary> Id. </summary>

@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> How the data that is collected should be combined over time. </summary>
     public partial class ManagementEventAggregationCondition
     {
-        /// <summary> Initializes a new instance of ManagementEventAggregationCondition. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementEventAggregationCondition"/>. </summary>
         public ManagementEventAggregationCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementEventAggregationCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementEventAggregationCondition"/>. </summary>
         /// <param name="operator"> the condition operator. </param>
         /// <param name="threshold"> The threshold value that activates the alert. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>
-        internal ManagementEventAggregationCondition(MonitorConditionOperator? @operator, double? threshold, TimeSpan? windowSize)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementEventAggregationCondition(MonitorConditionOperator? @operator, double? threshold, TimeSpan? windowSize, Dictionary<string, BinaryData> rawData)
         {
             Operator = @operator;
             Threshold = threshold;
             WindowSize = windowSize;
+            _rawData = rawData;
         }
 
         /// <summary> the condition operator. </summary>

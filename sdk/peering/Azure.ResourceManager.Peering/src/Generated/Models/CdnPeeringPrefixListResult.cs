@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of CDN peering prefixes. </summary>
     internal partial class CdnPeeringPrefixListResult
     {
-        /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/>. </summary>
         internal CdnPeeringPrefixListResult()
         {
             Value = new ChangeTrackingList<CdnPeeringPrefix>();
         }
 
-        /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnPeeringPrefixListResult"/>. </summary>
         /// <param name="value"> The list of CDN peering prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of CDN peering prefixes. </param>
-        internal CdnPeeringPrefixListResult(IReadOnlyList<CdnPeeringPrefix> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnPeeringPrefixListResult(IReadOnlyList<CdnPeeringPrefix> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of CDN peering prefixes. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayPolicyGroupMember : IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayPolicyGroupMember : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworkGatewayPolicyGroupMember>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworkGatewayPolicyGroupMember>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworkGatewayPolicyGroupMember>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("attributeValue"u8);
                 writer.WriteStringValue(AttributeValue);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkGatewayPolicyGroupMember DeserializeVirtualNetworkGatewayPolicyGroupMember(JsonElement element)
+        internal static VirtualNetworkGatewayPolicyGroupMember DeserializeVirtualNetworkGatewayPolicyGroupMember(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<VpnPolicyMemberAttributeType> attributeType = default;
             Optional<string> attributeValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,8 +86,57 @@ namespace Azure.ResourceManager.Network.Models
                     attributeValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Optional.ToNullable(attributeType), attributeValue.Value);
+            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Optional.ToNullable(attributeType), attributeValue.Value, rawData);
+        }
+
+        VirtualNetworkGatewayPolicyGroupMember IModelJsonSerializable<VirtualNetworkGatewayPolicyGroupMember>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkGatewayPolicyGroupMember(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworkGatewayPolicyGroupMember>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworkGatewayPolicyGroupMember IModelSerializable<VirtualNetworkGatewayPolicyGroupMember>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkGatewayPolicyGroupMember(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(VirtualNetworkGatewayPolicyGroupMember model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator VirtualNetworkGatewayPolicyGroupMember(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworkGatewayPolicyGroupMember(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

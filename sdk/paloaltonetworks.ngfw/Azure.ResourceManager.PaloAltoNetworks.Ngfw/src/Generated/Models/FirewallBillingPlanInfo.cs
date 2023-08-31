@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Billing plan information. </summary>
     public partial class FirewallBillingPlanInfo
     {
-        /// <summary> Initializes a new instance of FirewallBillingPlanInfo. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanInfo"/>. </summary>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="planId"/> is null. </exception>
@@ -25,17 +28,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             PlanId = planId;
         }
 
-        /// <summary> Initializes a new instance of FirewallBillingPlanInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanInfo"/>. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. </param>
         /// <param name="planId"> plan id as published by Liftr.PAN. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        internal FirewallBillingPlanInfo(FirewallBillingPlanUsageType? usageType, FirewallBillingCycle billingCycle, string planId, DateTimeOffset? effectiveOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallBillingPlanInfo(FirewallBillingPlanUsageType? usageType, FirewallBillingCycle billingCycle, string planId, DateTimeOffset? effectiveOn, Dictionary<string, BinaryData> rawData)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;
             PlanId = planId;
             EffectiveOn = effectiveOn;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallBillingPlanInfo"/> for deserialization. </summary>
+        internal FirewallBillingPlanInfo()
+        {
         }
 
         /// <summary> different usage type like PAYG/COMMITTED. </summary>

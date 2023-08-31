@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AutoApprovedPrivateLinkService
+    public partial class AutoApprovedPrivateLinkService : IUtf8JsonSerializable, IModelJsonSerializable<AutoApprovedPrivateLinkService>
     {
-        internal static AutoApprovedPrivateLinkService DeserializeAutoApprovedPrivateLinkService(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutoApprovedPrivateLinkService>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutoApprovedPrivateLinkService>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrivateLinkService))
+            {
+                writer.WritePropertyName("privateLinkService"u8);
+                writer.WriteStringValue(PrivateLinkService);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AutoApprovedPrivateLinkService DeserializeAutoApprovedPrivateLinkService(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> privateLinkService = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkService"u8))
@@ -26,8 +60,57 @@ namespace Azure.ResourceManager.Network.Models
                     privateLinkService = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutoApprovedPrivateLinkService(privateLinkService.Value);
+            return new AutoApprovedPrivateLinkService(privateLinkService.Value, rawData);
+        }
+
+        AutoApprovedPrivateLinkService IModelJsonSerializable<AutoApprovedPrivateLinkService>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoApprovedPrivateLinkService(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutoApprovedPrivateLinkService>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutoApprovedPrivateLinkService IModelSerializable<AutoApprovedPrivateLinkService>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutoApprovedPrivateLinkService(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(AutoApprovedPrivateLinkService model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator AutoApprovedPrivateLinkService(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutoApprovedPrivateLinkService(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

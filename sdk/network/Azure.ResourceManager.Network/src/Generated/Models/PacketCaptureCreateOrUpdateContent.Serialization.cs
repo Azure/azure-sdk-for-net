@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class PacketCaptureCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<PacketCaptureCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PacketCaptureCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PacketCaptureCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,7 +65,172 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PacketCaptureCreateOrUpdateContent DeserializePacketCaptureCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string target = default;
+            Optional<PacketCaptureMachineScope> scope = default;
+            Optional<PacketCaptureTargetType> targetType = default;
+            Optional<long> bytesToCapturePerPacket = default;
+            Optional<long> totalBytesPerSession = default;
+            Optional<int> timeLimitInSeconds = default;
+            PacketCaptureStorageLocation storageLocation = default;
+            Optional<IList<PacketCaptureFilter>> filters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("target"u8))
+                        {
+                            target = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("scope"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("targetType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetType = property0.Value.GetString().ToPacketCaptureTargetType();
+                            continue;
+                        }
+                        if (property0.NameEquals("bytesToCapturePerPacket"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            bytesToCapturePerPacket = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("totalBytesPerSession"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalBytesPerSession = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("timeLimitInSeconds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeLimitInSeconds = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("storageLocation"u8))
+                        {
+                            storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("filters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
+                            }
+                            filters = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PacketCaptureCreateOrUpdateContent(target, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation, Optional.ToList(filters), rawData);
+        }
+
+        PacketCaptureCreateOrUpdateContent IModelJsonSerializable<PacketCaptureCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePacketCaptureCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PacketCaptureCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PacketCaptureCreateOrUpdateContent IModelSerializable<PacketCaptureCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePacketCaptureCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PacketCaptureCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PacketCaptureCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePacketCaptureCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

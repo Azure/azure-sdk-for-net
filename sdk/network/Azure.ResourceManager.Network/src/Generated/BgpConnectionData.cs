@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -18,12 +20,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class BgpConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BgpConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         public BgpConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of BgpConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -33,7 +35,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="hubVirtualNetworkConnection"> The reference to the HubVirtualNetworkConnection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             PeerAsn = peerAsn;

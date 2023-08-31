@@ -15,6 +15,8 @@ namespace Azure.AI.OpenAI
     /// <summary> Representation of a log probabilities model for a completions generation. </summary>
     public partial class CompletionsLogProbabilityModel
     {
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
         /// <param name="tokens"> The textual forms of tokens evaluated in this probability model. </param>
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
@@ -39,12 +41,19 @@ namespace Azure.AI.OpenAI
         /// <param name="tokenLogProbabilities"> A collection of log probability values for the tokens in this completions data. </param>
         /// <param name="topLogProbabilities"> A mapping of tokens to maximum log probability values in this completions data. </param>
         /// <param name="textOffsets"> The text offsets associated with tokens in this completions data. </param>
-        internal CompletionsLogProbabilityModel(IReadOnlyList<string> tokens, IReadOnlyList<float?> tokenLogProbabilities, IReadOnlyList<IDictionary<string, float?>> topLogProbabilities, IReadOnlyList<int> textOffsets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompletionsLogProbabilityModel(IReadOnlyList<string> tokens, IReadOnlyList<float?> tokenLogProbabilities, IReadOnlyList<IDictionary<string, float?>> topLogProbabilities, IReadOnlyList<int> textOffsets, Dictionary<string, BinaryData> rawData)
         {
             Tokens = tokens;
             TokenLogProbabilities = tokenLogProbabilities;
             TopLogProbabilities = topLogProbabilities;
             TextOffsets = textOffsets;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsLogProbabilityModel"/> for deserialization. </summary>
+        internal CompletionsLogProbabilityModel()
+        {
         }
 
         /// <summary> The textual forms of tokens evaluated in this probability model. </summary>

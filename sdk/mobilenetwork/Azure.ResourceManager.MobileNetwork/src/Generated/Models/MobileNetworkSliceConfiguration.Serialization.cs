@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkSliceConfiguration : IUtf8JsonSerializable
+    public partial class MobileNetworkSliceConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkSliceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkSliceConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkSliceConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("slice"u8);
             JsonSerializer.Serialize(writer, Slice); writer.WritePropertyName("defaultDataNetwork"u8);
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkSliceConfiguration DeserializeMobileNetworkSliceConfiguration(JsonElement element)
+        internal static MobileNetworkSliceConfiguration DeserializeMobileNetworkSliceConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             WritableSubResource slice = default;
             WritableSubResource defaultDataNetwork = default;
             IList<DataNetworkConfiguration> dataNetworkConfigurations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("slice"u8))
@@ -60,8 +82,57 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     dataNetworkConfigurations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkSliceConfiguration(slice, defaultDataNetwork, dataNetworkConfigurations);
+            return new MobileNetworkSliceConfiguration(slice, defaultDataNetwork, dataNetworkConfigurations, rawData);
+        }
+
+        MobileNetworkSliceConfiguration IModelJsonSerializable<MobileNetworkSliceConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkSliceConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkSliceConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkSliceConfiguration IModelSerializable<MobileNetworkSliceConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkSliceConfiguration(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(MobileNetworkSliceConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator MobileNetworkSliceConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkSliceConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -8,17 +8,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable
+    public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable, IModelJsonSerializable<PacketCoreControlPlaneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PacketCoreControlPlaneData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PacketCoreControlPlaneData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -90,11 +96,25 @@ namespace Azure.ResourceManager.MobileNetwork
 #endif
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element)
+        internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -120,6 +140,7 @@ namespace Azure.ResourceManager.MobileNetwork
             MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
             Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
             Optional<BinaryData> interopSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -285,8 +306,57 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, interopSettings.Value);
+            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, interopSettings.Value, rawData);
+        }
+
+        PacketCoreControlPlaneData IModelJsonSerializable<PacketCoreControlPlaneData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePacketCoreControlPlaneData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PacketCoreControlPlaneData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PacketCoreControlPlaneData IModelSerializable<PacketCoreControlPlaneData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePacketCoreControlPlaneData(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(PacketCoreControlPlaneData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator PacketCoreControlPlaneData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePacketCoreControlPlaneData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

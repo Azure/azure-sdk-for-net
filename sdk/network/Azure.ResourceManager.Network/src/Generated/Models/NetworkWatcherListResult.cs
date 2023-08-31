@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,17 +15,21 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkWatchers API service call. </summary>
     internal partial class NetworkWatcherListResult
     {
-        /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherListResult"/>. </summary>
         internal NetworkWatcherListResult()
         {
             Value = new ChangeTrackingList<NetworkWatcherData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkWatcherListResult"/>. </summary>
         /// <param name="value"> List of network watcher resources. </param>
-        internal NetworkWatcherListResult(IReadOnlyList<NetworkWatcherData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkWatcherListResult(IReadOnlyList<NetworkWatcherData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of network watcher resources. </summary>

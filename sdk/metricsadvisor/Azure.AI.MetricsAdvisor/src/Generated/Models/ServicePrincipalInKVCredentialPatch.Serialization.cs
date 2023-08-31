@@ -5,12 +5,144 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalInKVCredentialPatch : IUtf8JsonSerializable
+    internal partial class ServicePrincipalInKVCredentialPatch : IUtf8JsonSerializable, IModelJsonSerializable<ServicePrincipalInKVCredentialPatch>
     {
+        void IModelJsonSerializable<ServicePrincipalInKVCredentialPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePrincipalInKVCredentialPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteObjectValue(Parameters);
+            }
+            writer.WritePropertyName("dataSourceCredentialType"u8);
+            writer.WriteStringValue(DataSourceCredentialType.ToString());
+            if (Optional.IsDefined(DataSourceCredentialName))
+            {
+                writer.WritePropertyName("dataSourceCredentialName"u8);
+                writer.WriteStringValue(DataSourceCredentialName);
+            }
+            if (Optional.IsDefined(DataSourceCredentialDescription))
+            {
+                writer.WritePropertyName("dataSourceCredentialDescription"u8);
+                writer.WriteStringValue(DataSourceCredentialDescription);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServicePrincipalInKVCredentialPatch DeserializeServicePrincipalInKVCredentialPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ServicePrincipalInKVParamPatch> parameters = default;
+            DataSourceCredentialKind dataSourceCredentialType = default;
+            Optional<string> dataSourceCredentialName = default;
+            Optional<string> dataSourceCredentialDescription = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = ServicePrincipalInKVParamPatch.DeserializeServicePrincipalInKVParamPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialType"u8))
+                {
+                    dataSourceCredentialType = new DataSourceCredentialKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialName"u8))
+                {
+                    dataSourceCredentialName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSourceCredentialDescription"u8))
+                {
+                    dataSourceCredentialDescription = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ServicePrincipalInKVCredentialPatch(dataSourceCredentialType, dataSourceCredentialName.Value, dataSourceCredentialDescription.Value, parameters.Value, rawData);
+        }
+
+        ServicePrincipalInKVCredentialPatch IModelJsonSerializable<ServicePrincipalInKVCredentialPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePrincipalInKVCredentialPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalInKVCredentialPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServicePrincipalInKVCredentialPatch>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePrincipalInKVCredentialPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServicePrincipalInKVCredentialPatch IModelSerializable<ServicePrincipalInKVCredentialPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat<ServicePrincipalInKVCredentialPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalInKVCredentialPatch(doc.RootElement, options);
+        }
+
+        public static implicit operator RequestContent(ServicePrincipalInKVCredentialPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator ServicePrincipalInKVCredentialPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServicePrincipalInKVCredentialPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }
