@@ -110,7 +110,10 @@ function Get-dotnet-OnboardedDocsMsPackagesForMoniker ($DocRepoLocation, $monike
     $onboardingSpec = "$DocRepoLocation/bundlepackages/azure-dotnet.csv"
     if ("preview" -eq $moniker) {
         $onboardingSpec = "$DocRepoLocation/bundlepackages/azure-dotnet-preview.csv"
+    } elseif ('legacy' -eq $moniker) { 
+        $onboardingSpec = "$DocRepoLocation/bundlepackages/azure-dotnet-legacy.csv"
     }
+
     $onboardedPackages = @{}
     $packageInfos = Get-DocsCiConfig $onboardingSpec
     foreach ($packageInfo in $packageInfos) {
