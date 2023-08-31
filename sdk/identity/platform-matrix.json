@@ -5,11 +5,7 @@
         "msi_image": {
           "OSVmImage": "ubuntu-22.04",
           "Pool": "azsdk-pool-mms-ubuntu-2204-identitymsi",
-          "TestFilterConfig": {
-            "ExcludeNonVirtualized": {
-                "AdditionalTestFilters": "TestCategory=NonVirtualized"
-            }
-          }
+          "AdditionalTestFilters": "TestCategory=NonVirtualized"
         }
       },
       "ContainerAgent": {
