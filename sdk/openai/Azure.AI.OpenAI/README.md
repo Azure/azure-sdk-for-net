@@ -392,6 +392,51 @@ Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAs
 Uri imageUri = imageGenerations.Value.Data[0].Url;
 ```
 
+### Transcribe audio data with Whisper speech models
+
+```C# Snippet:TranscribeAudio
+using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
+BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
+
+var transcriptionOptions = new AudioTranscriptionOptions()
+{
+    File = BinaryData.FromStream(audioStreamFromFile),
+    ResponseFormat = AudioTranscriptionFormat.VerboseJson,
+};
+
+Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
+    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
+    transcriptionOptions);
+AudioTranscription transcription = transcriptionResponse.Value;
+
+// When using Text, Vtt, Json formats, only .Text will be populated
+Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+Console.WriteLine(transcription.Text);
+```
+
+### Translate audio data to English with Whisper speech models
+
+```C# Snippet:TranslateAudio
+using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
+BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
+
+var translationOptions = new AudioTranslationOptions()
+{
+    File = BinaryData.FromStream(audioStreamFromFile),
+    ResponseFormat = AudioTranscriptionFormat.VerboseJson,
+};
+
+Response<AudioTranscription> translationResponse = await client.GetAudioTranslationAsync(
+    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
+    translationOptions);
+AudioTranscription transcription = translationResponse.Value;
+
+// When using Text, Vtt, Json formats, only .Text will be populated
+Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
+// .Text will be translated to English (ISO-639-1 "en")
+Console.WriteLine(transcription.Text);
+```
+
 ## Troubleshooting
 
 When you interact with Azure OpenAI using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][openai_rest] requests.

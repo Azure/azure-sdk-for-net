@@ -105,10 +105,14 @@ namespace Azure.AI.OpenAI
         /// Describes language related to physical actions intended to purposely hurt, injure,
         /// or damage one’s body, or kill oneself.
         /// </param>
+        /// <param name="error">
+        /// Describes an error returned if the content filtering system is
+        /// down or otherwise unable to complete the operation in time.
+        /// </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResults"/> instance for mocking. </returns>
-        public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null)
+        public static ContentFilterResults ContentFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ResponseError error = null)
         {
-            return new ContentFilterResults(sexual, violence, hate, selfHarm);
+            return new ContentFilterResults(sexual, violence, hate, selfHarm, error);
         }
 
         /// <summary> Initializes a new instance of ContentFilterResult. </summary>
@@ -210,6 +214,25 @@ namespace Azure.AI.OpenAI
             }
 
             return new ImageLocation(url);
+        }
+
+        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <param name="id"> Segment identifier. </param>
+        /// <param name="start"> Segment start offset. </param>
+        /// <param name="end"> Segment end offset. </param>
+        /// <param name="text"> Segment text. </param>
+        /// <param name="temperature"> Temperature. </param>
+        /// <param name="averageLogProb"> Average log probability. </param>
+        /// <param name="compressionRatio"> Compression ratio. </param>
+        /// <param name="noSpeechProb"> Probability of 'no speech'. </param>
+        /// <param name="tokens"> Tokens in this segment. </param>
+        /// <param name="seek"> TODO. </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranscriptionSegment"/> instance for mocking. </returns>
+        public static AudioTranscriptionSegment AudioTranscriptionSegment(int? id = null, float? start = null, float? end = null, string text = null, float? temperature = null, float? averageLogProb = null, float? compressionRatio = null, float? noSpeechProb = null, IEnumerable<int> tokens = null, int seek = default)
+        {
+            tokens ??= new List<int>();
+
+            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProb, compressionRatio, noSpeechProb, tokens?.ToList(), seek);
         }
     }
 }

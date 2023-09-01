@@ -21,6 +21,8 @@ namespace Azure.AI.OpenAI
     [CodeGenSuppress("CreateGetCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetChatCompletionsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateGetEmbeddingsRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateAudioTranscriptionRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
+    [CodeGenSuppress("CreateAudioTranslationRequest", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     public partial class OpenAIClient
     {
         private const int DefaultMaxCompletionsTokens = 100;
@@ -706,6 +708,98 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        /// <summary> Transcribes audio into the input language. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioTranscriptionOptions">
+        /// Transcription request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranscriptionOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AudioTranscription>> GetAudioTranscriptionAsync(string deploymentId, AudioTranscriptionOptions audioTranscriptionOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
+
+            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
+            audioTranscriptionOptions.InternalModel = deploymentId;
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAudioTranscriptionAsync(deploymentId, audioTranscriptionOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+        }
+
+        /// <summary> Transcribes audio into the input language. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioTranscriptionOptions">
+        /// Transcription request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranscriptionOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AudioTranscription> GetAudioTranscription(string deploymentId, AudioTranscriptionOptions audioTranscriptionOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
+
+            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
+            audioTranscriptionOptions.InternalModel = deploymentId;
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAudioTranscription(deploymentId, audioTranscriptionOptions.ToRequestContent(), context);
+            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+        }
+
+        /// <summary> Transcribes and translates input audio into English text. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioTranslationOptions">
+        /// Translation request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AudioTranscription>> GetAudioTranslationAsync(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
+
+            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
+            audioTranslationOptions.InternalModelName = deploymentId;
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetAudioTranslationAsync(deploymentId, audioTranslationOptions.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+        }
+
+        /// <summary> Transcribes and translates input audio into English text. </summary>
+        /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
+        /// <param name="audioTranslationOptions">
+        /// Translation request.
+        /// Requesting format 'json' will result on only the 'text' field being set.
+        /// For more output data use 'verbose_json.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentId"/> or <paramref name="audioTranslationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AudioTranscription> GetAudioTranslation(string deploymentId, AudioTranslationOptions audioTranslationOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
+            Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
+
+            // Custom code: merely linking the deployment ID (== model name) into the request body for non-Azure use
+            audioTranslationOptions.InternalModelName = deploymentId;
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetAudioTranslation(deploymentId, audioTranslationOptions.ToRequestContent(), context);
+            return Response.FromValue(AudioTranscription.FromResponse(response), response);
+        }
+
         internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
         {
             var uri = new RawRequestUriBuilder();
@@ -763,5 +857,29 @@ namespace Azure.AI.OpenAI
             => chatCompletionsOptions.AzureExtensionsOptions != null
                 ? "extensions/chat/completions"
                 : "chat/completions";
+
+        internal HttpMessage CreateGetAudioTranscriptionRequest(string deploymentId, RequestContent content, RequestContext context)
+        {
+            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = GetUri(deploymentId, "audio/transcriptions");
+            request.Content = content;
+            string boundary = (content as MultipartFormDataRequestContent).Boundary;
+            request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAudioTranslationRequest(string deploymentId, RequestContent content, RequestContext context)
+        {
+            HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Post;
+            request.Uri = GetUri(deploymentId, "audio/translations");
+            request.Content = content;
+            string boundary = (content as MultipartFormDataRequestContent).Boundary;
+            request.Headers.Add("content-type", $"multipart/form-data; boundary={boundary}");
+            return message;
+        }
     }
 }
