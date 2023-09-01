@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
