@@ -449,6 +449,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public Azure.ResourceManager.RecoveryServices.Models.BackupStorageVersion? BackupStorageVersion { get { throw null; } }
         public Azure.ResourceManager.RecoveryServices.Models.CrossSubscriptionRestoreState? CrossSubscriptionRestoreState { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesEncryption Encryption { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.ResourceManager.RecoveryServices.Models.ImmutabilityState? ImmutabilityState { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultMonitoringSettings MonitoringSettings { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.VaultPropertiesMoveDetails MoveDetails { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.ResourceMoveState? MoveState { get { throw null; } }
