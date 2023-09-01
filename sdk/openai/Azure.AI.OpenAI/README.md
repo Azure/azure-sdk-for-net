@@ -323,7 +323,10 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
             ChatRole.Function,
             JsonSerializer.Serialize(
                 functionResultData,
-                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }))
+        {
+            Name = responseChoice.Message.FunctionCall.Name
+        };
         conversationMessages.Add(functionResponseMessage);
         // Now make a new request using all three messages in conversationMessages
     }
