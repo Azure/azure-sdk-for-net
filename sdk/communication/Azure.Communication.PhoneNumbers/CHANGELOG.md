@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (2023-08-31)
+## 1.3.0-beta.2 (2023-08-31)
 
 ### Bugs Fixed
 - Service version updated to include 2023-05-01-preview
