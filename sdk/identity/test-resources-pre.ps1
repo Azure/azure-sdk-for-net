@@ -5,8 +5,14 @@ param (
     $RemainingArguments
 )
 
-if ($EnvironmentVariables -eq $null) {
-    throw "EnvironmentVariables must be set in calling script New-TestResources.ps1"
+if (!$CI) {
+    # TODO: Remove this once auto-cloud config downloads are supported locally
+    Write-Host "Skipping cert setup in local testing mode"
+    return
+}
+
+if ($EnvironmentVariables -eq $null -or $EnvironmentVariables.Count -eq 0) {
+    throw "EnvironmentVariables must be set in the calling script New-TestResources.ps1"
 }
 
 $tmp = $env:TEMP ? $env:TEMP : [System.IO.Path]::GetTempPath()
