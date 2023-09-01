@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.TestFramework
             Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
 
             // Verify all class end with `Resource` & `Collection`
-            string[] exceptionList = ExceptionList ?? Array.Empty<string>();
+            HashSet<string> exceptionList = ExceptionList == null ? new HashSet<string>() : new HashSet<string>(ExceptionList);
             List<string> errorList = new();
 
             foreach (var type in sdkAssembly.GetTypes())
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.TestFramework
                 // Remove the elements to verify there is nothing left in this list
                 if (exceptionList.Contains(type.Name))
                 {
-                    exceptionList = exceptionList.Where(val => val != type.Name).ToArray();
+                    exceptionList.Remove(type.Name);
                 }
             }
 

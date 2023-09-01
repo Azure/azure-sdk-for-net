@@ -15,7 +15,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+rename-mapping:
+  AssessmentResource: AssessmentResourceContent
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -49,4 +49,7 @@ rename-rules:
 list-exception:
   - /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
 
+rename-mapping:
+  AssignmentJobCreatedResource: AssignmentJobCreatedResult
+
 ```

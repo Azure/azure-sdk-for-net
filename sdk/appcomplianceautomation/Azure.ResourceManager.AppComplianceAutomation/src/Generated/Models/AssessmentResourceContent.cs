@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> A class represent the assessment resource. </summary>
-    public partial class AssessmentResource
+    public partial class AssessmentResourceContent
     {
-        /// <summary> Initializes a new instance of AssessmentResource. </summary>
-        internal AssessmentResource()
+        /// <summary> Initializes a new instance of AssessmentResourceContent. </summary>
+        internal AssessmentResourceContent()
         {
         }
 
-        /// <summary> Initializes a new instance of AssessmentResource. </summary>
+        /// <summary> Initializes a new instance of AssessmentResourceContent. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="reason"> The reason for the N/A resource. </param>
         /// <param name="statusChangeDate"> The status change date for the resource. For unavailable date, set it as N/A. </param>
-        internal AssessmentResource(string resourceId, ResourceStatus? resourceStatus, string reason, string statusChangeDate)
+        internal AssessmentResourceContent(string resourceId, ResourceStatus? resourceStatus, string reason, string statusChangeDate)
         {
             ResourceId = resourceId;
             ResourceStatus = resourceStatus;

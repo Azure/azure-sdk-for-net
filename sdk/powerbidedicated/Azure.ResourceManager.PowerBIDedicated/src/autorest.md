@@ -45,4 +45,7 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  SkuDetailsForExistingResource: SkuDetails
+
 ```
