@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration()
                 {
-                    Name = "managedResourceGroupName",
-                    Location = new AzureLocation("eastus"),
+                    Name = TestEnvironment.NetworkFabricControllerName + "-mrg",
+                    Location = new AzureLocation(TestEnvironment.Location),
                 },
                 IsWorkloadManagementNetworkEnabled = IsWorkloadManagementNetworkEnabled.True,
                 IPv4AddressSpace = "172.253.0.0/19",

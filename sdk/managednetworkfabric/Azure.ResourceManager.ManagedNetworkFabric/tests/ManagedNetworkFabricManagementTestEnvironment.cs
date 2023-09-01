@@ -164,6 +164,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         /// </summary>
         public string NeighborGroupName => GetRecordedVariable("NEIGHBOR_GROUP_NAME");
 
+        /// <summary>
+        /// The name of the Existing Network Fabric to be used for playback tests. Recorded.
+        /// </summary>
+        public string ExistingNetworkFabricName => GetRecordedVariable("EXISTING_NETWORK_FABRIC_NAME");
         // Support using the Default Credential created by Azure CLI so
         // that we don't have to support creating a service principal, etc. to run these tests.
         public override TokenCredential Credential

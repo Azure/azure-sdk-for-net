@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
-            ResourceIdentifier networkFabricResourceId2 = NetworkFabricResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkFabricName);
+            ResourceIdentifier networkFabricResourceId2 = NetworkFabricResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.ExistingNetworkFabricName);
             TestContext.Out.WriteLine($"networkFabricId: {networkFabricResourceId2}");
             NetworkFabricResource networkFabric2 = Client.GetNetworkFabricResource(networkFabricResourceId2);
 

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         new StatementConditionProperties()
                         {
                             RoutePolicyConditionType = RoutePolicyConditionType.Or,
-                            IPPrefixId = new ResourceIdentifier("/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfcrg071323/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipPrefix071423"),
+                            IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
                         },
                         new StatementActionProperties(RoutePolicyActionType.Deny)
                         {
