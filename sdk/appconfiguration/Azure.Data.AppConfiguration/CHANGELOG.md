@@ -12,6 +12,8 @@
 
 - Marked a constructor overload of `ConfigurationSetting` that was intended for testing purposes as non-visible, as the `ConfigurationModelFactory` should instead be used.
 
+- Fixed a bug where a disposed content stream was used to attempt deserialization in some scenarios, such as using a custom `HttpMessageHandler`.
+
 ### Other Changes
 
 ## 1.3.0-beta.2 (2023-07-11)
