@@ -1,5 +1,86 @@
 namespace Azure.AI.OpenAI
 {
+    public partial class AzureChatExtensionConfiguration
+    {
+        public AzureChatExtensionConfiguration() { }
+        public AzureChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.BinaryData parameters) { }
+        public System.BinaryData Parameters { get { throw null; } set { } }
+        public virtual Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
+    }
+    public partial class AzureChatExtensionsMessageContext
+    {
+        public AzureChatExtensionsMessageContext() { }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
+    }
+    public partial class AzureChatExtensionsOptions
+    {
+        public AzureChatExtensionsOptions() { }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.AzureChatExtensionConfiguration> Extensions { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureChatExtensionType : System.IEquatable<Azure.AI.OpenAI.AzureChatExtensionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureChatExtensionType(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureChatExtensionType AzureCognitiveSearch { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureChatExtensionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureChatExtensionType left, Azure.AI.OpenAI.AzureChatExtensionType right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureChatExtensionType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureChatExtensionType left, Azure.AI.OpenAI.AzureChatExtensionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AzureCognitiveSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
+    {
+        public AzureCognitiveSearchChatExtensionConfiguration() { }
+        public AzureCognitiveSearchChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.Uri searchEndpoint, Azure.AzureKeyCredential searchKey, string indexName) { }
+        public int? DocumentCount { get { throw null; } set { } }
+        public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
+        public Azure.AzureKeyCredential EmbeddingKey { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureCognitiveSearchQueryType? QueryType { get { throw null; } set { } }
+        public System.Uri SearchEndpoint { get { throw null; } set { } }
+        public Azure.AzureKeyCredential SearchKey { get { throw null; } set { } }
+        public string SemanticConfiguration { get { throw null; } set { } }
+        public bool? ShouldRestrictResultScope { get { throw null; } set { } }
+        public override Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
+    }
+    public partial class AzureCognitiveSearchIndexFieldMappingOptions
+    {
+        public AzureCognitiveSearchIndexFieldMappingOptions() { }
+        public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
+        public string ContentFieldSeparator { get { throw null; } set { } }
+        public string FilepathFieldName { get { throw null; } set { } }
+        public string TitleFieldName { get { throw null; } set { } }
+        public string UrlFieldName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureCognitiveSearchQueryType : System.IEquatable<Azure.AI.OpenAI.AzureCognitiveSearchQueryType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureCognitiveSearchQueryType(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Semantic { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Simple { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Vector { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType VectorSemanticHybrid { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType VectorSimpleHybrid { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureCognitiveSearchQueryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureCognitiveSearchQueryType left, Azure.AI.OpenAI.AzureCognitiveSearchQueryType right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureCognitiveSearchQueryType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureCognitiveSearchQueryType left, Azure.AI.OpenAI.AzureCognitiveSearchQueryType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class AzureOpenAIModelFactory
     {
         public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
@@ -13,8 +94,8 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.Collections.Generic.IEnumerable<float> embedding = null, int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
-        public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.InternalImageLocation> data = null) { throw null; }
-        public static Azure.AI.OpenAI.InternalImageLocation InternalImageLocation(System.Uri url = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url = null) { throw null; }
         public static Azure.AI.OpenAI.PromptFilterResult PromptFilterResult(int promptIndex = 0, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatChoice StreamingChatChoice(Azure.AI.OpenAI.ChatChoice originalBaseChoice = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatCompletions StreamingChatCompletions(Azure.AI.OpenAI.ChatCompletions baseChatCompletions = null, System.Collections.Generic.List<Azure.AI.OpenAI.StreamingChatChoice> streamingChatChoices = null) { throw null; }
@@ -42,6 +123,7 @@ namespace Azure.AI.OpenAI
     {
         public ChatCompletionsOptions() { }
         public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
+        public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition FunctionCall { get { throw null; } set { } }
@@ -59,6 +141,7 @@ namespace Azure.AI.OpenAI
     {
         public ChatMessage() { }
         public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
+        public Azure.AI.OpenAI.AzureChatExtensionsMessageContext AzureExtensionsContext { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -73,6 +156,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ChatRole Assistant { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole Function { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole System { get { throw null; } }
+        public static Azure.AI.OpenAI.ChatRole Tool { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole User { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.ChatRole other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -244,7 +328,12 @@ namespace Azure.AI.OpenAI
     {
         internal ImageGenerations() { }
         public System.DateTimeOffset Created { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.InternalImageLocation> Data { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageLocation> Data { get { throw null; } }
+    }
+    public partial class ImageLocation
+    {
+        internal ImageLocation() { }
+        public System.Uri Url { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageSize : System.IEquatable<Azure.AI.OpenAI.ImageSize>
@@ -264,11 +353,6 @@ namespace Azure.AI.OpenAI
         public static implicit operator Azure.AI.OpenAI.ImageSize (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class InternalImageLocation
-    {
-        internal InternalImageLocation() { }
-        public System.Uri Url { get { throw null; } }
     }
     public partial class OpenAIClient
     {
@@ -297,13 +381,14 @@ namespace Azure.AI.OpenAI
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_07_01_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_12_01 = 1,
             V2023_05_15 = 2,
             V2023_06_01_Preview = 3,
             V2023_07_01_Preview = 4,
+            V2023_08_01_Preview = 5,
         }
     }
     public partial class PromptFilterResult

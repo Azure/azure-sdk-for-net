@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Count > 0)
                 {
-                    requestOrigins = requestOrigin;
+                    requestOrigins = requestOrigin.SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries)).ToList();
                     return true;
                 }
             }
