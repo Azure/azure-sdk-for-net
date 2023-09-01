@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Entered into the Internet Gateway update");
             NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch()
             {
-                InternetGatewayRuleId = new ResourceIdentifier("/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/smyl-prod-rp-upgrd-rg/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/example-internetgatewayrule"),
+                InternetGatewayRuleId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/example-internetgatewayrule"),
             };
             ArmOperation<NetworkFabricInternetGatewayResource> lro = await networkFabricInternetGateway.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricInternetGatewayResource result1 = lro.Value;
