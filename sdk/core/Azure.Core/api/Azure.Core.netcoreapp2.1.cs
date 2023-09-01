@@ -1078,10 +1078,10 @@ namespace Azure.Core.Pipeline
 namespace Azure.Core.Serialization
 {
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public sealed partial class AbstractHierarchyDeserializerAttribute : System.Attribute
+    public sealed partial class DeserializationProxyAttribute : System.Attribute
     {
-        public AbstractHierarchyDeserializerAttribute(System.Type typeToActivate) { }
-        public System.Type TypeToActivate { get { throw null; } }
+        public DeserializationProxyAttribute(System.Type proxyType) { }
+        public System.Type ProxyType { get { throw null; } }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
@@ -1157,10 +1157,10 @@ namespace Azure.Core.Serialization
     }
     public static partial class ModelSerializer
     {
-        public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
-        public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
-        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
+        public static object? Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
+        public static object? Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
+        public static T? Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
+        public static T? Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
         public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
         public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static System.BinaryData SerializeCore(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
@@ -1191,7 +1191,7 @@ namespace Azure.Core.Serialization
         public ModelSerializerOptions() { }
         public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { }
         public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
-        public System.Func<System.Type, Azure.Core.Serialization.ObjectSerializer>? GenericTypeSerializerCreator { get { throw null; } set { } }
+        public System.Func<System.Type, Azure.Core.Serialization.ObjectSerializer>? ObjectSerializerResolver { get { throw null; } set { } }
     }
     public abstract partial class ObjectSerializer
     {

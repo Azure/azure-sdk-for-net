@@ -52,9 +52,9 @@ namespace Azure.Core.Serialization
 
         /// <summary>
         /// Gets or sets a factory method that returns an <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
-        /// Should return null if the type is not supported.
+        /// Should return <c>null</c> if the type is not supported.
         /// </summary>
-        public Func<Type, ObjectSerializer>? GenericTypeSerializerCreator
+        public Func<Type, ObjectSerializer>? ObjectSerializerResolver
         {
             get
             {
