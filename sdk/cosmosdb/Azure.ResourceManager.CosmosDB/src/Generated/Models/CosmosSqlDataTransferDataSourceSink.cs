@@ -31,10 +31,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="component"></param>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
-        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string containerName) : base(component)
+        /// <param name="remoteAccountName"></param>
+        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string containerName, string remoteAccountName) : base(component)
         {
             DatabaseName = databaseName;
             ContainerName = containerName;
+            RemoteAccountName = remoteAccountName;
             Component = component;
         }
 
@@ -42,5 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the container name. </summary>
         public string ContainerName { get; set; }
+        /// <summary> Gets or sets the remote account name. </summary>
+        public string RemoteAccountName { get; set; }
     }
 }
