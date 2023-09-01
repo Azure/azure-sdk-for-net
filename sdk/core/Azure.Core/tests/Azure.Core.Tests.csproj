@@ -32,7 +32,6 @@
     <Compile Remove="..\src\Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="..\src\Shared\ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ApiVersionString.cs" LinkBase="Shared" />
-    <Compile Include="..\src\Shared\ARMChallengeAuthenticationPolicy.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ChangeTrackingDictionary.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\ChangeTrackingList.cs" LinkBase="Shared" />
