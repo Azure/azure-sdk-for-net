@@ -231,6 +231,8 @@ You can read more about Chat Functions on OpenAI's blog: https://openai.com/blog
 **NOTE**: Chat Functions require model versions beginning with gpt-4 and gpt-3.5-turbo's `-0613` labels. They are not
 available with older versions of the models.
 
+**NOTE:** The concurrent use of Chat Functions and [Azure Chat Extensions](#use-your-own-data-with-azure-openai) on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
+
 To use Chat Functions, you first define the function you'd like the model to be able to use when appropriate. Using
 the example from the linked blog post, above:
 
@@ -337,6 +339,8 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
 
 The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
 See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.com/azure/ai-services/openai/use-your-data-quickstart) for conceptual background and detailed setup instructions.
+
+**NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
 var chatCompletionsOptions = new ChatCompletionsOptions()
