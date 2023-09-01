@@ -116,43 +116,5 @@ namespace Azure.ResourceManager.Network
             );
         }
         #endregion
-
-        #region CloudServiceNetworkResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CloudServiceNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudServiceNetworkResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudServiceNetworkResource" /> object. </returns>
-        public static CloudServiceNetworkResource GetCloudServiceNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CloudServiceNetworkResource.ValidateResourceId(id);
-                return new CloudServiceNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region CloudServiceRoleInstanceNetworkResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CloudServiceRoleInstanceNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudServiceRoleInstanceNetworkResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleInstanceNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudServiceRoleInstanceNetworkResource" /> object. </returns>
-        public static CloudServiceRoleInstanceNetworkResource GetCloudServiceRoleInstanceNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CloudServiceRoleInstanceNetworkResource.ValidateResourceId(id);
-                return new CloudServiceRoleInstanceNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }
