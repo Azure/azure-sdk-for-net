@@ -14,6 +14,7 @@ namespace Azure.Identity.Tests
         public ManagedIdentityVMIntegrationTests(bool isAsync) : base(isAsync)
         { }
 
+        [Test]
         [LiveOnly]
         [Category("IdentityVM")]
         // This test leverages the test app found in Azure.Identity\integration\WebApp
