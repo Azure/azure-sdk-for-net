@@ -11,19 +11,17 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ManagedIdentityCredentialWebAppTests : IdentityRecordedTestBase
+    public class ManagedIdentityCredentialIntegrationTests : IdentityRecordedTestBase
     {
         private HttpPipeline _pipeline;
-        private Uri _testEndpoint;
 
-        public ManagedIdentityCredentialWebAppTests(bool isAsync) : base(isAsync)
+        public ManagedIdentityCredentialIntegrationTests(bool isAsync) : base(isAsync)
         {
         }
 
         [SetUp]
         public void Setup() {
             var options = new TokenCredentialOptions();
-            _testEndpoint = new Uri($"https://{TestEnvironment.IdentityTestWebName}.azurewebsites.net/test");
             _pipeline = HttpPipelineBuilder.Build(InstrumentClientOptions(options), Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }
 
@@ -31,10 +29,26 @@ namespace Azure.Identity.Tests
         [SyncOnly]
         // This test leverages the test app found in Azure.Identity\integration\WebApp
         // It validates that ManagedIdentityCredential can acquire a token in an actual Azure Web App environment
-        public async Task CallTestWebApp()
+        public async Task CallIntegrationTestWebApp()
         {
+            var testEndpoint = new Uri($"https://{TestEnvironment.IdentityTestWebName}.azurewebsites.net/test");
             Request request = _pipeline.CreateRequest();
-            request.Uri.Reset(_testEndpoint);
+            request.Uri.Reset(testEndpoint);
+            Response response = await _pipeline.SendRequestAsync(request, default);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.AreEqual("Successfully acquired a token from ManagedIdentityCredential", response.Content.ToString(), response.Content.ToString());
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        // This test leverages the test app found in Azure.Identity\integration\Integration.Identity.Func
+        // It validates that ManagedIdentityCredential can acquire a token in an actual Azure Web App environment
+        public async Task CallIntegrationTestAzFunction()
+        {
+            var testEndpoint = new Uri($"https://{TestEnvironment.IdentityTestAzFuncName}.azurewebsites.net/api/function1");
+            Request request = _pipeline.CreateRequest();
+            request.Uri.Reset(testEndpoint);
             Response response = await _pipeline.SendRequestAsync(request, default);
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
