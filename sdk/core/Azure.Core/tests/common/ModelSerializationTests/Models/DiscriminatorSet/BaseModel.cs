@@ -8,7 +8,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
-    [AbstractHierarchyDeserializer(typeof(UnknownBaseModel))]
+    [DeserializationProxy(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;

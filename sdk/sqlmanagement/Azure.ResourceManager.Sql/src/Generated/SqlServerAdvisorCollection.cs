@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlServerAdvisorResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlServerAdvisorResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerAdvisorResource(Client, SqlAdvisorData.DeserializeSqlAdvisorData(e)), _sqlServerAdvisorServerAdvisorsClientDiagnostics, Pipeline, "SqlServerAdvisorCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

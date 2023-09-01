@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkPrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateLinkResource(Client, PrivateLinkData.DeserializePrivateLinkData(e)), _privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, "PrivateLinkCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateLinkResource(Client, PrivateLinkData.DeserializePrivateLinkData(e)), _privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, "PrivateLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkPrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateLinkResource(Client, PrivateLinkData.DeserializePrivateLinkData(e)), _privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, "PrivateLinkCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateLinkResource(Client, PrivateLinkData.DeserializePrivateLinkData(e)), _privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, "PrivateLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

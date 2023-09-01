@@ -8,7 +8,7 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -17,6 +17,7 @@
       to give customers time to migrate without losing perf optimizations
      -->
     <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,6 +44,10 @@
     <PackageReference Include="System.Net.Http" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
@@ -64,6 +69,15 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
+    <Compile Include="Shared\MutableJsonChange.cs" />
+    <Compile Include="Shared\MutableJsonChangeKind.cs" />
+    <Compile Include="Shared\MutableJsonDocument.ChangeTracker.cs" />
+    <Compile Include="Shared\MutableJsonDocument.cs" />
+    <Compile Include="Shared\MutableJsonElement.ArrayEnumerator.cs" />
+    <Compile Include="Shared\MutableJsonElement.cs" />
+    <Compile Include="Shared\MutableJsonElement.ObjectEnumerator.cs" />
+    <Compile Include="Shared\MutableJsonElement.WriteTo.cs" />
+    <Compile Include="Shared\MutableJsonElement.WriteTo.MergePatch.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
     <Compile Include="Shared\TrimmingAttribute.cs" />

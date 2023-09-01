@@ -18,7 +18,16 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Update="TestData\AvailabilitySetData.json">
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelXml.xml">
@@ -27,10 +36,16 @@
     <None Update="TestData\ModelXmlX.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ResourceProviderData-Collapsed.json">
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ResourceProviderData.json">
+    <None Update="TestData\ResourceProviderData\ResourceProviderData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelX\ModelX.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelX\ModelXWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

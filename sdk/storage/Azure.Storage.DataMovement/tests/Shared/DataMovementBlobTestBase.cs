@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 
-        public async Task<DisposingBlobContainer> GetTestContainerAsync(
+        public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,

@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string checkpointerPath,
             string id,
             int jobPartNumber,
-            string schemaVersion = DataMovementConstants.PlanFile.SchemaVersion)
+            string schemaVersion = DataMovementConstants.JobPartPlanFile.SchemaVersion)
         {
             Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobPartNumber = jobPartNumber;
             SchemaVersion = schemaVersion;
 
-            string fileName = $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}{DataMovementConstants.PlanFile.FileExtension}{SchemaVersion}";
+            string fileName = $"{Id}--{JobPartNumber.ToString("D5", NumberFormatInfo.CurrentInfo)}{DataMovementConstants.JobPartPlanFile.FileExtension}{SchemaVersion}";
             FullPath = Path.Combine(PrefixPath, fileName);
         }
 
@@ -97,23 +97,23 @@ namespace Azure.Storage.DataMovement.JobPlan
             // {transferid}--{jobpartNumber}.steV{schemaVersion}
 
             // Check for valid Transfer Id
-            int endTransferIdIndex = fileName.IndexOf(DataMovementConstants.PlanFile.JobPlanFileNameDelimiter, StringComparison.InvariantCultureIgnoreCase);
-            if (endTransferIdIndex != DataMovementConstants.PlanFile.IdSize)
+            int endTransferIdIndex = fileName.IndexOf(DataMovementConstants.JobPartPlanFile.JobPlanFileNameDelimiter, StringComparison.InvariantCultureIgnoreCase);
+            if (endTransferIdIndex != DataMovementConstants.JobPartPlanFile.IdSize)
             {
                 throw Errors.InvalidTransferIdFileName(fullPath);
             }
             Id = fileName.Substring(0, endTransferIdIndex);
 
             // Check for valid transfer part number
-            int partStartIndex = endTransferIdIndex + DataMovementConstants.PlanFile.JobPlanFileNameDelimiter.Length;
+            int partStartIndex = endTransferIdIndex + DataMovementConstants.JobPartPlanFile.JobPlanFileNameDelimiter.Length;
             int endPartIndex = fileName.Length;
 
-            if (endPartIndex - partStartIndex != DataMovementConstants.PlanFile.JobPartLength)
+            if (endPartIndex - partStartIndex != DataMovementConstants.JobPartPlanFile.JobPartLength)
             {
                 throw Errors.InvalidJobPartFileName(fullPath);
             }
             if (!int.TryParse(
-                    fileName.Substring(partStartIndex, DataMovementConstants.PlanFile.JobPartLength),
+                    fileName.Substring(partStartIndex, DataMovementConstants.JobPartPlanFile.JobPartLength),
                     NumberStyles.Number,
                     CultureInfo.InvariantCulture,
                     out int jobPartNumber))
@@ -122,12 +122,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             }
             JobPartNumber = jobPartNumber;
 
-            string fullExtension = string.Concat(DataMovementConstants.PlanFile.FileExtension, DataMovementConstants.PlanFile.SchemaVersion);
+            string fullExtension = string.Concat(DataMovementConstants.JobPartPlanFile.FileExtension, DataMovementConstants.JobPartPlanFile.SchemaVersion);
             if (!fullExtension.Equals(extension))
             {
                 throw Errors.InvalidSchemaVersionFileName(extension);
             }
-            SchemaVersion = DataMovementConstants.PlanFile.SchemaVersion;
+            SchemaVersion = DataMovementConstants.JobPartPlanFile.SchemaVersion;
 
             FullPath = fullPath;
         }

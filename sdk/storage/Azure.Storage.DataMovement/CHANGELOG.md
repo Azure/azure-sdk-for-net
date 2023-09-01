@@ -6,7 +6,6 @@
 
 ### Breaking Changes
 - [BREAKING CHANGE] Made the following members `public` to `protected internal` members (including all derived classes):
-    - `StorageResource.CanProduceUri`
     - `StorageResource.IsContainer`
     - `StorageResourceContainer.GetStorageResourcesAsync`
     - `StorageResourceSingle.Length`
@@ -62,6 +61,8 @@
 - [BREAKING CHANGE] Made parameter `completeLength` from `StorageResourceSingle.CopyBlockFromUriAsync` mandatory.
 - [BREAKING CHANGE] Moved `DataTransferOptions.ProgressHandler` to `DataTransferOptions.ProgressHandlerOptions`.
 - [BREAKING CHANGE] Removed default constructor for `ProgressHandlerOptions`. Use `ProgressHandlerOptions(IProgress<DataTransferProgress>, bool)` instead.
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
+- [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
 
 ### Bugs Fixed
 
