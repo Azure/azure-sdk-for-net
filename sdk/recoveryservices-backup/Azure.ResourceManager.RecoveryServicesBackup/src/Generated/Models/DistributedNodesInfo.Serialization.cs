@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                writer.WritePropertyName("sourceResourceId"u8);
+                writer.WriteStringValue(SourceResourceId);
+            }
             writer.WriteEndObject();
         }
 
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> nodeName = default;
             Optional<string> status = default;
             Optional<BackupErrorDetail> errorDetail = default;
+            Optional<string> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -63,8 +69,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     errorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
                     continue;
                 }
+                if (property.NameEquals("sourceResourceId"u8))
+                {
+                    sourceResourceId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DistributedNodesInfo(nodeName.Value, status.Value, errorDetail.Value);
+            return new DistributedNodesInfo(nodeName.Value, status.Value, errorDetail.Value, sourceResourceId.Value);
         }
     }
 }
