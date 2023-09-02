@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Remove="Shared\*.cs" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
   </ItemGroup>
