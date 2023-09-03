@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/pricings/VirtualMachines?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvcHJpY2luZ3MvVmlydHVhbE1hY2hpbmVzP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/pricings/VirtualMachines?api-version=2023-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvcHJpY2luZ3MvVmlydHVhbE1hY2hpbmVzP2FwaS12ZXJzaW9uPTIwMjMtMDEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"pricingTier\": \"Standard\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2f3beaf8-f3ff-4fcc-a092-e2e1fd959c4b"
+          "385703f0-8f03-4134-9551-93b99e73e74d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.47601",
+          "FxVersion/6.0.2123.36311",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/4.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -42,25 +42,25 @@
           "1.0"
         ],
         "x-ms-request-id": [
-          "915a6dde-8b4d-4b0d-9fe2-6936ad67bf8e"
+          "7c8409d5-0210-4d43-a723-fa806a6c18f7"
         ],
         "Server": [
           "Kestrel"
         ],
         "x-ms-correlation-request-id": [
-          "3b54b86f-0d5f-4075-863e-71f9814911b0"
+          "d0fb1f23-e219-4da8-94a5-9db996204872"
         ],
         "x-ms-routing-request-id": [
-          "GERMANYWESTCENTRAL:20221027T065522Z:3b54b86f-0d5f-4075-863e-71f9814911b0"
+          "FRANCESOUTH:20230903T082812Z:d0fb1f23-e219-4da8-94a5-9db996204872"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 27 Oct 2022 06:55:22 GMT"
+          "Sun, 03 Sep 2023 08:28:11 GMT"
         ],
         "Content-Length": [
-          "263"
+          "522"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,7 +69,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/pricings/VirtualMachines\",\r\n  \"name\": \"VirtualMachines\",\r\n  \"type\": \"Microsoft.Security/pricings\",\r\n  \"properties\": {\r\n    \"subPlan\": \"P2\",\r\n    \"pricingTier\": \"Standard\",\r\n    \"freeTrialRemainingTime\": \"PT0S\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/pricings/VirtualMachines\",\r\n  \"name\": \"VirtualMachines\",\r\n  \"type\": \"Microsoft.Security/pricings\",\r\n  \"properties\": {\r\n    \"extensions\": [\r\n      {\r\n        \"name\": \"MdeDesignatedSubscription\",\r\n        \"isEnabled\": \"False\"\r\n      },\r\n      {\r\n        \"name\": \"AgentlessVmScanning\",\r\n        \"isEnabled\": \"True\",\r\n        \"additionalExtensionProperties\": {\r\n          \"ExclusionTags\": \"[]\"\r\n        },\r\n        \"operationStatus\": {\r\n          \"code\": \"Succeeded\",\r\n          \"message\": \"Successfully enabled extension\"\r\n        }\r\n      }\r\n    ],\r\n    \"subPlan\": \"P2\",\r\n    \"pricingTier\": \"Standard\",\r\n    \"freeTrialRemainingTime\": \"PT0S\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
