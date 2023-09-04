@@ -10,9 +10,6 @@ using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
-// Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
-// Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
-
 namespace Azure.ResourceManager.Maintenance
 {
     [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
@@ -62,113 +59,22 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-
             if (Optional.IsDefined(InstallPatches))
             {
-                Console.WriteLine("InstallPatches is defined");
-                writer.WritePropertyName("installPathes"u8);
-                writer.WriteStartObject();
-
-                if (Optional.IsDefined(InstallPatches.RebootSetting))
-                {
-                    Console.WriteLine("RebootSetting is defined");
-                    writer.WritePropertyName("rebootSetting"u8);
-                    writer.WriteStringValue(InstallPatches.RebootSetting.Value.ToString());
-                }
-
-                if (Optional.IsDefined(InstallPatches.LinuxParameters))
-                {
-                    Console.WriteLine("LinuxParameters is defined");
-                    writer.WritePropertyName("linuxParameters"u8);
-                    writer.WriteStartObject();
-
-                    if (Optional.IsDefined(InstallPatches.LinuxParameters.ClassificationsToInclude))
-                    {
-                        writer.WritePropertyName("classificationsToInclude"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in InstallPatches.LinuxParameters.ClassificationsToInclude)
-                        {
-                            writer.WriteStringValue(item.ToString());
-                        }
-                        writer.WriteEndArray();
-                    }
-
-                    if (Optional.IsDefined(InstallPatches.LinuxParameters.PackageNameMasksToInclude))
-                    {
-                        writer.WritePropertyName("packageNameMasksToInclude"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in InstallPatches.LinuxParameters.PackageNameMasksToInclude)
-                        {
-                            writer.WriteStringValue(item.ToString());
-                        }
-                        writer.WriteEndArray();
-                    }
-
-                    if (Optional.IsDefined(InstallPatches.LinuxParameters.PackageNameMasksToExclude))
-                    {
-                        writer.WritePropertyName("packageNameMasksToExclude"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in InstallPatches.LinuxParameters.PackageNameMasksToExclude)
-                        {
-                            writer.WriteStringValue(item.ToString());
-                        }
-                        writer.WriteEndArray();
-                    }
-
-                    writer.WriteEndObject();
-                }
-
-                if (Optional.IsDefined(InstallPatches.WindowsParameters))
-                {
-                    writer.WritePropertyName("windowsParameters"u8);
-                    writer.WriteStartObject();
-
-                    if (Optional.IsDefined(InstallPatches.WindowsParameters.ClassificationsToInclude))
-                    {
-                        writer.WritePropertyName("classificationsToInclude"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in InstallPatches.WindowsParameters.ClassificationsToInclude)
-                        {
-                            writer.WriteStringValue(item.ToString());
-                        }
-                        writer.WriteEndArray();
-                    }
-
-                    if (Optional.IsDefined(InstallPatches.WindowsParameters.KbNumbersToInclude))
-                    {
-                        writer.WritePropertyName("kbNumbersToInclude"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in InstallPatches.WindowsParameters.KbNumbersToInclude)
-                        {
-                            writer.WriteStringValue(item.ToString());
-                        }
-                        writer.WriteEndArray();
-                    }
-
-                    if (Optional.IsDefined(InstallPatches.WindowsParameters.KbNumbersToExclude))
-                    {
-                        writer.WritePropertyName("kbNumbersToExclude"u8);
-                        writer.WriteStartArray();
-                        foreach (var item in InstallPatches.WindowsParameters.KbNumbersToExclude)
-                        {
-                            writer.WriteStringValue(item.ToString());
-                        }
-                        writer.WriteEndArray();
-                    }
-
-                    writer.WriteEndObject();
-                }
-
-                writer.WriteEndObject();
+                writer.WritePropertyName("installPatches"u8);
+                writer.WriteObjectValue(InstallPatches);
             }
-
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
+            // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
+            // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "yyyy-MM-dd hh:mm");
             }
+            // Custom code to support custom datetime format for the 2 properties startDateTime and expirationDateTime
+            // Here is an issue https://github.com/Azure/autorest.csharp/issues/3184 to track if codegen can support custom datetime format in the furture.
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
