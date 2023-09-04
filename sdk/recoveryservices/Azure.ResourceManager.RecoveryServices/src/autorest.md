@@ -62,6 +62,9 @@ prepend-rp-prefix:
   - AuthType
   - PrivateEndpointConnectionStatus
   - PrivateEndpointConnectionVaultProperties
+  - SecuritySettings
+  - SoftDeleteSettings
+  - SoftDeleteState
 
 format-by-name-rules:
   'tenantId': 'uuid'

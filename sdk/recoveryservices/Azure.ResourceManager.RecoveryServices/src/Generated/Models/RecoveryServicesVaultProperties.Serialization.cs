@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<VaultMonitoringSettings> monitoringSettings = default;
             Optional<RestoreSettings> restoreSettings = default;
             Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
-            Optional<SecuritySettings> securitySettings = default;
+            Optional<RecoveryServicesSecuritySettings> securitySettings = default;
             Optional<SecureScoreLevel> secureScore = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    securitySettings = SecuritySettings.DeserializeSecuritySettings(property.Value);
+                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))

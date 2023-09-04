@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Soft delete Settings of vault. </summary>
-    public partial class SoftDeleteSettings
+    public partial class RecoveryServicesSoftDeleteSettings
     {
-        /// <summary> Initializes a new instance of SoftDeleteSettings. </summary>
-        public SoftDeleteSettings()
+        /// <summary> Initializes a new instance of RecoveryServicesSoftDeleteSettings. </summary>
+        public RecoveryServicesSoftDeleteSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftDeleteSettings. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesSoftDeleteSettings. </summary>
         /// <param name="softDeleteState"></param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
-        internal SoftDeleteSettings(SoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays)
+        internal RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays)
         {
             SoftDeleteState = softDeleteState;
             SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
         }
 
         /// <summary> Gets or sets the soft delete state. </summary>
-        public SoftDeleteState? SoftDeleteState { get; set; }
+        public RecoveryServicesSoftDeleteState? SoftDeleteState { get; set; }
         /// <summary> Soft delete retention period in days. </summary>
         public int? SoftDeleteRetentionPeriodInDays { get; set; }
     }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class SecuritySettings : IUtf8JsonSerializable
+    public partial class RecoveryServicesSecuritySettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteEndObject();
         }
 
-        internal static SecuritySettings DeserializeSecuritySettings(JsonElement element)
+        internal static RecoveryServicesSecuritySettings DeserializeRecoveryServicesSecuritySettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ImmutabilitySettings> immutabilitySettings = default;
-            Optional<SoftDeleteSettings> softDeleteSettings = default;
+            Optional<RecoveryServicesSoftDeleteSettings> softDeleteSettings = default;
             Optional<MultiUserAuthorization> multiUserAuthorization = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = SoftDeleteSettings.DeserializeSoftDeleteSettings(property.Value);
+                    softDeleteSettings = RecoveryServicesSoftDeleteSettings.DeserializeRecoveryServicesSoftDeleteSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("multiUserAuthorization"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new SecuritySettings(immutabilitySettings.Value, softDeleteSettings.Value, Optional.ToNullable(multiUserAuthorization));
+            return new RecoveryServicesSecuritySettings(immutabilitySettings.Value, softDeleteSettings.Value, Optional.ToNullable(multiUserAuthorization));
         }
     }
 }

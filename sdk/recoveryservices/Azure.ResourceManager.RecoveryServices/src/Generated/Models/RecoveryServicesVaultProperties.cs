@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
         /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
-        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, SecuritySettings securitySettings, SecureScoreLevel? secureScore)
+        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore)
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> The redundancy Settings of a Vault. </summary>
         public VaultPropertiesRedundancySettings RedundancySettings { get; set; }
         /// <summary> Security Settings of the vault. </summary>
-        public SecuritySettings SecuritySettings { get; set; }
+        public RecoveryServicesSecuritySettings SecuritySettings { get; set; }
         /// <summary> Secure Score of Recovery Services Vault. </summary>
         public SecureScoreLevel? SecureScore { get; }
     }

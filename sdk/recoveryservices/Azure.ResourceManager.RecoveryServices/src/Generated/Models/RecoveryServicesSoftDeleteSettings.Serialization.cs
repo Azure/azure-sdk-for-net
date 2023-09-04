@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class SoftDeleteSettings : IUtf8JsonSerializable
+    public partial class RecoveryServicesSoftDeleteSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteEndObject();
         }
 
-        internal static SoftDeleteSettings DeserializeSoftDeleteSettings(JsonElement element)
+        internal static RecoveryServicesSoftDeleteSettings DeserializeRecoveryServicesSoftDeleteSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SoftDeleteState> softDeleteState = default;
+            Optional<RecoveryServicesSoftDeleteState> softDeleteState = default;
             Optional<int> softDeleteRetentionPeriodInDays = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    softDeleteState = new SoftDeleteState(property.Value.GetString());
+                    softDeleteState = new RecoveryServicesSoftDeleteState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new SoftDeleteSettings(Optional.ToNullable(softDeleteState), Optional.ToNullable(softDeleteRetentionPeriodInDays));
+            return new RecoveryServicesSoftDeleteSettings(Optional.ToNullable(softDeleteState), Optional.ToNullable(softDeleteRetentionPeriodInDays));
         }
     }
 }

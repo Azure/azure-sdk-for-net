@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Security Settings of the vault. </summary>
-    public partial class SecuritySettings
+    public partial class RecoveryServicesSecuritySettings
     {
-        /// <summary> Initializes a new instance of SecuritySettings. </summary>
-        public SecuritySettings()
+        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
+        public RecoveryServicesSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
         /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
-        internal SecuritySettings(ImmutabilitySettings immutabilitySettings, SoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
+        internal RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
         {
             ImmutabilitySettings = immutabilitySettings;
             SoftDeleteSettings = softDeleteSettings;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Soft delete Settings of a vault. </summary>
-        public SoftDeleteSettings SoftDeleteSettings { get; set; }
+        public RecoveryServicesSoftDeleteSettings SoftDeleteSettings { get; set; }
         /// <summary> MUA Settings of a vault. </summary>
         public MultiUserAuthorization? MultiUserAuthorization { get; }
     }

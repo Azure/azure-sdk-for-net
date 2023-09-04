@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="securitySettings"> Security Settings of the vault. </param>
         /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = null, VaultUpgradeDetails upgradeDetails = null, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = null, VaultPrivateEndpointState? privateEndpointStateForBackup = null, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = null, VaultPropertiesEncryption encryption = null, VaultPropertiesMoveDetails moveDetails = null, ResourceMoveState? moveState = null, BackupStorageVersion? backupStorageVersion = null, VaultPublicNetworkAccess? publicNetworkAccess = null, VaultMonitoringSettings monitoringSettings = null, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = null, VaultPropertiesRedundancySettings redundancySettings = null, SecuritySettings securitySettings = null, SecureScoreLevel? secureScore = null)
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = null, VaultUpgradeDetails upgradeDetails = null, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = null, VaultPrivateEndpointState? privateEndpointStateForBackup = null, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = null, VaultPropertiesEncryption encryption = null, VaultPropertiesMoveDetails moveDetails = null, ResourceMoveState? moveState = null, BackupStorageVersion? backupStorageVersion = null, VaultPublicNetworkAccess? publicNetworkAccess = null, VaultMonitoringSettings monitoringSettings = null, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = null, VaultPropertiesRedundancySettings redundancySettings = null, RecoveryServicesSecuritySettings securitySettings = null, SecureScoreLevel? secureScore = null)
         {
             privateEndpointConnections ??= new List<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
 
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore);
         }
 
-        /// <summary> Initializes a new instance of SecuritySettings. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
         /// <param name="immutabilityState"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
-        /// <returns> A new <see cref="Models.SecuritySettings"/> instance for mocking. </returns>
-        public static SecuritySettings SecuritySettings(ImmutabilityState? immutabilityState = null, SoftDeleteSettings softDeleteSettings = null, MultiUserAuthorization? multiUserAuthorization = null)
+        /// <returns> A new <see cref="Models.RecoveryServicesSecuritySettings"/> instance for mocking. </returns>
+        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = null, RecoveryServicesSoftDeleteSettings softDeleteSettings = null, MultiUserAuthorization? multiUserAuthorization = null)
         {
-            return new SecuritySettings(immutabilityState != null ? new ImmutabilitySettings(immutabilityState) : null, softDeleteSettings, multiUserAuthorization);
+            return new RecoveryServicesSecuritySettings(immutabilityState != null ? new ImmutabilitySettings(immutabilityState) : null, softDeleteSettings, multiUserAuthorization);
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesVaultPatch. </summary>

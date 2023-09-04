@@ -1,8 +1,13 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0 (2023-09-08)
 
 ### Features Added
+
+- Added SecureScore as part of VaultProperties
+- Added MultiUserAuthorization as part of vaultProperties
+- Added SoftDeleteSettings as part of vaultproperties
+- Added CrossSubscriptionRestoresettings
 
 ### Breaking Changes
 
