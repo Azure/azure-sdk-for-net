@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.IotHub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableRootCertificateV2))
+            if (Optional.IsDefined(IsRootCertificateV2Enabled))
             {
                 writer.WritePropertyName("enableRootCertificateV2"u8);
-                writer.WriteBooleanValue(EnableRootCertificateV2.Value);
+                writer.WriteBooleanValue(IsRootCertificateV2Enabled.Value);
             }
             writer.WriteEndObject();
         }

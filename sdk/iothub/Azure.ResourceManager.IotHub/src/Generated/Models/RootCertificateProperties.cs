@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> Initializes a new instance of RootCertificateProperties. </summary>
-        /// <param name="enableRootCertificateV2"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
-        /// <param name="lastUpdatedTimeUtc"> the last update time to root certificate flag. </param>
-        internal RootCertificateProperties(bool? enableRootCertificateV2, DateTimeOffset? lastUpdatedTimeUtc)
+        /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
+        /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
+        internal RootCertificateProperties(bool? isRootCertificateV2Enabled, DateTimeOffset? lastUpdatedOn)
         {
-            EnableRootCertificateV2 = enableRootCertificateV2;
-            LastUpdatedTimeUtc = lastUpdatedTimeUtc;
+            IsRootCertificateV2Enabled = isRootCertificateV2Enabled;
+            LastUpdatedOn = lastUpdatedOn;
         }
 
         /// <summary> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </summary>
-        public bool? EnableRootCertificateV2 { get; set; }
+        public bool? IsRootCertificateV2Enabled { get; set; }
         /// <summary> the last update time to root certificate flag. </summary>
-        public DateTimeOffset? LastUpdatedTimeUtc { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

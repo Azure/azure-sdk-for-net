@@ -203,9 +203,9 @@ MaxDeliveryCount = 10,
                     EnableDataResidency = true,
                     RootCertificate = new RootCertificateProperties()
                     {
-                        EnableRootCertificateV2 = true,
+                        IsRootCertificateV2Enabled = true,
                     },
-                    IPVersion = IPVersion.IPv4IPv6,
+                    IPVersion = IotHubIPVersion.IPv4IPv6,
                 },
                 Tags =
 {

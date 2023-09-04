@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<IReadOnlyList<IotHubLocationDescription>> locations = default;
             Optional<bool> enableDataResidency = default;
             Optional<RootCertificateProperties> rootCertificate = default;
-            Optional<IPVersion> ipVersion = default;
+            Optional<IotHubIPVersion> ipVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationPolicies"u8))
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    ipVersion = new IPVersion(property.Value.GetString());
+                    ipVersion = new IotHubIPVersion(property.Value.GetString());
                     continue;
                 }
             }

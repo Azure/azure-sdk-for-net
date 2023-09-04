@@ -15,8 +15,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
@@ -60,6 +60,8 @@ rename-mapping:
   IotHubSkuDescription.resourceType: -|resource-type
   CertificateProperties.thumbprint: ThumbprintString
   CertificatePropertiesWithNonce.thumbprint: ThumbprintString
+  RootCertificateProperties.enableRootCertificateV2: IsRootCertificateV2Enabled
+  RootCertificateProperties.lastUpdatedTimeUtc: LastUpdatedOn
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -98,6 +100,7 @@ prepend-rp-prefix:
   - NetworkRuleIPAction
   - RoutingProperties
   - StorageEndpointProperties
+  - IPVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'
