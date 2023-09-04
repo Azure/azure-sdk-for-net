@@ -77,15 +77,6 @@ namespace Azure.Data.AppConfiguration
 
         internal override string GetValue()
         {
-            // If the setting was created using the composite constructor, it
-            // will not have an original value and it will need to be formatted for
-            // the first time.
-            if (_originalValue == null && _isValidValue)
-            {
-                _originalValue = CreateInitialValue();
-                return _originalValue;
-            }
-
             // If the value wasn't valid, return it verbatim.
             if (!_isValidValue)
             {
@@ -125,19 +116,6 @@ namespace Azure.Data.AppConfiguration
 
             _originalValue = Encoding.UTF8.GetString(memoryStream.ToArray());
             return _originalValue;
-        }
-
-        private string CreateInitialValue()
-        {
-            using var memoryStream = new MemoryStream();
-            var writer = new Utf8JsonWriter(memoryStream);
-
-            writer.WriteStartObject();
-            writer.WriteString("uri", _secretId.AbsoluteUri);
-            writer.WriteEndObject();
-            writer.Flush();
-
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
 
         private bool TryParseValue()
