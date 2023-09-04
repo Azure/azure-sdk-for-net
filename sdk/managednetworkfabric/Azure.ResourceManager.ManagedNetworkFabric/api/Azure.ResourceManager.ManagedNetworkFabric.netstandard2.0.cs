@@ -524,6 +524,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public NetworkFabricInternetGatewayData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType typePropertiesType, Azure.Core.ResourceIdentifier networkFabricControllerId) : base (default(Azure.Core.AzureLocation)) { }
         public string Annotation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InternetGatewayRuleId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("IPv4Address is deprecated, use IPV4Address instead")]
         public System.Net.IPAddress IPv4Address { get { throw null; } }
         public string IPV4Address { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkFabricControllerId { get { throw null; } set { } }

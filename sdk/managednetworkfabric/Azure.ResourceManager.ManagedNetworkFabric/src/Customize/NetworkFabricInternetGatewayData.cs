@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Net;
 using Azure.ResourceManager.Models;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("IPv4Address is deprecated, use IPV4Address instead")]
         public IPAddress IPv4Address { get; }
     }
 }
