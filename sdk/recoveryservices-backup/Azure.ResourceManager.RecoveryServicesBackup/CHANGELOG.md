@@ -1,10 +1,15 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0 (2023-09-08)
 
 ### Features Added
 
+- Added a new property DistributedNodesInfo in AzureWorkloadContainerExtendedInfo, AzureVmWorkloadSQLAvailabilityGroupProtectableItem, AzureVmWorkloadProtectedItem response.
+- The property lists the nodes part of the distributed item at that time, their registration state and their ARM vm Id
+
 ### Breaking Changes
+
+- Renamed softDeleteRetentionPeriod to softDeleteRetentionPeriodInDays
 
 ### Bugs Fixed
 
