@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -397,7 +398,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

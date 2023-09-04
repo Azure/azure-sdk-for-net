@@ -1,5 +1,17 @@
 # Release History
 
+## 7.17.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3. This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
+
 ## 7.16.1 (2023-08-15)
 
 ### Bugs Fixed

@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.ModelSerialization
     public class ModelWriterTests
     {
         private const int _modelSize = 156000;
-        private static readonly string _json = File.ReadAllText(TestData.GetLocation("ResourceProviderData.json"));
+        private static readonly string _json = File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData.json"));
         private static readonly ResourceProviderData _resourceProviderData = ModelSerializer.Deserialize<ResourceProviderData>(BinaryData.FromString(_json));
 
         [Test]

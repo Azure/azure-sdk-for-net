@@ -38,7 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="dscpConfiguration"> Gets or sets the dscp configuration. </param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration)
+        /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
+        /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku)
         {
             Name = name;
             Primary = primary;
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Compute.Models
             DnsSettings = dnsSettings;
             IPConfigurations = ipConfigurations;
             DscpConfiguration = dscpConfiguration;
+            AuxiliaryMode = auxiliaryMode;
+            AuxiliarySku = auxiliarySku;
         }
 
         /// <summary> The network interface configuration name. </summary>
@@ -109,5 +113,10 @@ namespace Azure.ResourceManager.Compute.Models
                 DscpConfiguration.Id = value;
             }
         }
+
+        /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
+        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
+        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

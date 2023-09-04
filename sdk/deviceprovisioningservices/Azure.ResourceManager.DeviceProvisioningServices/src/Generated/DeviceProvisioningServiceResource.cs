@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -477,7 +478,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -499,7 +500,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSkuDefinition.DeserializeDeviceProvisioningServicesSkuDefinition, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -543,7 +544,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceIotDpsResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey, _deviceProvisioningServiceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServiceResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

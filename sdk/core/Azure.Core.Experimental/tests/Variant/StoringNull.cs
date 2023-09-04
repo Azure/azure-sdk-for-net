@@ -11,10 +11,10 @@ namespace Azure
         [Test]
         public void GetIntFromStoredNull()
         {
-            Value nullValue = new((object)null);
+            Variant nullValue = new((object)null);
             Assert.Throws<InvalidCastException>(() => _ = nullValue.As<int>());
 
-            Value nullFastValue = new((object)null);
+            Variant nullFastValue = new((object)null);
             Assert.Throws<InvalidCastException>(() => _ = nullFastValue.As<int>());
 
             bool success = nullFastValue.TryGetValue(out int result);

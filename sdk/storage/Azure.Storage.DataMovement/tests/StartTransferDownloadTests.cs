@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,9 +9,10 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using NUnit.Framework;
 using System.Threading;
-using Azure.Storage.DataMovement.Blobs;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using System.Linq;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -178,7 +181,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToLocal()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             // No Option Download bag or manager options bag, plain download
             await DownloadBlockBlobsAndVerify(
@@ -193,7 +196,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
@@ -222,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             // Act
             // Create options bag to overwrite any existing destination.
@@ -246,7 +249,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
@@ -296,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
@@ -347,7 +350,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
             await DownloadBlockBlobsAndVerify(
@@ -365,7 +368,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToLocal_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
@@ -382,7 +385,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToLocal_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
@@ -399,7 +402,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToLocal_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
@@ -417,7 +420,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task BlockBlobToLocal_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
@@ -440,7 +443,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -473,7 +476,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadBlockBlobsAndVerify(
                 testContainer.Container,
@@ -597,7 +600,7 @@ namespace Azure.Storage.DataMovement.Tests
             int waitTimeInSec = 10;
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
@@ -610,7 +613,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
@@ -639,7 +642,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             // Act
             // Create options bag to overwrite any existing destination.
@@ -663,7 +666,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
@@ -703,7 +706,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
@@ -747,7 +750,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToLocal_FailedEvent()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
             int size = Constants.KB;
@@ -790,7 +793,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToLocal_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             DataTransferOptions options = new DataTransferOptions();
 
@@ -814,7 +817,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToLocal_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             string exceptionMessage = default;
             DataTransferOptions options = new DataTransferOptions();
@@ -842,7 +845,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToLocal_MultipleSmall(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
@@ -863,7 +866,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AppendBlobToLocal_MultipleLarge(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
@@ -886,7 +889,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
             await DownloadBlockBlobsAndVerify(
@@ -912,7 +915,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
@@ -939,7 +942,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadAppendBlobsAndVerify(
                 testContainer.Container,
@@ -1059,7 +1062,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToLocal()
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(testContainer.Container).ConfigureAwait(false);
         }
@@ -1069,7 +1072,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.GetTempFileName();
             int size = Constants.KB;
@@ -1098,7 +1101,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             // Act
             // Create options bag to overwrite any existing destination.
@@ -1115,14 +1118,12 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33086")]
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task PageBlobToLocal_Skip_Exists()
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
@@ -1131,6 +1132,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create destination file. So it can get skipped over.
             string destFile = Path.Combine(testDirectory.DirectoryPath, GetNewBlobName());
+            File.Create(destFile).Close();
 
             // Act
             // Create options bag to overwrite any existing destination.
@@ -1163,7 +1165,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             // Create source local file for checking, and source blob
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string blobName = GetNewBlobName();
             string localSourceFile = Path.Combine(testDirectory.DirectoryPath, blobName);
@@ -1215,7 +1217,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
             await DownloadPageBlobsAndVerify(
@@ -1233,7 +1235,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToLocal_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
@@ -1250,7 +1252,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToLocal_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
@@ -1265,7 +1267,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToLocal_SmallMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
@@ -1283,7 +1285,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task PageBlobToLocal_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
@@ -1314,7 +1316,7 @@ namespace Azure.Storage.DataMovement.Tests
             List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
@@ -1340,7 +1342,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            await using DisposingContainer testContainer = await GetTestContainerAsync();
 
             await DownloadPageBlobsAndVerify(
                 testContainer.Container,
@@ -1395,7 +1397,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer to do a AwaitCompletion
@@ -1422,7 +1424,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Failed()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             DataTransferOptions options = new DataTransferOptions()
@@ -1456,7 +1458,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_AwaitCompletion_Skipped()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available
@@ -1489,7 +1491,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer to do a EnsureCompleted
@@ -1521,7 +1523,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Failed()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             DataTransferOptions options = new DataTransferOptions()
@@ -1554,7 +1556,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task StartTransfer_EnsureCompleted_Skipped()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available

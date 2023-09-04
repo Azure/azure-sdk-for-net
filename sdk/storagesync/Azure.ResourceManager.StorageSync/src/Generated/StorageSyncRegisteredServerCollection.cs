@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncRegisteredServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncRegisteredServerRegisteredServersRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncRegisteredServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncRegisteredServerRegisteredServersRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

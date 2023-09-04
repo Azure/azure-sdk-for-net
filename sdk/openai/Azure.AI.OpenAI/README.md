@@ -231,6 +231,8 @@ You can read more about Chat Functions on OpenAI's blog: https://openai.com/blog
 **NOTE**: Chat Functions require model versions beginning with gpt-4 and gpt-3.5-turbo's `-0613` labels. They are not
 available with older versions of the models.
 
+**NOTE:** The concurrent use of Chat Functions and [Azure Chat Extensions](#use-your-own-data-with-azure-openai) on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
+
 To use Chat Functions, you first define the function you'd like the model to be able to use when appropriate. Using
 the example from the linked blog post, above:
 
@@ -323,10 +325,63 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
             ChatRole.Function,
             JsonSerializer.Serialize(
                 functionResultData,
-                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }))
+        {
+            Name = responseChoice.Message.FunctionCall.Name
+        };
         conversationMessages.Add(functionResponseMessage);
         // Now make a new request using all three messages in conversationMessages
     }
+}
+```
+
+### Use your own data with Azure OpenAI
+
+The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
+See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.com/azure/ai-services/openai/use-your-data-quickstart) for conceptual background and detailed setup instructions.
+
+**NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
+
+```C# Snippet:ChatUsingYourOwnData
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages =
+    {
+        new ChatMessage(
+            ChatRole.System,
+            "You are a helpful assistant that answers questions about the Contoso product database."),
+        new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
+    },
+    // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
+    // the behavior of Chat Completions, here the "using your own data" feature to supplement the context
+    // with information from an Azure Cognitive Search resource with documents that have been indexed.
+    AzureExtensionsOptions = new AzureChatExtensionsOptions()
+    {
+        Extensions =
+        {
+            new AzureCognitiveSearchChatExtensionConfiguration()
+            {
+                SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+                IndexName = "contoso-products-index",
+                SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
+            }
+        }
+    }
+};
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
+    "gpt-35-turbo-0613",
+    chatCompletionsOptions);
+ChatMessage message = response.Value.Choices[0].Message;
+// The final, data-informed response still appears in the ChatMessages as usual
+Console.WriteLine($"{message.Role}: {message.Content}");
+// Responses that used extensions will also have Context information that includes special Tool messages
+// to explain extension activity and provide supplemental information like citations.
+Console.WriteLine($"Citations and other information:");
+foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
+{
+    // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
+    // and need to be parsed as such; that step is omitted here for brevity.
+    Console.WriteLine($"{contextMessage.Role}: {contextMessage.Content}");
 }
 ```
 

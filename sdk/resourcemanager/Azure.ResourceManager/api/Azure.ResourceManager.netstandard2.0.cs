@@ -546,6 +546,7 @@ namespace Azure.ResourceManager.Models
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
+        protected TrackedResourceData() { }
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
         protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
@@ -861,7 +862,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ResourceGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ResourceGroupData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
     }
@@ -1824,7 +1825,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class TrackedResourceExtendedData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public TrackedResourceExtendedData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TrackedResourceExtendedData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
     }
     public partial class WritableSubResource
