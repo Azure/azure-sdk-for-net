@@ -13,6 +13,9 @@
 
 ### Bugs Fixed
 
+- Removed incorrect protectable item type and discriminator for HSR container protectable item
+- Added correct protectable item type and discriminator for HSR container protectable item
+
 ### Other Changes
 
 ## 1.1.0-beta.1 (2023-05-31)
