@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -32,6 +33,22 @@ namespace Azure.Data.AppConfiguration
     {
         internal const string FeatureFlagContentType = "application/vnd.microsoft.appconfig.ff+json;charset=utf-8";
 
+        private static readonly string[] s_jsonPropertyNames =
+        {
+            "id",
+            "description",
+            "display_name",
+            "enabled",
+            "conditions"
+        };
+
+        private static readonly string[] s_requiredJsonPropertyNames =
+        {
+            "id",
+            "enabled",
+            "conditions"
+        };
+
         /// <summary>
         /// The prefix used for <see cref="FeatureFlagConfigurationSetting"/> setting keys.
         /// </summary>
@@ -44,12 +61,7 @@ namespace Azure.Data.AppConfiguration
         private string _displayName;
         private bool _isEnabled;
         private IList<FeatureFlagFilter> _clientFilters;
-
-        internal FeatureFlagConfigurationSetting(string jsonValue) : this()
-        {
-            _originalValue = jsonValue;
-            _isValidValue = TryParseValue();
-        }
+        private List<(string Name, JsonElement Json)> _parsedProperties = new(s_jsonPropertyNames.Length);
 
         internal FeatureFlagConfigurationSetting()
         {
@@ -191,14 +203,34 @@ namespace Azure.Data.AppConfiguration
                 return _originalValue;
             }
 
-            // Form the value by coping the source JSON and replacing the setting property
-            // values.  This will ensure that any custom attributes are preserved.
+            var knownProperties = new HashSet<string>(s_jsonPropertyNames);
+
             using var memoryStream = new MemoryStream();
             using var writer = new Utf8JsonWriter(memoryStream);
 
-            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(_originalValue));
+            writer.WriteStartObject();
 
-            WriteSettingValue(reader, writer);
+            for (var index = 0; index < _parsedProperties.Count; ++index)
+            {
+                var (name, jsonValue) = _parsedProperties[index];
+
+                if (TryWriteKnownProperty(name, writer, includeOptionalWhenNull: true))
+                {
+                    knownProperties.Remove(name);
+                }
+                else
+                {
+                    writer.WritePropertyName(name);
+                    jsonValue.WriteTo(writer);
+                }
+            }
+
+            foreach (var name in knownProperties)
+            {
+                TryWriteKnownProperty(name, writer);
+            }
+
+            writer.WriteEndObject();
             writer.Flush();
 
             _originalValue = Encoding.UTF8.GetString(memoryStream.ToArray());
@@ -212,11 +244,10 @@ namespace Azure.Data.AppConfiguration
 
             writer.WriteStartObject();
 
-            TryWriteKnownProperty("id", writer);
-            TryWriteKnownProperty("enabled", writer);
-            TryWriteKnownProperty("conditions", writer);
-            TryWriteKnownProperty("description", writer);
-            TryWriteKnownProperty("display_name", writer);
+            foreach (var knownProperty in s_jsonPropertyNames)
+            {
+                TryWriteKnownProperty(knownProperty, writer);
+            }
 
             writer.WriteEndObject();
             writer.Flush();
@@ -224,86 +255,63 @@ namespace Azure.Data.AppConfiguration
             return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
 
-        private void WriteSettingValue(Utf8JsonReader settingValueReader, Utf8JsonWriter writer)
+        private bool TryParseValue()
         {
-            var writtenKnownProperties = new HashSet<string>();
-            writer.WriteStartObject();
+            _parsedProperties.Clear();
 
-            while (settingValueReader.Read())
+            try
             {
-                switch (settingValueReader.TokenType)
+                var requiredProperties = new HashSet<string>(s_requiredJsonPropertyNames);
+                using var doc = JsonDocument.Parse(_originalValue);
+
+                foreach (var item in doc.RootElement.EnumerateObject())
                 {
-                    case JsonTokenType.StartObject when settingValueReader.CurrentDepth > 0:
-                        writer.WriteStartObject();
-                        break;
-                    case JsonTokenType.EndObject when settingValueReader.CurrentDepth > 0:
-                        writer.WriteEndObject();
-                        break;
-                    case JsonTokenType.StartArray:
-                        writer.WriteStartArray();
-                        break;
-                    case JsonTokenType.EndArray:
-                        writer.WriteEndArray();
-                        break;
-                    case JsonTokenType.PropertyName:
-                        string propertyName = settingValueReader.GetString();
+                    switch (item.Name)
+                    {
+                        case "id":
+                            _featureId = item.Value.GetString();
+                            _parsedProperties.Add((item.Name, default));
+                            break;
 
-                        // All the well-known property values are on the top-level of the object.  Anything
-                        // lower with the same parameter names belong to custom attributes and should be ignored.
-                        if ((settingValueReader.CurrentDepth <= 1) && (TryWriteKnownProperty(propertyName, writer, true)))
-                        {
-                            writtenKnownProperties.Add(propertyName);
-                            settingValueReader.Read();
-                            settingValueReader.Skip();
-                        }
-                        else
-                        {
-                            writer.WritePropertyName(propertyName);
-                        }
-                        break;
-                    case JsonTokenType.String:
-                        writer.WriteStringValue(settingValueReader.GetString());
-                        break;
-                    case JsonTokenType.Number:
-                        writer.WriteNumberValue(settingValueReader.GetDecimal());
-                        break;
-                    case JsonTokenType.True:
-                    case JsonTokenType.False:
-                        writer.WriteBooleanValue(settingValueReader.GetBoolean());
-                        break;
-                    case JsonTokenType.Null:
-                        writer.WriteNullValue();
-                        break;
+                        case "description":
+                            _description = item.Value.GetString();
+                            _parsedProperties.Add((item.Name, default));
+                            break;
+
+                        case "display_name":
+                            _displayName = item.Value.GetString();
+                            _parsedProperties.Add((item.Name, default));
+                            break;
+
+                        case "enabled":
+                            _isEnabled = item.Value.GetBoolean();
+                            _parsedProperties.Add((item.Name, default));
+                            break;
+
+                        case "conditions":
+                            _parsedProperties.Add((item.Name, default));
+
+                            if (item.Value.TryGetProperty("client_filters", out var clientFiltersProperty)
+                                && clientFiltersProperty.ValueKind == JsonValueKind.Array)
+                            {
+                                _clientFilters = ParseFilters(clientFiltersProperty);
+                            }
+                            break;
+
+                        default:
+                            _parsedProperties.Add((item.Name, item.Value.Clone()));
+                            break;
+                    }
+
+                    requiredProperties.Remove(item.Name);
                 }
-            }
 
-            // Write any well-known properties that were not already written.
-            if (!writtenKnownProperties.Contains("id"))
+                return requiredProperties.Count == 0;
+            }
+            catch (Exception)
             {
-                TryWriteKnownProperty("id", writer);
+                return false;
             }
-
-            if (!writtenKnownProperties.Contains("description"))
-            {
-                TryWriteKnownProperty("description", writer);
-            }
-
-            if (!writtenKnownProperties.Contains("display_name"))
-            {
-                TryWriteKnownProperty("display_name", writer);
-            }
-
-            if (!writtenKnownProperties.Contains("enabled"))
-            {
-                TryWriteKnownProperty("enabled", writer);
-            }
-
-            if (!writtenKnownProperties.Contains("conditions"))
-            {
-                TryWriteKnownProperty("conditions", writer);
-            }
-
-            writer.WriteEndObject();
         }
 
         private bool TryWriteKnownProperty(string propertyName, Utf8JsonWriter writer, bool includeOptionalWhenNull = false)
@@ -353,115 +361,6 @@ namespace Azure.Data.AppConfiguration
             return true;
         }
 
-        private bool TryParseValue()
-        {
-            try
-            {
-                using var document = JsonDocument.Parse(_originalValue);
-                var root = document.RootElement;
-
-                if (!root.TryGetProperty("id", out var idProperty))
-                {
-                    return false;
-                }
-
-                _featureId = idProperty.GetString();
-
-                if (!root.TryGetProperty("enabled", out var enabledProperty))
-                {
-                    return false;
-                }
-
-                _isEnabled = enabledProperty.GetBoolean();
-
-                if (!root.TryGetProperty("conditions", out var conditionsProperty))
-                {
-                    return false;
-                }
-
-                if (root.TryGetProperty("description", out var descriptionProperty))
-                {
-                    _description = descriptionProperty.GetString();
-                }
-
-                if (root.TryGetProperty("display_name", out var displayNameProperty))
-                {
-                    _displayName = displayNameProperty.GetString();
-                }
-
-                var newFilters = new ObservableCollection<FeatureFlagFilter>();
-                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty) &&
-                    clientFiltersProperty.ValueKind == JsonValueKind.Array)
-                {
-                    foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
-                    {
-                        if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
-                        {
-                            return false;
-                        }
-
-                        Dictionary<string, object> value = null;
-                        if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
-                        {
-                            value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
-                        }
-
-                        newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
-                    }
-                }
-
-                _clientFilters = newFilters;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static object ReadParameterValue(in JsonElement element)
-        {
-            switch (element.ValueKind)
-            {
-                case JsonValueKind.String:
-                    return element.GetString();
-                case JsonValueKind.Number:
-                    if (element.TryGetInt32(out int intValue))
-                    {
-                        return intValue;
-                    }
-                    if (element.TryGetInt64(out long longValue))
-                    {
-                        return longValue;
-                    }
-                    return element.GetDouble();
-                case JsonValueKind.True:
-                    return true;
-                case JsonValueKind.False:
-                    return false;
-                case JsonValueKind.Undefined:
-                case JsonValueKind.Null:
-                    return null;
-                case JsonValueKind.Object:
-                    var dictionary = new Dictionary<string, object>();
-                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
-                    {
-                        dictionary.Add(jsonProperty.Name, ReadParameterValue(jsonProperty.Value));
-                    }
-                    return dictionary;
-                case JsonValueKind.Array:
-                    var list = new List<object>();
-                    foreach (JsonElement item in element.EnumerateArray())
-                    {
-                        list.Add(ReadParameterValue(item));
-                    }
-                    return list;
-                default:
-                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
-            }
-        }
-
         private static void WriteParameterValue(Utf8JsonWriter writer, object value)
         {
             switch (value)
@@ -507,6 +406,74 @@ namespace Azure.Data.AppConfiguration
 
                 default:
                     throw new NotSupportedException("Not supported type " + value.GetType());
+            }
+        }
+
+        private static IList<FeatureFlagFilter> ParseFilters(JsonElement filters)
+        {
+            var newFilters = new ObservableCollection<FeatureFlagFilter>();
+            if (filters.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var clientFilter in filters.EnumerateArray())
+                {
+                    if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
+                    {
+                        newFilters.Clear();
+                        return newFilters;
+                    }
+
+                    Dictionary<string, object> value = null;
+                    if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
+                    {
+                        value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                    }
+
+                    newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                }
+            }
+
+            return newFilters;
+        }
+
+        private static object ReadParameterValue(in JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    return element.GetDouble();
+                case JsonValueKind.True:
+                    return true;
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Null:
+                    return null;
+                case JsonValueKind.Object:
+                    var dictionary = new Dictionary<string, object>();
+                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
+                    {
+                        dictionary.Add(jsonProperty.Name, ReadParameterValue(jsonProperty.Value));
+                    }
+                    return dictionary;
+                case JsonValueKind.Array:
+                    var list = new List<object>();
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(ReadParameterValue(item));
+                    }
+                    return list;
+                default:
+                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
             }
         }
 

@@ -19,12 +19,7 @@ namespace Azure.Data.AppConfiguration
         private string _originalValue;
         private bool _isValidValue;
         private Uri _secretId;
-
-        internal SecretReferenceConfigurationSetting(string jsonValue)
-        {
-            _originalValue = jsonValue;
-            _isValidValue = TryParseValue();
-        }
+        private List<(string Name, JsonElement Json)> _parsedProperties = new(1);
 
         internal SecretReferenceConfigurationSetting()
         {
@@ -97,14 +92,35 @@ namespace Azure.Data.AppConfiguration
                 return _originalValue;
             }
 
-            // Form the value by coping the source JSON and replacing the setting property
-            // values.  This will ensure that any custom attributes are preserved.
+            var uriWritten = false;
+
             using var memoryStream = new MemoryStream();
             using var writer = new Utf8JsonWriter(memoryStream);
 
-            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(_originalValue));
+            writer.WriteStartObject();
 
-            WriteSettingValue(reader, writer);
+            for (var index = 0; index < _parsedProperties.Count; ++index)
+            {
+                var (name, jsonValue) = _parsedProperties[index];
+
+                if (name == "uri")
+                {
+                    writer.WriteString("uri", _secretId.AbsoluteUri);
+                    uriWritten = true;
+                }
+                else
+                {
+                    writer.WritePropertyName(name);
+                    jsonValue.WriteTo(writer);
+                }
+            }
+
+            if (!uriWritten)
+            {
+                writer.WriteString("uri", _secretId.AbsoluteUri);
+            }
+
+            writer.WriteEndObject();
             writer.Flush();
 
             _originalValue = Encoding.UTF8.GetString(memoryStream.ToArray());
@@ -117,117 +133,48 @@ namespace Azure.Data.AppConfiguration
             var writer = new Utf8JsonWriter(memoryStream);
 
             writer.WriteStartObject();
-
-            TryWriteKnownProperty("uri", writer);
-
+            writer.WriteString("uri", _secretId.AbsoluteUri);
             writer.WriteEndObject();
             writer.Flush();
 
             return Encoding.UTF8.GetString(memoryStream.ToArray());
         }
 
-        private void WriteSettingValue(Utf8JsonReader settingValueReader, Utf8JsonWriter writer)
-        {
-            var writtenKnownProperties = new HashSet<string>();
-            writer.WriteStartObject();
-
-            while (settingValueReader.Read())
-            {
-                switch (settingValueReader.TokenType)
-                {
-                    case JsonTokenType.StartObject when settingValueReader.CurrentDepth > 0:
-                        writer.WriteStartObject();
-                        break;
-                    case JsonTokenType.EndObject when settingValueReader.CurrentDepth > 0:
-                        writer.WriteEndObject();
-                        break;
-                    case JsonTokenType.StartArray:
-                        writer.WriteStartArray();
-                        break;
-                    case JsonTokenType.EndArray:
-                        writer.WriteEndArray();
-                        break;
-                    case JsonTokenType.PropertyName:
-                        string propertyName = settingValueReader.GetString();
-
-                        // All the well-known property values are on the top-level of the object.  Anything
-                        // lower with the same parameter names belong to custom attributes and should be ignored.
-                        if ((settingValueReader.CurrentDepth <= 1) && (TryWriteKnownProperty(propertyName, writer, true)))
-                        {
-                            writtenKnownProperties.Add(propertyName);
-                            settingValueReader.Read();
-                            settingValueReader.Skip();
-                        }
-                        else
-                        {
-                            writer.WritePropertyName(propertyName);
-                        }
-                        break;
-                    case JsonTokenType.String:
-                        writer.WriteStringValue(settingValueReader.GetString());
-                        break;
-                    case JsonTokenType.Number:
-                        writer.WriteNumberValue(settingValueReader.GetDecimal());
-                        break;
-                    case JsonTokenType.True:
-                    case JsonTokenType.False:
-                        writer.WriteBooleanValue(settingValueReader.GetBoolean());
-                        break;
-                    case JsonTokenType.Null:
-                        writer.WriteNullValue();
-                        break;
-                }
-            }
-
-            // Write any well-known properties that were not already written.
-            if (!writtenKnownProperties.Contains("uri"))
-            {
-                TryWriteKnownProperty("uri", writer);
-            }
-
-            writer.WriteEndObject();
-        }
-
-        private bool TryWriteKnownProperty(string propertyName, Utf8JsonWriter writer, bool includeOptionalWhenNull = false)
-        {
-            switch (propertyName)
-            {
-                case "uri":
-                    writer.WriteString(propertyName, _secretId.AbsoluteUri);
-                    break;
-
-                default:
-                    return false;
-            }
-
-            return true;
-        }
-
         private bool TryParseValue()
         {
+            _parsedProperties.Clear();
+
             try
             {
+                var isUriValid = false;
                 using var document = JsonDocument.Parse(_originalValue);
-                var root = document.RootElement;
 
-                if (!root.TryGetProperty("uri", out var uriProperty))
+                foreach (var item in document.RootElement.EnumerateObject())
                 {
-                    return false;
+                    switch (item.Name)
+                    {
+                        case "uri":
+                            if (Uri.TryCreate(item.Value.GetString(), UriKind.Absolute, out Uri uriValue))
+                            {
+                                _secretId = uriValue;
+                                _parsedProperties.Add((item.Name, default));
+
+                                isUriValid = true;
+                            }
+                            break;
+
+                        default:
+                            _parsedProperties.Add((item.Name, item.Value.Clone()));
+                            break;
+                    }
                 }
 
-                if (!Uri.TryCreate(uriProperty.GetString(), UriKind.Absolute, out Uri uriValue))
-                {
-                    return false;
-                }
-
-                _secretId = uriValue;
+                return isUriValid;
             }
             catch (Exception)
             {
                 return false;
             }
-
-            return true;
         }
 
         private void CheckValid()

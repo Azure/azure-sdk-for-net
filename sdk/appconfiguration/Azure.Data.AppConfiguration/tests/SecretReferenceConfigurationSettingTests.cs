@@ -117,7 +117,9 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void UnknownAttributesArePreservedWhenReadingValue()
         {
-            var secretSetting = new SecretReferenceConfigurationSetting(UnknownAttributeReferenceValue);
+            var secretSetting = new SecretReferenceConfigurationSetting();
+            secretSetting.Value = UnknownAttributeReferenceValue;
+
             using var expected = JsonDocument.Parse(UnknownAttributeReferenceValue);
 
             // Since the value is generated on each read, read and compare multiple times to ensure
@@ -132,8 +134,11 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void UnknownAttributesArePreservedChangingProperties()
         {
-            var originalSecretSetting = new SecretReferenceConfigurationSetting(UnknownAttributeReferenceValue);
-            var secretSetting = new SecretReferenceConfigurationSetting(UnknownAttributeReferenceValue);
+            var originalSecretSetting = new SecretReferenceConfigurationSetting();
+            originalSecretSetting.Value = UnknownAttributeReferenceValue;
+
+            var secretSetting = new SecretReferenceConfigurationSetting();
+            secretSetting.Value = UnknownAttributeReferenceValue;
 
             secretSetting.SecretId = new Uri("https://www.i-was-changed.org");
 

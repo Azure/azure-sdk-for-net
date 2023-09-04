@@ -298,7 +298,9 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void UnknownAttributesArePreservedWhenReadingValue()
         {
-            var feature = new FeatureFlagConfigurationSetting(UnknownAttributeFeatureValue);
+            var feature = new FeatureFlagConfigurationSetting();
+            feature.Value = UnknownAttributeFeatureValue;
+
             using var expected = JsonDocument.Parse(UnknownAttributeFeatureValue);
 
             // Since the value is generated on each read, read and compare multiple times to ensure
@@ -313,8 +315,11 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void UnknownAttributesArePreservedChangingProperties()
         {
-            var originalFeature = new FeatureFlagConfigurationSetting(UnknownAttributeFeatureValue);
-            var feature = new FeatureFlagConfigurationSetting(UnknownAttributeFeatureValue);
+            var originalFeature = new FeatureFlagConfigurationSetting();
+            originalFeature.Value = UnknownAttributeFeatureValue;
+
+            var feature = new FeatureFlagConfigurationSetting();
+            feature.Value = UnknownAttributeFeatureValue;
 
             feature.FeatureId = "new-id";
             feature.Description = "new-description";
@@ -334,7 +339,8 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void UnknownAttributesArePreservedWhenAddingOptionalMembers()
         {
-            var feature = new FeatureFlagConfigurationSetting(UnknownAttributeMinimalFeatureValue);
+            var feature = new FeatureFlagConfigurationSetting();
+            feature.Value = UnknownAttributeMinimalFeatureValue;
             feature.DisplayName = "new-display";
             feature.Description = "new-description";
 
@@ -355,7 +361,8 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void UnknownAttributesArePreservedAndNullOptionalMembersAreNotAdded()
         {
-            var feature = new FeatureFlagConfigurationSetting(UnknownAttributeMinimalFeatureValue);
+            var feature = new FeatureFlagConfigurationSetting();
+            feature.Value = UnknownAttributeMinimalFeatureValue;
             feature.DisplayName = "new-display";
             feature.Description = "new-description";
 
