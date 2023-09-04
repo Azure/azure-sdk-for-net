@@ -5,11 +5,8 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
-using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -22,6 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     {
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IPAddress IPv4Address { get; }
     }
 }
