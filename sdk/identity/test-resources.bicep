@@ -9,6 +9,9 @@ param baseName string = resourceGroup().name
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
+param runtime string = 'node'
+var functionWorkerRuntime = runtime
+
 //See https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 var blobContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe') //Storage Blob Data Contributor
 var websiteContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'de139f84-1756-47ae-9be6-808fbbe84772') //Website Contributor
@@ -23,6 +26,16 @@ resource blobRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, blobContributor)
   properties: {
     principalId: web.identity.principalId
+    roleDefinitionId: blobContributor
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource blobRoleFunc 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: sa
+  name: guid(resourceGroup().id, blobContributor, 'azfunc')
+  properties: {
+    principalId: azfunc.identity.principalId
     roleDefinitionId: blobContributor
     principalType: 'ServicePrincipal'
   }
@@ -76,18 +89,76 @@ resource farm 'Microsoft.Web/serverfarms@2021-03-01' = {
   name: '${baseName}_asp'
   location: location
   sku: {
-    name: 'F1'
-    tier: 'Free'
-    size: 'F1'
-    family: 'F'
-    capacity: 0
+    name: 'B1'
+    tier: 'Bassic'
+    size: 'B1'
+    family: 'B'
+    capacity: 1
   }
   properties: { }
   kind: 'app'
 }
 
+resource azfunc 'Microsoft.Web/sites@2021-03-01' = {
+  name: '${baseName}func'
+  location: location
+  kind: 'functionapp'
+  identity: {
+    type: 'SystemAssigned, UserAssigned'
+    userAssignedIdentities: {
+      '${usermgdid.id}' : { }
+    }
+  }
+  properties: {
+    enabled: true
+    serverFarmId: farm.id
+    httpsOnly: true
+    keyVaultReferenceIdentity: 'SystemAssigned'
+    siteConfig: {
+      alwaysOn: true
+      netFrameworkVersion: 'v6.0'
+      http20Enabled: true
+      minTlsVersion: '1.2'
+      appSettings: [
+        {
+          name: 'IDENTITY_STORAGE_NAME_1'
+          value: sa.name
+        }
+        {
+          name: 'IDENTITY_STORAGE_NAME_2'
+          value: sa2.name
+        }
+        {
+          name: 'IDENTITY_WEBAPP_USER_DEFINED_IDENTITY'
+          value: usermgdid.id
+        }
+        {
+          name: 'AzureWebJobsStorage'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${sa.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${sa.listKeys().keys[0].value}'
+        }
+        {
+          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${sa.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${sa.listKeys().keys[0].value}'
+        }
+        {
+          name: 'WEBSITE_CONTENTSHARE'
+          value: toLower('${baseName}-func')
+        }
+        {
+          name: 'FUNCTIONS_EXTENSION_VERSION'
+          value: '~4'
+        }
+        {
+          name: 'FUNCTIONS_WORKER_RUNTIME'
+          value: 'dotnet'
+        }
+      ]
+    }
+  }
+}
+
 resource web 'Microsoft.Web/sites@2021-03-01' = {
-  name: '${baseName}-webapp'
+  name: '${baseName}webapp'
   location: location
   kind: 'app'
   identity: {
@@ -127,7 +198,26 @@ resource web 'Microsoft.Web/sites@2021-03-01' = {
   }
 }
 
+resource scmweb 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-09-01' = {
+  kind: 'app'
+  parent: web
+  name: 'scm'
+  properties: {
+    allow: true
+  }
+}
+
+resource scmfunc 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-09-01' = {
+  kind: 'functionapp'
+  parent: azfunc
+  name: 'scm'
+  properties: {
+    allow: true
+  }
+}
+
 output IDENTITY_WEBAPP_NAME string = web.name
 output IDENTITY_WEBAPP_USER_DEFINED_IDENTITY string = usermgdid.id
 output IDENTITY_STORAGE_NAME_1 string = sa.name
 output IDENTITY_STORAGE_NAME_2 string = sa2.name
+output IDENTITY_FUNCTION_NAME string = azfunc.name
