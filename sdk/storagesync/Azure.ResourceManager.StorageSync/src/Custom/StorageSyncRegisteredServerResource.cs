@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="content"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default) => await UpdateAsync(waitUntil, CreateUpdatePatchData(content), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="content"> Body of Registered Server object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default) => Update(waitUntil, CreateUpdatePatchData(content), cancellationToken);
 
         internal StorageSyncRegisteredServerPatch CreateUpdatePatchData(StorageSyncRegisteredServerCreateOrUpdateContent content)
