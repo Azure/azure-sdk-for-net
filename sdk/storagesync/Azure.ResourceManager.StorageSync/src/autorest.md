@@ -9,12 +9,15 @@ csharp: true
 library-name: StorageSync
 namespace: Azure.ResourceManager.StorageSync
 require: https://github.com/ankushbindlish2/azure-rest-api-specs/blob/e98964a41ed956313897c815c9a56056802c2008/specification/storagesync/resource-manager/readme.md
-tag: package-2022-09
+# tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
