@@ -9,14 +9,15 @@ csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
 require: https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8bb20d3c82ebd1783c64a/specification/iothub/resource-manager/readme.md
+#tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
@@ -60,6 +61,8 @@ rename-mapping:
   IotHubSkuDescription.resourceType: -|resource-type
   CertificateProperties.thumbprint: ThumbprintString
   CertificatePropertiesWithNonce.thumbprint: ThumbprintString
+  RootCertificateProperties.enableRootCertificateV2: IsRootCertificateV2Enabled
+  RootCertificateProperties.lastUpdatedTimeUtc: LastUpdatedOn
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -98,6 +101,7 @@ prepend-rp-prefix:
   - NetworkRuleIPAction
   - RoutingProperties
   - StorageEndpointProperties
+  - IPVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'

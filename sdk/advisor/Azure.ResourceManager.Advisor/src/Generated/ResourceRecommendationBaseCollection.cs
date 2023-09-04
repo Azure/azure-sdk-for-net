@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

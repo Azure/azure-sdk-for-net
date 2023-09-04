@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Any())
                 {
-                    requestHosts = requestOrigin.ToList();
+                    requestHosts = requestOrigin.SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries)).ToList();
                     return true;
                 }
             }
