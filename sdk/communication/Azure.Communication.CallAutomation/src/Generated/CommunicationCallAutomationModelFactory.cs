@@ -38,23 +38,13 @@ namespace Azure.Communication.CallAutomation
             return new UnmuteParticipantsResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of CancelAddParticipantResponse. </summary>
-        /// <param name="invitationId"> Invitation ID used to cancel the add participant action. </param>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.CancelAddParticipantResponse"/> instance for mocking. </returns>
-        public static CancelAddParticipantResponse CancelAddParticipantResponse(string invitationId = null, string operationContext = null)
-        {
-            return new CancelAddParticipantResponse(invitationId, operationContext);
-        }
-
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
-        /// <param name="recordingType"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingStateResult"/> instance for mocking. </returns>
-        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null, RecordingType? recordingType = null)
+        public static RecordingStateResult RecordingStateResult(string recordingId = null, RecordingState? recordingState = null)
         {
-            return new RecordingStateResult(recordingId, recordingState, recordingType);
+            return new RecordingStateResult(recordingId, recordingState);
         }
 
         /// <summary> Initializes a new instance of ResultInformation. </summary>
