@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> IP Prefix Type. </summary>
+    /// <summary> IP Prefix Type that needs to be matched. </summary>
     public readonly partial struct IPMatchConditionPrefixType : IEquatable<IPMatchConditionPrefixType>
     {
         private readonly string _value;

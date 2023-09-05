@@ -57,7 +57,7 @@ namespace Azure.Core.Serialization
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return (IModelJsonSerializable<object>)ModelSerializer.Deserialize(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, ModelSerializerOptions);
+            return (IModelJsonSerializable<object>)ModelSerializer.Deserialize(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, ModelSerializerOptions)!;
         }
 
         /// <inheritdoc/>

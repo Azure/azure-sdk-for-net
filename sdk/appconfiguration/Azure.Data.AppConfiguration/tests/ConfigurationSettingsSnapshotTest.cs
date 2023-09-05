@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
@@ -18,7 +15,6 @@ namespace Azure.Data.AppConfiguration.Tests
             var settingSnapshot = new ConfigurationSettingsSnapshot(
                 "name",
                 SnapshotStatus.Ready,
-                1,
                 new List<SnapshotSettingFilter>(),
                 new CompositionType(),
                 DateTime.UtcNow,

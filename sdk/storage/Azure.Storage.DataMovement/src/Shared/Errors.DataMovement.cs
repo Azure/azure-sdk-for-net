@@ -65,7 +65,7 @@ namespace Azure.Storage
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
 
         public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
-            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
+            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.JobPartPlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
 
         public static ArgumentException InvalidPlanFileElement(string elementName, int expectedSize, int actualSize)
             => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
@@ -118,5 +118,8 @@ namespace Azure.Storage
 
         public static InvalidOperationException InvalidTransferResourceTypes()
             => new InvalidOperationException("Invalid source and destination resource types.");
+
+        public static ArgumentException ResourceUriInvalid(string parameterResource)
+            => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
     }
 }

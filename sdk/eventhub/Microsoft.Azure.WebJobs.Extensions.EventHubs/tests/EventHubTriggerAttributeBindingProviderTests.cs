@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.UnitTests
 
         [Test]
         [TestCase(nameof(SingleDispatch), 1)]
-        [TestCase(nameof(MultipleDispatch), 10)]
+        [TestCase(nameof(MultipleDispatch), 100)]
         public async Task TryCreateAsync_BatchCountsDefaultedCorrectly(string function, int expectedBatchCount)
         {
             ParameterInfo parameter = GetType().GetMethod(function, BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];
