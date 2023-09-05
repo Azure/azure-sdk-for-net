@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, _networkInterfaceName, _ipConfigurationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, _networkInterfaceName, _ipConfigurationName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, _networkInterfaceName, _ipConfigurationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsRestClient.CreateListPublicIPAddressesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, _networkInterfaceName, _ipConfigurationName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), _virtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressVirtualMachineScaleSetVmsClientDiagnostics, Pipeline, "VirtualMachineScaleSetVirtualMachineNetworkInterfaceIpconfigurationPublicipaddressCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -258,18 +258,18 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
 # This part is for generate partial class in network
-# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}
-# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}
-# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName} # this is get something out of from VirtualMachineScaleSetVM, itself is not a resource
-# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIPAddressName}
-# - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIpAddressName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName} # this is get something out of from VirtualMachineScaleSetVM, itself is not a resource
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIPAddressName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
 
 # This part is for generate partial class in network
-# partial-resources:
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}: CloudService
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}: CloudServiceRoleInstance
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
-#   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
+partial-resources:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}: CloudService
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}: CloudServiceRoleInstance
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
 
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetAppGatewayAvailableWafRuleSets
@@ -294,48 +294,48 @@ directive:
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
-  # - rename-operation:
-  #     from: NetworkInterfaces_ListCloudServiceRoleInstanceNetworkInterfaces
-  #     to: CloudServiceRoleInstance_ListNetworkInterfaces
-  # - rename-operation:
-  #     from: NetworkInterfaces_ListCloudServiceNetworkInterfaces
-  #     to: CloudService_ListNetworkInterfaces
-  # - rename-operation:
-  #     from: NetworkInterfaces_GetCloudServiceNetworkInterface
-  #     to: CloudService_GetNetworkInterface
-  # - rename-operation:
-  #     from: PublicIPAddresses_ListCloudServicePublicIPAddresses
-  #     to: CloudService_ListIpConfigurations
-  # - rename-operation:
-  #     from: PublicIPAddresses_ListCloudServiceRoleInstancePublicIPAddresses
-  #     to: CloudServiceRoleInstance_ListIpConfigurations
-  # - rename-operation:
-  #     from: PublicIPAddresses_GetCloudServicePublicIPAddress
-  #     to: CloudService_GetPublicIPAddress
-  # # - rename-operation:
-  #     from: NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces
-  #     to: VirtualMachineScaleSetVMs_ListNetworkInterfaces
-  # - rename-operation:
-  #     from: NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces
-  #     to: VirtualMachineScaleSets_ListNetworkInterfaces
-  # - rename-operation:
-  #     from: NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface
-  #     to: VirtualMachineScaleSets_GetNetworkInterface
-  # - rename-operation:
-  #     from: NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations
-  #     to: VirtualMachineScaleSets_ListIpConfigurations
-  # - rename-operation:
-  #     from: NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration
-  #     to: VirtualMachineScaleSets_GetIpConfiguration
-  # - rename-operation:
-  #     from: PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses
-  #     to: VirtualMachineScaleSets_ListPublicIPAddresses
-  # - rename-operation:
-  #     from: PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses
-  #     to: VirtualMachineScaleSetVMs_ListPublicIPAddresses
-  # - rename-operation:
-  #     from: PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress
-  #     to: VirtualMachineScaleSets_GetPublicIPAddress
+  - rename-operation:
+      from: NetworkInterfaces_ListCloudServiceRoleInstanceNetworkInterfaces
+      to: CloudServiceRoleInstance_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_ListCloudServiceNetworkInterfaces
+      to: CloudService_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_GetCloudServiceNetworkInterface
+      to: CloudService_GetNetworkInterface
+  - rename-operation:
+      from: PublicIPAddresses_ListCloudServicePublicIPAddresses
+      to: CloudService_ListIpConfigurations
+  - rename-operation:
+      from: PublicIPAddresses_ListCloudServiceRoleInstancePublicIPAddresses
+      to: CloudServiceRoleInstance_ListIpConfigurations
+  - rename-operation:
+      from: PublicIPAddresses_GetCloudServicePublicIPAddress
+      to: CloudService_GetPublicIPAddress
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces
+      to: VirtualMachineScaleSetVMs_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces
+      to: VirtualMachineScaleSets_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface
+      to: VirtualMachineScaleSets_GetNetworkInterface
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations
+      to: VirtualMachineScaleSets_ListIpConfigurations
+  - rename-operation:
+      from: NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration
+      to: VirtualMachineScaleSets_GetIpConfiguration
+  - rename-operation:
+      from: PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses
+      to: VirtualMachineScaleSets_ListPublicIPAddresses
+  - rename-operation:
+      from: PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses
+      to: VirtualMachineScaleSetVMs_ListPublicIPAddresses
+  - rename-operation:
+      from: PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress
+      to: VirtualMachineScaleSets_GetPublicIPAddress
   - from: serviceEndpointPolicy.json
     where: $.definitions
     transform: >
@@ -535,46 +535,46 @@ directive:
     transform: return "object";
   # This part is for generate partial class in network
   # Remove all files that not belong to Network
-  - from: cloudServiceNetworkInterface.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: cloudServicePublicIpAddress.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssPublicIpAddress.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.definitions
-    transform: >
-      for (var def in $)
-      {
-          delete $[def];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.parameters
-    transform: >
-      for (var param in $)
-      {
-          delete $[param];
-      }
+  # - from: cloudServiceNetworkInterface.json
+  #   where: $.paths
+  #   transform: >
+  #     for (var path in $)
+  #     {
+  #         delete $[path];
+  #     }
+  # - from: cloudServicePublicIpAddress.json
+  #   where: $.paths
+  #   transform: >
+  #     for (var path in $)
+  #     {
+  #         delete $[path];
+  #     }
+  # - from: vmssPublicIpAddress.json
+  #   where: $.paths
+  #   transform: >
+  #     for (var path in $)
+  #     {
+  #         delete $[path];
+  #     }
+  # - from: vmssNetworkInterface.json
+  #   where: $.paths
+  #   transform: >
+  #     for (var path in $)
+  #     {
+  #         delete $[path];
+  #     }
+  # - from: vmssNetworkInterface.json
+  #   where: $.definitions
+  #   transform: >
+  #     for (var def in $)
+  #     {
+  #         delete $[def];
+  #     }
+  # - from: vmssNetworkInterface.json
+  #   where: $.parameters
+  #   transform: >
+  #     for (var param in $)
+  #     {
+  #         delete $[param];
+  #     }
 ```
