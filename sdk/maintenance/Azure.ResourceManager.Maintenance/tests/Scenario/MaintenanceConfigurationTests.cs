@@ -98,8 +98,8 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
                 InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
-                    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Other" }, false),
-                    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Other" }))
+                    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false),
+                    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }))
             };
             data.ExtensionProperties.Add("InGuestPatchMode", "User");
 
