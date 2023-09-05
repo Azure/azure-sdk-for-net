@@ -15,6 +15,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
+    [CodeGenSuppress("GetNetworkInterfaceVirtualMachineScaleSetAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetNetworkInterfaceVirtualMachineScaleSet", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSetsAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSets", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSetAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSet", typeof(string), typeof(CancellationToken))]
     public partial class VirtualMachineScaleSetVmNetworkResource
     {
         /// <summary>
