@@ -3,18 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System.Collections.ObjectModel;
-using System.Configuration.Provider;
-using System.Security.AccessControl;
-using Newtonsoft.Json;
 
 namespace Azure.ResourceManager.Maintenance.Tests
 {
@@ -49,12 +43,9 @@ namespace Azure.ResourceManager.Maintenance.Tests
         [RecordedTest]
         public async Task MaintenanceConfigurationCancelTest()
         {
-            string resourceName = Recording.GenerateAssetName("maintenance-config-adanapopescu-");
+            string resourceName = Recording.GenerateAssetName("maintenance-config-");
             DateTime startOn = DateTime.UtcNow.AddMinutes(42);
             MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration(resourceName, startOn);
-
-            Console.WriteLine("Got config: " + JsonConvert.SerializeObject(config.Data));
-            Console.WriteLine("Here1 - " + DateTime.Now);
 
             MaintenanceApplyUpdateData data = new MaintenanceApplyUpdateData()
             {
@@ -64,30 +55,14 @@ namespace Azure.ResourceManager.Maintenance.Tests
             string resourceType = "maintenanceConfigurations";
             string applyUpdateName = $"{startOn:yyyyMMddHHmmss}";
 
-            //await Delay(15 * 60 * 1000);
-            //await Delay(5 * 1000);
-            //Console.WriteLine("Here - " + DateTime.Now);
-            //var retrieveConfig = await _resourceGroup.GetMaintenanceConfigurations().GetAsync(config.Data.Name);
-            //Assert.IsNotEmpty(retrieveConfig.Value.Data.Id);
-            //Console.WriteLine("Got retrieved config: " + JsonConvert.SerializeObject(retrieveConfig.Value.Data));
-
-            //await Delay(5 * 1000);
-            var exists = await _configCollection.ExistsAsync(providerName, resourceType, resourceName, applyUpdateName);
-            Console.WriteLine("Exists: " + exists.Value);
-
-            // await Delay(5 * 1000);
-            //var retrieveUpdateConfig = await _configCollection.GetAsync(providerName, resourceType, resourceName, applyUpdateName);
-            //Assert.IsNotEmpty(retrieveUpdateConfig.Value.Data.Id);
-            //Console.WriteLine("Got retrieved update config: " + JsonConvert.SerializeObject(retrieveUpdateConfig.Value.Data));
-
             // wait 10 minutes
             await Delay(10 * 60 * 1000);
-            Console.WriteLine("Here2 - " + DateTime.Now);
 
+            // cancel the maintenance
             ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
             MaintenanceApplyUpdateResource result = lro.Value;
 
-            Console.WriteLine("Got update: " + JsonConvert.SerializeObject(result.Data));
+            Assert.IsTrue(result.HasData);
         }
 
         private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTime startOn)

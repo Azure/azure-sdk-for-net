@@ -64,20 +64,17 @@ namespace Azure.ResourceManager.Maintenance
             }
             if (Optional.IsDefined(InstallPatches))
             {
-                Console.WriteLine("InstallPatches is defined");
                 writer.WritePropertyName("installPathes"u8);
                 writer.WriteStartObject();
 
                 if (Optional.IsDefined(InstallPatches.RebootSetting))
                 {
-                    Console.WriteLine("RebootSetting is defined");
                     writer.WritePropertyName("rebootSetting"u8);
                     writer.WriteStringValue(InstallPatches.RebootSetting.Value.ToString());
                 }
 
                 if (Optional.IsDefined(InstallPatches.LinuxParameters))
                 {
-                    Console.WriteLine("LinuxParameters is defined");
                     writer.WritePropertyName("linuxParameters"u8);
                     writer.WriteStartObject();
 
