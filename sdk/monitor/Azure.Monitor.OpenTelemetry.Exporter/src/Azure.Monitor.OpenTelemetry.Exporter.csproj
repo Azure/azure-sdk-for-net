@@ -24,6 +24,9 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
+
+    <!--TODO: Remove this after https://github.com/Azure/azure-sdk-for-net/pull/37734 merges-->
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
