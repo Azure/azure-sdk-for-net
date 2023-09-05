@@ -51,10 +51,10 @@ namespace Azure
         public Variant(ushort value) { throw null; }
         public Variant(uint value) { throw null; }
         public Variant(ulong value) { throw null; }
+        public bool IsNull { get { throw null; } }
         public System.Type? Type { get { throw null; } }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public T As<T>() { throw null; }
         public static Azure.Variant Create<T>(T value) { throw null; }
-        public static bool IsNull(Azure.Variant value) { throw null; }
         public static explicit operator System.ArraySegment<byte> (in Azure.Variant value) { throw null; }
         public static explicit operator System.ArraySegment<char> (in Azure.Variant value) { throw null; }
         public static explicit operator bool (in Azure.Variant value) { throw null; }

@@ -24,8 +24,9 @@ namespace Azure.Core.Experimental.Tests
         public void CanTestForNull()
         {
             Variant variant = Variant.Null;
+            Assert.True(variant.IsNull);
 
-            Assert.IsTrue(Variant.IsNull(variant));
+            Assert.True(new Variant((object)null).IsNull);
         }
     }
 }
