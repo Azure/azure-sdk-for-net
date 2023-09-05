@@ -40,15 +40,15 @@ namespace Azure.Identity
             _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
-			{
-				var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
-            	builder.Path = imddsTokenPath;
+            {
+                var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
+                builder.Path = imddsTokenPath;
                 _imdsEndpoint = builder.Uri;
-			}
-			else
-			{
-            	_imdsEndpoint = s_imdsEndpoint;
-			}
+            }
+            else
+            {
+                _imdsEndpoint = s_imdsEndpoint;
+            }
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -102,6 +102,10 @@ namespace Azure.Identity
             catch (AggregateException e)
             {
                 throw new CredentialUnavailableException(AggregateError, e);
+            }
+            catch (CredentialUnavailableException)
+            {
+                throw;
             }
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricSkuRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricSkuRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricSkuResource(Client, NetworkFabricSkuData.DeserializeNetworkFabricSkuData(e)), _networkFabricSkuClientDiagnostics, Pipeline, "NetworkFabricSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

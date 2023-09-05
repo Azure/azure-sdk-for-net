@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<DiagnosticSettingsCategoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingsCategoryRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<DiagnosticSettingsCategoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingsCategoryRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

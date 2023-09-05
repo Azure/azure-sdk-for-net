@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- `ManagedIdentityCredential` will fall through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
+
 ### Other Changes
 
 ## 1.10.0 (2023-08-14)

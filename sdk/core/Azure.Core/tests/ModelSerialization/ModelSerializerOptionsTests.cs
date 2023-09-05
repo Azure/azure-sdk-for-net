@@ -28,14 +28,14 @@ namespace Azure.Core.Tests.ModelSerialization
 
         public void ValidateFrozenInstance(ModelSerializerOptions frozen)
         {
-            Assert.Throws<InvalidOperationException>(() => frozen.GenericTypeSerializerCreator = type => null);
+            Assert.Throws<InvalidOperationException>(() => frozen.ObjectSerializerResolver = type => null);
         }
 
         [Test]
         public void NewInstanceShouldNotBeFrozen()
         {
             ModelSerializerOptions nonFrozen = new ModelSerializerOptions();
-            Assert.DoesNotThrow(() => nonFrozen.GenericTypeSerializerCreator = type => null);
+            Assert.DoesNotThrow(() => nonFrozen.ObjectSerializerResolver = type => null);
         }
 
         [Test]
@@ -56,11 +56,11 @@ namespace Azure.Core.Tests.ModelSerialization
         {
             var options = ModelSerializerOptions.GetOptions(ModelSerializerFormat.Wire);
             Assert.AreEqual(ModelSerializerFormat.Wire, options.Format);
-            Assert.IsNull(options.GenericTypeSerializerCreator);
+            Assert.IsNull(options.ObjectSerializerResolver);
 
             options = ModelSerializerOptions.GetOptions(ModelSerializerFormat.Json);
             Assert.AreEqual(ModelSerializerFormat.Json, options.Format);
-            Assert.IsNull(options.GenericTypeSerializerCreator);
+            Assert.IsNull(options.ObjectSerializerResolver);
         }
     }
 }

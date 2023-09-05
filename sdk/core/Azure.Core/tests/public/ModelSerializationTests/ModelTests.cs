@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             string serviceResponse = format == ModelSerializerFormat.Json ? JsonPayload : WirePayload;
 
             ModelSerializerOptions options = new ModelSerializerOptions(format);
-            options.GenericTypeSerializerCreator = GetObjectSerializerFactory(format);
+            options.ObjectSerializerResolver = GetObjectSerializerFactory(format);
 
             var expectedSerializedString = GetExpectedResult(format);
 

@@ -48,7 +48,6 @@ namespace Azure.Data.AppConfiguration
         {
             Optional<string> name = default;
             Optional<SnapshotStatus> status = default;
-            Optional<int> statusCode = default;
             IList<SnapshotSettingFilter> filters = default;
             Optional<CompositionType> compositionType = default;
             Optional<DateTimeOffset> created = default;
@@ -73,16 +72,6 @@ namespace Azure.Data.AppConfiguration
                         continue;
                     }
                     status = new SnapshotStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("status_code"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    statusCode = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("filters"))
@@ -176,7 +165,7 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSettingsSnapshot(name.Value, Optional.ToNullable(status), Optional.ToNullable(statusCode), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
+            return new ConfigurationSettingsSnapshot(name.Value, Optional.ToNullable(status), filters, Optional.ToNullable(compositionType), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
         }
 
         // Mapping raw response to model

@@ -142,7 +142,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private static ObjectSerializer GetObjectSerializer(ModelSerializerOptions options)
         {
-            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(typeof(T)) : null;
+            var serializer = options.ObjectSerializerResolver is not null ? options.ObjectSerializerResolver(typeof(T)) : null;
             return serializer ?? JsonObjectSerializer.Default;
         }
 

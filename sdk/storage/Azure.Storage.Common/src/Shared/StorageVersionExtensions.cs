@@ -16,6 +16,8 @@ using ServiceVersion =
     Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion;
 #elif ChangeFeedSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
+#elif DataMovementSDK
+    Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #elif BlobDataMovementSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #else
@@ -37,7 +39,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         public const ServiceVersion LatestVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || BlobDataMovementSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK|| BlobDataMovementSDK
             ServiceVersion.V2023_08_03;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
@@ -47,7 +49,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         internal const ServiceVersion MaxVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || BlobDataMovementSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || DataMovementSDK|| BlobDataMovementSDK
             ServiceVersion.V2023_08_03;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;

@@ -4,6 +4,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -32,9 +33,11 @@ namespace Azure.Storage.DataMovement
 
         private StorageResource FromTransferProperties(DataTransferProperties properties, bool getSource)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+            string storedPath = getSource ? properties.SourcePath : properties.DestinationPath;
             return properties.IsContainer
-                ? LocalDirectoryStorageResourceContainer.RehydrateResource(properties, getSource)
-                : LocalFileStorageResource.RehydrateResource(properties, getSource);
+                ? new LocalDirectoryStorageResourceContainer(storedPath)
+                : new LocalFileStorageResource(storedPath);
         }
 
         /// <summary>
