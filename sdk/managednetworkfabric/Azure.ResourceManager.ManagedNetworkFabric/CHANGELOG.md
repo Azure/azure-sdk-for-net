@@ -2,15 +2,9 @@
 
 ## 1.1.0 (2023-09-28)
 
-### Features Added
-
 ### Breaking Changes
     - New optional parameter default action added in Access Control List and Route Policy resources. 
     - IP V4 address parameter type changed from IPAddress to String in internet gateway resource.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2023-07-28)
 
