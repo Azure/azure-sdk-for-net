@@ -842,7 +842,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Cancel add participant operation.
         /// </summary>
         /// <param name="invitationId"></param>
         /// <param name="cancellationToken"></param>
@@ -853,7 +853,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Cancel add participant operation.
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
@@ -889,7 +889,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Cancel add participant operation.
         /// </summary>
         /// <param name="invitationId"></param>
         /// <param name="cancellationToken"></param>
@@ -900,7 +900,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// 
+        /// Cancel add participant operation.
         /// </summary>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>

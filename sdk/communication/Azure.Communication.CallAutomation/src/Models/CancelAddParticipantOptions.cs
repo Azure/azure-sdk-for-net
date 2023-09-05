@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         {
             InvitationId = invitationId;
         }
-        
+
         /// <summary>
         /// Invitation ID used to add a participant.
         /// </summary>
