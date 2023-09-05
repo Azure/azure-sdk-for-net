@@ -4,4 +4,4 @@
 using Azure;
 
 bool source = true;
-Value value = source;
+Variant value = source;

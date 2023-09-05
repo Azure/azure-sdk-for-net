@@ -117,7 +117,7 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanHandleNull_SetValuesInDictionaryToNull()
         {
-            Dictionary<string, Value> d = new Dictionary<string, Value>();
+            Dictionary<string, Variant> d = new Dictionary<string, Variant>();
 
             // TODO: address API
             d["a"] = new((object)null);
@@ -163,7 +163,7 @@ namespace Azure.Core.Experimental.Tests
             d.foo = 5;
             d.bar = 6;
 
-            Value x = d.foo;
+            Variant x = d.foo;
             int b = x;
 
             int y = d.foo;
@@ -176,7 +176,7 @@ namespace Azure.Core.Experimental.Tests
         #region Helpers
         internal class ValueModel
         {
-            public Value Value { get; set; }
+            public Variant Value { get; set; }
         }
         #endregion
     }

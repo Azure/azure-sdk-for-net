@@ -7,18 +7,18 @@ using System.Linq.Expressions;
 
 namespace Azure
 {
-    public readonly partial struct Value : IDynamicMetaObjectProvider
+    public readonly partial struct Variant : IDynamicMetaObjectProvider
     {
         /// <inheritdoc />
         DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
 
         private class MetaObject : DynamicMetaObject
         {
-            private readonly Value _value;
+            private readonly Variant _value;
 
             internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
-                _value = (Value)value;
+                _value = (Variant)value;
             }
 
             public override DynamicMetaObject BindConvert(ConvertBinder binder)
@@ -26,7 +26,7 @@ namespace Azure
                 Expression this_ = Expression.Convert(Expression, LimitType);
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
 
-                if (binder.Type == typeof(Value))
+                if (binder.Type == typeof(Variant))
                 {
                     return new DynamicMetaObject(this_, restrictions);
                 }

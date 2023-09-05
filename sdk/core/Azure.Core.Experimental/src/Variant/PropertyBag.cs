@@ -11,7 +11,7 @@ namespace Azure
     /// <summary>
     /// Used to hold instances of Value as a dictionary and a dynamic.
     /// </summary>
-    public class PropertyBag : Dictionary<string, Value>, IDynamicMetaObjectProvider
+    public class PropertyBag : Dictionary<string, Variant>, IDynamicMetaObjectProvider
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(PropertyBag).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(PropertyBag).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;

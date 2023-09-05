@@ -116,7 +116,7 @@ namespace Azure
         /// Casts value to byte, if possible.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator byte(in Variant value) => value.As<byte>();
+        public static implicit operator byte(in Variant value) => value.As<byte>();
         /// <summary>
         /// Casts nullable byte to value.
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure
         /// Casts value to nullable byte, if possible.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator byte?(in Variant value) => value.As<byte?>();
+        public static implicit operator byte?(in Variant value) => value.As<byte?>();
         #endregion
 
         #region SByte
@@ -220,7 +220,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator bool(in Variant value) => value.As<bool>();
+        public static implicit operator bool(in Variant value) => value.As<bool>();
         /// <summary>
         /// TBD.
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator bool?(in Variant value) => value.As<bool?>();
+        public static implicit operator bool?(in Variant value) => value.As<bool?>();
         #endregion
 
         #region Char
@@ -957,13 +957,13 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator Value(string? value) => new(value);
+        public static implicit operator Variant(string? value) => new(value);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator string?(in Value value) => value.As<string?>();
+        public static implicit operator string?(in Variant value) => value.As<string?>();
         #endregion
 
         #region T
