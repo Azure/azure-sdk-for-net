@@ -243,7 +243,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
       }
     }
     catch {
-      #Wait-Debugger
+      
       $responsePresent = $_.Exception.psobject.Properties.name -contains "Response"
       if ($responsePresent) {
         $statusCode = $_.Exception.Response.StatusCode.value__
