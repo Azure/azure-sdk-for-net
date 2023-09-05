@@ -1,9 +1,22 @@
 # Release History
 
-## 5.2.0 (2023-08-10)
+## 5.3.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support for `BlobsOptions.MaxDequeueCount`
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0 (2023-08-29)
+
+### Bugs Fixed
+- Updating ParameterBindingData  "Connection" value to the full connection name instead of the connection section key
+
+### Features Added
+- Added support for `BlobsOptions.PoisonBlobThreshold`
 
 ## 5.1.3 (2023-06-26)
 - Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)

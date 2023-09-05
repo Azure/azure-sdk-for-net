@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AttachedDataNetworkData>> value = default;
+            Optional<IReadOnlyList<MobileAttachedDataNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<AttachedDataNetworkData> array = new List<AttachedDataNetworkData>();
+                    List<MobileAttachedDataNetworkData> array = new List<MobileAttachedDataNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttachedDataNetworkData.DeserializeAttachedDataNetworkData(item));
+                        array.Add(MobileAttachedDataNetworkData.DeserializeMobileAttachedDataNetworkData(item));
                     }
                     value = array;
                     continue;

@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<Platform>> platforms = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<IList<MobileNetworkPlatform>> platforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("platforms"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            List<Platform> array = new List<Platform>();
+                            List<MobileNetworkPlatform> array = new List<MobileNetworkPlatform>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Platform.DeserializePlatform(item));
+                                array.Add(MobileNetworkPlatform.DeserializeMobileNetworkPlatform(item));
                             }
                             platforms = array;
                             continue;

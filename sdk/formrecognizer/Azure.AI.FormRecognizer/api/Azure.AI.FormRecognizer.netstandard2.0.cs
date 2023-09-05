@@ -2,6 +2,7 @@ namespace Azure.AI.FormRecognizer
 {
     public enum FormContentType
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         Json = 0,
         Pdf = 1,
         Png = 2,

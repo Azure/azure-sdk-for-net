@@ -71,7 +71,7 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="builder"></param>
         /// <param name="triggerMetadata">Trigger metadata.</param>
         /// <returns></returns>
-        public static IWebJobsBuilder AddAzureStorageBlobsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        internal static IWebJobsBuilder AddAzureStorageBlobsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
             builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider =>
             {

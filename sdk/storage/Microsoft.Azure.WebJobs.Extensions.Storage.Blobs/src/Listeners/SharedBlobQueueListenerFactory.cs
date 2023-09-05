@@ -98,7 +98,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             {
                 BatchSize = batchSize,
                 NewBatchThreshold = newBatchThreshold,
-                MaxDequeueCount = blobsOptions.MaxDequeueCount
+                MaxDequeueCount = blobsOptions.PoisonBlobThreshold
             };
         }
 

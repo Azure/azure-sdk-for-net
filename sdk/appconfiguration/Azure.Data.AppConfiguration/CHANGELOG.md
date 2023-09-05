@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+- Added the ability to create `FeatureFlagConfigurationSetting` and `SecretReferenceConfigurationSetting` instances for testing purposes using the `ConfigurationModelFactory`. It was previously not possible to populate service-owned fields when testing.
+
+- Marked a constructor overload of `ConfigurationSetting` that was intended for testing purposes as non-visible, as the `ConfigurationModelFactory` should instead be used.
+
 ### Other Changes
 
 ## 1.3.0-beta.2 (2023-07-11)

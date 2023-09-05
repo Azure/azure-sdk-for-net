@@ -631,13 +631,11 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
             var remainingMessages = expectedOrders.Count();
             while (remainingMessages > 0)
             {
-                foreach (var item in await receiver.ReceiveMessagesAsync(Orders.Length).ConfigureAwait(false))
-                {
-                    receivedMessages.Add(item);
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Color, item.Subject);
-                    remainingMessages--;
-                }
+                var item = await receiver.ReceiveMessageAsync();
+                receivedMessages.Add(item);
+                messageEnum.MoveNext();
+                Assert.AreEqual(messageEnum.Current.Color, item.Subject);
+                remainingMessages--;
             }
             Assert.AreEqual(0, remainingMessages);
 

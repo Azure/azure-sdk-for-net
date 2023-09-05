@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
