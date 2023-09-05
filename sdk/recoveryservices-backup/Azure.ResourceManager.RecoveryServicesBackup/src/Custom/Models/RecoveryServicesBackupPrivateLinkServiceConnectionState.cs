@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Private Link Service Connection State. </summary>
@@ -11,6 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary>
         /// ActionRequired
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string ActionRequired
         {
             get => ActionsRequired;
