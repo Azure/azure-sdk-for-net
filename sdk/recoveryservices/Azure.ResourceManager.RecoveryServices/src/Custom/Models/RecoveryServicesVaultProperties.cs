@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 if (SecuritySettings is null)
                 {
-                    SecuritySettings = new SecuritySettings();
+                    SecuritySettings = new RecoveryServicesSecuritySettings();
                 }
                 SecuritySettings.ImmutabilityState = value;
             }
