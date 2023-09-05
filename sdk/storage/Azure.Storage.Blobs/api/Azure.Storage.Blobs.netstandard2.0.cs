@@ -1,5 +1,20 @@
 namespace Azure.Storage.Blobs
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BlobAudience : System.IEquatable<Azure.Storage.Blobs.BlobAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BlobAudience(string audience) { throw null; }
+        public static Azure.Storage.Blobs.BlobAudience PublicAudience { get { throw null; } }
+        public static Azure.Storage.Blobs.BlobAudience BlobServiceAccountAudience(string storageAccountName) { throw null; }
+        public bool Equals(Azure.Storage.Blobs.BlobAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BlobClient : Azure.Storage.Blobs.Specialized.BlobBaseClient
     {
         protected BlobClient() { }
@@ -52,6 +67,7 @@ namespace Azure.Storage.Blobs
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
         public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2023_08_03) { }
+        public Azure.Storage.Blobs.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
