@@ -2,39 +2,29 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>AddParticipantsResult Result.</summary>
-    public class AddParticipantResult
+    public class CancelAddParticipantResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal AddParticipantResult(CallParticipant participant, string operationContext)
+        internal CancelAddParticipantResult(CancelAddParticipantResponseInternal internalObj)
         {
-            Participant = participant;
-            OperationContext = operationContext;
-        }
-
-        internal AddParticipantResult(AddParticipantResponseInternal internalObj)
-        {
-            Participant = new CallParticipant(internalObj.Participant);
             OperationContext = internalObj.OperationContext;
-            InvitationId = internalObj.InvitiationId;
+            InvitationId = internalObj.InvitationId;
         }
 
-        /// <summary>Gets the participant.</summary>
-        public CallParticipant Participant { get; }
         /// <summary>The operation context provided by client.</summary>
         public string OperationContext { get; }
+
         /// <summary>
-        /// The invitation ID used to add the participant.
+        /// Invitation ID used to cancel the add participant action.
         /// </summary>
         public string InvitationId { get; }
 
