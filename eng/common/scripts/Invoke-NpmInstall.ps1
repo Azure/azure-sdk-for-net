@@ -61,7 +61,7 @@ try {
 
     if($useAlphaNpmRegistry) {
         Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
-        "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
+        "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest@local/npm/registry/" | Out-File '.npmrc'
     }
 
     if ($usingLockFile) {
