@@ -59,11 +59,15 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
         /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
         /// <param name="comments"> IoT hub comments. </param>
+        /// <param name="deviceStreamsStreamingEndpoints"> The device streams properties of iothub. </param>
         /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
+        /// <param name="encryption"> The encryption properties for the IoT hub. </param>
         /// <param name="locations"> Primary and secondary location for iot hub. </param>
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
+        /// <param name="rootCertificate"> This property store root certificate related information. </param>
+        /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IotHubCapability? features = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = null, bool? disableDeviceSas = null, bool? disableModuleSas = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdns = null, IotHubPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<IotHubIPFilterRule> ipFilterRules = null, IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = null, IotHubRoutingProperties routing = null, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = null, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = null, CloudToDeviceProperties cloudToDevice = null, string comments = null, IEnumerable<string> deviceStreamsStreamingEndpoints = null, IotHubCapability? features = null, EncryptionPropertiesDescription encryption = null, IEnumerable<IotHubLocationDescription> locations = null, bool? enableDataResidency = null, RootCertificateProperties rootCertificate = null, IotHubIPVersion? ipVersion = null)
         {
             authorizationPolicies ??= new List<SharedAccessSignatureAuthorizationRule>();
             allowedFqdns ??= new List<string>();
@@ -72,9 +76,10 @@ namespace Azure.ResourceManager.IotHub.Models
             eventHubEndpoints ??= new Dictionary<string, EventHubCompatibleEndpointProperties>();
             storageEndpoints ??= new Dictionary<string, IotHubStorageEndpointProperties>();
             messagingEndpoints ??= new Dictionary<string, MessagingEndpointProperties>();
+            deviceStreamsStreamingEndpoints ??= new List<string>();
             locations ??= new List<IotHubLocationDescription>();
 
-            return new IotHubProperties(authorizationPolicies?.ToList(), disableLocalAuth, disableDeviceSas, disableModuleSas, restrictOutboundNetworkAccess, allowedFqdns?.ToList(), publicNetworkAccess, ipFilterRules?.ToList(), networkRuleSets, minTlsVersion, privateEndpointConnections?.ToList(), provisioningState, state, hostName, eventHubEndpoints, routing, storageEndpoints, messagingEndpoints, enableFileUploadNotifications, cloudToDevice, comments, features, locations?.ToList(), enableDataResidency);
+            return new IotHubProperties(authorizationPolicies?.ToList(), disableLocalAuth, disableDeviceSas, disableModuleSas, restrictOutboundNetworkAccess, allowedFqdns?.ToList(), publicNetworkAccess, ipFilterRules?.ToList(), networkRuleSets, minTlsVersion, privateEndpointConnections?.ToList(), provisioningState, state, hostName, eventHubEndpoints, routing, storageEndpoints, messagingEndpoints, enableFileUploadNotifications, cloudToDevice, comments, deviceStreamsStreamingEndpoints != null ? new IotHubPropertiesDeviceStreams(deviceStreamsStreamingEndpoints?.ToList()) : null, features, encryption, locations?.ToList(), enableDataResidency, rootCertificate, ipVersion);
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionData. </summary>
@@ -110,6 +115,15 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubLocationDescription IotHubLocationDescription(AzureLocation? location = null, IotHubReplicaRoleType? role = null)
         {
             return new IotHubLocationDescription(location, role);
+        }
+
+        /// <summary> Initializes a new instance of RootCertificateProperties. </summary>
+        /// <param name="isRootCertificateV2Enabled"> This property when set to true, hub will use G2 cert; while it's set to false, hub uses Baltimore Cert. </param>
+        /// <param name="lastUpdatedOn"> the last update time to root certificate flag. </param>
+        /// <returns> A new <see cref="Models.RootCertificateProperties"/> instance for mocking. </returns>
+        public static RootCertificateProperties RootCertificateProperties(bool? isRootCertificateV2Enabled = null, DateTimeOffset? lastUpdatedOn = null)
+        {
+            return new RootCertificateProperties(isRootCertificateV2Enabled, lastUpdatedOn);
         }
 
         /// <summary> Initializes a new instance of IotHubSkuInfo. </summary>

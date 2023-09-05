@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

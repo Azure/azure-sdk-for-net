@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Support
         public virtual AsyncPageable<ProblemClassificationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Support
         public virtual Pageable<ProblemClassificationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

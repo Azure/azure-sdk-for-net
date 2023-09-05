@@ -9,7 +9,6 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/2f7a3cbda00c6ae4199940d500e5212b6481d9ea/specification/appconfiguration/data-plane/Microsoft.AppConfiguration/preview/2022-11-01-preview/appconfiguration.json
 namespace: Azure.Data.AppConfiguration
 title: ConfigurationClient
-keep-non-overloadable-protocol-signature: true
 ```
 
 ### Change Endpoint type to Uri

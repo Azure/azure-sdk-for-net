@@ -20,17 +20,17 @@ namespace Azure.AI.OpenAI
         ///     Gets a list of generated image items in the format specified for the request.
         /// </summary>
         [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeDataProperty))]
-        public IReadOnlyList<InternalImageLocation> Data { get; }
+        public IReadOnlyList<ImageLocation> Data { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void DeserializeDataProperty(JsonProperty property, ref IReadOnlyList<InternalImageLocation> data)
+        internal static void DeserializeDataProperty(JsonProperty property, ref IReadOnlyList<ImageLocation> data)
         {
             // CUSTOM CODE NOTE: this hook for Data is needed pending improved codegen support for union types; it
             //                      otherwise generates with "property.Value.()"
-            List<InternalImageLocation> array = new List<InternalImageLocation>();
+            List<ImageLocation> array = new List<ImageLocation>();
             foreach (var item in property.Value.EnumerateArray())
             {
-                array.Add(InternalImageLocation.DeserializeInternalImageLocation(item));
+                array.Add(ImageLocation.DeserializeImageLocation(item));
             }
             data = array;
         }

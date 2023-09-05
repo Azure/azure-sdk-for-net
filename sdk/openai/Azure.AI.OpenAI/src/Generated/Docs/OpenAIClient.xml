@@ -111,6 +111,14 @@ var result = client.GetCompletions("<deploymentId>", completionsOptions);
     </member>
     <member name="GetChatCompletions(string,RequestContent,RequestContext)">
     </member>
+    <member name="GetChatCompletionsWithAzureExtensionsAsync(string,ChatCompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensions(string,ChatCompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensionsAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetChatCompletionsWithAzureExtensions(string,RequestContent,RequestContext)">
+    </member>
     <member name="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)">
     </member>
     <member name="BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)">

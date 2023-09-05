@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

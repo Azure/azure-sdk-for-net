@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -415,7 +416,7 @@ namespace Azure.ResourceManager.Media
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
         }
 
         /// <summary>
@@ -440,7 +441,7 @@ namespace Azure.ResourceManager.Media
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +522,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<MediaAssetStreamingLocator> GetStreamingLocatorsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListStreamingLocatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator, _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStreamingLocators", "streamingLocators", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator, _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStreamingLocators", "streamingLocators", null, cancellationToken);
         }
 
         /// <summary>
@@ -542,7 +543,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<MediaAssetStreamingLocator> GetStreamingLocators(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListStreamingLocatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator, _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStreamingLocators", "streamingLocators", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator, _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStreamingLocators", "streamingLocators", null, cancellationToken);
         }
     }
 }
