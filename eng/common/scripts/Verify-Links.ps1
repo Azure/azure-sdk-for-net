@@ -188,7 +188,11 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
 
   #$links | Foreach-Object { Write-Host $_ }
 
-  return $links
+  if ($null -eq $links) {
+    $links = @()
+  }
+
+  return ,$links
 }
 
 function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
@@ -239,9 +243,15 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
       }
     }
     catch {
-      $statusCode = $_.Exception.Response.StatusCode.value__
+      #Wait-Debugger
+      $responsePresent = $_.Exception.psobject.Properties.name -contains "Response"
+      if ($responsePresent) {
+        $statusCode = $_.Exception.Response.StatusCode.value__
+      } else {
+        $statusCode = $null
+      }
 
-      if(!$statusCode) {
+      if (!$statusCode) {
         # Try to pull the error code from any inner SocketException we might hit
         $statusCode = $_.Exception.InnerException.ErrorCode
       }
@@ -259,7 +269,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
       else {
         if ($null -ne $statusCode) {
           # For 429 rate-limiting try to pause if possible
-          if ($allowRetry -and $_.Exception.Response -and $statusCode -eq 429) {
+          if ($allowRetry -and $responsePresent -and $statusCode -eq 429) {
             $retryAfter = $_.Exception.Response.Headers.RetryAfter.Delta.TotalSeconds
 
             # Default retry after 60 (arbitrary) seconds if no header given
@@ -368,7 +378,7 @@ function GetLinks([System.Uri]$pageUri)
 
   $links = ParseLinks $pageUri $content
 
-  return $links;
+  return ,$links;
 }
 
 if ($urls) {
@@ -433,6 +443,7 @@ if ($devOpsLogging) {
 while ($pageUrisToCheck.Count -ne 0)
 {
   $pageUri = $pageUrisToCheck.Dequeue();
+  Write-Verbose "Processing pageUri $pageUri"
   if ($checkedPages.ContainsKey($pageUri)) { continue }
   $checkedPages[$pageUri] = $true;
 
