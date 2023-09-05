@@ -4,7 +4,7 @@ function Invoke-LoggedCommand($command, $executePath)
     $startTime = Get-Date
 
     if($pipelineBuild) {
-        Write-Host "##[group]> $command"
+        Write-Host "##[group]$command"
     } else {
         Write-Host "> $command"
     }
