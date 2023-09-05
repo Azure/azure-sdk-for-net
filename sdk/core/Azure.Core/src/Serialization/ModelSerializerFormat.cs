@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Enumerator representing format of the serialized model.
+    /// A format used to specify how a model should be serialized and deserialized.
     /// </summary>
     public readonly partial struct ModelSerializerFormat : IEquatable<ModelSerializerFormat>
     {
@@ -15,12 +15,18 @@ namespace Azure.Core.Serialization
         internal const string WireValue = "W";
 
         /// <summary>
-        /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
+        /// Default format which will serialize all properties including read-only and additional properties.
+        /// The format will always be JSON.
         /// </summary>
         public static readonly ModelSerializerFormat Json = new ModelSerializerFormat(JsonValue);
 
         /// <summary>
-        /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.
+        /// Format used to serialize this model when sending as a request to an Azure service.
+        /// It may not serialize read-only properties or additional properties.
+        /// The content-type will vary between JSON, XML, etc., depending on the service.
+        ///
+        /// Most use cases should prefer a more complete format like <see cref="ModelSerializerFormat.Json"/> that includes
+        /// read-only and additional properties.
         /// </summary>
         public static readonly ModelSerializerFormat Wire = new ModelSerializerFormat(WireValue);
 
@@ -55,12 +61,6 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="value">The string value to convert.</param>
         public static implicit operator ModelSerializerFormat(string value) => new ModelSerializerFormat(value);
-
-        /// <summary>
-        /// Converts a <see cref="ModelSerializerFormat"/> to a string.
-        /// </summary>
-        /// <param name="value">The ModelSerializerFormat value to convert.</param>
-        public static implicit operator string(ModelSerializerFormat value) => value.ToString();
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

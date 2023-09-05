@@ -2,24 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Add
+    /// A generic converter which allows <see cref="JsonSerializer"/> to be able to serialize and deserialize any models that implement <see cref="IModelJsonSerializable{T}"/>.
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IModelSerializable>
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+    [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
+#endif
+    public class ModelJsonConverter : JsonConverter<IModelJsonSerializable<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// ModelSerializerFormat that determines Format of serialized model. ModelSerializerFormat.Data = data format which means both properties are false, ModelSerializerFormat.Wire = wire format which means both properties are true Default is ModelSerializerFormat.Data.
+        /// Gets the <see cref="ModelSerializerOptions"/> used to serialize and deserialize models.
         /// </summary>
-        public ModelSerializerFormat Format { get; }
+        public ModelSerializerOptions ModelSerializerOptions { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default format of <see cref="ModelSerializerFormat.Json"/>.
@@ -32,56 +34,38 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="format"> The format to serialize to and deserialize from. </param>
         public ModelJsonConverter(ModelSerializerFormat format)
-        {
-            Format = format;
-        }
+            : this(ModelSerializerOptions.GetOptions(format)) { }
 
         /// <summary>
-        /// Check if a certain type can be converted to IModelSerializable
+        /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
         /// </summary>
-        /// <param name="typeToConvert"></param>
-        /// <returns></returns>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        public ModelJsonConverter(ModelSerializerOptions options)
+        {
+            ModelSerializerOptions = options;
+        }
+
+        /// <inheritdoc/>
         public override bool CanConvert(Type typeToConvert)
         {
             return !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
         }
 
-        /// <summary>
-        /// todo
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="typeToConvert"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IModelJsonSerializable<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, GetOptions());
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return (IModelJsonSerializable<object>)ModelSerializer.Deserialize(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, ModelSerializerOptions)!;
         }
 
-        /// <summary>
-        /// todo
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="value"></param>
-        /// <param name="options"></param>
+        /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IModelSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IModelJsonSerializable<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            BinaryData data = value.Serialize(GetOptions());
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(data);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(data.ToString()).RootElement);
-#endif
-        }
-
-        private ModelSerializerOptions GetOptions()
-        {
-            return new ModelSerializerOptions(Format);
+            value.Serialize(writer, ModelSerializerOptions);
         }
     }
 }
