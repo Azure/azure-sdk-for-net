@@ -18,10 +18,10 @@ foreach ($folder in $packageFolders) {
     Write-Host 'Generating projects under folder ' -ForegroundColor Green -NoNewline
     Write-Host "$folder" -ForegroundColor Yellow
     if ($showSummary) {
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope='$folder' /v:n /ds 'eng\service.proj'"
+      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" /v:n /ds eng\service.proj"
     }
     else {
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope='$folder' 'eng\service.proj'"
+      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$folder`" eng\service.proj"
     }
     if ($LastExitCode -ne 0) {
       Write-Error "Generation error in $folder"
