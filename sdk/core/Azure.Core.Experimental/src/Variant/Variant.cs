@@ -951,6 +951,20 @@ namespace Azure
         public static explicit operator decimal?(in Variant value) => value.As<decimal?>();
         #endregion
 
+        #region String
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="value"></param>
+        public static implicit operator Variant(string value) => new(value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="value"></param>
+        public static explicit operator string(in Variant value) => value.As<string>();
+        #endregion
+
         #region T
         /// <summary>
         /// TBD.
