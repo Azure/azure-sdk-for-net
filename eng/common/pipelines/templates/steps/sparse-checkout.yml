@@ -29,7 +29,7 @@ steps:
             if (!$dir) {
               $dir = "./$($repository.Name)"
             }
-            New-Item $dir -ItemType Directory -Force
+            New-Item $dir -ItemType Directory -Force | Out-Null
             Push-Location $dir
 
             if (Test-Path .git/info/sparse-checkout) {
