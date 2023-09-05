@@ -2,6 +2,8 @@
 
 ## 1.0.0 (2023-09-05)
 
+This package is the first stable release of the Azure Mobile Network management library.
+
 ### Features Added
 
 - Updated api-version to `2023-06-01`.
