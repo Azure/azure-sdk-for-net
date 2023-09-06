@@ -2285,6 +2285,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState
     {
         public RecoveryServicesBackupPrivateLinkServiceConnectionState() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string ActionRequired { get { throw null; } set { } }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.PrivateEndpointConnectionStatus? Status { get { throw null; } set { } }
@@ -2973,6 +2975,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadSapHanaDBInstanceProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.VmWorkloadProtectedItem
     {
         public VmWorkloadSapHanaDBInstanceProtectedItem() { }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class VmWorkloadSapHanaHsr : Azure.ResourceManager.RecoveryServicesBackup.Models.VmWorkloadProtectableItem
+    {
+        public VmWorkloadSapHanaHsr() { }
     }
     public partial class VmWorkloadSapHanaSystemProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.VmWorkloadProtectableItem
     {
