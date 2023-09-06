@@ -5,7 +5,7 @@ using System;
 using Azure.Core.Shared;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests;
+namespace Azure.Messaging.ServiceBus.Tests;
 
 public class GuidUtilitiesTests
 {
