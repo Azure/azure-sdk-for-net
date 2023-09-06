@@ -3,9 +3,9 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
-    public class Creation
+    public class VariantCreation
     {
         [Test]
         public void CreateIsAllocationFree()
