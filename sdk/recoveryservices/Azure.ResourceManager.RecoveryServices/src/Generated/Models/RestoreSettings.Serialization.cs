@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class SecuritySettings : IUtf8JsonSerializable
+    internal partial class RestoreSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImmutabilitySettings))
+            if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
-                writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue(ImmutabilitySettings);
+                writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
+                writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
             }
             writer.WriteEndObject();
         }
 
-        internal static SecuritySettings DeserializeSecuritySettings(JsonElement element)
+        internal static RestoreSettings DeserializeRestoreSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ImmutabilitySettings> immutabilitySettings = default;
+            Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("immutabilitySettings"u8))
+                if (property.NameEquals("crossSubscriptionRestoreSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value);
                     continue;
                 }
             }
-            return new SecuritySettings(immutabilitySettings.Value);
+            return new RestoreSettings(crossSubscriptionRestoreSettings.Value);
         }
     }
 }
