@@ -29,6 +29,22 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: keyvault
+    SupportedClouds: China
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'eastus2euap'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+      China:
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        MatrixReplace:
+          # Use dedicated pool with regional affinity to China cloud.
+        - Pool=(.*)-general/$1-asia
+        MatrixFilters:
+        - Pool=.*mms-ubuntu-2004.*
     ArtifactName: packages
     Artifacts:
     - name: Azure.Security.KeyVault.Administration
