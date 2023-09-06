@@ -173,7 +173,8 @@ function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSo
 }
 
 
-# TODO: Refactor
+# This function is called within a loop. To prevent multiple reads of the same 
+# file data, this uses a script-scoped cache variable.
 $script:PackageMetadataJsonLookup = $null
 function GetPackageMetadataJsonLookup($docRepoLocation) { 
     if ($script:PackageMetadataJsonLookup) {
