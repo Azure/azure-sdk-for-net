@@ -3,9 +3,9 @@
 
 namespace Azure.Storage.DataMovement
 {
-    internal static class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
-        public static TransferCheckpointer GetCheckpointer(this TransferCheckpointerOptions options)
+        public static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
         {
             if (!string.IsNullOrEmpty(options?.CheckpointerPath))
             {

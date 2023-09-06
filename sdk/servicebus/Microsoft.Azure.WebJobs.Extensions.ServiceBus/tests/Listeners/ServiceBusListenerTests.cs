@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private readonly Mock<IConcurrencyThrottleManager> _mockConcurrencyThrottleManager;
         private readonly ServiceBusClient _client;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly Mock<IDrainModeManager> _mockDrainModeManager;
 
         public ServiceBusListenerTests()
         {
@@ -57,6 +59,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             _mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
             _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockMessagingProvider.Object, new AzureEventSourceLogForwarder(new NullLoggerFactory()), new OptionsWrapper<ServiceBusOptions>(new ServiceBusOptions()));
+
+            _mockDrainModeManager = new Mock<IDrainModeManager>();
+            _mockDrainModeManager.Setup(p => p.IsDrainModeEnabled).Returns(true);
 
             _mockMessagingProvider
                 .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), _entityPath, It.IsAny<ServiceBusProcessorOptions>()))
@@ -87,7 +92,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                _concurrencyManager);
+                _concurrencyManager,
+                _mockDrainModeManager.Object);
         }
 
         [SetUp]
@@ -246,7 +252,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                _concurrencyManager);
+                _concurrencyManager,
+                _mockDrainModeManager.Object);
 
             await listener.StartAsync(CancellationToken.None);
             await listener.StopAsync(CancellationToken.None);
@@ -290,7 +297,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                _concurrencyManager);
+                _concurrencyManager,
+                _mockDrainModeManager.Object);
 
             await listener.StartAsync(CancellationToken.None);
             await listener.StopAsync(CancellationToken.None);

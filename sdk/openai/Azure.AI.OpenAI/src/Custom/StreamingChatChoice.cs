@@ -39,6 +39,8 @@ namespace Azure.AI.OpenAI
 
         private bool _isFinishedStreaming { get; set; } = false;
 
+        private Exception _pumpException { get; set; }
+
         internal StreamingChatChoice(ChatChoice originalBaseChoice)
         {
             _baseChoices = new List<ChatChoice>() { originalBaseChoice };
@@ -89,6 +91,11 @@ namespace Azure.AI.OpenAI
                     }
                 }
 
+                if (_pumpException != null)
+                {
+                    throw _pumpException;
+                }
+
                 ChatMessage message = null;
 
                 lock (_baseChoicesLock)
@@ -107,11 +114,12 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        internal void EnsureFinishStreaming()
+        internal void EnsureFinishStreaming(Exception pumpException = null)
         {
             if (!_isFinishedStreaming)
             {
                 _isFinishedStreaming = true;
+                _pumpException = pumpException;
                 _updateAvailableEvent.Set();
             }
         }

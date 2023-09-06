@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenancePublicConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenancePublicConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -5,12 +5,14 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
     /// <summary>
     /// EventSource for the AzureMonitorExporter.
     /// EventSource Guid at Runtime: bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b.
+    /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
     /// PerfView Instructions:
@@ -36,7 +38,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         internal const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+#if DEBUG
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+#endif
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -355,5 +359,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(36, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
         public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(36, typeName, value);
+
+        [Event(37, Message = "Failed to delete telemetry from storage. This may result in duplicate telemetry if the file is processed again. Not user actionable.", Level = EventLevel.Warning)]
+        public void DeletedFailed() => WriteEvent(37);
+
+        [NonEvent]
+        public void PartialContentResponseInvalid(int totalTelemetryItems, TelemetryErrorDetails error)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                PartialContentResponseInvalid(totalTelemetryItems, error.Index?.ToString() ?? "N/A", error.StatusCode?.ToString() ?? "N/A", error.Message);
+            }
+        }
+
+        [Event(38, Message = "Received a partial success from ingestion that does not match telemetry that was sent. Total telemetry items sent: {0}. Error Index: {1}. Error StatusCode: {2}. Error Message: {3}", Level = EventLevel.Warning)]
+        public void PartialContentResponseInvalid(int totalTelemetryItems, string errorIndex, string errorStatusCode, string errorMessage) => WriteEvent(38, totalTelemetryItems, errorIndex, errorStatusCode, errorMessage);
+
+        [NonEvent]
+        public void PartialContentResponseUnhandled(TelemetryErrorDetails error)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                PartialContentResponseUnhandled(error.StatusCode?.ToString() ?? "N/A", error.Message);
+            }
+        }
+
+        [Event(39, Message = "Received a partial success from ingestion. This status code is not handled and telemetry will be lost. Error StatusCode: {0}. Error Message: {1}", Level = EventLevel.Warning)]
+        public void PartialContentResponseUnhandled(string errorStatusCode, string errorMessage) => WriteEvent(39, errorStatusCode, errorMessage);
     }
 }

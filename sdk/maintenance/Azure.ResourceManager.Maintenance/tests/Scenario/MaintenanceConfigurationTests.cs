@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -89,14 +90,19 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
             {
                 Namespace = "Microsoft.Maintenance",
-                MaintenanceScope = MaintenanceScope.Host,
+                MaintenanceScope = MaintenanceScope.InGuestPatch,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = DateTimeOffset.Parse("2023-12-31 00:00"),
+                StartOn = DateTimeOffset.Parse("2024-12-31 00:00"),
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("05:00"),
+                Duration = TimeSpan.Parse("03:00"),
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
+                InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
+                    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false),
+                    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }))
             };
+            data.ExtensionProperties.Add("InGuestPatchMode", "User");
+
             ArmOperation<MaintenanceConfigurationResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
             return lro.Value;
         }

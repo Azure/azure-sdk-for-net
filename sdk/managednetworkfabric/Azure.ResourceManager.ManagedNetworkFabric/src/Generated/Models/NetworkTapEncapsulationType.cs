@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Encapsulation Type. </summary>
+    /// <summary> Encapsulation Type that needs to be matched. </summary>
     public readonly partial struct NetworkTapEncapsulationType : IEquatable<NetworkTapEncapsulationType>
     {
         private readonly string _value;

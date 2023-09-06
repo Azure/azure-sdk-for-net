@@ -62,9 +62,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 lastAccessed: blobProperties.LastAccessed);
         }
 
-        internal static ReadStreamStorageResourceResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
+        internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
-            return new ReadStreamStorageResourceResult(
+            return new StorageResourceReadStreamResult(
                 content: result.Content,
                 contentRange: result.Details.ContentRange,
                 acceptRanges: result.Details.AcceptRanges,
@@ -131,7 +131,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new AppendBlobStorageResourceOptions(options?.ResourceOptions);
+            return new AppendBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new BlockBlobStorageResourceOptions(options?.ResourceOptions);
+            return new BlockBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -334,7 +334,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static PageBlobStorageResourceOptions ToPageBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new PageBlobStorageResourceOptions(options?.ResourceOptions);
+            return new PageBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -421,7 +421,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // Get AccessTier
             if (!isSource)
             {
-                int startIndex = DataMovementConstants.PlanFile.DstBlobBlockBlobTierIndex;
+                int startIndex = DataMovementConstants.JobPartPlanFile.DstBlobBlockBlobTierIndex;
                 JobPartPlanBlockBlobTier accessTier = (JobPartPlanBlockBlobTier)await checkpointer.GetByteValue(
                     transferId,
                     startIndex,
@@ -446,7 +446,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if (!isSource)
             {
                 // Get AccessTier
-                int startIndex = DataMovementConstants.PlanFile.DstBlobPageBlobTierIndex;
+                int startIndex = DataMovementConstants.JobPartPlanFile.DstBlobPageBlobTierIndex;
                 JobPartPlanPageBlobTier accessTier = (JobPartPlanPageBlobTier)await checkpointer.GetByteValue(
                     transferId,
                     startIndex,
@@ -469,24 +469,24 @@ namespace Azure.Storage.DataMovement.Blobs
             if (!isSource)
             {
                 // Get Metadata
-                int metadataIndex = DataMovementConstants.PlanFile.DstBlobMetadataLengthIndex;
-                int metadataReadLength = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex - metadataIndex;
+                int metadataIndex = DataMovementConstants.JobPartPlanFile.DstBlobMetadataLengthIndex;
+                int metadataReadLength = DataMovementConstants.JobPartPlanFile.DstBlobTagsLengthIndex - metadataIndex;
                 string metadata = await checkpointer.GetHeaderUShortValue(
                     transferId,
                     metadataIndex,
                     metadataReadLength,
-                    DataMovementConstants.PlanFile.MetadataStrNumBytes,
+                    DataMovementConstants.JobPartPlanFile.MetadataStrNumBytes,
                     cancellationToken).ConfigureAwait(false);
                 options.Metadata = metadata.ToDictionary(nameof(metadata));
 
                 // Get blob tags
-                int tagsIndex = DataMovementConstants.PlanFile.DstBlobTagsLengthIndex;
-                int tagsReadLength = DataMovementConstants.PlanFile.DstBlobIsSourceEncrypted - tagsIndex;
+                int tagsIndex = DataMovementConstants.JobPartPlanFile.DstBlobTagsLengthIndex;
+                int tagsReadLength = DataMovementConstants.JobPartPlanFile.DstBlobIsSourceEncrypted - tagsIndex;
                 string tags = await checkpointer.GetHeaderLongValue(
                     transferId,
                     tagsIndex,
                     tagsReadLength,
-                    DataMovementConstants.PlanFile.BlobTagsStrNumBytes,
+                    DataMovementConstants.JobPartPlanFile.BlobTagsStrNumBytes,
                     cancellationToken).ConfigureAwait(false);
                 options.Tags = tags.ToDictionary(nameof(tags));
             }
@@ -506,8 +506,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 cancellationToken).ConfigureAwait(false);
             BlobStorageResourceContainerOptions options = new()
             {
-                DirectoryPrefix = directoryPrefix,
-                ResourceOptions = baseOptions,
+                BlobDirectoryPrefix = directoryPrefix,
+                BlobOptions = baseOptions,
             };
 
             return options;

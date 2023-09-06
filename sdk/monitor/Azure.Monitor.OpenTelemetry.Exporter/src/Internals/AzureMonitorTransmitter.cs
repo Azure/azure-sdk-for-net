@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (options.ConnectionString == null)
             {
-                var connectionString = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+                var connectionString = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING);
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
                 {
@@ -137,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var disableStatsbeat = platform.GetEnvironmentVariable("APPLICATIONINSIGHTS_STATSBEAT_DISABLED");
+                    var disableStatsbeat = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATSBEAT_DISABLED);
                     if (string.Equals(disableStatsbeat, "true", StringComparison.OrdinalIgnoreCase))
                     {
                         AzureMonitorExporterEventSource.Log.StatsbeatDisabled();

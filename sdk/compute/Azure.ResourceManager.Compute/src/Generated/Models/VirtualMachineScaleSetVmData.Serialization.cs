@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> modelDefinitionApplied = default;
             Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
             Optional<string> userData = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceId"u8))
@@ -390,11 +392,20 @@ namespace Azure.ResourceManager.Compute
                             userData = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("timeCreated"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), identity, Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value);
+            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), identity, Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

@@ -6,7 +6,6 @@
 
 ### Breaking Changes
 - [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
-    - `BlobStorageResourceContainer.CanProduceUri`
     - `BlobStorageResourceContainer.GetStorageResourcesAsync`
     - `*BlobStorageResource.CanProduceUri`
     - `*BlobStorageResource.Length`
@@ -21,6 +20,14 @@
     - `*BlobStorageResource.GetPropertiesAsync`
     - `*BlobStorageResource.ReadStreamAsync`
     - `*BlobStorageResource.WriteFromStreamAsync`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceProvider.MakeResourceAsync` to `BlobStorageResourceProvider.CreateResourceAsync`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.DirectoryPrefix` to `BlobDirectoryPrefix`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.ResourceOptions` to `BlobOptions`
+- [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
+- [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
+- [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
 ### Bugs Fixed
 
 ### Other Changes

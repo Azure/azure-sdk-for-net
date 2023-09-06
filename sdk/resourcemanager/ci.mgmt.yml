@@ -82,6 +82,7 @@ trigger:
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
@@ -259,6 +260,7 @@ pr:
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereDeploymentDeploymentsRestClient.CreateListByDeviceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, top, skip, pageSizeHint);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeploymentResource(Client, SphereDeploymentData.DeserializeSphereDeploymentData(e)), _sphereDeploymentDeploymentsClientDiagnostics, Pipeline, "SphereDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

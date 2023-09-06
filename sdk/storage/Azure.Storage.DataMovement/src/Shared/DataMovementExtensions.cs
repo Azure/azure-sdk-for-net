@@ -22,14 +22,14 @@ namespace Azure.Storage.DataMovement
         public static async Task<StreamToUriJobPart> ToJobPartAsync(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource)
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
+            DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -48,14 +48,14 @@ namespace Azure.Storage.DataMovement
         public static async Task<ServiceToServiceJobPart> ToJobPartAsync(
             this ServiceToServiceTransferJob baseJob,
             Stream planFileStream,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource)
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
+            DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -74,14 +74,14 @@ namespace Azure.Storage.DataMovement
         public static async Task<UriToStreamJobPart> ToJobPartAsync(
             this UriToStreamTransferJob baseJob,
             Stream planFileStream,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource)
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
             // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
+            DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
@@ -108,16 +108,16 @@ namespace Azure.Storage.DataMovement
 
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceResource.Path.Length + 1);
+            string childSourceName = childSourcePath.Substring(sourceResource.Uri.GetPath().Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
+            DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourceName),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
@@ -139,13 +139,13 @@ namespace Azure.Storage.DataMovement
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
             string childDestinationPath = header.DestinationPath;
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
+            DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
@@ -168,14 +168,14 @@ namespace Azure.Storage.DataMovement
             string childSourcePath = header.SourcePath;
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationResource.Path.Length + 1);
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.GetPath().Length + 1);
+            DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourceName),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
@@ -189,7 +189,7 @@ namespace Azure.Storage.DataMovement
         /// Translate the initial job part header to a job plan format file
         /// </summary>
         internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart,
-            StorageTransferStatus jobStatus,
+            DataTransferStatus jobStatus,
             bool isFinalPart)
         {
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
@@ -214,34 +214,18 @@ namespace Azure.Storage.DataMovement
                 checksumVerificationOption: 0); // TODO: update when supported
 
             // Create the source Path
-            string sourcePath;
-            if (jobPart._sourceResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                sourcePath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                sourcePath = jobPart._sourceResource.Path;
-            }
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+            sourceUriBuilder.Query = "";
+            string sourcePath = sourceUriBuilder.Uri.AbsoluteUri;
 
-            string destinationPath;
-            if (jobPart._destinationResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                destinationPath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                destinationPath = jobPart._destinationResource.Path;
-            }
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+            destinationUriBuilder.Query = "";
+            string destinationPath = destinationUriBuilder.Uri.AbsoluteUri;
 
             return new JobPartPlanHeader(
-                version: DataMovementConstants.PlanFile.SchemaVersion,
+                version: DataMovementConstants.JobPartPlanFile.SchemaVersion,
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
@@ -252,7 +236,7 @@ namespace Azure.Storage.DataMovement
                 destinationPath: destinationPath,
                 destinationExtraQuery: "", // TODO: convert options to string
                 isFinalPart: isFinalPart,
-                forceWrite: jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
+                forceWrite: jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists, // TODO: change to enum value
                 forceIfReadOnly: false, // TODO: revisit for Azure Files
                 autoDecompress: false, // TODO: revisit if we want to support this feature
                 priority: 0, // TODO: add priority feature
@@ -289,19 +273,12 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MismatchTransferId(jobPart._dataTransfer.Id, header.TransferId);
             }
 
-            // Check source path
-            string passedSourcePath;
-            if (jobPart._sourceResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                passedSourcePath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                passedSourcePath = jobPart._sourceResource.Path;
-            }
+            // Check source path'
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+            sourceUriBuilder.Query = "";
+            string passedSourcePath = sourceUriBuilder.Uri.AbsoluteUri;
+
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
             if (!header.SourcePath.StartsWith(passedSourcePath))
@@ -310,18 +287,11 @@ namespace Azure.Storage.DataMovement
             }
 
             // Check destination path
-            string passedDestinationPath;
-            if (jobPart._destinationResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                passedDestinationPath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                passedDestinationPath = jobPart._destinationResource.Path;
-            }
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+            destinationUriBuilder.Query = "";
+            string passedDestinationPath = destinationUriBuilder.Uri.AbsoluteUri;
+
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
             if (!header.DestinationPath.StartsWith(passedDestinationPath))
@@ -330,11 +300,14 @@ namespace Azure.Storage.DataMovement
             }
 
             // Check CreateMode / Overwrite
-            if ((header.ForceWrite && jobPart._createMode != StorageResourceCreateMode.Overwrite) ||
-                (!header.ForceWrite && jobPart._createMode == StorageResourceCreateMode.Overwrite))
+            if ((header.ForceWrite && jobPart._createMode != StorageResourceCreationPreference.OverwriteIfExists) ||
+                (!header.ForceWrite && jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists))
             {
                 throw Errors.MismatchResumeCreateMode(header.ForceWrite, jobPart._createMode);
             }
         }
+
+        internal static bool IsLocalResource(this StorageResource resource)
+            => resource is LocalFileStorageResource || resource is LocalDirectoryStorageResourceContainer;
     }
 }
