@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ResponseBasedOriginErrorDetectionSettings : IUtf8JsonSerializable
+    public partial class ResponseBasedOriginErrorDetectionSettings : IUtf8JsonSerializable, IModelJsonSerializable<ResponseBasedOriginErrorDetectionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResponseBasedOriginErrorDetectionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResponseBasedOriginErrorDetectionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResponseBasedOriginErrorDetectionSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
@@ -32,15 +39,36 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpErrorRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HttpErrorRange>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ResponseBasedOriginErrorDetectionSettings DeserializeResponseBasedOriginErrorDetectionSettings(JsonElement element)
+        internal static ResponseBasedOriginErrorDetectionSettings DeserializeResponseBasedOriginErrorDetectionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
             Optional<int> responseBasedFailoverThresholdPercentage = default;
             Optional<IList<HttpErrorRange>> httpErrorRanges = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("responseBasedDetectedErrorTypes"u8))
@@ -82,8 +111,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     httpErrorRanges = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResponseBasedOriginErrorDetectionSettings(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), Optional.ToList(httpErrorRanges));
+            return new ResponseBasedOriginErrorDetectionSettings(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), Optional.ToList(httpErrorRanges), rawData);
+        }
+
+        ResponseBasedOriginErrorDetectionSettings IModelJsonSerializable<ResponseBasedOriginErrorDetectionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResponseBasedOriginErrorDetectionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResponseBasedOriginErrorDetectionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResponseBasedOriginErrorDetectionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResponseBasedOriginErrorDetectionSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResponseBasedOriginErrorDetectionSettings IModelSerializable<ResponseBasedOriginErrorDetectionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResponseBasedOriginErrorDetectionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResponseBasedOriginErrorDetectionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResponseBasedOriginErrorDetectionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResponseBasedOriginErrorDetectionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(ResponseBasedOriginErrorDetectionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResponseBasedOriginErrorDetectionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResponseBasedOriginErrorDetectionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

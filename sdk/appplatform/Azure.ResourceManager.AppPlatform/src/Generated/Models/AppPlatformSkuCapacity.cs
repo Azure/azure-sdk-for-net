@@ -5,29 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The SKU capacity. </summary>
     public partial class AppPlatformSkuCapacity
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapacity"/>. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         internal AppPlatformSkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapacity"/>. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="default"> Gets or sets the default. </param>
         /// <param name="scaleType"> Gets or sets the type of the scale. </param>
-        internal AppPlatformSkuCapacity(int minimum, int? maximum, int? @default, AppPlatformSkuScaleType? scaleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuCapacity(int minimum, int? maximum, int? @default, AppPlatformSkuScaleType? scaleType, Dictionary<string, BinaryData> rawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             ScaleType = scaleType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapacity"/> for deserialization. </summary>
+        internal AppPlatformSkuCapacity()
+        {
         }
 
         /// <summary> Gets or sets the minimum. </summary>

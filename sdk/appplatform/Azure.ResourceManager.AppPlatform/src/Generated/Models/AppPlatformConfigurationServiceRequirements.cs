@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource request payload of Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceRequirements. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceRequirements"/>. </summary>
         internal AppPlatformConfigurationServiceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Application Configuration Service instance. </param>
         /// <param name="memory"> Memory allocated to each Application Configuration Service instance. </param>
         /// <param name="instanceCount"> Instance count of the Application Configuration Service. </param>
-        internal AppPlatformConfigurationServiceRequirements(string cpu, string memory, int? instanceCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceRequirements(string cpu, string memory, int? instanceCount, Dictionary<string, BinaryData> rawData)
         {
             Cpu = cpu;
             Memory = memory;
             InstanceCount = instanceCount;
+            _rawData = rawData;
         }
 
         /// <summary> Cpu allocated to each Application Configuration Service instance. </summary>

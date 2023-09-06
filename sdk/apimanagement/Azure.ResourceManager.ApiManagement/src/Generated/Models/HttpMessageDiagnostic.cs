@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Http message diagnostic settings. </summary>
     public partial class HttpMessageDiagnostic
     {
-        /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpMessageDiagnostic"/>. </summary>
         public HttpMessageDiagnostic()
         {
             Headers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpMessageDiagnostic"/>. </summary>
         /// <param name="headers"> Array of HTTP Headers to log. </param>
         /// <param name="body"> Body logging settings. </param>
         /// <param name="dataMasking"> Data masking settings. </param>
-        internal HttpMessageDiagnostic(IList<string> headers, BodyDiagnosticSettings body, DataMasking dataMasking)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpMessageDiagnostic(IList<string> headers, BodyDiagnosticSettings body, DataMasking dataMasking, Dictionary<string, BinaryData> rawData)
         {
             Headers = headers;
             Body = body;
             DataMasking = dataMasking;
+            _rawData = rawData;
         }
 
         /// <summary> Array of HTTP Headers to log. </summary>

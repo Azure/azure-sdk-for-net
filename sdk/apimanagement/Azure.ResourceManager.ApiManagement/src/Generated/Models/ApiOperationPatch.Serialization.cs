@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiOperationPatch : IUtf8JsonSerializable
+    public partial class ApiOperationPatch : IUtf8JsonSerializable, IModelJsonSerializable<ApiOperationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiOperationPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiOperationPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiOperationPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -23,7 +31,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ParameterContract>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -35,7 +50,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                if (Request is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RequestContract>)Request).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Responses))
             {
@@ -43,7 +65,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ResponseContract>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +97,169 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(UriTemplate);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ApiOperationPatch DeserializeApiOperationPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<ParameterContract>> templateParameters = default;
+            Optional<string> description = default;
+            Optional<RequestContract> request = default;
+            Optional<IList<ResponseContract>> responses = default;
+            Optional<string> policies = default;
+            Optional<string> displayName = default;
+            Optional<string> method = default;
+            Optional<string> uriTemplate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("templateParameters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ParameterContract> array = new List<ParameterContract>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ParameterContract.DeserializeParameterContract(item));
+                            }
+                            templateParameters = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("request"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            request = RequestContract.DeserializeRequestContract(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("responses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResponseContract> array = new List<ResponseContract>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ResponseContract.DeserializeResponseContract(item));
+                            }
+                            responses = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("policies"u8))
+                        {
+                            policies = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("method"u8))
+                        {
+                            method = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("urlTemplate"u8))
+                        {
+                            uriTemplate = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ApiOperationPatch(Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value, rawData);
+        }
+
+        ApiOperationPatch IModelJsonSerializable<ApiOperationPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiOperationPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiOperationPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiOperationPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiOperationPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiOperationPatch IModelSerializable<ApiOperationPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiOperationPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiOperationPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiOperationPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiOperationPatch"/> to convert. </param>
+        public static implicit operator RequestContent(ApiOperationPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiOperationPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiOperationPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiOperationPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

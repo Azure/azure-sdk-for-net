@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

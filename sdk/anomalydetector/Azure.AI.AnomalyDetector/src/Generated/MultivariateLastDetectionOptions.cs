@@ -15,6 +15,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of the last detection. </summary>
     public partial class MultivariateLastDetectionOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
         /// <param name="variables">
         /// Contains the inference data, including the name, time stamps (ISO 8601), and
@@ -38,10 +41,17 @@ namespace Azure.AI.AnomalyDetector
         /// variables for one anomalous time stamp in the response. The default is
         /// 10.
         /// </param>
-        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount, Dictionary<string, BinaryData> rawData)
         {
             Variables = variables;
             TopContributorCount = topContributorCount;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/> for deserialization. </summary>
+        internal MultivariateLastDetectionOptions()
+        {
         }
 
         /// <summary>

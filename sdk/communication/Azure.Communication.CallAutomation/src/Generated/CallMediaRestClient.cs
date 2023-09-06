@@ -51,9 +51,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playRequest);
-            request.Content = content;
+            request.Content = playRequest;
             return message;
         }
 
@@ -185,9 +183,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recognizeRequest);
-            request.Content = content;
+            request.Content = recognizeRequest;
             return message;
         }
 
@@ -259,9 +255,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
-            request.Content = content;
+            request.Content = continuousDtmfRecognitionRequest;
             return message;
         }
 
@@ -333,9 +327,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
-            request.Content = content;
+            request.Content = continuousDtmfRecognitionRequest;
             return message;
         }
 
@@ -407,9 +399,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfRequest);
-            request.Content = content;
+            request.Content = sendDtmfRequest;
             return message;
         }
 

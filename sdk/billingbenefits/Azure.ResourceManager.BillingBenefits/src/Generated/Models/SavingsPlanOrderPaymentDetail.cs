@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Information about payment related to a savings plan order. </summary>
     public partial class SavingsPlanOrderPaymentDetail
     {
-        /// <summary> Initializes a new instance of SavingsPlanOrderPaymentDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderPaymentDetail"/>. </summary>
         public SavingsPlanOrderPaymentDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanOrderPaymentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderPaymentDetail"/>. </summary>
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
         /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
         /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
         /// <param name="extendedStatusInfo"></param>
         /// <param name="billingAccount"> Billing account. </param>
-        internal SavingsPlanOrderPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? payOn, BillingBenefitsPrice pricingCurrencyTotal, BillingBenefitsPrice billingCurrencyTotal, BillingBenefitsPaymentStatus? status, BillingBenefitsExtendedStatusInfo extendedStatusInfo, string billingAccount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanOrderPaymentDetail(DateTimeOffset? dueOn, DateTimeOffset? payOn, BillingBenefitsPrice pricingCurrencyTotal, BillingBenefitsPrice billingCurrencyTotal, BillingBenefitsPaymentStatus? status, BillingBenefitsExtendedStatusInfo extendedStatusInfo, string billingAccount, Dictionary<string, BinaryData> rawData)
         {
             DueOn = dueOn;
             PayOn = payOn;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Status = status;
             ExtendedStatusInfo = extendedStatusInfo;
             BillingAccount = billingAccount;
+            _rawData = rawData;
         }
 
         /// <summary> Date when the payment needs to be done. </summary>

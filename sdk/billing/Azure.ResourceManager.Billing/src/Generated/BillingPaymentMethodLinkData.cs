@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingPaymentMethodLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodLinkData"/>. </summary>
         public BillingPaymentMethodLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingPaymentMethodLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="paymentMethod"> Projection of a payment method. </param>
-        internal BillingPaymentMethodLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodProjectionProperties paymentMethod) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPaymentMethodLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodProjectionProperties paymentMethod, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PaymentMethod = paymentMethod;
+            _rawData = rawData;
         }
 
         /// <summary> Projection of a payment method. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Task properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationTasks
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTasks"/>. </summary>
         public SoftwareUpdateConfigurationTasks()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationTasks"/>. </summary>
         /// <param name="preTask"> Pre task properties. </param>
         /// <param name="postTask"> Post task properties. </param>
-        internal SoftwareUpdateConfigurationTasks(SoftwareUpdateConfigurationTaskProperties preTask, SoftwareUpdateConfigurationTaskProperties postTask)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationTasks(SoftwareUpdateConfigurationTaskProperties preTask, SoftwareUpdateConfigurationTaskProperties postTask, Dictionary<string, BinaryData> rawData)
         {
             PreTask = preTask;
             PostTask = postTask;
+            _rawData = rawData;
         }
 
         /// <summary> Pre task properties. </summary>

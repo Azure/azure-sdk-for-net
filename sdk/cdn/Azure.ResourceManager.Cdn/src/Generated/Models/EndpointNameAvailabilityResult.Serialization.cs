@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class EndpointNameAvailabilityResult
+    public partial class EndpointNameAvailabilityResult : IUtf8JsonSerializable, IModelJsonSerializable<EndpointNameAvailabilityResult>
     {
-        internal static EndpointNameAvailabilityResult DeserializeEndpointNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EndpointNameAvailabilityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EndpointNameAvailabilityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointNameAvailabilityResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EndpointNameAvailabilityResult DeserializeEndpointNameAvailabilityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> availableHostname = default;
             Optional<string> reason = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -48,8 +77,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EndpointNameAvailabilityResult(Optional.ToNullable(nameAvailable), availableHostname.Value, reason.Value, message.Value);
+            return new EndpointNameAvailabilityResult(Optional.ToNullable(nameAvailable), availableHostname.Value, reason.Value, message.Value, rawData);
+        }
+
+        EndpointNameAvailabilityResult IModelJsonSerializable<EndpointNameAvailabilityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointNameAvailabilityResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEndpointNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EndpointNameAvailabilityResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointNameAvailabilityResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EndpointNameAvailabilityResult IModelSerializable<EndpointNameAvailabilityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EndpointNameAvailabilityResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEndpointNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EndpointNameAvailabilityResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EndpointNameAvailabilityResult"/> to convert. </param>
+        public static implicit operator RequestContent(EndpointNameAvailabilityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EndpointNameAvailabilityResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EndpointNameAvailabilityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEndpointNameAvailabilityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

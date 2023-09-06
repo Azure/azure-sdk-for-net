@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Generate SSO Url operations response details. </summary>
     public partial class GenerateSsoUriResult
     {
-        /// <summary> Initializes a new instance of GenerateSsoUriResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateSsoUriResult"/>. </summary>
         internal GenerateSsoUriResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GenerateSsoUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateSsoUriResult"/>. </summary>
         /// <param name="value"> Redirect Url containing the SSO URL value. </param>
-        internal GenerateSsoUriResult(string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateSsoUriResult(string value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Redirect Url containing the SSO URL value. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Savings plan patch request. </summary>
     public partial class BillingBenefitsSavingsPlanPatch
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatch"/>. </summary>
         public BillingBenefitsSavingsPlanPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanPatch"/>. </summary>
+        /// <param name="properties"> Savings plan patch request. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanPatch(BillingBenefitsSavingsPlanPatchProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Savings plan patch request. </summary>

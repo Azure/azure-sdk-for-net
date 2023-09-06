@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudClusterVirtualMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterVirtualMachineData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
         public AvsPrivateCloudClusterVirtualMachineData()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +36,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="moRefId"> Virtual machine managed object reference id. </param>
         /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
-        internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             MoRefId = moRefId;
             FolderPath = folderPath;
             RestrictMovement = restrictMovement;
+            _rawData = rawData;
         }
 
         /// <summary> Display name of the VM. </summary>

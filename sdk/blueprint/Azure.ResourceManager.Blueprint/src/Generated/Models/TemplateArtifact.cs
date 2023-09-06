@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Blueprint artifact that deploys a Resource Manager template. </summary>
     public partial class TemplateArtifact : ArtifactData
     {
-        /// <summary> Initializes a new instance of TemplateArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateArtifact"/>. </summary>
         /// <param name="template"> The Resource Manager template blueprint artifact body. </param>
         /// <param name="parameters"> Resource Manager template blueprint artifact parameter values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> or <paramref name="parameters"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Kind = ArtifactKind.Template;
         }
 
-        /// <summary> Initializes a new instance of TemplateArtifact. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateArtifact"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="template"> The Resource Manager template blueprint artifact body. </param>
         /// <param name="resourceGroup"> If applicable, the name of the resource group placeholder to which the Resource Manager template blueprint artifact will be deployed. </param>
         /// <param name="parameters"> Resource Manager template blueprint artifact parameter values. </param>
-        internal TemplateArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, string displayName, string description, IList<string> dependsOn, BinaryData template, string resourceGroup, IDictionary<string, ParameterValue> parameters) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, string displayName, string description, IList<string> dependsOn, BinaryData template, string resourceGroup, IDictionary<string, ParameterValue> parameters, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceGroup = resourceGroup;
             Parameters = parameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateArtifact"/> for deserialization. </summary>
+        internal TemplateArtifact()
+        {
         }
 
         /// <summary> One-liner string explain this resource. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Parameters required for content purge. </summary>
     public partial class FrontDoorPurgeContent
     {
-        /// <summary> Initializes a new instance of FrontDoorPurgeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorPurgeContent"/>. </summary>
         /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public FrontDoorPurgeContent(IEnumerable<string> contentPaths)
@@ -24,6 +27,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
             ContentPaths = contentPaths.ToList();
             Domains = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorPurgeContent"/>. </summary>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
+        /// <param name="domains"> List of domains. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorPurgeContent(IList<string> contentPaths, IList<string> domains, Dictionary<string, BinaryData> rawData)
+        {
+            ContentPaths = contentPaths;
+            Domains = domains;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorPurgeContent"/> for deserialization. </summary>
+        internal FrontDoorPurgeContent()
+        {
         }
 
         /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>

@@ -230,9 +230,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(proactiveDetectionProperties);
-            request.Content = content;
+            request.Content = proactiveDetectionProperties;
             _userAgent.Apply(message);
             return message;
         }

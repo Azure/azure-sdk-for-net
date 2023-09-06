@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Operation Entity contract Properties. </summary>
     public partial class AssociatedOperationProperties
     {
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         internal AssociatedOperationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         /// <param name="id"> Identifier of the operation in form /operations/{operationId}. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="apiName"> API Name. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Operation Description. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
         /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Description = description;
             Method = method;
             UriTemplate = uriTemplate;
+            _rawData = rawData;
         }
 
         /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>

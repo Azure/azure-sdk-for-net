@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Notification Parameter contract. </summary>
     public partial class RecipientsContractProperties
     {
-        /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecipientsContractProperties"/>. </summary>
         public RecipientsContractProperties()
         {
             Emails = new ChangeTrackingList<string>();
             Users = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientsContractProperties"/>. </summary>
         /// <param name="emails"> List of Emails subscribed for the notification. </param>
         /// <param name="users"> List of Users subscribed for the notification. </param>
-        internal RecipientsContractProperties(IList<string> emails, IList<string> users)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecipientsContractProperties(IList<string> emails, IList<string> users, Dictionary<string, BinaryData> rawData)
         {
             Emails = emails;
             Users = users;
+            _rawData = rawData;
         }
 
         /// <summary> List of Emails subscribed for the notification. </summary>

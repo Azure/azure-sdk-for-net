@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, tags);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, tags);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, tags);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, tags);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ApiManagementProductResource(Client, ApiManagementProductData.DeserializeApiManagementProductData(e)), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

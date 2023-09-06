@@ -5,37 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownProbeAction : IUtf8JsonSerializable
+    internal partial class UnknownProbeAction : IUtf8JsonSerializable, IModelJsonSerializable<AppInstanceProbeAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppInstanceProbeAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppInstanceProbeAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbeAction>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ProbeActionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownProbeAction DeserializeUnknownProbeAction(JsonElement element)
+        internal static AppInstanceProbeAction DeserializeUnknownProbeAction(JsonElement element, ModelSerializerOptions options = default) => DeserializeAppInstanceProbeAction(element, options);
+
+        AppInstanceProbeAction IModelJsonSerializable<AppInstanceProbeAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ProbeActionType type = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ProbeActionType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownProbeAction(type);
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbeAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownProbeAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppInstanceProbeAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbeAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppInstanceProbeAction IModelSerializable<AppInstanceProbeAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbeAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppInstanceProbeAction(doc.RootElement, options);
         }
     }
 }

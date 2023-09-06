@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WebTestGeolocation : IUtf8JsonSerializable
+    public partial class WebTestGeolocation : IUtf8JsonSerializable, IModelJsonSerializable<WebTestGeolocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebTestGeolocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebTestGeolocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestGeolocation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Location.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebTestGeolocation DeserializeWebTestGeolocation(JsonElement element)
+        internal static WebTestGeolocation DeserializeWebTestGeolocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureLocation> id = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     id = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebTestGeolocation(Optional.ToNullable(id));
+            return new WebTestGeolocation(Optional.ToNullable(id), rawData);
+        }
+
+        WebTestGeolocation IModelJsonSerializable<WebTestGeolocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestGeolocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebTestGeolocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebTestGeolocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestGeolocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebTestGeolocation IModelSerializable<WebTestGeolocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestGeolocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebTestGeolocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebTestGeolocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebTestGeolocation"/> to convert. </param>
+        public static implicit operator RequestContent(WebTestGeolocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebTestGeolocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebTestGeolocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebTestGeolocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

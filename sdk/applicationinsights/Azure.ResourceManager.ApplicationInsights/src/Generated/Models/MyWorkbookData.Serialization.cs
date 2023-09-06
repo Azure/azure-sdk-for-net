@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class MyWorkbookData : IUtf8JsonSerializable
+    public partial class MyWorkbookData : IUtf8JsonSerializable, IModelJsonSerializable<MyWorkbookData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MyWorkbookData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MyWorkbookData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MyWorkbookData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -27,7 +33,14 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                if (Identity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MyWorkbookManagedIdentity>)Identity).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Id))
             {
@@ -118,11 +131,25 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MyWorkbookData DeserializeMyWorkbookData(JsonElement element)
+        internal static MyWorkbookData DeserializeMyWorkbookData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -144,6 +171,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<string> userId = default;
             Optional<string> sourceId = default;
             Optional<Uri> storageUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -287,8 +315,61 @@ namespace Azure.ResourceManager.ApplicationInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value);
+            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value, rawData);
+        }
+
+        MyWorkbookData IModelJsonSerializable<MyWorkbookData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MyWorkbookData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMyWorkbookData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MyWorkbookData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MyWorkbookData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MyWorkbookData IModelSerializable<MyWorkbookData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MyWorkbookData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMyWorkbookData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MyWorkbookData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MyWorkbookData"/> to convert. </param>
+        public static implicit operator RequestContent(MyWorkbookData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MyWorkbookData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MyWorkbookData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMyWorkbookData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> List the alerts. </summary>
     internal partial class SmartGroupsList
     {
-        /// <summary> Initializes a new instance of SmartGroupsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartGroupsList"/>. </summary>
         internal SmartGroupsList()
         {
             Value = new ChangeTrackingList<SmartGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupsList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alerts. </param>
         /// <param name="value"> List of alerts. </param>
-        internal SmartGroupsList(string nextLink, IReadOnlyList<SmartGroupData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartGroupsList(string nextLink, IReadOnlyList<SmartGroupData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> URL to fetch the next set of alerts. </summary>

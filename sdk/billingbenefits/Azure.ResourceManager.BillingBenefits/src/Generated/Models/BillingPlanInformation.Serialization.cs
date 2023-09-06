@@ -8,19 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingPlanInformation : IUtf8JsonSerializable
+    public partial class BillingPlanInformation : IUtf8JsonSerializable, IModelJsonSerializable<BillingPlanInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BillingPlanInformation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BillingPlanInformation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BillingPlanInformation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                if (PricingCurrencyTotal is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BillingBenefitsPrice>)PricingCurrencyTotal).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -38,15 +51,36 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SavingsPlanOrderPaymentDetail>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element)
+        internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +89,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
             Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -98,8 +133,61 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     transactions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions));
+            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), rawData);
+        }
+
+        BillingPlanInformation IModelJsonSerializable<BillingPlanInformation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingPlanInformation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingPlanInformation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BillingPlanInformation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingPlanInformation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BillingPlanInformation IModelSerializable<BillingPlanInformation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingPlanInformation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBillingPlanInformation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BillingPlanInformation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BillingPlanInformation"/> to convert. </param>
+        public static implicit operator RequestContent(BillingPlanInformation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BillingPlanInformation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BillingPlanInformation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBillingPlanInformation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

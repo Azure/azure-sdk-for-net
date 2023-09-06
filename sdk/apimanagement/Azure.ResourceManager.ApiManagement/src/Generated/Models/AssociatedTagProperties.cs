@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Contract defining the Tag property in the Tag Resource Contract. </summary>
     public partial class AssociatedTagProperties
     {
-        /// <summary> Initializes a new instance of AssociatedTagProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssociatedTagProperties"/>. </summary>
         internal AssociatedTagProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AssociatedTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedTagProperties"/>. </summary>
         /// <param name="id"> Tag identifier. </param>
         /// <param name="name"> Tag Name. </param>
-        internal AssociatedTagProperties(string id, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssociatedTagProperties(string id, string name, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Tag identifier. </summary>

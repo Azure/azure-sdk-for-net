@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Management service resource SKU properties. </summary>
     public partial class ApiManagementServiceSkuProperties
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceSkuProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/>. </summary>
         /// <param name="name"> Name of the Sku. </param>
         /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
         public ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity)
         {
             Name = name;
             Capacity = capacity;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/>. </summary>
+        /// <param name="name"> Name of the Sku. </param>
+        /// <param name="capacity"> Capacity of the SKU (number of deployed units of the SKU). For Consumption SKU capacity must be specified as 0. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementServiceSkuProperties(ApiManagementServiceSkuType name, int capacity, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Capacity = capacity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceSkuProperties"/> for deserialization. </summary>
+        internal ApiManagementServiceSkuProperties()
+        {
         }
 
         /// <summary> Name of the Sku. </summary>

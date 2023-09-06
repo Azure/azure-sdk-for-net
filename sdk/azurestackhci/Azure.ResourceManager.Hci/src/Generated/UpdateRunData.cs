@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class UpdateRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateRunData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRunData"/>. </summary>
         public UpdateRunData()
         {
             Steps = new ChangeTrackingList<HciUpdateStep>();
         }
 
-        /// <summary> Initializes a new instance of UpdateRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
-        internal UpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<HciUpdateStep> steps) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, string namePropertiesProgressName, string description, string errorMessage, string status, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, DateTimeOffset? lastUpdatedTimeUtc, IList<HciUpdateStep> steps, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -60,6 +64,7 @@ namespace Azure.ResourceManager.Hci
             EndTimeUtc = endTimeUtc;
             LastUpdatedTimeUtc = lastUpdatedTimeUtc;
             Steps = steps;
+            _rawData = rawData;
         }
 
         /// <summary> The geo-location where the resource lives. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleGroupOverrideSetting
     {
-        /// <summary> Initializes a new instance of ManagedRuleGroupOverrideSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideSetting"/>. </summary>
         /// <param name="ruleGroupName"> Describes the managed rule group within the rule set to override. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ManagedRuleGroupOverrideSetting(string ruleGroupName)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Cdn.Models
             Rules = new ChangeTrackingList<ManagedRuleOverrideSetting>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleGroupOverrideSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideSetting"/>. </summary>
         /// <param name="ruleGroupName"> Describes the managed rule group within the rule set to override. </param>
         /// <param name="rules"> List of rules that will be disabled. If none specified, all rules in the group will be disabled. </param>
-        internal ManagedRuleGroupOverrideSetting(string ruleGroupName, IList<ManagedRuleOverrideSetting> rules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleGroupOverrideSetting(string ruleGroupName, IList<ManagedRuleOverrideSetting> rules, Dictionary<string, BinaryData> rawData)
         {
             RuleGroupName = ruleGroupName;
             Rules = rules;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverrideSetting"/> for deserialization. </summary>
+        internal ManagedRuleGroupOverrideSetting()
+        {
         }
 
         /// <summary> Describes the managed rule group within the rule set to override. </summary>

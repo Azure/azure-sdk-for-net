@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class OriginGroupOverrideActionProperties : IUtf8JsonSerializable
+    public partial class OriginGroupOverrideActionProperties : IUtf8JsonSerializable, IModelJsonSerializable<OriginGroupOverrideActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OriginGroupOverrideActionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OriginGroupOverrideActionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OriginGroupOverrideActionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("originGroup"u8);
-            JsonSerializer.Serialize(writer, OriginGroup); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, OriginGroup); if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
-        internal static OriginGroupOverrideActionProperties DeserializeOriginGroupOverrideActionProperties(JsonElement element)
+        internal static OriginGroupOverrideActionProperties DeserializeOriginGroupOverrideActionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             OriginGroupOverrideActionType typeName = default;
             WritableSubResource originGroup = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OriginGroupOverrideActionProperties(typeName, originGroup);
+            return new OriginGroupOverrideActionProperties(typeName, originGroup, rawData);
+        }
+
+        OriginGroupOverrideActionProperties IModelJsonSerializable<OriginGroupOverrideActionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OriginGroupOverrideActionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOriginGroupOverrideActionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OriginGroupOverrideActionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OriginGroupOverrideActionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OriginGroupOverrideActionProperties IModelSerializable<OriginGroupOverrideActionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OriginGroupOverrideActionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOriginGroupOverrideActionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OriginGroupOverrideActionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OriginGroupOverrideActionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(OriginGroupOverrideActionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OriginGroupOverrideActionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OriginGroupOverrideActionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOriginGroupOverrideActionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

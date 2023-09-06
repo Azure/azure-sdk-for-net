@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountPoolStartTask : IUtf8JsonSerializable
+    public partial class BatchAccountPoolStartTask : IUtf8JsonSerializable, IModelJsonSerializable<BatchAccountPoolStartTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchAccountPoolStartTask>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchAccountPoolStartTask>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolStartTask>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CommandLine))
             {
@@ -27,7 +34,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BatchResourceFile>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -37,14 +51,28 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BatchEnvironmentSetting>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity);
+                if (UserIdentity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BatchUserIdentity>)UserIdentity).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -59,13 +87,34 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                if (ContainerSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BatchTaskContainerSettings>)ContainerSettings).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element)
+        internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<int> maxTaskRetryCount = default;
             Optional<bool> waitForSuccess = default;
             Optional<BatchTaskContainerSettings> containerSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commandLine"u8))
@@ -148,8 +198,61 @@ namespace Azure.ResourceManager.Batch.Models
                     containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value);
+            return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, rawData);
+        }
+
+        BatchAccountPoolStartTask IModelJsonSerializable<BatchAccountPoolStartTask>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolStartTask>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountPoolStartTask(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchAccountPoolStartTask>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolStartTask>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchAccountPoolStartTask IModelSerializable<BatchAccountPoolStartTask>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolStartTask>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchAccountPoolStartTask(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchAccountPoolStartTask"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchAccountPoolStartTask"/> to convert. </param>
+        public static implicit operator RequestContent(BatchAccountPoolStartTask model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchAccountPoolStartTask"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchAccountPoolStartTask(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchAccountPoolStartTask(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

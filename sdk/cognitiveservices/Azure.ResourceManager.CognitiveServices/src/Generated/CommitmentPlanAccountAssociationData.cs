@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CommitmentPlanAccountAssociationData : ResourceData
     {
-        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAccountAssociationData"/>. </summary>
         public CommitmentPlanAccountAssociationData()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAccountAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="accountId"> The Azure resource id of the account. </param>
-        internal CommitmentPlanAccountAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string accountId) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentPlanAccountAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string accountId, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             AccountId = accountId;
+            _rawData = rawData;
         }
 
         /// <summary> Resource Etag. </summary>

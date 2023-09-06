@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Response containing status for a specific purge operation. </summary>
     public partial class ComponentPurgeStatusResponse
     {
-        /// <summary> Initializes a new instance of ComponentPurgeStatusResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeStatusResponse"/>. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         internal ComponentPurgeStatusResponse(PurgeState status)
         {
             Status = status;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeStatusResponse"/>. </summary>
+        /// <param name="status"> Status of the operation represented by the requested Id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentPurgeStatusResponse(PurgeState status, Dictionary<string, BinaryData> rawData)
+        {
+            Status = status;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeStatusResponse"/> for deserialization. </summary>
+        internal ComponentPurgeStatusResponse()
+        {
         }
 
         /// <summary> Status of the operation represented by the requested Id. </summary>

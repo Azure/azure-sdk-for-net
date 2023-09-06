@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object. </summary>
     public partial class FrontDoorRouteCacheConfiguration
     {
-        /// <summary> Initializes a new instance of FrontDoorRouteCacheConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRouteCacheConfiguration"/>. </summary>
         public FrontDoorRouteCacheConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRouteCacheConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRouteCacheConfiguration"/>. </summary>
         /// <param name="queryStringCachingBehavior"> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
         /// <param name="compressionSettings"> compression settings. </param>
-        internal FrontDoorRouteCacheConfiguration(FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RouteCacheCompressionSettings compressionSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRouteCacheConfiguration(FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RouteCacheCompressionSettings compressionSettings, Dictionary<string, BinaryData> rawData)
         {
             QueryStringCachingBehavior = queryStringCachingBehavior;
             QueryParameters = queryParameters;
             CompressionSettings = compressionSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>

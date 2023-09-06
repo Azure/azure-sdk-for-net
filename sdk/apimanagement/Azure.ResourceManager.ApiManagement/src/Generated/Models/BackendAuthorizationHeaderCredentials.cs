@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Authorization header information. </summary>
     public partial class BackendAuthorizationHeaderCredentials
     {
-        /// <summary> Initializes a new instance of BackendAuthorizationHeaderCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
         /// <param name="scheme"> Authentication Scheme name. </param>
         /// <param name="parameter"> Authentication Parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheme"/> or <paramref name="parameter"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Scheme = scheme;
             Parameter = parameter;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
+        /// <param name="scheme"> Authentication Scheme name. </param>
+        /// <param name="parameter"> Authentication Parameter value. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendAuthorizationHeaderCredentials(string scheme, string parameter, Dictionary<string, BinaryData> rawData)
+        {
+            Scheme = scheme;
+            Parameter = parameter;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/> for deserialization. </summary>
+        internal BackendAuthorizationHeaderCredentials()
+        {
         }
 
         /// <summary> Authentication Scheme name. </summary>

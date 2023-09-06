@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationAdvancedScheduleMonthlyOccurrence : IUtf8JsonSerializable
+    public partial class AutomationAdvancedScheduleMonthlyOccurrence : IUtf8JsonSerializable, IModelJsonSerializable<AutomationAdvancedScheduleMonthlyOccurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationAdvancedScheduleMonthlyOccurrence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationAdvancedScheduleMonthlyOccurrence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationAdvancedScheduleMonthlyOccurrence>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Occurrence))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element)
+        internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> occurrence = default;
             Optional<AutomationDayOfWeek> day = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("occurrence"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.Automation.Models
                     day = new AutomationDayOfWeek(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationAdvancedScheduleMonthlyOccurrence(Optional.ToNullable(occurrence), Optional.ToNullable(day));
+            return new AutomationAdvancedScheduleMonthlyOccurrence(Optional.ToNullable(occurrence), Optional.ToNullable(day), rawData);
+        }
+
+        AutomationAdvancedScheduleMonthlyOccurrence IModelJsonSerializable<AutomationAdvancedScheduleMonthlyOccurrence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationAdvancedScheduleMonthlyOccurrence>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationAdvancedScheduleMonthlyOccurrence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationAdvancedScheduleMonthlyOccurrence>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationAdvancedScheduleMonthlyOccurrence>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationAdvancedScheduleMonthlyOccurrence IModelSerializable<AutomationAdvancedScheduleMonthlyOccurrence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationAdvancedScheduleMonthlyOccurrence>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationAdvancedScheduleMonthlyOccurrence(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/> to convert. </param>
+        public static implicit operator RequestContent(AutomationAdvancedScheduleMonthlyOccurrence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomationAdvancedScheduleMonthlyOccurrence"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomationAdvancedScheduleMonthlyOccurrence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationAdvancedScheduleMonthlyOccurrence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

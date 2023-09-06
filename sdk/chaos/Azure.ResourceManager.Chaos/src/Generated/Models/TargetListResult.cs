@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Chaos;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list of Target resources and a link for pagination. </summary>
     internal partial class TargetListResult
     {
-        /// <summary> Initializes a new instance of TargetListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetListResult"/>. </summary>
         internal TargetListResult()
         {
             Value = new ChangeTrackingList<TargetData>();
         }
 
-        /// <summary> Initializes a new instance of TargetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetListResult"/>. </summary>
         /// <param name="value"> List of Target resources. </param>
         /// <param name="nextLink"> URL to retrieve the next page of Target resources. </param>
-        internal TargetListResult(IReadOnlyList<TargetData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetListResult(IReadOnlyList<TargetData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of Target resources. </summary>

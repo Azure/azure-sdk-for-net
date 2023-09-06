@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountModelDeprecationInfo : IUtf8JsonSerializable
+    public partial class ServiceAccountModelDeprecationInfo : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAccountModelDeprecationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAccountModelDeprecationInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAccountModelDeprecationInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountModelDeprecationInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FineTuneOn))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("inference"u8);
                 writer.WriteStringValue(InferenceOn.Value, "O");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAccountModelDeprecationInfo DeserializeServiceAccountModelDeprecationInfo(JsonElement element)
+        internal static ServiceAccountModelDeprecationInfo DeserializeServiceAccountModelDeprecationInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> fineTune = default;
             Optional<DateTimeOffset> inference = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fineTune"u8))
@@ -57,8 +79,61 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     inference = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAccountModelDeprecationInfo(Optional.ToNullable(fineTune), Optional.ToNullable(inference));
+            return new ServiceAccountModelDeprecationInfo(Optional.ToNullable(fineTune), Optional.ToNullable(inference), rawData);
+        }
+
+        ServiceAccountModelDeprecationInfo IModelJsonSerializable<ServiceAccountModelDeprecationInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountModelDeprecationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountModelDeprecationInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAccountModelDeprecationInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountModelDeprecationInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAccountModelDeprecationInfo IModelSerializable<ServiceAccountModelDeprecationInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAccountModelDeprecationInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAccountModelDeprecationInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceAccountModelDeprecationInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceAccountModelDeprecationInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceAccountModelDeprecationInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceAccountModelDeprecationInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceAccountModelDeprecationInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAccountModelDeprecationInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

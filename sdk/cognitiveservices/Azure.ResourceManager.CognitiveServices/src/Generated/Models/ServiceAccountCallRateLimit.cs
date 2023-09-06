@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The call rate limit Cognitive Services account. </summary>
     public partial class ServiceAccountCallRateLimit
     {
-        /// <summary> Initializes a new instance of ServiceAccountCallRateLimit. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountCallRateLimit"/>. </summary>
         internal ServiceAccountCallRateLimit()
         {
             Rules = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountCallRateLimit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountCallRateLimit"/>. </summary>
         /// <param name="count"> The count value of Call Rate Limit. </param>
         /// <param name="renewalPeriod"> The renewal period in seconds of Call Rate Limit. </param>
         /// <param name="rules"></param>
-        internal ServiceAccountCallRateLimit(float? count, float? renewalPeriod, IReadOnlyList<ServiceAccountThrottlingRule> rules)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountCallRateLimit(float? count, float? renewalPeriod, IReadOnlyList<ServiceAccountThrottlingRule> rules, Dictionary<string, BinaryData> rawData)
         {
             Count = count;
             RenewalPeriod = renewalPeriod;
             Rules = rules;
+            _rawData = rawData;
         }
 
         /// <summary> The count value of Call Rate Limit. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Service Provider Definition. </summary>
     public partial class BotServiceProvider
     {
-        /// <summary> Initializes a new instance of BotServiceProvider. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceProvider"/>. </summary>
         internal BotServiceProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of BotServiceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProvider"/>. </summary>
         /// <param name="properties"> The Properties of a Service Provider Object. </param>
-        internal BotServiceProvider(BotServiceProviderProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceProvider(BotServiceProviderProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> The Properties of a Service Provider Object. </summary>

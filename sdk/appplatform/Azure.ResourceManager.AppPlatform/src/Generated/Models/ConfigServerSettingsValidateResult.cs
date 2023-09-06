@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for config server settings. </summary>
     public partial class ConfigServerSettingsValidateResult
     {
-        /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsValidateResult"/>. </summary>
         internal ConfigServerSettingsValidateResult()
         {
             Details = new ChangeTrackingList<ConfigServerSettingsErrorRecord>();
         }
 
-        /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the config server settings are valid. </param>
         /// <param name="details"> The detail validation results. </param>
-        internal ConfigServerSettingsValidateResult(bool? isValid, IReadOnlyList<ConfigServerSettingsErrorRecord> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigServerSettingsValidateResult(bool? isValid, IReadOnlyList<ConfigServerSettingsErrorRecord> details, Dictionary<string, BinaryData> rawData)
         {
             IsValid = isValid;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> Indicate if the config server settings are valid. </summary>

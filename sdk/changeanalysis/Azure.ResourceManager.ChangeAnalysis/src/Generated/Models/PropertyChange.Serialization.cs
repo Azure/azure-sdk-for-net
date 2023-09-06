@@ -5,15 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    public partial class PropertyChange
+    public partial class PropertyChange : IUtf8JsonSerializable, IModelJsonSerializable<PropertyChange>
     {
-        internal static PropertyChange DeserializePropertyChange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PropertyChange>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PropertyChange>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PropertyChange>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ChangeType))
+            {
+                writer.WritePropertyName("changeType"u8);
+                writer.WriteStringValue(ChangeType.Value.ToString());
+            }
+            if (Optional.IsDefined(ChangeCategory))
+            {
+                writer.WritePropertyName("changeCategory"u8);
+                writer.WriteStringValue(ChangeCategory.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(JsonPath))
+            {
+                writer.WritePropertyName("jsonPath"u8);
+                writer.WriteStringValue(JsonPath);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(Level))
+            {
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level.Value.ToString());
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(OldValue))
+            {
+                writer.WritePropertyName("oldValue"u8);
+                writer.WriteStringValue(OldValue);
+            }
+            if (Optional.IsDefined(NewValue))
+            {
+                writer.WritePropertyName("newValue"u8);
+                writer.WriteStringValue(NewValue);
+            }
+            if (Optional.IsDefined(IsDataMasked))
+            {
+                writer.WritePropertyName("isDataMasked"u8);
+                writer.WriteBooleanValue(IsDataMasked.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PropertyChange DeserializePropertyChange(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +100,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             Optional<string> oldValue = default;
             Optional<string> newValue = default;
             Optional<bool> isDataMasked = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeType"u8))
@@ -90,8 +164,61 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     isDataMasked = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked));
+            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked), rawData);
+        }
+
+        PropertyChange IModelJsonSerializable<PropertyChange>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PropertyChange>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePropertyChange(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PropertyChange>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PropertyChange>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PropertyChange IModelSerializable<PropertyChange>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PropertyChange>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePropertyChange(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PropertyChange"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PropertyChange"/> to convert. </param>
+        public static implicit operator RequestContent(PropertyChange model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PropertyChange"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PropertyChange(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePropertyChange(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,18 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
-    public partial class MetadataEntityData
+    public partial class MetadataEntityData : IUtf8JsonSerializable, IModelJsonSerializable<MetadataEntityData>
     {
-        internal static MetadataEntityData DeserializeMetadataEntityData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetadataEntityData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetadataEntityData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetadataEntityData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(DependsOn))
+            {
+                writer.WritePropertyName("dependsOn"u8);
+                writer.WriteStartArray();
+                foreach (var item in DependsOn)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApplicableScenarios))
+            {
+                writer.WritePropertyName("applicableScenarios"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicableScenarios)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SupportedValues))
+            {
+                writer.WritePropertyName("supportedValues"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedValues)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetadataSupportedValueDetail>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MetadataEntityData DeserializeMetadataEntityData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +101,7 @@ namespace Azure.ResourceManager.Advisor
             Optional<IReadOnlyList<string>> dependsOn = default;
             Optional<IReadOnlyList<Scenario>> applicableScenarios = default;
             Optional<IReadOnlyList<MetadataSupportedValueDetail>> supportedValues = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,8 +187,61 @@ namespace Azure.ResourceManager.Advisor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues));
+            return new MetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues), rawData);
+        }
+
+        MetadataEntityData IModelJsonSerializable<MetadataEntityData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetadataEntityData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetadataEntityData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetadataEntityData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetadataEntityData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetadataEntityData IModelSerializable<MetadataEntityData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetadataEntityData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetadataEntityData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetadataEntityData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetadataEntityData"/> to convert. </param>
+        public static implicit operator RequestContent(MetadataEntityData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetadataEntityData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetadataEntityData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetadataEntityData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

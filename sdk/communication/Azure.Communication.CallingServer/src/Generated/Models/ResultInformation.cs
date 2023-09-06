@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The ResultInformation. </summary>
     public partial class ResultInformation
     {
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResultInformation"/>. </summary>
         internal ResultInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResultInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInformation"/>. </summary>
         /// <param name="code"></param>
         /// <param name="subCode"></param>
         /// <param name="message"></param>
-        internal ResultInformation(int? code, int? subCode, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResultInformation(int? code, int? subCode, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             SubCode = subCode;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the code. </summary>

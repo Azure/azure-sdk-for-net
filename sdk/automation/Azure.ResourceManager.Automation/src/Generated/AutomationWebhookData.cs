@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationWebhookData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationWebhookData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookData"/>. </summary>
         public AutomationWebhookData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWebhookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWebhookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="lastModifiedBy"> Details of the user who last modified the Webhook. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationWebhookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, Uri uri, DateTimeOffset? expireOn, DateTimeOffset? lastInvokedOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, string description, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             Uri = uri;
@@ -54,6 +58,7 @@ namespace Azure.ResourceManager.Automation
             LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the value of the enabled flag of the webhook. </summary>

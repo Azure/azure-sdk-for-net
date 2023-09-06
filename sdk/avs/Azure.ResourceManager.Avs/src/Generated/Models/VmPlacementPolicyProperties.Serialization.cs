@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VmPlacementPolicyProperties : IUtf8JsonSerializable
+    public partial class VmPlacementPolicyProperties : IUtf8JsonSerializable, IModelJsonSerializable<VmPlacementPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmPlacementPolicyProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmPlacementPolicyProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmPlacementPolicyProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("vmMembers"u8);
             writer.WriteStartArray();
@@ -42,11 +49,25 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmPlacementPolicyProperties DeserializeVmPlacementPolicyProperties(JsonElement element)
+        internal static VmPlacementPolicyProperties DeserializeVmPlacementPolicyProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +78,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<PlacementPolicyState> state = default;
             Optional<string> displayName = default;
             Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmMembers"u8))
@@ -109,8 +131,61 @@ namespace Azure.ResourceManager.Avs.Models
                     provisioningState = new PlacementPolicyProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, affinityType);
+            return new VmPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, affinityType, rawData);
+        }
+
+        VmPlacementPolicyProperties IModelJsonSerializable<VmPlacementPolicyProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmPlacementPolicyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmPlacementPolicyProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmPlacementPolicyProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmPlacementPolicyProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmPlacementPolicyProperties IModelSerializable<VmPlacementPolicyProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmPlacementPolicyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmPlacementPolicyProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmPlacementPolicyProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmPlacementPolicyProperties"/> to convert. </param>
+        public static implicit operator RequestContent(VmPlacementPolicyProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmPlacementPolicyProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmPlacementPolicyProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmPlacementPolicyProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ApiManagementPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/>. </summary>
         internal ApiManagementPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

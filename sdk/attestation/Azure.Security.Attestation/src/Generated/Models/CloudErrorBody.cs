@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> An error response from Attestation. </summary>
     internal partial class CloudErrorBody
     {
-        /// <summary> Initializes a new instance of CloudErrorBody. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudErrorBody"/>. </summary>
         internal CloudErrorBody()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudErrorBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudErrorBody"/>. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for displaying in a user interface. </param>
-        internal CloudErrorBody(string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudErrorBody(string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </summary>

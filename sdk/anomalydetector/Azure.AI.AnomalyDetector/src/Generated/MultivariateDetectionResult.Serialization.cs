@@ -10,13 +10,63 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class MultivariateDetectionResult
+    public partial class MultivariateDetectionResult : IUtf8JsonSerializable, IModelJsonSerializable<MultivariateDetectionResult>
     {
-        internal static MultivariateDetectionResult DeserializeMultivariateDetectionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MultivariateDetectionResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MultivariateDetectionResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultId"u8);
+            writer.WriteStringValue(ResultId);
+            writer.WritePropertyName("summary"u8);
+            if (Summary is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MultivariateBatchDetectionResultSummary>)Summary).Serialize(writer, options);
+            }
+            writer.WritePropertyName("results"u8);
+            writer.WriteStartArray();
+            foreach (var item in Results)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AnomalyState>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MultivariateDetectionResult DeserializeMultivariateDetectionResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +74,7 @@ namespace Azure.AI.AnomalyDetector
             Guid resultId = default;
             MultivariateBatchDetectionResultSummary summary = default;
             IReadOnlyList<AnomalyState> results = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultId"u8))
@@ -46,16 +97,61 @@ namespace Azure.AI.AnomalyDetector
                     results = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MultivariateDetectionResult(resultId, summary, results);
+            return new MultivariateDetectionResult(resultId, summary, results, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MultivariateDetectionResult FromResponse(Response response)
+        MultivariateDetectionResult IModelJsonSerializable<MultivariateDetectionResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMultivariateDetectionResult(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMultivariateDetectionResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MultivariateDetectionResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MultivariateDetectionResult IModelSerializable<MultivariateDetectionResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMultivariateDetectionResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MultivariateDetectionResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MultivariateDetectionResult"/> to convert. </param>
+        public static implicit operator RequestContent(MultivariateDetectionResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MultivariateDetectionResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MultivariateDetectionResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMultivariateDetectionResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

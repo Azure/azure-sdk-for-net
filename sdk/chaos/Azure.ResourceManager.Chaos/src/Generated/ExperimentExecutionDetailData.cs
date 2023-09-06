@@ -19,12 +19,15 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ExperimentExecutionDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailData"/>. </summary>
         internal ExperimentExecutionDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="startOn"> String that represents the start date time. </param>
         /// <param name="stopOn"> String that represents the stop date time. </param>
         /// <param name="runInformation"> The information of the experiment run. </param>
-        internal ExperimentExecutionDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string experimentId, string status, string failureReason, DateTimeOffset? createdOn, DateTimeOffset? lastActionOn, DateTimeOffset? startOn, DateTimeOffset? stopOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentExecutionDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string experimentId, string status, string failureReason, DateTimeOffset? createdOn, DateTimeOffset? lastActionOn, DateTimeOffset? startOn, DateTimeOffset? stopOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ExperimentId = experimentId;
             Status = status;
@@ -47,6 +51,7 @@ namespace Azure.ResourceManager.Chaos
             StartOn = startOn;
             StopOn = stopOn;
             RunInformation = runInformation;
+            _rawData = rawData;
         }
 
         /// <summary> The id of the experiment. </summary>

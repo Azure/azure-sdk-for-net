@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The response payload for adding participants to the call. </summary>
     internal partial class AddParticipantResponseInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantResponseInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResponseInternal"/>. </summary>
         internal AddParticipantResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AddParticipantResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResponseInternal"/>. </summary>
         /// <param name="participant"> List of current participants in the call. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal AddParticipantResponseInternal(CallParticipantInternal participant, string operationContext)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddParticipantResponseInternal(CallParticipantInternal participant, string operationContext, Dictionary<string, BinaryData> rawData)
         {
             Participant = participant;
             OperationContext = operationContext;
+            _rawData = rawData;
         }
 
         /// <summary> List of current participants in the call. </summary>

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

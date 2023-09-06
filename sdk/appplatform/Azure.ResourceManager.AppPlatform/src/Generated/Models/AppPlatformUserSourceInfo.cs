@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AppPlatformBuildResultUserSourceInfo"/>, <see cref="AppPlatformCustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="AppPlatformUploadedUserSourceInfo"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownUserSourceInfo))]
     public abstract partial class AppPlatformUserSourceInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformUserSourceInfo"/>. </summary>
         protected AppPlatformUserSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
-        internal AppPlatformUserSourceInfo(string userSourceInfoType, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformUserSourceInfo(string userSourceInfoType, string version, Dictionary<string, BinaryData> rawData)
         {
             UserSourceInfoType = userSourceInfoType;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the source uploaded. </summary>

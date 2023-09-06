@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class JsonWebKey : IUtf8JsonSerializable
+    public partial class JsonWebKey : IUtf8JsonSerializable, IModelJsonSerializable<JsonWebKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonWebKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JsonWebKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JsonWebKey>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Alg))
             {
@@ -102,7 +110,198 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> alg = default;
+            Optional<string> crv = default;
+            Optional<string> d = default;
+            Optional<string> dp = default;
+            Optional<string> dq = default;
+            Optional<string> e = default;
+            Optional<string> k = default;
+            Optional<string> kid = default;
+            string kty = default;
+            Optional<string> n = default;
+            Optional<string> p = default;
+            Optional<string> q = default;
+            Optional<string> qi = default;
+            Optional<string> use = default;
+            Optional<string> x = default;
+            Optional<IList<string>> x5c = default;
+            Optional<string> y = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("alg"u8))
+                {
+                    alg = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("crv"u8))
+                {
+                    crv = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("d"u8))
+                {
+                    d = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dp"u8))
+                {
+                    dp = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dq"u8))
+                {
+                    dq = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("e"u8))
+                {
+                    e = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("k"u8))
+                {
+                    k = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kid"u8))
+                {
+                    kid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kty"u8))
+                {
+                    kty = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("n"u8))
+                {
+                    n = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("p"u8))
+                {
+                    p = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("q"u8))
+                {
+                    q = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("qi"u8))
+                {
+                    qi = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("use"u8))
+                {
+                    use = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("x"u8))
+                {
+                    x = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("x5c"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    x5c = array;
+                    continue;
+                }
+                if (property.NameEquals("y"u8))
+                {
+                    y = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value, rawData);
+        }
+
+        JsonWebKey IModelJsonSerializable<JsonWebKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonWebKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonWebKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JsonWebKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonWebKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JsonWebKey IModelSerializable<JsonWebKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonWebKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJsonWebKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JsonWebKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonWebKey"/> to convert. </param>
+        public static implicit operator RequestContent(JsonWebKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonWebKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonWebKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJsonWebKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

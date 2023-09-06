@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for updating a chat message. </summary>
     internal partial class UpdateChatMessageRequest
     {
-        /// <summary> Initializes a new instance of UpdateChatMessageRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateChatMessageRequest"/>. </summary>
         public UpdateChatMessageRequest()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateChatMessageRequest"/>. </summary>
+        /// <param name="content"> Chat message content. </param>
+        /// <param name="metadata"> Message metadata. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateChatMessageRequest(string content, IDictionary<string, string> metadata, Dictionary<string, BinaryData> rawData)
+        {
+            Content = content;
+            Metadata = metadata;
+            _rawData = rawData;
         }
 
         /// <summary> Chat message content. </summary>

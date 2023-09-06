@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueContractProperties
     {
-        /// <summary> Initializes a new instance of QuotaCounterValueContractProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueContractProperties"/>. </summary>
         internal QuotaCounterValueContractProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaCounterValueContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueContractProperties"/>. </summary>
         /// <param name="callsCount"> Number of times Counter was called. </param>
         /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
-        internal QuotaCounterValueContractProperties(int? callsCount, double? kbTransferred)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCounterValueContractProperties(int? callsCount, double? kbTransferred, Dictionary<string, BinaryData> rawData)
         {
             CallsCount = callsCount;
             KbTransferred = kbTransferred;
+            _rawData = rawData;
         }
 
         /// <summary> Number of times Counter was called. </summary>

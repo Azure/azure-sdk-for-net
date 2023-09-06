@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a selector in the Experiment resource. </summary>
     public partial class Selector
     {
-        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Selector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="targets"> List of Target references. </param>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Targets = targets.ToList();
         }
 
-        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <summary> Initializes a new instance of <see cref="Selector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="targets"> List of Target references. </param>
@@ -39,12 +42,19 @@ namespace Azure.ResourceManager.Chaos.Models
         /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SimpleFilter"/>.
         /// </param>
-        internal Selector(SelectorType selectorType, string id, IList<TargetReference> targets, Filter filter)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Selector(SelectorType selectorType, string id, IList<TargetReference> targets, Filter filter, Dictionary<string, BinaryData> rawData)
         {
             SelectorType = selectorType;
             Id = id;
             Targets = targets;
             Filter = filter;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Selector"/> for deserialization. </summary>
+        internal Selector()
+        {
         }
 
         /// <summary> Enum of the selector type. </summary>

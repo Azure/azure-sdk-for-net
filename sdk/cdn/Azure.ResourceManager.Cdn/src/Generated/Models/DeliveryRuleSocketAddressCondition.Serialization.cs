@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRuleSocketAddressCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleSocketAddressCondition : IUtf8JsonSerializable, IModelJsonSerializable<DeliveryRuleSocketAddressCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeliveryRuleSocketAddressCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeliveryRuleSocketAddressCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleSocketAddressCondition>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<SocketAddressMatchCondition>)Properties).Serialize(writer, options);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeliveryRuleSocketAddressCondition DeserializeDeliveryRuleSocketAddressCondition(JsonElement element)
+        internal static DeliveryRuleSocketAddressCondition DeserializeDeliveryRuleSocketAddressCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SocketAddressMatchCondition parameters = default;
             MatchVariable name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     name = new MatchVariable(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeliveryRuleSocketAddressCondition(name, parameters);
+            return new DeliveryRuleSocketAddressCondition(name, parameters, rawData);
+        }
+
+        DeliveryRuleSocketAddressCondition IModelJsonSerializable<DeliveryRuleSocketAddressCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleSocketAddressCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeliveryRuleSocketAddressCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeliveryRuleSocketAddressCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleSocketAddressCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeliveryRuleSocketAddressCondition IModelSerializable<DeliveryRuleSocketAddressCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleSocketAddressCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeliveryRuleSocketAddressCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeliveryRuleSocketAddressCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeliveryRuleSocketAddressCondition"/> to convert. </param>
+        public static implicit operator RequestContent(DeliveryRuleSocketAddressCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeliveryRuleSocketAddressCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeliveryRuleSocketAddressCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeliveryRuleSocketAddressCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

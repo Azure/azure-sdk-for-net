@@ -8,14 +8,102 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationActivity
+    public partial class AutomationActivity : IUtf8JsonSerializable, IModelJsonSerializable<AutomationActivity>
     {
-        internal static AutomationActivity DeserializeAutomationActivity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationActivity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationActivity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivity>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Definition))
+            {
+                writer.WritePropertyName("definition"u8);
+                writer.WriteStringValue(Definition);
+            }
+            if (Optional.IsCollectionDefined(ParameterSets))
+            {
+                writer.WritePropertyName("parameterSets"u8);
+                writer.WriteStartArray();
+                foreach (var item in ParameterSets)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AutomationActivityParameterSet>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OutputTypes))
+            {
+                writer.WritePropertyName("outputTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in OutputTypes)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AutomationActivityOutputType>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AutomationActivity DeserializeAutomationActivity(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +116,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,8 +201,61 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationActivity(id.Value, name.Value, definition.Value, Optional.ToList(parameterSets), Optional.ToList(outputTypes), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationActivity(id.Value, name.Value, definition.Value, Optional.ToList(parameterSets), Optional.ToList(outputTypes), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, rawData);
+        }
+
+        AutomationActivity IModelJsonSerializable<AutomationActivity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationActivity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationActivity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationActivity IModelSerializable<AutomationActivity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationActivity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationActivity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomationActivity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomationActivity"/> to convert. </param>
+        public static implicit operator RequestContent(AutomationActivity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomationActivity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomationActivity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationActivity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

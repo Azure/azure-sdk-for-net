@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayHostnameConfigurationData : IUtf8JsonSerializable
+    public partial class ApiManagementGatewayHostnameConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementGatewayHostnameConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementGatewayHostnameConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementGatewayHostnameConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementGatewayHostnameConfigurationData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -49,11 +57,25 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementGatewayHostnameConfigurationData DeserializeApiManagementGatewayHostnameConfigurationData(JsonElement element)
+        internal static ApiManagementGatewayHostnameConfigurationData DeserializeApiManagementGatewayHostnameConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +90,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<bool> tls10Enabled = default;
             Optional<bool> tls11Enabled = default;
             Optional<bool> http2Enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,8 +175,61 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled));
+            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled), rawData);
+        }
+
+        ApiManagementGatewayHostnameConfigurationData IModelJsonSerializable<ApiManagementGatewayHostnameConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementGatewayHostnameConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementGatewayHostnameConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementGatewayHostnameConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementGatewayHostnameConfigurationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementGatewayHostnameConfigurationData IModelSerializable<ApiManagementGatewayHostnameConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementGatewayHostnameConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementGatewayHostnameConfigurationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementGatewayHostnameConfigurationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementGatewayHostnameConfigurationData"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementGatewayHostnameConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementGatewayHostnameConfigurationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementGatewayHostnameConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementGatewayHostnameConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

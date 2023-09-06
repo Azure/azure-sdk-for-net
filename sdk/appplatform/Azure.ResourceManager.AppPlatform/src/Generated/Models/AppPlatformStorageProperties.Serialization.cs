@@ -5,23 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformStorageProperties : IUtf8JsonSerializable
+    public partial class AppPlatformStorageProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformStorageProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformStorageProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformStorageProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformStorageProperties DeserializeAppPlatformStorageProperties(JsonElement element)
+        internal static AppPlatformStorageProperties DeserializeAppPlatformStorageProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,7 +55,72 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     case "StorageAccount": return AppPlatformStorageAccount.DeserializeAppPlatformStorageAccount(element);
                 }
             }
-            return UnknownStorageProperties.DeserializeUnknownStorageProperties(element);
+
+            // Unknown type found so we will deserialize the base properties only
+            StorageType storageType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageType"u8))
+                {
+                    storageType = new StorageType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UnknownStorageProperties(storageType, rawData);
+        }
+
+        AppPlatformStorageProperties IModelJsonSerializable<AppPlatformStorageProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformStorageProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformStorageProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformStorageProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformStorageProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformStorageProperties IModelSerializable<AppPlatformStorageProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformStorageProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformStorageProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformStorageProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformStorageProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformStorageProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformStorageProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformStorageProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformStorageProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

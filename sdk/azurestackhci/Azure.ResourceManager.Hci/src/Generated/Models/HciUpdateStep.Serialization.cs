@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciUpdateStep : IUtf8JsonSerializable
+    public partial class HciUpdateStep : IUtf8JsonSerializable, IModelJsonSerializable<HciUpdateStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HciUpdateStep>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HciUpdateStep>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HciUpdateStep>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -58,15 +64,36 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HciUpdateStep>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element)
+        internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +106,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> endTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
             Optional<IList<HciUpdateStep>> steps = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -142,8 +170,61 @@ namespace Azure.ResourceManager.Hci.Models
                     steps = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
+            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps), rawData);
+        }
+
+        HciUpdateStep IModelJsonSerializable<HciUpdateStep>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HciUpdateStep>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciUpdateStep(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HciUpdateStep>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HciUpdateStep>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HciUpdateStep IModelSerializable<HciUpdateStep>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HciUpdateStep>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHciUpdateStep(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HciUpdateStep"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HciUpdateStep"/> to convert. </param>
+        public static implicit operator RequestContent(HciUpdateStep model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HciUpdateStep"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HciUpdateStep(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHciUpdateStep(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

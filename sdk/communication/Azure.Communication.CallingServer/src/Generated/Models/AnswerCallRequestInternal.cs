@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallingServer
     /// <summary> The request payload for answering the call. </summary>
     internal partial class AnswerCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
@@ -24,6 +28,24 @@ namespace Azure.Communication.CallingServer
 
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration, Dictionary<string, BinaryData> rawData)
+        {
+            IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/> for deserialization. </summary>
+        internal AnswerCallRequestInternal()
+        {
         }
 
         /// <summary> The context associated with the call. </summary>

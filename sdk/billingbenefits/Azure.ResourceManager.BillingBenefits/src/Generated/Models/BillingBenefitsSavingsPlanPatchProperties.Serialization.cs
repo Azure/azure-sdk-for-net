@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingBenefitsSavingsPlanPatchProperties : IUtf8JsonSerializable
+    public partial class BillingBenefitsSavingsPlanPatchProperties : IUtf8JsonSerializable, IModelJsonSerializable<BillingBenefitsSavingsPlanPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BillingBenefitsSavingsPlanPatchProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BillingBenefitsSavingsPlanPatchProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsSavingsPlanPatchProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -28,7 +36,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                if (AppliedScopeProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BillingBenefitsAppliedScopeProperties>)AppliedScopeProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -38,9 +53,142 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties);
+                if (RenewProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RenewProperties>)RenewProperties).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static BillingBenefitsSavingsPlanPatchProperties DeserializeBillingBenefitsSavingsPlanPatchProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> displayName = default;
+            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
+            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
+            Optional<bool> renew = default;
+            Optional<RenewProperties> renewProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("appliedScopeType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appliedScopeType = new BillingBenefitsAppliedScopeType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("appliedScopeProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    appliedScopeProperties = BillingBenefitsAppliedScopeProperties.DeserializeBillingBenefitsAppliedScopeProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("renew"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    renew = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("renewProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    renewProperties = RenewProperties.DeserializeRenewProperties(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new BillingBenefitsSavingsPlanPatchProperties(displayName.Value, Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, Optional.ToNullable(renew), renewProperties.Value, rawData);
+        }
+
+        BillingBenefitsSavingsPlanPatchProperties IModelJsonSerializable<BillingBenefitsSavingsPlanPatchProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsSavingsPlanPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingBenefitsSavingsPlanPatchProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BillingBenefitsSavingsPlanPatchProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsSavingsPlanPatchProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BillingBenefitsSavingsPlanPatchProperties IModelSerializable<BillingBenefitsSavingsPlanPatchProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingBenefitsSavingsPlanPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBillingBenefitsSavingsPlanPatchProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BillingBenefitsSavingsPlanPatchProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BillingBenefitsSavingsPlanPatchProperties"/> to convert. </param>
+        public static implicit operator RequestContent(BillingBenefitsSavingsPlanPatchProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BillingBenefitsSavingsPlanPatchProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BillingBenefitsSavingsPlanPatchProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBillingBenefitsSavingsPlanPatchProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

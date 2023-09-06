@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
@@ -12,24 +16,35 @@ namespace Azure.ResourceManager.Cdn.Models
     /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownCustomDomainHttpsParameters))]
     public abstract partial class CustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         protected CustomDomainHttpsContent(SecureDeliveryProtocolType protocolType)
         {
             ProtocolType = protocolType;
         }
 
-        /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
-        internal CustomDomainHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomDomainHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, Dictionary<string, BinaryData> rawData)
         {
             CertificateSource = certificateSource;
             ProtocolType = protocolType;
             MinimumTlsVersion = minimumTlsVersion;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomDomainHttpsContent"/> for deserialization. </summary>
+        internal CustomDomainHttpsContent()
+        {
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>

@@ -5,16 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication.CallAutomation;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation.Models.Events
 {
-    internal partial class DialogCompletedInternal
+    internal partial class DialogCompletedInternal : IUtf8JsonSerializable, IModelJsonSerializable<DialogCompletedInternal>
     {
-        internal static DialogCompletedInternal DeserializeDialogCompletedInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DialogCompletedInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DialogCompletedInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DialogCompletedInternal>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(DialogInputType))
+            {
+                writer.WritePropertyName("dialogInputType"u8);
+                writer.WriteStringValue(DialogInputType.Value.ToString());
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DialogCompletedInternal DeserializeDialogCompletedInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +69,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
             Optional<ResultInformation> resultInformation = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> dialogId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -71,8 +115,61 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     dialogId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DialogCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value);
+            return new DialogCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, rawData);
+        }
+
+        DialogCompletedInternal IModelJsonSerializable<DialogCompletedInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DialogCompletedInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDialogCompletedInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DialogCompletedInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DialogCompletedInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DialogCompletedInternal IModelSerializable<DialogCompletedInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DialogCompletedInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDialogCompletedInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DialogCompletedInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DialogCompletedInternal"/> to convert. </param>
+        public static implicit operator RequestContent(DialogCompletedInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DialogCompletedInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DialogCompletedInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDialogCompletedInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

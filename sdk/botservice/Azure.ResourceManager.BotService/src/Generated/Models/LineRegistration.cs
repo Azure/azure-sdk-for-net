@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The properties corresponding to a line channel registration. </summary>
     public partial class LineRegistration
     {
-        /// <summary> Initializes a new instance of LineRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LineRegistration"/>. </summary>
         public LineRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of LineRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LineRegistration"/>. </summary>
         /// <param name="generatedId"> Id generated for the line channel registration. </param>
         /// <param name="channelSecret"> Secret for the line channel registration. </param>
         /// <param name="channelAccessToken"> Access token for the line channel registration. </param>
-        internal LineRegistration(string generatedId, string channelSecret, string channelAccessToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LineRegistration(string generatedId, string channelSecret, string channelAccessToken, Dictionary<string, BinaryData> rawData)
         {
             GeneratedId = generatedId;
             ChannelSecret = channelSecret;
             ChannelAccessToken = channelAccessToken;
+            _rawData = rawData;
         }
 
         /// <summary> Id generated for the line channel registration. </summary>

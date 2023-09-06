@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     /// <summary>
@@ -13,16 +16,21 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// </summary>
     public partial class ArmAsyncOperation
     {
-        /// <summary> Initializes a new instance of ArmAsyncOperation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmAsyncOperation"/>. </summary>
         internal ArmAsyncOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmAsyncOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmAsyncOperation"/>. </summary>
         /// <param name="status"> Status of the async operation. </param>
-        internal ArmAsyncOperation(string status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmAsyncOperation(string status, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Status of the async operation. </summary>

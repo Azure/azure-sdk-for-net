@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Properties of the smartGroup modification item. </summary>
     public partial class SmartGroupModificationProperties
     {
-        /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationProperties"/>. </summary>
         public SmartGroupModificationProperties()
         {
             Modifications = new ChangeTrackingList<SmartGroupModificationItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationProperties"/>. </summary>
         /// <param name="smartGroupId"> Unique Id of the smartGroup for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
         /// <param name="nextLink"> URL to fetch the next set of results. </param>
-        internal SmartGroupModificationProperties(Guid? smartGroupId, IList<SmartGroupModificationItemInfo> modifications, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartGroupModificationProperties(Guid? smartGroupId, IList<SmartGroupModificationItemInfo> modifications, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             SmartGroupId = smartGroupId;
             Modifications = modifications;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Unique Id of the smartGroup for which the history is being retrieved. </summary>

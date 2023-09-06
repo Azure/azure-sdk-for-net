@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the linked workspace. </summary>
     public partial class AutomationLinkedWorkspace
     {
-        /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationLinkedWorkspace"/>. </summary>
         internal AutomationLinkedWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationLinkedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationLinkedWorkspace"/>. </summary>
         /// <param name="id"> Gets the id of the linked workspace. </param>
-        internal AutomationLinkedWorkspace(string id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationLinkedWorkspace(string id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the id of the linked workspace. </summary>

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleGroupDefinition
+    public partial class ManagedRuleGroupDefinition : IUtf8JsonSerializable, IModelJsonSerializable<ManagedRuleGroupDefinition>
     {
-        internal static ManagedRuleGroupDefinition DeserializeManagedRuleGroupDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedRuleGroupDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedRuleGroupDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleGroupDefinition>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedRuleGroupDefinition DeserializeManagedRuleGroupDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> ruleGroupName = default;
             Optional<string> description = default;
             Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"u8))
@@ -48,8 +76,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     rules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, Optional.ToList(rules));
+            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, Optional.ToList(rules), rawData);
+        }
+
+        ManagedRuleGroupDefinition IModelJsonSerializable<ManagedRuleGroupDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleGroupDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleGroupDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedRuleGroupDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleGroupDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedRuleGroupDefinition IModelSerializable<ManagedRuleGroupDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedRuleGroupDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedRuleGroupDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedRuleGroupDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedRuleGroupDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedRuleGroupDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedRuleGroupDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedRuleGroupDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedRuleGroupDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

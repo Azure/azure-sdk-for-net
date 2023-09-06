@@ -6,111 +6,61 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownCertificateProperties : IUtf8JsonSerializable
+    internal partial class UnknownCertificateProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformCertificateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformCertificateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCertificateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CertificatePropertiesType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCertificateProperties DeserializeUnknownCertificateProperties(JsonElement element)
+        internal static AppPlatformCertificateProperties DeserializeUnknownCertificateProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeAppPlatformCertificateProperties(element, options);
+
+        AppPlatformCertificateProperties IModelJsonSerializable<AppPlatformCertificateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issuedDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> activateDate = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> dnsNames = default;
-            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("thumbprint"u8))
-                {
-                    thumbprint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("issuer"u8))
-                {
-                    issuer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("issuedDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    issuedDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("expirationDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expirationDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("activateDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    activateDate = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("subjectName"u8))
-                {
-                    subjectName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dnsNames"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    dnsNames = array;
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new AppPlatformCertificateProvisioningState(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState));
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCertificateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformCertificateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCertificateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformCertificateProperties IModelSerializable<AppPlatformCertificateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformCertificateProperties(doc.RootElement, options);
         }
     }
 }

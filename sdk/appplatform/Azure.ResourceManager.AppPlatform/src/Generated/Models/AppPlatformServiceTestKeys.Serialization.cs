@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceTestKeys
+    public partial class AppPlatformServiceTestKeys : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformServiceTestKeys>
     {
-        internal static AppPlatformServiceTestKeys DeserializeAppPlatformServiceTestKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformServiceTestKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformServiceTestKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformServiceTestKeys>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                writer.WritePropertyName("primaryKey"u8);
+                writer.WriteStringValue(PrimaryKey);
+            }
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                writer.WritePropertyName("secondaryKey"u8);
+                writer.WriteStringValue(SecondaryKey);
+            }
+            if (Optional.IsDefined(PrimaryTestEndpoint))
+            {
+                writer.WritePropertyName("primaryTestEndpoint"u8);
+                writer.WriteStringValue(PrimaryTestEndpoint);
+            }
+            if (Optional.IsDefined(SecondaryTestEndpoint))
+            {
+                writer.WritePropertyName("secondaryTestEndpoint"u8);
+                writer.WriteStringValue(SecondaryTestEndpoint);
+            }
+            if (Optional.IsDefined(IsEnabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AppPlatformServiceTestKeys DeserializeAppPlatformServiceTestKeys(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> primaryTestEndpoint = default;
             Optional<string> secondaryTestEndpoint = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -54,8 +108,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Optional.ToNullable(enabled));
+            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Optional.ToNullable(enabled), rawData);
+        }
+
+        AppPlatformServiceTestKeys IModelJsonSerializable<AppPlatformServiceTestKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformServiceTestKeys>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformServiceTestKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformServiceTestKeys>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformServiceTestKeys>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformServiceTestKeys IModelSerializable<AppPlatformServiceTestKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformServiceTestKeys>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformServiceTestKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformServiceTestKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformServiceTestKeys"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformServiceTestKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformServiceTestKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformServiceTestKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformServiceTestKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

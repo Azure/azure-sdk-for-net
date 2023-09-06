@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementEmailTemplateData : IUtf8JsonSerializable
+    public partial class ApiManagementEmailTemplateData : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementEmailTemplateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementEmailTemplateData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementEmailTemplateData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementEmailTemplateData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,16 +53,37 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EmailTemplateParametersContractProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementEmailTemplateData DeserializeApiManagementEmailTemplateData(JsonElement element)
+        internal static ApiManagementEmailTemplateData DeserializeApiManagementEmailTemplateData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +98,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> description = default;
             Optional<bool> isDefault = default;
             Optional<IList<EmailTemplateParametersContractProperties>> parameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -151,8 +180,61 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiManagementEmailTemplateData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Optional.ToNullable(isDefault), Optional.ToList(parameters));
+            return new ApiManagementEmailTemplateData(id, name, type, systemData.Value, subject.Value, body.Value, title.Value, description.Value, Optional.ToNullable(isDefault), Optional.ToList(parameters), rawData);
+        }
+
+        ApiManagementEmailTemplateData IModelJsonSerializable<ApiManagementEmailTemplateData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementEmailTemplateData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementEmailTemplateData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementEmailTemplateData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementEmailTemplateData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementEmailTemplateData IModelSerializable<ApiManagementEmailTemplateData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementEmailTemplateData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementEmailTemplateData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementEmailTemplateData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementEmailTemplateData"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementEmailTemplateData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementEmailTemplateData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementEmailTemplateData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementEmailTemplateData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,32 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
+using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlayRequestInternal : IUtf8JsonSerializable
+    internal partial class PlayRequestInternal : IUtf8JsonSerializable, IModelJsonSerializable<PlayRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PlayRequestInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PlayRequestInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PlayRequestInternal>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("playSourceInfo"u8);
-            writer.WriteObjectValue(PlaySourceInfo);
+            if (PlaySourceInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<PlaySourceInternal>)PlaySourceInfo).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(PlayTo))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CommunicationIdentifierModel>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue(PlayOptions);
+                if (PlayOptions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PlayOptionsInternal>)PlayOptions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -42,7 +72,130 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PlayRequestInternal DeserializePlayRequestInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PlaySourceInternal playSourceInfo = default;
+            Optional<IList<CommunicationIdentifierModel>> playTo = default;
+            Optional<PlayOptionsInternal> playOptions = default;
+            Optional<string> operationContext = default;
+            Optional<string> callbackUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("playSourceInfo"u8))
+                {
+                    playSourceInfo = PlaySourceInternal.DeserializePlaySourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("playTo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                    }
+                    playTo = array;
+                    continue;
+                }
+                if (property.NameEquals("playOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    playOptions = PlayOptionsInternal.DeserializePlayOptionsInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callbackUri"u8))
+                {
+                    callbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PlayRequestInternal(playSourceInfo, Optional.ToList(playTo), playOptions.Value, operationContext.Value, callbackUri.Value, rawData);
+        }
+
+        PlayRequestInternal IModelJsonSerializable<PlayRequestInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PlayRequestInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePlayRequestInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PlayRequestInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PlayRequestInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PlayRequestInternal IModelSerializable<PlayRequestInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PlayRequestInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePlayRequestInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PlayRequestInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PlayRequestInternal"/> to convert. </param>
+        public static implicit operator RequestContent(PlayRequestInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PlayRequestInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PlayRequestInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePlayRequestInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

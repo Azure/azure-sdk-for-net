@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class AgFoodPlatformPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkServiceConnectionState"/>. </summary>
         public AgFoodPlatformPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal AgFoodPlatformPrivateLinkServiceConnectionState(AgFoodPlatformPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgFoodPlatformPrivateLinkServiceConnectionState(AgFoodPlatformPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>

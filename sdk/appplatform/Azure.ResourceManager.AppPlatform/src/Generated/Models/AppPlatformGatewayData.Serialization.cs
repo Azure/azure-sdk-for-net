@@ -5,33 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    public partial class AppPlatformGatewayData : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayData : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformGatewayData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformGatewayData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformGatewayData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppPlatformGatewayProperties>)Properties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppPlatformSku>)Sku).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformGatewayData DeserializeAppPlatformGatewayData(JsonElement element)
+        internal static AppPlatformGatewayData DeserializeAppPlatformGatewayData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.AppPlatform
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -86,8 +123,61 @@ namespace Azure.ResourceManager.AppPlatform
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformGatewayData(id, name, type, systemData.Value, properties.Value, sku.Value);
+            return new AppPlatformGatewayData(id, name, type, systemData.Value, properties.Value, sku.Value, rawData);
+        }
+
+        AppPlatformGatewayData IModelJsonSerializable<AppPlatformGatewayData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformGatewayData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformGatewayData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformGatewayData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformGatewayData IModelSerializable<AppPlatformGatewayData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformGatewayData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformGatewayData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformGatewayData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformGatewayData"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformGatewayData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformGatewayData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformGatewayData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformGatewayData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

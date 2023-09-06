@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Response of the GetDomainOwnershipIdentifier operation. </summary>
     public partial class ApiManagementServiceGetDomainOwnershipIdentifierResult
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceGetDomainOwnershipIdentifierResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetDomainOwnershipIdentifierResult"/>. </summary>
         internal ApiManagementServiceGetDomainOwnershipIdentifierResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceGetDomainOwnershipIdentifierResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceGetDomainOwnershipIdentifierResult"/>. </summary>
         /// <param name="domainOwnershipIdentifier"> The domain ownership identifier value. </param>
-        internal ApiManagementServiceGetDomainOwnershipIdentifierResult(string domainOwnershipIdentifier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementServiceGetDomainOwnershipIdentifierResult(string domainOwnershipIdentifier, Dictionary<string, BinaryData> rawData)
         {
             DomainOwnershipIdentifier = domainOwnershipIdentifier;
+            _rawData = rawData;
         }
 
         /// <summary> The domain ownership identifier value. </summary>

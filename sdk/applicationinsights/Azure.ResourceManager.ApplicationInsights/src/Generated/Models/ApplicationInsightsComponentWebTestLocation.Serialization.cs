@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentWebTestLocation
+    public partial class ApplicationInsightsComponentWebTestLocation : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationInsightsComponentWebTestLocation>
     {
-        internal static ApplicationInsightsComponentWebTestLocation DeserializeApplicationInsightsComponentWebTestLocation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationInsightsComponentWebTestLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationInsightsComponentWebTestLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentWebTestLocation>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationInsightsComponentWebTestLocation DeserializeApplicationInsightsComponentWebTestLocation(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> displayName = default;
             Optional<string> tag = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("DisplayName"u8))
@@ -32,8 +61,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     tag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationInsightsComponentWebTestLocation(displayName.Value, tag.Value);
+            return new ApplicationInsightsComponentWebTestLocation(displayName.Value, tag.Value, rawData);
+        }
+
+        ApplicationInsightsComponentWebTestLocation IModelJsonSerializable<ApplicationInsightsComponentWebTestLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentWebTestLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentWebTestLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationInsightsComponentWebTestLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentWebTestLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationInsightsComponentWebTestLocation IModelSerializable<ApplicationInsightsComponentWebTestLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationInsightsComponentWebTestLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentWebTestLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationInsightsComponentWebTestLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationInsightsComponentWebTestLocation"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationInsightsComponentWebTestLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationInsightsComponentWebTestLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationInsightsComponentWebTestLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationInsightsComponentWebTestLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

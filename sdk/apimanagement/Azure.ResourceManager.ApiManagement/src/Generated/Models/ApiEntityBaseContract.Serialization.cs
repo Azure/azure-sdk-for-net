@@ -6,15 +6,140 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiEntityBaseContract
+    public partial class ApiEntityBaseContract : IUtf8JsonSerializable, IModelJsonSerializable<ApiEntityBaseContract>
     {
-        internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiEntityBaseContract>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiEntityBaseContract>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiEntityBaseContract>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(AuthenticationSettings))
+            {
+                writer.WritePropertyName("authenticationSettings"u8);
+                if (AuthenticationSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AuthenticationSettingsContract>)AuthenticationSettings).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            {
+                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
+                if (SubscriptionKeyParameterNames is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SubscriptionKeyParameterNamesContract>)SubscriptionKeyParameterNames).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ApiType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ApiType.Value.ToString());
+            }
+            if (Optional.IsDefined(ApiRevision))
+            {
+                writer.WritePropertyName("apiRevision"u8);
+                writer.WriteStringValue(ApiRevision);
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsDefined(IsCurrent))
+            {
+                writer.WritePropertyName("isCurrent"u8);
+                writer.WriteBooleanValue(IsCurrent.Value);
+            }
+            if (Optional.IsDefined(ApiRevisionDescription))
+            {
+                writer.WritePropertyName("apiRevisionDescription"u8);
+                writer.WriteStringValue(ApiRevisionDescription);
+            }
+            if (Optional.IsDefined(ApiVersionDescription))
+            {
+                writer.WritePropertyName("apiVersionDescription"u8);
+                writer.WriteStringValue(ApiVersionDescription);
+            }
+            if (Optional.IsDefined(ApiVersionSetId))
+            {
+                writer.WritePropertyName("apiVersionSetId"u8);
+                writer.WriteStringValue(ApiVersionSetId);
+            }
+            if (Optional.IsDefined(IsSubscriptionRequired))
+            {
+                writer.WritePropertyName("subscriptionRequired"u8);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+            }
+            if (Optional.IsDefined(TermsOfServiceUri))
+            {
+                writer.WritePropertyName("termsOfServiceUrl"u8);
+                writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Contact))
+            {
+                writer.WritePropertyName("contact"u8);
+                if (Contact is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApiContactInformation>)Contact).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(License))
+            {
+                writer.WritePropertyName("license"u8);
+                if (License is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ApiLicenseInformation>)License).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<Uri> termsOfServiceUri = default;
             Optional<ApiContactInformation> contact = default;
             Optional<ApiLicenseInformation> license = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -151,8 +277,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value);
+            return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, rawData);
+        }
+
+        ApiEntityBaseContract IModelJsonSerializable<ApiEntityBaseContract>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiEntityBaseContract>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiEntityBaseContract(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiEntityBaseContract>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiEntityBaseContract>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiEntityBaseContract IModelSerializable<ApiEntityBaseContract>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiEntityBaseContract>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiEntityBaseContract(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiEntityBaseContract"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiEntityBaseContract"/> to convert. </param>
+        public static implicit operator RequestContent(ApiEntityBaseContract model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiEntityBaseContract"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiEntityBaseContract(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiEntityBaseContract(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Collection of instances belong to the API portal. </summary>
     public partial class AppPlatformApiPortalInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalInstance. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalInstance"/>. </summary>
         internal AppPlatformApiPortalInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalInstance"/>. </summary>
         /// <param name="name"> Name of the API portal instance. </param>
         /// <param name="status"> Status of the API portal instance. </param>
-        internal AppPlatformApiPortalInstance(string name, string status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformApiPortalInstance(string name, string status, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the API portal instance. </summary>

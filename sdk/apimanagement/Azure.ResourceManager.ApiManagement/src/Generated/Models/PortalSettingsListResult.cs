@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Descriptions of APIM policies. </summary>
     internal partial class PortalSettingsListResult
     {
-        /// <summary> Initializes a new instance of PortalSettingsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
         internal PortalSettingsListResult()
         {
             Value = new ChangeTrackingList<PortalSettingsContractData>();
         }
 
-        /// <summary> Initializes a new instance of PortalSettingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalSettingsListResult"/>. </summary>
         /// <param name="value"> Descriptions of APIM policies. </param>
         /// <param name="count"> Total record count number. </param>
-        internal PortalSettingsListResult(IReadOnlyList<PortalSettingsContractData> value, long? count)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PortalSettingsListResult(IReadOnlyList<PortalSettingsContractData> value, long? count, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Count = count;
+            _rawData = rawData;
         }
 
         /// <summary> Descriptions of APIM policies. </summary>

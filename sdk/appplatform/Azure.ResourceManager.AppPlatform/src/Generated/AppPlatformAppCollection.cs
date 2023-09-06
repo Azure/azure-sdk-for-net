@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformAppAppsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformAppAppsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformAppResource(Client, AppPlatformAppData.DeserializeAppPlatformAppData(e)), _appPlatformAppAppsClientDiagnostics, Pipeline, "AppPlatformAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformAppResource(Client, AppPlatformAppData.DeserializeAppPlatformAppData(e)), _appPlatformAppAppsClientDiagnostics, Pipeline, "AppPlatformAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformAppAppsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformAppAppsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformAppResource(Client, AppPlatformAppData.DeserializeAppPlatformAppData(e)), _appPlatformAppAppsClientDiagnostics, Pipeline, "AppPlatformAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformAppResource(Client, AppPlatformAppData.DeserializeAppPlatformAppData(e)), _appPlatformAppAppsClientDiagnostics, Pipeline, "AppPlatformAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

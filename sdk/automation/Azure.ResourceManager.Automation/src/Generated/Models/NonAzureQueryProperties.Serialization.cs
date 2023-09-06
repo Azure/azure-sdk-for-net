@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class NonAzureQueryProperties : IUtf8JsonSerializable
+    public partial class NonAzureQueryProperties : IUtf8JsonSerializable, IModelJsonSerializable<NonAzureQueryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NonAzureQueryProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NonAzureQueryProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NonAzureQueryProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionAlias))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NonAzureQueryProperties DeserializeNonAzureQueryProperties(JsonElement element)
+        internal static NonAzureQueryProperties DeserializeNonAzureQueryProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> functionAlias = default;
             Optional<string> workspaceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("functionAlias"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.Automation.Models
                     workspaceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NonAzureQueryProperties(functionAlias.Value, workspaceId.Value);
+            return new NonAzureQueryProperties(functionAlias.Value, workspaceId.Value, rawData);
+        }
+
+        NonAzureQueryProperties IModelJsonSerializable<NonAzureQueryProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NonAzureQueryProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNonAzureQueryProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NonAzureQueryProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NonAzureQueryProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NonAzureQueryProperties IModelSerializable<NonAzureQueryProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NonAzureQueryProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNonAzureQueryProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NonAzureQueryProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NonAzureQueryProperties"/> to convert. </param>
+        public static implicit operator RequestContent(NonAzureQueryProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NonAzureQueryProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NonAzureQueryProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNonAzureQueryProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

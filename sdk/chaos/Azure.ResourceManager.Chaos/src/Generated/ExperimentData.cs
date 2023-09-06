@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ExperimentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors"> List of selectors. </param>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.Chaos
             Selectors = selectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,12 +48,19 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors"> List of selectors. </param>
         /// <param name="startOnCreation"> A boolean value that indicates if experiment should be started on creation or not. </param>
-        internal ExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Step> steps, IList<Selector> selectors, bool? startOnCreation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Step> steps, IList<Selector> selectors, bool? startOnCreation, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Steps = steps;
             Selectors = selectors;
             StartOnCreation = startOnCreation;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentData"/> for deserialization. </summary>
+        internal ExperimentData()
+        {
         }
 
         /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned. </summary>

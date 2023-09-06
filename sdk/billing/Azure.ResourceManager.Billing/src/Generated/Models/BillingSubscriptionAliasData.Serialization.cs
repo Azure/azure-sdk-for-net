@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class BillingSubscriptionAliasData : IUtf8JsonSerializable
+    public partial class BillingSubscriptionAliasData : IUtf8JsonSerializable, IModelJsonSerializable<BillingSubscriptionAliasData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BillingSubscriptionAliasData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BillingSubscriptionAliasData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BillingSubscriptionAliasData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -85,11 +91,25 @@ namespace Azure.ResourceManager.Billing
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BillingSubscriptionAliasData DeserializeBillingSubscriptionAliasData(JsonElement element)
+        internal static BillingSubscriptionAliasData DeserializeBillingSubscriptionAliasData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,6 +156,7 @@ namespace Azure.ResourceManager.Billing
             Optional<ResourceIdentifier> billingSubscriptionId = default;
             Optional<SubscriptionEnrollmentAccountStatus> subscriptionEnrollmentAccountStatus = default;
             Optional<DateTimeOffset> enrollmentAccountStartDate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -462,8 +483,61 @@ namespace Azure.ResourceManager.Billing
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, Optional.ToList(suspensionReasons), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value);
+            return new BillingSubscriptionAliasData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, Optional.ToList(suspensionReasons), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate), billingSubscriptionId.Value, rawData);
+        }
+
+        BillingSubscriptionAliasData IModelJsonSerializable<BillingSubscriptionAliasData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingSubscriptionAliasData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingSubscriptionAliasData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BillingSubscriptionAliasData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingSubscriptionAliasData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BillingSubscriptionAliasData IModelSerializable<BillingSubscriptionAliasData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BillingSubscriptionAliasData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBillingSubscriptionAliasData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BillingSubscriptionAliasData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BillingSubscriptionAliasData"/> to convert. </param>
+        public static implicit operator RequestContent(BillingSubscriptionAliasData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BillingSubscriptionAliasData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BillingSubscriptionAliasData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBillingSubscriptionAliasData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

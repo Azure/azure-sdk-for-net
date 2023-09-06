@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotServiceNameAvailabilityResult
+    public partial class BotServiceNameAvailabilityResult : IUtf8JsonSerializable, IModelJsonSerializable<BotServiceNameAvailabilityResult>
     {
-        internal static BotServiceNameAvailabilityResult DeserializeBotServiceNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BotServiceNameAvailabilityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BotServiceNameAvailabilityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceNameAvailabilityResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsValid))
+            {
+                writer.WritePropertyName("valid"u8);
+                writer.WriteBooleanValue(IsValid.Value);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(AbsCode))
+            {
+                writer.WritePropertyName("absCode"u8);
+                writer.WriteStringValue(AbsCode);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BotServiceNameAvailabilityResult DeserializeBotServiceNameAvailabilityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> valid = default;
             Optional<string> message = default;
             Optional<string> absCode = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valid"u8))
@@ -42,8 +86,61 @@ namespace Azure.ResourceManager.BotService.Models
                     absCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BotServiceNameAvailabilityResult(Optional.ToNullable(valid), message.Value, absCode.Value);
+            return new BotServiceNameAvailabilityResult(Optional.ToNullable(valid), message.Value, absCode.Value, rawData);
+        }
+
+        BotServiceNameAvailabilityResult IModelJsonSerializable<BotServiceNameAvailabilityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceNameAvailabilityResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotServiceNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BotServiceNameAvailabilityResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceNameAvailabilityResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BotServiceNameAvailabilityResult IModelSerializable<BotServiceNameAvailabilityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BotServiceNameAvailabilityResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBotServiceNameAvailabilityResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BotServiceNameAvailabilityResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BotServiceNameAvailabilityResult"/> to convert. </param>
+        public static implicit operator RequestContent(BotServiceNameAvailabilityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BotServiceNameAvailabilityResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BotServiceNameAvailabilityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBotServiceNameAvailabilityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

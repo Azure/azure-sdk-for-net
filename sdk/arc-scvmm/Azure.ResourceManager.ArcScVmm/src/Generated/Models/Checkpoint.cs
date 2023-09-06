@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class Checkpoint
     {
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Checkpoint"/>. </summary>
         public Checkpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of Checkpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Checkpoint"/>. </summary>
         /// <param name="parentCheckpointId"> Gets ID of parent of the checkpoint. </param>
         /// <param name="checkpointId"> Gets ID of the checkpoint. </param>
         /// <param name="name"> Gets name of the checkpoint. </param>
         /// <param name="description"> Gets description of the checkpoint. </param>
-        internal Checkpoint(string parentCheckpointId, string checkpointId, string name, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Checkpoint(string parentCheckpointId, string checkpointId, string name, string description, Dictionary<string, BinaryData> rawData)
         {
             ParentCheckpointId = parentCheckpointId;
             CheckpointId = checkpointId;
             Name = name;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Gets ID of parent of the checkpoint. </summary>

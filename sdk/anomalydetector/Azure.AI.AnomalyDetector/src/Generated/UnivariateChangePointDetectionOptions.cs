@@ -15,6 +15,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Request of change point detection. </summary>
     public partial class UnivariateChangePointDetectionOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of UnivariateChangePointDetectionOptions. </summary>
         /// <param name="series">
         /// Time series data points. Points should be sorted by time stamp in ascending
@@ -54,7 +57,8 @@ namespace Azure.AI.AnomalyDetector
         /// value is, the larger the trend error is, which means less change point will
         /// be accepted.
         /// </param>
-        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnivariateChangePointDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity granularity, int? customInterval, int? period, int? stableTrendWindow, float? threshold, Dictionary<string, BinaryData> rawData)
         {
             Series = series;
             Granularity = granularity;
@@ -62,6 +66,12 @@ namespace Azure.AI.AnomalyDetector
             Period = period;
             StableTrendWindow = stableTrendWindow;
             Threshold = threshold;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateChangePointDetectionOptions"/> for deserialization. </summary>
+        internal UnivariateChangePointDetectionOptions()
+        {
         }
 
         /// <summary>

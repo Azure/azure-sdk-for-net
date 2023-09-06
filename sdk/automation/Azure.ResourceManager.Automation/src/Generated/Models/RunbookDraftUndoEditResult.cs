@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The response model for the undo edit runbook operation. </summary>
     public partial class RunbookDraftUndoEditResult
     {
-        /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunbookDraftUndoEditResult"/>. </summary>
         internal RunbookDraftUndoEditResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RunbookDraftUndoEditResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookDraftUndoEditResult"/>. </summary>
         /// <param name="statusCode"></param>
         /// <param name="requestId"></param>
-        internal RunbookDraftUndoEditResult(AutomationHttpStatusCode? statusCode, string requestId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunbookDraftUndoEditResult(AutomationHttpStatusCode? statusCode, string requestId, Dictionary<string, BinaryData> rawData)
         {
             StatusCode = statusCode;
             RequestId = requestId;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the status code. </summary>

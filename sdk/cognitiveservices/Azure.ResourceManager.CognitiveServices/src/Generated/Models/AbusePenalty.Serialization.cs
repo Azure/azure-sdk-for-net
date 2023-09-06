@@ -6,15 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class AbusePenalty
+    public partial class AbusePenalty : IUtf8JsonSerializable, IModelJsonSerializable<AbusePenalty>
     {
-        internal static AbusePenalty DeserializeAbusePenalty(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AbusePenalty>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AbusePenalty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AbusePenalty>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteStringValue(Action.Value.ToString());
+            }
+            if (Optional.IsDefined(RateLimitPercentage))
+            {
+                writer.WritePropertyName("rateLimitPercentage"u8);
+                writer.WriteNumberValue(RateLimitPercentage.Value);
+            }
+            if (Optional.IsDefined(Expiration))
+            {
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteStringValue(Expiration.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AbusePenalty DeserializeAbusePenalty(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<AbusePenaltyAction> action = default;
             Optional<float> rateLimitPercentage = default;
             Optional<DateTimeOffset> expiration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -51,8 +94,61 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     expiration = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration));
+            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration), rawData);
+        }
+
+        AbusePenalty IModelJsonSerializable<AbusePenalty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AbusePenalty>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAbusePenalty(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AbusePenalty>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AbusePenalty>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AbusePenalty IModelSerializable<AbusePenalty>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AbusePenalty>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAbusePenalty(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AbusePenalty"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AbusePenalty"/> to convert. </param>
+        public static implicit operator RequestContent(AbusePenalty model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AbusePenalty"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AbusePenalty(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAbusePenalty(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

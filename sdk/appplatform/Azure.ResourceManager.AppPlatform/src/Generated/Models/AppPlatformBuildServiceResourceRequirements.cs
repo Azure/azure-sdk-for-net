@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The runtime resource configuration of this build service. </summary>
     public partial class AppPlatformBuildServiceResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceResourceRequirements. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceResourceRequirements"/>. </summary>
         public AppPlatformBuildServiceResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildServiceResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildServiceResourceRequirements"/>. </summary>
         /// <param name="cpu"> vCPU allocated to the entire build service node pool. </param>
         /// <param name="memory"> Memory allocated to the entire build service node pool. </param>
-        internal AppPlatformBuildServiceResourceRequirements(string cpu, string memory)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildServiceResourceRequirements(string cpu, string memory, Dictionary<string, BinaryData> rawData)
         {
             Cpu = cpu;
             Memory = memory;
+            _rawData = rawData;
         }
 
         /// <summary> vCPU allocated to the entire build service node pool. </summary>

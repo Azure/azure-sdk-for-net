@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class ServiceAlertActionStatus : IUtf8JsonSerializable
+    internal partial class ServiceAlertActionStatus : IUtf8JsonSerializable, IModelJsonSerializable<ServiceAlertActionStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceAlertActionStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceAlertActionStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertActionStatus>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsSuppressed))
             {
                 writer.WritePropertyName("isSuppressed"u8);
                 writer.WriteBooleanValue(IsSuppressed.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAlertActionStatus DeserializeServiceAlertActionStatus(JsonElement element)
+        internal static ServiceAlertActionStatus DeserializeServiceAlertActionStatus(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isSuppressed = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSuppressed"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     isSuppressed = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceAlertActionStatus(Optional.ToNullable(isSuppressed));
+            return new ServiceAlertActionStatus(Optional.ToNullable(isSuppressed), rawData);
+        }
+
+        ServiceAlertActionStatus IModelJsonSerializable<ServiceAlertActionStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertActionStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAlertActionStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceAlertActionStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertActionStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceAlertActionStatus IModelSerializable<ServiceAlertActionStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceAlertActionStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceAlertActionStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceAlertActionStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceAlertActionStatus"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceAlertActionStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceAlertActionStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceAlertActionStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceAlertActionStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

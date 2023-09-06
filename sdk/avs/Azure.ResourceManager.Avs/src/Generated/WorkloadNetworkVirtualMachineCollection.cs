@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVirtualMachineWorkloadNetworksRestClient.CreateListVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVirtualMachineWorkloadNetworksRestClient.CreateListVirtualMachinesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVirtualMachineResource(Client, WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(e)), _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkVirtualMachineResource(Client, WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(e)), _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVirtualMachineWorkloadNetworksRestClient.CreateListVirtualMachinesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVirtualMachineWorkloadNetworksRestClient.CreateListVirtualMachinesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVirtualMachineResource(Client, WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(e)), _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkloadNetworkVirtualMachineResource(Client, WorkloadNetworkVirtualMachineData.DeserializeWorkloadNetworkVirtualMachineData(e)), _workloadNetworkVirtualMachineWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Error details of the transfer eligibility validation. </summary>
     public partial class BillingSubscriptionValidateMoveEligibilityError
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityError"/>. </summary>
         internal BillingSubscriptionValidateMoveEligibilityError()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityError"/>. </summary>
         /// <param name="code"> Error code for the billing subscription move validation. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> Detailed error message explaining the error. </param>
-        internal BillingSubscriptionValidateMoveEligibilityError(SubscriptionTransferValidationErrorCode? code, string message, string details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionValidateMoveEligibilityError(SubscriptionTransferValidationErrorCode? code, string message, string details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> Error code for the billing subscription move validation. </summary>

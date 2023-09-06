@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ContinentsResponse
+    public partial class ContinentsResponse : IUtf8JsonSerializable, IModelJsonSerializable<ContinentsResponse>
     {
-        internal static ContinentsResponse DeserializeContinentsResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContinentsResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContinentsResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Continents))
+            {
+                writer.WritePropertyName("continents"u8);
+                writer.WriteStartArray();
+                foreach (var item in Continents)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContinentsResponseContinentsItem>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(CountryOrRegions))
+            {
+                writer.WritePropertyName("countryOrRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in CountryOrRegions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ContinentsResponseCountryOrRegionsItem>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContinentsResponse DeserializeContinentsResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ContinentsResponseContinentsItem>> continents = default;
             Optional<IReadOnlyList<ContinentsResponseCountryOrRegionsItem>> countryOrRegions = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("continents"u8))
@@ -51,8 +113,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     countryOrRegions = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContinentsResponse(Optional.ToList(continents), Optional.ToList(countryOrRegions));
+            return new ContinentsResponse(Optional.ToList(continents), Optional.ToList(countryOrRegions), rawData);
+        }
+
+        ContinentsResponse IModelJsonSerializable<ContinentsResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinentsResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContinentsResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContinentsResponse IModelSerializable<ContinentsResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContinentsResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContinentsResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContinentsResponse"/> to convert. </param>
+        public static implicit operator RequestContent(ContinentsResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContinentsResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContinentsResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContinentsResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

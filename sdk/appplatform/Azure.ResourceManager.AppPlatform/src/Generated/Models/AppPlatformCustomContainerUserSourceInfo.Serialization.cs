@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformCustomContainerUserSourceInfo : IUtf8JsonSerializable
+    public partial class AppPlatformCustomContainerUserSourceInfo : IUtf8JsonSerializable, IModelJsonSerializable<AppPlatformCustomContainerUserSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppPlatformCustomContainerUserSourceInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppPlatformCustomContainerUserSourceInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCustomContainerUserSourceInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomContainer))
             {
                 writer.WritePropertyName("customContainer"u8);
-                writer.WriteObjectValue(CustomContainer);
+                if (CustomContainer is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppPlatformCustomContainer>)CustomContainer).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
@@ -27,11 +42,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformCustomContainerUserSourceInfo DeserializeAppPlatformCustomContainerUserSourceInfo(JsonElement element)
+        internal static AppPlatformCustomContainerUserSourceInfo DeserializeAppPlatformCustomContainerUserSourceInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<AppPlatformCustomContainer> customContainer = default;
             string type = default;
             Optional<string> version = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customContainer"u8))
@@ -60,8 +90,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppPlatformCustomContainerUserSourceInfo(type, version.Value, customContainer.Value);
+            return new AppPlatformCustomContainerUserSourceInfo(type, version.Value, customContainer.Value, rawData);
+        }
+
+        AppPlatformCustomContainerUserSourceInfo IModelJsonSerializable<AppPlatformCustomContainerUserSourceInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCustomContainerUserSourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformCustomContainerUserSourceInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppPlatformCustomContainerUserSourceInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCustomContainerUserSourceInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppPlatformCustomContainerUserSourceInfo IModelSerializable<AppPlatformCustomContainerUserSourceInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppPlatformCustomContainerUserSourceInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppPlatformCustomContainerUserSourceInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppPlatformCustomContainerUserSourceInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppPlatformCustomContainerUserSourceInfo"/> to convert. </param>
+        public static implicit operator RequestContent(AppPlatformCustomContainerUserSourceInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppPlatformCustomContainerUserSourceInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppPlatformCustomContainerUserSourceInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppPlatformCustomContainerUserSourceInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

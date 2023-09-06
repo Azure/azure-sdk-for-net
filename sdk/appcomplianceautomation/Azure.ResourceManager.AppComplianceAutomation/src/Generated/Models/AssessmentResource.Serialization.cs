@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class AssessmentResource
+    public partial class AssessmentResource : IUtf8JsonSerializable, IModelJsonSerializable<AssessmentResource>
     {
-        internal static AssessmentResource DeserializeAssessmentResource(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AssessmentResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AssessmentResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AssessmentResource>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AssessmentResource DeserializeAssessmentResource(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<ResourceStatus> resourceStatus = default;
             Optional<string> reason = default;
             Optional<string> statusChangeDate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -48,8 +77,61 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     statusChangeDate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AssessmentResource(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value);
+            return new AssessmentResource(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value, rawData);
+        }
+
+        AssessmentResource IModelJsonSerializable<AssessmentResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AssessmentResource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssessmentResource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AssessmentResource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AssessmentResource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AssessmentResource IModelSerializable<AssessmentResource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AssessmentResource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAssessmentResource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AssessmentResource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AssessmentResource"/> to convert. </param>
+        public static implicit operator RequestContent(AssessmentResource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AssessmentResource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AssessmentResource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAssessmentResource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

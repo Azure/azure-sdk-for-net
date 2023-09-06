@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX Public IP Blocks. </summary>
     internal partial class WorkloadNetworkPublicIPsList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkPublicIPsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPublicIPsList"/>. </summary>
         internal WorkloadNetworkPublicIPsList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkPublicIPData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkPublicIPsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPublicIPsList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkPublicIPsList(IReadOnlyList<WorkloadNetworkPublicIPData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkPublicIPsList(IReadOnlyList<WorkloadNetworkPublicIPData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The items on the page. </summary>

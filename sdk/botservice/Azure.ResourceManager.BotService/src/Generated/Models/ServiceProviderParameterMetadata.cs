@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Meta data for the Service Provider. </summary>
     internal partial class ServiceProviderParameterMetadata
     {
-        /// <summary> Initializes a new instance of ServiceProviderParameterMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadata"/>. </summary>
         internal ServiceProviderParameterMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceProviderParameterMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadata"/>. </summary>
         /// <param name="constraints"> the constraints of the bot meta data. </param>
-        internal ServiceProviderParameterMetadata(ServiceProviderParameterMetadataConstraints constraints)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceProviderParameterMetadata(ServiceProviderParameterMetadataConstraints constraints, Dictionary<string, BinaryData> rawData)
         {
             Constraints = constraints;
+            _rawData = rawData;
         }
 
         /// <summary> the constraints of the bot meta data. </summary>

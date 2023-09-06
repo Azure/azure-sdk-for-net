@@ -6,27 +6,49 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodLogo : IUtf8JsonSerializable
+    public partial class PaymentMethodLogo : IUtf8JsonSerializable, IModelJsonSerializable<PaymentMethodLogo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PaymentMethodLogo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PaymentMethodLogo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PaymentMethodLogo>(this, options.Format);
+
             writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PaymentMethodLogo DeserializePaymentMethodLogo(JsonElement element)
+        internal static PaymentMethodLogo DeserializePaymentMethodLogo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> mimeType = default;
             Optional<Uri> url = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mimeType"u8))
@@ -43,8 +65,61 @@ namespace Azure.ResourceManager.Billing.Models
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PaymentMethodLogo(mimeType.Value, url.Value);
+            return new PaymentMethodLogo(mimeType.Value, url.Value, rawData);
+        }
+
+        PaymentMethodLogo IModelJsonSerializable<PaymentMethodLogo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PaymentMethodLogo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentMethodLogo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PaymentMethodLogo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PaymentMethodLogo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PaymentMethodLogo IModelSerializable<PaymentMethodLogo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PaymentMethodLogo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePaymentMethodLogo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PaymentMethodLogo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PaymentMethodLogo"/> to convert. </param>
+        public static implicit operator RequestContent(PaymentMethodLogo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PaymentMethodLogo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PaymentMethodLogo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePaymentMethodLogo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

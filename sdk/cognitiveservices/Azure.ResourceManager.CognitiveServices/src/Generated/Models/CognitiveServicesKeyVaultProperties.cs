@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties to configure keyVault Properties. </summary>
     public partial class CognitiveServicesKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of CognitiveServicesKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesKeyVaultProperties"/>. </summary>
         public CognitiveServicesKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVersion"> Version of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="identityClientId"></param>
-        internal CognitiveServicesKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, Guid? identityClientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, Guid? identityClientId, Dictionary<string, BinaryData> rawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyVaultUri = keyVaultUri;
             IdentityClientId = identityClientId;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the Key from KeyVault. </summary>

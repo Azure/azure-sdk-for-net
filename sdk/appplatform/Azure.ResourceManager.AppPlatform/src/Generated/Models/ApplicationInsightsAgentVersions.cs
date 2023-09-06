@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Application Insights agent versions properties payload. </summary>
     internal partial class ApplicationInsightsAgentVersions
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsAgentVersions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsAgentVersions"/>. </summary>
         public ApplicationInsightsAgentVersions()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsAgentVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsAgentVersions"/>. </summary>
         /// <param name="appInsightsJavaAgentVersion"> Indicates the version of application insight java agent. </param>
-        internal ApplicationInsightsAgentVersions(string appInsightsJavaAgentVersion)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsAgentVersions(string appInsightsJavaAgentVersion, Dictionary<string, BinaryData> rawData)
         {
             AppInsightsJavaAgentVersion = appInsightsJavaAgentVersion;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates the version of application insight java agent. </summary>

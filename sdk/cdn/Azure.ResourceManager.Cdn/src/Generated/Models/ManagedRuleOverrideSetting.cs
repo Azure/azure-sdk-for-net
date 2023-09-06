@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleOverrideSetting
     {
-        /// <summary> Initializes a new instance of ManagedRuleOverrideSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverrideSetting(string ruleId)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleOverrideSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
-        internal ManagedRuleOverrideSetting(string ruleId, ManagedRuleSetupState? enabledState, OverrideActionType? action)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleOverrideSetting(string ruleId, ManagedRuleSetupState? enabledState, OverrideActionType? action, Dictionary<string, BinaryData> rawData)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
             Action = action;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverrideSetting"/> for deserialization. </summary>
+        internal ManagedRuleOverrideSetting()
+        {
         }
 
         /// <summary> Identifier for the managed rule. </summary>

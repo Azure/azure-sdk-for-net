@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), _hciClusterClustersClientDiagnostics, Pipeline, "HciClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), _hciClusterClustersClientDiagnostics, Pipeline, "HciClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Hci
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), _hciClusterClustersClientDiagnostics, Pipeline, "HciClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new HciClusterResource(Client, HciClusterData.DeserializeHciClusterData(e)), _hciClusterClustersClientDiagnostics, Pipeline, "HciClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

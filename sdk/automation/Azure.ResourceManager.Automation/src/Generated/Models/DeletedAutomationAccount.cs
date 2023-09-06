@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the deleted automation account type. </summary>
     public partial class DeletedAutomationAccount : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedAutomationAccount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedAutomationAccount"/>. </summary>
         internal DeletedAutomationAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAutomationAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAutomationAccount"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,13 +33,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="automationAccountId"> Gets or sets the Automation Account Id. </param>
         /// <param name="locationPropertiesLocation"> Gets or sets the location of the resource. </param>
         /// <param name="deletedOn"> Gets the deletion time. </param>
-        internal DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedAutomationAccount(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier automationAccountResourceId, string automationAccountId, string locationPropertiesLocation, DateTimeOffset? deletedOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             AutomationAccountResourceId = automationAccountResourceId;
             AutomationAccountId = automationAccountId;
             LocationPropertiesLocation = locationPropertiesLocation;
             DeletedOn = deletedOn;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the location of the resource. </summary>

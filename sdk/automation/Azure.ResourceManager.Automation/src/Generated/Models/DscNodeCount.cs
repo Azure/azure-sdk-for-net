@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Number of nodes based on the Filter. </summary>
     public partial class DscNodeCount
     {
-        /// <summary> Initializes a new instance of DscNodeCount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeCount"/>. </summary>
         internal DscNodeCount()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCount"/>. </summary>
         /// <param name="name"> Gets the name of a count type. </param>
         /// <param name="properties"></param>
-        internal DscNodeCount(string name, DscNodeCountProperties properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeCount(string name, DscNodeCountProperties properties, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the name of a count type. </summary>

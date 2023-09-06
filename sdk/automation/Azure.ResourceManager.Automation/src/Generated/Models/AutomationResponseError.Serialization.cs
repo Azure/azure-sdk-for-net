@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationResponseError : IUtf8JsonSerializable
+    public partial class AutomationResponseError : IUtf8JsonSerializable, IModelJsonSerializable<AutomationResponseError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AutomationResponseError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AutomationResponseError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationResponseError>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationResponseError DeserializeAutomationResponseError(JsonElement element)
+        internal static AutomationResponseError DeserializeAutomationResponseError(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> code = default;
             Optional<string> message = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.Automation.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AutomationResponseError(code.Value, message.Value);
+            return new AutomationResponseError(code.Value, message.Value, rawData);
+        }
+
+        AutomationResponseError IModelJsonSerializable<AutomationResponseError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationResponseError>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationResponseError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AutomationResponseError>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationResponseError>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AutomationResponseError IModelSerializable<AutomationResponseError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AutomationResponseError>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAutomationResponseError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AutomationResponseError"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AutomationResponseError"/> to convert. </param>
+        public static implicit operator RequestContent(AutomationResponseError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AutomationResponseError"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AutomationResponseError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAutomationResponseError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

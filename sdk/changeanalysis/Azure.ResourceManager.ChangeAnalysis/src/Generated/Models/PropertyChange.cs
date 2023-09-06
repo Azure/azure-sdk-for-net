@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     /// <summary> Data of a property change. </summary>
     public partial class PropertyChange
     {
-        /// <summary> Initializes a new instance of PropertyChange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PropertyChange"/>. </summary>
         internal PropertyChange()
         {
         }
 
-        /// <summary> Initializes a new instance of PropertyChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyChange"/>. </summary>
         /// <param name="changeType"> The type of the change. </param>
         /// <param name="changeCategory"> The change category. </param>
         /// <param name="jsonPath"> The json path of the changed property. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <param name="oldValue"> The value of the property before the change. </param>
         /// <param name="newValue"> The value of the property after the change. </param>
         /// <param name="isDataMasked"> The boolean indicating whether the oldValue and newValue are masked. The values are masked if it contains sensitive information that the user doesn't have access to. </param>
-        internal PropertyChange(ChangeType? changeType, ChangeCategory? changeCategory, string jsonPath, string displayName, PropertyChangeLevel? level, string description, string oldValue, string newValue, bool? isDataMasked)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PropertyChange(ChangeType? changeType, ChangeCategory? changeCategory, string jsonPath, string displayName, PropertyChangeLevel? level, string description, string oldValue, string newValue, bool? isDataMasked, Dictionary<string, BinaryData> rawData)
         {
             ChangeType = changeType;
             ChangeCategory = changeCategory;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             OldValue = oldValue;
             NewValue = newValue;
             IsDataMasked = isDataMasked;
+            _rawData = rawData;
         }
 
         /// <summary> The type of the change. </summary>

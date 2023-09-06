@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleMonthlyRecurrence : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleMonthlyRecurrence : IUtf8JsonSerializable, IModelJsonSerializable<AlertProcessingRuleMonthlyRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlertProcessingRuleMonthlyRecurrence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlertProcessingRuleMonthlyRecurrence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleMonthlyRecurrence>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("daysOfMonth"u8);
             writer.WriteStartArray();
@@ -36,11 +42,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element)
+        internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             RecurrenceType recurrenceType = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> endTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfMonth"u8))
@@ -84,8 +105,61 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     endTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfMonth);
+            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfMonth, rawData);
+        }
+
+        AlertProcessingRuleMonthlyRecurrence IModelJsonSerializable<AlertProcessingRuleMonthlyRecurrence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleMonthlyRecurrence>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleMonthlyRecurrence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlertProcessingRuleMonthlyRecurrence>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleMonthlyRecurrence>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlertProcessingRuleMonthlyRecurrence IModelSerializable<AlertProcessingRuleMonthlyRecurrence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlertProcessingRuleMonthlyRecurrence>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleMonthlyRecurrence(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlertProcessingRuleMonthlyRecurrence"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlertProcessingRuleMonthlyRecurrence"/> to convert. </param>
+        public static implicit operator RequestContent(AlertProcessingRuleMonthlyRecurrence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlertProcessingRuleMonthlyRecurrence"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlertProcessingRuleMonthlyRecurrence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlertProcessingRuleMonthlyRecurrence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

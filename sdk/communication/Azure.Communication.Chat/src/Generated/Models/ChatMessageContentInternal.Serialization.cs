@@ -5,17 +5,83 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Communication;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatMessageContentInternal
+    internal partial class ChatMessageContentInternal : IUtf8JsonSerializable, IModelJsonSerializable<ChatMessageContentInternal>
     {
-        internal static ChatMessageContentInternal DeserializeChatMessageContentInternal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ChatMessageContentInternal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ChatMessageContentInternal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ChatMessageContentInternal>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Topic))
+            {
+                writer.WritePropertyName("topic"u8);
+                writer.WriteStringValue(Topic);
+            }
+            if (Optional.IsCollectionDefined(Participants))
+            {
+                writer.WritePropertyName("participants"u8);
+                writer.WriteStartArray();
+                foreach (var item in Participants)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ChatParticipantInternal>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(InitiatorCommunicationIdentifier))
+            {
+                writer.WritePropertyName("initiatorCommunicationIdentifier"u8);
+                if (InitiatorCommunicationIdentifier is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommunicationIdentifierModel>)InitiatorCommunicationIdentifier).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ChatMessageContentInternal DeserializeChatMessageContentInternal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +90,7 @@ namespace Azure.Communication.Chat
             Optional<string> topic = default;
             Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
             Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -59,8 +126,61 @@ namespace Azure.Communication.Chat
                     initiatorCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), initiatorCommunicationIdentifier.Value);
+            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), initiatorCommunicationIdentifier.Value, rawData);
+        }
+
+        ChatMessageContentInternal IModelJsonSerializable<ChatMessageContentInternal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ChatMessageContentInternal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatMessageContentInternal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ChatMessageContentInternal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ChatMessageContentInternal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ChatMessageContentInternal IModelSerializable<ChatMessageContentInternal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ChatMessageContentInternal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeChatMessageContentInternal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ChatMessageContentInternal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ChatMessageContentInternal"/> to convert. </param>
+        public static implicit operator RequestContent(ChatMessageContentInternal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ChatMessageContentInternal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ChatMessageContentInternal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeChatMessageContentInternal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

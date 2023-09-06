@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the RequestHeader condition for the delivery rule. </summary>
     public partial class DeliveryRuleRequestHeaderCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleRequestHeaderCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestHeaderCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleRequestHeaderCondition(RequestHeaderMatchCondition properties)
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.RequestHeader;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleRequestHeaderCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestHeaderCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRequestHeaderCondition(MatchVariable name, RequestHeaderMatchCondition properties) : base(name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeliveryRuleRequestHeaderCondition(MatchVariable name, RequestHeaderMatchCondition properties, Dictionary<string, BinaryData> rawData) : base(name, rawData)
         {
             Properties = properties;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestHeaderCondition"/> for deserialization. </summary>
+        internal DeliveryRuleRequestHeaderCondition()
+        {
         }
 
         /// <summary> Defines the parameters for the condition. </summary>

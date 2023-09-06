@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.Cdn.Models
             CountryOrRegions = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsMetricsOptions()
+        {
+        }
+
         /// <summary> The ArrayOfLogMetric to use. </summary>
         public IList<LogMetric> Metrics { get; }
         /// <summary> The DateTime to use. </summary>

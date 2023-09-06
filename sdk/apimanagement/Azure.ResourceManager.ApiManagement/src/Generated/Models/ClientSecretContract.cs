@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class ClientSecretContract
     {
-        /// <summary> Initializes a new instance of ClientSecretContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientSecretContract"/>. </summary>
         internal ClientSecretContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientSecretContract"/>. </summary>
         /// <param name="clientSecret"> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </param>
-        internal ClientSecretContract(string clientSecret)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientSecretContract(string clientSecret, Dictionary<string, BinaryData> rawData)
         {
             ClientSecret = clientSecret;
+            _rawData = rawData;
         }
 
         /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>

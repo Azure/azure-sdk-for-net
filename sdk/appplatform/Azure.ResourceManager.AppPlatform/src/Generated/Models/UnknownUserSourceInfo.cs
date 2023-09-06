@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownUserSourceInfo. </summary>
     internal partial class UnknownUserSourceInfo : AppPlatformUserSourceInfo
     {
-        /// <summary> Initializes a new instance of UnknownUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
-        internal UnknownUserSourceInfo(string userSourceInfoType, string version) : base(userSourceInfoType, version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownUserSourceInfo(string userSourceInfoType, string version, Dictionary<string, BinaryData> rawData) : base(userSourceInfoType, version, rawData)
         {
             UserSourceInfoType = userSourceInfoType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownUserSourceInfo"/> for deserialization. </summary>
+        internal UnknownUserSourceInfo()
+        {
         }
     }
 }

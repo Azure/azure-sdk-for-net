@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ResourcesResponseEndpointsPropertiesItemsItem. </summary>
     public partial class ResourcesResponseEndpointsPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         internal ResourcesResponseEndpointsPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="endpointId"></param>
         /// <param name="history"></param>
-        internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             EndpointId = endpointId;
             History = history;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the id. </summary>
