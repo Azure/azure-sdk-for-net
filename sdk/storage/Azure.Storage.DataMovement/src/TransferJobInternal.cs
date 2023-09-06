@@ -297,7 +297,6 @@ namespace Azure.Storage.DataMovement
                         ClientDiagnostics)
                         .ConfigureAwait(false);
                 }
-                _dataTransfer._state.TryOnFailedItemsState();
             }
             await TriggerJobCancellationAsync().ConfigureAwait(false);
 
@@ -327,6 +326,7 @@ namespace Azure.Storage.DataMovement
                 if (_dataTransfer._state.TryOnFailedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
+                    await OnJobPartStatusChangedAsync().ConfigureAwait(false);
                 }
             }
             else if (jobPartStatus.HasSkippedItems)
@@ -334,6 +334,7 @@ namespace Azure.Storage.DataMovement
                 if (_dataTransfer._state.TryOnSkippedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
+                    await OnJobPartStatusChangedAsync().ConfigureAwait(false);
                 }
             }
 

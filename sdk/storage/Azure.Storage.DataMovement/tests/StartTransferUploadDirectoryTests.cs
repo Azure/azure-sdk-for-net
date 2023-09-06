@@ -942,7 +942,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }

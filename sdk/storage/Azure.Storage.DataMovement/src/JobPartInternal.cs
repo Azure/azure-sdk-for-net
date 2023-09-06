@@ -587,7 +587,6 @@ namespace Azure.Storage.DataMovement
                 }
                 else if (JobPartStatus.State == DataTransferStatus.TransferState.Stopping)
                 {
-                    _progressTracker.IncrementFailedFiles();
                     await OnTransferStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
                 }
             }
