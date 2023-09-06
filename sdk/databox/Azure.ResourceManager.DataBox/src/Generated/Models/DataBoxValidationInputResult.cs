@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -14,20 +17,26 @@ namespace Azure.ResourceManager.DataBox.Models
     /// Please note <see cref="DataBoxValidationInputResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="DataTransferDetailsValidationResult"/>, <see cref="PreferencesValidationResult"/>, <see cref="SkuAvailabilityValidationResult"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationResult"/> and <see cref="AddressValidationResult"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownValidationInputResponse))]
     public abstract partial class DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of DataBoxValidationInputResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputResult"/>. </summary>
         protected DataBoxValidationInputResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxValidationInputResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
-        internal DataBoxValidationInputResult(DataBoxValidationInputDiscriminator validationType, ResponseError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxValidationInputResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, Dictionary<string, BinaryData> rawData)
         {
             ValidationType = validationType;
             Error = error;
+            _rawData = rawData;
         }
 
         /// <summary> Identifies the type of validation response. </summary>

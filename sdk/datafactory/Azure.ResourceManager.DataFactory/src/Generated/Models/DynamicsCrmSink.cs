@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Dynamics CRM sink. </summary>
     public partial class DynamicsCrmSink : CopySink
     {
-        /// <summary> Initializes a new instance of DynamicsCrmSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/>. </summary>
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         public DynamicsCrmSink(DynamicsSinkWriteBehavior writeBehavior)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = "DynamicsCrmSink";
         }
 
-        /// <summary> Initializes a new instance of DynamicsCrmSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             IgnoreNullValues = ignoreNullValues;
             AlternateKeyName = alternateKeyName;
             CopySinkType = copySinkType ?? "DynamicsCrmSink";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmSink"/> for deserialization. </summary>
+        internal DynamicsCrmSink()
+        {
         }
 
         /// <summary> The write behavior for the operation. </summary>

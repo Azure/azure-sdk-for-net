@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of ResourcePools. </summary>
     internal partial class ResourcePoolsList
     {
-        /// <summary> Initializes a new instance of ResourcePoolsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcePoolsList"/>. </summary>
         /// <param name="value"> Array of ResourcePools. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourcePoolsList(IEnumerable<ResourcePoolData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourcePoolsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcePoolsList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of ResourcePools. </param>
         /// <param name="value"> Array of ResourcePools. </param>
-        internal ResourcePoolsList(string nextLink, IReadOnlyList<ResourcePoolData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcePoolsList(string nextLink, IReadOnlyList<ResourcePoolData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourcePoolsList"/> for deserialization. </summary>
+        internal ResourcePoolsList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of ResourcePools. </summary>

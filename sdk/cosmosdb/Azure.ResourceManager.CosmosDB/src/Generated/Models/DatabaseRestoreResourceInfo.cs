@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class DatabaseRestoreResourceInfo
     {
-        /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseRestoreResourceInfo"/>. </summary>
         public DatabaseRestoreResourceInfo()
         {
             CollectionNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseRestoreResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseRestoreResourceInfo"/>. </summary>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        internal DatabaseRestoreResourceInfo(string databaseName, IList<string> collectionNames)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseRestoreResourceInfo(string databaseName, IList<string> collectionNames, Dictionary<string, BinaryData> rawData)
         {
             DatabaseName = databaseName;
             CollectionNames = collectionNames;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the database available for restore. </summary>

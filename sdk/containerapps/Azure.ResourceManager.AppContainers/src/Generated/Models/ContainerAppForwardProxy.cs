@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
     public partial class ContainerAppForwardProxy
     {
-        /// <summary> Initializes a new instance of ContainerAppForwardProxy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppForwardProxy"/>. </summary>
         public ContainerAppForwardProxy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppForwardProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppForwardProxy"/>. </summary>
         /// <param name="convention"> The convention used to determine the url of the request made. </param>
         /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
         /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
-        internal ContainerAppForwardProxy(ContainerAppForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppForwardProxy(ContainerAppForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName, Dictionary<string, BinaryData> rawData)
         {
             Convention = convention;
             CustomHostHeaderName = customHostHeaderName;
             CustomProtoHeaderName = customProtoHeaderName;
+            _rawData = rawData;
         }
 
         /// <summary> The convention used to determine the url of the request made. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Attribute mapping details. </summary>
     internal partial class MapperAttributeMappings
     {
-        /// <summary> Initializes a new instance of MapperAttributeMappings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperAttributeMappings"/>. </summary>
         public MapperAttributeMappings()
         {
             AttributeMappings = new ChangeTrackingList<MapperAttributeMapping>();
         }
 
-        /// <summary> Initializes a new instance of MapperAttributeMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperAttributeMappings"/>. </summary>
         /// <param name="attributeMappings"> List of attribute mappings. </param>
-        internal MapperAttributeMappings(IList<MapperAttributeMapping> attributeMappings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperAttributeMappings(IList<MapperAttributeMapping> attributeMappings, Dictionary<string, BinaryData> rawData)
         {
             AttributeMappings = attributeMappings;
+            _rawData = rawData;
         }
 
         /// <summary> List of attribute mappings. </summary>

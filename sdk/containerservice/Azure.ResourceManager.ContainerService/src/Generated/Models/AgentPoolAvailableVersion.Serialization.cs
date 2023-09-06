@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolAvailableVersion
+    public partial class AgentPoolAvailableVersion : IUtf8JsonSerializable, IModelJsonSerializable<AgentPoolAvailableVersion>
     {
-        internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AgentPoolAvailableVersion>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AgentPoolAvailableVersion>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolAvailableVersion>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("default"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (Optional.IsDefined(IsPreview))
+            {
+                writer.WritePropertyName("isPreview"u8);
+                writer.WriteBooleanValue(IsPreview.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> @default = default;
             Optional<string> kubernetesVersion = default;
             Optional<bool> isPreview = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -46,8 +90,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AgentPoolAvailableVersion(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview));
+            return new AgentPoolAvailableVersion(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview), rawData);
+        }
+
+        AgentPoolAvailableVersion IModelJsonSerializable<AgentPoolAvailableVersion>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolAvailableVersion>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolAvailableVersion(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AgentPoolAvailableVersion>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolAvailableVersion>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AgentPoolAvailableVersion IModelSerializable<AgentPoolAvailableVersion>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AgentPoolAvailableVersion>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAgentPoolAvailableVersion(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AgentPoolAvailableVersion"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AgentPoolAvailableVersion"/> to convert. </param>
+        public static implicit operator RequestContent(AgentPoolAvailableVersion model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AgentPoolAvailableVersion"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AgentPoolAvailableVersion(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAgentPoolAvailableVersion(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

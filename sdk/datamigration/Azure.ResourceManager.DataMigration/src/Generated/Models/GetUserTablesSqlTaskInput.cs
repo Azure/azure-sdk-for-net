@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlTaskInput
     {
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesSqlTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        internal GetUserTablesSqlTaskInput(SqlConnectionInfo connectionInfo, IList<string> selectedDatabases, string encryptedKeyForSecureFields)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesSqlTaskInput(SqlConnectionInfo connectionInfo, IList<string> selectedDatabases, string encryptedKeyForSecureFields, Dictionary<string, BinaryData> rawData)
         {
             ConnectionInfo = connectionInfo;
             SelectedDatabases = selectedDatabases;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlTaskInput"/> for deserialization. </summary>
+        internal GetUserTablesSqlTaskInput()
+        {
         }
 
         /// <summary> Connection information for SQL Server. </summary>

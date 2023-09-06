@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class UnknownRunRequest : IUtf8JsonSerializable
+    internal partial class UnknownRunRequest : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryRunContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryRunContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryRunContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
@@ -32,47 +38,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownRunRequest DeserializeUnknownRunRequest(JsonElement element)
+        internal static ContainerRegistryRunContent DeserializeUnknownRunRequest(JsonElement element, ModelSerializerOptions options = default) => DeserializeContainerRegistryRunContent(element, options);
+
+        ContainerRegistryRunContent IModelJsonSerializable<ContainerRegistryRunContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string type = "Unknown";
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isArchiveEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isArchiveEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("agentPoolName"u8))
-                {
-                    agentPoolName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("logTemplate"u8))
-                {
-                    logTemplate = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownRunRequest(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value);
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownRunRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryRunContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryRunContent IModelSerializable<ContainerRegistryRunContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryRunContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryRunContent(doc.RootElement, options);
         }
     }
 }

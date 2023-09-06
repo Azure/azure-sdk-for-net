@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> The ProxyOptionsTransportCertificatesItem. </summary>
     public partial class ProxyOptionsTransportCertificatesItem
     {
-        /// <summary> Initializes a new instance of ProxyOptionsTransportCertificatesItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransportCertificatesItem"/>. </summary>
         public ProxyOptionsTransportCertificatesItem()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransportCertificatesItem"/>. </summary>
+        /// <param name="pemValue"></param>
+        /// <param name="pemKey"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyOptionsTransportCertificatesItem(string pemValue, string pemKey, Dictionary<string, BinaryData> rawData)
+        {
+            PemValue = pemValue;
+            PemKey = pemKey;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the pem value. </summary>

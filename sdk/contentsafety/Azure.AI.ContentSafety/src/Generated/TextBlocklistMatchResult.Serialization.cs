@@ -5,16 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class TextBlocklistMatchResult
+    public partial class TextBlocklistMatchResult : IUtf8JsonSerializable, IModelJsonSerializable<TextBlocklistMatchResult>
     {
-        internal static TextBlocklistMatchResult DeserializeTextBlocklistMatchResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TextBlocklistMatchResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TextBlocklistMatchResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("blocklistName"u8);
+            writer.WriteStringValue(BlocklistName);
+            writer.WritePropertyName("blockItemId"u8);
+            writer.WriteStringValue(BlockItemId);
+            writer.WritePropertyName("blockItemText"u8);
+            writer.WriteStringValue(BlockItemText);
+            writer.WritePropertyName("offset"u8);
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length"u8);
+            writer.WriteNumberValue(Length);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TextBlocklistMatchResult DeserializeTextBlocklistMatchResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +61,7 @@ namespace Azure.AI.ContentSafety
             string blockItemText = default;
             int offset = default;
             int length = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blocklistName"u8))
@@ -51,16 +89,61 @@ namespace Azure.AI.ContentSafety
                     length = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TextBlocklistMatchResult(blocklistName, blockItemId, blockItemText, offset, length);
+            return new TextBlocklistMatchResult(blocklistName, blockItemId, blockItemText, offset, length, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TextBlocklistMatchResult FromResponse(Response response)
+        TextBlocklistMatchResult IModelJsonSerializable<TextBlocklistMatchResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTextBlocklistMatchResult(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextBlocklistMatchResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TextBlocklistMatchResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TextBlocklistMatchResult IModelSerializable<TextBlocklistMatchResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTextBlocklistMatchResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TextBlocklistMatchResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TextBlocklistMatchResult"/> to convert. </param>
+        public static implicit operator RequestContent(TextBlocklistMatchResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TextBlocklistMatchResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TextBlocklistMatchResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTextBlocklistMatchResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

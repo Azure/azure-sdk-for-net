@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The participant property reference. </summary>
     public partial class ParticipantPropertyReference
     {
-        /// <summary> Initializes a new instance of ParticipantPropertyReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantPropertyReference"/>. </summary>
         /// <param name="sourcePropertyName"> The source property that maps to the target property. </param>
         /// <param name="targetPropertyName"> The target property that maps to the source property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePropertyName"/> or <paramref name="targetPropertyName"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
             SourcePropertyName = sourcePropertyName;
             TargetPropertyName = targetPropertyName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantPropertyReference"/>. </summary>
+        /// <param name="sourcePropertyName"> The source property that maps to the target property. </param>
+        /// <param name="targetPropertyName"> The target property that maps to the source property. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParticipantPropertyReference(string sourcePropertyName, string targetPropertyName, Dictionary<string, BinaryData> rawData)
+        {
+            SourcePropertyName = sourcePropertyName;
+            TargetPropertyName = targetPropertyName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantPropertyReference"/> for deserialization. </summary>
+        internal ParticipantPropertyReference()
+        {
         }
 
         /// <summary> The source property that maps to the target property. </summary>

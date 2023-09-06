@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of InventoryItems. </summary>
     internal partial class InventoryItemsList
     {
-        /// <summary> Initializes a new instance of InventoryItemsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemsList"/>. </summary>
         /// <param name="value"> Array of InventoryItems. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InventoryItemsList(IEnumerable<InventoryItemData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of InventoryItemsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemsList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of InventoryItems. </param>
         /// <param name="value"> Array of InventoryItems. </param>
-        internal InventoryItemsList(string nextLink, IReadOnlyList<InventoryItemData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InventoryItemsList(string nextLink, IReadOnlyList<InventoryItemData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemsList"/> for deserialization. </summary>
+        internal InventoryItemsList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of InventoryItems. </summary>

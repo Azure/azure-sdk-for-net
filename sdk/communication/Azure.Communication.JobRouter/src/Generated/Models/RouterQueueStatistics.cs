@@ -14,7 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> Statistics for the queue. </summary>
     public partial class RouterQueueStatistics
     {
-        /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/>. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
@@ -27,17 +30,24 @@ namespace Azure.Communication.JobRouter.Models
             EstimatedWaitTimeMinutes = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/>. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimeMinutes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
         /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
-        internal RouterQueueStatistics(string queueId, int length, IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes, double? longestJobWaitTimeMinutes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterQueueStatistics(string queueId, int length, IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes, double? longestJobWaitTimeMinutes, Dictionary<string, BinaryData> rawData)
         {
             QueueId = queueId;
             Length = length;
             EstimatedWaitTimeMinutes = estimatedWaitTimeMinutes;
             LongestJobWaitTimeMinutes = longestJobWaitTimeMinutes;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/> for deserialization. </summary>
+        internal RouterQueueStatistics()
+        {
         }
 
         /// <summary> Id of the queue these details are about. </summary>

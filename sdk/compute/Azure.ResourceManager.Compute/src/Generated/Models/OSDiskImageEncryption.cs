@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,15 +14,16 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains encryption settings for an OS disk image. </summary>
     public partial class OSDiskImageEncryption : DiskImageEncryption
     {
-        /// <summary> Initializes a new instance of OSDiskImageEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDiskImageEncryption"/>. </summary>
         public OSDiskImageEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of OSDiskImageEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDiskImageEncryption"/>. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
         /// <param name="securityProfile"> This property specifies the security profile of an OS disk image. </param>
-        internal OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, OSDiskImageSecurityProfile securityProfile) : base(diskEncryptionSetId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, OSDiskImageSecurityProfile securityProfile, Dictionary<string, BinaryData> rawData) : base(diskEncryptionSetId, rawData)
         {
             SecurityProfile = securityProfile;
         }

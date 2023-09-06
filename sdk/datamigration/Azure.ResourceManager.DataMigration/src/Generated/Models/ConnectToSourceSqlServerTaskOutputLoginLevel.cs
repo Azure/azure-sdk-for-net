@@ -5,18 +5,21 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Login level output for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskOutputLoginLevel : ConnectToSourceSqlServerTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputLoginLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>. </summary>
         internal ConnectToSourceSqlServerTaskOutputLoginLevel()
         {
             ResultType = "LoginLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputLoginLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Type of result - database level or task level. </param>
         /// <param name="name"> Login name. </param>
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="defaultDatabase"> The default database for the login. </param>
         /// <param name="isEnabled"> The state of the login. </param>
         /// <param name="migrationEligibility"> Information about eligibility of login for migration. </param>
-        internal ConnectToSourceSqlServerTaskOutputLoginLevel(string id, string resultType, string name, LoginType? loginType, string defaultDatabase, bool? isEnabled, MigrationEligibilityInfo migrationEligibility) : base(id, resultType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskOutputLoginLevel(string id, string resultType, string name, LoginType? loginType, string defaultDatabase, bool? isEnabled, MigrationEligibilityInfo migrationEligibility, Dictionary<string, BinaryData> rawData) : base(id, resultType, rawData)
         {
             Name = name;
             LoginType = loginType;

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class CommunicationServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CommunicationServiceResourceData(AzureLocation location) : base(location)
         {
             LinkedDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +43,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
-        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CommunicationServicesProvisioningState? provisioningState, string hostName, string dataLocation, ResourceIdentifier notificationHubId, string version, Guid? immutableResourceId, IList<string> linkedDomains, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -49,6 +53,12 @@ namespace Azure.ResourceManager.Communication
             Version = version;
             ImmutableResourceId = immutableResourceId;
             LinkedDomains = linkedDomains;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResourceData"/> for deserialization. </summary>
+        internal CommunicationServiceResourceData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

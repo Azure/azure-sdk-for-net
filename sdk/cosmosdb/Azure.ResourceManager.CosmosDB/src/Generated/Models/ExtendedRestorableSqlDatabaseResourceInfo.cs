@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB SQL database event. </summary>
     public partial class ExtendedRestorableSqlDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableSqlDatabaseResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableSqlDatabaseResourceInfo"/>. </summary>
         internal ExtendedRestorableSqlDatabaseResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableSqlDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableSqlDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of the SQL database. </param>
         /// <param name="databaseId"> The resource ID of the SQL database. </param>
         /// <param name="database"> Cosmos DB SQL database resource object. </param>
-        internal ExtendedRestorableSqlDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId, RestorableSqlDatabasePropertiesResourceDatabase database)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableSqlDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId, RestorableSqlDatabasePropertiesResourceDatabase database, Dictionary<string, BinaryData> rawData)
         {
             Rid = rid;
             OperationType = operationType;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DatabaseName = databaseName;
             DatabaseId = databaseId;
             Database = database;
+            _rawData = rawData;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a disk restore point. </summary>
     public partial class DiskRestorePointInstanceView
     {
-        /// <summary> Initializes a new instance of DiskRestorePointInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointInstanceView"/>. </summary>
         internal DiskRestorePointInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskRestorePointInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointInstanceView"/>. </summary>
         /// <param name="id"> Disk restore point Id. </param>
         /// <param name="replicationStatus"> The disk restore point replication status information. </param>
-        internal DiskRestorePointInstanceView(string id, DiskRestorePointReplicationStatus replicationStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskRestorePointInstanceView(string id, DiskRestorePointReplicationStatus replicationStatus, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             ReplicationStatus = replicationStatus;
+            _rawData = rawData;
         }
 
         /// <summary> Disk restore point Id. </summary>

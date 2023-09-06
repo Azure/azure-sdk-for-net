@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.ContentSafety
 {
     /// <summary> Image analysis result. </summary>
     public partial class ImageAnalyzeSeverityResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ImageAnalyzeSeverityResult. </summary>
         /// <param name="category"> The image category. </param>
         /// <param name="severity"> The higher the severity of input content, the larger this value, currently its value could be: 0,2,4,6. </param>
@@ -17,6 +23,22 @@ namespace Azure.AI.ContentSafety
         {
             Category = category;
             Severity = severity;
+        }
+
+        /// <summary> Initializes a new instance of ImageAnalyzeSeverityResult. </summary>
+        /// <param name="category"> The image category. </param>
+        /// <param name="severity"> The higher the severity of input content, the larger this value, currently its value could be: 0,2,4,6. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageAnalyzeSeverityResult(ImageCategory category, int severity, Dictionary<string, BinaryData> rawData)
+        {
+            Category = category;
+            Severity = severity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageAnalyzeSeverityResult"/> for deserialization. </summary>
+        internal ImageAnalyzeSeverityResult()
+        {
         }
 
         /// <summary> The image category. </summary>

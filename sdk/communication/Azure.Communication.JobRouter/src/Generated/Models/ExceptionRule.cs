@@ -14,6 +14,33 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule that defines actions to execute upon a specific trigger. </summary>
     public partial class ExceptionRule
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionRule"/>. </summary>
+        /// <param name="trigger">
+        /// The trigger for this exception rule
+        /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
+        /// </param>
+        /// <param name="actions">
+        /// A dictionary collection of actions to perform once the exception is triggered. Key is the Id of each exception action.
+        /// Please note <see cref="ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CancelExceptionAction"/>, <see cref="ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExceptionRule(ExceptionTrigger trigger, IDictionary<string, ExceptionAction> actions, Dictionary<string, BinaryData> rawData)
+        {
+            Trigger = trigger;
+            Actions = actions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionRule"/> for deserialization. </summary>
+        internal ExceptionRule()
+        {
+        }
+
         /// <summary>
         /// The trigger for this exception rule
         /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -5,16 +5,45 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataCenterAddressInstructionResult
+    public partial class DataCenterAddressInstructionResult : IUtf8JsonSerializable, IModelJsonSerializable<DataCenterAddressInstructionResult>
     {
-        internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataCenterAddressInstructionResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataCenterAddressInstructionResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressInstructionResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("datacenterAddressType"u8);
+            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataCenterAddressInstructionResult DeserializeDataCenterAddressInstructionResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataCenterAddressType dataCenterAddressType = default;
             Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
             Optional<AzureLocation> dataCenterAzureLocation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationInstruction"u8))
@@ -58,8 +88,61 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataCenterAzureLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), communicationInstruction.Value);
+            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), communicationInstruction.Value, rawData);
+        }
+
+        DataCenterAddressInstructionResult IModelJsonSerializable<DataCenterAddressInstructionResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressInstructionResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCenterAddressInstructionResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataCenterAddressInstructionResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressInstructionResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataCenterAddressInstructionResult IModelSerializable<DataCenterAddressInstructionResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCenterAddressInstructionResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataCenterAddressInstructionResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataCenterAddressInstructionResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataCenterAddressInstructionResult"/> to convert. </param>
+        public static implicit operator RequestContent(DataCenterAddressInstructionResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataCenterAddressInstructionResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataCenterAddressInstructionResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataCenterAddressInstructionResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

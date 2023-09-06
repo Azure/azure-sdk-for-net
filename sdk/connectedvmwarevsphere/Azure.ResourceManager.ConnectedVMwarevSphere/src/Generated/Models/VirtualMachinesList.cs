@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualMachines. </summary>
     internal partial class VirtualMachinesList
     {
-        /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/>. </summary>
         /// <param name="value"> Array of VirtualMachines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachinesList(IEnumerable<VirtualMachineData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualMachines. </param>
         /// <param name="value"> Array of VirtualMachines. </param>
-        internal VirtualMachinesList(string nextLink, IReadOnlyList<VirtualMachineData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachinesList(string nextLink, IReadOnlyList<VirtualMachineData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinesList"/> for deserialization. </summary>
+        internal VirtualMachinesList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of VirtualMachines. </summary>

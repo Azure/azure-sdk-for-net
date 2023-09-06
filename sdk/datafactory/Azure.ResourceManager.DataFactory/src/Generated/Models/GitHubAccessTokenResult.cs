@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Get GitHub access token response definition. </summary>
     public partial class GitHubAccessTokenResult
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenResult"/>. </summary>
         internal GitHubAccessTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenResult"/>. </summary>
         /// <param name="gitHubAccessToken"> GitHub access token. </param>
-        internal GitHubAccessTokenResult(string gitHubAccessToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubAccessTokenResult(string gitHubAccessToken, Dictionary<string, BinaryData> rawData)
         {
             GitHubAccessToken = gitHubAccessToken;
+            _rawData = rawData;
         }
 
         /// <summary> GitHub access token. </summary>

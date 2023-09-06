@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class TargetLocation : IUtf8JsonSerializable
+    public partial class TargetLocation : IUtf8JsonSerializable, IModelJsonSerializable<TargetLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TargetLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TargetLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLocation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TargetLocation DeserializeTargetLocation(JsonElement element)
+        internal static TargetLocation DeserializeTargetLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> storageAccountResourceId = default;
             Optional<string> accountKey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountResourceId"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     accountKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TargetLocation(storageAccountResourceId.Value, accountKey.Value);
+            return new TargetLocation(storageAccountResourceId.Value, accountKey.Value, rawData);
+        }
+
+        TargetLocation IModelJsonSerializable<TargetLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTargetLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TargetLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TargetLocation IModelSerializable<TargetLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TargetLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTargetLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TargetLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TargetLocation"/> to convert. </param>
+        public static implicit operator RequestContent(TargetLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TargetLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TargetLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTargetLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

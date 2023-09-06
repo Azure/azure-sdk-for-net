@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Pipeline Policy. </summary>
     internal partial class DataFactoryPipelinePolicy
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelinePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelinePolicy"/>. </summary>
         public DataFactoryPipelinePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelinePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelinePolicy"/>. </summary>
         /// <param name="elapsedTimeMetric"> Pipeline ElapsedTime Metric Policy. </param>
-        internal DataFactoryPipelinePolicy(PipelineElapsedTimeMetricPolicy elapsedTimeMetric)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPipelinePolicy(PipelineElapsedTimeMetricPolicy elapsedTimeMetric, Dictionary<string, BinaryData> rawData)
         {
             ElapsedTimeMetric = elapsedTimeMetric;
+            _rawData = rawData;
         }
 
         /// <summary> Pipeline ElapsedTime Metric Policy. </summary>

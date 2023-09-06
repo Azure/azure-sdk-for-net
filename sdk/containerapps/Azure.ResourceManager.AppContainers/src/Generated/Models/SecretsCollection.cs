@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App Secrets Collection ARM resource. </summary>
     internal partial class SecretsCollection
     {
-        /// <summary> Initializes a new instance of SecretsCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SecretsCollection(IEnumerable<ContainerAppSecret> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
-        internal SecretsCollection(IReadOnlyList<ContainerAppSecret> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretsCollection(IReadOnlyList<ContainerAppSecret> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecretsCollection"/> for deserialization. </summary>
+        internal SecretsCollection()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

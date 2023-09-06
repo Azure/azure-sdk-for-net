@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsStorageContainerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageContainerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageContainerData"/>. </summary>
         internal DataLakeAnalyticsStorageContainerData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The last modified time of the blob container.
         /// Serialized Name: StorageContainer.properties.lastModifiedTime
         /// </param>
-        internal DataLakeAnalyticsStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
+            _rawData = rawData;
         }
 
         /// <summary>

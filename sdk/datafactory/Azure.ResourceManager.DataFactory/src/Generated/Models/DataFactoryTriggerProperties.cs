@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
         public DataFactoryTriggerProperties()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class StorageProfile
     {
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
             Disks = new ChangeTrackingList<VirtualDisk>();
             ScsiControllers = new ChangeTrackingList<VirtualScsiController>();
         }
 
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
         /// <param name="scsiControllers"> Gets or sets the list of virtual SCSI controllers associated with the virtual machine. </param>
-        internal StorageProfile(IList<VirtualDisk> disks, IReadOnlyList<VirtualScsiController> scsiControllers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageProfile(IList<VirtualDisk> disks, IReadOnlyList<VirtualScsiController> scsiControllers, Dictionary<string, BinaryData> rawData)
         {
             Disks = disks;
             ScsiControllers = scsiControllers;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>

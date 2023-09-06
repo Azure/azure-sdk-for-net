@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class IngressStickySessions : IUtf8JsonSerializable
+    internal partial class IngressStickySessions : IUtf8JsonSerializable, IModelJsonSerializable<IngressStickySessions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IngressStickySessions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IngressStickySessions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IngressStickySessions>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Affinity))
             {
                 writer.WritePropertyName("affinity"u8);
                 writer.WriteStringValue(Affinity.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IngressStickySessions DeserializeIngressStickySessions(JsonElement element)
+        internal static IngressStickySessions DeserializeIngressStickySessions(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Affinity> affinity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("affinity"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     affinity = new Affinity(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IngressStickySessions(Optional.ToNullable(affinity));
+            return new IngressStickySessions(Optional.ToNullable(affinity), rawData);
+        }
+
+        IngressStickySessions IModelJsonSerializable<IngressStickySessions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngressStickySessions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIngressStickySessions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IngressStickySessions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngressStickySessions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IngressStickySessions IModelSerializable<IngressStickySessions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IngressStickySessions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIngressStickySessions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IngressStickySessions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IngressStickySessions"/> to convert. </param>
+        public static implicit operator RequestContent(IngressStickySessions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IngressStickySessions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IngressStickySessions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIngressStickySessions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Spark configuration reference. </summary>
     public partial class SparkConfigurationParametrizationReference
     {
-        /// <summary> Initializes a new instance of SparkConfigurationParametrizationReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationParametrizationReference"/>. </summary>
         /// <param name="referenceType"> Spark configuration reference type. </param>
         /// <param name="referenceName"> Reference spark configuration name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationParametrizationReference"/>. </summary>
+        /// <param name="referenceType"> Spark configuration reference type. </param>
+        /// <param name="referenceName"> Reference spark configuration name. Type: string (or Expression with resultType string). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkConfigurationParametrizationReference(SparkConfigurationReferenceType referenceType, DataFactoryElement<string> referenceName, Dictionary<string, BinaryData> rawData)
+        {
+            ReferenceType = referenceType;
+            ReferenceName = referenceName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkConfigurationParametrizationReference"/> for deserialization. </summary>
+        internal SparkConfigurationParametrizationReference()
+        {
         }
 
         /// <summary> Spark configuration reference type. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Microsoft Defender settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileDefender
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         public ManagedClusterSecurityProfileDefender()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefender. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </param>
         /// <param name="securityMonitoring"> Microsoft Defender threat detection for Cloud settings for the security profile. </param>
-        internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring, Dictionary<string, BinaryData> rawData)
         {
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             SecurityMonitoring = securityMonitoring;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </summary>

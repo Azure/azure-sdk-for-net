@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -14,20 +15,25 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Reference objects for custom activity. </summary>
     public partial class CustomActivityReferenceObject
     {
-        /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomActivityReferenceObject"/>. </summary>
         public CustomActivityReferenceObject()
         {
             LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Datasets = new ChangeTrackingList<DatasetReference>();
         }
 
-        /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivityReferenceObject"/>. </summary>
         /// <param name="linkedServices"> Linked service references. </param>
         /// <param name="datasets"> Dataset references. </param>
-        internal CustomActivityReferenceObject(IList<DataFactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomActivityReferenceObject(IList<DataFactoryLinkedServiceReference> linkedServices, IList<DatasetReference> datasets, Dictionary<string, BinaryData> rawData)
         {
             LinkedServices = linkedServices;
             Datasets = datasets;
+            _rawData = rawData;
         }
 
         /// <summary> Linked service references. </summary>

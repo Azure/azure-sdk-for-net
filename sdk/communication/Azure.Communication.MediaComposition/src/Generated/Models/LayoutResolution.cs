@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The dimensions of the scene or objects in the scene. </summary>
     public partial class LayoutResolution
     {
-        /// <summary> Initializes a new instance of LayoutResolution. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LayoutResolution"/>. </summary>
         /// <param name="width"> Width of the object. </param>
         /// <param name="height"> Height of the object. </param>
         public LayoutResolution(int width, int height)
         {
             Width = width;
             Height = height;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LayoutResolution"/>. </summary>
+        /// <param name="width"> Width of the object. </param>
+        /// <param name="height"> Height of the object. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LayoutResolution(int width, int height, Dictionary<string, BinaryData> rawData)
+        {
+            Width = width;
+            Height = height;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LayoutResolution"/> for deserialization. </summary>
+        internal LayoutResolution()
+        {
         }
 
         /// <summary> Width of the object. </summary>

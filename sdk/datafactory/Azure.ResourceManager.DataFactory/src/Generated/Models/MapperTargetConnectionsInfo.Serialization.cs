@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperTargetConnectionsInfo : IUtf8JsonSerializable
+    public partial class MapperTargetConnectionsInfo : IUtf8JsonSerializable, IModelJsonSerializable<MapperTargetConnectionsInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MapperTargetConnectionsInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MapperTargetConnectionsInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MapperTargetConnectionsInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TargetEntities))
             {
@@ -23,14 +29,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetEntities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MapperTable>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue(Connection);
+                if (Connection is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MapperConnection>)Connection).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DataMapperMappings))
             {
@@ -38,7 +58,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataMapperMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataMapperMapping>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,11 +88,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MapperTargetConnectionsInfo DeserializeMapperTargetConnectionsInfo(JsonElement element)
+        internal static MapperTargetConnectionsInfo DeserializeMapperTargetConnectionsInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<MapperConnection> connection = default;
             Optional<IList<DataMapperMapping>> dataMapperMappings = default;
             Optional<IList<BinaryData>> relationships = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntities"u8))
@@ -134,8 +176,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     relationships = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MapperTargetConnectionsInfo(Optional.ToList(targetEntities), connection.Value, Optional.ToList(dataMapperMappings), Optional.ToList(relationships));
+            return new MapperTargetConnectionsInfo(Optional.ToList(targetEntities), connection.Value, Optional.ToList(dataMapperMappings), Optional.ToList(relationships), rawData);
+        }
+
+        MapperTargetConnectionsInfo IModelJsonSerializable<MapperTargetConnectionsInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapperTargetConnectionsInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperTargetConnectionsInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MapperTargetConnectionsInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapperTargetConnectionsInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MapperTargetConnectionsInfo IModelSerializable<MapperTargetConnectionsInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MapperTargetConnectionsInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMapperTargetConnectionsInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MapperTargetConnectionsInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MapperTargetConnectionsInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MapperTargetConnectionsInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MapperTargetConnectionsInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MapperTargetConnectionsInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMapperTargetConnectionsInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

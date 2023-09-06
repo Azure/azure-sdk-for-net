@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The collection of storage account credentials. </summary>
     internal partial class StorageAccountCredentialList
     {
-        /// <summary> Initializes a new instance of StorageAccountCredentialList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/>. </summary>
         internal StorageAccountCredentialList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeStorageAccountCredentialData>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentialList"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal StorageAccountCredentialList(IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountCredentialList(IReadOnlyList<DataBoxEdgeStorageAccountCredentialData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The value. </summary>

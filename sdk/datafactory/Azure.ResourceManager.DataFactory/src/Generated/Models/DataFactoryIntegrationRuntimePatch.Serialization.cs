@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryIntegrationRuntimePatch : IUtf8JsonSerializable
+    public partial class DataFactoryIntegrationRuntimePatch : IUtf8JsonSerializable, IModelJsonSerializable<DataFactoryIntegrationRuntimePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFactoryIntegrationRuntimePatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFactoryIntegrationRuntimePatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryIntegrationRuntimePatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoUpdate))
             {
@@ -25,7 +33,107 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset.Value, "P");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DataFactoryIntegrationRuntimePatch DeserializeDataFactoryIntegrationRuntimePatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
+            Optional<TimeSpan> updateDelayOffset = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("autoUpdate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpdate = new IntegrationRuntimeAutoUpdateState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("updateDelayOffset"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateDelayOffset = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataFactoryIntegrationRuntimePatch(Optional.ToNullable(autoUpdate), Optional.ToNullable(updateDelayOffset), rawData);
+        }
+
+        DataFactoryIntegrationRuntimePatch IModelJsonSerializable<DataFactoryIntegrationRuntimePatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryIntegrationRuntimePatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryIntegrationRuntimePatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFactoryIntegrationRuntimePatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryIntegrationRuntimePatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFactoryIntegrationRuntimePatch IModelSerializable<DataFactoryIntegrationRuntimePatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFactoryIntegrationRuntimePatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFactoryIntegrationRuntimePatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFactoryIntegrationRuntimePatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFactoryIntegrationRuntimePatch"/> to convert. </param>
+        public static implicit operator RequestContent(DataFactoryIntegrationRuntimePatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFactoryIntegrationRuntimePatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFactoryIntegrationRuntimePatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFactoryIntegrationRuntimePatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> The usage names that can be used. </summary>
     public partial class DataLakeStoreUsageName
     {
-        /// <summary> Initializes a new instance of DataLakeStoreUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsageName"/>. </summary>
         internal DataLakeStoreUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsageName"/>. </summary>
         /// <param name="value"> Gets a string describing the resource name. </param>
         /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
-        internal DataLakeStoreUsageName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreUsageName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> Gets a string describing the resource name. </summary>

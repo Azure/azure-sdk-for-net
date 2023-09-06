@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The logs. </summary>
     public partial class ContainerLogs
     {
-        /// <summary> Initializes a new instance of ContainerLogs. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerLogs"/>. </summary>
         internal ContainerLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerLogs"/>. </summary>
         /// <param name="content"> The content of the log. </param>
-        internal ContainerLogs(string content)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerLogs(string content, Dictionary<string, BinaryData> rawData)
         {
             Content = content;
+            _rawData = rawData;
         }
 
         /// <summary> The content of the log. </summary>

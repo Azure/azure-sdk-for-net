@@ -5,23 +5,37 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBDatabaseSettings : IUtf8JsonSerializable
+    public partial class MongoDBDatabaseSettings : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBDatabaseSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBDatabaseSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBDatabaseSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("collections"u8);
             writer.WriteStartObject();
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBCollectionSettings>)item.Value).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(TargetRUs))
@@ -29,17 +43,32 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBDatabaseSettings DeserializeMongoDBDatabaseSettings(JsonElement element)
+        internal static MongoDBDatabaseSettings DeserializeMongoDBDatabaseSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, MongoDBCollectionSettings> collections = default;
             Optional<int> targetRUs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collections"u8))
@@ -61,8 +90,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetRUs = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBDatabaseSettings(collections, Optional.ToNullable(targetRUs));
+            return new MongoDBDatabaseSettings(collections, Optional.ToNullable(targetRUs), rawData);
+        }
+
+        MongoDBDatabaseSettings IModelJsonSerializable<MongoDBDatabaseSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBDatabaseSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBDatabaseSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBDatabaseSettings IModelSerializable<MongoDBDatabaseSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBDatabaseSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBDatabaseSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBDatabaseSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBDatabaseSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBDatabaseSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBDatabaseSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBDatabaseSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBDatabaseSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

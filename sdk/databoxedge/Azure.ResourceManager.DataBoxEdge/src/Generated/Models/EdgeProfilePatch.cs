@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway Edge Profile patch. </summary>
     internal partial class EdgeProfilePatch
     {
-        /// <summary> Initializes a new instance of EdgeProfilePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeProfilePatch"/>. </summary>
         public EdgeProfilePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeProfilePatch"/>. </summary>
+        /// <param name="subscription"> The Data Box Edge/Gateway Edge Profile Subscription patch. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeProfilePatch(WritableSubResource subscription, Dictionary<string, BinaryData> rawData)
+        {
+            Subscription = subscription;
+            _rawData = rawData;
         }
 
         /// <summary> The Data Box Edge/Gateway Edge Profile Subscription patch. </summary>

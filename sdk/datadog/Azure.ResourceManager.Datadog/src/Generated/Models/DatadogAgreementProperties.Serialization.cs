@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogAgreementProperties : IUtf8JsonSerializable
+    public partial class DatadogAgreementProperties : IUtf8JsonSerializable, IModelJsonSerializable<DatadogAgreementProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DatadogAgreementProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DatadogAgreementProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DatadogAgreementProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
@@ -56,11 +63,25 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(Accepted.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatadogAgreementProperties DeserializeDatadogAgreementProperties(JsonElement element)
+        internal static DatadogAgreementProperties DeserializeDatadogAgreementProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<DateTimeOffset> retrieveDatetime = default;
             Optional<string> signature = default;
             Optional<bool> accepted = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
@@ -123,8 +145,61 @@ namespace Azure.ResourceManager.Datadog.Models
                     accepted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), rawData);
+        }
+
+        DatadogAgreementProperties IModelJsonSerializable<DatadogAgreementProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatadogAgreementProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogAgreementProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DatadogAgreementProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatadogAgreementProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DatadogAgreementProperties IModelSerializable<DatadogAgreementProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DatadogAgreementProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDatadogAgreementProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DatadogAgreementProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DatadogAgreementProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DatadogAgreementProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DatadogAgreementProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DatadogAgreementProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDatadogAgreementProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

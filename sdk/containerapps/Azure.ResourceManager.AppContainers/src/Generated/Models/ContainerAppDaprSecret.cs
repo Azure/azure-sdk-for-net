@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Dapr component Secret for ListSecrets Action. </summary>
     public partial class ContainerAppDaprSecret
     {
-        /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprSecret"/>. </summary>
         internal ContainerAppDaprSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
-        internal ContainerAppDaprSecret(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDaprSecret(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Secret Name. </summary>

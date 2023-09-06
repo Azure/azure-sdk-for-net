@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The tag resource. </summary>
     public partial class ConsumptionTag
     {
-        /// <summary> Initializes a new instance of ConsumptionTag. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionTag"/>. </summary>
         public ConsumptionTag()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionTag"/>. </summary>
         /// <param name="key"> Tag key. </param>
         /// <param name="value"> Tag values. </param>
-        internal ConsumptionTag(string key, IList<string> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionTag(string key, IList<string> value, Dictionary<string, BinaryData> rawData)
         {
             Key = key;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Tag key. </summary>

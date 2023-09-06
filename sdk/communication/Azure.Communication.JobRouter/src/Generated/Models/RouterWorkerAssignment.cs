@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> The assignment for a worker to a job. </summary>
     public partial class RouterWorkerAssignment
     {
-        /// <summary> Initializes a new instance of RouterWorkerAssignment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/>. </summary>
         /// <param name="assignmentId"> The Id of the assignment. </param>
         /// <param name="jobId"> The Id of the Job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
@@ -28,6 +32,26 @@ namespace Azure.Communication.JobRouter.Models
             JobId = jobId;
             CapacityCost = capacityCost;
             AssignedAt = assignedAt;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/>. </summary>
+        /// <param name="assignmentId"> The Id of the assignment. </param>
+        /// <param name="jobId"> The Id of the Job assigned. </param>
+        /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
+        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorkerAssignment(string assignmentId, string jobId, int capacityCost, DateTimeOffset assignedAt, Dictionary<string, BinaryData> rawData)
+        {
+            AssignmentId = assignmentId;
+            JobId = jobId;
+            CapacityCost = capacityCost;
+            AssignedAt = assignedAt;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/> for deserialization. </summary>
+        internal RouterWorkerAssignment()
+        {
         }
 
         /// <summary> The Id of the assignment. </summary>

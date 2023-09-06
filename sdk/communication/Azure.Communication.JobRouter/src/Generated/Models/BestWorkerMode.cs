@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.JobRouter.Models;
 
 namespace Azure.Communication.JobRouter
@@ -12,7 +14,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
     public partial class BestWorkerMode : DistributionMode
     {
-        /// <summary> Initializes a new instance of BestWorkerMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestWorkerMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Mode. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
@@ -35,7 +37,8 @@ namespace Azure.Communication.JobRouter
         /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
         /// <param name="scoringRuleOptions"> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </param>
-        internal BestWorkerMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, RouterRule scoringRule, ScoringRuleOptions scoringRuleOptions) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BestWorkerMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, RouterRule scoringRule, ScoringRuleOptions scoringRuleOptions, Dictionary<string, BinaryData> rawData) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors, rawData)
         {
             ScoringRule = scoringRule;
             ScoringRuleOptions = scoringRuleOptions;

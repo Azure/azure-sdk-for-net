@@ -8,14 +8,42 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel : IUtf8JsonSerializable, IModelJsonSerializable<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>
     {
-        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> objectSummary = default;
             Optional<string> id = default;
             string resultType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -165,8 +194,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(lastStorageUpdate), objectSummary.Value);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(lastStorageUpdate), objectSummary.Value, rawData);
+        }
+
+        MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel IModelJsonSerializable<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel IModelSerializable<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/> to convert. </param>
+        public static implicit operator RequestContent(MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

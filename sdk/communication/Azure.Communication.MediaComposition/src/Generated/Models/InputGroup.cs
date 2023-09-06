@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -14,21 +17,26 @@ namespace Azure.Communication.MediaComposition
     /// Please note <see cref="InputGroup"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoGridInputGroup"/> and <see cref="GridInputGroup"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownInputGroup))]
     public abstract partial class InputGroup
     {
-        /// <summary> Initializes a new instance of InputGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InputGroup"/>. </summary>
         protected InputGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of InputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
-        internal InputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
             Position = position;
@@ -36,6 +44,7 @@ namespace Azure.Communication.MediaComposition
             Height = height;
             Layer = layer;
             ScalingMode = scalingMode;
+            _rawData = rawData;
         }
 
         /// <summary> Kind of input group. </summary>

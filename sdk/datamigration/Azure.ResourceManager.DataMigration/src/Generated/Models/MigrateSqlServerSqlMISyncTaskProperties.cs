@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for task that migrates SQL Server databases to Azure SQL Database Managed Instance sync scenario. </summary>
     public partial class MigrateSqlServerSqlMISyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
         public MigrateSqlServerSqlMISyncTaskProperties()
         {
             Output = new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>();
             TaskType = TaskType.MigrateSqlServerAzureSqlDBMISyncLRS;
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
         /// </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
-        internal MigrateSqlServerSqlMISyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateSqlServerSqlMISyncTaskInput input, IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput> output, string createdOn) : base(taskType, errors, state, commands, clientData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlMISyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateSqlServerSqlMISyncTaskInput input, IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput> output, string createdOn, Dictionary<string, BinaryData> rawData) : base(taskType, errors, state, commands, clientData, rawData)
         {
             Input = input;
             Output = output;

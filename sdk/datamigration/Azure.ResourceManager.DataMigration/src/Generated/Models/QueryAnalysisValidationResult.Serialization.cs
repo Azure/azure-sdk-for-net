@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class QueryAnalysisValidationResult
+    public partial class QueryAnalysisValidationResult : IUtf8JsonSerializable, IModelJsonSerializable<QueryAnalysisValidationResult>
     {
-        internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QueryAnalysisValidationResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QueryAnalysisValidationResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<QueryAnalysisValidationResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueryResults))
+            {
+                writer.WritePropertyName("queryResults"u8);
+                if (QueryResults is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<QueryExecutionResult>)QueryResults).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                if (ValidationErrors is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ValidationError>)ValidationErrors).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<QueryExecutionResult> queryResults = default;
             Optional<ValidationError> validationErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryResults"u8))
@@ -40,8 +93,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = ValidationError.DeserializeValidationError(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new QueryAnalysisValidationResult(queryResults.Value, validationErrors.Value);
+            return new QueryAnalysisValidationResult(queryResults.Value, validationErrors.Value, rawData);
+        }
+
+        QueryAnalysisValidationResult IModelJsonSerializable<QueryAnalysisValidationResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryAnalysisValidationResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryAnalysisValidationResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QueryAnalysisValidationResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryAnalysisValidationResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QueryAnalysisValidationResult IModelSerializable<QueryAnalysisValidationResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<QueryAnalysisValidationResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQueryAnalysisValidationResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QueryAnalysisValidationResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QueryAnalysisValidationResult"/> to convert. </param>
+        public static implicit operator RequestContent(QueryAnalysisValidationResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QueryAnalysisValidationResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QueryAnalysisValidationResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQueryAnalysisValidationResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

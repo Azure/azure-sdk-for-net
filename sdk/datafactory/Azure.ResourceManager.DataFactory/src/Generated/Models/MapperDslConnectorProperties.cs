@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Connector properties of a CDC table in terms of name / value pairs. </summary>
     public partial class MapperDslConnectorProperties
     {
-        /// <summary> Initializes a new instance of MapperDslConnectorProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperDslConnectorProperties"/>. </summary>
         public MapperDslConnectorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperDslConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperDslConnectorProperties"/>. </summary>
         /// <param name="name"> Name of the property. </param>
         /// <param name="value"> Value of the property. </param>
-        internal MapperDslConnectorProperties(string name, BinaryData value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperDslConnectorProperties(string name, BinaryData value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the property. </summary>

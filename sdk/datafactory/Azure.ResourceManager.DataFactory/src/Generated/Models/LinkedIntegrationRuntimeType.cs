@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownLinkedIntegrationRuntimeType))]
     public abstract partial class LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
         protected LinkedIntegrationRuntimeType()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
-        internal LinkedIntegrationRuntimeType(string authorizationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedIntegrationRuntimeType(string authorizationType, Dictionary<string, BinaryData> rawData)
         {
             AuthorizationType = authorizationType;
+            _rawData = rawData;
         }
 
         /// <summary> The authorization type for integration runtime sharing. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container Apps Job Secrets Collection ARM resource. </summary>
     internal partial class JobSecretsCollection
     {
-        /// <summary> Initializes a new instance of JobSecretsCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal JobSecretsCollection(IEnumerable<ContainerAppWritableSecret> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of JobSecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
-        internal JobSecretsCollection(IReadOnlyList<ContainerAppWritableSecret> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobSecretsCollection(IReadOnlyList<ContainerAppWritableSecret> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobSecretsCollection"/> for deserialization. </summary>
+        internal JobSecretsCollection()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

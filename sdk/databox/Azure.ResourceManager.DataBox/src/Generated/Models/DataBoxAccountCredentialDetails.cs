@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Credential details of the account. </summary>
     public partial class DataBoxAccountCredentialDetails
     {
-        /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCredentialDetails"/>. </summary>
         internal DataBoxAccountCredentialDetails()
         {
             ShareCredentialDetails = new ChangeTrackingList<ShareCredentialDetails>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCredentialDetails"/>. </summary>
         /// <param name="accountName"> Name of the account. </param>
         /// <param name="dataAccountType"> Type of the account. </param>
         /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>
         /// <param name="shareCredentialDetails"> Per share level unencrypted access credentials. </param>
-        internal DataBoxAccountCredentialDetails(string accountName, DataAccountType? dataAccountType, string accountConnectionString, IReadOnlyList<ShareCredentialDetails> shareCredentialDetails)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxAccountCredentialDetails(string accountName, DataAccountType? dataAccountType, string accountConnectionString, IReadOnlyList<ShareCredentialDetails> shareCredentialDetails, Dictionary<string, BinaryData> rawData)
         {
             AccountName = accountName;
             DataAccountType = dataAccountType;
             AccountConnectionString = accountConnectionString;
             ShareCredentialDetails = shareCredentialDetails;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the account. </summary>

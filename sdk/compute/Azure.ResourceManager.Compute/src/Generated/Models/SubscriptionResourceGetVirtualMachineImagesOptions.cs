@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Compute.Models
             Skus = skus;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesOptions"/> for deserialization. </summary>
+        internal SubscriptionResourceGetVirtualMachineImagesOptions()
+        {
+        }
+
         /// <summary> The name of a supported Azure region. </summary>
         public AzureLocation Location { get; }
         /// <summary> A valid image publisher. </summary>

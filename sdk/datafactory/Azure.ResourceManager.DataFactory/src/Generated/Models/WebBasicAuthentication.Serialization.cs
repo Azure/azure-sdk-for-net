@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebBasicAuthentication : IUtf8JsonSerializable
+    public partial class WebBasicAuthentication : IUtf8JsonSerializable, IModelJsonSerializable<WebBasicAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebBasicAuthentication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebBasicAuthentication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebBasicAuthentication>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             JsonSerializer.Serialize(writer, Username);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element)
+        internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecretBaseDefinition password = default;
             DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authenticationType = new WebAuthenticationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebBasicAuthentication(url, authenticationType, username, password);
+            return new WebBasicAuthentication(url, authenticationType, username, password, rawData);
+        }
+
+        WebBasicAuthentication IModelJsonSerializable<WebBasicAuthentication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebBasicAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebBasicAuthentication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebBasicAuthentication>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebBasicAuthentication>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebBasicAuthentication IModelSerializable<WebBasicAuthentication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebBasicAuthentication>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebBasicAuthentication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebBasicAuthentication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebBasicAuthentication"/> to convert. </param>
+        public static implicit operator RequestContent(WebBasicAuthentication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebBasicAuthentication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebBasicAuthentication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebBasicAuthentication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

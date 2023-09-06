@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class RelationshipsLookup
+    public partial class RelationshipsLookup : IUtf8JsonSerializable, IModelJsonSerializable<RelationshipsLookup>
     {
-        internal static RelationshipsLookup DeserializeRelationshipsLookup(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RelationshipsLookup>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RelationshipsLookup>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RelationshipsLookup>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RelationshipsLookup DeserializeRelationshipsLookup(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> relatedProfileName = default;
             Optional<IReadOnlyList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
             Optional<string> existingRelationshipName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileName"u8))
@@ -69,8 +97,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     existingRelationshipName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RelationshipsLookup(profileName.Value, Optional.ToList(profilePropertyReferences), relatedProfileName.Value, Optional.ToList(relatedProfilePropertyReferences), existingRelationshipName.Value);
+            return new RelationshipsLookup(profileName.Value, Optional.ToList(profilePropertyReferences), relatedProfileName.Value, Optional.ToList(relatedProfilePropertyReferences), existingRelationshipName.Value, rawData);
+        }
+
+        RelationshipsLookup IModelJsonSerializable<RelationshipsLookup>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RelationshipsLookup>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRelationshipsLookup(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RelationshipsLookup>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RelationshipsLookup>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RelationshipsLookup IModelSerializable<RelationshipsLookup>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RelationshipsLookup>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRelationshipsLookup(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RelationshipsLookup"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RelationshipsLookup"/> to convert. </param>
+        public static implicit operator RequestContent(RelationshipsLookup model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RelationshipsLookup"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RelationshipsLookup(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRelationshipsLookup(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Description about the errors happen while performing migration validation. </summary>
     public partial class ValidationError
     {
-        /// <summary> Initializes a new instance of ValidationError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidationError"/>. </summary>
         internal ValidationError()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationError"/>. </summary>
         /// <param name="text"> Error Text. </param>
         /// <param name="severity"> Severity of the error. </param>
-        internal ValidationError(string text, Severity? severity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidationError(string text, Severity? severity, Dictionary<string, BinaryData> rawData)
         {
             Text = text;
             Severity = severity;
+            _rawData = rawData;
         }
 
         /// <summary> Error Text. </summary>

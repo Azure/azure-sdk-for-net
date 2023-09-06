@@ -5,15 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterJobPositionDetails
+    public partial class RouterJobPositionDetails : IUtf8JsonSerializable, IModelJsonSerializable<RouterJobPositionDetails>
     {
-        internal static RouterJobPositionDetails DeserializeRouterJobPositionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouterJobPositionDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouterJobPositionDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RouterJobPositionDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("jobId"u8);
+            writer.WriteStringValue(JobId);
+            writer.WritePropertyName("position"u8);
+            writer.WriteNumberValue(Position);
+            writer.WritePropertyName("queueId"u8);
+            writer.WriteStringValue(QueueId);
+            writer.WritePropertyName("queueLength"u8);
+            writer.WriteNumberValue(QueueLength);
+            writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
+            writer.WriteNumberValue(_estimatedWaitTimeMinutes);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RouterJobPositionDetails DeserializeRouterJobPositionDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +61,7 @@ namespace Azure.Communication.JobRouter.Models
             string queueId = default;
             int queueLength = default;
             double estimatedWaitTimeMinutes = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -50,8 +89,61 @@ namespace Azure.Communication.JobRouter.Models
                     estimatedWaitTimeMinutes = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
+            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes, rawData);
+        }
+
+        RouterJobPositionDetails IModelJsonSerializable<RouterJobPositionDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterJobPositionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterJobPositionDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RouterJobPositionDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterJobPositionDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RouterJobPositionDetails IModelSerializable<RouterJobPositionDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RouterJobPositionDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRouterJobPositionDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RouterJobPositionDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RouterJobPositionDetails"/> to convert. </param>
+        public static implicit operator RequestContent(RouterJobPositionDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RouterJobPositionDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RouterJobPositionDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouterJobPositionDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> An offer of a job to a worker. </summary>
     public partial class RouterJobOffer
     {
-        /// <summary> Initializes a new instance of RouterJobOffer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
         /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="jobId"> The Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
@@ -28,19 +32,26 @@ namespace Azure.Communication.JobRouter.Models
             CapacityCost = capacityCost;
         }
 
-        /// <summary> Initializes a new instance of RouterJobOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/>. </summary>
         /// <param name="offerId"> The Id of the offer. </param>
         /// <param name="jobId"> The Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
         /// <param name="offeredAt"> The time the offer was created in UTC. </param>
         /// <param name="expiresAt"> The time that the offer will expire in UTC. </param>
-        internal RouterJobOffer(string offerId, string jobId, int capacityCost, DateTimeOffset? offeredAt, DateTimeOffset? expiresAt)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobOffer(string offerId, string jobId, int capacityCost, DateTimeOffset? offeredAt, DateTimeOffset? expiresAt, Dictionary<string, BinaryData> rawData)
         {
             OfferId = offerId;
             JobId = jobId;
             CapacityCost = capacityCost;
             OfferedAt = offeredAt;
             ExpiresAt = expiresAt;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobOffer"/> for deserialization. </summary>
+        internal RouterJobOffer()
+        {
         }
 
         /// <summary> The Id of the offer. </summary>

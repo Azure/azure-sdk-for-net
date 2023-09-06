@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,19 +15,20 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The address validation output. </summary>
     public partial class AddressValidationResult : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of AddressValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
         internal AddressValidationResult()
         {
             AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
             ValidationType = DataBoxValidationInputDiscriminator.ValidateAddress;
         }
 
-        /// <summary> Initializes a new instance of AddressValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
-        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses) : base(validationType, error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddressValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, AddressValidationStatus? validationStatus, IReadOnlyList<DataBoxShippingAddress> alternateAddresses, Dictionary<string, BinaryData> rawData) : base(validationType, error, rawData)
         {
             ValidationStatus = validationStatus;
             AlternateAddresses = alternateAddresses;

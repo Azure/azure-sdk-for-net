@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,30 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The ContainerAppJobPatchProperties. </summary>
     public partial class ContainerAppJobPatchProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppJobPatchProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatchProperties"/>. </summary>
         public ContainerAppJobPatchProperties()
         {
             OutboundIPAddresses = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobPatchProperties"/>. </summary>
+        /// <param name="environmentId"> Resource ID of environment. </param>
+        /// <param name="configuration"> Container Apps Job configuration properties. </param>
+        /// <param name="template"> Container Apps job definition. </param>
+        /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
+        /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobPatchProperties(string environmentId, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IList<string> outboundIPAddresses, string eventStreamEndpoint, Dictionary<string, BinaryData> rawData)
+        {
+            EnvironmentId = environmentId;
+            Configuration = configuration;
+            Template = template;
+            OutboundIPAddresses = outboundIPAddresses;
+            EventStreamEndpoint = eventStreamEndpoint;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID of environment. </summary>

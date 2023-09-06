@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileFileCsiDriver
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileFileCsiDriver. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileFileCsiDriver"/>. </summary>
         public ManagedClusterStorageProfileFileCsiDriver()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileFileCsiDriver. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileFileCsiDriver"/>. </summary>
         /// <param name="isEnabled"> Whether to enable AzureFile CSI Driver. The default value is true. </param>
-        internal ManagedClusterStorageProfileFileCsiDriver(bool? isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterStorageProfileFileCsiDriver(bool? isEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>

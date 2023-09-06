@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
     public partial class AgentPoolUpgradeProfilePropertiesUpgradesItem
     {
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
         internal AgentPoolUpgradeProfilePropertiesUpgradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfilePropertiesUpgradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfilePropertiesUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
-        internal AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolUpgradeProfilePropertiesUpgradesItem(string kubernetesVersion, bool? isPreview, Dictionary<string, BinaryData> rawData)
         {
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            _rawData = rawData;
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>

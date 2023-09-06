@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Migration Operation Input. </summary>
     public partial class MigrationOperationInput
     {
-        /// <summary> Initializes a new instance of MigrationOperationInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationOperationInput"/>. </summary>
         public MigrationOperationInput()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MigrationOperationInput"/>. </summary>
+        /// <param name="migrationOperationId"> ID tracking migration operation. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationOperationInput(Guid? migrationOperationId, Dictionary<string, BinaryData> rawData)
+        {
+            MigrationOperationId = migrationOperationId;
+            _rawData = rawData;
         }
 
         /// <summary> ID tracking migration operation. </summary>

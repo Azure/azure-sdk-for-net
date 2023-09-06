@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Compute role against which events will be raised. </summary>
     public partial class DataBoxEdgeRoleSinkInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeRoleSinkInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleSinkInfo"/>. </summary>
         /// <param name="roleId"> Compute role ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
         public DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(roleId, nameof(roleId));
 
             RoleId = roleId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleSinkInfo"/>. </summary>
+        /// <param name="roleId"> Compute role ID. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId, Dictionary<string, BinaryData> rawData)
+        {
+            RoleId = roleId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleSinkInfo"/> for deserialization. </summary>
+        internal DataBoxEdgeRoleSinkInfo()
+        {
         }
 
         /// <summary> Compute role ID. </summary>

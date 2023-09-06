@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of service objects. </summary>
     internal partial class DataMigrationServiceList
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceList"/>. </summary>
         internal DataMigrationServiceList()
         {
             Value = new ChangeTrackingList<DataMigrationServiceData>();
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceList"/>. </summary>
         /// <param name="value"> List of services. </param>
         /// <param name="nextLink"> URL to load the next page of services. </param>
-        internal DataMigrationServiceList(IReadOnlyList<DataMigrationServiceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationServiceList(IReadOnlyList<DataMigrationServiceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of services. </summary>

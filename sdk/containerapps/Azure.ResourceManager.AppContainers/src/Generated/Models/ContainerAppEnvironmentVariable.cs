@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App container environment variable. </summary>
     public partial class ContainerAppEnvironmentVariable
     {
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentVariable"/>. </summary>
         public ContainerAppEnvironmentVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentVariable"/>. </summary>
         /// <param name="name"> Environment variable name. </param>
         /// <param name="value"> Non-secret environment variable value. </param>
         /// <param name="secretRef"> Name of the Container App secret from which to pull the environment variable value. </param>
-        internal ContainerAppEnvironmentVariable(string name, string value, string secretRef)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppEnvironmentVariable(string name, string value, string secretRef, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
             SecretRef = secretRef;
+            _rawData = rawData;
         }
 
         /// <summary> Environment variable name. </summary>

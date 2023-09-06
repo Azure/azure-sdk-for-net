@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppReplicaContainerAppsRevisionReplicasRestClient.CreateListReplicasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppReplicaResource(Client, ContainerAppReplicaData.DeserializeContainerAppReplicaData(e)), _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ContainerAppReplicaResource(Client, ContainerAppReplicaData.DeserializeContainerAppReplicaData(e)), _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppReplicaResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppReplicaContainerAppsRevisionReplicasRestClient.CreateListReplicasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppReplicaResource(Client, ContainerAppReplicaData.DeserializeContainerAppReplicaData(e)), _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ContainerAppReplicaResource(Client, ContainerAppReplicaData.DeserializeContainerAppReplicaData(e)), _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics, Pipeline, "ContainerAppReplicaCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

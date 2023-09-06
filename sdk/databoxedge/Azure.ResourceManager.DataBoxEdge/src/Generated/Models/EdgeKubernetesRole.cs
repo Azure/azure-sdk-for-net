@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
@@ -23,13 +25,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// </summary>
     public partial class EdgeKubernetesRole : DataBoxEdgeRoleData
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         public EdgeKubernetesRole()
         {
             Kind = DataBoxEdgeRoleType.Kubernetes;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRole"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +43,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="kubernetesClusterInfo"> Kubernetes cluster configuration. </param>
         /// <param name="kubernetesRoleResources"> Kubernetes role resources. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeOSPlatformType? hostPlatform, EdgeKubernetesState? provisioningState, HostPlatformType? hostPlatformType, EdgeKubernetesClusterInfo kubernetesClusterInfo, EdgeKubernetesRoleResources kubernetesRoleResources, DataBoxEdgeRoleStatus? roleStatus, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             HostPlatform = hostPlatform;
             ProvisioningState = provisioningState;

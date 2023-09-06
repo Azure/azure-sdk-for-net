@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreFirewallRuleResource(Client, DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(e)), _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "DataLakeStoreFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataLakeStoreFirewallRuleResource(Client, DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(e)), _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "DataLakeStoreFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreFirewallRuleFirewallRulesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreFirewallRuleResource(Client, DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(e)), _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "DataLakeStoreFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataLakeStoreFirewallRuleResource(Client, DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(e)), _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "DataLakeStoreFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,22 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBShardKeyInfo
+    public partial class MongoDBShardKeyInfo : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBShardKeyInfo>
     {
-        internal static MongoDBShardKeyInfo DeserializeMongoDBShardKeyInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBShardKeyInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBShardKeyInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBShardKeyInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("fields"u8);
+            writer.WriteStartArray();
+            foreach (var item in Fields)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MongoDBShardKeyField>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("isUnique"u8);
+            writer.WriteBooleanValue(IsUnique);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MongoDBShardKeyInfo DeserializeMongoDBShardKeyInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<MongoDBShardKeyField> fields = default;
             bool isUnique = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fields"u8))
@@ -38,8 +82,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     isUnique = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBShardKeyInfo(fields, isUnique);
+            return new MongoDBShardKeyInfo(fields, isUnique, rawData);
+        }
+
+        MongoDBShardKeyInfo IModelJsonSerializable<MongoDBShardKeyInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBShardKeyInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBShardKeyInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBShardKeyInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBShardKeyInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBShardKeyInfo IModelSerializable<MongoDBShardKeyInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBShardKeyInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBShardKeyInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBShardKeyInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBShardKeyInfo"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBShardKeyInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBShardKeyInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBShardKeyInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBShardKeyInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

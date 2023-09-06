@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Defines the response of a trigger subscription operation. </summary>
     public partial class DataFactoryTriggerSubscriptionOperationResult
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerSubscriptionOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerSubscriptionOperationResult"/>. </summary>
         internal DataFactoryTriggerSubscriptionOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerSubscriptionOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerSubscriptionOperationResult"/>. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="status"> Event Subscription Status. </param>
-        internal DataFactoryTriggerSubscriptionOperationResult(string triggerName, EventSubscriptionStatus? status)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryTriggerSubscriptionOperationResult(string triggerName, EventSubscriptionStatus? status, Dictionary<string, BinaryData> rawData)
         {
             TriggerName = triggerName;
             Status = status;
+            _rawData = rawData;
         }
 
         /// <summary> Trigger name. </summary>

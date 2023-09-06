@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB options resource object. </summary>
     public partial class CosmosDBBaseConfig
     {
-        /// <summary> Initializes a new instance of CosmosDBBaseConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBaseConfig"/>. </summary>
         public CosmosDBBaseConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBBaseConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBaseConfig"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
-        internal CosmosDBBaseConfig(int? throughput, AutoscaleSettings autoscaleSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBBaseConfig(int? throughput, AutoscaleSettings autoscaleSettings, Dictionary<string, BinaryData> rawData)
         {
             Throughput = throughput;
             AutoscaleSettings = autoscaleSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </summary>

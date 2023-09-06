@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraClusterPublicStatusDataCentersItem. </summary>
     public partial class CassandraClusterPublicStatusDataCentersItem
     {
-        /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterPublicStatusDataCentersItem"/>. </summary>
         internal CassandraClusterPublicStatusDataCentersItem()
         {
             SeedNodes = new ChangeTrackingList<string>();
             Nodes = new ChangeTrackingList<CassandraClusterDataCenterNodeItem>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterPublicStatusDataCentersItem"/>. </summary>
         /// <param name="name"> The name of this Datacenter. </param>
         /// <param name="seedNodes"> A list of all seed nodes in the cluster, managed and unmanaged. </param>
         /// <param name="nodes"></param>
-        internal CassandraClusterPublicStatusDataCentersItem(string name, IReadOnlyList<string> seedNodes, IReadOnlyList<CassandraClusterDataCenterNodeItem> nodes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterPublicStatusDataCentersItem(string name, IReadOnlyList<string> seedNodes, IReadOnlyList<CassandraClusterDataCenterNodeItem> nodes, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             SeedNodes = seedNodes;
             Nodes = nodes;
+            _rawData = rawData;
         }
 
         /// <summary> The name of this Datacenter. </summary>

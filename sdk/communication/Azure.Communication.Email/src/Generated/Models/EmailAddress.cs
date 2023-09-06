@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -13,6 +14,20 @@ namespace Azure.Communication.Email
     /// <summary> An object representing the email address and its display name. </summary>
     public readonly partial struct EmailAddress
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmailAddress"/>. </summary>
+        /// <param name="address"> Email address. </param>
+        /// <param name="displayName"> Email display name. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailAddress(string address, string displayName, Dictionary<string, BinaryData> rawData)
+        {
+            Address = address;
+            DisplayName = displayName;
+            _rawData = rawData;
+        }
+
         /// <summary> Email address. </summary>
         public string Address { get; }
         /// <summary> Email display name. </summary>

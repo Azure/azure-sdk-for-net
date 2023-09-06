@@ -8,15 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HdfsLocation : IUtf8JsonSerializable
+    public partial class HdfsLocation : IUtf8JsonSerializable, IModelJsonSerializable<HdfsLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HdfsLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HdfsLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HdfsLocation>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
@@ -42,8 +48,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static HdfsLocation DeserializeHdfsLocation(JsonElement element)
+        internal static HdfsLocation DeserializeHdfsLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +90,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HdfsLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+        }
+
+        HdfsLocation IModelJsonSerializable<HdfsLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HdfsLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHdfsLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HdfsLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HdfsLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HdfsLocation IModelSerializable<HdfsLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HdfsLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHdfsLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HdfsLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HdfsLocation"/> to convert. </param>
+        public static implicit operator RequestContent(HdfsLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HdfsLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HdfsLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHdfsLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

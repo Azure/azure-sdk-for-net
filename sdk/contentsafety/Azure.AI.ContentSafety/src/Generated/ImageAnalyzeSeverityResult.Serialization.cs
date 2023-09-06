@@ -5,22 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class ImageAnalyzeSeverityResult
+    public partial class ImageAnalyzeSeverityResult : IUtf8JsonSerializable, IModelJsonSerializable<ImageAnalyzeSeverityResult>
     {
-        internal static ImageAnalyzeSeverityResult DeserializeImageAnalyzeSeverityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageAnalyzeSeverityResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageAnalyzeSeverityResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("category"u8);
+            writer.WriteStringValue(Category.ToString());
+            writer.WritePropertyName("severity"u8);
+            writer.WriteNumberValue(Severity);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ImageAnalyzeSeverityResult DeserializeImageAnalyzeSeverityResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ImageCategory category = default;
             int severity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -33,16 +65,61 @@ namespace Azure.AI.ContentSafety
                     severity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageAnalyzeSeverityResult(category, severity);
+            return new ImageAnalyzeSeverityResult(category, severity, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImageAnalyzeSeverityResult FromResponse(Response response)
+        ImageAnalyzeSeverityResult IModelJsonSerializable<ImageAnalyzeSeverityResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImageAnalyzeSeverityResult(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageAnalyzeSeverityResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageAnalyzeSeverityResult>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageAnalyzeSeverityResult IModelSerializable<ImageAnalyzeSeverityResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageAnalyzeSeverityResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageAnalyzeSeverityResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageAnalyzeSeverityResult"/> to convert. </param>
+        public static implicit operator RequestContent(ImageAnalyzeSeverityResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageAnalyzeSeverityResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageAnalyzeSeverityResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageAnalyzeSeverityResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

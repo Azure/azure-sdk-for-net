@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class DataLakeStoreForDataLakeAnalyticsAccountUpdateContent : IUtf8JsonSerializable
+    public partial class DataLakeStoreForDataLakeAnalyticsAccountUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -25,7 +33,111 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStringValue(Suffix);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static DataLakeStoreForDataLakeAnalyticsAccountUpdateContent DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            Optional<string> suffix = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("suffix"u8))
+                        {
+                            suffix = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(name, suffix.Value, rawData);
+        }
+
+        DataLakeStoreForDataLakeAnalyticsAccountUpdateContent IModelJsonSerializable<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataLakeStoreForDataLakeAnalyticsAccountUpdateContent IModelSerializable<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataLakeStoreForDataLakeAnalyticsAccountUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataLakeStoreForDataLakeAnalyticsAccountUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataLakeStoreForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

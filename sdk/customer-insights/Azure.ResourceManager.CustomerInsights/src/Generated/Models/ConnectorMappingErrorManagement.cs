@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The error management. </summary>
     public partial class ConnectorMappingErrorManagement
     {
-        /// <summary> Initializes a new instance of ConnectorMappingErrorManagement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingErrorManagement"/>. </summary>
         /// <param name="errorManagementType"> The type of error management to use for the mapping. </param>
         public ConnectorMappingErrorManagement(ErrorManagementType errorManagementType)
         {
             ErrorManagementType = errorManagementType;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingErrorManagement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingErrorManagement"/>. </summary>
         /// <param name="errorManagementType"> The type of error management to use for the mapping. </param>
         /// <param name="errorLimit"> The error limit allowed while importing data. </param>
-        internal ConnectorMappingErrorManagement(ErrorManagementType errorManagementType, int? errorLimit)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorMappingErrorManagement(ErrorManagementType errorManagementType, int? errorLimit, Dictionary<string, BinaryData> rawData)
         {
             ErrorManagementType = errorManagementType;
             ErrorLimit = errorLimit;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingErrorManagement"/> for deserialization. </summary>
+        internal ConnectorMappingErrorManagement()
+        {
         }
 
         /// <summary> The type of error management to use for the mapping. </summary>

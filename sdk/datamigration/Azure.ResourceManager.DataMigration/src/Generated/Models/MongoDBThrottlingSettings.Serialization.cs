@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBThrottlingSettings : IUtf8JsonSerializable
+    public partial class MongoDBThrottlingSettings : IUtf8JsonSerializable, IModelJsonSerializable<MongoDBThrottlingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MongoDBThrottlingSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MongoDBThrottlingSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBThrottlingSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MinFreeCpu))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("maxParallelism"u8);
                 writer.WriteNumberValue(MaxParallelism.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBThrottlingSettings DeserializeMongoDBThrottlingSettings(JsonElement element)
+        internal static MongoDBThrottlingSettings DeserializeMongoDBThrottlingSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<int> minFreeCpu = default;
             Optional<int> minFreeMemoryMb = default;
             Optional<int> maxParallelism = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minFreeCpu"u8))
@@ -71,8 +94,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     maxParallelism = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MongoDBThrottlingSettings(Optional.ToNullable(minFreeCpu), Optional.ToNullable(minFreeMemoryMb), Optional.ToNullable(maxParallelism));
+            return new MongoDBThrottlingSettings(Optional.ToNullable(minFreeCpu), Optional.ToNullable(minFreeMemoryMb), Optional.ToNullable(maxParallelism), rawData);
+        }
+
+        MongoDBThrottlingSettings IModelJsonSerializable<MongoDBThrottlingSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBThrottlingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBThrottlingSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MongoDBThrottlingSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBThrottlingSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MongoDBThrottlingSettings IModelSerializable<MongoDBThrottlingSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MongoDBThrottlingSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMongoDBThrottlingSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MongoDBThrottlingSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MongoDBThrottlingSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MongoDBThrottlingSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MongoDBThrottlingSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MongoDBThrottlingSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMongoDBThrottlingSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

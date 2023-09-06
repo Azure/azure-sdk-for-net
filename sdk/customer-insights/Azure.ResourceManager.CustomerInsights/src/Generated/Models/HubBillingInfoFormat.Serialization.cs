@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class HubBillingInfoFormat : IUtf8JsonSerializable
+    public partial class HubBillingInfoFormat : IUtf8JsonSerializable, IModelJsonSerializable<HubBillingInfoFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HubBillingInfoFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HubBillingInfoFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HubBillingInfoFormat>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SkuName))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("maxUnits"u8);
                 writer.WriteNumberValue(MaxUnits.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HubBillingInfoFormat DeserializeHubBillingInfoFormat(JsonElement element)
+        internal static HubBillingInfoFormat DeserializeHubBillingInfoFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> skuName = default;
             Optional<int> minUnits = default;
             Optional<int> maxUnits = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuName"u8))
@@ -67,8 +90,61 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     maxUnits = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HubBillingInfoFormat(skuName.Value, Optional.ToNullable(minUnits), Optional.ToNullable(maxUnits));
+            return new HubBillingInfoFormat(skuName.Value, Optional.ToNullable(minUnits), Optional.ToNullable(maxUnits), rawData);
+        }
+
+        HubBillingInfoFormat IModelJsonSerializable<HubBillingInfoFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HubBillingInfoFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHubBillingInfoFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HubBillingInfoFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HubBillingInfoFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HubBillingInfoFormat IModelSerializable<HubBillingInfoFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HubBillingInfoFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHubBillingInfoFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HubBillingInfoFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HubBillingInfoFormat"/> to convert. </param>
+        public static implicit operator RequestContent(HubBillingInfoFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HubBillingInfoFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HubBillingInfoFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHubBillingInfoFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

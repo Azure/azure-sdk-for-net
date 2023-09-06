@@ -6,15 +6,50 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.Rooms
 {
-    public partial class CommunicationRoom
+    public partial class CommunicationRoom : IUtf8JsonSerializable, IModelJsonSerializable<CommunicationRoom>
     {
-        internal static CommunicationRoom DeserializeCommunicationRoom(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommunicationRoom>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommunicationRoom>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationRoom>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("createdAt"u8);
+            writer.WriteStringValue(CreatedAt, "O");
+            writer.WritePropertyName("validFrom"u8);
+            writer.WriteStringValue(ValidFrom, "O");
+            writer.WritePropertyName("validUntil"u8);
+            writer.WriteStringValue(ValidUntil, "O");
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CommunicationRoom DeserializeCommunicationRoom(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +58,7 @@ namespace Azure.Communication.Rooms
             DateTimeOffset createdAt = default;
             DateTimeOffset validFrom = default;
             DateTimeOffset validUntil = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -45,8 +81,61 @@ namespace Azure.Communication.Rooms
                     validUntil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommunicationRoom(id, createdAt, validFrom, validUntil);
+            return new CommunicationRoom(id, createdAt, validFrom, validUntil, rawData);
+        }
+
+        CommunicationRoom IModelJsonSerializable<CommunicationRoom>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationRoom>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationRoom(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommunicationRoom>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationRoom>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommunicationRoom IModelSerializable<CommunicationRoom>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationRoom>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommunicationRoom(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommunicationRoom"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommunicationRoom"/> to convert. </param>
+        public static implicit operator RequestContent(CommunicationRoom model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommunicationRoom"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommunicationRoom(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommunicationRoom(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

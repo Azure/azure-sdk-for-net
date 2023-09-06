@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Pipeline that needs to be triggered with the given parameters. </summary>
     public partial class TriggerPipelineReference
     {
-        /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerPipelineReference"/>. </summary>
         public TriggerPipelineReference()
         {
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerPipelineReference"/>. </summary>
         /// <param name="pipelineReference"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
-        internal TriggerPipelineReference(DataFactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerPipelineReference(DataFactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters, Dictionary<string, BinaryData> rawData)
         {
             PipelineReference = pipelineReference;
             Parameters = parameters;
+            _rawData = rawData;
         }
 
         /// <summary> Pipeline reference. </summary>

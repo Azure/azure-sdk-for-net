@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The GPU resource. </summary>
     public partial class ContainerGpuResourceInfo
     {
-        /// <summary> Initializes a new instance of ContainerGpuResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGpuResourceInfo"/>. </summary>
         /// <param name="count"> The count of the GPU resource. </param>
         /// <param name="sku"> The SKU of the GPU resource. </param>
         public ContainerGpuResourceInfo(int count, ContainerGpuSku sku)
         {
             Count = count;
             Sku = sku;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGpuResourceInfo"/>. </summary>
+        /// <param name="count"> The count of the GPU resource. </param>
+        /// <param name="sku"> The SKU of the GPU resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGpuResourceInfo(int count, ContainerGpuSku sku, Dictionary<string, BinaryData> rawData)
+        {
+            Count = count;
+            Sku = sku;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGpuResourceInfo"/> for deserialization. </summary>
+        internal ContainerGpuResourceInfo()
+        {
         }
 
         /// <summary> The count of the GPU resource. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The UnknownServiceResourceProperties. </summary>
     internal partial class UnknownServiceResourceProperties : CosmosDBServiceProperties
     {
-        /// <summary> Initializes a new instance of UnknownServiceResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal UnknownServiceResourceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
         {
             ServiceType = serviceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/> for deserialization. </summary>
+        internal UnknownServiceResourceProperties()
+        {
         }
     }
 }

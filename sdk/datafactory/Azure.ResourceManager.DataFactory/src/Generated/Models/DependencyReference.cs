@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDependencyReference))]
     public abstract partial class DependencyReference
     {
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         protected DependencyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
-        internal DependencyReference(string dependencyReferenceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DependencyReference(string dependencyReferenceType, Dictionary<string, BinaryData> rawData)
         {
             DependencyReferenceType = dependencyReferenceType;
+            _rawData = rawData;
         }
 
         /// <summary> The type of dependency reference. </summary>

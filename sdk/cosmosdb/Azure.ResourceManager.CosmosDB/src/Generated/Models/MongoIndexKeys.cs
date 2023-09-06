@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB collection resource object. </summary>
     internal partial class MongoIndexKeys
     {
-        /// <summary> Initializes a new instance of MongoIndexKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoIndexKeys"/>. </summary>
         public MongoIndexKeys()
         {
             Keys = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MongoIndexKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoIndexKeys"/>. </summary>
         /// <param name="keys"> List of keys for each MongoDB collection in the Azure Cosmos DB service. </param>
-        internal MongoIndexKeys(IList<string> keys)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoIndexKeys(IList<string> keys, Dictionary<string, BinaryData> rawData)
         {
             Keys = keys;
+            _rawData = rawData;
         }
 
         /// <summary> List of keys for each MongoDB collection in the Azure Cosmos DB service. </summary>

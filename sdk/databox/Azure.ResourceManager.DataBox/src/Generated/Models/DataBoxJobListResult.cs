@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBox;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Job Resource Collection. </summary>
     internal partial class DataBoxJobListResult
     {
-        /// <summary> Initializes a new instance of DataBoxJobListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobListResult"/>. </summary>
         internal DataBoxJobListResult()
         {
             Value = new ChangeTrackingList<DataBoxJobData>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobListResult"/>. </summary>
         /// <param name="value"> List of job resources. </param>
         /// <param name="nextLink"> Link for the next set of job resources. </param>
-        internal DataBoxJobListResult(IReadOnlyList<DataBoxJobData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxJobListResult(IReadOnlyList<DataBoxJobData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of job resources. </summary>

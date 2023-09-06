@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableTableResourceData
     {
-        /// <summary> Initializes a new instance of RestorableTableResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourceData"/>. </summary>
         internal RestorableTableResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableTableResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourceData"/>. </summary>
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the Table. </param>
         /// <param name="resourceType"> The type of Azure resource. </param>
-        internal RestorableTableResourceData(string id, string name, string resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableTableResourceData(string id, string name, string resourceType, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> The unique resource identifier of the ARM resource. </summary>

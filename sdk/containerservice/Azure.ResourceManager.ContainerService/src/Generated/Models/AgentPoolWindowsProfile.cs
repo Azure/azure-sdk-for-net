@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The Windows agent pool's specific profile. </summary>
     internal partial class AgentPoolWindowsProfile
     {
-        /// <summary> Initializes a new instance of AgentPoolWindowsProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolWindowsProfile"/>. </summary>
         public AgentPoolWindowsProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolWindowsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolWindowsProfile"/>. </summary>
         /// <param name="disableOutboundNat"> The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </param>
-        internal AgentPoolWindowsProfile(bool? disableOutboundNat)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolWindowsProfile(bool? disableOutboundNat, Dictionary<string, BinaryData> rawData)
         {
             DisableOutboundNat = disableOutboundNat;
+            _rawData = rawData;
         }
 
         /// <summary> The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled. </summary>

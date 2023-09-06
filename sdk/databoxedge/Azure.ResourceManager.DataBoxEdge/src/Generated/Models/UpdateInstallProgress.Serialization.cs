@@ -5,15 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class UpdateInstallProgress
+    public partial class UpdateInstallProgress : IUtf8JsonSerializable, IModelJsonSerializable<UpdateInstallProgress>
     {
-        internal static UpdateInstallProgress DeserializeUpdateInstallProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateInstallProgress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateInstallProgress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateInstallProgress>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static UpdateInstallProgress DeserializeUpdateInstallProgress(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +49,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> percentComplete = default;
             Optional<int> numberOfUpdatesToInstall = default;
             Optional<int> numberOfUpdatesInstalled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("percentComplete"u8))
@@ -50,8 +79,61 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     numberOfUpdatesInstalled = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UpdateInstallProgress(Optional.ToNullable(percentComplete), Optional.ToNullable(numberOfUpdatesToInstall), Optional.ToNullable(numberOfUpdatesInstalled));
+            return new UpdateInstallProgress(Optional.ToNullable(percentComplete), Optional.ToNullable(numberOfUpdatesToInstall), Optional.ToNullable(numberOfUpdatesInstalled), rawData);
+        }
+
+        UpdateInstallProgress IModelJsonSerializable<UpdateInstallProgress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateInstallProgress>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateInstallProgress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateInstallProgress>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateInstallProgress>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateInstallProgress IModelSerializable<UpdateInstallProgress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateInstallProgress>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateInstallProgress(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UpdateInstallProgress"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UpdateInstallProgress"/> to convert. </param>
+        public static implicit operator RequestContent(UpdateInstallProgress model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateInstallProgress"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UpdateInstallProgress(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateInstallProgress(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

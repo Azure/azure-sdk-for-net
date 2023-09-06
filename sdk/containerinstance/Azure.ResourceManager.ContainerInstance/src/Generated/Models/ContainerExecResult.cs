@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The information for the container exec command. </summary>
     public partial class ContainerExecResult
     {
-        /// <summary> Initializes a new instance of ContainerExecResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecResult"/>. </summary>
         internal ContainerExecResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerExecResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerExecResult"/>. </summary>
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
-        internal ContainerExecResult(Uri webSocketUri, string password)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerExecResult(Uri webSocketUri, string password, Dictionary<string, BinaryData> rawData)
         {
             WebSocketUri = webSocketUri;
             Password = password;
+            _rawData = rawData;
         }
 
         /// <summary> The uri for the exec websocket. </summary>

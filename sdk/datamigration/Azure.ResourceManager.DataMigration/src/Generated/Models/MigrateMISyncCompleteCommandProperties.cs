@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -12,19 +13,20 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the command that completes online migration for an Azure SQL Database Managed Instance. </summary>
     public partial class MigrateMISyncCompleteCommandProperties : CommandProperties
     {
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
         public MigrateMISyncCompleteCommandProperties()
         {
             CommandType = CommandType.MigrateSqlServerAzureDBSqlMIComplete;
         }
 
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
-        internal MigrateMISyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMISyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output, Dictionary<string, BinaryData> rawData) : base(commandType, errors, state, rawData)
         {
             Input = input;
             Output = output;

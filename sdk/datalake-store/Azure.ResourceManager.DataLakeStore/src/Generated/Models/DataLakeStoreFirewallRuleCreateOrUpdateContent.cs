@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to create a new firewall rule. </summary>
     public partial class DataLakeStoreFirewallRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
         /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
@@ -25,6 +29,22 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreFirewallRuleCreateOrUpdateContent(IPAddress startIPAddress, IPAddress endIPAddress, Dictionary<string, BinaryData> rawData)
+        {
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreFirewallRuleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DataLakeStoreFirewallRuleCreateOrUpdateContent()
+        {
         }
 
         /// <summary> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </summary>

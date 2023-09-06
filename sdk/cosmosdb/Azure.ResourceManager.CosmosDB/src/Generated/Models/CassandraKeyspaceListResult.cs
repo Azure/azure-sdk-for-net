@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Cassandra keyspaces and their properties. </summary>
     internal partial class CassandraKeyspaceListResult
     {
-        /// <summary> Initializes a new instance of CassandraKeyspaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceListResult"/>. </summary>
         internal CassandraKeyspaceListResult()
         {
             Value = new ChangeTrackingList<CassandraKeyspaceData>();
         }
 
-        /// <summary> Initializes a new instance of CassandraKeyspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceListResult"/>. </summary>
         /// <param name="value"> List of Cassandra keyspaces and their properties. </param>
-        internal CassandraKeyspaceListResult(IReadOnlyList<CassandraKeyspaceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraKeyspaceListResult(IReadOnlyList<CassandraKeyspaceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> List of Cassandra keyspaces and their properties. </summary>

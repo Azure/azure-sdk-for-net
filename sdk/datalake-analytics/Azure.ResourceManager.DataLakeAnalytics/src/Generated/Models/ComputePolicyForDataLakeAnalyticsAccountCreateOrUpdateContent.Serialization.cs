@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -34,7 +42,137 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            Guid objectId = default;
+            AadObjectIdentifierType objectType = default;
+            Optional<int> maxDegreeOfParallelismPerJob = default;
+            Optional<int> minPriorityPerJob = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("objectId"u8))
+                        {
+                            objectId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("objectType"u8))
+                        {
+                            objectType = new AadObjectIdentifierType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("maxDegreeOfParallelismPerJob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxDegreeOfParallelismPerJob = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("minPriorityPerJob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minPriorityPerJob = property0.Value.GetInt32();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(name, objectId, objectType, Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), rawData);
+        }
+
+        ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent IModelJsonSerializable<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent IModelSerializable<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

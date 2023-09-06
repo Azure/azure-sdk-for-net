@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
     public partial class ComputePublicIPAddressSku
     {
-        /// <summary> Initializes a new instance of ComputePublicIPAddressSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputePublicIPAddressSku"/>. </summary>
         public ComputePublicIPAddressSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputePublicIPAddressSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePublicIPAddressSku"/>. </summary>
         /// <param name="name"> Specify public IP sku name. </param>
         /// <param name="tier"> Specify public IP sku tier. </param>
-        internal ComputePublicIPAddressSku(ComputePublicIPAddressSkuName? name, ComputePublicIPAddressSkuTier? tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputePublicIPAddressSku(ComputePublicIPAddressSkuName? name, ComputePublicIPAddressSkuTier? tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
         }
 
         /// <summary> Specify public IP sku name. </summary>

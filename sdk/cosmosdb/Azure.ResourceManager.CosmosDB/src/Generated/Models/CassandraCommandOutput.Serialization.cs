@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraCommandOutput
+    public partial class CassandraCommandOutput : IUtf8JsonSerializable, IModelJsonSerializable<CassandraCommandOutput>
     {
-        internal static CassandraCommandOutput DeserializeCassandraCommandOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CassandraCommandOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CassandraCommandOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraCommandOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CommandOutput))
+            {
+                writer.WritePropertyName("commandOutput"u8);
+                writer.WriteStringValue(CommandOutput);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CassandraCommandOutput DeserializeCassandraCommandOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> commandOutput = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commandOutput"u8))
@@ -26,8 +60,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     commandOutput = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CassandraCommandOutput(commandOutput.Value);
+            return new CassandraCommandOutput(commandOutput.Value, rawData);
+        }
+
+        CassandraCommandOutput IModelJsonSerializable<CassandraCommandOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraCommandOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraCommandOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CassandraCommandOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraCommandOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CassandraCommandOutput IModelSerializable<CassandraCommandOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CassandraCommandOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCassandraCommandOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CassandraCommandOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CassandraCommandOutput"/> to convert. </param>
+        public static implicit operator RequestContent(CassandraCommandOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CassandraCommandOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CassandraCommandOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCassandraCommandOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

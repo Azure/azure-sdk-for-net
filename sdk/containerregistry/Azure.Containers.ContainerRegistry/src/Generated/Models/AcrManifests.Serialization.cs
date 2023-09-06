@@ -5,16 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class AcrManifests
+    internal partial class AcrManifests : IUtf8JsonSerializable, IModelJsonSerializable<AcrManifests>
     {
-        internal static AcrManifests DeserializeAcrManifests(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcrManifests>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcrManifests>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcrManifests>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RegistryLoginServer))
+            {
+                writer.WritePropertyName("registry"u8);
+                writer.WriteStringValue(RegistryLoginServer);
+            }
+            if (Optional.IsDefined(Repository))
+            {
+                writer.WritePropertyName("imageName"u8);
+                writer.WriteStringValue(Repository);
+            }
+            if (Optional.IsCollectionDefined(Manifests))
+            {
+                writer.WritePropertyName("manifests"u8);
+                writer.WriteStartArray();
+                foreach (var item in Manifests)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ManifestAttributesBase>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Link))
+            {
+                writer.WritePropertyName("link"u8);
+                writer.WriteStringValue(Link);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcrManifests DeserializeAcrManifests(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +82,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> imageName = default;
             Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;
             Optional<string> link = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -54,8 +114,61 @@ namespace Azure.Containers.ContainerRegistry
                     link = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value);
+            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value, rawData);
+        }
+
+        AcrManifests IModelJsonSerializable<AcrManifests>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcrManifests>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcrManifests(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcrManifests>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcrManifests>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcrManifests IModelSerializable<AcrManifests>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcrManifests>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcrManifests(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcrManifests"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcrManifests"/> to convert. </param>
+        public static implicit operator RequestContent(AcrManifests model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcrManifests"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcrManifests(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcrManifests(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

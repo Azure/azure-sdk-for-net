@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the network profile for the role instance. </summary>
     internal partial class RoleInstanceNetworkProfile
     {
-        /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceNetworkProfile"/>. </summary>
         internal RoleInstanceNetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceNetworkProfile"/>. </summary>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the role instance. </param>
-        internal RoleInstanceNetworkProfile(IReadOnlyList<WritableSubResource> networkInterfaces)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleInstanceNetworkProfile(IReadOnlyList<WritableSubResource> networkInterfaces, Dictionary<string, BinaryData> rawData)
         {
             NetworkInterfaces = networkInterfaces;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the role instance. </summary>

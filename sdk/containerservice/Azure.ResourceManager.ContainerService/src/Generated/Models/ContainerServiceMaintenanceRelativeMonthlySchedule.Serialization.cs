@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : IUtf8JsonSerializable
+    public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : IUtf8JsonSerializable, IModelJsonSerializable<ContainerServiceMaintenanceRelativeMonthlySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerServiceMaintenanceRelativeMonthlySchedule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerServiceMaintenanceRelativeMonthlySchedule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceMaintenanceRelativeMonthlySchedule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("intervalMonths"u8);
             writer.WriteNumberValue(IntervalMonths);
@@ -21,11 +29,25 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStringValue(WeekIndex.ToString());
             writer.WritePropertyName("dayOfWeek"u8);
             writer.WriteStringValue(DayOfWeek.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceMaintenanceRelativeMonthlySchedule DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(JsonElement element)
+        internal static ContainerServiceMaintenanceRelativeMonthlySchedule DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int intervalMonths = default;
             ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex weekIndex = default;
             ContainerServiceWeekDay dayOfWeek = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("intervalMonths"u8))
@@ -50,8 +73,61 @@ namespace Azure.ResourceManager.ContainerService.Models
                     dayOfWeek = new ContainerServiceWeekDay(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerServiceMaintenanceRelativeMonthlySchedule(intervalMonths, weekIndex, dayOfWeek);
+            return new ContainerServiceMaintenanceRelativeMonthlySchedule(intervalMonths, weekIndex, dayOfWeek, rawData);
+        }
+
+        ContainerServiceMaintenanceRelativeMonthlySchedule IModelJsonSerializable<ContainerServiceMaintenanceRelativeMonthlySchedule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceMaintenanceRelativeMonthlySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerServiceMaintenanceRelativeMonthlySchedule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceMaintenanceRelativeMonthlySchedule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerServiceMaintenanceRelativeMonthlySchedule IModelSerializable<ContainerServiceMaintenanceRelativeMonthlySchedule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerServiceMaintenanceRelativeMonthlySchedule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerServiceMaintenanceRelativeMonthlySchedule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerServiceMaintenanceRelativeMonthlySchedule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

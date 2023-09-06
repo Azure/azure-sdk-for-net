@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The TarGZip compression read settings. </summary>
     public partial class TarGzipReadSettings : CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of TarGzipReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TarGzipReadSettings"/>. </summary>
         public TarGzipReadSettings()
         {
             CompressionReadSettingsType = "TarGZipReadSettings";
         }
 
-        /// <summary> Initializes a new instance of TarGzipReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TarGzipReadSettings"/>. </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>

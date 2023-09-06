@@ -5,15 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ImageSignature
+    internal partial class ImageSignature : IUtf8JsonSerializable, IModelJsonSerializable<ImageSignature>
     {
-        internal static ImageSignature DeserializeImageSignature(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ImageSignature>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ImageSignature>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ImageSignature>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Header))
+            {
+                writer.WritePropertyName("header"u8);
+                if (Header is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<JWK>)Header).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Signature))
+            {
+                writer.WritePropertyName("signature"u8);
+                writer.WriteStringValue(Signature);
+            }
+            if (Optional.IsDefined(Protected))
+            {
+                writer.WritePropertyName("protected"u8);
+                writer.WriteStringValue(Protected);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ImageSignature DeserializeImageSignature(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +71,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<JWK> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("header"u8))
@@ -42,8 +93,61 @@ namespace Azure.Containers.ContainerRegistry
                     @protected = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ImageSignature(header.Value, signature.Value, @protected.Value);
+            return new ImageSignature(header.Value, signature.Value, @protected.Value, rawData);
+        }
+
+        ImageSignature IModelJsonSerializable<ImageSignature>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageSignature>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageSignature(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ImageSignature>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageSignature>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ImageSignature IModelSerializable<ImageSignature>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ImageSignature>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeImageSignature(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ImageSignature"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ImageSignature"/> to convert. </param>
+        public static implicit operator RequestContent(ImageSignature model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ImageSignature"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ImageSignature(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeImageSignature(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class GraphResourceGetResultData : IUtf8JsonSerializable
+    public partial class GraphResourceGetResultData : IUtf8JsonSerializable, IModelJsonSerializable<GraphResourceGetResultData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GraphResourceGetResultData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GraphResourceGetResultData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GraphResourceGetResultData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -48,14 +55,35 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                if (Options is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GraphResourceGetPropertiesOptions>)Options).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GraphResourceGetResultData DeserializeGraphResourceGetResultData(JsonElement element)
+        internal static GraphResourceGetResultData DeserializeGraphResourceGetResultData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +97,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> resource = default;
             Optional<GraphResourceGetPropertiesOptions> options = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -154,8 +183,61 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GraphResourceGetResultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity);
+            return new GraphResourceGetResultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity, rawData);
+        }
+
+        GraphResourceGetResultData IModelJsonSerializable<GraphResourceGetResultData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GraphResourceGetResultData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGraphResourceGetResultData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GraphResourceGetResultData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GraphResourceGetResultData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GraphResourceGetResultData IModelSerializable<GraphResourceGetResultData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GraphResourceGetResultData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGraphResourceGetResultData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GraphResourceGetResultData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GraphResourceGetResultData"/> to convert. </param>
+        public static implicit operator RequestContent(GraphResourceGetResultData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GraphResourceGetResultData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GraphResourceGetResultData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGraphResourceGetResultData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Peer authentication settings for the Managed Environment. </summary>
     internal partial class ManagedEnvironmentPropertiesPeerAuthentication
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentPropertiesPeerAuthentication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerAuthentication"/>. </summary>
         public ManagedEnvironmentPropertiesPeerAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentPropertiesPeerAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerAuthentication"/>. </summary>
         /// <param name="mtls"> Mutual TLS authentication settings for the Managed Environment. </param>
-        internal ManagedEnvironmentPropertiesPeerAuthentication(Mtls mtls)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedEnvironmentPropertiesPeerAuthentication(Mtls mtls, Dictionary<string, BinaryData> rawData)
         {
             Mtls = mtls;
+            _rawData = rawData;
         }
 
         /// <summary> Mutual TLS authentication settings for the Managed Environment. </summary>

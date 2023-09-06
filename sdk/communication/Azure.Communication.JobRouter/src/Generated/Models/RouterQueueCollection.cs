@@ -15,7 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     /// <summary> A paged collection of queues. </summary>
     internal partial class RouterQueueCollection
     {
-        /// <summary> Initializes a new instance of RouterQueueCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueCollection"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RouterQueueCollection(IEnumerable<RouterQueueItem> value)
@@ -25,13 +28,20 @@ namespace Azure.Communication.JobRouter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RouterQueueCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterQueueCollection"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal RouterQueueCollection(IReadOnlyList<RouterQueueItem> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterQueueCollection(IReadOnlyList<RouterQueueItem> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueCollection"/> for deserialization. </summary>
+        internal RouterQueueCollection()
+        {
         }
 
         /// <summary> Gets the value. </summary>

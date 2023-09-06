@@ -5,16 +5,21 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class UnknownTaskStepProperties : IUtf8JsonSerializable
+    internal partial class UnknownTaskStepProperties : IUtf8JsonSerializable, IModelJsonSerializable<ContainerRegistryTaskStepProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerRegistryTaskStepProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerRegistryTaskStepProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
@@ -28,52 +33,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element)
+        internal static ContainerRegistryTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element, ModelSerializerOptions options = default) => DeserializeContainerRegistryTaskStepProperties(element, options);
+
+        ContainerRegistryTaskStepProperties IModelJsonSerializable<ContainerRegistryTaskStepProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ContainerRegistryTaskStepType type = "Unknown";
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
-            Optional<string> contextPath = default;
-            Optional<string> contextAccessToken = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ContainerRegistryTaskStepType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("baseImageDependencies"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
-                    }
-                    baseImageDependencies = array;
-                    continue;
-                }
-                if (property.NameEquals("contextPath"u8))
-                {
-                    contextPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("contextAccessToken"u8))
-                {
-                    contextAccessToken = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownTaskStepProperties(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value);
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownTaskStepProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerRegistryTaskStepProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerRegistryTaskStepProperties IModelSerializable<ContainerRegistryTaskStepProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerRegistryTaskStepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryTaskStepProperties(doc.RootElement, options);
         }
     }
 }

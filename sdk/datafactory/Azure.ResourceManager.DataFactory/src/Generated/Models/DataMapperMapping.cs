@@ -13,24 +13,29 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Source and target table mapping details. </summary>
     public partial class DataMapperMapping
     {
-        /// <summary> Initializes a new instance of DataMapperMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMapperMapping"/>. </summary>
         public DataMapperMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMapperMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMapperMapping"/>. </summary>
         /// <param name="targetEntityName"> Name of the target table. </param>
         /// <param name="sourceEntityName"> Name of the source table. </param>
         /// <param name="sourceConnectionReference"> The connection reference for the source connection. </param>
         /// <param name="attributeMappingInfo"> This holds the user provided attribute mapping information. </param>
         /// <param name="sourceDenormalizeInfo"> This holds the source denormalization information used while joining multiple sources. </param>
-        internal DataMapperMapping(string targetEntityName, string sourceEntityName, MapperConnectionReference sourceConnectionReference, MapperAttributeMappings attributeMappingInfo, BinaryData sourceDenormalizeInfo)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMapperMapping(string targetEntityName, string sourceEntityName, MapperConnectionReference sourceConnectionReference, MapperAttributeMappings attributeMappingInfo, BinaryData sourceDenormalizeInfo, Dictionary<string, BinaryData> rawData)
         {
             TargetEntityName = targetEntityName;
             SourceEntityName = sourceEntityName;
             SourceConnectionReference = sourceConnectionReference;
             AttributeMappingInfo = attributeMappingInfo;
             SourceDenormalizeInfo = sourceDenormalizeInfo;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the target table. </summary>

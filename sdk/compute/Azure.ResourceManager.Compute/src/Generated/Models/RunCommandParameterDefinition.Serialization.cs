@@ -5,15 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RunCommandParameterDefinition
+    public partial class RunCommandParameterDefinition : IUtf8JsonSerializable, IModelJsonSerializable<RunCommandParameterDefinition>
     {
-        internal static RunCommandParameterDefinition DeserializeRunCommandParameterDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RunCommandParameterDefinition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RunCommandParameterDefinition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandParameterDefinition>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RunCommandParameterDefinitionType);
+            if (Optional.IsDefined(DefaultValue))
+            {
+                writer.WritePropertyName("defaultValue"u8);
+                writer.WriteStringValue(DefaultValue);
+            }
+            if (Optional.IsDefined(Required))
+            {
+                writer.WritePropertyName("required"u8);
+                writer.WriteBooleanValue(Required.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RunCommandParameterDefinition DeserializeRunCommandParameterDefinition(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             string type = default;
             Optional<string> defaultValue = default;
             Optional<bool> required = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +91,61 @@ namespace Azure.ResourceManager.Compute.Models
                     required = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required));
+            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required), rawData);
+        }
+
+        RunCommandParameterDefinition IModelJsonSerializable<RunCommandParameterDefinition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandParameterDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunCommandParameterDefinition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RunCommandParameterDefinition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandParameterDefinition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RunCommandParameterDefinition IModelSerializable<RunCommandParameterDefinition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RunCommandParameterDefinition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRunCommandParameterDefinition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RunCommandParameterDefinition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RunCommandParameterDefinition"/> to convert. </param>
+        public static implicit operator RequestContent(RunCommandParameterDefinition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RunCommandParameterDefinition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RunCommandParameterDefinition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRunCommandParameterDefinition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourcePostgreSqlSyncTaskOutput
+    public partial class ConnectToSourcePostgreSqlSyncTaskOutput : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToSourcePostgreSqlSyncTaskOutput>
     {
-        internal static ConnectToSourcePostgreSqlSyncTaskOutput DeserializeConnectToSourcePostgreSqlSyncTaskOutput(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToSourcePostgreSqlSyncTaskOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToSourcePostgreSqlSyncTaskOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourcePostgreSqlSyncTaskOutput>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectToSourcePostgreSqlSyncTaskOutput DeserializeConnectToSourcePostgreSqlSyncTaskOutput(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<string>> databases = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,8 +97,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToSourcePostgreSqlSyncTaskOutput(id.Value, sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourcePostgreSqlSyncTaskOutput(id.Value, sourceServerVersion.Value, Optional.ToList(databases), sourceServerBrandVersion.Value, Optional.ToList(validationErrors), rawData);
+        }
+
+        ConnectToSourcePostgreSqlSyncTaskOutput IModelJsonSerializable<ConnectToSourcePostgreSqlSyncTaskOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourcePostgreSqlSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourcePostgreSqlSyncTaskOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToSourcePostgreSqlSyncTaskOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourcePostgreSqlSyncTaskOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToSourcePostgreSqlSyncTaskOutput IModelSerializable<ConnectToSourcePostgreSqlSyncTaskOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourcePostgreSqlSyncTaskOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToSourcePostgreSqlSyncTaskOutput(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectToSourcePostgreSqlSyncTaskOutput"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectToSourcePostgreSqlSyncTaskOutput"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectToSourcePostgreSqlSyncTaskOutput model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectToSourcePostgreSqlSyncTaskOutput"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectToSourcePostgreSqlSyncTaskOutput(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToSourcePostgreSqlSyncTaskOutput(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

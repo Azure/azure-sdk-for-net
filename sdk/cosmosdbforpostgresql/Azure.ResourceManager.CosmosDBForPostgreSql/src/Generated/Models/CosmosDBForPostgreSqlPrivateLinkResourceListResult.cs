@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class CosmosDBForPostgreSqlPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
         internal CosmosDBForPostgreSqlPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlPrivateLinkResourceListResult(IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

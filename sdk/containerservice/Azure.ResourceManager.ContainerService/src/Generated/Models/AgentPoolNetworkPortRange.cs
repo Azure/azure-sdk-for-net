@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The port range. </summary>
     public partial class AgentPoolNetworkPortRange
     {
-        /// <summary> Initializes a new instance of AgentPoolNetworkPortRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
         public AgentPoolNetworkPortRange()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolNetworkPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
         /// <param name="portStart"> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </param>
         /// <param name="portEnd"> The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart. </param>
         /// <param name="protocol"> The network protocol of the port. </param>
-        internal AgentPoolNetworkPortRange(int? portStart, int? portEnd, AgentPoolNetworkPortProtocol? protocol)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolNetworkPortRange(int? portStart, int? portEnd, AgentPoolNetworkPortProtocol? protocol, Dictionary<string, BinaryData> rawData)
         {
             PortStart = portStart;
             PortEnd = portEnd;
             Protocol = protocol;
+            _rawData = rawData;
         }
 
         /// <summary> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </summary>

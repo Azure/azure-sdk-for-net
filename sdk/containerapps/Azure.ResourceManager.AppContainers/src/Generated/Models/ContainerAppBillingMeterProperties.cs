@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Revision resource specific properties. </summary>
     public partial class ContainerAppBillingMeterProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppBillingMeterProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeterProperties"/>. </summary>
         public ContainerAppBillingMeterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppBillingMeterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeterProperties"/>. </summary>
         /// <param name="workloadProfileCategory"> Used to categorize billing meters. </param>
         /// <param name="meterType"> Billing meter type. </param>
         /// <param name="displayName"> The everyday name of the billing meter. </param>
-        internal ContainerAppBillingMeterProperties(string workloadProfileCategory, string meterType, string displayName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppBillingMeterProperties(string workloadProfileCategory, string meterType, string displayName, Dictionary<string, BinaryData> rawData)
         {
             WorkloadProfileCategory = workloadProfileCategory;
             MeterType = meterType;
             DisplayName = displayName;
+            _rawData = rawData;
         }
 
         /// <summary> Used to categorize billing meters. </summary>

@@ -9,15 +9,21 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.NetworkTraversal
 {
     [JsonConverter(typeof(CommunicationIceServerConverter))]
-    public partial class CommunicationIceServer : IUtf8JsonSerializable
+    public partial class CommunicationIceServer : IUtf8JsonSerializable, IModelJsonSerializable<CommunicationIceServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CommunicationIceServer>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CommunicationIceServer>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationIceServer>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("urls"u8);
             writer.WriteStartArray();
@@ -32,11 +38,25 @@ namespace Azure.Communication.NetworkTraversal
             writer.WriteStringValue(Credential);
             writer.WritePropertyName("routeType"u8);
             writer.WriteStringValue(RouteType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommunicationIceServer DeserializeCommunicationIceServer(JsonElement element)
+        internal static CommunicationIceServer DeserializeCommunicationIceServer(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +65,7 @@ namespace Azure.Communication.NetworkTraversal
             string username = default;
             string credential = default;
             RouteType routeType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urls"u8))
@@ -72,8 +93,61 @@ namespace Azure.Communication.NetworkTraversal
                     routeType = new RouteType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CommunicationIceServer(urls, username, credential, routeType);
+            return new CommunicationIceServer(urls, username, credential, routeType, rawData);
+        }
+
+        CommunicationIceServer IModelJsonSerializable<CommunicationIceServer>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationIceServer>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationIceServer(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CommunicationIceServer>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationIceServer>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CommunicationIceServer IModelSerializable<CommunicationIceServer>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CommunicationIceServer>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCommunicationIceServer(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CommunicationIceServer"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CommunicationIceServer"/> to convert. </param>
+        public static implicit operator RequestContent(CommunicationIceServer model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CommunicationIceServer"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CommunicationIceServer(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCommunicationIceServer(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class CommunicationIceServerConverter : JsonConverter<CommunicationIceServer>

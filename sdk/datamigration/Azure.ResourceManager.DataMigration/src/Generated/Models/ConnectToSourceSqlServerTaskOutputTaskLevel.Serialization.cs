@@ -5,16 +5,45 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskOutputTaskLevel
+    public partial class ConnectToSourceSqlServerTaskOutputTaskLevel : IUtf8JsonSerializable, IModelJsonSerializable<ConnectToSourceSqlServerTaskOutputTaskLevel>
     {
-        internal static ConnectToSourceSqlServerTaskOutputTaskLevel DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ConnectToSourceSqlServerTaskOutputTaskLevel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutputTaskLevel>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ConnectToSourceSqlServerTaskOutputTaskLevel DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             Optional<string> id = default;
             string resultType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databases"u8))
@@ -84,8 +114,61 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors), rawData);
+        }
+
+        ConnectToSourceSqlServerTaskOutputTaskLevel IModelJsonSerializable<ConnectToSourceSqlServerTaskOutputTaskLevel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutputTaskLevel>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ConnectToSourceSqlServerTaskOutputTaskLevel>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutputTaskLevel>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ConnectToSourceSqlServerTaskOutputTaskLevel IModelSerializable<ConnectToSourceSqlServerTaskOutputTaskLevel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ConnectToSourceSqlServerTaskOutputTaskLevel>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/> to convert. </param>
+        public static implicit operator RequestContent(ConnectToSourceSqlServerTaskOutputTaskLevel model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ConnectToSourceSqlServerTaskOutputTaskLevel(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

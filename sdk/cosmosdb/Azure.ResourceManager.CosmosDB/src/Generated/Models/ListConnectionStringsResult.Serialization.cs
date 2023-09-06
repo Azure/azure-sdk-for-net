@@ -5,21 +5,49 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ListConnectionStringsResult
+    public partial class ListConnectionStringsResult : IUtf8JsonSerializable, IModelJsonSerializable<ListConnectionStringsResult>
     {
-        internal static ListConnectionStringsResult DeserializeListConnectionStringsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ListConnectionStringsResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ListConnectionStringsResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ListConnectionStringsResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ListConnectionStringsResult DeserializeListConnectionStringsResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<CosmosDBConnectionString>> connectionStrings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStrings"u8))
@@ -36,8 +64,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     connectionStrings = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ListConnectionStringsResult(Optional.ToList(connectionStrings));
+            return new ListConnectionStringsResult(Optional.ToList(connectionStrings), rawData);
+        }
+
+        ListConnectionStringsResult IModelJsonSerializable<ListConnectionStringsResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListConnectionStringsResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeListConnectionStringsResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ListConnectionStringsResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListConnectionStringsResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ListConnectionStringsResult IModelSerializable<ListConnectionStringsResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListConnectionStringsResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeListConnectionStringsResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ListConnectionStringsResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ListConnectionStringsResult"/> to convert. </param>
+        public static implicit operator RequestContent(ListConnectionStringsResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ListConnectionStringsResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ListConnectionStringsResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeListConnectionStringsResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,93 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomHostnameAnalysisResult
+    public partial class ContainerAppCustomHostnameAnalysisResult : IUtf8JsonSerializable, IModelJsonSerializable<ContainerAppCustomHostnameAnalysisResult>
     {
-        internal static ContainerAppCustomHostnameAnalysisResult DeserializeContainerAppCustomHostnameAnalysisResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContainerAppCustomHostnameAnalysisResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContainerAppCustomHostnameAnalysisResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomHostnameAnalysisResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(CNameRecords))
+            {
+                writer.WritePropertyName("cNameRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in CNameRecords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TxtRecords))
+            {
+                writer.WritePropertyName("txtRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in TxtRecords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ARecords))
+            {
+                writer.WritePropertyName("aRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in ARecords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AlternateCNameRecords))
+            {
+                writer.WritePropertyName("alternateCNameRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in AlternateCNameRecords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AlternateTxtRecords))
+            {
+                writer.WritePropertyName("alternateTxtRecords"u8);
+                writer.WriteStartArray();
+                foreach (var item in AlternateTxtRecords)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContainerAppCustomHostnameAnalysisResult DeserializeContainerAppCustomHostnameAnalysisResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IReadOnlyList<string>> aRecords = default;
             Optional<IReadOnlyList<string>> alternateCNameRecords = default;
             Optional<IReadOnlyList<string>> alternateTxtRecords = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -158,8 +236,61 @@ namespace Azure.ResourceManager.AppContainers.Models
                     alternateTxtRecords = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords));
+            return new ContainerAppCustomHostnameAnalysisResult(hostName.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnManagedEnvironment), Optional.ToNullable(conflictWithEnvironmentCustomDomain), conflictingContainerAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords), rawData);
+        }
+
+        ContainerAppCustomHostnameAnalysisResult IModelJsonSerializable<ContainerAppCustomHostnameAnalysisResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomHostnameAnalysisResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppCustomHostnameAnalysisResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContainerAppCustomHostnameAnalysisResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomHostnameAnalysisResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContainerAppCustomHostnameAnalysisResult IModelSerializable<ContainerAppCustomHostnameAnalysisResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContainerAppCustomHostnameAnalysisResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContainerAppCustomHostnameAnalysisResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContainerAppCustomHostnameAnalysisResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContainerAppCustomHostnameAnalysisResult"/> to convert. </param>
+        public static implicit operator RequestContent(ContainerAppCustomHostnameAnalysisResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContainerAppCustomHostnameAnalysisResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContainerAppCustomHostnameAnalysisResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContainerAppCustomHostnameAnalysisResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that validates connection to PostgreSQL and source server requirements. </summary>
     public partial class ConnectToSourcePostgreSqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskOutput"/>. </summary>
         internal ConnectToSourcePostgreSqlSyncTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="sourceServerVersion"> Version of the source server. </param>
         /// <param name="databases"> List of databases on source server. </param>
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
-        internal ConnectToSourcePostgreSqlSyncTaskOutput(string id, string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourcePostgreSqlSyncTaskOutput(string id, string sourceServerVersion, IReadOnlyList<string> databases, string sourceServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             SourceServerVersion = sourceServerVersion;
             Databases = databases;
             SourceServerBrandVersion = sourceServerBrandVersion;
             ValidationErrors = validationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> Result identifier. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes node info. </summary>
     public partial class EdgeKubernetesNodeInfo
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesNodeInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesNodeInfo"/>. </summary>
         internal EdgeKubernetesNodeInfo()
         {
             IPConfiguration = new ChangeTrackingList<EdgeKubernetesIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesNodeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesNodeInfo"/>. </summary>
         /// <param name="name"> Node name. </param>
         /// <param name="nodeType"> Node type - Master/Worker. </param>
         /// <param name="ipConfiguration"> IP Configuration of the Kubernetes node. </param>
-        internal EdgeKubernetesNodeInfo(string name, EdgeKubernetesNodeType? nodeType, IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesNodeInfo(string name, EdgeKubernetesNodeType? nodeType, IReadOnlyList<EdgeKubernetesIPConfiguration> ipConfiguration, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             NodeType = nodeType;
             IPConfiguration = ipConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> Node name. </summary>

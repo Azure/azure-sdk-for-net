@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list pipeline runs. </summary>
     internal partial class DataFactoryPipelineRunsQueryResult
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunsQueryResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunsQueryResult"/>. </summary>
         /// <param name="value"> List of pipeline runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryPipelineRunsQueryResult(IEnumerable<DataFactoryPipelineRunInfo> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineRunsQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunsQueryResult"/>. </summary>
         /// <param name="value"> List of pipeline runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal DataFactoryPipelineRunsQueryResult(IReadOnlyList<DataFactoryPipelineRunInfo> value, string continuationToken)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPipelineRunsQueryResult(IReadOnlyList<DataFactoryPipelineRunInfo> value, string continuationToken, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineRunsQueryResult"/> for deserialization. </summary>
+        internal DataFactoryPipelineRunsQueryResult()
+        {
         }
 
         /// <summary> List of pipeline runs. </summary>

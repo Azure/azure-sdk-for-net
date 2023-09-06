@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class CustomDefaultMatcher : IUtf8JsonSerializable
+    public partial class CustomDefaultMatcher : IUtf8JsonSerializable, IModelJsonSerializable<CustomDefaultMatcher>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomDefaultMatcher>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomDefaultMatcher>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExcludedHeaders))
             {
@@ -35,7 +43,115 @@ namespace Azure.Core.TestFramework.Models
                 writer.WritePropertyName("ignoredQueryParameters"u8);
                 writer.WriteStringValue(IgnoredQueryParameters);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CustomDefaultMatcher DeserializeCustomDefaultMatcher(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> excludedHeaders = default;
+            Optional<bool> compareBodies = default;
+            Optional<string> ignoredHeaders = default;
+            Optional<string> ignoredQueryParameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("excludedHeaders"u8))
+                {
+                    excludedHeaders = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("compareBodies"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compareBodies = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("ignoredHeaders"u8))
+                {
+                    ignoredHeaders = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("ignoredQueryParameters"u8))
+                {
+                    ignoredQueryParameters = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CustomDefaultMatcher(excludedHeaders.Value, Optional.ToNullable(compareBodies), ignoredHeaders.Value, ignoredQueryParameters.Value, rawData);
+        }
+
+        CustomDefaultMatcher IModelJsonSerializable<CustomDefaultMatcher>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomDefaultMatcher(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomDefaultMatcher>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomDefaultMatcher IModelSerializable<CustomDefaultMatcher>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomDefaultMatcher>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomDefaultMatcher(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomDefaultMatcher"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomDefaultMatcher"/> to convert. </param>
+        public static implicit operator RequestContent(CustomDefaultMatcher model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomDefaultMatcher"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomDefaultMatcher(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomDefaultMatcher(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

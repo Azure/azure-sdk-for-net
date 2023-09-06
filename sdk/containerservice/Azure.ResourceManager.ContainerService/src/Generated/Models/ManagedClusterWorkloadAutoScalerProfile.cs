@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
     public partial class ManagedClusterWorkloadAutoScalerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterWorkloadAutoScalerProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfile"/>. </summary>
         public ManagedClusterWorkloadAutoScalerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterWorkloadAutoScalerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfile"/>. </summary>
         /// <param name="keda"> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </param>
         /// <param name="verticalPodAutoscaler"></param>
-        internal ManagedClusterWorkloadAutoScalerProfile(ManagedClusterWorkloadAutoScalerProfileKeda keda, ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterWorkloadAutoScalerProfile(ManagedClusterWorkloadAutoScalerProfileKeda keda, ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler, Dictionary<string, BinaryData> rawData)
         {
             Keda = keda;
             VerticalPodAutoscaler = verticalPodAutoscaler;
+            _rawData = rawData;
         }
 
         /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>

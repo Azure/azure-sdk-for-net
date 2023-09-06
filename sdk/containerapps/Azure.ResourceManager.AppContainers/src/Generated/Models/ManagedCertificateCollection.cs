@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of Managed Certificates. </summary>
     internal partial class ManagedCertificateCollection
     {
-        /// <summary> Initializes a new instance of ManagedCertificateCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ManagedCertificateCollection(IEnumerable<ContainerAppManagedCertificateData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagedCertificateCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal ManagedCertificateCollection(IReadOnlyList<ContainerAppManagedCertificateData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedCertificateCollection(IReadOnlyList<ContainerAppManagedCertificateData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedCertificateCollection"/> for deserialization. </summary>
+        internal ManagedCertificateCollection()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

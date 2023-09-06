@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
     internal partial class MetricRules
     {
-        /// <summary> Initializes a new instance of MetricRules. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricRules"/>. </summary>
         public MetricRules()
         {
             FilteringTags = new ChangeTrackingList<FilteringTag>();
         }
 
-        /// <summary> Initializes a new instance of MetricRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricRules"/>. </summary>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
-        internal MetricRules(IList<FilteringTag> filteringTags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricRules(IList<FilteringTag> filteringTags, Dictionary<string, BinaryData> rawData)
         {
             FilteringTags = filteringTags;
+            _rawData = rawData;
         }
 
         /// <summary> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </summary>

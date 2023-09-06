@@ -5,37 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WeightedAllocationWorkerSelectorAttachment : IUtf8JsonSerializable
+    public partial class WeightedAllocationWorkerSelectorAttachment : IUtf8JsonSerializable, IModelJsonSerializable<WeightedAllocationWorkerSelectorAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WeightedAllocationWorkerSelectorAttachment>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WeightedAllocationWorkerSelectorAttachment>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WeightedAllocationWorkerSelectorAttachment>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("allocations"u8);
             writer.WriteStartArray();
             foreach (var item in Allocations)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WorkerWeightedAllocation>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WeightedAllocationWorkerSelectorAttachment DeserializeWeightedAllocationWorkerSelectorAttachment(JsonElement element)
+        internal static WeightedAllocationWorkerSelectorAttachment DeserializeWeightedAllocationWorkerSelectorAttachment(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<WorkerWeightedAllocation> allocations = default;
             string kind = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocations"u8))
@@ -53,8 +82,61 @@ namespace Azure.Communication.JobRouter
                     kind = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WeightedAllocationWorkerSelectorAttachment(kind, allocations);
+            return new WeightedAllocationWorkerSelectorAttachment(kind, allocations, rawData);
+        }
+
+        WeightedAllocationWorkerSelectorAttachment IModelJsonSerializable<WeightedAllocationWorkerSelectorAttachment>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WeightedAllocationWorkerSelectorAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWeightedAllocationWorkerSelectorAttachment(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WeightedAllocationWorkerSelectorAttachment>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WeightedAllocationWorkerSelectorAttachment>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WeightedAllocationWorkerSelectorAttachment IModelSerializable<WeightedAllocationWorkerSelectorAttachment>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WeightedAllocationWorkerSelectorAttachment>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWeightedAllocationWorkerSelectorAttachment(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WeightedAllocationWorkerSelectorAttachment"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WeightedAllocationWorkerSelectorAttachment"/> to convert. </param>
+        public static implicit operator RequestContent(WeightedAllocationWorkerSelectorAttachment model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WeightedAllocationWorkerSelectorAttachment"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WeightedAllocationWorkerSelectorAttachment(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWeightedAllocationWorkerSelectorAttachment(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Configuration properties for mutual TLS authentication. </summary>
     internal partial class Mtls
     {
-        /// <summary> Initializes a new instance of Mtls. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Mtls"/>. </summary>
         public Mtls()
         {
         }
 
-        /// <summary> Initializes a new instance of Mtls. </summary>
+        /// <summary> Initializes a new instance of <see cref="Mtls"/>. </summary>
         /// <param name="isMtlsEnabled"> Boolean indicating whether the mutual TLS authentication is enabled. </param>
-        internal Mtls(bool? isMtlsEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Mtls(bool? isMtlsEnabled, Dictionary<string, BinaryData> rawData)
         {
             IsMtlsEnabled = isMtlsEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>

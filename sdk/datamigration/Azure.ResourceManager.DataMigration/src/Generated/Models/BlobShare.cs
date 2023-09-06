@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Blob container storage information. </summary>
     public partial class BlobShare
     {
-        /// <summary> Initializes a new instance of BlobShare. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobShare"/>. </summary>
         public BlobShare()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobShare"/>. </summary>
         /// <param name="sasUri"> SAS URI of Azure Storage Account Container. </param>
-        internal BlobShare(Uri sasUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobShare(Uri sasUri, Dictionary<string, BinaryData> rawData)
         {
             SasUri = sasUri;
+            _rawData = rawData;
         }
 
         /// <summary> SAS URI of Azure Storage Account Container. </summary>

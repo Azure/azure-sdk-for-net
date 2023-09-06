@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,7 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents an administrative division. e.g. state or province. </summary>
     public partial class PhoneNumberAdministrativeDivision
     {
-        /// <summary> Initializes a new instance of PhoneNumberAdministrativeDivision. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAdministrativeDivision"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </param>
         /// <param name="abbreviatedName"> Represents the abbreviated name of the administrative division of the locality. e.g. state or province abbreviation such as WA (Washington). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="abbreviatedName"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Communication.PhoneNumbers
 
             LocalizedName = localizedName;
             AbbreviatedName = abbreviatedName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAdministrativeDivision"/>. </summary>
+        /// <param name="localizedName"> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </param>
+        /// <param name="abbreviatedName"> Represents the abbreviated name of the administrative division of the locality. e.g. state or province abbreviation such as WA (Washington). </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberAdministrativeDivision(string localizedName, string abbreviatedName, Dictionary<string, BinaryData> rawData)
+        {
+            LocalizedName = localizedName;
+            AbbreviatedName = abbreviatedName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAdministrativeDivision"/> for deserialization. </summary>
+        internal PhoneNumberAdministrativeDivision()
+        {
         }
 
         /// <summary> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </summary>

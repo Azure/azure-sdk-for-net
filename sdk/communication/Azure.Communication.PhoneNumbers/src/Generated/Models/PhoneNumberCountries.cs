@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,5 +14,18 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a wrapper around a list of countries. </summary>
     internal partial class PhoneNumberCountries
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCountries"/>. </summary>
+        /// <param name="countries"> Represents the underlying list of countries. </param>
+        /// <param name="nextLink"> Represents the URL link to the next page. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberCountries(IReadOnlyList<PhoneNumberCountry> countries, string nextLink, Dictionary<string, BinaryData> rawData)
+        {
+            Countries = countries;
+            NextLink = nextLink;
+            _rawData = rawData;
+        }
     }
 }

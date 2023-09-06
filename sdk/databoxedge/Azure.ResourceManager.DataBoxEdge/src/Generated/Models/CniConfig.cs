@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Cni configuration. </summary>
     public partial class CniConfig
     {
-        /// <summary> Initializes a new instance of CniConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CniConfig"/>. </summary>
         internal CniConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of CniConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="CniConfig"/>. </summary>
         /// <param name="cniConfigType"> Cni type. </param>
         /// <param name="version"> Cni version. </param>
         /// <param name="podSubnet"> Pod Subnet. </param>
         /// <param name="serviceSubnet"> Service subnet. </param>
-        internal CniConfig(string cniConfigType, string version, string podSubnet, string serviceSubnet)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CniConfig(string cniConfigType, string version, string podSubnet, string serviceSubnet, Dictionary<string, BinaryData> rawData)
         {
             CniConfigType = cniConfigType;
             Version = version;
             PodSubnet = podSubnet;
             ServiceSubnet = serviceSubnet;
+            _rawData = rawData;
         }
 
         /// <summary> Cni type. </summary>
