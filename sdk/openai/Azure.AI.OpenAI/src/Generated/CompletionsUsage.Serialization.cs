@@ -5,16 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class CompletionsUsage
+    public partial class CompletionsUsage : IUtf8JsonSerializable, IModelJsonSerializable<CompletionsUsage>
     {
-        internal static CompletionsUsage DeserializeCompletionsUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CompletionsUsage>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CompletionsUsage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("completion_tokens"u8);
+            writer.WriteNumberValue(CompletionTokens);
+            writer.WritePropertyName("prompt_tokens"u8);
+            writer.WriteNumberValue(PromptTokens);
+            writer.WritePropertyName("total_tokens"u8);
+            writer.WriteNumberValue(TotalTokens);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CompletionsUsage DeserializeCompletionsUsage(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +55,7 @@ namespace Azure.AI.OpenAI
             int completionTokens = default;
             int promptTokens = default;
             int totalTokens = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completion_tokens"u8))
@@ -39,16 +73,61 @@ namespace Azure.AI.OpenAI
                     totalTokens = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CompletionsUsage FromResponse(Response response)
+        CompletionsUsage IModelJsonSerializable<CompletionsUsage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCompletionsUsage(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCompletionsUsage(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CompletionsUsage>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CompletionsUsage IModelSerializable<CompletionsUsage>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCompletionsUsage(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CompletionsUsage"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CompletionsUsage"/> to convert. </param>
+        public static implicit operator RequestContent(CompletionsUsage model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CompletionsUsage"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CompletionsUsage(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCompletionsUsage(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

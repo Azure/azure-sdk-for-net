@@ -5,16 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class PolicyStatesQueryResults
+    internal partial class PolicyStatesQueryResults : IUtf8JsonSerializable, IModelJsonSerializable<PolicyStatesQueryResults>
     {
-        internal static PolicyStatesQueryResults DeserializePolicyStatesQueryResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyStatesQueryResults>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyStatesQueryResults>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyStatesQueryResults>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ODataContext))
+            {
+                writer.WritePropertyName("@odata.context"u8);
+                writer.WriteStringValue(ODataContext);
+            }
+            if (Optional.IsDefined(ODataCount))
+            {
+                writer.WritePropertyName("@odata.count"u8);
+                writer.WriteNumberValue(ODataCount.Value);
+            }
+            if (Optional.IsDefined(ODataNextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(ODataNextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PolicyState>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyStatesQueryResults DeserializePolicyStatesQueryResults(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +82,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
             Optional<IReadOnlyList<PolicyState>> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.context"u8))
@@ -58,8 +118,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyStatesQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value));
+            return new PolicyStatesQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value), rawData);
+        }
+
+        PolicyStatesQueryResults IModelJsonSerializable<PolicyStatesQueryResults>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyStatesQueryResults>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyStatesQueryResults(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyStatesQueryResults>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyStatesQueryResults>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyStatesQueryResults IModelSerializable<PolicyStatesQueryResults>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyStatesQueryResults>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyStatesQueryResults(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyStatesQueryResults"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyStatesQueryResults"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyStatesQueryResults model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyStatesQueryResults"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyStatesQueryResults(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyStatesQueryResults(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -10,15 +10,20 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ScheduledQueryRuleData : IUtf8JsonSerializable
+    public partial class ScheduledQueryRuleData : IUtf8JsonSerializable, IModelJsonSerializable<ScheduledQueryRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScheduledQueryRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScheduledQueryRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduledQueryRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -98,7 +103,14 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria);
+                if (Criteria is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ScheduledQueryRuleCriteria>)Criteria).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
@@ -108,7 +120,14 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                if (Actions is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ScheduledQueryRuleActions>)Actions).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
             {
@@ -126,11 +145,25 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element)
+        internal static ScheduledQueryRuleData DeserializeScheduledQueryRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,6 +194,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
             Optional<bool> skipQueryValidation = default;
             Optional<bool> autoMitigate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -396,8 +430,61 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScheduledQueryRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate));
+            return new ScheduledQueryRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate), rawData);
+        }
+
+        ScheduledQueryRuleData IModelJsonSerializable<ScheduledQueryRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduledQueryRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScheduledQueryRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScheduledQueryRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduledQueryRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScheduledQueryRuleData IModelSerializable<ScheduledQueryRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScheduledQueryRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScheduledQueryRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScheduledQueryRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScheduledQueryRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(ScheduledQueryRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScheduledQueryRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScheduledQueryRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScheduledQueryRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

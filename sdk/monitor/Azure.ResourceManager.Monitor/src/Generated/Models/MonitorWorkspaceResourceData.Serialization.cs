@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable
+    public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable, IModelJsonSerializable<MonitorWorkspaceResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorWorkspaceResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorWorkspaceResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspaceResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -35,11 +41,25 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorWorkspaceResourceData DeserializeMonitorWorkspaceResourceData(JsonElement element)
+        internal static MonitorWorkspaceResourceData DeserializeMonitorWorkspaceResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +77,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
             Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
             Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -178,8 +199,61 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), rawData);
+        }
+
+        MonitorWorkspaceResourceData IModelJsonSerializable<MonitorWorkspaceResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspaceResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorWorkspaceResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorWorkspaceResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspaceResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorWorkspaceResourceData IModelSerializable<MonitorWorkspaceResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorWorkspaceResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorWorkspaceResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorWorkspaceResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorWorkspaceResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorWorkspaceResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorWorkspaceResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorWorkspaceResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorWorkspaceResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Subvolumes. </summary>
     internal partial class SubvolumesList
     {
-        /// <summary> Initializes a new instance of SubvolumesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubvolumesList"/>. </summary>
         internal SubvolumesList()
         {
             Value = new ChangeTrackingList<NetAppSubvolumeInfoData>();
         }
 
-        /// <summary> Initializes a new instance of SubvolumesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubvolumesList"/>. </summary>
         /// <param name="value"> A list of Subvolumes. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal SubvolumesList(IReadOnlyList<NetAppSubvolumeInfoData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubvolumesList(IReadOnlyList<NetAppSubvolumeInfoData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of Subvolumes. </summary>

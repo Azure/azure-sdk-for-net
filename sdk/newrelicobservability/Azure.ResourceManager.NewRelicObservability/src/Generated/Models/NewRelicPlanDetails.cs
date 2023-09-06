@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Plan data of NewRelic Monitor resource. </summary>
     public partial class NewRelicPlanDetails
     {
-        /// <summary> Initializes a new instance of NewRelicPlanDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
         public NewRelicPlanDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicPlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
         /// <param name="usageType"> Different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> Different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, NewRelicObservabilityBillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, NewRelicObservabilityBillingCycle? billingCycle, string planDetails, DateTimeOffset? effectiveOn, Dictionary<string, BinaryData> rawData)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;
             PlanDetails = planDetails;
             EffectiveOn = effectiveOn;
+            _rawData = rawData;
         }
 
         /// <summary> Different usage type like PAYG/COMMITTED. this could be enum. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,6 +14,9 @@ namespace Azure.AI.OpenAI
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
     public partial class FunctionDefinition
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of FunctionDefinition. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -30,11 +34,13 @@ namespace Azure.AI.OpenAI
         /// interpreting its parameters.
         /// </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        internal FunctionDefinition(string name, string description, BinaryData parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionDefinition(string name, string description, BinaryData parameters, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
+            _rawData = rawData;
         }
         /// <summary>
         /// A description of what the function does. The model will use this description when selecting the function and

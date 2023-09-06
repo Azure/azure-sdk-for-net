@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway BackendHealthHttp settings. </summary>
     public partial class ApplicationGatewayBackendHealthHttpSettings
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthHttpSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthHttpSettings"/>. </summary>
         internal ApplicationGatewayBackendHealthHttpSettings()
         {
             Servers = new ChangeTrackingList<ApplicationGatewayBackendHealthServer>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthHttpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthHttpSettings"/>. </summary>
         /// <param name="backendHttpSettings"> Reference to an ApplicationGatewayBackendHttpSettings resource. </param>
         /// <param name="servers"> List of ApplicationGatewayBackendHealthServer resources. </param>
-        internal ApplicationGatewayBackendHealthHttpSettings(ApplicationGatewayBackendHttpSettings backendHttpSettings, IReadOnlyList<ApplicationGatewayBackendHealthServer> servers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayBackendHealthHttpSettings(ApplicationGatewayBackendHttpSettings backendHttpSettings, IReadOnlyList<ApplicationGatewayBackendHealthServer> servers, Dictionary<string, BinaryData> rawData)
         {
             BackendHttpSettings = backendHttpSettings;
             Servers = servers;
+            _rawData = rawData;
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendHttpSettings resource. </summary>

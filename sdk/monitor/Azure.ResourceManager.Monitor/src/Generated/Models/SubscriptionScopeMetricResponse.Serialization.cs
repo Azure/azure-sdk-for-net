@@ -8,14 +8,76 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class SubscriptionScopeMetricResponse
+    internal partial class SubscriptionScopeMetricResponse : IUtf8JsonSerializable, IModelJsonSerializable<SubscriptionScopeMetricResponse>
     {
-        internal static SubscriptionScopeMetricResponse DeserializeSubscriptionScopeMetricResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SubscriptionScopeMetricResponse>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SubscriptionScopeMetricResponse>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionScopeMetricResponse>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Cost))
+            {
+                writer.WritePropertyName("cost"u8);
+                writer.WriteNumberValue(Cost.Value);
+            }
+            writer.WritePropertyName("timespan"u8);
+            writer.WriteStringValue(Timespan);
+            if (Optional.IsDefined(Interval))
+            {
+                writer.WritePropertyName("interval"u8);
+                writer.WriteStringValue(Interval.Value, "P");
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(Resourceregion))
+            {
+                writer.WritePropertyName("resourceregion"u8);
+                writer.WriteStringValue(Resourceregion);
+            }
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SubscriptionMonitorMetric>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SubscriptionScopeMetricResponse DeserializeSubscriptionScopeMetricResponse(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> @namespace = default;
             Optional<string> resourceregion = default;
             IReadOnlyList<SubscriptionMonitorMetric> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cost"u8))
@@ -71,8 +134,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SubscriptionScopeMetricResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new SubscriptionScopeMetricResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, rawData);
+        }
+
+        SubscriptionScopeMetricResponse IModelJsonSerializable<SubscriptionScopeMetricResponse>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionScopeMetricResponse>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionScopeMetricResponse(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SubscriptionScopeMetricResponse>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionScopeMetricResponse>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SubscriptionScopeMetricResponse IModelSerializable<SubscriptionScopeMetricResponse>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SubscriptionScopeMetricResponse>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSubscriptionScopeMetricResponse(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SubscriptionScopeMetricResponse"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SubscriptionScopeMetricResponse"/> to convert. </param>
+        public static implicit operator RequestContent(SubscriptionScopeMetricResponse model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SubscriptionScopeMetricResponse"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SubscriptionScopeMetricResponse(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSubscriptionScopeMetricResponse(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

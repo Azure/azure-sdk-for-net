@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Monitor;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class MonitorPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceListResult"/>. </summary>
         internal MonitorPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<MonitorPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal MonitorPrivateLinkResourceListResult(IReadOnlyList<MonitorPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkResourceListResult(IReadOnlyList<MonitorPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

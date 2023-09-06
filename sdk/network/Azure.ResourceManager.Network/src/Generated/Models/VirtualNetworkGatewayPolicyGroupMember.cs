@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Client Connection configuration PolicyGroup member. </summary>
     public partial class VirtualNetworkGatewayPolicyGroupMember
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroupMember. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupMember"/>. </summary>
         public VirtualNetworkGatewayPolicyGroupMember()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroupMember. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroupMember"/>. </summary>
         /// <param name="name"> Name of the VirtualNetworkGatewayPolicyGroupMember. </param>
         /// <param name="attributeType"> The Vpn Policy member attribute type. </param>
         /// <param name="attributeValue"> The value of Attribute used for this VirtualNetworkGatewayPolicyGroupMember. </param>
-        internal VirtualNetworkGatewayPolicyGroupMember(string name, VpnPolicyMemberAttributeType? attributeType, string attributeValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkGatewayPolicyGroupMember(string name, VpnPolicyMemberAttributeType? attributeType, string attributeValue, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             AttributeType = attributeType;
             AttributeValue = attributeValue;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the VirtualNetworkGatewayPolicyGroupMember. </summary>

@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerServerVersionCapability
+    public partial class PostgreSqlFlexibleServerServerVersionCapability : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerServerVersionCapability>
     {
-        internal static PostgreSqlFlexibleServerServerVersionCapability DeserializePostgreSqlFlexibleServerServerVersionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerServerVersionCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerServerVersionCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerServerVersionCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlFlexibleServerServerVersionCapability DeserializePostgreSqlFlexibleServerServerVersionCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<IReadOnlyList<string>> supportedVersionsToUpgrade = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,8 +86,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PostgreSqlFlexibleServerServerVersionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedVersionsToUpgrade));
+            return new PostgreSqlFlexibleServerServerVersionCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedVersionsToUpgrade), rawData);
+        }
+
+        PostgreSqlFlexibleServerServerVersionCapability IModelJsonSerializable<PostgreSqlFlexibleServerServerVersionCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerServerVersionCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerServerVersionCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerServerVersionCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerServerVersionCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerServerVersionCapability IModelSerializable<PostgreSqlFlexibleServerServerVersionCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerServerVersionCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerServerVersionCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerServerVersionCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerServerVersionCapability"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerServerVersionCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerServerVersionCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerServerVersionCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

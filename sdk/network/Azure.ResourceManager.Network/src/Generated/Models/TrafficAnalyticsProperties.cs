@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the configuration of traffic analytics. </summary>
     internal partial class TrafficAnalyticsProperties
     {
-        /// <summary> Initializes a new instance of TrafficAnalyticsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsProperties"/>. </summary>
         public TrafficAnalyticsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficAnalyticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsProperties"/>. </summary>
         /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
-        internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration, Dictionary<string, BinaryData> rawData)
         {
             TrafficAnalyticsConfiguration = trafficAnalyticsConfiguration;
+            _rawData = rawData;
         }
 
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>

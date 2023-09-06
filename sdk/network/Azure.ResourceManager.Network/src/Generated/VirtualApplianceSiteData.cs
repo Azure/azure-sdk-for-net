@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualApplianceSiteData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSiteData"/>. </summary>
         public VirtualApplianceSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSiteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -30,7 +32,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="addressPrefix"> Address Prefix. </param>
         /// <param name="o365Policy"> Office 365 Policy. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualApplianceSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, Office365PolicyProperties o365Policy, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, Office365PolicyProperties o365Policy, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             ETag = etag;
             AddressPrefix = addressPrefix;

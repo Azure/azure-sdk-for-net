@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of query texts. </summary>
     internal partial class MySqlQueryTextListResult
     {
-        /// <summary> Initializes a new instance of MySqlQueryTextListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryTextListResult"/>. </summary>
         internal MySqlQueryTextListResult()
         {
             Value = new ChangeTrackingList<MySqlQueryTextData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryTextListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryTextListResult"/>. </summary>
         /// <param name="value"> The list of query texts. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal MySqlQueryTextListResult(IReadOnlyList<MySqlQueryTextData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlQueryTextListResult(IReadOnlyList<MySqlQueryTextData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of query texts. </summary>

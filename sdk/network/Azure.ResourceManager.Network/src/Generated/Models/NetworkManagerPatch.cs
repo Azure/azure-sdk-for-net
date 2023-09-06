@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Object for patch operations. </summary>
     public partial class NetworkManagerPatch
     {
-        /// <summary> Initializes a new instance of NetworkManagerPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerPatch"/>. </summary>
         public NetworkManagerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerFullBackupStoreDetails : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerFullBackupStoreDetails : IUtf8JsonSerializable, IModelJsonSerializable<MySqlFlexibleServerFullBackupStoreDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MySqlFlexibleServerFullBackupStoreDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MySqlFlexibleServerFullBackupStoreDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerFullBackupStoreDetails>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sasUriList"u8);
             writer.WriteStartArray();
@@ -24,7 +32,104 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             writer.WriteEndArray();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MySqlFlexibleServerFullBackupStoreDetails DeserializeMySqlFlexibleServerFullBackupStoreDetails(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> sasUriList = default;
+            string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sasUriList"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    sasUriList = array;
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MySqlFlexibleServerFullBackupStoreDetails(objectType, sasUriList, rawData);
+        }
+
+        MySqlFlexibleServerFullBackupStoreDetails IModelJsonSerializable<MySqlFlexibleServerFullBackupStoreDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerFullBackupStoreDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerFullBackupStoreDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MySqlFlexibleServerFullBackupStoreDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerFullBackupStoreDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MySqlFlexibleServerFullBackupStoreDetails IModelSerializable<MySqlFlexibleServerFullBackupStoreDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MySqlFlexibleServerFullBackupStoreDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerFullBackupStoreDetails(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MySqlFlexibleServerFullBackupStoreDetails"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MySqlFlexibleServerFullBackupStoreDetails"/> to convert. </param>
+        public static implicit operator RequestContent(MySqlFlexibleServerFullBackupStoreDetails model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MySqlFlexibleServerFullBackupStoreDetails"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MySqlFlexibleServerFullBackupStoreDetails(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMySqlFlexibleServerFullBackupStoreDetails(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

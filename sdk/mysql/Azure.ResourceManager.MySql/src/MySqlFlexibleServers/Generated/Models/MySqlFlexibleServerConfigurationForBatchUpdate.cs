@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents a Configuration. </summary>
     public partial class MySqlFlexibleServerConfigurationForBatchUpdate
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationForBatchUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationForBatchUpdate"/>. </summary>
         public MySqlFlexibleServerConfigurationForBatchUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationForBatchUpdate"/>. </summary>
+        /// <param name="name"> Name of the configuration. </param>
+        /// <param name="value"> Value of the configuration. </param>
+        /// <param name="source"> Source of the configuration. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerConfigurationForBatchUpdate(string name, string value, string source, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Value = value;
+            Source = source;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the configuration. </summary>

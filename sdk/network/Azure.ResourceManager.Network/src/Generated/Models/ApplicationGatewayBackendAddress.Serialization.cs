@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendAddress : IUtf8JsonSerializable
+    public partial class ApplicationGatewayBackendAddress : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayBackendAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayBackendAddress>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayBackendAddress>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendAddress>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayBackendAddress DeserializeApplicationGatewayBackendAddress(JsonElement element)
+        internal static ApplicationGatewayBackendAddress DeserializeApplicationGatewayBackendAddress(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> fqdn = default;
             Optional<string> ipAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.Network.Models
                     ipAddress = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayBackendAddress(fqdn.Value, ipAddress.Value);
+            return new ApplicationGatewayBackendAddress(fqdn.Value, ipAddress.Value, rawData);
+        }
+
+        ApplicationGatewayBackendAddress IModelJsonSerializable<ApplicationGatewayBackendAddress>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendAddress>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayBackendAddress(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayBackendAddress>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendAddress>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayBackendAddress IModelSerializable<ApplicationGatewayBackendAddress>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayBackendAddress>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayBackendAddress(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayBackendAddress"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayBackendAddress"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayBackendAddress model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayBackendAddress"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayBackendAddress(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayBackendAddress(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

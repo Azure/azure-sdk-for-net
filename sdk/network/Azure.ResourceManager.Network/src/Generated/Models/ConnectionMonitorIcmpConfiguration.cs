@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the ICMP configuration. </summary>
     internal partial class ConnectionMonitorIcmpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorIcmpConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorIcmpConfiguration"/>. </summary>
         public ConnectionMonitorIcmpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorIcmpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorIcmpConfiguration"/>. </summary>
         /// <param name="disableTraceRoute"> Value indicating whether path evaluation with trace route should be disabled. </param>
-        internal ConnectionMonitorIcmpConfiguration(bool? disableTraceRoute)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorIcmpConfiguration(bool? disableTraceRoute, Dictionary<string, BinaryData> rawData)
         {
             DisableTraceRoute = disableTraceRoute;
+            _rawData = rawData;
         }
 
         /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>

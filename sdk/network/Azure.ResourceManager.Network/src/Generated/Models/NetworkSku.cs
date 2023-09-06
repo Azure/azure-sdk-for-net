@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The sku of this Bastion Host. </summary>
     internal partial class NetworkSku
     {
-        /// <summary> Initializes a new instance of NetworkSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSku"/>. </summary>
         public NetworkSku()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSku"/>. </summary>
         /// <param name="name"> The name of this Bastion Host. </param>
-        internal NetworkSku(BastionHostSkuName? name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSku(BastionHostSkuName? name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The name of this Bastion Host. </summary>

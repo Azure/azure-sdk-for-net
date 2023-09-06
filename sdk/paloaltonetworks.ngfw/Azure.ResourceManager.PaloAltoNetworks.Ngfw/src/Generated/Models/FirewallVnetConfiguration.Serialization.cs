@@ -5,32 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallVnetConfiguration : IUtf8JsonSerializable
+    public partial class FirewallVnetConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<FirewallVnetConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallVnetConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallVnetConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallVnetConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("vnet"u8);
-            writer.WriteObjectValue(Vnet);
+            if (Vnet is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IPAddressSpaceInfo>)Vnet).Serialize(writer, options);
+            }
             writer.WritePropertyName("trustSubnet"u8);
-            writer.WriteObjectValue(TrustSubnet);
+            if (TrustSubnet is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IPAddressSpaceInfo>)TrustSubnet).Serialize(writer, options);
+            }
             writer.WritePropertyName("unTrustSubnet"u8);
-            writer.WriteObjectValue(UnTrustSubnet);
+            if (UnTrustSubnet is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IPAddressSpaceInfo>)UnTrustSubnet).Serialize(writer, options);
+            }
             if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue(IPOfTrustSubnetForUdr);
+                if (IPOfTrustSubnetForUdr is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IPAddressInfo>)IPOfTrustSubnetForUdr).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static FirewallVnetConfiguration DeserializeFirewallVnetConfiguration(JsonElement element)
+        internal static FirewallVnetConfiguration DeserializeFirewallVnetConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IPAddressSpaceInfo trustSubnet = default;
             IPAddressSpaceInfo unTrustSubnet = default;
             Optional<IPAddressInfo> ipOfTrustSubnetForUdr = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnet"u8))
@@ -65,8 +116,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     ipOfTrustSubnetForUdr = IPAddressInfo.DeserializeIPAddressInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallVnetConfiguration(vnet, trustSubnet, unTrustSubnet, ipOfTrustSubnetForUdr.Value);
+            return new FirewallVnetConfiguration(vnet, trustSubnet, unTrustSubnet, ipOfTrustSubnetForUdr.Value, rawData);
+        }
+
+        FirewallVnetConfiguration IModelJsonSerializable<FirewallVnetConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallVnetConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallVnetConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallVnetConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallVnetConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallVnetConfiguration IModelSerializable<FirewallVnetConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallVnetConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallVnetConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirewallVnetConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirewallVnetConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(FirewallVnetConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirewallVnetConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirewallVnetConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallVnetConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

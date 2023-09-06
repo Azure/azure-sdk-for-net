@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderSubscriptionStateRule. </summary>
     public partial class ProviderSubscriptionStateRule
     {
-        /// <summary> Initializes a new instance of ProviderSubscriptionStateRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionStateRule"/>. </summary>
         public ProviderSubscriptionStateRule()
         {
             AllowedActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ProviderSubscriptionStateRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderSubscriptionStateRule"/>. </summary>
         /// <param name="state"></param>
         /// <param name="allowedActions"></param>
-        internal ProviderSubscriptionStateRule(ProviderSubscriptionState? state, IList<string> allowedActions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderSubscriptionStateRule(ProviderSubscriptionState? state, IList<string> allowedActions, Dictionary<string, BinaryData> rawData)
         {
             State = state;
             AllowedActions = allowedActions;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the state. </summary>

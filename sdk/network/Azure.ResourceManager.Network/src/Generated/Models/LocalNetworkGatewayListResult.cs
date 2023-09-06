@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListLocalNetworkGateways API service call. </summary>
     internal partial class LocalNetworkGatewayListResult
     {
-        /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayListResult"/>. </summary>
         internal LocalNetworkGatewayListResult()
         {
             Value = new ChangeTrackingList<LocalNetworkGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayListResult"/>. </summary>
         /// <param name="value"> A list of local network gateways that exists in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LocalNetworkGatewayListResult(IReadOnlyList<LocalNetworkGatewayData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalNetworkGatewayListResult(IReadOnlyList<LocalNetworkGatewayData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of local network gateways that exists in a resource group. </summary>

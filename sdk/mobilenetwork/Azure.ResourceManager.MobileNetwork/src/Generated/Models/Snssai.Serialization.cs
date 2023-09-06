@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class Snssai : IUtf8JsonSerializable
+    public partial class Snssai : IUtf8JsonSerializable, IModelJsonSerializable<Snssai>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Snssai>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Snssai>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Snssai>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
@@ -22,17 +30,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Snssai DeserializeSnssai(JsonElement element)
+        internal static Snssai DeserializeSnssai(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int sst = default;
             Optional<string> sd = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sst"u8))
@@ -45,8 +68,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     sd = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Snssai(sst, sd.Value);
+            return new Snssai(sst, sd.Value, rawData);
+        }
+
+        Snssai IModelJsonSerializable<Snssai>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Snssai>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSnssai(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Snssai>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Snssai>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Snssai IModelSerializable<Snssai>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Snssai>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSnssai(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Snssai"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Snssai"/> to convert. </param>
+        public static implicit operator RequestContent(Snssai model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Snssai"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Snssai(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSnssai(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderCapabilities : IUtf8JsonSerializable
+    public partial class ResourceProviderCapabilities : IUtf8JsonSerializable, IModelJsonSerializable<ResourceProviderCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceProviderCapabilities>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceProviderCapabilities>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderCapabilities>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("quotaId"u8);
             writer.WriteStringValue(QuotaId);
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceProviderCapabilities DeserializeResourceProviderCapabilities(JsonElement element)
+        internal static ResourceProviderCapabilities DeserializeResourceProviderCapabilities(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string quotaId = default;
             ResourceProviderCapabilitiesEffect effect = default;
             Optional<IList<string>> requiredFeatures = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quotaId"u8))
@@ -68,8 +90,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     requiredFeatures = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceProviderCapabilities(quotaId, effect, Optional.ToList(requiredFeatures));
+            return new ResourceProviderCapabilities(quotaId, effect, Optional.ToList(requiredFeatures), rawData);
+        }
+
+        ResourceProviderCapabilities IModelJsonSerializable<ResourceProviderCapabilities>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderCapabilities>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceProviderCapabilities(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceProviderCapabilities>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderCapabilities>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceProviderCapabilities IModelSerializable<ResourceProviderCapabilities>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceProviderCapabilities>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceProviderCapabilities(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceProviderCapabilities"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceProviderCapabilities"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceProviderCapabilities model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceProviderCapabilities"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceProviderCapabilities(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceProviderCapabilities(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

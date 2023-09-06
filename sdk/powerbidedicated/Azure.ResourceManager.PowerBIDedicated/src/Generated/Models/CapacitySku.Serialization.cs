@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    public partial class CapacitySku : IUtf8JsonSerializable
+    public partial class CapacitySku : IUtf8JsonSerializable, IModelJsonSerializable<CapacitySku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CapacitySku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CapacitySku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CapacitySku>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CapacitySku DeserializeCapacitySku(JsonElement element)
+        internal static CapacitySku DeserializeCapacitySku(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             string name = default;
             Optional<CapacitySkuTier> tier = default;
             Optional<int> capacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,8 +87,61 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CapacitySku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
+            return new CapacitySku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), rawData);
+        }
+
+        CapacitySku IModelJsonSerializable<CapacitySku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CapacitySku>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacitySku(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CapacitySku>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CapacitySku>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CapacitySku IModelSerializable<CapacitySku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CapacitySku>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCapacitySku(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CapacitySku"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CapacitySku"/> to convert. </param>
+        public static implicit operator RequestContent(CapacitySku model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CapacitySku"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CapacitySku(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCapacitySku(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

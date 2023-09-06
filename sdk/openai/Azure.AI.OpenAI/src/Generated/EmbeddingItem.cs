@@ -15,6 +15,9 @@ namespace Azure.AI.OpenAI
     /// <summary> Representation of a single embeddings relatedness comparison. </summary>
     public partial class EmbeddingItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of EmbeddingItem. </summary>
         /// <param name="embedding">
         /// List of embeddings value for the input prompt. These represent a measurement of the
@@ -36,10 +39,17 @@ namespace Azure.AI.OpenAI
         /// vector-based relatedness of the provided input.
         /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
-        internal EmbeddingItem(IReadOnlyList<float> embedding, int index)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingItem(IReadOnlyList<float> embedding, int index, Dictionary<string, BinaryData> rawData)
         {
             Embedding = embedding;
             Index = index;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/> for deserialization. </summary>
+        internal EmbeddingItem()
+        {
         }
 
         /// <summary>

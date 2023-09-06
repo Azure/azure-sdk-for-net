@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientIPsecParameters : IUtf8JsonSerializable
+    public partial class VpnClientIPsecParameters : IUtf8JsonSerializable, IModelJsonSerializable<VpnClientIPsecParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnClientIPsecParameters>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnClientIPsecParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientIPsecParameters>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("saLifeTimeSeconds"u8);
             writer.WriteNumberValue(SaLifeTimeSeconds);
@@ -31,11 +39,25 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(DhGroup.ToString());
             writer.WritePropertyName("pfsGroup"u8);
             writer.WriteStringValue(PfsGroup.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element)
+        internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             IkeIntegrity ikeIntegrity = default;
             DHGroup dhGroup = default;
             PfsGroup pfsGroup = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("saLifeTimeSeconds"u8))
@@ -90,8 +113,61 @@ namespace Azure.ResourceManager.Network.Models
                     pfsGroup = new PfsGroup(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VpnClientIPsecParameters(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup);
+            return new VpnClientIPsecParameters(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup, rawData);
+        }
+
+        VpnClientIPsecParameters IModelJsonSerializable<VpnClientIPsecParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientIPsecParameters>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnClientIPsecParameters(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnClientIPsecParameters>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientIPsecParameters>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnClientIPsecParameters IModelSerializable<VpnClientIPsecParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientIPsecParameters>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnClientIPsecParameters(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VpnClientIPsecParameters"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VpnClientIPsecParameters"/> to convert. </param>
+        public static implicit operator RequestContent(VpnClientIPsecParameters model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VpnClientIPsecParameters"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VpnClientIPsecParameters(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnClientIPsecParameters(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ManagedResourceGroupConfiguration represents the configuration of the resource group managed by Azure. </summary>
     public partial class ManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         public ManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="location"> The location of the managed resource group. If not specified, the location of the parent resource is chosen. </param>
         /// <param name="name"> The name for the managed resource group. If not specified, the unique name is automatically generated. </param>
-        internal ManagedResourceGroupConfiguration(AzureLocation? location, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedResourceGroupConfiguration(AzureLocation? location, string name, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The location of the managed resource group. If not specified, the location of the parent resource is chosen. </summary>

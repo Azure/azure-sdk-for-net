@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateEndpointIPConfiguration : IUtf8JsonSerializable
+    public partial class PrivateEndpointIPConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<PrivateEndpointIPConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateEndpointIPConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateEndpointIPConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateEndpointIPConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -40,11 +47,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateEndpointIPConfiguration DeserializePrivateEndpointIPConfiguration(JsonElement element)
+        internal static PrivateEndpointIPConfiguration DeserializePrivateEndpointIPConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> groupId = default;
             Optional<string> memberName = default;
             Optional<IPAddress> privateIPAddress = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,8 +129,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value);
+            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value, rawData);
+        }
+
+        PrivateEndpointIPConfiguration IModelJsonSerializable<PrivateEndpointIPConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateEndpointIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateEndpointIPConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateEndpointIPConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateEndpointIPConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateEndpointIPConfiguration IModelSerializable<PrivateEndpointIPConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateEndpointIPConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateEndpointIPConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrivateEndpointIPConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrivateEndpointIPConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(PrivateEndpointIPConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrivateEndpointIPConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrivateEndpointIPConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateEndpointIPConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

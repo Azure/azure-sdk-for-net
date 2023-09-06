@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EnrichmentStatusList. </summary>
     internal partial class EnrichmentStatusList
     {
-        /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatusList"/>. </summary>
         internal EnrichmentStatusList()
         {
             Value = new ChangeTrackingList<EnrichmentStatus>();
         }
 
-        /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatusList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
-        internal EnrichmentStatusList(string nextLink, IReadOnlyList<EnrichmentStatus> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnrichmentStatusList(string nextLink, IReadOnlyList<EnrichmentStatus> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the next link. </summary>

@@ -8,14 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventDataInfo
+    public partial class EventDataInfo : IUtf8JsonSerializable, IModelJsonSerializable<EventDataInfo>
     {
-        internal static EventDataInfo DeserializeEventDataInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventDataInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventDataInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventDataInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EventDataInfo DeserializeEventDataInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<DateTimeOffset> submissionTimestamp = default;
             Optional<string> subscriptionId = default;
             Optional<Guid> tenantId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorization"u8))
@@ -240,8 +267,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId));
+            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), rawData);
+        }
+
+        EventDataInfo IModelJsonSerializable<EventDataInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventDataInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventDataInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventDataInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventDataInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventDataInfo IModelSerializable<EventDataInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventDataInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventDataInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventDataInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventDataInfo"/> to convert. </param>
+        public static implicit operator RequestContent(EventDataInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventDataInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventDataInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventDataInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

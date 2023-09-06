@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsIntelligencePack
+    public partial class OperationalInsightsIntelligencePack : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsIntelligencePack>
     {
-        internal static OperationalInsightsIntelligencePack DeserializeOperationalInsightsIntelligencePack(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsIntelligencePack>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsIntelligencePack>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsIntelligencePack>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsEnabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OperationalInsightsIntelligencePack DeserializeOperationalInsightsIntelligencePack(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<string> name = default;
             Optional<bool> enabled = default;
             Optional<string> displayName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +86,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     displayName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsIntelligencePack(name.Value, Optional.ToNullable(enabled), displayName.Value);
+            return new OperationalInsightsIntelligencePack(name.Value, Optional.ToNullable(enabled), displayName.Value, rawData);
+        }
+
+        OperationalInsightsIntelligencePack IModelJsonSerializable<OperationalInsightsIntelligencePack>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsIntelligencePack>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsIntelligencePack(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsIntelligencePack>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsIntelligencePack>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsIntelligencePack IModelSerializable<OperationalInsightsIntelligencePack>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsIntelligencePack>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsIntelligencePack(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsIntelligencePack"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsIntelligencePack"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsIntelligencePack model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsIntelligencePack"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsIntelligencePack(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsIntelligencePack(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

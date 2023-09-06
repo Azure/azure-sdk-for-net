@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class RemediationPropertiesFailureThreshold : IUtf8JsonSerializable
+    internal partial class RemediationPropertiesFailureThreshold : IUtf8JsonSerializable, IModelJsonSerializable<RemediationPropertiesFailureThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemediationPropertiesFailureThreshold>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemediationPropertiesFailureThreshold>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationPropertiesFailureThreshold>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemediationPropertiesFailureThreshold DeserializeRemediationPropertiesFailureThreshold(JsonElement element)
+        internal static RemediationPropertiesFailureThreshold DeserializeRemediationPropertiesFailureThreshold(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<float> percentage = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("percentage"u8))
@@ -41,8 +64,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     percentage = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemediationPropertiesFailureThreshold(Optional.ToNullable(percentage));
+            return new RemediationPropertiesFailureThreshold(Optional.ToNullable(percentage), rawData);
+        }
+
+        RemediationPropertiesFailureThreshold IModelJsonSerializable<RemediationPropertiesFailureThreshold>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationPropertiesFailureThreshold>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemediationPropertiesFailureThreshold(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemediationPropertiesFailureThreshold>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationPropertiesFailureThreshold>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemediationPropertiesFailureThreshold IModelSerializable<RemediationPropertiesFailureThreshold>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationPropertiesFailureThreshold>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemediationPropertiesFailureThreshold(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RemediationPropertiesFailureThreshold"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RemediationPropertiesFailureThreshold"/> to convert. </param>
+        public static implicit operator RequestContent(RemediationPropertiesFailureThreshold model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RemediationPropertiesFailureThreshold"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RemediationPropertiesFailureThreshold(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemediationPropertiesFailureThreshold(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

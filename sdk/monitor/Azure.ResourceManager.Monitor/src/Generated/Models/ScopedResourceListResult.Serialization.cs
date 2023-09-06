@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ScopedResourceListResult
+    internal partial class ScopedResourceListResult : IUtf8JsonSerializable, IModelJsonSerializable<ScopedResourceListResult>
     {
-        internal static ScopedResourceListResult DeserializeScopedResourceListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScopedResourceListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScopedResourceListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScopedResourceListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ScopedResourceListResult DeserializeScopedResourceListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MonitorPrivateLinkScopedResourceData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScopedResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new ScopedResourceListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        ScopedResourceListResult IModelJsonSerializable<ScopedResourceListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopedResourceListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScopedResourceListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScopedResourceListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopedResourceListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScopedResourceListResult IModelSerializable<ScopedResourceListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopedResourceListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScopedResourceListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScopedResourceListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScopedResourceListResult"/> to convert. </param>
+        public static implicit operator RequestContent(ScopedResourceListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScopedResourceListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScopedResourceListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScopedResourceListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

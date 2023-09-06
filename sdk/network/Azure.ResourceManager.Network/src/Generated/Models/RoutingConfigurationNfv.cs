@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NFV version of Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
     public partial class RoutingConfigurationNfv
     {
-        /// <summary> Initializes a new instance of RoutingConfigurationNfv. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfv"/>. </summary>
         public RoutingConfigurationNfv()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingConfigurationNfv. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationNfv"/>. </summary>
         /// <param name="associatedRouteTable"> The resource id RouteTable associated with this RoutingConfiguration. </param>
         /// <param name="propagatedRouteTables"> The list of RouteTables to advertise the routes to. </param>
         /// <param name="inboundRouteMap"> The resource id of the RouteMap associated with this RoutingConfiguration for inbound learned routes. </param>
         /// <param name="outboundRouteMap"> The resource id of the RouteMap associated with this RoutingConfiguration for outbound advertised routes. </param>
-        internal RoutingConfigurationNfv(RoutingConfigurationNfvSubResource associatedRouteTable, PropagatedRouteTableNfv propagatedRouteTables, RoutingConfigurationNfvSubResource inboundRouteMap, RoutingConfigurationNfvSubResource outboundRouteMap)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingConfigurationNfv(RoutingConfigurationNfvSubResource associatedRouteTable, PropagatedRouteTableNfv propagatedRouteTables, RoutingConfigurationNfvSubResource inboundRouteMap, RoutingConfigurationNfvSubResource outboundRouteMap, Dictionary<string, BinaryData> rawData)
         {
             AssociatedRouteTable = associatedRouteTable;
             PropagatedRouteTables = propagatedRouteTables;
             InboundRouteMap = inboundRouteMap;
             OutboundRouteMap = outboundRouteMap;
+            _rawData = rawData;
         }
 
         /// <summary> The resource id RouteTable associated with this RoutingConfiguration. </summary>

@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyResultList. </summary>
     internal partial class AnomalyResultList
     {
-        /// <summary> Initializes a new instance of AnomalyResultList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyResultList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AnomalyResultList(IEnumerable<DataPointAnomaly> value)
@@ -25,13 +28,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnomalyResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyResultList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
-        internal AnomalyResultList(string nextLink, IReadOnlyList<DataPointAnomaly> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyResultList(string nextLink, IReadOnlyList<DataPointAnomaly> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyResultList"/> for deserialization. </summary>
+        internal AnomalyResultList()
+        {
         }
 
         /// <summary> Gets the next link. </summary>

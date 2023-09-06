@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateDnsZoneConfig : IUtf8JsonSerializable
+    public partial class PrivateDnsZoneConfig : IUtf8JsonSerializable, IModelJsonSerializable<PrivateDnsZoneConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateDnsZoneConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateDnsZoneConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -29,11 +36,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(PrivateDnsZoneId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsZoneConfig DeserializePrivateDnsZoneConfig(JsonElement element)
+        internal static PrivateDnsZoneConfig DeserializePrivateDnsZoneConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +62,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<string> privateDnsZoneId = default;
             Optional<IReadOnlyList<RecordSet>> recordSets = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,8 +101,61 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets));
+            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets), rawData);
+        }
+
+        PrivateDnsZoneConfig IModelJsonSerializable<PrivateDnsZoneConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateDnsZoneConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateDnsZoneConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateDnsZoneConfig IModelSerializable<PrivateDnsZoneConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateDnsZoneConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateDnsZoneConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrivateDnsZoneConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrivateDnsZoneConfig"/> to convert. </param>
+        public static implicit operator RequestContent(PrivateDnsZoneConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrivateDnsZoneConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrivateDnsZoneConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateDnsZoneConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

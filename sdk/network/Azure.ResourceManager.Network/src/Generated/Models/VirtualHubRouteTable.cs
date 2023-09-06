@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHub route table. </summary>
     internal partial class VirtualHubRouteTable
     {
-        /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTable"/>. </summary>
         public VirtualHubRouteTable()
         {
             Routes = new ChangeTrackingList<VirtualHubRoute>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTable"/>. </summary>
         /// <param name="routes"> List of all routes. </param>
-        internal VirtualHubRouteTable(IList<VirtualHubRoute> routes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualHubRouteTable(IList<VirtualHubRoute> routes, Dictionary<string, BinaryData> rawData)
         {
             Routes = routes;
+            _rawData = rawData;
         }
 
         /// <summary> List of all routes. </summary>

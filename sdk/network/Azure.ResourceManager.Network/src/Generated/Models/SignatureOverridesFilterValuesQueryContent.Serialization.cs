@@ -5,22 +5,116 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SignatureOverridesFilterValuesQueryContent : IUtf8JsonSerializable
+    public partial class SignatureOverridesFilterValuesQueryContent : IUtf8JsonSerializable, IModelJsonSerializable<SignatureOverridesFilterValuesQueryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SignatureOverridesFilterValuesQueryContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SignatureOverridesFilterValuesQueryContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SignatureOverridesFilterValuesQueryContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FilterName))
             {
                 writer.WritePropertyName("filterName"u8);
                 writer.WriteStringValue(FilterName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static SignatureOverridesFilterValuesQueryContent DeserializeSignatureOverridesFilterValuesQueryContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> filterName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filterName"u8))
+                {
+                    filterName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SignatureOverridesFilterValuesQueryContent(filterName.Value, rawData);
+        }
+
+        SignatureOverridesFilterValuesQueryContent IModelJsonSerializable<SignatureOverridesFilterValuesQueryContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SignatureOverridesFilterValuesQueryContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignatureOverridesFilterValuesQueryContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SignatureOverridesFilterValuesQueryContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SignatureOverridesFilterValuesQueryContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SignatureOverridesFilterValuesQueryContent IModelSerializable<SignatureOverridesFilterValuesQueryContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SignatureOverridesFilterValuesQueryContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSignatureOverridesFilterValuesQueryContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SignatureOverridesFilterValuesQueryContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SignatureOverridesFilterValuesQueryContent"/> to convert. </param>
+        public static implicit operator RequestContent(SignatureOverridesFilterValuesQueryContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SignatureOverridesFilterValuesQueryContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SignatureOverridesFilterValuesQueryContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSignatureOverridesFilterValuesQueryContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

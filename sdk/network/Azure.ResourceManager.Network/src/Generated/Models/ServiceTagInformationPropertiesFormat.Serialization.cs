@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceTagInformationPropertiesFormat
+    public partial class ServiceTagInformationPropertiesFormat : IUtf8JsonSerializable, IModelJsonSerializable<ServiceTagInformationPropertiesFormat>
     {
-        internal static ServiceTagInformationPropertiesFormat DeserializeServiceTagInformationPropertiesFormat(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceTagInformationPropertiesFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceTagInformationPropertiesFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceTagInformationPropertiesFormat>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceTagInformationPropertiesFormat DeserializeServiceTagInformationPropertiesFormat(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> systemService = default;
             Optional<IReadOnlyList<string>> addressPrefixes = default;
             Optional<string> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"u8))
@@ -60,8 +88,61 @@ namespace Azure.ResourceManager.Network.Models
                     state = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes), state.Value);
+            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, Optional.ToList(addressPrefixes), state.Value, rawData);
+        }
+
+        ServiceTagInformationPropertiesFormat IModelJsonSerializable<ServiceTagInformationPropertiesFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceTagInformationPropertiesFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceTagInformationPropertiesFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceTagInformationPropertiesFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceTagInformationPropertiesFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceTagInformationPropertiesFormat IModelSerializable<ServiceTagInformationPropertiesFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceTagInformationPropertiesFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceTagInformationPropertiesFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceTagInformationPropertiesFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceTagInformationPropertiesFormat"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceTagInformationPropertiesFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceTagInformationPropertiesFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceTagInformationPropertiesFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceTagInformationPropertiesFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

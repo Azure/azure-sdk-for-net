@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Settings for text log files. </summary>
     internal partial class LogFileTextSettings
     {
-        /// <summary> Initializes a new instance of LogFileTextSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogFileTextSettings"/>. </summary>
         /// <param name="recordStartTimestampFormat"> One of the supported timestamp formats. </param>
         public LogFileTextSettings(LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat)
         {
             RecordStartTimestampFormat = recordStartTimestampFormat;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogFileTextSettings"/>. </summary>
+        /// <param name="recordStartTimestampFormat"> One of the supported timestamp formats. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogFileTextSettings(LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat, Dictionary<string, BinaryData> rawData)
+        {
+            RecordStartTimestampFormat = recordStartTimestampFormat;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogFileTextSettings"/> for deserialization. </summary>
+        internal LogFileTextSettings()
+        {
         }
 
         /// <summary> One of the supported timestamp formats. </summary>

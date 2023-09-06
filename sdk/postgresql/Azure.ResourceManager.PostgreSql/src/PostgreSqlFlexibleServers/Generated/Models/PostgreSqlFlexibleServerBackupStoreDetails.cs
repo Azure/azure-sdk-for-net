@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Details about the target where the backup content will be stored. </summary>
     public partial class PostgreSqlFlexibleServerBackupStoreDetails
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupStoreDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupStoreDetails"/>. </summary>
         /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriList"/> is null. </exception>
         public PostgreSqlFlexibleServerBackupStoreDetails(IEnumerable<string> sasUriList)
@@ -23,6 +26,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Argument.AssertNotNull(sasUriList, nameof(sasUriList));
 
             SasUriList = sasUriList.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupStoreDetails"/>. </summary>
+        /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerBackupStoreDetails(IList<string> sasUriList, Dictionary<string, BinaryData> rawData)
+        {
+            SasUriList = sasUriList;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupStoreDetails"/> for deserialization. </summary>
+        internal PostgreSqlFlexibleServerBackupStoreDetails()
+        {
         }
 
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>

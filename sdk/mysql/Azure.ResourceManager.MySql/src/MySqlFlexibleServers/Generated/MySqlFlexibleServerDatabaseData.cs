@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerDatabaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDatabaseData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDatabaseData"/>. </summary>
         public MySqlFlexibleServerDatabaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="charset"> The charset of the database. </param>
         /// <param name="collation"> The collation of the database. </param>
-        internal MySqlFlexibleServerDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string charset, string collation) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string charset, string collation, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Charset = charset;
             Collation = collation;
+            _rawData = rawData;
         }
 
         /// <summary> The charset of the database. </summary>

@@ -5,21 +5,66 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityGroupViewResult
+    public partial class SecurityGroupViewResult : IUtf8JsonSerializable, IModelJsonSerializable<SecurityGroupViewResult>
     {
-        internal static SecurityGroupViewResult DeserializeSecurityGroupViewResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SecurityGroupViewResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SecurityGroupViewResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityGroupViewResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            {
+                writer.WritePropertyName("networkInterfaces"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkInterfaces)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SecurityGroupNetworkInterface>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static SecurityGroupViewResult DeserializeSecurityGroupViewResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SecurityGroupNetworkInterface>> networkInterfaces = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -36,8 +81,61 @@ namespace Azure.ResourceManager.Network.Models
                     networkInterfaces = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SecurityGroupViewResult(Optional.ToList(networkInterfaces));
+            return new SecurityGroupViewResult(Optional.ToList(networkInterfaces), rawData);
+        }
+
+        SecurityGroupViewResult IModelJsonSerializable<SecurityGroupViewResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityGroupViewResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityGroupViewResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SecurityGroupViewResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityGroupViewResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SecurityGroupViewResult IModelSerializable<SecurityGroupViewResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SecurityGroupViewResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecurityGroupViewResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SecurityGroupViewResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SecurityGroupViewResult"/> to convert. </param>
+        public static implicit operator RequestContent(SecurityGroupViewResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SecurityGroupViewResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SecurityGroupViewResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSecurityGroupViewResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

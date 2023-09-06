@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuCost : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuCost : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeSkuCost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeSkuCost>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceTypeSkuCost>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeSkuCost>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("meterId"u8);
             writer.WriteStringValue(MeterId);
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeSkuCost DeserializeResourceTypeSkuCost(JsonElement element)
+        internal static ResourceTypeSkuCost DeserializeResourceTypeSkuCost(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string meterId = default;
             Optional<int> quantity = default;
             Optional<string> extendedUnit = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -60,8 +83,61 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     extendedUnit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceTypeSkuCost(meterId, Optional.ToNullable(quantity), extendedUnit.Value);
+            return new ResourceTypeSkuCost(meterId, Optional.ToNullable(quantity), extendedUnit.Value, rawData);
+        }
+
+        ResourceTypeSkuCost IModelJsonSerializable<ResourceTypeSkuCost>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeSkuCost>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeSkuCost(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceTypeSkuCost>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeSkuCost>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceTypeSkuCost IModelSerializable<ResourceTypeSkuCost>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceTypeSkuCost>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceTypeSkuCost(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceTypeSkuCost"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceTypeSkuCost"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceTypeSkuCost model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceTypeSkuCost"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceTypeSkuCost(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceTypeSkuCost(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// </summary>
     public partial class MobileNetworkPortRange
     {
-        /// <summary> Initializes a new instance of MobileNetworkPortRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPortRange"/>. </summary>
         public MobileNetworkPortRange()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPortRange"/>. </summary>
         /// <param name="minPort"> The minimum port number. </param>
         /// <param name="maxPort"> The maximum port number. </param>
-        internal MobileNetworkPortRange(int? minPort, int? maxPort)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkPortRange(int? minPort, int? maxPort, Dictionary<string, BinaryData> rawData)
         {
             MinPort = minPort;
             MaxPort = maxPort;
+            _rawData = rawData;
         }
 
         /// <summary> The minimum port number. </summary>

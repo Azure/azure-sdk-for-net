@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkManagerData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         public NetworkManagerData()
         {
             NetworkManagerScopeAccesses = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
         /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             SystemData = systemData;

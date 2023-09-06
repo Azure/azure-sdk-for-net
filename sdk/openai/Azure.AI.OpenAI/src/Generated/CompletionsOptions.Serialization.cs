@@ -5,19 +5,344 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class CompletionsOptions : IUtf8JsonSerializable
+    public partial class CompletionsOptions : IUtf8JsonSerializable, IModelJsonSerializable<CompletionsOptions>
     {
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        void IModelJsonSerializable<CompletionsOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("prompt"u8);
+            writer.WriteStartArray();
+            foreach (var item in Prompts)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(MaxTokens))
+            {
+                writer.WritePropertyName("max_tokens"u8);
+                writer.WriteNumberValue(MaxTokens.Value);
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
+            }
+            if (Optional.IsDefined(NucleusSamplingFactor))
+            {
+                writer.WritePropertyName("top_p"u8);
+                writer.WriteNumberValue(NucleusSamplingFactor.Value);
+            }
+            if (Optional.IsCollectionDefined(InternalStringKeyedTokenSelectionBiases))
+            {
+                writer.WritePropertyName("logit_bias"u8);
+                writer.WriteStartObject();
+                foreach (var item in InternalStringKeyedTokenSelectionBiases)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteStringValue(User);
+            }
+            if (Optional.IsDefined(ChoicesPerPrompt))
+            {
+                writer.WritePropertyName("n"u8);
+                writer.WriteNumberValue(ChoicesPerPrompt.Value);
+            }
+            if (Optional.IsDefined(LogProbabilityCount))
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteNumberValue(LogProbabilityCount.Value);
+            }
+            if (Optional.IsDefined(Echo))
+            {
+                writer.WritePropertyName("echo"u8);
+                writer.WriteBooleanValue(Echo.Value);
+            }
+            if (Optional.IsCollectionDefined(StopSequences))
+            {
+                writer.WritePropertyName("stop"u8);
+                writer.WriteStartArray();
+                foreach (var item in StopSequences)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PresencePenalty))
+            {
+                writer.WritePropertyName("presence_penalty"u8);
+                writer.WriteNumberValue(PresencePenalty.Value);
+            }
+            if (Optional.IsDefined(FrequencyPenalty))
+            {
+                writer.WritePropertyName("frequency_penalty"u8);
+                writer.WriteNumberValue(FrequencyPenalty.Value);
+            }
+            if (Optional.IsDefined(GenerationSampleCount))
+            {
+                writer.WritePropertyName("best_of"u8);
+                writer.WriteNumberValue(GenerationSampleCount.Value);
+            }
+            if (Optional.IsDefined(InternalShouldStreamResponse))
+            {
+                writer.WritePropertyName("stream"u8);
+                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+            }
+            if (Optional.IsDefined(InternalNonAzureModelName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(InternalNonAzureModelName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static CompletionsOptions DeserializeCompletionsOptions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> prompt = default;
+            Optional<int> maxTokens = default;
+            Optional<float> temperature = default;
+            Optional<float> topP = default;
+            Optional<IDictionary<string, int>> logitBias = default;
+            Optional<string> user = default;
+            Optional<int> n = default;
+            Optional<int> logprobs = default;
+            Optional<bool> echo = default;
+            Optional<IList<string>> stop = default;
+            Optional<float> presencePenalty = default;
+            Optional<float> frequencyPenalty = default;
+            Optional<int> bestOf = default;
+            Optional<bool> stream = default;
+            Optional<string> model = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("prompt"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    prompt = array;
+                    continue;
+                }
+                if (property.NameEquals("max_tokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("temperature"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    temperature = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("top_p"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    topP = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("logit_bias"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    logitBias = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("user"u8))
+                {
+                    user = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("n"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    n = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logprobs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("echo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    echo = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stop"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    stop = array;
+                    continue;
+                }
+                if (property.NameEquals("presence_penalty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    presencePenalty = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("frequency_penalty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    frequencyPenalty = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("best_of"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bestOf = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("stream"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stream = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("model"u8))
+                {
+                    model = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CompletionsOptions(prompt, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model.Value, rawData);
+        }
+
+        CompletionsOptions IModelJsonSerializable<CompletionsOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCompletionsOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CompletionsOptions>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CompletionsOptions IModelSerializable<CompletionsOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCompletionsOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CompletionsOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CompletionsOptions"/> to convert. </param>
+        public static implicit operator RequestContent(CompletionsOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CompletionsOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CompletionsOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCompletionsOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -12,28 +12,22 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Model factory for models. </summary>
     public static partial class MonitorQueryModelFactory
     {
-        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
         public static LogsTableColumn LogsTableColumn(string name = null, LogsColumnType type = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new LogsTableColumn(name, type);
+            return new LogsTableColumn(name, type, default);
         }
 
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAvailability"/>. </summary>
         /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
-            return new MetricAvailability(granularity, retention);
+            return new MetricAvailability(granularity, retention, default);
         }
     }
 }

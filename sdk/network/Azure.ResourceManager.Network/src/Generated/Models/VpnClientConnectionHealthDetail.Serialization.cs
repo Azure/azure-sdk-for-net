@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientConnectionHealthDetail
+    public partial class VpnClientConnectionHealthDetail : IUtf8JsonSerializable, IModelJsonSerializable<VpnClientConnectionHealthDetail>
     {
-        internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VpnClientConnectionHealthDetail>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VpnClientConnectionHealthDetail>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientConnectionHealthDetail>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VpnClientConnectionHealthDetail DeserializeVpnClientConnectionHealthDetail(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> ingressPacketsTransferred = default;
             Optional<long> ingressBytesTransferred = default;
             Optional<long> maxPacketsPerSecond = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnConnectionId"u8))
@@ -125,8 +153,61 @@ namespace Azure.ResourceManager.Network.Models
                     maxPacketsPerSecond = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond));
+            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), rawData);
+        }
+
+        VpnClientConnectionHealthDetail IModelJsonSerializable<VpnClientConnectionHealthDetail>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientConnectionHealthDetail>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnClientConnectionHealthDetail(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VpnClientConnectionHealthDetail>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientConnectionHealthDetail>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VpnClientConnectionHealthDetail IModelSerializable<VpnClientConnectionHealthDetail>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VpnClientConnectionHealthDetail>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVpnClientConnectionHealthDetail(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VpnClientConnectionHealthDetail"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VpnClientConnectionHealthDetail"/> to convert. </param>
+        public static implicit operator RequestContent(VpnClientConnectionHealthDetail model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VpnClientConnectionHealthDetail"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VpnClientConnectionHealthDetail(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVpnClientConnectionHealthDetail(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

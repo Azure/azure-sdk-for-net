@@ -6,19 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    public partial class OrbitalContactData : IUtf8JsonSerializable
+    public partial class OrbitalContactData : IUtf8JsonSerializable, IModelJsonSerializable<OrbitalContactData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrbitalContactData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrbitalContactData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -48,11 +54,25 @@ namespace Azure.ResourceManager.Orbital
                 JsonSerializer.Serialize(writer, ContactProfile);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OrbitalContactData DeserializeOrbitalContactData(JsonElement element)
+        internal static OrbitalContactData DeserializeOrbitalContactData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +99,7 @@ namespace Azure.ResourceManager.Orbital
             Optional<float> endElevationDegrees = default;
             Optional<OrbitalContactAntennaConfiguration> antennaConfiguration = default;
             Optional<WritableSubResource> contactProfile = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -271,8 +292,61 @@ namespace Azure.ResourceManager.Orbital
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrbitalContactData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(reservationStartTime), Optional.ToNullable(reservationEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName.Value, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), antennaConfiguration.Value, contactProfile);
+            return new OrbitalContactData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(reservationStartTime), Optional.ToNullable(reservationEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName.Value, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), antennaConfiguration.Value, contactProfile, rawData);
+        }
+
+        OrbitalContactData IModelJsonSerializable<OrbitalContactData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalContactData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrbitalContactData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrbitalContactData IModelSerializable<OrbitalContactData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrbitalContactData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrbitalContactData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrbitalContactData"/> to convert. </param>
+        public static implicit operator RequestContent(OrbitalContactData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrbitalContactData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrbitalContactData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrbitalContactData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

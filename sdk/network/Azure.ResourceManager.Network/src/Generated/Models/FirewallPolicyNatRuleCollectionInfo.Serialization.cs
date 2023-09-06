@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyNatRuleCollectionInfo : IUtf8JsonSerializable
+    public partial class FirewallPolicyNatRuleCollectionInfo : IUtf8JsonSerializable, IModelJsonSerializable<FirewallPolicyNatRuleCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallPolicyNatRuleCollectionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallPolicyNatRuleCollectionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyNatRuleCollectionInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                if (Action is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FirewallPolicyNatRuleCollectionAction>)Action).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -27,7 +41,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FirewallPolicyRule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,11 +64,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyNatRuleCollectionInfo DeserializeFirewallPolicyNatRuleCollectionInfo(JsonElement element)
+        internal static FirewallPolicyNatRuleCollectionInfo DeserializeFirewallPolicyNatRuleCollectionInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             FirewallPolicyRuleCollectionType ruleCollectionType = default;
             Optional<string> name = default;
             Optional<int> priority = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -101,8 +137,61 @@ namespace Azure.ResourceManager.Network.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirewallPolicyNatRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules));
+            return new FirewallPolicyNatRuleCollectionInfo(ruleCollectionType, name.Value, Optional.ToNullable(priority), action.Value, Optional.ToList(rules), rawData);
+        }
+
+        FirewallPolicyNatRuleCollectionInfo IModelJsonSerializable<FirewallPolicyNatRuleCollectionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyNatRuleCollectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicyNatRuleCollectionInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallPolicyNatRuleCollectionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyNatRuleCollectionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallPolicyNatRuleCollectionInfo IModelSerializable<FirewallPolicyNatRuleCollectionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyNatRuleCollectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallPolicyNatRuleCollectionInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirewallPolicyNatRuleCollectionInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirewallPolicyNatRuleCollectionInfo"/> to convert. </param>
+        public static implicit operator RequestContent(FirewallPolicyNatRuleCollectionInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirewallPolicyNatRuleCollectionInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirewallPolicyNatRuleCollectionInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirewallPolicyNatRuleCollectionInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

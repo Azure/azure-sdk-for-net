@@ -10,14 +10,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ServiceEndpointPolicyData : IUtf8JsonSerializable
+    public partial class ServiceEndpointPolicyData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceEndpointPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceEndpointPolicyData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceEndpointPolicyData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -48,7 +53,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpointPolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ServiceEndpointPolicyDefinitionData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,11 +80,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceEndpointPolicyData DeserializeServiceEndpointPolicyData(JsonElement element)
+        internal static ServiceEndpointPolicyData DeserializeServiceEndpointPolicyData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,6 +116,7 @@ namespace Azure.ResourceManager.Network
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> serviceAlias = default;
             Optional<IList<string>> contextualServiceEndpointPolicies = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -229,8 +256,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), serviceAlias.Value, Optional.ToList(contextualServiceEndpointPolicies));
+            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, Optional.ToList(serviceEndpointPolicyDefinitions), Optional.ToList(subnets), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), serviceAlias.Value, Optional.ToList(contextualServiceEndpointPolicies), rawData);
+        }
+
+        ServiceEndpointPolicyData IModelJsonSerializable<ServiceEndpointPolicyData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceEndpointPolicyData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceEndpointPolicyData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceEndpointPolicyData IModelSerializable<ServiceEndpointPolicyData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceEndpointPolicyData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceEndpointPolicyData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceEndpointPolicyData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceEndpointPolicyData"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceEndpointPolicyData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceEndpointPolicyData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceEndpointPolicyData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceEndpointPolicyData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

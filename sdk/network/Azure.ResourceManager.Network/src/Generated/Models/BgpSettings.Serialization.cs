@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpSettings : IUtf8JsonSerializable
+    public partial class BgpSettings : IUtf8JsonSerializable, IModelJsonSerializable<BgpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BgpSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BgpSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BgpSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Asn))
             {
@@ -37,15 +44,36 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeeringAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<NetworkIPConfigurationBgpPeeringAddress>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BgpSettings DeserializeBgpSettings(JsonElement element)
+        internal static BgpSettings DeserializeBgpSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> bgpPeeringAddress = default;
             Optional<int> peerWeight = default;
             Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"u8))
@@ -93,8 +122,61 @@ namespace Azure.ResourceManager.Network.Models
                     bgpPeeringAddresses = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), Optional.ToList(bgpPeeringAddresses));
+            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), Optional.ToList(bgpPeeringAddresses), rawData);
+        }
+
+        BgpSettings IModelJsonSerializable<BgpSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BgpSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBgpSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BgpSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BgpSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BgpSettings IModelSerializable<BgpSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BgpSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBgpSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BgpSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BgpSettings"/> to convert. </param>
+        public static implicit operator RequestContent(BgpSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BgpSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BgpSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBgpSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

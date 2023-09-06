@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         public LocalNetworkGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;

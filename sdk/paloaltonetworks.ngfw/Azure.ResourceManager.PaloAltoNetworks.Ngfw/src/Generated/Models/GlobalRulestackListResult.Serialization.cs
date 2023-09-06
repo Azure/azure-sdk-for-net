@@ -5,23 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    internal partial class GlobalRulestackListResult
+    internal partial class GlobalRulestackListResult : IUtf8JsonSerializable, IModelJsonSerializable<GlobalRulestackListResult>
     {
-        internal static GlobalRulestackListResult DeserializeGlobalRulestackListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GlobalRulestackListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GlobalRulestackListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GlobalRulestackData>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static GlobalRulestackListResult DeserializeGlobalRulestackListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<GlobalRulestackData> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,8 +86,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new GlobalRulestackListResult(value, nextLink.Value);
+            return new GlobalRulestackListResult(value, nextLink.Value, rawData);
+        }
+
+        GlobalRulestackListResult IModelJsonSerializable<GlobalRulestackListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalRulestackListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GlobalRulestackListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GlobalRulestackListResult IModelSerializable<GlobalRulestackListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GlobalRulestackListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGlobalRulestackListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GlobalRulestackListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GlobalRulestackListResult"/> to convert. </param>
+        public static implicit operator RequestContent(GlobalRulestackListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GlobalRulestackListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GlobalRulestackListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGlobalRulestackListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

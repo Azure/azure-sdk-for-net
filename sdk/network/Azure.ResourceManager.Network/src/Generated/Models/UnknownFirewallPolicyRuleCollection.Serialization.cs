@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownFirewallPolicyRuleCollection : IUtf8JsonSerializable
+    internal partial class UnknownFirewallPolicyRuleCollection : IUtf8JsonSerializable, IModelJsonSerializable<FirewallPolicyRuleCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirewallPolicyRuleCollectionInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirewallPolicyRuleCollectionInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyRuleCollectionInfo>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleCollectionType"u8);
             writer.WriteStringValue(RuleCollectionType.ToString());
@@ -27,41 +33,44 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element)
+        internal static FirewallPolicyRuleCollectionInfo DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element, ModelSerializerOptions options = default) => DeserializeFirewallPolicyRuleCollectionInfo(element, options);
+
+        FirewallPolicyRuleCollectionInfo IModelJsonSerializable<FirewallPolicyRuleCollectionInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            FirewallPolicyRuleCollectionType ruleCollectionType = "Unknown";
-            Optional<string> name = default;
-            Optional<int> priority = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("ruleCollectionType"u8))
-                {
-                    ruleCollectionType = new FirewallPolicyRuleCollectionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("priority"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    priority = property.Value.GetInt32();
-                    continue;
-                }
-            }
-            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name.Value, Optional.ToNullable(priority));
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyRuleCollectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownFirewallPolicyRuleCollection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirewallPolicyRuleCollectionInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyRuleCollectionInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirewallPolicyRuleCollectionInfo IModelSerializable<FirewallPolicyRuleCollectionInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirewallPolicyRuleCollectionInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirewallPolicyRuleCollectionInfo(doc.RootElement, options);
         }
     }
 }

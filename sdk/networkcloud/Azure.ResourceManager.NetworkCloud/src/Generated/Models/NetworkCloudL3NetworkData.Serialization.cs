@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable
+    public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudL3NetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudL3NetworkData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudL3NetworkData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudL3NetworkData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            if (ExtendedLocation is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<ExtendedLocation>)ExtendedLocation).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -70,11 +84,25 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("vlan"u8);
             writer.WriteNumberValue(Vlan);
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudL3NetworkData DeserializeNetworkCloudL3NetworkData(JsonElement element)
+        internal static NetworkCloudL3NetworkData DeserializeNetworkCloudL3NetworkData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,6 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<L3NetworkProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
             long vlan = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -310,8 +339,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksIpamEnabled), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlan);
+            return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksIpamEnabled), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlan, rawData);
+        }
+
+        NetworkCloudL3NetworkData IModelJsonSerializable<NetworkCloudL3NetworkData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudL3NetworkData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudL3NetworkData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudL3NetworkData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudL3NetworkData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudL3NetworkData IModelSerializable<NetworkCloudL3NetworkData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudL3NetworkData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudL3NetworkData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudL3NetworkData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudL3NetworkData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudL3NetworkData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudL3NetworkData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudL3NetworkData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudL3NetworkData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

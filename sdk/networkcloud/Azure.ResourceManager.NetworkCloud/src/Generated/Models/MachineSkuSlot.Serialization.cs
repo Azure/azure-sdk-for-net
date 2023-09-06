@@ -5,16 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class MachineSkuSlot
+    public partial class MachineSkuSlot : IUtf8JsonSerializable, IModelJsonSerializable<MachineSkuSlot>
     {
-        internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineSkuSlot>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineSkuSlot>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineSkuSlot>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
             Optional<long> totalThreads = default;
             Optional<string> vendor = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -147,8 +178,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value);
+            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value, rawData);
+        }
+
+        MachineSkuSlot IModelJsonSerializable<MachineSkuSlot>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineSkuSlot>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineSkuSlot(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineSkuSlot>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineSkuSlot>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineSkuSlot IModelSerializable<MachineSkuSlot>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineSkuSlot>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineSkuSlot(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineSkuSlot"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineSkuSlot"/> to convert. </param>
+        public static implicit operator RequestContent(MachineSkuSlot model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineSkuSlot"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineSkuSlot(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineSkuSlot(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

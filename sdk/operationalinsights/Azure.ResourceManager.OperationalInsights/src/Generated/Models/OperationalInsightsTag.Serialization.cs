@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsTag : IUtf8JsonSerializable
+    public partial class OperationalInsightsTag : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsTag>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsTag>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsTag>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsTag DeserializeOperationalInsightsTag(JsonElement element)
+        internal static OperationalInsightsTag DeserializeOperationalInsightsTag(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsTag(name, value);
+            return new OperationalInsightsTag(name, value, rawData);
+        }
+
+        OperationalInsightsTag IModelJsonSerializable<OperationalInsightsTag>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsTag>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsTag(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsTag>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsTag>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsTag IModelSerializable<OperationalInsightsTag>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsTag>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsTag(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsTag"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsTag"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsTag model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsTag"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsTag(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsTag(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

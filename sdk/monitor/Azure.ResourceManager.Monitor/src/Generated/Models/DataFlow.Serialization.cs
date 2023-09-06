@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataFlow : IUtf8JsonSerializable
+    public partial class DataFlow : IUtf8JsonSerializable, IModelJsonSerializable<DataFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataFlow>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataFlow>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlow>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("builtInTransform"u8);
                 writer.WriteStringValue(BuiltInTransform);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFlow DeserializeDataFlow(JsonElement element)
+        internal static DataFlow DeserializeDataFlow(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> transformKql = default;
             Optional<string> outputStream = default;
             Optional<string> builtInTransform = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -110,8 +132,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     builtInTransform = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value);
+            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value, rawData);
+        }
+
+        DataFlow IModelJsonSerializable<DataFlow>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlow>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlow(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataFlow>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlow>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataFlow IModelSerializable<DataFlow>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataFlow>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataFlow(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataFlow"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataFlow"/> to convert. </param>
+        public static implicit operator RequestContent(DataFlow model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataFlow"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataFlow(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataFlow(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The key vault properties. </summary>
     public partial class OperationalInsightsKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of OperationalInsightsKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsKeyVaultProperties"/>. </summary>
         public OperationalInsightsKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultUri"> The Key Vault uri which holds they key associated with the Log Analytics cluster. </param>
         /// <param name="keyName"> The name of the key associated with the Log Analytics cluster. </param>
         /// <param name="keyVersion"> The version of the key associated with the Log Analytics cluster. </param>
         /// <param name="keyRsaSize"> Selected key minimum required size. </param>
-        internal OperationalInsightsKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVersion, int? keyRsaSize)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVersion, int? keyRsaSize, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyRsaSize = keyRsaSize;
+            _rawData = rawData;
         }
 
         /// <summary> The Key Vault uri which holds they key associated with the Log Analytics cluster. </summary>

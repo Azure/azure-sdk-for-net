@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> Request from client to check resource name availability. </summary>
     public partial class PostgreSqlNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlNameAvailabilityContent(string name)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlNameAvailabilityContent(string name, ResourceType? resourceType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlNameAvailabilityContent"/> for deserialization. </summary>
+        internal PostgreSqlNameAvailabilityContent()
+        {
         }
 
         /// <summary> Resource name to verify. </summary>

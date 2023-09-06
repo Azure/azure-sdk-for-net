@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Result of Query Performance Insight data reset. </summary>
     public partial class MySqlQueryPerformanceInsightResetDataResult
     {
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         internal MySqlQueryPerformanceInsightResetDataResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryPerformanceInsightResetDataResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryPerformanceInsightResetDataResult"/>. </summary>
         /// <param name="status"> Indicates result of the operation. </param>
         /// <param name="message"> operation message. </param>
-        internal MySqlQueryPerformanceInsightResetDataResult(MySqlQueryPerformanceInsightResetDataResultState? status, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlQueryPerformanceInsightResetDataResult(MySqlQueryPerformanceInsightResetDataResultState? status, string message, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates result of the operation. </summary>

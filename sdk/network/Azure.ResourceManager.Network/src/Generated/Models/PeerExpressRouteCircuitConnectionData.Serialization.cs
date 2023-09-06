@@ -6,18 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PeerExpressRouteCircuitConnectionData : IUtf8JsonSerializable
+    public partial class PeerExpressRouteCircuitConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<PeerExpressRouteCircuitConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PeerExpressRouteCircuitConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PeerExpressRouteCircuitConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PeerExpressRouteCircuitConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -57,11 +63,25 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(AuthResourceGuid.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeerExpressRouteCircuitConnectionData DeserializePeerExpressRouteCircuitConnectionData(JsonElement element)
+        internal static PeerExpressRouteCircuitConnectionData DeserializePeerExpressRouteCircuitConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +97,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> connectionName = default;
             Optional<Guid> authResourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -178,8 +199,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState));
+            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        PeerExpressRouteCircuitConnectionData IModelJsonSerializable<PeerExpressRouteCircuitConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeerExpressRouteCircuitConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePeerExpressRouteCircuitConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PeerExpressRouteCircuitConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeerExpressRouteCircuitConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PeerExpressRouteCircuitConnectionData IModelSerializable<PeerExpressRouteCircuitConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PeerExpressRouteCircuitConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePeerExpressRouteCircuitConnectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PeerExpressRouteCircuitConnectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PeerExpressRouteCircuitConnectionData"/> to convert. </param>
+        public static implicit operator RequestContent(PeerExpressRouteCircuitConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PeerExpressRouteCircuitConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePeerExpressRouteCircuitConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

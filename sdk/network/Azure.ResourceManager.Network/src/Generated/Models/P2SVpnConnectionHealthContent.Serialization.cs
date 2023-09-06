@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SVpnConnectionHealthContent : IUtf8JsonSerializable
+    public partial class P2SVpnConnectionHealthContent : IUtf8JsonSerializable, IModelJsonSerializable<P2SVpnConnectionHealthContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<P2SVpnConnectionHealthContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<P2SVpnConnectionHealthContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionHealthContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VpnUserNamesFilter))
             {
@@ -30,7 +38,112 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("outputBlobSasUrl"u8);
                 writer.WriteStringValue(OutputBlobSasUri.AbsoluteUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static P2SVpnConnectionHealthContent DeserializeP2SVpnConnectionHealthContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> vpnUserNamesFilter = default;
+            Optional<Uri> outputBlobSasUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("vpnUserNamesFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    vpnUserNamesFilter = array;
+                    continue;
+                }
+                if (property.NameEquals("outputBlobSasUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputBlobSasUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new P2SVpnConnectionHealthContent(Optional.ToList(vpnUserNamesFilter), outputBlobSasUrl.Value, rawData);
+        }
+
+        P2SVpnConnectionHealthContent IModelJsonSerializable<P2SVpnConnectionHealthContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionHealthContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeP2SVpnConnectionHealthContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<P2SVpnConnectionHealthContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionHealthContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        P2SVpnConnectionHealthContent IModelSerializable<P2SVpnConnectionHealthContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<P2SVpnConnectionHealthContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeP2SVpnConnectionHealthContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="P2SVpnConnectionHealthContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="P2SVpnConnectionHealthContent"/> to convert. </param>
+        public static implicit operator RequestContent(P2SVpnConnectionHealthContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="P2SVpnConnectionHealthContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator P2SVpnConnectionHealthContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeP2SVpnConnectionHealthContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

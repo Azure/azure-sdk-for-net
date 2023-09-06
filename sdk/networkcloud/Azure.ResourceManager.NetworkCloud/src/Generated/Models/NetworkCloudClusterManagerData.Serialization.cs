@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterManagerData : IUtf8JsonSerializable
+    public partial class NetworkCloudClusterManagerData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkCloudClusterManagerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkCloudClusterManagerData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkCloudClusterManagerData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudClusterManagerData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +60,14 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                if (ManagedResourceGroupConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -61,11 +75,25 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(VmSize);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudClusterManagerData DeserializeNetworkCloudClusterManagerData(JsonElement element)
+        internal static NetworkCloudClusterManagerData DeserializeNetworkCloudClusterManagerData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +114,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<ExtendedLocation> managerExtendedLocation = default;
             Optional<ClusterManagerProvisioningState> provisioningState = default;
             Optional<string> vmSize = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -231,8 +260,61 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Optional.ToList(availabilityZones), Optional.ToList(clusterVersions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value);
+            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Optional.ToList(availabilityZones), Optional.ToList(clusterVersions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value, rawData);
+        }
+
+        NetworkCloudClusterManagerData IModelJsonSerializable<NetworkCloudClusterManagerData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudClusterManagerData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudClusterManagerData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkCloudClusterManagerData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudClusterManagerData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkCloudClusterManagerData IModelSerializable<NetworkCloudClusterManagerData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkCloudClusterManagerData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudClusterManagerData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkCloudClusterManagerData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkCloudClusterManagerData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkCloudClusterManagerData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkCloudClusterManagerData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkCloudClusterManagerData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkCloudClusterManagerData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

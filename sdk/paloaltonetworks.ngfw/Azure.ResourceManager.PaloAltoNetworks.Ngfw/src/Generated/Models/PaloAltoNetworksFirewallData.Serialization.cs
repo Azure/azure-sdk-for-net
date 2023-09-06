@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class PaloAltoNetworksFirewallData : IUtf8JsonSerializable
+    public partial class PaloAltoNetworksFirewallData : IUtf8JsonSerializable, IModelJsonSerializable<PaloAltoNetworksFirewallData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PaloAltoNetworksFirewallData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PaloAltoNetworksFirewallData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PaloAltoNetworksFirewallData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -46,7 +52,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
-            writer.WriteObjectValue(NetworkProfile);
+            if (NetworkProfile is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<FirewallNetworkProfile>)NetworkProfile).Serialize(writer, options);
+            }
             if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
@@ -55,35 +68,91 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue(PanoramaConfig);
+                if (PanoramaConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FirewallPanoramaConfiguration>)PanoramaConfig).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue(AssociatedRulestack);
+                if (AssociatedRulestack is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RulestackDetails>)AssociatedRulestack).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("dnsSettings"u8);
-            writer.WriteObjectValue(DnsSettings);
+            if (DnsSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<FirewallDnsSettings>)DnsSettings).Serialize(writer, options);
+            }
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FirewallFrontendSetting>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("planData"u8);
-            writer.WriteObjectValue(PlanData);
+            if (PlanData is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<FirewallBillingPlanInfo>)PlanData).Serialize(writer, options);
+            }
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails);
+            if (MarketplaceDetails is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<PanFirewallMarketplaceDetails>)MarketplaceDetails).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PaloAltoNetworksFirewallData DeserializePaloAltoNetworksFirewallData(JsonElement element)
+        internal static PaloAltoNetworksFirewallData DeserializePaloAltoNetworksFirewallData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +174,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Optional<FirewallProvisioningState> provisioningState = default;
             FirewallBillingPlanInfo planData = default;
             PanFirewallMarketplaceDetails marketplaceDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -251,8 +321,61 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PaloAltoNetworksFirewallData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), networkProfile, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings, Optional.ToList(frontEndSettings), Optional.ToNullable(provisioningState), planData, marketplaceDetails);
+            return new PaloAltoNetworksFirewallData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), networkProfile, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings, Optional.ToList(frontEndSettings), Optional.ToNullable(provisioningState), planData, marketplaceDetails, rawData);
+        }
+
+        PaloAltoNetworksFirewallData IModelJsonSerializable<PaloAltoNetworksFirewallData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PaloAltoNetworksFirewallData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePaloAltoNetworksFirewallData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PaloAltoNetworksFirewallData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PaloAltoNetworksFirewallData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PaloAltoNetworksFirewallData IModelSerializable<PaloAltoNetworksFirewallData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PaloAltoNetworksFirewallData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePaloAltoNetworksFirewallData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PaloAltoNetworksFirewallData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PaloAltoNetworksFirewallData"/> to convert. </param>
+        public static implicit operator RequestContent(PaloAltoNetworksFirewallData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PaloAltoNetworksFirewallData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PaloAltoNetworksFirewallData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePaloAltoNetworksFirewallData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

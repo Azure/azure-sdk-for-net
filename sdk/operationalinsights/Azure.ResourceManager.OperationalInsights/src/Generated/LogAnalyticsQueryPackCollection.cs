@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logAnalyticsQueryPackQueryPacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logAnalyticsQueryPackQueryPacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryPackResource(Client, LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(e)), _logAnalyticsQueryPackQueryPacksClientDiagnostics, Pipeline, "LogAnalyticsQueryPackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LogAnalyticsQueryPackResource(Client, LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(e)), _logAnalyticsQueryPackQueryPacksClientDiagnostics, Pipeline, "LogAnalyticsQueryPackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logAnalyticsQueryPackQueryPacksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logAnalyticsQueryPackQueryPacksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryPackResource(Client, LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(e)), _logAnalyticsQueryPackQueryPacksClientDiagnostics, Pipeline, "LogAnalyticsQueryPackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LogAnalyticsQueryPackResource(Client, LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(e)), _logAnalyticsQueryPackQueryPacksClientDiagnostics, Pipeline, "LogAnalyticsQueryPackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

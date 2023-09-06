@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), _networkSecurityGroupClientDiagnostics, Pipeline, "NetworkSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), _networkSecurityGroupClientDiagnostics, Pipeline, "NetworkSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), _networkSecurityGroupClientDiagnostics, Pipeline, "NetworkSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), _networkSecurityGroupClientDiagnostics, Pipeline, "NetworkSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

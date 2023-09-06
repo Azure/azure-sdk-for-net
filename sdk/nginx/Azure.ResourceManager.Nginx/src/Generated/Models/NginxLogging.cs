@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxLogging. </summary>
     internal partial class NginxLogging
     {
-        /// <summary> Initializes a new instance of NginxLogging. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxLogging"/>. </summary>
         public NginxLogging()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxLogging. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxLogging"/>. </summary>
         /// <param name="storageAccount"></param>
-        internal NginxLogging(NginxStorageAccount storageAccount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxLogging(NginxStorageAccount storageAccount, Dictionary<string, BinaryData> rawData)
         {
             StorageAccount = storageAccount;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the storage account. </summary>

@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceIPConfigurationData : IUtf8JsonSerializable
+    public partial class NetworkInterfaceIPConfigurationData : IUtf8JsonSerializable, IModelJsonSerializable<NetworkInterfaceIPConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetworkInterfaceIPConfigurationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetworkInterfaceIPConfigurationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceIPConfigurationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -47,7 +53,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkTaps)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<VirtualNetworkTapData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +70,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationGatewayBackendAddressPool>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +87,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BackendAddressPoolData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +104,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerInboundNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<InboundNatRuleData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +133,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                if (Subnet is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SubnetData>)Subnet).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Primary))
             {
@@ -109,7 +150,14 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue(PublicIPAddress);
+                if (PublicIPAddress is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PublicIPAddressData>)PublicIPAddress).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
@@ -117,16 +165,37 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ApplicationSecurityGroupData>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterfaceIPConfigurationData DeserializeNetworkInterfaceIPConfigurationData(JsonElement element)
+        internal static NetworkInterfaceIPConfigurationData DeserializeNetworkInterfaceIPConfigurationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -149,6 +218,7 @@ namespace Azure.ResourceManager.Network
             Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties> privateLinkConnectionProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -342,8 +412,61 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
+            return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value, rawData);
+        }
+
+        NetworkInterfaceIPConfigurationData IModelJsonSerializable<NetworkInterfaceIPConfigurationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceIPConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterfaceIPConfigurationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetworkInterfaceIPConfigurationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceIPConfigurationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetworkInterfaceIPConfigurationData IModelSerializable<NetworkInterfaceIPConfigurationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetworkInterfaceIPConfigurationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetworkInterfaceIPConfigurationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetworkInterfaceIPConfigurationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetworkInterfaceIPConfigurationData"/> to convert. </param>
+        public static implicit operator RequestContent(NetworkInterfaceIPConfigurationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetworkInterfaceIPConfigurationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetworkInterfaceIPConfigurationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetworkInterfaceIPConfigurationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define an exchange peering location. </summary>
     internal partial class PeeringLocationPropertiesExchange
     {
-        /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationPropertiesExchange"/>. </summary>
         public PeeringLocationPropertiesExchange()
         {
             PeeringFacilities = new ChangeTrackingList<ExchangePeeringFacility>();
         }
 
-        /// <summary> Initializes a new instance of PeeringLocationPropertiesExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationPropertiesExchange"/>. </summary>
         /// <param name="peeringFacilities"> The list of exchange peering facilities at the peering location. </param>
-        internal PeeringLocationPropertiesExchange(IList<ExchangePeeringFacility> peeringFacilities)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringLocationPropertiesExchange(IList<ExchangePeeringFacility> peeringFacilities, Dictionary<string, BinaryData> rawData)
         {
             PeeringFacilities = peeringFacilities;
+            _rawData = rawData;
         }
 
         /// <summary> The list of exchange peering facilities at the peering location. </summary>

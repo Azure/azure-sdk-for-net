@@ -5,12 +5,211 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyDetectionConfigurationPatch : IUtf8JsonSerializable
+    internal partial class AnomalyDetectionConfigurationPatch : IUtf8JsonSerializable, IModelJsonSerializable<AnomalyDetectionConfigurationPatch>
     {
+        void IModelJsonSerializable<AnomalyDetectionConfigurationPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyDetectionConfigurationPatch>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(WholeMetricConfiguration))
+            {
+                writer.WritePropertyName("wholeMetricConfiguration"u8);
+                if (WholeMetricConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<WholeMetricConfigurationPatch>)WholeMetricConfiguration).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(DimensionGroupOverrideConfigurations))
+            {
+                writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in DimensionGroupOverrideConfigurations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricSeriesGroupDetectionCondition>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SeriesOverrideConfigurations))
+            {
+                writer.WritePropertyName("seriesOverrideConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SeriesOverrideConfigurations)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MetricSingleSeriesDetectionCondition>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnomalyDetectionConfigurationPatch DeserializeAnomalyDetectionConfigurationPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<WholeMetricConfigurationPatch> wholeMetricConfiguration = default;
+            Optional<IList<MetricSeriesGroupDetectionCondition>> dimensionGroupOverrideConfigurations = default;
+            Optional<IList<MetricSingleSeriesDetectionCondition>> seriesOverrideConfigurations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("wholeMetricConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    wholeMetricConfiguration = WholeMetricConfigurationPatch.DeserializeWholeMetricConfigurationPatch(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dimensionGroupOverrideConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MetricSeriesGroupDetectionCondition> array = new List<MetricSeriesGroupDetectionCondition>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MetricSeriesGroupDetectionCondition.DeserializeMetricSeriesGroupDetectionCondition(item));
+                    }
+                    dimensionGroupOverrideConfigurations = array;
+                    continue;
+                }
+                if (property.NameEquals("seriesOverrideConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MetricSingleSeriesDetectionCondition> array = new List<MetricSingleSeriesDetectionCondition>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MetricSingleSeriesDetectionCondition.DeserializeMetricSingleSeriesDetectionCondition(item));
+                    }
+                    seriesOverrideConfigurations = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new AnomalyDetectionConfigurationPatch(name.Value, description.Value, wholeMetricConfiguration.Value, Optional.ToList(dimensionGroupOverrideConfigurations), Optional.ToList(seriesOverrideConfigurations), rawData);
+        }
+
+        AnomalyDetectionConfigurationPatch IModelJsonSerializable<AnomalyDetectionConfigurationPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyDetectionConfigurationPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyDetectionConfigurationPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnomalyDetectionConfigurationPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyDetectionConfigurationPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnomalyDetectionConfigurationPatch IModelSerializable<AnomalyDetectionConfigurationPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyDetectionConfigurationPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnomalyDetectionConfigurationPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnomalyDetectionConfigurationPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnomalyDetectionConfigurationPatch"/> to convert. </param>
+        public static implicit operator RequestContent(AnomalyDetectionConfigurationPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnomalyDetectionConfigurationPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnomalyDetectionConfigurationPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnomalyDetectionConfigurationPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
     }
 }

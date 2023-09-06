@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         public VirtualNetworkData()
         {
             Subnets = new ChangeTrackingList<SubnetData>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;

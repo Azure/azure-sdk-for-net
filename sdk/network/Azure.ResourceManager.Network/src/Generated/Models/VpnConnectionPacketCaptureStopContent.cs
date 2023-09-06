@@ -14,10 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection. </summary>
     public partial class VpnConnectionPacketCaptureStopContent
     {
-        /// <summary> Initializes a new instance of VpnConnectionPacketCaptureStopContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStopContent"/>. </summary>
         public VpnConnectionPacketCaptureStopContent()
         {
             LinkConnectionNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionPacketCaptureStopContent"/>. </summary>
+        /// <param name="sasUri"> SAS url for packet capture on vpn connection. </param>
+        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnConnectionPacketCaptureStopContent(Uri sasUri, IList<string> linkConnectionNames, Dictionary<string, BinaryData> rawData)
+        {
+            SasUri = sasUri;
+            LinkConnectionNames = linkConnectionNames;
+            _rawData = rawData;
         }
 
         /// <summary> SAS url for packet capture on vpn connection. </summary>

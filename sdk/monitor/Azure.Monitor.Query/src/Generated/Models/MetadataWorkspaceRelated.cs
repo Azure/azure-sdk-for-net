@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the Log Analytics workspace. </summary>
     internal partial class MetadataWorkspaceRelated
     {
-        /// <summary> Initializes a new instance of MetadataWorkspaceRelated. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataWorkspaceRelated"/>. </summary>
         internal MetadataWorkspaceRelated()
         {
             Tables = new ChangeTrackingList<string>();
@@ -21,6 +25,23 @@ namespace Azure.Monitor.Query.Models
             ResourceTypes = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<string>();
             Resources = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataWorkspaceRelated"/>. </summary>
+        /// <param name="tables"> The related tables for the Log Analytics workspace. </param>
+        /// <param name="solutions"> The related Log Analytics solutions for the Log Analytics workspace. </param>
+        /// <param name="resourceTypes"> The related resource types for the Log Analytics workspace. </param>
+        /// <param name="functions"> The related functions for the Log Analytics workspace. </param>
+        /// <param name="resources"> The related Azure resources for the Log Analytics workspace. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataWorkspaceRelated(IReadOnlyList<string> tables, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> functions, IReadOnlyList<string> resources, Dictionary<string, BinaryData> rawData)
+        {
+            Tables = tables;
+            Solutions = solutions;
+            ResourceTypes = resourceTypes;
+            Functions = functions;
+            Resources = resources;
+            _rawData = rawData;
         }
 
         /// <summary> The related tables for the Log Analytics workspace. </summary>

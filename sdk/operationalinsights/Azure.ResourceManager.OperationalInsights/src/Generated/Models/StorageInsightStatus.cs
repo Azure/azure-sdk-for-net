@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The status of the storage insight. </summary>
     public partial class StorageInsightStatus
     {
-        /// <summary> Initializes a new instance of StorageInsightStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageInsightStatus"/>. </summary>
         /// <param name="state"> The state of the storage insight connection to the workspace. </param>
         internal StorageInsightStatus(StorageInsightState state)
         {
             State = state;
         }
 
-        /// <summary> Initializes a new instance of StorageInsightStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightStatus"/>. </summary>
         /// <param name="state"> The state of the storage insight connection to the workspace. </param>
         /// <param name="description"> Description of the state of the storage insight. </param>
-        internal StorageInsightStatus(StorageInsightState state, string description)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageInsightStatus(StorageInsightState state, string description, Dictionary<string, BinaryData> rawData)
         {
             State = state;
             Description = description;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageInsightStatus"/> for deserialization. </summary>
+        internal StorageInsightStatus()
+        {
         }
 
         /// <summary> The state of the storage insight connection to the workspace. </summary>

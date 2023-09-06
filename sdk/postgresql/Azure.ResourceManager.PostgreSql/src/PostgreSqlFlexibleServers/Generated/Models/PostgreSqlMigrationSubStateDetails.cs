@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration sub state details. </summary>
     internal partial class PostgreSqlMigrationSubStateDetails
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationSubStateDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         internal PostgreSqlMigrationSubStateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationSubStateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         /// <param name="currentSubState"> Migration sub state. </param>
-        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, Dictionary<string, BinaryData> rawData)
         {
             CurrentSubState = currentSubState;
+            _rawData = rawData;
         }
 
         /// <summary> Migration sub state. </summary>

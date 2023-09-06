@@ -5,16 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactEndpoint : IUtf8JsonSerializable
+    public partial class OrbitalContactEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<OrbitalContactEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrbitalContactEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrbitalContactEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactEndpoint>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress.ToString());
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Port);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OrbitalContactEndpoint DeserializeOrbitalContactEndpoint(JsonElement element)
+        internal static OrbitalContactEndpoint DeserializeOrbitalContactEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.ResourceManager.Orbital.Models
             string endPointName = default;
             string port = default;
             OrbitalContactProtocol protocol = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.Orbital.Models
                     protocol = new OrbitalContactProtocol(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrbitalContactEndpoint(ipAddress, endPointName, port, protocol);
+            return new OrbitalContactEndpoint(ipAddress, endPointName, port, protocol, rawData);
+        }
+
+        OrbitalContactEndpoint IModelJsonSerializable<OrbitalContactEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalContactEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrbitalContactEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactEndpoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrbitalContactEndpoint IModelSerializable<OrbitalContactEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalContactEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrbitalContactEndpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrbitalContactEndpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrbitalContactEndpoint"/> to convert. </param>
+        public static implicit operator RequestContent(OrbitalContactEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrbitalContactEndpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrbitalContactEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrbitalContactEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

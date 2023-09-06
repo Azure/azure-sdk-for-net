@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ControlPlaneNodePatchConfiguration represents the properties of the control plane that can be patched for this Kubernetes cluster. </summary>
     internal partial class ControlPlaneNodePatchConfiguration
     {
-        /// <summary> Initializes a new instance of ControlPlaneNodePatchConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodePatchConfiguration"/>. </summary>
         public ControlPlaneNodePatchConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ControlPlaneNodePatchConfiguration"/>. </summary>
+        /// <param name="count"> The number of virtual machines that use this configuration. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ControlPlaneNodePatchConfiguration(long? count, Dictionary<string, BinaryData> rawData)
+        {
+            Count = count;
+            _rawData = rawData;
         }
 
         /// <summary> The number of virtual machines that use this configuration. </summary>

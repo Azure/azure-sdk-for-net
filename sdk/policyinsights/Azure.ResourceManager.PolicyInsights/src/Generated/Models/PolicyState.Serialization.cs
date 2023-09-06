@@ -8,14 +8,216 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyState
+    public partial class PolicyState : IUtf8JsonSerializable, IModelJsonSerializable<PolicyState>
     {
-        internal static PolicyState DeserializePolicyState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyState>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ODataId))
+            {
+                writer.WritePropertyName("@odata.id"u8);
+                writer.WriteStringValue(ODataId);
+            }
+            if (Optional.IsDefined(ODataContext))
+            {
+                writer.WritePropertyName("@odata.context"u8);
+                writer.WriteStringValue(ODataContext);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                writer.WritePropertyName("policyAssignmentId"u8);
+                writer.WriteStringValue(PolicyAssignmentId);
+            }
+            if (Optional.IsDefined(PolicyDefinitionId))
+            {
+                writer.WritePropertyName("policyDefinitionId"u8);
+                writer.WriteStringValue(PolicyDefinitionId);
+            }
+            if (Optional.IsDefined(EffectiveParameters))
+            {
+                writer.WritePropertyName("effectiveParameters"u8);
+                writer.WriteStringValue(EffectiveParameters);
+            }
+            if (Optional.IsDefined(IsCompliant))
+            {
+                writer.WritePropertyName("isCompliant"u8);
+                writer.WriteBooleanValue(IsCompliant.Value);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (Optional.IsDefined(ResourceTypeString))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceTypeString);
+            }
+            if (Optional.IsDefined(ResourceLocation))
+            {
+                writer.WritePropertyName("resourceLocation"u8);
+                writer.WriteStringValue(ResourceLocation.Value);
+            }
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (Optional.IsDefined(ResourceTags))
+            {
+                writer.WritePropertyName("resourceTags"u8);
+                writer.WriteStringValue(ResourceTags);
+            }
+            if (Optional.IsDefined(PolicyAssignmentName))
+            {
+                writer.WritePropertyName("policyAssignmentName"u8);
+                writer.WriteStringValue(PolicyAssignmentName);
+            }
+            if (Optional.IsDefined(PolicyAssignmentOwner))
+            {
+                writer.WritePropertyName("policyAssignmentOwner"u8);
+                writer.WriteStringValue(PolicyAssignmentOwner);
+            }
+            if (Optional.IsDefined(PolicyAssignmentParameters))
+            {
+                writer.WritePropertyName("policyAssignmentParameters"u8);
+                writer.WriteStringValue(PolicyAssignmentParameters);
+            }
+            if (Optional.IsDefined(PolicyAssignmentScope))
+            {
+                writer.WritePropertyName("policyAssignmentScope"u8);
+                writer.WriteStringValue(PolicyAssignmentScope);
+            }
+            if (Optional.IsDefined(PolicyDefinitionName))
+            {
+                writer.WritePropertyName("policyDefinitionName"u8);
+                writer.WriteStringValue(PolicyDefinitionName);
+            }
+            if (Optional.IsDefined(PolicyDefinitionAction))
+            {
+                writer.WritePropertyName("policyDefinitionAction"u8);
+                writer.WriteStringValue(PolicyDefinitionAction);
+            }
+            if (Optional.IsDefined(PolicyDefinitionCategory))
+            {
+                writer.WritePropertyName("policyDefinitionCategory"u8);
+                writer.WriteStringValue(PolicyDefinitionCategory);
+            }
+            if (Optional.IsDefined(PolicySetDefinitionId))
+            {
+                writer.WritePropertyName("policySetDefinitionId"u8);
+                writer.WriteStringValue(PolicySetDefinitionId);
+            }
+            if (Optional.IsDefined(PolicySetDefinitionName))
+            {
+                writer.WritePropertyName("policySetDefinitionName"u8);
+                writer.WriteStringValue(PolicySetDefinitionName);
+            }
+            if (Optional.IsDefined(PolicySetDefinitionOwner))
+            {
+                writer.WritePropertyName("policySetDefinitionOwner"u8);
+                writer.WriteStringValue(PolicySetDefinitionOwner);
+            }
+            if (Optional.IsDefined(PolicySetDefinitionCategory))
+            {
+                writer.WritePropertyName("policySetDefinitionCategory"u8);
+                writer.WriteStringValue(PolicySetDefinitionCategory);
+            }
+            if (Optional.IsDefined(PolicySetDefinitionParameters))
+            {
+                writer.WritePropertyName("policySetDefinitionParameters"u8);
+                writer.WriteStringValue(PolicySetDefinitionParameters);
+            }
+            if (Optional.IsDefined(ManagementGroupIds))
+            {
+                writer.WritePropertyName("managementGroupIds"u8);
+                writer.WriteStringValue(ManagementGroupIds);
+            }
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            {
+                writer.WritePropertyName("policyDefinitionReferenceId"u8);
+                writer.WriteStringValue(PolicyDefinitionReferenceId);
+            }
+            if (Optional.IsDefined(ComplianceState))
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState);
+            }
+            if (Optional.IsDefined(PolicyEvaluationDetails))
+            {
+                writer.WritePropertyName("policyEvaluationDetails"u8);
+                if (PolicyEvaluationDetails is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PolicyEvaluationDetails>)PolicyEvaluationDetails).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
+            {
+                writer.WritePropertyName("policyDefinitionGroupNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in PolicyDefinitionGroupNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Components))
+            {
+                writer.WritePropertyName("components"u8);
+                writer.WriteStartArray();
+                foreach (var item in Components)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ComponentStateDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyState DeserializePolicyState(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -282,6 +484,54 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PolicyState(odataId.Value, odataContext.Value, Optional.ToNullable(timestamp), resourceId.Value, policyAssignmentId.Value, policyDefinitionId.Value, effectiveParameters.Value, Optional.ToNullable(isCompliant), subscriptionId.Value, resourceType.Value, Optional.ToNullable(resourceLocation), resourceGroup.Value, resourceTags.Value, policyAssignmentName.Value, policyAssignmentOwner.Value, policyAssignmentParameters.Value, policyAssignmentScope.Value, policyDefinitionName.Value, policyDefinitionAction.Value, policyDefinitionCategory.Value, policySetDefinitionId.Value, policySetDefinitionName.Value, policySetDefinitionOwner.Value, policySetDefinitionCategory.Value, policySetDefinitionParameters.Value, managementGroupIds.Value, policyDefinitionReferenceId.Value, complianceState.Value, policyEvaluationDetails.Value, Optional.ToList(policyDefinitionGroupNames), Optional.ToList(components), policyDefinitionVersion.Value, policySetDefinitionVersion.Value, policyAssignmentVersion.Value, additionalProperties);
+        }
+
+        PolicyState IModelJsonSerializable<PolicyState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyState IModelSerializable<PolicyState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyState"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

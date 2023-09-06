@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Virtual network subnet usage data. </summary>
     public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
         internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult()
         {
             DelegatedSubnetsUsage = new ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="delegatedSubnetsUsage"> A list of delegated subnet usage. </param>
-        internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult(AzureLocation? location, string subscriptionId, IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult(AzureLocation? location, string subscriptionId, IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage, Dictionary<string, BinaryData> rawData)
         {
             Location = location;
             SubscriptionId = subscriptionId;
             DelegatedSubnetsUsage = delegatedSubnetsUsage;
+            _rawData = rawData;
         }
 
         /// <summary> The location name. </summary>

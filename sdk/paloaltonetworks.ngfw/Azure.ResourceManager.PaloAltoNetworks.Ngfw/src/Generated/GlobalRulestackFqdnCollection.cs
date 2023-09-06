@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new GlobalRulestackFqdnResource(Client, GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(e)), _globalRulestackFqdnFqdnListGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackFqdnCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

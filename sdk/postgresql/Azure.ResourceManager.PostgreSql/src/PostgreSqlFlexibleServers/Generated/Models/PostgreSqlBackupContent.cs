@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> BackupRequestBase is the base for all backup request. </summary>
     public partial class PostgreSqlBackupContent
     {
-        /// <summary> Initializes a new instance of PostgreSqlBackupContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
 
             BackupSettings = backupSettings;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, Dictionary<string, BinaryData> rawData)
+        {
+            BackupSettings = backupSettings;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/> for deserialization. </summary>
+        internal PostgreSqlBackupContent()
+        {
         }
 
         /// <summary> Backup Settings. </summary>

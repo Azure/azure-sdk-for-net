@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Virtual Appliance NIC properties. </summary>
     public partial class VirtualApplianceNicProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         internal VirtualApplianceNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         /// <param name="name"> NIC name. </param>
         /// <param name="publicIPAddress"> Public IP address. </param>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="instanceName"> Instance on which nic is attached. </param>
-        internal VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress, string instanceName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceNicProperties(string name, string publicIPAddress, string privateIPAddress, string instanceName, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             PublicIPAddress = publicIPAddress;
             PrivateIPAddress = privateIPAddress;
             InstanceName = instanceName;
+            _rawData = rawData;
         }
 
         /// <summary> NIC name. </summary>

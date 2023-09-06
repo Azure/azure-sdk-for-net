@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The response for a QueryInboundNatRulePortMapping API. </summary>
     public partial class BackendAddressInboundNatRulePortMappings
     {
-        /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendAddressInboundNatRulePortMappings"/>. </summary>
         internal BackendAddressInboundNatRulePortMappings()
         {
             InboundNatRulePortMappings = new ChangeTrackingList<InboundNatRulePortMapping>();
         }
 
-        /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressInboundNatRulePortMappings"/>. </summary>
         /// <param name="inboundNatRulePortMappings"> Collection of inbound NAT rule port mappings. </param>
-        internal BackendAddressInboundNatRulePortMappings(IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendAddressInboundNatRulePortMappings(IReadOnlyList<InboundNatRulePortMapping> inboundNatRulePortMappings, Dictionary<string, BinaryData> rawData)
         {
             InboundNatRulePortMappings = inboundNatRulePortMappings;
+            _rawData = rawData;
         }
 
         /// <summary> Collection of inbound NAT rule port mappings. </summary>

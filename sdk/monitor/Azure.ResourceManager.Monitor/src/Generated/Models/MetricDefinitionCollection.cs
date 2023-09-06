@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents collection of metric definitions. </summary>
     internal partial class MetricDefinitionCollection
     {
-        /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MetricDefinitionCollection(IEnumerable<MonitorMetricDefinition> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/>. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
-        internal MetricDefinitionCollection(IReadOnlyList<MonitorMetricDefinition> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDefinitionCollection(IReadOnlyList<MonitorMetricDefinition> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDefinitionCollection"/> for deserialization. </summary>
+        internal MetricDefinitionCollection()
+        {
         }
 
         /// <summary> the values for the metric definitions. </summary>

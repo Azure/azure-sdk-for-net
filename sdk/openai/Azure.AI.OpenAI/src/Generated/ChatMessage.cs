@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
     public partial class ChatMessage
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of ChatMessage. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
         /// <param name="content"> The text associated with this message payload. </param>
@@ -34,13 +40,15 @@ namespace Azure.AI.OpenAI
         ///   request.
         ///   This context information is only populated when using Azure OpenAI with chat extensions capabilities configured.
         /// </param>
-        internal ChatMessage(ChatRole role, string content, string name, FunctionCall functionCall, AzureChatExtensionsMessageContext azureExtensionsContext)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessage(ChatRole role, string content, string name, FunctionCall functionCall, AzureChatExtensionsMessageContext azureExtensionsContext, Dictionary<string, BinaryData> rawData)
         {
             Role = role;
             Content = content;
             Name = name;
             FunctionCall = functionCall;
             AzureExtensionsContext = azureExtensionsContext;
+            _rawData = rawData;
         }
 
         /// <summary> The role associated with this message payload. </summary>

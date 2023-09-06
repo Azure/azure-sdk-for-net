@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The SubscriptionLifecycleNotificationSpecifications. </summary>
     public partial class SubscriptionLifecycleNotificationSpecifications
     {
-        /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionLifecycleNotificationSpecifications"/>. </summary>
         public SubscriptionLifecycleNotificationSpecifications()
         {
             SubscriptionStateOverrideActions = new ChangeTrackingList<SubscriptionStateOverrideAction>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionLifecycleNotificationSpecifications"/>. </summary>
         /// <param name="subscriptionStateOverrideActions"></param>
         /// <param name="softDeleteTtl"></param>
-        internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTtl)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTtl, Dictionary<string, BinaryData> rawData)
         {
             SubscriptionStateOverrideActions = subscriptionStateOverrideActions;
             SoftDeleteTtl = softDeleteTtl;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the subscription state override actions. </summary>

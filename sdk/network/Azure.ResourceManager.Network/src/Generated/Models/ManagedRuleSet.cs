@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines a managed rule set. </summary>
     public partial class ManagedRuleSet
     {
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.ResourceManager.Network.Models
             RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleGroupOverride> ruleGroupOverrides)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleGroupOverride> ruleGroupOverrides, Dictionary<string, BinaryData> rawData)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroupOverrides = ruleGroupOverrides;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/> for deserialization. </summary>
+        internal ManagedRuleSet()
+        {
         }
 
         /// <summary> Defines the rule set type to use. </summary>

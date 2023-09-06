@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,14 +20,14 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualRouterData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualRouterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         public VirtualRouterData()
         {
             VirtualRouterIPs = new ChangeTrackingList<string>();
             Peerings = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualRouterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             VirtualRouterAsn = virtualRouterAsn;

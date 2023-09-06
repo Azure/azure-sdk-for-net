@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBackupPatch : IUtf8JsonSerializable
+    public partial class NetAppVolumeBackupPatch : IUtf8JsonSerializable, IModelJsonSerializable<NetAppVolumeBackupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NetAppVolumeBackupPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NetAppVolumeBackupPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppVolumeBackupPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -39,7 +47,184 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteBooleanValue(UseExistingSnapshot.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NetAppVolumeBackupPatch DeserializeNetAppVolumeBackupPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> backupId = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<string> provisioningState = default;
+            Optional<long> size = default;
+            Optional<string> label = default;
+            Optional<NetAppBackupType> backupType = default;
+            Optional<string> failureReason = default;
+            Optional<string> volumeName = default;
+            Optional<bool> useExistingSnapshot = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("backupId"u8))
+                        {
+                            backupId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("creationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            creationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("size"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            size = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("label"u8))
+                        {
+                            label = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("backupType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupType = new NetAppBackupType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("failureReason"u8))
+                        {
+                            failureReason = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("volumeName"u8))
+                        {
+                            volumeName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("useExistingSnapshot"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useExistingSnapshot = property0.Value.GetBoolean();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NetAppVolumeBackupPatch(Optional.ToDictionary(tags), backupId.Value, Optional.ToNullable(creationDate), provisioningState.Value, Optional.ToNullable(size), label.Value, Optional.ToNullable(backupType), failureReason.Value, volumeName.Value, Optional.ToNullable(useExistingSnapshot), rawData);
+        }
+
+        NetAppVolumeBackupPatch IModelJsonSerializable<NetAppVolumeBackupPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppVolumeBackupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeBackupPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NetAppVolumeBackupPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppVolumeBackupPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NetAppVolumeBackupPatch IModelSerializable<NetAppVolumeBackupPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NetAppVolumeBackupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNetAppVolumeBackupPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NetAppVolumeBackupPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NetAppVolumeBackupPatch"/> to convert. </param>
+        public static implicit operator RequestContent(NetAppVolumeBackupPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NetAppVolumeBackupPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NetAppVolumeBackupPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNetAppVolumeBackupPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayFirewallRule : IUtf8JsonSerializable
+    public partial class ApplicationGatewayFirewallRule : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationGatewayFirewallRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationGatewayFirewallRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationGatewayFirewallRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayFirewallRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteNumberValue(RuleId);
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayFirewallRule DeserializeApplicationGatewayFirewallRule(JsonElement element)
+        internal static ApplicationGatewayFirewallRule DeserializeApplicationGatewayFirewallRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ApplicationGatewayWafRuleStateType> state = default;
             Optional<ApplicationGatewayWafRuleActionType> action = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -86,8 +109,61 @@ namespace Azure.ResourceManager.Network.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Optional.ToNullable(state), Optional.ToNullable(action), description.Value);
+            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Optional.ToNullable(state), Optional.ToNullable(action), description.Value, rawData);
+        }
+
+        ApplicationGatewayFirewallRule IModelJsonSerializable<ApplicationGatewayFirewallRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayFirewallRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayFirewallRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationGatewayFirewallRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayFirewallRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationGatewayFirewallRule IModelSerializable<ApplicationGatewayFirewallRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationGatewayFirewallRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayFirewallRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationGatewayFirewallRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationGatewayFirewallRule"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationGatewayFirewallRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationGatewayFirewallRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationGatewayFirewallRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationGatewayFirewallRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

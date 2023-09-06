@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlRecommendationActionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlRecommendationActionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlRecommendationActionData"/>. </summary>
         public MySqlRecommendationActionData()
         {
             Details = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MySqlRecommendationActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlRecommendationActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.MySql
         /// <param name="reason"> Recommendation action reason. </param>
         /// <param name="recommendationType"> Recommendation action type. </param>
         /// <param name="details"> Recommendation action details. </param>
-        internal MySqlRecommendationActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string advisorName, Guid? sessionId, int? actionId, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string reason, string recommendationType, IDictionary<string, string> details) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlRecommendationActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string advisorName, Guid? sessionId, int? actionId, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string reason, string recommendationType, IDictionary<string, string> details, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AdvisorName = advisorName;
             SessionId = sessionId;
@@ -47,6 +51,7 @@ namespace Azure.ResourceManager.MySql
             Reason = reason;
             RecommendationType = recommendationType;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> Advisor name. </summary>

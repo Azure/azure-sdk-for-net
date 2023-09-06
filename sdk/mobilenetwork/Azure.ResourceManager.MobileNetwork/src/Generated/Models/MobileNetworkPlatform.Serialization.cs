@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPlatform : IUtf8JsonSerializable
+    public partial class MobileNetworkPlatform : IUtf8JsonSerializable, IModelJsonSerializable<MobileNetworkPlatform>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MobileNetworkPlatform>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MobileNetworkPlatform>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatform>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PlatformType))
             {
@@ -45,11 +53,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkPlatform DeserializeMobileNetworkPlatform(JsonElement element)
+        internal static MobileNetworkPlatform DeserializeMobileNetworkPlatform(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<string> maximumPlatformSoftwareVersion = default;
             Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
             Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformType"u8))
@@ -108,8 +131,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     obsoleteVersion = new MobileNetworkObsoleteVersion(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion));
+            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion), rawData);
+        }
+
+        MobileNetworkPlatform IModelJsonSerializable<MobileNetworkPlatform>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatform>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkPlatform(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MobileNetworkPlatform>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatform>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MobileNetworkPlatform IModelSerializable<MobileNetworkPlatform>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MobileNetworkPlatform>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkPlatform(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MobileNetworkPlatform"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MobileNetworkPlatform"/> to convert. </param>
+        public static implicit operator RequestContent(MobileNetworkPlatform model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MobileNetworkPlatform"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MobileNetworkPlatform(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMobileNetworkPlatform(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

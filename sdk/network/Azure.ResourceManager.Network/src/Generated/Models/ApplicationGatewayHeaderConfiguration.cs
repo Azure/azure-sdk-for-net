@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Header configuration of the Actions set in Application Gateway. </summary>
     public partial class ApplicationGatewayHeaderConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayHeaderConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHeaderConfiguration"/>. </summary>
         public ApplicationGatewayHeaderConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayHeaderConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHeaderConfiguration"/>. </summary>
         /// <param name="headerName"> Header name of the header configuration. </param>
         /// <param name="headerValue"> Header value of the header configuration. </param>
-        internal ApplicationGatewayHeaderConfiguration(string headerName, string headerValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayHeaderConfiguration(string headerName, string headerValue, Dictionary<string, BinaryData> rawData)
         {
             HeaderName = headerName;
             HeaderValue = headerValue;
+            _rawData = rawData;
         }
 
         /// <summary> Header name of the header configuration. </summary>

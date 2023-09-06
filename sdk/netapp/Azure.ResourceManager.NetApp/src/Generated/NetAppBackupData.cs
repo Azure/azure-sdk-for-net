@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppBackupData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppBackupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
         /// <param name="location"> Resource location. </param>
         public NetAppBackupData(AzureLocation location)
         {
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of NetAppBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="failureReason"> Failure reason. </param>
         /// <param name="volumeName"> Volume name. </param>
         /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
-        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, string volumeName, bool? useExistingSnapshot) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, string volumeName, bool? useExistingSnapshot, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             BackupId = backupId;
@@ -52,6 +57,12 @@ namespace Azure.ResourceManager.NetApp
             FailureReason = failureReason;
             VolumeName = volumeName;
             UseExistingSnapshot = useExistingSnapshot;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/> for deserialization. </summary>
+        internal NetAppBackupData()
+        {
         }
 
         /// <summary> Resource location. </summary>

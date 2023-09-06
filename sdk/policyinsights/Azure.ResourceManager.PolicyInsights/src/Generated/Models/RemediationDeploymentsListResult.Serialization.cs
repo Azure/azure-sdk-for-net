@@ -5,22 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class RemediationDeploymentsListResult
+    internal partial class RemediationDeploymentsListResult : IUtf8JsonSerializable, IModelJsonSerializable<RemediationDeploymentsListResult>
     {
-        internal static RemediationDeploymentsListResult DeserializeRemediationDeploymentsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RemediationDeploymentsListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RemediationDeploymentsListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeploymentsListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RemediationDeploymentsListResult DeserializeRemediationDeploymentsListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<RemediationDeployment>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +70,61 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RemediationDeploymentsListResult(Optional.ToList(value), nextLink.Value);
+            return new RemediationDeploymentsListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        RemediationDeploymentsListResult IModelJsonSerializable<RemediationDeploymentsListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeploymentsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemediationDeploymentsListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RemediationDeploymentsListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeploymentsListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RemediationDeploymentsListResult IModelSerializable<RemediationDeploymentsListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RemediationDeploymentsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRemediationDeploymentsListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RemediationDeploymentsListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RemediationDeploymentsListResult"/> to convert. </param>
+        public static implicit operator RequestContent(RemediationDeploymentsListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RemediationDeploymentsListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RemediationDeploymentsListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRemediationDeploymentsListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

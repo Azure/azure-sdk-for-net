@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class MetricDimensionQueryOptions : IUtf8JsonSerializable
+    internal partial class MetricDimensionQueryOptions : IUtf8JsonSerializable, IModelJsonSerializable<MetricDimensionQueryOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricDimensionQueryOptions>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricDimensionQueryOptions>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimensionQueryOptions>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(DimensionName);
@@ -22,7 +30,99 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("dimensionValueFilter"u8);
                 writer.WriteStringValue(DimensionValueFilter);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static MetricDimensionQueryOptions DeserializeMetricDimensionQueryOptions(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string dimensionName = default;
+            Optional<string> dimensionValueFilter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dimensionName"u8))
+                {
+                    dimensionName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dimensionValueFilter"u8))
+                {
+                    dimensionValueFilter = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new MetricDimensionQueryOptions(dimensionName, dimensionValueFilter.Value, rawData);
+        }
+
+        MetricDimensionQueryOptions IModelJsonSerializable<MetricDimensionQueryOptions>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimensionQueryOptions>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricDimensionQueryOptions(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricDimensionQueryOptions>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimensionQueryOptions>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricDimensionQueryOptions IModelSerializable<MetricDimensionQueryOptions>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricDimensionQueryOptions>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricDimensionQueryOptions(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricDimensionQueryOptions"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricDimensionQueryOptions"/> to convert. </param>
+        public static implicit operator RequestContent(MetricDimensionQueryOptions model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricDimensionQueryOptions"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricDimensionQueryOptions(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricDimensionQueryOptions(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

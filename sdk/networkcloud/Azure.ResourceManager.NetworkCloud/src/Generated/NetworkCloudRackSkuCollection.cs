@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackSkuResource(Client, NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(e)), _networkCloudRackSkuRackSkusClientDiagnostics, Pipeline, "NetworkCloudRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudRackSkuResource(Client, NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(e)), _networkCloudRackSkuRackSkusClientDiagnostics, Pipeline, "NetworkCloudRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudRackSkuRackSkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackSkuResource(Client, NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(e)), _networkCloudRackSkuRackSkusClientDiagnostics, Pipeline, "NetworkCloudRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkCloudRackSkuResource(Client, NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(e)), _networkCloudRackSkuRackSkusClientDiagnostics, Pipeline, "NetworkCloudRackSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

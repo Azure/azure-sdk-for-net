@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListVirtualNetworkTap API service call. </summary>
     internal partial class VirtualNetworkTapListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapListResult"/>. </summary>
         internal VirtualNetworkTapListResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkTapData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkTapListResult"/>. </summary>
         /// <param name="value"> A list of VirtualNetworkTaps in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal VirtualNetworkTapListResult(IReadOnlyList<VirtualNetworkTapData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkTapListResult(IReadOnlyList<VirtualNetworkTapData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of VirtualNetworkTaps in a resource group. </summary>

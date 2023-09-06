@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,24 +15,29 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Effective network security group. </summary>
     public partial class EffectiveNetworkSecurityGroup
     {
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroup"/>. </summary>
         internal EffectiveNetworkSecurityGroup()
         {
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
             TagToIPAddresses = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroup"/>. </summary>
         /// <param name="networkSecurityGroup"> The ID of network security group that is applied. </param>
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
         /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses, Dictionary<string, BinaryData> rawData)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
             EffectiveSecurityRules = effectiveSecurityRules;
             TagToIPAddresses = tagToIPAddresses;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of network security group that is applied. </summary>

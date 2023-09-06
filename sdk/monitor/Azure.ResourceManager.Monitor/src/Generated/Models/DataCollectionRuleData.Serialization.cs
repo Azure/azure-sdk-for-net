@@ -5,19 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DataCollectionRuleData : IUtf8JsonSerializable
+    public partial class DataCollectionRuleData : IUtf8JsonSerializable, IModelJsonSerializable<DataCollectionRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataCollectionRuleData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataCollectionRuleData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataCollectionRuleData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -61,19 +67,40 @@ namespace Azure.ResourceManager.Monitor
                 foreach (var item in StreamDeclarations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataStreamDeclaration>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
-                writer.WriteObjectValue(DataSources);
+                if (DataSources is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataCollectionRuleDataSources>)DataSources).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue(Destinations);
+                if (Destinations is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataCollectionRuleDestinations>)Destinations).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -81,16 +108,37 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataFlow>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
+        internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,6 +161,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionRuleDestinations> destinations = default;
             Optional<IList<DataFlow>> dataFlows = default;
             Optional<DataCollectionRuleProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -280,8 +329,61 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        DataCollectionRuleData IModelJsonSerializable<DataCollectionRuleData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCollectionRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionRuleData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataCollectionRuleData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCollectionRuleData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataCollectionRuleData IModelSerializable<DataCollectionRuleData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataCollectionRuleData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataCollectionRuleData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataCollectionRuleData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataCollectionRuleData"/> to convert. </param>
+        public static implicit operator RequestContent(DataCollectionRuleData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataCollectionRuleData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataCollectionRuleData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataCollectionRuleData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

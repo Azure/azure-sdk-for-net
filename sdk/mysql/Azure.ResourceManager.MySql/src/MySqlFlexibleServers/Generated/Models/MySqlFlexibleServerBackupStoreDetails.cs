@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary>
@@ -14,9 +17,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// </summary>
     public abstract partial class MySqlFlexibleServerBackupStoreDetails
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerBackupStoreDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
         protected MySqlFlexibleServerBackupStoreDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBackupStoreDetails"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerBackupStoreDetails(string objectType, Dictionary<string, BinaryData> rawData)
+        {
+            ObjectType = objectType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the revoked VPN client certificate of VpnServerConfiguration. </summary>
     public partial class VpnServerConfigVpnClientRevokedCertificate
     {
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRevokedCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRevokedCertificate"/>. </summary>
         public VpnServerConfigVpnClientRevokedCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigVpnClientRevokedCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigVpnClientRevokedCertificate"/>. </summary>
         /// <param name="name"> The certificate name. </param>
         /// <param name="thumbprint"> The revoked VPN client certificate thumbprint. </param>
-        internal VpnServerConfigVpnClientRevokedCertificate(string name, string thumbprint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnServerConfigVpnClientRevokedCertificate(string name, string thumbprint, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Thumbprint = thumbprint;
+            _rawData = rawData;
         }
 
         /// <summary> The certificate name. </summary>

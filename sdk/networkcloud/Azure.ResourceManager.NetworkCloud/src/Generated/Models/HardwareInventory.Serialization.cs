@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class HardwareInventory
+    public partial class HardwareInventory : IUtf8JsonSerializable, IModelJsonSerializable<HardwareInventory>
     {
-        internal static HardwareInventory DeserializeHardwareInventory(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HardwareInventory>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HardwareInventory>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareInventory>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HardwareInventory DeserializeHardwareInventory(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> additionalHostInformation = default;
             Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
             Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalHostInformation"u8))
@@ -57,8 +85,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     nics = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HardwareInventory(additionalHostInformation.Value, Optional.ToList(interfaces), Optional.ToList(nics));
+            return new HardwareInventory(additionalHostInformation.Value, Optional.ToList(interfaces), Optional.ToList(nics), rawData);
+        }
+
+        HardwareInventory IModelJsonSerializable<HardwareInventory>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareInventory>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardwareInventory(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HardwareInventory>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareInventory>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HardwareInventory IModelSerializable<HardwareInventory>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HardwareInventory>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHardwareInventory(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HardwareInventory"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HardwareInventory"/> to convert. </param>
+        public static implicit operator RequestContent(HardwareInventory model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HardwareInventory"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HardwareInventory(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHardwareInventory(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalAvailableContactsContent : IUtf8JsonSerializable
+    public partial class OrbitalAvailableContactsContent : IUtf8JsonSerializable, IModelJsonSerializable<OrbitalAvailableContactsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrbitalAvailableContactsContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrbitalAvailableContactsContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalAvailableContactsContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("contactProfile"u8);
             JsonSerializer.Serialize(writer, ContactProfile); writer.WritePropertyName("groundStationName"u8);
@@ -22,7 +31,111 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static OrbitalAvailableContactsContent DeserializeOrbitalAvailableContactsContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            WritableSubResource contactProfile = default;
+            string groundStationName = default;
+            DateTimeOffset startTime = default;
+            DateTimeOffset endTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("contactProfile"u8))
+                {
+                    contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("groundStationName"u8))
+                {
+                    groundStationName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("startTime"u8))
+                {
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    endTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new OrbitalAvailableContactsContent(contactProfile, groundStationName, startTime, endTime, rawData);
+        }
+
+        OrbitalAvailableContactsContent IModelJsonSerializable<OrbitalAvailableContactsContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalAvailableContactsContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrbitalAvailableContactsContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrbitalAvailableContactsContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalAvailableContactsContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrbitalAvailableContactsContent IModelSerializable<OrbitalAvailableContactsContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrbitalAvailableContactsContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrbitalAvailableContactsContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrbitalAvailableContactsContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrbitalAvailableContactsContent"/> to convert. </param>
+        public static implicit operator RequestContent(OrbitalAvailableContactsContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrbitalAvailableContactsContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrbitalAvailableContactsContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrbitalAvailableContactsContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

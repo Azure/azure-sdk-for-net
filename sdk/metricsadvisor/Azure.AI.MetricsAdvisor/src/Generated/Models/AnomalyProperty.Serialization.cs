@@ -5,15 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyProperty
+    internal partial class AnomalyProperty : IUtf8JsonSerializable, IModelJsonSerializable<AnomalyProperty>
     {
-        internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnomalyProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnomalyProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyProperty>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("anomalySeverity"u8);
+            writer.WriteStringValue(AnomalySeverity.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +52,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<AnomalyStatus> anomalyStatus = default;
             double value = default;
             Optional<double?> expectedValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalySeverity"u8))
@@ -53,8 +84,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     expectedValue = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue));
+            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue), rawData);
+        }
+
+        AnomalyProperty IModelJsonSerializable<AnomalyProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyProperty>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyProperty(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnomalyProperty>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyProperty>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnomalyProperty IModelSerializable<AnomalyProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyProperty>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnomalyProperty(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnomalyProperty"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnomalyProperty"/> to convert. </param>
+        public static implicit operator RequestContent(AnomalyProperty model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnomalyProperty"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnomalyProperty(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnomalyProperty(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

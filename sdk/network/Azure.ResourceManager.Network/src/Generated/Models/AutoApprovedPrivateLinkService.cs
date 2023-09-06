@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The information of an AutoApprovedPrivateLinkService. </summary>
     public partial class AutoApprovedPrivateLinkService
     {
-        /// <summary> Initializes a new instance of AutoApprovedPrivateLinkService. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkService"/>. </summary>
         internal AutoApprovedPrivateLinkService()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoApprovedPrivateLinkService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoApprovedPrivateLinkService"/>. </summary>
         /// <param name="privateLinkService"> The id of the private link service resource. </param>
-        internal AutoApprovedPrivateLinkService(string privateLinkService)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoApprovedPrivateLinkService(string privateLinkService, Dictionary<string, BinaryData> rawData)
         {
             PrivateLinkService = privateLinkService;
+            _rawData = rawData;
         }
 
         /// <summary> The id of the private link service resource. </summary>

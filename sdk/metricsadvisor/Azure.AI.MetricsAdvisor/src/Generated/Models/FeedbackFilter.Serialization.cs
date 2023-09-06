@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class FeedbackFilter : IUtf8JsonSerializable
+    public partial class FeedbackFilter : IUtf8JsonSerializable, IModelJsonSerializable<FeedbackFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FeedbackFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FeedbackFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FeedbackFilter>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dimension"u8);
             writer.WriteStartObject();
@@ -24,16 +31,31 @@ namespace Azure.AI.MetricsAdvisor
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FeedbackFilter DeserializeFeedbackFilter(JsonElement element)
+        internal static FeedbackFilter DeserializeFeedbackFilter(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> dimension = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -46,8 +68,61 @@ namespace Azure.AI.MetricsAdvisor
                     dimension = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FeedbackFilter(dimension);
+            return new FeedbackFilter(dimension, rawData);
+        }
+
+        FeedbackFilter IModelJsonSerializable<FeedbackFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FeedbackFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFeedbackFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FeedbackFilter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FeedbackFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FeedbackFilter IModelSerializable<FeedbackFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FeedbackFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFeedbackFilter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FeedbackFilter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FeedbackFilter"/> to convert. </param>
+        public static implicit operator RequestContent(FeedbackFilter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FeedbackFilter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FeedbackFilter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFeedbackFilter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

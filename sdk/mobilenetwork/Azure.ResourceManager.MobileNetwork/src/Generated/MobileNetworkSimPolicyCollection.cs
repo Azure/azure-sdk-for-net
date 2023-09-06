@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSimPolicyResource(Client, MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(e)), _mobileNetworkSimPolicySimPoliciesClientDiagnostics, Pipeline, "MobileNetworkSimPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

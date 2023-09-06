@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicSwitchBillingContent : IUtf8JsonSerializable
+    public partial class NewRelicSwitchBillingContent : IUtf8JsonSerializable, IModelJsonSerializable<NewRelicSwitchBillingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NewRelicSwitchBillingContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NewRelicSwitchBillingContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicSwitchBillingContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureResourceId))
             {
@@ -28,11 +36,130 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                if (PlanData is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<NewRelicPlanDetails>)PlanData).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("userEmail"u8);
             writer.WriteStringValue(UserEmail);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NewRelicSwitchBillingContent DeserializeNewRelicSwitchBillingContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> azureResourceId = default;
+            Optional<string> organizationId = default;
+            Optional<NewRelicPlanDetails> planData = default;
+            string userEmail = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("azureResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("organizationId"u8))
+                {
+                    organizationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("planData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("userEmail"u8))
+                {
+                    userEmail = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NewRelicSwitchBillingContent(azureResourceId.Value, organizationId.Value, planData.Value, userEmail, rawData);
+        }
+
+        NewRelicSwitchBillingContent IModelJsonSerializable<NewRelicSwitchBillingContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicSwitchBillingContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicSwitchBillingContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NewRelicSwitchBillingContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicSwitchBillingContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NewRelicSwitchBillingContent IModelSerializable<NewRelicSwitchBillingContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NewRelicSwitchBillingContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNewRelicSwitchBillingContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NewRelicSwitchBillingContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NewRelicSwitchBillingContent"/> to convert. </param>
+        public static implicit operator RequestContent(NewRelicSwitchBillingContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NewRelicSwitchBillingContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NewRelicSwitchBillingContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNewRelicSwitchBillingContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

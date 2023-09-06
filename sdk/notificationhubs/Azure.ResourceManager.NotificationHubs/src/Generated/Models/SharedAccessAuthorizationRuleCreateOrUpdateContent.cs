@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Parameters supplied to the CreateOrUpdate Namespace AuthorizationRules. </summary>
     public partial class SharedAccessAuthorizationRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Properties of the Namespace AuthorizationRules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SharedAccessAuthorizationRuleCreateOrUpdateContent(SharedAccessAuthorizationRuleProperties properties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Properties of the Namespace AuthorizationRules. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedAccessAuthorizationRuleCreateOrUpdateContent(SharedAccessAuthorizationRuleProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal SharedAccessAuthorizationRuleCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Properties of the Namespace AuthorizationRules. </summary>

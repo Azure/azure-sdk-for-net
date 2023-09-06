@@ -6,15 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsAvailableServiceTier
+    public partial class OperationalInsightsAvailableServiceTier : IUtf8JsonSerializable, IModelJsonSerializable<OperationalInsightsAvailableServiceTier>
     {
-        internal static OperationalInsightsAvailableServiceTier DeserializeOperationalInsightsAvailableServiceTier(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationalInsightsAvailableServiceTier>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationalInsightsAvailableServiceTier>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsAvailableServiceTier>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OperationalInsightsAvailableServiceTier DeserializeOperationalInsightsAvailableServiceTier(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<long> defaultRetention = default;
             Optional<long> capacityReservationLevel = default;
             Optional<DateTimeOffset> lastSkuUpdate = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceTier"u8))
@@ -91,8 +119,61 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     lastSkuUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OperationalInsightsAvailableServiceTier(Optional.ToNullable(serviceTier), Optional.ToNullable(enabled), Optional.ToNullable(minimumRetention), Optional.ToNullable(maximumRetention), Optional.ToNullable(defaultRetention), Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate));
+            return new OperationalInsightsAvailableServiceTier(Optional.ToNullable(serviceTier), Optional.ToNullable(enabled), Optional.ToNullable(minimumRetention), Optional.ToNullable(maximumRetention), Optional.ToNullable(defaultRetention), Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate), rawData);
+        }
+
+        OperationalInsightsAvailableServiceTier IModelJsonSerializable<OperationalInsightsAvailableServiceTier>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsAvailableServiceTier>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsAvailableServiceTier(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationalInsightsAvailableServiceTier>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsAvailableServiceTier>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationalInsightsAvailableServiceTier IModelSerializable<OperationalInsightsAvailableServiceTier>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationalInsightsAvailableServiceTier>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsAvailableServiceTier(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OperationalInsightsAvailableServiceTier"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OperationalInsightsAvailableServiceTier"/> to convert. </param>
+        public static implicit operator RequestContent(OperationalInsightsAvailableServiceTier model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OperationalInsightsAvailableServiceTier"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OperationalInsightsAvailableServiceTier(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOperationalInsightsAvailableServiceTier(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

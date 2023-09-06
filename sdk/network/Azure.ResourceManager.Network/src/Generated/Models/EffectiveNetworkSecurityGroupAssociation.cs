@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The effective network security group association. </summary>
     public partial class EffectiveNetworkSecurityGroupAssociation
     {
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupAssociation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroupAssociation"/>. </summary>
         internal EffectiveNetworkSecurityGroupAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroupAssociation"/>. </summary>
         /// <param name="networkManager"> The ID of the Azure network manager if assigned. </param>
         /// <param name="subnet"> The ID of the subnet if assigned. </param>
         /// <param name="networkInterface"> The ID of the network interface if assigned. </param>
-        internal EffectiveNetworkSecurityGroupAssociation(WritableSubResource networkManager, WritableSubResource subnet, WritableSubResource networkInterface)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveNetworkSecurityGroupAssociation(WritableSubResource networkManager, WritableSubResource subnet, WritableSubResource networkInterface, Dictionary<string, BinaryData> rawData)
         {
             NetworkManager = networkManager;
             Subnet = subnet;
             NetworkInterface = networkInterface;
+            _rawData = rawData;
         }
 
         /// <summary> The ID of the Azure network manager if assigned. </summary>

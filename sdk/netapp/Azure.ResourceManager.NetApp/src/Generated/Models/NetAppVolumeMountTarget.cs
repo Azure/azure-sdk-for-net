@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,24 +14,34 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Mount target properties. </summary>
     public partial class NetAppVolumeMountTarget
     {
-        /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         internal NetAppVolumeMountTarget(Guid fileSystemId)
         {
             FileSystemId = fileSystemId;
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeMountTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/>. </summary>
         /// <param name="mountTargetId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="fileSystemId"> UUID v4 used to identify the MountTarget. </param>
         /// <param name="ipAddress"> The mount target's IPv4 address. </param>
         /// <param name="smbServerFqdn"> The SMB server's Fully Qualified Domain Name, FQDN. </param>
-        internal NetAppVolumeMountTarget(Guid? mountTargetId, Guid fileSystemId, IPAddress ipAddress, string smbServerFqdn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeMountTarget(Guid? mountTargetId, Guid fileSystemId, IPAddress ipAddress, string smbServerFqdn, Dictionary<string, BinaryData> rawData)
         {
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
             IPAddress = ipAddress;
             SmbServerFqdn = smbServerFqdn;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeMountTarget"/> for deserialization. </summary>
+        internal NetAppVolumeMountTarget()
+        {
         }
 
         /// <summary> UUID v4 used to identify the MountTarget. </summary>

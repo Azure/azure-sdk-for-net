@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,6 +15,9 @@ namespace Azure.AI.OpenAI
     /// <summary> A polling status update or final response payload for an image operation. </summary>
     internal partial class BatchImageGenerationOperationResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of BatchImageGenerationOperationResponse. </summary>
         /// <param name="id"> The ID of the operation. </param>
         /// <param name="created"> A timestamp when this job or item was created (in unix epochs). </param>
@@ -35,7 +39,8 @@ namespace Azure.AI.OpenAI
         /// <param name="result"> The result of the operation if the operation succeeded. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error if the operation failed. </param>
-        internal BatchImageGenerationOperationResponse(string id, DateTimeOffset created, long? expires, ImageGenerations result, AzureOpenAIOperationState status, ResponseError error)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchImageGenerationOperationResponse(string id, DateTimeOffset created, long? expires, ImageGenerations result, AzureOpenAIOperationState status, ResponseError error, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Created = created;
@@ -43,6 +48,12 @@ namespace Azure.AI.OpenAI
             Result = result;
             Status = status;
             Error = error;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchImageGenerationOperationResponse"/> for deserialization. </summary>
+        internal BatchImageGenerationOperationResponse()
+        {
         }
 
         /// <summary> The ID of the operation. </summary>

@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class MonitorPrivateLinkScopeData : IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkScopeData : IUtf8JsonSerializable, IModelJsonSerializable<MonitorPrivateLinkScopeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MonitorPrivateLinkScopeData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MonitorPrivateLinkScopeData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorPrivateLinkScopeData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -34,13 +41,34 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("accessModeSettings"u8);
-            writer.WriteObjectValue(AccessModeSettings);
+            if (AccessModeSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MonitorPrivateLinkAccessModeSettings>)AccessModeSettings).Serialize(writer, options);
+            }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorPrivateLinkScopeData DeserializeMonitorPrivateLinkScopeData(JsonElement element)
+        internal static MonitorPrivateLinkScopeData DeserializeMonitorPrivateLinkScopeData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +82,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> provisioningState = default;
             Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> privateEndpointConnections = default;
             MonitorPrivateLinkAccessModeSettings accessModeSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -135,8 +164,61 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MonitorPrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), accessModeSettings);
+            return new MonitorPrivateLinkScopeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToList(privateEndpointConnections), accessModeSettings, rawData);
+        }
+
+        MonitorPrivateLinkScopeData IModelJsonSerializable<MonitorPrivateLinkScopeData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorPrivateLinkScopeData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorPrivateLinkScopeData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MonitorPrivateLinkScopeData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorPrivateLinkScopeData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MonitorPrivateLinkScopeData IModelSerializable<MonitorPrivateLinkScopeData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MonitorPrivateLinkScopeData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMonitorPrivateLinkScopeData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MonitorPrivateLinkScopeData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MonitorPrivateLinkScopeData"/> to convert. </param>
+        public static implicit operator RequestContent(MonitorPrivateLinkScopeData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MonitorPrivateLinkScopeData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MonitorPrivateLinkScopeData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMonitorPrivateLinkScopeData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

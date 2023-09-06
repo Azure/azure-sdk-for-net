@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An array of available delegations. </summary>
     internal partial class AvailableDelegationsResult
     {
-        /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegationsResult"/>. </summary>
         internal AvailableDelegationsResult()
         {
             Value = new ChangeTrackingList<AvailableDelegation>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegationsResult"/>. </summary>
         /// <param name="value"> An array of available delegations. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AvailableDelegationsResult(IReadOnlyList<AvailableDelegation> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableDelegationsResult(IReadOnlyList<AvailableDelegation> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> An array of available delegations. </summary>

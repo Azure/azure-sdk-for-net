@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class FirewallPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         public FirewallPolicyData()
         {
             RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
             ChildPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -51,7 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, location, tags, rawData)
         {
             ETag = etag;
             Identity = identity;

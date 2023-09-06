@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Break replication request. </summary>
     public partial class NetAppVolumeBreakReplicationContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumeBreakReplicationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakReplicationContent"/>. </summary>
         public NetAppVolumeBreakReplicationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakReplicationContent"/>. </summary>
+        /// <param name="forceBreakReplication"> If replication is in status transferring and you want to force break the replication, set to true. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBreakReplicationContent(bool? forceBreakReplication, Dictionary<string, BinaryData> rawData)
+        {
+            ForceBreakReplication = forceBreakReplication;
+            _rawData = rawData;
         }
 
         /// <summary> If replication is in status transferring and you want to force break the replication, set to true. </summary>

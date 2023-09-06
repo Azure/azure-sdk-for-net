@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

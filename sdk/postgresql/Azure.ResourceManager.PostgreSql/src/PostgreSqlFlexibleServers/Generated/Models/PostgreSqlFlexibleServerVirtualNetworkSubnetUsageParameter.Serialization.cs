@@ -5,22 +5,120 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter : IUtf8JsonSerializable, IModelJsonSerializable<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetworkArmResourceId))
             {
                 writer.WritePropertyName("virtualNetworkArmResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkArmResourceId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> virtualNetworkArmResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("virtualNetworkArmResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    virtualNetworkArmResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkArmResourceId.Value, rawData);
+        }
+
+        PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter IModelJsonSerializable<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter IModelSerializable<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> to convert. </param>
+        public static implicit operator RequestContent(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

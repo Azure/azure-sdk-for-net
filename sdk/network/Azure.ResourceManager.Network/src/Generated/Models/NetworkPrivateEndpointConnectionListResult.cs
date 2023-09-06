@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListPrivateEndpointConnection API service call. </summary>
     internal partial class NetworkPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionListResult"/>. </summary>
         internal NetworkPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> A list of PrivateEndpointConnection resources for a specific private link service. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal NetworkPrivateEndpointConnectionListResult(IReadOnlyList<NetworkPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkPrivateEndpointConnectionListResult(IReadOnlyList<NetworkPrivateEndpointConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> A list of PrivateEndpointConnection resources for a specific private link service. </summary>

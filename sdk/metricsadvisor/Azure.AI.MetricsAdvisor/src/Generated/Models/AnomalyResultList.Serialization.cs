@@ -5,22 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyResultList
+    internal partial class AnomalyResultList : IUtf8JsonSerializable, IModelJsonSerializable<AnomalyResultList>
     {
-        internal static AnomalyResultList DeserializeAnomalyResultList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnomalyResultList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnomalyResultList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyResultList>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataPointAnomaly>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnomalyResultList DeserializeAnomalyResultList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
             IReadOnlyList<DataPointAnomaly> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -38,8 +80,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnomalyResultList(nextLink.Value, value);
+            return new AnomalyResultList(nextLink.Value, value, rawData);
+        }
+
+        AnomalyResultList IModelJsonSerializable<AnomalyResultList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyResultList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnomalyResultList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnomalyResultList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyResultList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnomalyResultList IModelSerializable<AnomalyResultList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnomalyResultList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnomalyResultList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnomalyResultList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnomalyResultList"/> to convert. </param>
+        public static implicit operator RequestContent(AnomalyResultList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnomalyResultList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnomalyResultList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnomalyResultList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

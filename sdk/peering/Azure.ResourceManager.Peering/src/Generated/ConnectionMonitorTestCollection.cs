@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionMonitorTestRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionMonitorTestRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,26 +17,32 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Please note <see cref="RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownRuleDataSource))]
     public abstract partial class RuleDataSource
     {
-        /// <summary> Initializes a new instance of RuleDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RuleDataSource"/>. </summary>
         protected RuleDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleDataSource"/>. </summary>
         /// <param name="odataType"> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </param>
         /// <param name="resourceId"> the resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="legacyResourceId"> the legacy resource identifier of the resource the rule monitors. **NOTE**: this property cannot be updated for an existing rule. </param>
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
-        internal RuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RuleDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace, Dictionary<string, BinaryData> rawData)
         {
             OdataType = odataType;
             ResourceId = resourceId;
             LegacyResourceId = legacyResourceId;
             ResourceLocation = resourceLocation;
             MetricNamespace = metricNamespace;
+            _rawData = rawData;
         }
 
         /// <summary> specifies the type of data source. There are two types of rule data sources: RuleMetricDataSource and RuleManagementEventDataSource. </summary>

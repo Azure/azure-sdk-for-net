@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Represents ValidateBackup API Response. </summary>
     public partial class MySqlFlexibleServerValidateBackupResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerValidateBackupResult"/>. </summary>
         internal MySqlFlexibleServerValidateBackupResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerValidateBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerValidateBackupResult"/>. </summary>
         /// <param name="numberOfContainers"> Estimated no of storage containers required for resource data to be backed up. </param>
-        internal MySqlFlexibleServerValidateBackupResult(int? numberOfContainers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerValidateBackupResult(int? numberOfContainers, Dictionary<string, BinaryData> rawData)
         {
             NumberOfContainers = numberOfContainers;
+            _rawData = rawData;
         }
 
         /// <summary> Estimated no of storage containers required for resource data to be backed up. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains custom Dns resolution configuration from customer. </summary>
     public partial class CustomDnsConfigProperties
     {
-        /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomDnsConfigProperties"/>. </summary>
         public CustomDnsConfigProperties()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDnsConfigProperties"/>. </summary>
         /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
         /// <param name="ipAddresses"> A list of private ip addresses of the private endpoint. </param>
-        internal CustomDnsConfigProperties(string fqdn, IList<string> ipAddresses)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomDnsConfigProperties(string fqdn, IList<string> ipAddresses, Dictionary<string, BinaryData> rawData)
         {
             Fqdn = fqdn;
             IPAddresses = ipAddresses;
+            _rawData = rawData;
         }
 
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>

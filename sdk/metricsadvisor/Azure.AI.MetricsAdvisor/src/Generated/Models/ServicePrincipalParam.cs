@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ServicePrincipalParam. </summary>
     internal partial class ServicePrincipalParam
     {
-        /// <summary> Initializes a new instance of ServicePrincipalParam. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/>. </summary>
         /// <param name="clientId"> The client id of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="tenantId"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/>. </summary>
         /// <param name="clientId"> The client id of the service principal. </param>
         /// <param name="clientSecret"> The client secret of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>
-        internal ServicePrincipalParam(string clientId, string clientSecret, string tenantId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePrincipalParam(string clientId, string clientSecret, string tenantId, Dictionary<string, BinaryData> rawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/> for deserialization. </summary>
+        internal ServicePrincipalParam()
+        {
         }
 
         /// <summary> The client id of the service principal. </summary>

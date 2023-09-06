@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Webhook notification of an autoscale event. </summary>
     public partial class WebhookNotification
     {
-        /// <summary> Initializes a new instance of WebhookNotification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebhookNotification"/>. </summary>
         public WebhookNotification()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WebhookNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookNotification"/>. </summary>
         /// <param name="serviceUri"> the service address to receive the notification. </param>
         /// <param name="properties"> a property bag of settings. This value can be empty. </param>
-        internal WebhookNotification(Uri serviceUri, IDictionary<string, string> properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebhookNotification(Uri serviceUri, IDictionary<string, string> properties, Dictionary<string, BinaryData> rawData)
         {
             ServiceUri = serviceUri;
             Properties = properties;
+            _rawData = rawData;
         }
 
         /// <summary> the service address to receive the notification. </summary>

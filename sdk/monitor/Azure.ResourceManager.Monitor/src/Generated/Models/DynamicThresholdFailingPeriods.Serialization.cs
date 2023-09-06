@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable
+    public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable, IModelJsonSerializable<DynamicThresholdFailingPeriods>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynamicThresholdFailingPeriods>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynamicThresholdFailingPeriods>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicThresholdFailingPeriods>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("numberOfEvaluationPeriods"u8);
             writer.WriteNumberValue(NumberOfEvaluationPeriods);
             writer.WritePropertyName("minFailingPeriodsToAlert"u8);
             writer.WriteNumberValue(MinFailingPeriodsToAlert);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DynamicThresholdFailingPeriods DeserializeDynamicThresholdFailingPeriods(JsonElement element)
+        internal static DynamicThresholdFailingPeriods DeserializeDynamicThresholdFailingPeriods(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             float numberOfEvaluationPeriods = default;
             float minFailingPeriodsToAlert = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfEvaluationPeriods"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.Monitor.Models
                     minFailingPeriodsToAlert = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DynamicThresholdFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert);
+            return new DynamicThresholdFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, rawData);
+        }
+
+        DynamicThresholdFailingPeriods IModelJsonSerializable<DynamicThresholdFailingPeriods>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicThresholdFailingPeriods>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicThresholdFailingPeriods(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynamicThresholdFailingPeriods>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicThresholdFailingPeriods>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynamicThresholdFailingPeriods IModelSerializable<DynamicThresholdFailingPeriods>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynamicThresholdFailingPeriods>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynamicThresholdFailingPeriods(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynamicThresholdFailingPeriods"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynamicThresholdFailingPeriods"/> to convert. </param>
+        public static implicit operator RequestContent(DynamicThresholdFailingPeriods model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynamicThresholdFailingPeriods"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynamicThresholdFailingPeriods(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynamicThresholdFailingPeriods(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

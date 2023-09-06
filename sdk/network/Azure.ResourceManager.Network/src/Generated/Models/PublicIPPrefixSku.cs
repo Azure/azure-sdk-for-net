@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SKU of a public IP prefix. </summary>
     public partial class PublicIPPrefixSku
     {
-        /// <summary> Initializes a new instance of PublicIPPrefixSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublicIPPrefixSku"/>. </summary>
         public PublicIPPrefixSku()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPPrefixSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPPrefixSku"/>. </summary>
         /// <param name="name"> Name of a public IP prefix SKU. </param>
         /// <param name="tier"> Tier of a public IP prefix SKU. </param>
-        internal PublicIPPrefixSku(PublicIPPrefixSkuName? name, PublicIPPrefixSkuTier? tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublicIPPrefixSku(PublicIPPrefixSkuName? name, PublicIPPrefixSkuTier? tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
         }
 
         /// <summary> Name of a public IP prefix SKU. </summary>

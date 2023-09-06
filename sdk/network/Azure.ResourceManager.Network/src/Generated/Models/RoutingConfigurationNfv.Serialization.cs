@@ -5,41 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RoutingConfigurationNfv : IUtf8JsonSerializable
+    public partial class RoutingConfigurationNfv : IUtf8JsonSerializable, IModelJsonSerializable<RoutingConfigurationNfv>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoutingConfigurationNfv>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoutingConfigurationNfv>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingConfigurationNfv>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
-                writer.WriteObjectValue(AssociatedRouteTable);
+                if (AssociatedRouteTable is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RoutingConfigurationNfvSubResource>)AssociatedRouteTable).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
-                writer.WriteObjectValue(PropagatedRouteTables);
+                if (PropagatedRouteTables is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<PropagatedRouteTableNfv>)PropagatedRouteTables).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(InboundRouteMap))
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
-                writer.WriteObjectValue(InboundRouteMap);
+                if (InboundRouteMap is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RoutingConfigurationNfvSubResource>)InboundRouteMap).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OutboundRouteMap))
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
-                writer.WriteObjectValue(OutboundRouteMap);
+                if (OutboundRouteMap is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<RoutingConfigurationNfvSubResource>)OutboundRouteMap).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static RoutingConfigurationNfv DeserializeRoutingConfigurationNfv(JsonElement element)
+        internal static RoutingConfigurationNfv DeserializeRoutingConfigurationNfv(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<PropagatedRouteTableNfv> propagatedRouteTables = default;
             Optional<RoutingConfigurationNfvSubResource> inboundRouteMap = default;
             Optional<RoutingConfigurationNfvSubResource> outboundRouteMap = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("associatedRouteTable"u8))
@@ -86,8 +137,61 @@ namespace Azure.ResourceManager.Network.Models
                     outboundRouteMap = RoutingConfigurationNfvSubResource.DeserializeRoutingConfigurationNfvSubResource(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoutingConfigurationNfv(associatedRouteTable.Value, propagatedRouteTables.Value, inboundRouteMap.Value, outboundRouteMap.Value);
+            return new RoutingConfigurationNfv(associatedRouteTable.Value, propagatedRouteTables.Value, inboundRouteMap.Value, outboundRouteMap.Value, rawData);
+        }
+
+        RoutingConfigurationNfv IModelJsonSerializable<RoutingConfigurationNfv>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingConfigurationNfv>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingConfigurationNfv(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoutingConfigurationNfv>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingConfigurationNfv>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoutingConfigurationNfv IModelSerializable<RoutingConfigurationNfv>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoutingConfigurationNfv>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoutingConfigurationNfv(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoutingConfigurationNfv"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoutingConfigurationNfv"/> to convert. </param>
+        public static implicit operator RequestContent(RoutingConfigurationNfv model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoutingConfigurationNfv"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoutingConfigurationNfv(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoutingConfigurationNfv(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

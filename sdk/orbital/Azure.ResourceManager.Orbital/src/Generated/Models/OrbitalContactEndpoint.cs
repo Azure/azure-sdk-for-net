@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Customer End point to store/retrieve data during a contact. </summary>
     public partial class OrbitalContactEndpoint
     {
-        /// <summary> Initializes a new instance of OrbitalContactEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactEndpoint"/>. </summary>
         /// <param name="ipAddress"> IP Address. </param>
         /// <param name="endPointName"> Name of an end point. </param>
         /// <param name="port"> TCP port to listen on to receive data. </param>
@@ -30,6 +34,26 @@ namespace Azure.ResourceManager.Orbital.Models
             EndPointName = endPointName;
             Port = port;
             Protocol = protocol;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactEndpoint"/>. </summary>
+        /// <param name="ipAddress"> IP Address. </param>
+        /// <param name="endPointName"> Name of an end point. </param>
+        /// <param name="port"> TCP port to listen on to receive data. </param>
+        /// <param name="protocol"> Protocol either UDP or TCP. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalContactEndpoint(IPAddress ipAddress, string endPointName, string port, OrbitalContactProtocol protocol, Dictionary<string, BinaryData> rawData)
+        {
+            IPAddress = ipAddress;
+            EndPointName = endPointName;
+            Port = port;
+            Protocol = protocol;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactEndpoint"/> for deserialization. </summary>
+        internal OrbitalContactEndpoint()
+        {
         }
 
         /// <summary> IP Address. </summary>

@@ -16,7 +16,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains the columns and rows for one table in a query response. </summary>
     public partial class LogsTable
     {
-        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
@@ -31,15 +34,22 @@ namespace Azure.Monitor.Query.Models
             InternalRows = internalRows;
         }
 
-        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
-        internal LogsTable(string name, IReadOnlyList<LogsTableColumn> columns, JsonElement internalRows)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogsTable(string name, IReadOnlyList<LogsTableColumn> columns, JsonElement internalRows, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Columns = columns;
             InternalRows = internalRows;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogsTable"/> for deserialization. </summary>
+        internal LogsTable()
+        {
         }
 
         /// <summary> The name of the table. </summary>

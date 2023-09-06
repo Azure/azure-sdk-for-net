@@ -6,16 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class PolicyMetadataData
+    public partial class PolicyMetadataData : IUtf8JsonSerializable, IModelJsonSerializable<PolicyMetadataData>
     {
-        internal static PolicyMetadataData DeserializePolicyMetadataData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PolicyMetadataData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PolicyMetadataData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyMetadataData>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PolicyMetadataData DeserializePolicyMetadataData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Optional<BinaryData> metadata = default;
             Optional<string> description = default;
             Optional<string> requirements = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,8 +149,61 @@ namespace Azure.ResourceManager.PolicyInsights
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PolicyMetadataData(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, description.Value, requirements.Value);
+            return new PolicyMetadataData(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, description.Value, requirements.Value, rawData);
+        }
+
+        PolicyMetadataData IModelJsonSerializable<PolicyMetadataData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyMetadataData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyMetadataData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PolicyMetadataData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyMetadataData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PolicyMetadataData IModelSerializable<PolicyMetadataData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PolicyMetadataData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePolicyMetadataData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PolicyMetadataData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PolicyMetadataData"/> to convert. </param>
+        public static implicit operator RequestContent(PolicyMetadataData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PolicyMetadataData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PolicyMetadataData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePolicyMetadataData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

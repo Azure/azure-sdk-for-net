@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of Subscription Quota Items. </summary>
     internal partial class SubscriptionQuotaItemList
     {
-        /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
         internal SubscriptionQuotaItemList()
         {
             Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
         /// <param name="value"> A list of SubscriptionQuotaItems. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> A list of SubscriptionQuotaItems. </summary>

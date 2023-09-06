@@ -5,29 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeSkuCapacity. </summary>
     public partial class ResourceTypeSkuCapacity
     {
-        /// <summary> Initializes a new instance of ResourceTypeSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/>. </summary>
         /// <param name="minimum"></param>
         public ResourceTypeSkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/>. </summary>
         /// <param name="minimum"></param>
         /// <param name="maximum"></param>
         /// <param name="default"></param>
         /// <param name="scaleType"></param>
-        internal ResourceTypeSkuCapacity(int minimum, int? maximum, int? @default, ResourceTypeSkuScaleType? scaleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeSkuCapacity(int minimum, int? maximum, int? @default, ResourceTypeSkuScaleType? scaleType, Dictionary<string, BinaryData> rawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             ScaleType = scaleType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCapacity"/> for deserialization. </summary>
+        internal ResourceTypeSkuCapacity()
+        {
         }
 
         /// <summary> Gets or sets the minimum. </summary>

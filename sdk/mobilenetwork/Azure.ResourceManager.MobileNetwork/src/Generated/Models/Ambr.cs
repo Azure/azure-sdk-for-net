@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Aggregate maximum bit rate. </summary>
     public partial class Ambr
     {
-        /// <summary> Initializes a new instance of Ambr. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
         /// <param name="uplink"> Uplink bit rate. </param>
         /// <param name="downlink"> Downlink bit rate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             Uplink = uplink;
             Downlink = downlink;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
+        /// <param name="uplink"> Uplink bit rate. </param>
+        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Ambr(string uplink, string downlink, Dictionary<string, BinaryData> rawData)
+        {
+            Uplink = uplink;
+            Downlink = downlink;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/> for deserialization. </summary>
+        internal Ambr()
+        {
         }
 
         /// <summary> Uplink bit rate. </summary>

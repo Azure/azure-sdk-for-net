@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricWholeSeriesDetectionCondition : IUtf8JsonSerializable
+    public partial class MetricWholeSeriesDetectionCondition : IUtf8JsonSerializable, IModelJsonSerializable<MetricWholeSeriesDetectionCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MetricWholeSeriesDetectionCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MetricWholeSeriesDetectionCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MetricWholeSeriesDetectionCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionOperator))
             {
@@ -23,23 +31,58 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(SmartDetectionCondition))
             {
                 writer.WritePropertyName("smartDetectionCondition"u8);
-                writer.WriteObjectValue(SmartDetectionCondition);
+                if (SmartDetectionCondition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SmartDetectionCondition>)SmartDetectionCondition).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(HardThresholdCondition))
             {
                 writer.WritePropertyName("hardThresholdCondition"u8);
-                writer.WriteObjectValue(HardThresholdCondition);
+                if (HardThresholdCondition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HardThresholdCondition>)HardThresholdCondition).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ChangeThresholdCondition))
             {
                 writer.WritePropertyName("changeThresholdCondition"u8);
-                writer.WriteObjectValue(ChangeThresholdCondition);
+                if (ChangeThresholdCondition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ChangeThresholdCondition>)ChangeThresholdCondition).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element)
+        internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +91,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionOperator"u8))
@@ -86,8 +130,61 @@ namespace Azure.AI.MetricsAdvisor.Models
                     changeThresholdCondition = Models.ChangeThresholdCondition.DeserializeChangeThresholdCondition(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MetricWholeSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value);
+            return new MetricWholeSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, rawData);
+        }
+
+        MetricWholeSeriesDetectionCondition IModelJsonSerializable<MetricWholeSeriesDetectionCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricWholeSeriesDetectionCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricWholeSeriesDetectionCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MetricWholeSeriesDetectionCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricWholeSeriesDetectionCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MetricWholeSeriesDetectionCondition IModelSerializable<MetricWholeSeriesDetectionCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MetricWholeSeriesDetectionCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMetricWholeSeriesDetectionCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MetricWholeSeriesDetectionCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MetricWholeSeriesDetectionCondition"/> to convert. </param>
+        public static implicit operator RequestContent(MetricWholeSeriesDetectionCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MetricWholeSeriesDetectionCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MetricWholeSeriesDetectionCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMetricWholeSeriesDetectionCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

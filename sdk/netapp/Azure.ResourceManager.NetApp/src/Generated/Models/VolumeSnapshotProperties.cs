@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volume Snapshot Properties. </summary>
     internal partial class VolumeSnapshotProperties
     {
-        /// <summary> Initializes a new instance of VolumeSnapshotProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VolumeSnapshotProperties"/>. </summary>
         public VolumeSnapshotProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeSnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeSnapshotProperties"/>. </summary>
         /// <param name="snapshotPolicyId"> Snapshot Policy ResourceId. </param>
-        internal VolumeSnapshotProperties(ResourceIdentifier snapshotPolicyId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VolumeSnapshotProperties(ResourceIdentifier snapshotPolicyId, Dictionary<string, BinaryData> rawData)
         {
             SnapshotPolicyId = snapshotPolicyId;
+            _rawData = rawData;
         }
 
         /// <summary> Snapshot Policy ResourceId. </summary>

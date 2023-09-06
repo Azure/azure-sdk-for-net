@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    internal partial class ContactProfilesPropertiesNetworkConfiguration : IUtf8JsonSerializable
+    internal partial class ContactProfilesPropertiesNetworkConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<ContactProfilesPropertiesNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContactProfilesPropertiesNetworkConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContactProfilesPropertiesNetworkConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContactProfilesPropertiesNetworkConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(NetworkSubnetId);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContactProfilesPropertiesNetworkConfiguration DeserializeContactProfilesPropertiesNetworkConfiguration(JsonElement element)
+        internal static ContactProfilesPropertiesNetworkConfiguration DeserializeContactProfilesPropertiesNetworkConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier subnetId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.Orbital.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContactProfilesPropertiesNetworkConfiguration(subnetId);
+            return new ContactProfilesPropertiesNetworkConfiguration(subnetId, rawData);
+        }
+
+        ContactProfilesPropertiesNetworkConfiguration IModelJsonSerializable<ContactProfilesPropertiesNetworkConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContactProfilesPropertiesNetworkConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContactProfilesPropertiesNetworkConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContactProfilesPropertiesNetworkConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContactProfilesPropertiesNetworkConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContactProfilesPropertiesNetworkConfiguration IModelSerializable<ContactProfilesPropertiesNetworkConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContactProfilesPropertiesNetworkConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContactProfilesPropertiesNetworkConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContactProfilesPropertiesNetworkConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContactProfilesPropertiesNetworkConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(ContactProfilesPropertiesNetworkConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContactProfilesPropertiesNetworkConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContactProfilesPropertiesNetworkConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContactProfilesPropertiesNetworkConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

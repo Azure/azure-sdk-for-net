@@ -6,8 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.MetricsAdvisor
 {
@@ -16,7 +18,34 @@ namespace Azure.AI.MetricsAdvisor
     /// Please note <see cref="MetricFeedback"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MetricAnomalyFeedback"/>, <see cref="MetricChangePointFeedback"/>, <see cref="MetricCommentFeedback"/> and <see cref="MetricPeriodFeedback"/>.
     /// </summary>
+    [DeserializationProxy(typeof(Models.UnknownMetricFeedback))]
     public abstract partial class MetricFeedback
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricFeedback"/>. </summary>
+        /// <param name="feedbackKind"> feedback type. </param>
+        /// <param name="id"> feedback unique id. </param>
+        /// <param name="createdOn"> feedback created time. </param>
+        /// <param name="userPrincipal"> user who gives this feedback. </param>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimensionFilter"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, Dictionary<string, BinaryData> rawData)
+        {
+            FeedbackKind = feedbackKind;
+            Id = id;
+            CreatedOn = createdOn;
+            UserPrincipal = userPrincipal;
+            MetricId = metricId;
+            DimensionFilter = dimensionFilter;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricFeedback"/> for deserialization. </summary>
+        internal MetricFeedback()
+        {
+        }
     }
 }

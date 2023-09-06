@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VnetRoute : IUtf8JsonSerializable
+    public partial class VnetRoute : IUtf8JsonSerializable, IModelJsonSerializable<VnetRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VnetRoute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VnetRoute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VnetRoute>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
-                writer.WriteObjectValue(StaticRoutesConfig);
+                if (StaticRoutesConfig is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StaticRoutesConfig>)StaticRoutesConfig).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
@@ -28,15 +42,36 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StaticRoute>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static VnetRoute DeserializeVnetRoute(JsonElement element)
+        internal static VnetRoute DeserializeVnetRoute(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<StaticRoutesConfig> staticRoutesConfig = default;
             Optional<IList<StaticRoute>> staticRoutes = default;
             Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("staticRoutesConfig"u8))
@@ -83,8 +119,61 @@ namespace Azure.ResourceManager.Network.Models
                     bgpConnections = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VnetRoute(staticRoutesConfig.Value, Optional.ToList(staticRoutes), Optional.ToList(bgpConnections));
+            return new VnetRoute(staticRoutesConfig.Value, Optional.ToList(staticRoutes), Optional.ToList(bgpConnections), rawData);
+        }
+
+        VnetRoute IModelJsonSerializable<VnetRoute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VnetRoute>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVnetRoute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VnetRoute>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VnetRoute>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VnetRoute IModelSerializable<VnetRoute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VnetRoute>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVnetRoute(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VnetRoute"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VnetRoute"/> to convert. </param>
+        public static implicit operator RequestContent(VnetRoute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VnetRoute"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VnetRoute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVnetRoute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
