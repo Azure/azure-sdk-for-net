@@ -12,13 +12,14 @@
   Specifies the file that contains a set of links to ignore when verifying.
 
   .PARAMETER devOpsLogging
-  Switch that will enable devops specific logging for warnings
+  Switch that will enable devops specific logging for warnings.
 
   .PARAMETER recursive
-  Check the links recurisvely based on recursivePattern.
+  Check the links recurisvely. Applies to links starting with 'baseUrl' parameter. Defaults to true.
 
   .PARAMETER baseUrl
   Recursively check links for all links verified that begin with this baseUrl, defaults to the folder the url is contained in.
+  If 'recursive' parameter is set to false, this parameter has no effect.
 
   .PARAMETER rootUrl
   Path to the root of the site for resolving rooted relative links, defaults to host root for http and file directory for local files.
@@ -73,6 +74,8 @@ param (
   [string] $outputCacheFile,
   [string] $requestTimeoutSec  = 15
 )
+
+Set-StrictMode -Version 3.0
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 # Regex of the locale keywords.
