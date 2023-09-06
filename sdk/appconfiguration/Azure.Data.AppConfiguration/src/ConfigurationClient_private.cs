@@ -19,16 +19,13 @@ namespace Azure.Data.AppConfiguration
 
         private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
-            using var contentStream = response.Content.ToStream();
-
-            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(contentStream, cancellation).ConfigureAwait(false);
+            ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.Content, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
         private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            using var contentStream = response.Content.ToStream();
-            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(contentStream), response);
+            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.Content), response);
         }
 
         private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
