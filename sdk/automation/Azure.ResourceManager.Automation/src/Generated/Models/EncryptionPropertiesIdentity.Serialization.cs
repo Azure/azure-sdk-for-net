@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class EncryptionPropertiesIdentity : IUtf8JsonSerializable
+    internal partial class EncryptionPropertiesIdentity : IUtf8JsonSerializable, IModelJsonSerializable<EncryptionPropertiesIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EncryptionPropertiesIdentity>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EncryptionPropertiesIdentity>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionPropertiesIdentity>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -25,16 +32,31 @@ namespace Azure.ResourceManager.Automation.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(UserAssignedIdentity.ToString()).RootElement);
 #endif
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EncryptionPropertiesIdentity DeserializeEncryptionPropertiesIdentity(JsonElement element)
+        internal static EncryptionPropertiesIdentity DeserializeEncryptionPropertiesIdentity(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BinaryData> userAssignedIdentity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -46,8 +68,61 @@ namespace Azure.ResourceManager.Automation.Models
                     userAssignedIdentity = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EncryptionPropertiesIdentity(userAssignedIdentity.Value);
+            return new EncryptionPropertiesIdentity(userAssignedIdentity.Value, rawData);
+        }
+
+        EncryptionPropertiesIdentity IModelJsonSerializable<EncryptionPropertiesIdentity>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionPropertiesIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncryptionPropertiesIdentity(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EncryptionPropertiesIdentity>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionPropertiesIdentity>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EncryptionPropertiesIdentity IModelSerializable<EncryptionPropertiesIdentity>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EncryptionPropertiesIdentity>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEncryptionPropertiesIdentity(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EncryptionPropertiesIdentity"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EncryptionPropertiesIdentity"/> to convert. </param>
+        public static implicit operator RequestContent(EncryptionPropertiesIdentity model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EncryptionPropertiesIdentity"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EncryptionPropertiesIdentity(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEncryptionPropertiesIdentity(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

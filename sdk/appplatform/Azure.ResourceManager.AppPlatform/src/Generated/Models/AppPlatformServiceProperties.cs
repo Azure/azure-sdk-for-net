@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Service properties payload. </summary>
     public partial class AppPlatformServiceProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceProperties"/>. </summary>
         public AppPlatformServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
         /// <param name="vnetAddons"> Additional Service settings in vnet injection instance. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="powerState"> Power state of the Service. </param>
         /// <param name="isZoneRedundant"></param>
         /// <param name="fqdn"> Fully qualified dns name of the service instance. </param>
-        internal AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState, AppPlatformServiceNetworkProfile networkProfile, ServiceVnetAddons vnetAddons, int? version, string serviceInstanceId, AppPlatformServicePowerState? powerState, bool? isZoneRedundant, string fqdn)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState, AppPlatformServiceNetworkProfile networkProfile, ServiceVnetAddons vnetAddons, int? version, string serviceInstanceId, AppPlatformServicePowerState? powerState, bool? isZoneRedundant, string fqdn, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             PowerState = powerState;
             IsZoneRedundant = isZoneRedundant;
             Fqdn = fqdn;
+            _rawData = rawData;
         }
 
         /// <summary> Provisioning state of the Service. </summary>

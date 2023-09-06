@@ -5,20 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppInstanceProbe : IUtf8JsonSerializable
+    public partial class AppInstanceProbe : IUtf8JsonSerializable, IModelJsonSerializable<AppInstanceProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppInstanceProbe>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppInstanceProbe>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbe>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue(ProbeAction);
+                if (ProbeAction is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AppInstanceProbeAction>)ProbeAction).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
@@ -47,11 +62,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element)
+        internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +92,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<int> timeoutSeconds = default;
             Optional<int> failureThreshold = default;
             Optional<int> successThreshold = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("probeAction"u8))
@@ -124,8 +154,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     successThreshold = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppInstanceProbe(probeAction.Value, disableProbe, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold));
+            return new AppInstanceProbe(probeAction.Value, disableProbe, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), rawData);
+        }
+
+        AppInstanceProbe IModelJsonSerializable<AppInstanceProbe>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbe>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppInstanceProbe(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppInstanceProbe>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbe>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppInstanceProbe IModelSerializable<AppInstanceProbe>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceProbe>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppInstanceProbe(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppInstanceProbe"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppInstanceProbe"/> to convert. </param>
+        public static implicit operator RequestContent(AppInstanceProbe model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppInstanceProbe"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppInstanceProbe(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppInstanceProbe(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

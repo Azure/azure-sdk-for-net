@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPortalSignUpSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalSignUpSettingData"/>. </summary>
         public ApiManagementPortalSignUpSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalSignUpSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isSignUpDeveloperPortalEnabled"> Allow users to sign up on a developer portal. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        internal ApiManagementPortalSignUpSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isSignUpDeveloperPortalEnabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementPortalSignUpSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isSignUpDeveloperPortalEnabled, TermsOfServiceProperties termsOfService, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             IsSignUpDeveloperPortalEnabled = isSignUpDeveloperPortalEnabled;
             TermsOfService = termsOfService;
+            _rawData = rawData;
         }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> The UnknownAlertsMetaDataProperties. </summary>
     internal partial class UnknownAlertsMetaDataProperties : ServiceAlertMetadataProperties
     {
-        /// <summary> Initializes a new instance of UnknownAlertsMetaDataProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertsMetaDataProperties"/>. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
-        internal UnknownAlertsMetaDataProperties(ServiceAlertMetadataIdentifier metadataIdentifier) : base(metadataIdentifier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAlertsMetaDataProperties(ServiceAlertMetadataIdentifier metadataIdentifier, Dictionary<string, BinaryData> rawData) : base(metadataIdentifier, rawData)
         {
             MetadataIdentifier = metadataIdentifier;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAlertsMetaDataProperties"/> for deserialization. </summary>
+        internal UnknownAlertsMetaDataProperties()
+        {
         }
     }
 }

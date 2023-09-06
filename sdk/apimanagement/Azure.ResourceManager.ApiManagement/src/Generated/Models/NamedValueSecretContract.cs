@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Client or app secret used in IdentityProviders, Aad, OpenID or OAuth. </summary>
     public partial class NamedValueSecretContract
     {
-        /// <summary> Initializes a new instance of NamedValueSecretContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamedValueSecretContract"/>. </summary>
         internal NamedValueSecretContract()
         {
         }
 
-        /// <summary> Initializes a new instance of NamedValueSecretContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedValueSecretContract"/>. </summary>
         /// <param name="value"> This is secret value of the NamedValue entity. </param>
-        internal NamedValueSecretContract(string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamedValueSecretContract(string value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> This is secret value of the NamedValue entity. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AgFoodPlatformPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkResourceListResult"/>. </summary>
         internal AgFoodPlatformPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AgFoodPlatformPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal AgFoodPlatformPrivateLinkResourceListResult(IReadOnlyList<AgFoodPlatformPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgFoodPlatformPrivateLinkResourceListResult(IReadOnlyList<AgFoodPlatformPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

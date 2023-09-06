@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementServiceBackupRestoreContent : IUtf8JsonSerializable
+    public partial class ApiManagementServiceBackupRestoreContent : IUtf8JsonSerializable, IModelJsonSerializable<ApiManagementServiceBackupRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiManagementServiceBackupRestoreContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApiManagementServiceBackupRestoreContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementServiceBackupRestoreContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccount"u8);
             writer.WriteStringValue(StorageAccount);
@@ -36,7 +44,127 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ApiManagementServiceBackupRestoreContent DeserializeApiManagementServiceBackupRestoreContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string storageAccount = default;
+            string containerName = default;
+            string backupName = default;
+            Optional<StorageAccountAccessType> accessType = default;
+            Optional<string> accessKey = default;
+            Optional<string> clientId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageAccount"u8))
+                {
+                    storageAccount = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("containerName"u8))
+                {
+                    containerName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("backupName"u8))
+                {
+                    backupName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accessType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessType = new StorageAccountAccessType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("accessKey"u8))
+                {
+                    accessKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientId"u8))
+                {
+                    clientId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ApiManagementServiceBackupRestoreContent(storageAccount, containerName, backupName, Optional.ToNullable(accessType), accessKey.Value, clientId.Value, rawData);
+        }
+
+        ApiManagementServiceBackupRestoreContent IModelJsonSerializable<ApiManagementServiceBackupRestoreContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementServiceBackupRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementServiceBackupRestoreContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApiManagementServiceBackupRestoreContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementServiceBackupRestoreContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApiManagementServiceBackupRestoreContent IModelSerializable<ApiManagementServiceBackupRestoreContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApiManagementServiceBackupRestoreContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApiManagementServiceBackupRestoreContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApiManagementServiceBackupRestoreContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApiManagementServiceBackupRestoreContent"/> to convert. </param>
+        public static implicit operator RequestContent(ApiManagementServiceBackupRestoreContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApiManagementServiceBackupRestoreContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApiManagementServiceBackupRestoreContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApiManagementServiceBackupRestoreContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

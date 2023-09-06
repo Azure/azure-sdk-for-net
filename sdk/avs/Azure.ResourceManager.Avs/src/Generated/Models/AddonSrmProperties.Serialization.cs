@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AddonSrmProperties : IUtf8JsonSerializable
+    public partial class AddonSrmProperties : IUtf8JsonSerializable, IModelJsonSerializable<AddonSrmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AddonSrmProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AddonSrmProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AddonSrmProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LicenseKey))
             {
@@ -22,11 +30,25 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AddonSrmProperties DeserializeAddonSrmProperties(JsonElement element)
+        internal static AddonSrmProperties DeserializeAddonSrmProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
             Optional<string> licenseKey = default;
             AddonType addonType = default;
             Optional<AddonProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("licenseKey"u8))
@@ -55,8 +78,61 @@ namespace Azure.ResourceManager.Avs.Models
                     provisioningState = new AddonProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AddonSrmProperties(addonType, Optional.ToNullable(provisioningState), licenseKey.Value);
+            return new AddonSrmProperties(addonType, Optional.ToNullable(provisioningState), licenseKey.Value, rawData);
+        }
+
+        AddonSrmProperties IModelJsonSerializable<AddonSrmProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddonSrmProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddonSrmProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AddonSrmProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddonSrmProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AddonSrmProperties IModelSerializable<AddonSrmProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AddonSrmProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAddonSrmProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AddonSrmProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AddonSrmProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AddonSrmProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AddonSrmProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AddonSrmProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAddonSrmProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

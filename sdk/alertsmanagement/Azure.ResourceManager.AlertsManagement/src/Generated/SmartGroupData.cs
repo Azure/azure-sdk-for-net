@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.AlertsManagement
     /// </summary>
     public partial class SmartGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         public SmartGroupData()
         {
             Resources = new ChangeTrackingList<SmartGroupAggregatedProperty>();
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.AlertsManagement
             AlertSeverities = new ChangeTrackingList<SmartGroupAggregatedProperty>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +53,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="alertStates"> Summary of alertStates in the smart group. </param>
         /// <param name="alertSeverities"> Summary of alertSeverities in the smart group. </param>
         /// <param name="nextLink"> The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts. </param>
-        internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, SmartGroupState? smartGroupState, ServiceAlertSeverity? severity, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, SmartGroupState? smartGroupState, ServiceAlertSeverity? severity, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             AlertsCount = alertsCount;
             SmartGroupState = smartGroupState;
@@ -66,6 +70,7 @@ namespace Azure.ResourceManager.AlertsManagement
             AlertStates = alertStates;
             AlertSeverities = alertSeverities;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Total number of alerts in smart group. </summary>

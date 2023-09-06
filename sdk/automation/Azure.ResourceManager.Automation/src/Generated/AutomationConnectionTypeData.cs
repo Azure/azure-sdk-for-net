@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationConnectionTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeData"/>. </summary>
         internal AutomationConnectionTypeData()
         {
             FieldDefinitions = new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>();
         }
 
-        /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +38,15 @@ namespace Azure.ResourceManager.Automation
         /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationConnectionTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isGlobal, IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationConnectionTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isGlobal, IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             IsGlobal = isGlobal;
             FieldDefinitions = fieldDefinitions;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>

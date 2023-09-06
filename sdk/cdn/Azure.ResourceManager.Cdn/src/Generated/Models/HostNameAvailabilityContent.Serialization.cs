@@ -5,19 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HostNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class HostNameAvailabilityContent : IUtf8JsonSerializable, IModelJsonSerializable<HostNameAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HostNameAvailabilityContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HostNameAvailabilityContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameAvailabilityContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HostNameAvailabilityContent DeserializeHostNameAvailabilityContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string hostName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hostName"u8))
+                {
+                    hostName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HostNameAvailabilityContent(hostName, rawData);
+        }
+
+        HostNameAvailabilityContent IModelJsonSerializable<HostNameAvailabilityContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameAvailabilityContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostNameAvailabilityContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HostNameAvailabilityContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameAvailabilityContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HostNameAvailabilityContent IModelSerializable<HostNameAvailabilityContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HostNameAvailabilityContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHostNameAvailabilityContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HostNameAvailabilityContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HostNameAvailabilityContent"/> to convert. </param>
+        public static implicit operator RequestContent(HostNameAvailabilityContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HostNameAvailabilityContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HostNameAvailabilityContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHostNameAvailabilityContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

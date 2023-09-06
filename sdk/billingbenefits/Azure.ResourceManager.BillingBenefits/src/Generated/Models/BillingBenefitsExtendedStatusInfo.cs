@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> The BillingBenefitsExtendedStatusInfo. </summary>
     public partial class BillingBenefitsExtendedStatusInfo
     {
-        /// <summary> Initializes a new instance of BillingBenefitsExtendedStatusInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsExtendedStatusInfo"/>. </summary>
         internal BillingBenefitsExtendedStatusInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsExtendedStatusInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsExtendedStatusInfo"/>. </summary>
         /// <param name="statusCode"> Status code providing additional information. </param>
         /// <param name="message"> The message giving detailed information about the status code. </param>
-        internal BillingBenefitsExtendedStatusInfo(string statusCode, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsExtendedStatusInfo(string statusCode, string message, Dictionary<string, BinaryData> rawData)
         {
             StatusCode = statusCode;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Status code providing additional information. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PlacementPolicyPatch : IUtf8JsonSerializable
+    public partial class PlacementPolicyPatch : IUtf8JsonSerializable, IModelJsonSerializable<PlacementPolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PlacementPolicyPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PlacementPolicyPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PlacementPolicyPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -58,7 +66,166 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static PlacementPolicyPatch DeserializePlacementPolicyPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PlacementPolicyState> state = default;
+            Optional<IList<ResourceIdentifier>> vmMembers = default;
+            Optional<IList<string>> hostMembers = default;
+            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
+            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("state"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            state = new PlacementPolicyState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmMembers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            vmMembers = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("hostMembers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            hostMembers = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("affinityStrength"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            affinityStrength = new VmHostPlacementPolicyAffinityStrength(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("azureHybridBenefitType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureHybridBenefitType = new AzureHybridBenefitType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PlacementPolicyPatch(Optional.ToNullable(state), Optional.ToList(vmMembers), Optional.ToList(hostMembers), Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType), rawData);
+        }
+
+        PlacementPolicyPatch IModelJsonSerializable<PlacementPolicyPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PlacementPolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePlacementPolicyPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PlacementPolicyPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PlacementPolicyPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PlacementPolicyPatch IModelSerializable<PlacementPolicyPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PlacementPolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePlacementPolicyPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PlacementPolicyPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PlacementPolicyPatch"/> to convert. </param>
+        public static implicit operator RequestContent(PlacementPolicyPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PlacementPolicyPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PlacementPolicyPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePlacementPolicyPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Test keys payload. </summary>
     public partial class AppPlatformServiceTestKeys
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceTestKeys"/>. </summary>
         internal AppPlatformServiceTestKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceTestKeys"/>. </summary>
         /// <param name="primaryKey"> Primary key. </param>
         /// <param name="secondaryKey"> Secondary key. </param>
         /// <param name="primaryTestEndpoint"> Primary test endpoint. </param>
         /// <param name="secondaryTestEndpoint"> Secondary test endpoint. </param>
         /// <param name="isEnabled"> Indicates whether the test endpoint feature enabled or not. </param>
-        internal AppPlatformServiceTestKeys(string primaryKey, string secondaryKey, string primaryTestEndpoint, string secondaryTestEndpoint, bool? isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceTestKeys(string primaryKey, string secondaryKey, string primaryTestEndpoint, string secondaryTestEndpoint, bool? isEnabled, Dictionary<string, BinaryData> rawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             PrimaryTestEndpoint = primaryTestEndpoint;
             SecondaryTestEndpoint = secondaryTestEndpoint;
             IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Primary key. </summary>

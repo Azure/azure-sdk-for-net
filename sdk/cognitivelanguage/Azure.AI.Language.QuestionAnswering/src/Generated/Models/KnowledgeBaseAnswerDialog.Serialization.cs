@@ -5,22 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class KnowledgeBaseAnswerDialog
+    public partial class KnowledgeBaseAnswerDialog : IUtf8JsonSerializable, IModelJsonSerializable<KnowledgeBaseAnswerDialog>
     {
-        internal static KnowledgeBaseAnswerDialog DeserializeKnowledgeBaseAnswerDialog(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KnowledgeBaseAnswerDialog>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KnowledgeBaseAnswerDialog>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KnowledgeBaseAnswerDialog>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsContextOnly))
+            {
+                writer.WritePropertyName("isContextOnly"u8);
+                writer.WriteBooleanValue(IsContextOnly.Value);
+            }
+            if (Optional.IsCollectionDefined(Prompts))
+            {
+                writer.WritePropertyName("prompts"u8);
+                writer.WriteStartArray();
+                foreach (var item in Prompts)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KnowledgeBaseAnswerPrompt>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KnowledgeBaseAnswerDialog DeserializeKnowledgeBaseAnswerDialog(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isContextOnly = default;
             Optional<IReadOnlyList<KnowledgeBaseAnswerPrompt>> prompts = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isContextOnly"u8))
@@ -46,8 +96,61 @@ namespace Azure.AI.Language.QuestionAnswering
                     prompts = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KnowledgeBaseAnswerDialog(Optional.ToNullable(isContextOnly), Optional.ToList(prompts));
+            return new KnowledgeBaseAnswerDialog(Optional.ToNullable(isContextOnly), Optional.ToList(prompts), rawData);
+        }
+
+        KnowledgeBaseAnswerDialog IModelJsonSerializable<KnowledgeBaseAnswerDialog>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KnowledgeBaseAnswerDialog>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKnowledgeBaseAnswerDialog(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KnowledgeBaseAnswerDialog>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KnowledgeBaseAnswerDialog>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KnowledgeBaseAnswerDialog IModelSerializable<KnowledgeBaseAnswerDialog>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KnowledgeBaseAnswerDialog>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKnowledgeBaseAnswerDialog(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KnowledgeBaseAnswerDialog"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KnowledgeBaseAnswerDialog"/> to convert. </param>
+        public static implicit operator RequestContent(KnowledgeBaseAnswerDialog model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KnowledgeBaseAnswerDialog"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KnowledgeBaseAnswerDialog(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKnowledgeBaseAnswerDialog(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

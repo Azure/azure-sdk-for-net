@@ -5,8 +5,11 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -15,24 +18,30 @@ namespace Azure.ResourceManager.BotService.Models
     /// Please note <see cref="BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AcsChatChannel"/>, <see cref="AlexaChannel"/>, <see cref="DirectLineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="EmailChannel"/>, <see cref="FacebookChannel"/>, <see cref="KikChannel"/>, <see cref="LineChannel"/>, <see cref="M365Extensions"/>, <see cref="MsTeamsChannel"/>, <see cref="Omnichannel"/>, <see cref="OutlookChannel"/>, <see cref="SearchAssistant"/>, <see cref="SkypeChannel"/>, <see cref="SlackChannel"/>, <see cref="SmsChannel"/>, <see cref="TelegramChannel"/>, <see cref="TelephonyChannel"/> and <see cref="WebChatChannel"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownChannel))]
     public abstract partial class BotChannelProperties
     {
-        /// <summary> Initializes a new instance of BotChannelProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
         protected BotChannelProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BotChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        internal BotChannelProperties(string channelName, ETag? etag, string provisioningState, AzureLocation? location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotChannelProperties(string channelName, ETag? etag, string provisioningState, AzureLocation? location, Dictionary<string, BinaryData> rawData)
         {
             ChannelName = channelName;
             ETag = etag;
             ProvisioningState = provisioningState;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> The channel name. </summary>

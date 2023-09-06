@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The Dsc configuration property associated with the entity. </summary>
     public partial class DscConfigurationAssociationProperty
     {
-        /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationAssociationProperty"/>. </summary>
         public DscConfigurationAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscConfigurationAssociationProperty"/>. </summary>
         /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
-        internal DscConfigurationAssociationProperty(string configurationName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscConfigurationAssociationProperty(string configurationName, Dictionary<string, BinaryData> rawData)
         {
             ConfigurationName = configurationName;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the name of the Dsc configuration. </summary>

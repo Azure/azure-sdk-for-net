@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Waf Metrics Response. </summary>
     public partial class WafMetricsResponse
     {
-        /// <summary> Initializes a new instance of WafMetricsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponse"/>. </summary>
         internal WafMetricsResponse()
         {
             Series = new ChangeTrackingList<WafMetricsResponseSeriesItem>();
         }
 
-        /// <summary> Initializes a new instance of WafMetricsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponse"/>. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
         /// <param name="granularity"></param>
         /// <param name="series"></param>
-        internal WafMetricsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, WafMetricsResponseGranularity? granularity, IReadOnlyList<WafMetricsResponseSeriesItem> series)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafMetricsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, WafMetricsResponseGranularity? granularity, IReadOnlyList<WafMetricsResponseSeriesItem> series, Dictionary<string, BinaryData> rawData)
         {
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Granularity = granularity;
             Series = series;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the date time begin. </summary>

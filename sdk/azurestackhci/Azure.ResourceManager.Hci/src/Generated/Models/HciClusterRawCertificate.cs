@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The HciClusterRawCertificate. </summary>
     internal partial class HciClusterRawCertificate
     {
-        /// <summary> Initializes a new instance of HciClusterRawCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterRawCertificate"/>. </summary>
         public HciClusterRawCertificate()
         {
             Certificates = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterRawCertificate"/>. </summary>
+        /// <param name="certificates"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterRawCertificate(IList<string> certificates, Dictionary<string, BinaryData> rawData)
+        {
+            Certificates = certificates;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the certificates. </summary>

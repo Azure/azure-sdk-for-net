@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Detailed information of the anomalous time stamp. </summary>
     public partial class AnomalyValue
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of AnomalyValue. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current time stamp. </param>
         /// <param name="severity">
@@ -36,12 +40,19 @@ namespace Azure.AI.AnomalyDetector
         /// </param>
         /// <param name="score"> Raw anomaly score of severity, to help indicate the degree of abnormality. </param>
         /// <param name="interpretation"> Interpretation of this anomalous time stamp. </param>
-        internal AnomalyValue(bool isAnomaly, float severity, float score, IReadOnlyList<AnomalyInterpretation> interpretation)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyValue(bool isAnomaly, float severity, float score, IReadOnlyList<AnomalyInterpretation> interpretation, Dictionary<string, BinaryData> rawData)
         {
             IsAnomaly = isAnomaly;
             Severity = severity;
             Score = score;
             Interpretation = interpretation;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyValue"/> for deserialization. </summary>
+        internal AnomalyValue()
+        {
         }
 
         /// <summary> True if an anomaly is detected at the current time stamp. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> KPack ClusterStack properties payload. </summary>
     public partial class AppPlatformClusterStackProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformClusterStackProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformClusterStackProperties"/>. </summary>
         public AppPlatformClusterStackProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformClusterStackProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformClusterStackProperties"/>. </summary>
         /// <param name="id"> Id of the ClusterStack. </param>
         /// <param name="version"> Version of the ClusterStack. </param>
-        internal AppPlatformClusterStackProperties(string id, string version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformClusterStackProperties(string id, string version, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Version = version;
+            _rawData = rawData;
         }
 
         /// <summary> Id of the ClusterStack. </summary>

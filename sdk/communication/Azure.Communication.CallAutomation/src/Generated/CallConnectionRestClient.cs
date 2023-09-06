@@ -244,9 +244,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transferToParticipantRequest);
-            request.Content = content;
+            request.Content = transferToParticipantRequest;
             return message;
         }
 
@@ -400,9 +398,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addParticipantRequest);
-            request.Content = content;
+            request.Content = addParticipantRequest;
             return message;
         }
 
@@ -486,9 +482,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(removeParticipantRequest);
-            request.Content = content;
+            request.Content = removeParticipantRequest;
             return message;
         }
 
@@ -572,9 +566,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(muteParticipantsRequest);
-            request.Content = content;
+            request.Content = muteParticipantsRequest;
             return message;
         }
 
@@ -658,9 +650,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unmuteParticipantsRequest);
-            request.Content = content;
+            request.Content = unmuteParticipantsRequest;
             return message;
         }
 

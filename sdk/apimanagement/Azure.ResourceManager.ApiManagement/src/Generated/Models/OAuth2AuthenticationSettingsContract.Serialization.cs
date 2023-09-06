@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable, IModelJsonSerializable<OAuth2AuthenticationSettingsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OAuth2AuthenticationSettingsContract>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OAuth2AuthenticationSettingsContract>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OAuth2AuthenticationSettingsContract>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationServerId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OAuth2AuthenticationSettingsContract DeserializeOAuth2AuthenticationSettingsContract(JsonElement element)
+        internal static OAuth2AuthenticationSettingsContract DeserializeOAuth2AuthenticationSettingsContract(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> authorizationServerId = default;
             Optional<string> scope = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerId"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     scope = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OAuth2AuthenticationSettingsContract(authorizationServerId.Value, scope.Value);
+            return new OAuth2AuthenticationSettingsContract(authorizationServerId.Value, scope.Value, rawData);
+        }
+
+        OAuth2AuthenticationSettingsContract IModelJsonSerializable<OAuth2AuthenticationSettingsContract>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OAuth2AuthenticationSettingsContract>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOAuth2AuthenticationSettingsContract(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OAuth2AuthenticationSettingsContract>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OAuth2AuthenticationSettingsContract>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OAuth2AuthenticationSettingsContract IModelSerializable<OAuth2AuthenticationSettingsContract>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OAuth2AuthenticationSettingsContract>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOAuth2AuthenticationSettingsContract(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OAuth2AuthenticationSettingsContract"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OAuth2AuthenticationSettingsContract"/> to convert. </param>
+        public static implicit operator RequestContent(OAuth2AuthenticationSettingsContract model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OAuth2AuthenticationSettingsContract"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OAuth2AuthenticationSettingsContract(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOAuth2AuthenticationSettingsContract(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

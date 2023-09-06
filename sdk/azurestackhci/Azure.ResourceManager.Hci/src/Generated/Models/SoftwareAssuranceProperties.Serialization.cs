@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class SoftwareAssuranceProperties : IUtf8JsonSerializable
+    public partial class SoftwareAssuranceProperties : IUtf8JsonSerializable, IModelJsonSerializable<SoftwareAssuranceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SoftwareAssuranceProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SoftwareAssuranceProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareAssuranceProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftwareAssuranceStatus))
             {
@@ -26,11 +33,25 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SoftwareAssuranceProperties DeserializeSoftwareAssuranceProperties(JsonElement element)
+        internal static SoftwareAssuranceProperties DeserializeSoftwareAssuranceProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<SoftwareAssuranceStatus> softwareAssuranceStatus = default;
             Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
             Optional<DateTimeOffset> lastUpdated = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareAssuranceStatus"u8))
@@ -67,8 +89,61 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SoftwareAssuranceProperties(Optional.ToNullable(softwareAssuranceStatus), Optional.ToNullable(softwareAssuranceIntent), Optional.ToNullable(lastUpdated));
+            return new SoftwareAssuranceProperties(Optional.ToNullable(softwareAssuranceStatus), Optional.ToNullable(softwareAssuranceIntent), Optional.ToNullable(lastUpdated), rawData);
+        }
+
+        SoftwareAssuranceProperties IModelJsonSerializable<SoftwareAssuranceProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareAssuranceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareAssuranceProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SoftwareAssuranceProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareAssuranceProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SoftwareAssuranceProperties IModelSerializable<SoftwareAssuranceProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SoftwareAssuranceProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSoftwareAssuranceProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SoftwareAssuranceProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SoftwareAssuranceProperties"/> to convert. </param>
+        public static implicit operator RequestContent(SoftwareAssuranceProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SoftwareAssuranceProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SoftwareAssuranceProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSoftwareAssuranceProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppInstanceHttpGetAction : IUtf8JsonSerializable
+    public partial class AppInstanceHttpGetAction : IUtf8JsonSerializable, IModelJsonSerializable<AppInstanceHttpGetAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppInstanceHttpGetAction>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppInstanceHttpGetAction>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceHttpGetAction>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
@@ -27,11 +35,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ProbeActionType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppInstanceHttpGetAction DeserializeAppInstanceHttpGetAction(JsonElement element)
+        internal static AppInstanceHttpGetAction DeserializeAppInstanceHttpGetAction(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> path = default;
             Optional<AppInstanceHttpSchemeType> scheme = default;
             ProbeActionType type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -60,8 +83,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     type = new ProbeActionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppInstanceHttpGetAction(type, path.Value, Optional.ToNullable(scheme));
+            return new AppInstanceHttpGetAction(type, path.Value, Optional.ToNullable(scheme), rawData);
+        }
+
+        AppInstanceHttpGetAction IModelJsonSerializable<AppInstanceHttpGetAction>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceHttpGetAction>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppInstanceHttpGetAction(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppInstanceHttpGetAction>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceHttpGetAction>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppInstanceHttpGetAction IModelSerializable<AppInstanceHttpGetAction>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppInstanceHttpGetAction>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppInstanceHttpGetAction(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppInstanceHttpGetAction"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppInstanceHttpGetAction"/> to convert. </param>
+        public static implicit operator RequestContent(AppInstanceHttpGetAction model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppInstanceHttpGetAction"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppInstanceHttpGetAction(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppInstanceHttpGetAction(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

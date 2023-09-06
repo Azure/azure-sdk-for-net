@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRuleUriFileExtensionCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleUriFileExtensionCondition : IUtf8JsonSerializable, IModelJsonSerializable<DeliveryRuleUriFileExtensionCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeliveryRuleUriFileExtensionCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeliveryRuleUriFileExtensionCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleUriFileExtensionCondition>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<UriFileExtensionMatchCondition>)Properties).Serialize(writer, options);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeliveryRuleUriFileExtensionCondition DeserializeDeliveryRuleUriFileExtensionCondition(JsonElement element)
+        internal static DeliveryRuleUriFileExtensionCondition DeserializeDeliveryRuleUriFileExtensionCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             UriFileExtensionMatchCondition parameters = default;
             MatchVariable name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     name = new MatchVariable(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeliveryRuleUriFileExtensionCondition(name, parameters);
+            return new DeliveryRuleUriFileExtensionCondition(name, parameters, rawData);
+        }
+
+        DeliveryRuleUriFileExtensionCondition IModelJsonSerializable<DeliveryRuleUriFileExtensionCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleUriFileExtensionCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeliveryRuleUriFileExtensionCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeliveryRuleUriFileExtensionCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleUriFileExtensionCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeliveryRuleUriFileExtensionCondition IModelSerializable<DeliveryRuleUriFileExtensionCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeliveryRuleUriFileExtensionCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeliveryRuleUriFileExtensionCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeliveryRuleUriFileExtensionCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeliveryRuleUriFileExtensionCondition"/> to convert. </param>
+        public static implicit operator RequestContent(DeliveryRuleUriFileExtensionCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeliveryRuleUriFileExtensionCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeliveryRuleUriFileExtensionCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeliveryRuleUriFileExtensionCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

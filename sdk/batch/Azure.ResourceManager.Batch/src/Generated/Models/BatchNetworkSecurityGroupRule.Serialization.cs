@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNetworkSecurityGroupRule : IUtf8JsonSerializable
+    public partial class BatchNetworkSecurityGroupRule : IUtf8JsonSerializable, IModelJsonSerializable<BatchNetworkSecurityGroupRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchNetworkSecurityGroupRule>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchNetworkSecurityGroupRule>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchNetworkSecurityGroupRule>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
@@ -32,11 +39,25 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element)
+        internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +66,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchNetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;
             Optional<IList<string>> sourcePortRanges = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -76,8 +98,61 @@ namespace Azure.ResourceManager.Batch.Models
                     sourcePortRanges = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Optional.ToList(sourcePortRanges));
+            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Optional.ToList(sourcePortRanges), rawData);
+        }
+
+        BatchNetworkSecurityGroupRule IModelJsonSerializable<BatchNetworkSecurityGroupRule>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchNetworkSecurityGroupRule>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchNetworkSecurityGroupRule(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchNetworkSecurityGroupRule>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchNetworkSecurityGroupRule>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchNetworkSecurityGroupRule IModelSerializable<BatchNetworkSecurityGroupRule>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchNetworkSecurityGroupRule>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchNetworkSecurityGroupRule(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchNetworkSecurityGroupRule"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchNetworkSecurityGroupRule"/> to convert. </param>
+        public static implicit operator RequestContent(BatchNetworkSecurityGroupRule model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchNetworkSecurityGroupRule"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchNetworkSecurityGroupRule(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchNetworkSecurityGroupRule(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

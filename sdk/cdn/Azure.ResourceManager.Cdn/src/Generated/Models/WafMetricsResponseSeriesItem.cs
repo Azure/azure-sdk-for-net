@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The WafMetricsResponseSeriesItem. </summary>
     public partial class WafMetricsResponseSeriesItem
     {
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesItem"/>. </summary>
         internal WafMetricsResponseSeriesItem()
         {
             Groups = new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>();
             Data = new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
         }
 
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesItem"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="unit"></param>
         /// <param name="groups"></param>
         /// <param name="data"></param>
-        internal WafMetricsResponseSeriesItem(string metric, WafMetricsResponseSeriesItemUnit? unit, IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafMetricsResponseSeriesItem(string metric, WafMetricsResponseSeriesItemUnit? unit, IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem> groups, IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> data, Dictionary<string, BinaryData> rawData)
         {
             Metric = metric;
             Unit = unit;
             Groups = groups;
             Data = data;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the metric. </summary>

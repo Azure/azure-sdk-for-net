@@ -6,25 +6,46 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class AlexaChannelProperties : IUtf8JsonSerializable
+    public partial class AlexaChannelProperties : IUtf8JsonSerializable, IModelJsonSerializable<AlexaChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AlexaChannelProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AlexaChannelProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AlexaChannelProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("alexaSkillId"u8);
             writer.WriteStringValue(AlexaSkillId);
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlexaChannelProperties DeserializeAlexaChannelProperties(JsonElement element)
+        internal static AlexaChannelProperties DeserializeAlexaChannelProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +54,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> urlFragment = default;
             Optional<Uri> serviceEndpointUri = default;
             bool isEnabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alexaSkillId"u8))
@@ -59,8 +81,61 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AlexaChannelProperties(alexaSkillId, urlFragment.Value, serviceEndpointUri.Value, isEnabled);
+            return new AlexaChannelProperties(alexaSkillId, urlFragment.Value, serviceEndpointUri.Value, isEnabled, rawData);
+        }
+
+        AlexaChannelProperties IModelJsonSerializable<AlexaChannelProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlexaChannelProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlexaChannelProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AlexaChannelProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlexaChannelProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AlexaChannelProperties IModelSerializable<AlexaChannelProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AlexaChannelProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAlexaChannelProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AlexaChannelProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AlexaChannelProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AlexaChannelProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AlexaChannelProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AlexaChannelProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAlexaChannelProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

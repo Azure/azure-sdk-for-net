@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

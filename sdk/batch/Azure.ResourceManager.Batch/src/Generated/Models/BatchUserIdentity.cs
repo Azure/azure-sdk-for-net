@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specify either the userName or autoUser property, but not both. </summary>
     public partial class BatchUserIdentity
     {
-        /// <summary> Initializes a new instance of BatchUserIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchUserIdentity"/>. </summary>
         public BatchUserIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchUserIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchUserIdentity"/>. </summary>
         /// <param name="userName"> The userName and autoUser properties are mutually exclusive; you must specify one but not both. </param>
         /// <param name="autoUser"> The userName and autoUser properties are mutually exclusive; you must specify one but not both. </param>
-        internal BatchUserIdentity(string userName, BatchAutoUserSpecification autoUser)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchUserIdentity(string userName, BatchAutoUserSpecification autoUser, Dictionary<string, BinaryData> rawData)
         {
             UserName = userName;
             AutoUser = autoUser;
+            _rawData = rawData;
         }
 
         /// <summary> The userName and autoUser properties are mutually exclusive; you must specify one but not both. </summary>

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> A class represent the assessment resource. </summary>
     public partial class AssessmentResource
     {
-        /// <summary> Initializes a new instance of AssessmentResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssessmentResource"/>. </summary>
         internal AssessmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of AssessmentResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssessmentResource"/>. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="reason"> The reason for the N/A resource. </param>
         /// <param name="statusChangeDate"> The status change date for the resource. For unavailable date, set it as N/A. </param>
-        internal AssessmentResource(string resourceId, ResourceStatus? resourceStatus, string reason, string statusChangeDate)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssessmentResource(string resourceId, ResourceStatus? resourceStatus, string reason, string statusChangeDate, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             ResourceStatus = resourceStatus;
             Reason = reason;
             StatusChangeDate = statusChangeDate;
+            _rawData = rawData;
         }
 
         /// <summary> The Id of the resource. </summary>

@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Represents individual job in given blueprint assignment operation. </summary>
     public partial class AssignmentDeploymentJob
     {
-        /// <summary> Initializes a new instance of AssignmentDeploymentJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJob"/>. </summary>
         public AssignmentDeploymentJob()
         {
             History = new ChangeTrackingList<AssignmentDeploymentJobResult>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentDeploymentJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJob"/>. </summary>
         /// <param name="kind"> Kind of job. </param>
         /// <param name="action"> Name of the action performed in this job. </param>
         /// <param name="jobId"> Id of this job. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="result"> Deployment job result. </param>
         /// <param name="history"> Result of this deployment job for each retry. </param>
         /// <param name="requestUri"> Reference to deployment job resource id. </param>
-        internal AssignmentDeploymentJob(string kind, string action, string jobId, string jobState, AssignmentDeploymentJobResult result, IList<AssignmentDeploymentJobResult> history, Uri requestUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentDeploymentJob(string kind, string action, string jobId, string jobState, AssignmentDeploymentJobResult result, IList<AssignmentDeploymentJobResult> history, Uri requestUri, Dictionary<string, BinaryData> rawData)
         {
             Kind = kind;
             Action = action;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Result = result;
             History = history;
             RequestUri = requestUri;
+            _rawData = rawData;
         }
 
         /// <summary> Kind of job. </summary>

@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Recommendation resource metadata. </summary>
     public partial class ResourceMetadata
     {
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         public ResourceMetadata()
         {
             Action = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
         /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
         /// <param name="source"> Source from which recommendation is generated. </param>
         /// <param name="action"> The action to view resource. </param>
         /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
         /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
-        internal ResourceMetadata(string resourceId, string source, IDictionary<string, BinaryData> action, string singular, string plural)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceMetadata(string resourceId, string source, IDictionary<string, BinaryData> action, string singular, string plural, Dictionary<string, BinaryData> rawData)
         {
             ResourceId = resourceId;
             Source = source;
             Action = action;
             Singular = singular;
             Plural = plural;
+            _rawData = rawData;
         }
 
         /// <summary> Azure resource Id of the assessed resource. </summary>

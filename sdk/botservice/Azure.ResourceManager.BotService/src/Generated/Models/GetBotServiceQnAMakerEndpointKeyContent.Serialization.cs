@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class GetBotServiceQnAMakerEndpointKeyContent : IUtf8JsonSerializable
+    public partial class GetBotServiceQnAMakerEndpointKeyContent : IUtf8JsonSerializable, IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
@@ -25,7 +33,99 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("authkey"u8);
                 writer.WriteStringValue(Authkey);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static GetBotServiceQnAMakerEndpointKeyContent DeserializeGetBotServiceQnAMakerEndpointKeyContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> hostname = default;
+            Optional<string> authkey = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("hostname"u8))
+                {
+                    hostname = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authkey"u8))
+                {
+                    authkey = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new GetBotServiceQnAMakerEndpointKeyContent(hostname.Value, authkey.Value, rawData);
+        }
+
+        GetBotServiceQnAMakerEndpointKeyContent IModelJsonSerializable<GetBotServiceQnAMakerEndpointKeyContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<GetBotServiceQnAMakerEndpointKeyContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        GetBotServiceQnAMakerEndpointKeyContent IModelSerializable<GetBotServiceQnAMakerEndpointKeyContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<GetBotServiceQnAMakerEndpointKeyContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="GetBotServiceQnAMakerEndpointKeyContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="GetBotServiceQnAMakerEndpointKeyContent"/> to convert. </param>
+        public static implicit operator RequestContent(GetBotServiceQnAMakerEndpointKeyContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="GetBotServiceQnAMakerEndpointKeyContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator GetBotServiceQnAMakerEndpointKeyContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeGetBotServiceQnAMakerEndpointKeyContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

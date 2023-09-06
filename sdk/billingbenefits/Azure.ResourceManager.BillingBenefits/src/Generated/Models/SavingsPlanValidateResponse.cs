@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanValidateResponse. </summary>
     internal partial class SavingsPlanValidateResponse
     {
-        /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResponse"/>. </summary>
         internal SavingsPlanValidateResponse()
         {
             Benefits = new ChangeTrackingList<SavingsPlanValidateResult>();
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResponse"/>. </summary>
         /// <param name="benefits"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        internal SavingsPlanValidateResponse(IReadOnlyList<SavingsPlanValidateResult> benefits, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanValidateResponse(IReadOnlyList<SavingsPlanValidateResult> benefits, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Benefits = benefits;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the benefits. </summary>

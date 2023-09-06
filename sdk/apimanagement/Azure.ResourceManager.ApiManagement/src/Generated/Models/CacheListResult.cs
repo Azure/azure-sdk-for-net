@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Caches list representation. </summary>
     internal partial class CacheListResult
     {
-        /// <summary> Initializes a new instance of CacheListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CacheListResult"/>. </summary>
         internal CacheListResult()
         {
             Value = new ChangeTrackingList<ApiManagementCacheData>();
         }
 
-        /// <summary> Initializes a new instance of CacheListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal CacheListResult(IReadOnlyList<ApiManagementCacheData> value, long? count, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CacheListResult(IReadOnlyList<ApiManagementCacheData> value, long? count, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Page values. </summary>

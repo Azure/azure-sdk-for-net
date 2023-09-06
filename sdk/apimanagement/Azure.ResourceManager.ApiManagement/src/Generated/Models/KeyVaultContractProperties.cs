@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> KeyVault contract details. </summary>
     public partial class KeyVaultContractProperties : KeyVaultContractCreateProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultContractProperties"/>. </summary>
         public KeyVaultContractProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultContractProperties"/>. </summary>
         /// <param name="secretIdentifier"> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </param>
         /// <param name="identityClientId"> Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret. </param>
         /// <param name="lastStatus"> Last time sync and refresh status of secret from key vault. </param>
-        internal KeyVaultContractProperties(string secretIdentifier, string identityClientId, KeyVaultLastAccessStatusContractProperties lastStatus) : base(secretIdentifier, identityClientId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultContractProperties(string secretIdentifier, string identityClientId, KeyVaultLastAccessStatusContractProperties lastStatus, Dictionary<string, BinaryData> rawData) : base(secretIdentifier, identityClientId, rawData)
         {
             LastStatus = lastStatus;
         }

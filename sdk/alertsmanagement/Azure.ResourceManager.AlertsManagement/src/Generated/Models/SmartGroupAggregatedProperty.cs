@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Aggregated property of each type. </summary>
     public partial class SmartGroupAggregatedProperty
     {
-        /// <summary> Initializes a new instance of SmartGroupAggregatedProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartGroupAggregatedProperty"/>. </summary>
         public SmartGroupAggregatedProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of SmartGroupAggregatedProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupAggregatedProperty"/>. </summary>
         /// <param name="name"> Name of the type. </param>
         /// <param name="count"> Total number of items of type. </param>
-        internal SmartGroupAggregatedProperty(string name, long? count)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartGroupAggregatedProperty(string name, long? count, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Count = count;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the type. </summary>

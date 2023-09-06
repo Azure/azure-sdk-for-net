@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update credential operation. </summary>
     public partial class AutomationCredentialCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationCredentialCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the credential. </param>
         /// <param name="userName"> Gets or sets the user name of the credential. </param>
         /// <param name="password"> Gets or sets the password of the credential. </param>
@@ -27,6 +31,26 @@ namespace Azure.ResourceManager.Automation.Models
             Name = name;
             UserName = userName;
             Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the credential. </param>
+        /// <param name="userName"> Gets or sets the user name of the credential. </param>
+        /// <param name="password"> Gets or sets the password of the credential. </param>
+        /// <param name="description"> Gets or sets the description of the credential. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationCredentialCreateOrUpdateContent(string name, string userName, string password, string description, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            UserName = userName;
+            Password = password;
+            Description = description;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationCredentialCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the name of the credential. </summary>

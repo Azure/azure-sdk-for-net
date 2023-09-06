@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Config server git properties payload. </summary>
     public partial class AppPlatformConfigServerProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigServerProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigServerProperties"/>. </summary>
         public AppPlatformConfigServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigServerProperties"/>. </summary>
         /// <param name="provisioningState"> State of the config server. </param>
         /// <param name="error"> Error when apply config server settings. </param>
         /// <param name="configServer"> Settings of config server. </param>
-        internal AppPlatformConfigServerProperties(AppPlatformConfigServerState? provisioningState, AppPlatformErrorInfo error, ConfigServerSettings configServer)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigServerProperties(AppPlatformConfigServerState? provisioningState, AppPlatformErrorInfo error, ConfigServerSettings configServer, Dictionary<string, BinaryData> rawData)
         {
             ProvisioningState = provisioningState;
             Error = error;
             ConfigServer = configServer;
+            _rawData = rawData;
         }
 
         /// <summary> State of the config server. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Availability Set model. </summary>
     public partial class AvailabilitySetListItem
     {
-        /// <summary> Initializes a new instance of AvailabilitySetListItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetListItem"/>. </summary>
         public AvailabilitySetListItem()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilitySetListItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilitySetListItem"/>. </summary>
         /// <param name="id"> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </param>
         /// <param name="name"> Gets or sets the name of the availability set. </param>
-        internal AvailabilitySetListItem(string id, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilitySetListItem(string id, string name, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </summary>

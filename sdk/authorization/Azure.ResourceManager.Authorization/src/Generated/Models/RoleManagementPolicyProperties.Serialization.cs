@@ -5,15 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyProperties
+    public partial class RoleManagementPolicyProperties : IUtf8JsonSerializable, IModelJsonSerializable<RoleManagementPolicyProperties>
     {
-        internal static RoleManagementPolicyProperties DeserializeRoleManagementPolicyProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RoleManagementPolicyProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RoleManagementPolicyProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RoleManagementPolicyProperties>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("scope"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ScopeId);
+            }
+            if (Optional.IsDefined(ScopeDisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(ScopeDisplayName);
+            }
+            if (Optional.IsDefined(ScopeType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ScopeType.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RoleManagementPolicyProperties DeserializeRoleManagementPolicyProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +67,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> displayName = default;
             Optional<RoleManagementScopeType> type = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -58,8 +105,61 @@ namespace Azure.ResourceManager.Authorization.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RoleManagementPolicyProperties(id.Value, displayName.Value, Optional.ToNullable(type));
+            return new RoleManagementPolicyProperties(id.Value, displayName.Value, Optional.ToNullable(type), rawData);
+        }
+
+        RoleManagementPolicyProperties IModelJsonSerializable<RoleManagementPolicyProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoleManagementPolicyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleManagementPolicyProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RoleManagementPolicyProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoleManagementPolicyProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RoleManagementPolicyProperties IModelSerializable<RoleManagementPolicyProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RoleManagementPolicyProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRoleManagementPolicyProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RoleManagementPolicyProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RoleManagementPolicyProperties"/> to convert. </param>
+        public static implicit operator RequestContent(RoleManagementPolicyProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RoleManagementPolicyProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RoleManagementPolicyProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRoleManagementPolicyProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

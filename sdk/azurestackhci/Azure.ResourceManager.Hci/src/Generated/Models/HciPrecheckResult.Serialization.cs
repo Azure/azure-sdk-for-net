@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciPrecheckResult : IUtf8JsonSerializable
+    public partial class HciPrecheckResult : IUtf8JsonSerializable, IModelJsonSerializable<HciPrecheckResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HciPrecheckResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HciPrecheckResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HciPrecheckResult>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -24,7 +31,14 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                if (Tags is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HciPrecheckResultTags>)Tags).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Title))
             {
@@ -76,11 +90,25 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("healthCheckSource"u8);
                 writer.WriteStringValue(HealthCheckSource);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element)
+        internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -97,6 +125,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> additionalData = default;
             Optional<string> healthCheckSource = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -175,8 +204,61 @@ namespace Azure.ResourceManager.Hci.Models
                     healthCheckSource = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
+            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value, rawData);
+        }
+
+        HciPrecheckResult IModelJsonSerializable<HciPrecheckResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HciPrecheckResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciPrecheckResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HciPrecheckResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HciPrecheckResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HciPrecheckResult IModelSerializable<HciPrecheckResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HciPrecheckResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHciPrecheckResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HciPrecheckResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HciPrecheckResult"/> to convert. </param>
+        public static implicit operator RequestContent(HciPrecheckResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HciPrecheckResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HciPrecheckResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHciPrecheckResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

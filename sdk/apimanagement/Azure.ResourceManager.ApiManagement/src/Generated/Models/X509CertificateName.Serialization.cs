@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class X509CertificateName : IUtf8JsonSerializable
+    public partial class X509CertificateName : IUtf8JsonSerializable, IModelJsonSerializable<X509CertificateName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X509CertificateName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X509CertificateName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<X509CertificateName>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("issuerCertificateThumbprint"u8);
                 writer.WriteStringValue(IssuerCertificateThumbprint);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X509CertificateName DeserializeX509CertificateName(JsonElement element)
+        internal static X509CertificateName DeserializeX509CertificateName(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             Optional<string> issuerCertificateThumbprint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     issuerCertificateThumbprint = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X509CertificateName(name.Value, issuerCertificateThumbprint.Value);
+            return new X509CertificateName(name.Value, issuerCertificateThumbprint.Value, rawData);
+        }
+
+        X509CertificateName IModelJsonSerializable<X509CertificateName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X509CertificateName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX509CertificateName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X509CertificateName>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X509CertificateName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X509CertificateName IModelSerializable<X509CertificateName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X509CertificateName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX509CertificateName(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X509CertificateName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X509CertificateName"/> to convert. </param>
+        public static implicit operator RequestContent(X509CertificateName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X509CertificateName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X509CertificateName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX509CertificateName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

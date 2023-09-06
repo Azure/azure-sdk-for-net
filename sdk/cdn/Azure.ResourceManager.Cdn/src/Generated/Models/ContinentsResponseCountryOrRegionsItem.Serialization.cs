@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ContinentsResponseCountryOrRegionsItem
+    public partial class ContinentsResponseCountryOrRegionsItem : IUtf8JsonSerializable, IModelJsonSerializable<ContinentsResponseCountryOrRegionsItem>
     {
-        internal static ContinentsResponseCountryOrRegionsItem DeserializeContinentsResponseCountryOrRegionsItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ContinentsResponseCountryOrRegionsItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ContinentsResponseCountryOrRegionsItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponseCountryOrRegionsItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ContinentId))
+            {
+                writer.WritePropertyName("continentId"u8);
+                writer.WriteStringValue(ContinentId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ContinentsResponseCountryOrRegionsItem DeserializeContinentsResponseCountryOrRegionsItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> id = default;
             Optional<string> continentId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -32,8 +71,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     continentId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ContinentsResponseCountryOrRegionsItem(id.Value, continentId.Value);
+            return new ContinentsResponseCountryOrRegionsItem(id.Value, continentId.Value, rawData);
+        }
+
+        ContinentsResponseCountryOrRegionsItem IModelJsonSerializable<ContinentsResponseCountryOrRegionsItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponseCountryOrRegionsItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeContinentsResponseCountryOrRegionsItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ContinentsResponseCountryOrRegionsItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponseCountryOrRegionsItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ContinentsResponseCountryOrRegionsItem IModelSerializable<ContinentsResponseCountryOrRegionsItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ContinentsResponseCountryOrRegionsItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeContinentsResponseCountryOrRegionsItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ContinentsResponseCountryOrRegionsItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ContinentsResponseCountryOrRegionsItem"/> to convert. </param>
+        public static implicit operator RequestContent(ContinentsResponseCountryOrRegionsItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ContinentsResponseCountryOrRegionsItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ContinentsResponseCountryOrRegionsItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeContinentsResponseCountryOrRegionsItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

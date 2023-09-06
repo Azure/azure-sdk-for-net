@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WebTestPropertiesValidationRulesContentValidation : IUtf8JsonSerializable
+    public partial class WebTestPropertiesValidationRulesContentValidation : IUtf8JsonSerializable, IModelJsonSerializable<WebTestPropertiesValidationRulesContentValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WebTestPropertiesValidationRulesContentValidation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WebTestPropertiesValidationRulesContentValidation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestPropertiesValidationRulesContentValidation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContentMatch))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("PassIfTextFound"u8);
                 writer.WriteBooleanValue(PassIfTextFound.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebTestPropertiesValidationRulesContentValidation DeserializeWebTestPropertiesValidationRulesContentValidation(JsonElement element)
+        internal static WebTestPropertiesValidationRulesContentValidation DeserializeWebTestPropertiesValidationRulesContentValidation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> contentMatch = default;
             Optional<bool> ignoreCase = default;
             Optional<bool> passIfTextFound = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ContentMatch"u8))
@@ -67,8 +90,61 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     passIfTextFound = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WebTestPropertiesValidationRulesContentValidation(contentMatch.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(passIfTextFound));
+            return new WebTestPropertiesValidationRulesContentValidation(contentMatch.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(passIfTextFound), rawData);
+        }
+
+        WebTestPropertiesValidationRulesContentValidation IModelJsonSerializable<WebTestPropertiesValidationRulesContentValidation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestPropertiesValidationRulesContentValidation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebTestPropertiesValidationRulesContentValidation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WebTestPropertiesValidationRulesContentValidation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestPropertiesValidationRulesContentValidation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WebTestPropertiesValidationRulesContentValidation IModelSerializable<WebTestPropertiesValidationRulesContentValidation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WebTestPropertiesValidationRulesContentValidation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWebTestPropertiesValidationRulesContentValidation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WebTestPropertiesValidationRulesContentValidation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WebTestPropertiesValidationRulesContentValidation"/> to convert. </param>
+        public static implicit operator RequestContent(WebTestPropertiesValidationRulesContentValidation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WebTestPropertiesValidationRulesContentValidation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WebTestPropertiesValidationRulesContentValidation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWebTestPropertiesValidationRulesContentValidation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

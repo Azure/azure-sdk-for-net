@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Gallery information for a workbook template. </summary>
     public partial class WorkbookTemplateGallery
     {
-        /// <summary> Initializes a new instance of WorkbookTemplateGallery. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateGallery"/>. </summary>
         public WorkbookTemplateGallery()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplateGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateGallery"/>. </summary>
         /// <param name="name"> Name of the workbook template in the gallery. </param>
         /// <param name="category"> Category for the gallery. </param>
         /// <param name="workbookTemplateGalleryType"> Type of workbook supported by the workbook template. </param>
         /// <param name="order"> Order of the template within the gallery. </param>
         /// <param name="resourceType"> Azure resource type supported by the gallery. </param>
-        internal WorkbookTemplateGallery(string name, string category, string workbookTemplateGalleryType, int? order, string resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkbookTemplateGallery(string name, string category, string workbookTemplateGalleryType, int? order, string resourceType, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Category = category;
             WorkbookTemplateGalleryType = workbookTemplateGalleryType;
             Order = order;
             ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the workbook template in the gallery. </summary>

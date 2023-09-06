@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Properties controlling TLS Certificate Validation. </summary>
     public partial class BackendTlsProperties
     {
-        /// <summary> Initializes a new instance of BackendTlsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendTlsProperties"/>. </summary>
         public BackendTlsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackendTlsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendTlsProperties"/>. </summary>
         /// <param name="shouldValidateCertificateChain"> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </param>
         /// <param name="shouldValidateCertificateName"> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </param>
-        internal BackendTlsProperties(bool? shouldValidateCertificateChain, bool? shouldValidateCertificateName)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendTlsProperties(bool? shouldValidateCertificateChain, bool? shouldValidateCertificateName, Dictionary<string, BinaryData> rawData)
         {
             ShouldValidateCertificateChain = shouldValidateCertificateChain;
             ShouldValidateCertificateName = shouldValidateCertificateName;
+            _rawData = rawData;
         }
 
         /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>

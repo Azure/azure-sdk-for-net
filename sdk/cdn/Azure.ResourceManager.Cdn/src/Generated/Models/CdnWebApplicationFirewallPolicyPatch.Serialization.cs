@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnWebApplicationFirewallPolicyPatch : IUtf8JsonSerializable
+    public partial class CdnWebApplicationFirewallPolicyPatch : IUtf8JsonSerializable, IModelJsonSerializable<CdnWebApplicationFirewallPolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CdnWebApplicationFirewallPolicyPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CdnWebApplicationFirewallPolicyPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CdnWebApplicationFirewallPolicyPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -26,7 +34,102 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static CdnWebApplicationFirewallPolicyPatch DeserializeCdnWebApplicationFirewallPolicyPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new CdnWebApplicationFirewallPolicyPatch(Optional.ToDictionary(tags), rawData);
+        }
+
+        CdnWebApplicationFirewallPolicyPatch IModelJsonSerializable<CdnWebApplicationFirewallPolicyPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CdnWebApplicationFirewallPolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnWebApplicationFirewallPolicyPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CdnWebApplicationFirewallPolicyPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CdnWebApplicationFirewallPolicyPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CdnWebApplicationFirewallPolicyPatch IModelSerializable<CdnWebApplicationFirewallPolicyPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CdnWebApplicationFirewallPolicyPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCdnWebApplicationFirewallPolicyPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CdnWebApplicationFirewallPolicyPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CdnWebApplicationFirewallPolicyPatch"/> to convert. </param>
+        public static implicit operator RequestContent(CdnWebApplicationFirewallPolicyPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CdnWebApplicationFirewallPolicyPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCdnWebApplicationFirewallPolicyPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

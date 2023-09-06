@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of VmmServers. </summary>
     internal partial class VmmServerListResult
     {
-        /// <summary> Initializes a new instance of VmmServerListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmmServerListResult"/>. </summary>
         internal VmmServerListResult()
         {
             Value = new ChangeTrackingList<ScVmmServerData>();
         }
 
-        /// <summary> Initializes a new instance of VmmServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmServerListResult"/>. </summary>
         /// <param name="value"> List of VmmServers. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal VmmServerListResult(IReadOnlyList<ScVmmServerData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmmServerListResult(IReadOnlyList<ScVmmServerData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of VmmServers. </summary>

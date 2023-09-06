@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> An environment variable to be set on a task process. </summary>
     public partial class BatchEnvironmentSetting
     {
-        /// <summary> Initializes a new instance of BatchEnvironmentSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchEnvironmentSetting"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BatchEnvironmentSetting(string name)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.Batch.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of BatchEnvironmentSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEnvironmentSetting"/>. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
-        internal BatchEnvironmentSetting(string name, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchEnvironmentSetting(string name, string value, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchEnvironmentSetting"/> for deserialization. </summary>
+        internal BatchEnvironmentSetting()
+        {
         }
 
         /// <summary> The name of the environment variable. </summary>

@@ -5,16 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ExternalStorage. </summary>
     internal partial class ExternalStorageInternal
     {
-        /// <summary> Initializes a new instance of ExternalStorageInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
         /// <param name="storageType"> Defines the type of external storage. </param>
         public ExternalStorageInternal(RecordingStorageType storageType)
         {
             StorageType = storageType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/>. </summary>
+        /// <param name="storageType"> Defines the type of external storage. </param>
+        /// <param name="blobStorage"> Defines the blob storage location where the recording will be stored. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExternalStorageInternal(RecordingStorageType storageType, BlobStorageInternal blobStorage, Dictionary<string, BinaryData> rawData)
+        {
+            StorageType = storageType;
+            BlobStorage = blobStorage;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExternalStorageInternal"/> for deserialization. </summary>
+        internal ExternalStorageInternal()
+        {
         }
 
         /// <summary> Defines the type of external storage. </summary>

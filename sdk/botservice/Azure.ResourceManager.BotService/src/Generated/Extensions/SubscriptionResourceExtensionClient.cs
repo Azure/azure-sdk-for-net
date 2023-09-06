@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.BotService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BotRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BotService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BotRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BotRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BotResource(Client, BotData.DeserializeBotData(e)), BotClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

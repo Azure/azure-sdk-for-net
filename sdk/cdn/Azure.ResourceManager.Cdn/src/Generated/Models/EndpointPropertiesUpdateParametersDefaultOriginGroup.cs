@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> A reference to the origin group. </summary>
     internal partial class EndpointPropertiesUpdateParametersDefaultOriginGroup
     {
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersDefaultOriginGroup"/>. </summary>
         public EndpointPropertiesUpdateParametersDefaultOriginGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointPropertiesUpdateParametersDefaultOriginGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointPropertiesUpdateParametersDefaultOriginGroup"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        internal EndpointPropertiesUpdateParametersDefaultOriginGroup(ResourceIdentifier id)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointPropertiesUpdateParametersDefaultOriginGroup(ResourceIdentifier id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
+            _rawData = rawData;
         }
 
         /// <summary> Resource ID. </summary>

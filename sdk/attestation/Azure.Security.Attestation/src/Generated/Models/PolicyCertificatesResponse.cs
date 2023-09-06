@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The response to an attestation policy management API. </summary>
     internal partial class PolicyCertificatesResponse
     {
-        /// <summary> Initializes a new instance of PolicyCertificatesResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyCertificatesResponse"/>. </summary>
         internal PolicyCertificatesResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyCertificatesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyCertificatesResponse"/>. </summary>
         /// <param name="token"> An RFC7519 JSON Web Token structure containing a PolicyCertificatesResults object which contains the certificates used to validate policy changes. </param>
-        internal PolicyCertificatesResponse(string token)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyCertificatesResponse(string token, Dictionary<string, BinaryData> rawData)
         {
             Token = token;
+            _rawData = rawData;
         }
 
         /// <summary> An RFC7519 JSON Web Token structure containing a PolicyCertificatesResults object which contains the certificates used to validate policy changes. </summary>

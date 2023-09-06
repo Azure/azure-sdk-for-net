@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ResourcesResponseEndpointsItem. </summary>
     public partial class ResourcesResponseEndpointsItem
     {
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsItem"/>. </summary>
         internal ResourcesResponseEndpointsItem()
         {
             CustomDomains = new ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="history"></param>
         /// <param name="customDomains"></param>
-        internal ResourcesResponseEndpointsItem(string id, string name, bool? history, IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponseEndpointsItem(string id, string name, bool? history, IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Name = name;
             History = history;
             CustomDomains = customDomains;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the id. </summary>

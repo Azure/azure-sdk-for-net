@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRevisionWorkbooksRestClient.CreateRevisionsListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workbookRevisionWorkbooksRestClient.CreateRevisionsListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkbookRevisionResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookRevisionWorkbooksClientDiagnostics, Pipeline, "WorkbookRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkbookRevisionResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookRevisionWorkbooksClientDiagnostics, Pipeline, "WorkbookRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workbookRevisionWorkbooksRestClient.CreateRevisionsListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workbookRevisionWorkbooksRestClient.CreateRevisionsListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkbookRevisionResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookRevisionWorkbooksClientDiagnostics, Pipeline, "WorkbookRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new WorkbookRevisionResource(Client, WorkbookData.DeserializeWorkbookData(e)), _workbookRevisionWorkbooksClientDiagnostics, Pipeline, "WorkbookRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

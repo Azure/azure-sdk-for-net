@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Supported buildpack resource properties. </summary>
     internal partial class SupportedBuildpackResourceProperties
     {
-        /// <summary> Initializes a new instance of SupportedBuildpackResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedBuildpackResourceProperties"/>. </summary>
         public SupportedBuildpackResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedBuildpackResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedBuildpackResourceProperties"/>. </summary>
         /// <param name="buildpackId"> The id of supported buildpack. </param>
-        internal SupportedBuildpackResourceProperties(string buildpackId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedBuildpackResourceProperties(string buildpackId, Dictionary<string, BinaryData> rawData)
         {
             BuildpackId = buildpackId;
+            _rawData = rawData;
         }
 
         /// <summary> The id of supported buildpack. </summary>

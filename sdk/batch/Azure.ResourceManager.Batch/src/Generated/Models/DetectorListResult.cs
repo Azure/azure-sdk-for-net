@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Batch;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class DetectorListResult
     {
-        /// <summary> Initializes a new instance of DetectorListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectorListResult"/>. </summary>
         internal DetectorListResult()
         {
             Value = new ChangeTrackingList<BatchAccountDetectorData>();
         }
 
-        /// <summary> Initializes a new instance of DetectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorListResult"/>. </summary>
         /// <param name="value"> The collection of Batch account detectors returned by the listing operation. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal DetectorListResult(IReadOnlyList<BatchAccountDetectorData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorListResult(IReadOnlyList<BatchAccountDetectorData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The collection of Batch account detectors returned by the listing operation. </summary>

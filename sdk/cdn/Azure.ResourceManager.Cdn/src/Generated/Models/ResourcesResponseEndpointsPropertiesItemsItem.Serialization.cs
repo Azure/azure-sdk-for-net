@@ -5,15 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ResourcesResponseEndpointsPropertiesItemsItem
+    public partial class ResourcesResponseEndpointsPropertiesItemsItem : IUtf8JsonSerializable, IModelJsonSerializable<ResourcesResponseEndpointsPropertiesItemsItem>
     {
-        internal static ResourcesResponseEndpointsPropertiesItemsItem DeserializeResourcesResponseEndpointsPropertiesItemsItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourcesResponseEndpointsPropertiesItemsItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourcesResponseEndpointsPropertiesItemsItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesResponseEndpointsPropertiesItemsItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(EndpointId))
+            {
+                writer.WritePropertyName("endpointId"u8);
+                writer.WriteStringValue(EndpointId);
+            }
+            if (Optional.IsDefined(History))
+            {
+                writer.WritePropertyName("history"u8);
+                writer.WriteBooleanValue(History.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourcesResponseEndpointsPropertiesItemsItem DeserializeResourcesResponseEndpointsPropertiesItemsItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +70,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<string> name = default;
             Optional<string> endpointId = default;
             Optional<bool> history = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,8 +97,61 @@ namespace Azure.ResourceManager.Cdn.Models
                     history = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history));
+            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history), rawData);
+        }
+
+        ResourcesResponseEndpointsPropertiesItemsItem IModelJsonSerializable<ResourcesResponseEndpointsPropertiesItemsItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesResponseEndpointsPropertiesItemsItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourcesResponseEndpointsPropertiesItemsItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourcesResponseEndpointsPropertiesItemsItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesResponseEndpointsPropertiesItemsItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourcesResponseEndpointsPropertiesItemsItem IModelSerializable<ResourcesResponseEndpointsPropertiesItemsItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourcesResponseEndpointsPropertiesItemsItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourcesResponseEndpointsPropertiesItemsItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/> to convert. </param>
+        public static implicit operator RequestContent(ResourcesResponseEndpointsPropertiesItemsItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourcesResponseEndpointsPropertiesItemsItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourcesResponseEndpointsPropertiesItemsItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

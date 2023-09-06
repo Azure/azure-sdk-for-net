@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The Object used to describe a Service Provider supported by Bot Service. </summary>
     public partial class BotServiceProviderProperties
     {
-        /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceProviderProperties"/>. </summary>
         internal BotServiceProviderProperties()
         {
             Parameters = new ChangeTrackingList<BotServiceProviderParameter>();
         }
 
-        /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProviderProperties"/>. </summary>
         /// <param name="id"> Id for Service Provider. </param>
         /// <param name="displayName"> Display Name of the Service Provider. </param>
         /// <param name="serviceProviderName"> Name of the Service Provider. </param>
         /// <param name="devPortalUri"> URL of Dev Portal. </param>
         /// <param name="iconUri"> The URL of icon. </param>
         /// <param name="parameters"> The list of parameters for the Service Provider. </param>
-        internal BotServiceProviderProperties(string id, string displayName, string serviceProviderName, Uri devPortalUri, Uri iconUri, IReadOnlyList<BotServiceProviderParameter> parameters)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceProviderProperties(string id, string displayName, string serviceProviderName, Uri devPortalUri, Uri iconUri, IReadOnlyList<BotServiceProviderParameter> parameters, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             DisplayName = displayName;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.BotService.Models
             DevPortalUri = devPortalUri;
             IconUri = iconUri;
             Parameters = parameters;
+            _rawData = rawData;
         }
 
         /// <summary> Id for Service Provider. </summary>

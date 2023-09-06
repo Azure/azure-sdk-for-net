@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Results of the last detection. </summary>
     public partial class MultivariateLastDetectionResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
         internal MultivariateLastDetectionResult()
         {
@@ -23,10 +27,12 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Initializes a new instance of MultivariateLastDetectionResult. </summary>
         /// <param name="variableStates"> Variable status. </param>
         /// <param name="results"> Anomaly status and information. </param>
-        internal MultivariateLastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultivariateLastDetectionResult(IReadOnlyList<VariableState> variableStates, IReadOnlyList<AnomalyState> results, Dictionary<string, BinaryData> rawData)
         {
             VariableStates = variableStates;
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> Variable status. </summary>

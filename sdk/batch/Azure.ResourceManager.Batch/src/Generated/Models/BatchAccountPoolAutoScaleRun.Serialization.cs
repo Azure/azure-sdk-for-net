@@ -6,16 +6,54 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountPoolAutoScaleRun
+    public partial class BatchAccountPoolAutoScaleRun : IUtf8JsonSerializable, IModelJsonSerializable<BatchAccountPoolAutoScaleRun>
     {
-        internal static BatchAccountPoolAutoScaleRun DeserializeBatchAccountPoolAutoScaleRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BatchAccountPoolAutoScaleRun>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BatchAccountPoolAutoScaleRun>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolAutoScaleRun>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("evaluationTime"u8);
+            writer.WriteStringValue(EvaluationOn, "O");
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteStringValue(Results);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static BatchAccountPoolAutoScaleRun DeserializeBatchAccountPoolAutoScaleRun(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
             DateTimeOffset evaluationTime = default;
             Optional<string> results = default;
             Optional<ResponseError> error = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("evaluationTime"u8))
@@ -44,8 +83,61 @@ namespace Azure.ResourceManager.Batch.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BatchAccountPoolAutoScaleRun(evaluationTime, results.Value, error.Value);
+            return new BatchAccountPoolAutoScaleRun(evaluationTime, results.Value, error.Value, rawData);
+        }
+
+        BatchAccountPoolAutoScaleRun IModelJsonSerializable<BatchAccountPoolAutoScaleRun>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolAutoScaleRun>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountPoolAutoScaleRun(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BatchAccountPoolAutoScaleRun>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolAutoScaleRun>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BatchAccountPoolAutoScaleRun IModelSerializable<BatchAccountPoolAutoScaleRun>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BatchAccountPoolAutoScaleRun>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBatchAccountPoolAutoScaleRun(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BatchAccountPoolAutoScaleRun"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BatchAccountPoolAutoScaleRun"/> to convert. </param>
+        public static implicit operator RequestContent(BatchAccountPoolAutoScaleRun model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BatchAccountPoolAutoScaleRun"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BatchAccountPoolAutoScaleRun(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBatchAccountPoolAutoScaleRun(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

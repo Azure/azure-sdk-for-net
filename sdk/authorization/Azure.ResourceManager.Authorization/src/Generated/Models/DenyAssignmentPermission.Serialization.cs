@@ -5,16 +5,93 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class DenyAssignmentPermission
+    public partial class DenyAssignmentPermission : IUtf8JsonSerializable, IModelJsonSerializable<DenyAssignmentPermission>
     {
-        internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DenyAssignmentPermission>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DenyAssignmentPermission>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DenyAssignmentPermission>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Actions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NotActions))
+            {
+                writer.WritePropertyName("notActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in NotActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DataActions))
+            {
+                writer.WritePropertyName("dataActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NotDataActions))
+            {
+                writer.WritePropertyName("notDataActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in NotDataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion"u8);
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +102,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<IReadOnlyList<string>> notDataActions = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -93,8 +171,61 @@ namespace Azure.ResourceManager.Authorization.Models
                     conditionVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value);
+            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value, rawData);
+        }
+
+        DenyAssignmentPermission IModelJsonSerializable<DenyAssignmentPermission>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DenyAssignmentPermission>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDenyAssignmentPermission(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DenyAssignmentPermission>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DenyAssignmentPermission>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DenyAssignmentPermission IModelSerializable<DenyAssignmentPermission>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DenyAssignmentPermission>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDenyAssignmentPermission(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DenyAssignmentPermission"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DenyAssignmentPermission"/> to convert. </param>
+        public static implicit operator RequestContent(DenyAssignmentPermission model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DenyAssignmentPermission"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DenyAssignmentPermission(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDenyAssignmentPermission(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

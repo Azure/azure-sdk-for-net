@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Blueprint;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> List of blueprint definitions. </summary>
     internal partial class BlueprintList
     {
-        /// <summary> Initializes a new instance of BlueprintList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlueprintList"/>. </summary>
         internal BlueprintList()
         {
             Value = new ChangeTrackingList<BlueprintData>();
         }
 
-        /// <summary> Initializes a new instance of BlueprintList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintList"/>. </summary>
         /// <param name="value"> List of blueprint definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal BlueprintList(IReadOnlyList<BlueprintData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlueprintList(IReadOnlyList<BlueprintData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of blueprint definitions. </summary>

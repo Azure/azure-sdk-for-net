@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Error Body contract. </summary>
     public partial class ErrorResponseBody
     {
-        /// <summary> Initializes a new instance of ErrorResponseBody. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseBody"/>. </summary>
         public ErrorResponseBody()
         {
             Details = new ChangeTrackingList<ErrorFieldContract>();
         }
 
-        /// <summary> Initializes a new instance of ErrorResponseBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseBody"/>. </summary>
         /// <param name="code"> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </param>
         /// <param name="message"> Human-readable representation of the error. </param>
         /// <param name="details"> The list of invalid fields send in request, in case of validation error. </param>
-        internal ErrorResponseBody(string code, string message, IList<ErrorFieldContract> details)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorResponseBody(string code, string message, IList<ErrorFieldContract> details, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _rawData = rawData;
         }
 
         /// <summary> Service-defined error code. This code serves as a sub-status for the HTTP error code specified in the response. </summary>

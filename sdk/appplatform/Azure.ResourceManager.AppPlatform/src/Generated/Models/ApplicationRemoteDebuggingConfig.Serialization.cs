@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ApplicationRemoteDebuggingConfig
+    public partial class ApplicationRemoteDebuggingConfig : IUtf8JsonSerializable, IModelJsonSerializable<ApplicationRemoteDebuggingConfig>
     {
-        internal static ApplicationRemoteDebuggingConfig DeserializeApplicationRemoteDebuggingConfig(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApplicationRemoteDebuggingConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ApplicationRemoteDebuggingConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationRemoteDebuggingConfig>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (Optional.IsDefined(IsEnabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ApplicationRemoteDebuggingConfig DeserializeApplicationRemoteDebuggingConfig(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> port = default;
             Optional<bool> enabled = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -40,8 +79,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ApplicationRemoteDebuggingConfig(Optional.ToNullable(port), Optional.ToNullable(enabled));
+            return new ApplicationRemoteDebuggingConfig(Optional.ToNullable(port), Optional.ToNullable(enabled), rawData);
+        }
+
+        ApplicationRemoteDebuggingConfig IModelJsonSerializable<ApplicationRemoteDebuggingConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationRemoteDebuggingConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationRemoteDebuggingConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ApplicationRemoteDebuggingConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationRemoteDebuggingConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ApplicationRemoteDebuggingConfig IModelSerializable<ApplicationRemoteDebuggingConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ApplicationRemoteDebuggingConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeApplicationRemoteDebuggingConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ApplicationRemoteDebuggingConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ApplicationRemoteDebuggingConfig"/> to convert. </param>
+        public static implicit operator RequestContent(ApplicationRemoteDebuggingConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ApplicationRemoteDebuggingConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ApplicationRemoteDebuggingConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeApplicationRemoteDebuggingConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

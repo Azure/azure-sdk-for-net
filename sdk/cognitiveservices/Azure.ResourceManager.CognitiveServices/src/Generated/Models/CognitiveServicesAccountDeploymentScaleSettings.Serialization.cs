@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountDeploymentScaleSettings : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountDeploymentScaleSettings : IUtf8JsonSerializable, IModelJsonSerializable<CognitiveServicesAccountDeploymentScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CognitiveServicesAccountDeploymentScaleSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CognitiveServicesAccountDeploymentScaleSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccountDeploymentScaleSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ScaleType))
             {
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesAccountDeploymentScaleSettings DeserializeCognitiveServicesAccountDeploymentScaleSettings(JsonElement element)
+        internal static CognitiveServicesAccountDeploymentScaleSettings DeserializeCognitiveServicesAccountDeploymentScaleSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CognitiveServicesAccountDeploymentScaleType> scaleType = default;
             Optional<int> capacity = default;
             Optional<int> activeCapacity = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleType"u8))
@@ -66,8 +89,61 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     activeCapacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountDeploymentScaleSettings(Optional.ToNullable(scaleType), Optional.ToNullable(capacity), Optional.ToNullable(activeCapacity));
+            return new CognitiveServicesAccountDeploymentScaleSettings(Optional.ToNullable(scaleType), Optional.ToNullable(capacity), Optional.ToNullable(activeCapacity), rawData);
+        }
+
+        CognitiveServicesAccountDeploymentScaleSettings IModelJsonSerializable<CognitiveServicesAccountDeploymentScaleSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccountDeploymentScaleSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesAccountDeploymentScaleSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CognitiveServicesAccountDeploymentScaleSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccountDeploymentScaleSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CognitiveServicesAccountDeploymentScaleSettings IModelSerializable<CognitiveServicesAccountDeploymentScaleSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CognitiveServicesAccountDeploymentScaleSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesAccountDeploymentScaleSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CognitiveServicesAccountDeploymentScaleSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CognitiveServicesAccountDeploymentScaleSettings"/> to convert. </param>
+        public static implicit operator RequestContent(CognitiveServicesAccountDeploymentScaleSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CognitiveServicesAccountDeploymentScaleSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CognitiveServicesAccountDeploymentScaleSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCognitiveServicesAccountDeploymentScaleSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

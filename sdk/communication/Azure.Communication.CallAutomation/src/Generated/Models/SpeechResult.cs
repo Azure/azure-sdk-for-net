@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The speech status as a result. </summary>
     public partial class SpeechResult
     {
-        /// <summary> Initializes a new instance of SpeechResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpeechResult"/>. </summary>
         internal SpeechResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SpeechResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
-        internal SpeechResult(string speech)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpeechResult(string speech, Dictionary<string, BinaryData> rawData)
         {
             Speech = speech;
+            _rawData = rawData;
         }
 
         /// <summary> The recognized speech in string. </summary>

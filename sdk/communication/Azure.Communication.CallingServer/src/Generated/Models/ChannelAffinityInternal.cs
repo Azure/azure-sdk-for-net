@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication;
 
 namespace Azure.Communication.CallingServer
@@ -12,9 +14,26 @@ namespace Azure.Communication.CallingServer
     /// <summary> Channel affinity for a participant. </summary>
     internal partial class ChannelAffinityInternal
     {
-        /// <summary> Initializes a new instance of ChannelAffinityInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChannelAffinityInternal"/>. </summary>
         public ChannelAffinityInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChannelAffinityInternal"/>. </summary>
+        /// <param name="channel"> Channel number to which bitstream from a particular participant will be written. </param>
+        /// <param name="participant">
+        /// The identifier for the participant whose bitstream will be written to the channel
+        /// represented by the channel number.
+        /// </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChannelAffinityInternal(int? channel, CommunicationIdentifierModel participant, Dictionary<string, BinaryData> rawData)
+        {
+            Channel = channel;
+            Participant = participant;
+            _rawData = rawData;
         }
 
         /// <summary> Channel number to which bitstream from a particular participant will be written. </summary>

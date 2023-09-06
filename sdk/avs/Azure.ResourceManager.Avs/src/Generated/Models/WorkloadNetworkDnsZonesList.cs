@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX DNS Zones. </summary>
     internal partial class WorkloadNetworkDnsZonesList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsZonesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZonesList"/>. </summary>
         internal WorkloadNetworkDnsZonesList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkDnsZoneData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsZonesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZonesList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkDnsZonesList(IReadOnlyList<WorkloadNetworkDnsZoneData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkDnsZonesList(IReadOnlyList<WorkloadNetworkDnsZoneData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The items on the page. </summary>

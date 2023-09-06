@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The RankingsResponseTablesPropertiesItemsItem. </summary>
     public partial class RankingsResponseTablesPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsItem"/>. </summary>
         internal RankingsResponseTablesPropertiesItemsItem()
         {
             Metrics = new ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>();
         }
 
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="metrics"></param>
-        internal RankingsResponseTablesPropertiesItemsItem(string name, IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> metrics)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RankingsResponseTablesPropertiesItemsItem(string name, IReadOnlyList<RankingsResponseTablesPropertiesItemsMetricsItem> metrics, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Metrics = metrics;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the name. </summary>

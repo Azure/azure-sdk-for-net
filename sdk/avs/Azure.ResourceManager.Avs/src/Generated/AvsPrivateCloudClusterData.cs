@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class AvsPrivateCloudClusterData : ResourceData
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="sku"> The cluster SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AvsPrivateCloudClusterData(AvsSku sku)
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Avs
             Hosts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,13 +43,20 @@ namespace Azure.ResourceManager.Avs
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
-        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             ClusterSize = clusterSize;
             ProvisioningState = provisioningState;
             ClusterId = clusterId;
             Hosts = hosts;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterData"/> for deserialization. </summary>
+        internal AvsPrivateCloudClusterData()
+        {
         }
 
         /// <summary> The cluster SKU. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Billing;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The list of billing subscriptions. </summary>
     internal partial class BillingSubscriptionsListResult
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionsListResult"/>. </summary>
         internal BillingSubscriptionsListResult()
         {
             Value = new ChangeTrackingList<BillingSubscriptionData>();
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionsListResult"/>. </summary>
         /// <param name="value"> The list of billing subscriptions. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal BillingSubscriptionsListResult(IReadOnlyList<BillingSubscriptionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionsListResult(IReadOnlyList<BillingSubscriptionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of billing subscriptions. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class Checkpoint : IUtf8JsonSerializable
+    public partial class Checkpoint : IUtf8JsonSerializable, IModelJsonSerializable<Checkpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Checkpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Checkpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Checkpoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentCheckpointId))
             {
@@ -35,11 +43,25 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Checkpoint DeserializeCheckpoint(JsonElement element)
+        internal static Checkpoint DeserializeCheckpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +70,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<string> checkpointId = default;
             Optional<string> name = default;
             Optional<string> description = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentCheckpointID"u8))
@@ -70,8 +93,61 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Checkpoint(parentCheckpointId.Value, checkpointId.Value, name.Value, description.Value);
+            return new Checkpoint(parentCheckpointId.Value, checkpointId.Value, name.Value, description.Value, rawData);
+        }
+
+        Checkpoint IModelJsonSerializable<Checkpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Checkpoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCheckpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Checkpoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Checkpoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Checkpoint IModelSerializable<Checkpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Checkpoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCheckpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Checkpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Checkpoint"/> to convert. </param>
+        public static implicit operator RequestContent(Checkpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Checkpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Checkpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCheckpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

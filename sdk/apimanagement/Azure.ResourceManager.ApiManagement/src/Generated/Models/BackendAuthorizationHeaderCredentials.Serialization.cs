@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendAuthorizationHeaderCredentials : IUtf8JsonSerializable
+    public partial class BackendAuthorizationHeaderCredentials : IUtf8JsonSerializable, IModelJsonSerializable<BackendAuthorizationHeaderCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BackendAuthorizationHeaderCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BackendAuthorizationHeaderCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BackendAuthorizationHeaderCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("scheme"u8);
             writer.WriteStringValue(Scheme);
             writer.WritePropertyName("parameter"u8);
             writer.WriteStringValue(Parameter);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackendAuthorizationHeaderCredentials DeserializeBackendAuthorizationHeaderCredentials(JsonElement element)
+        internal static BackendAuthorizationHeaderCredentials DeserializeBackendAuthorizationHeaderCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string scheme = default;
             string parameter = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheme"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     parameter = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BackendAuthorizationHeaderCredentials(scheme, parameter);
+            return new BackendAuthorizationHeaderCredentials(scheme, parameter, rawData);
+        }
+
+        BackendAuthorizationHeaderCredentials IModelJsonSerializable<BackendAuthorizationHeaderCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackendAuthorizationHeaderCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackendAuthorizationHeaderCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BackendAuthorizationHeaderCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackendAuthorizationHeaderCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BackendAuthorizationHeaderCredentials IModelSerializable<BackendAuthorizationHeaderCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BackendAuthorizationHeaderCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBackendAuthorizationHeaderCredentials(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BackendAuthorizationHeaderCredentials"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BackendAuthorizationHeaderCredentials"/> to convert. </param>
+        public static implicit operator RequestContent(BackendAuthorizationHeaderCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BackendAuthorizationHeaderCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBackendAuthorizationHeaderCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

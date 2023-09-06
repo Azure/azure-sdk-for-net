@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformCustomDomainCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformCustomDomainCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformCustomDomainResource(Client, AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(e)), _appPlatformCustomDomainCustomDomainsClientDiagnostics, Pipeline, "AppPlatformCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformCustomDomainResource(Client, AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(e)), _appPlatformCustomDomainCustomDomainsClientDiagnostics, Pipeline, "AppPlatformCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformCustomDomainCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformCustomDomainCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformCustomDomainResource(Client, AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(e)), _appPlatformCustomDomainCustomDomainsClientDiagnostics, Pipeline, "AppPlatformCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppPlatformCustomDomainResource(Client, AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(e)), _appPlatformCustomDomainCustomDomainsClientDiagnostics, Pipeline, "AppPlatformCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

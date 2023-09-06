@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> The RenewProperties. </summary>
     internal partial class RenewProperties
     {
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RenewProperties"/>. </summary>
         public RenewProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewProperties"/>. </summary>
         /// <param name="purchaseProperties"></param>
-        internal RenewProperties(BillingBenefitsPurchaseContent purchaseProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenewProperties(BillingBenefitsPurchaseContent purchaseProperties, Dictionary<string, BinaryData> rawData)
         {
             PurchaseProperties = purchaseProperties;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the purchase properties. </summary>

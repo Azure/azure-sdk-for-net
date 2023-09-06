@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the create checkpoint action properties. </summary>
     public partial class VirtualMachineCreateCheckpoint
     {
-        /// <summary> Initializes a new instance of VirtualMachineCreateCheckpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCreateCheckpoint"/>. </summary>
         public VirtualMachineCreateCheckpoint()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCreateCheckpoint"/>. </summary>
+        /// <param name="name"> Name of the checkpoint. </param>
+        /// <param name="description"> Description of the checkpoint. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineCreateCheckpoint(string name, string description, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Description = description;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the checkpoint. </summary>

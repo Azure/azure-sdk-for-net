@@ -5,38 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    internal partial class AppConfigurationStoreEncryptionProperties : IUtf8JsonSerializable
+    internal partial class AppConfigurationStoreEncryptionProperties : IUtf8JsonSerializable, IModelJsonSerializable<AppConfigurationStoreEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AppConfigurationStoreEncryptionProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AppConfigurationStoreEncryptionProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AppConfigurationStoreEncryptionProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 if (KeyVaultProperties != null)
                 {
                     writer.WritePropertyName("keyVaultProperties"u8);
-                    writer.WriteObjectValue(KeyVaultProperties);
+                    if (KeyVaultProperties is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<AppConfigurationKeyVaultProperties>)KeyVaultProperties).Serialize(writer, options);
+                    }
                 }
                 else
                 {
                     writer.WriteNull("keyVaultProperties");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppConfigurationStoreEncryptionProperties DeserializeAppConfigurationStoreEncryptionProperties(JsonElement element)
+        internal static AppConfigurationStoreEncryptionProperties DeserializeAppConfigurationStoreEncryptionProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -49,8 +79,61 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     keyVaultProperties = AppConfigurationKeyVaultProperties.DeserializeAppConfigurationKeyVaultProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AppConfigurationStoreEncryptionProperties(keyVaultProperties.Value);
+            return new AppConfigurationStoreEncryptionProperties(keyVaultProperties.Value, rawData);
+        }
+
+        AppConfigurationStoreEncryptionProperties IModelJsonSerializable<AppConfigurationStoreEncryptionProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppConfigurationStoreEncryptionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppConfigurationStoreEncryptionProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AppConfigurationStoreEncryptionProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppConfigurationStoreEncryptionProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AppConfigurationStoreEncryptionProperties IModelSerializable<AppConfigurationStoreEncryptionProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AppConfigurationStoreEncryptionProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAppConfigurationStoreEncryptionProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AppConfigurationStoreEncryptionProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AppConfigurationStoreEncryptionProperties"/> to convert. </param>
+        public static implicit operator RequestContent(AppConfigurationStoreEncryptionProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AppConfigurationStoreEncryptionProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AppConfigurationStoreEncryptionProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAppConfigurationStoreEncryptionProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

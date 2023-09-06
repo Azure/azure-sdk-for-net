@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list dsc nodes operation. </summary>
     internal partial class DscNodeListResult
     {
-        /// <summary> Initializes a new instance of DscNodeListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeListResult"/>. </summary>
         internal DscNodeListResult()
         {
             Value = new ChangeTrackingList<DscNodeData>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of dsc nodes. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         /// <param name="totalCount"> Gets the total number of nodes matching filter criteria. </param>
-        internal DscNodeListResult(IReadOnlyList<DscNodeData> value, string nextLink, int? totalCount)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeListResult(IReadOnlyList<DscNodeData> value, string nextLink, int? totalCount, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
             TotalCount = totalCount;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets a list of dsc nodes. </summary>

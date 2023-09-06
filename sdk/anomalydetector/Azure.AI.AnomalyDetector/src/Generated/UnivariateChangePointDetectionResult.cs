@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,9 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Response of change point detection. </summary>
     public partial class UnivariateChangePointDetectionResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of UnivariateChangePointDetectionResult. </summary>
         internal UnivariateChangePointDetectionResult()
         {
@@ -31,11 +35,13 @@ namespace Azure.AI.AnomalyDetector
         /// array is consistent with the input series.
         /// </param>
         /// <param name="confidenceScores"> Change point confidence of each point. </param>
-        internal UnivariateChangePointDetectionResult(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnivariateChangePointDetectionResult(int? period, IReadOnlyList<bool> isChangePoint, IReadOnlyList<float> confidenceScores, Dictionary<string, BinaryData> rawData)
         {
             Period = period;
             IsChangePoint = isChangePoint;
             ConfidenceScores = confidenceScores;
+            _rawData = rawData;
         }
 
         /// <summary>

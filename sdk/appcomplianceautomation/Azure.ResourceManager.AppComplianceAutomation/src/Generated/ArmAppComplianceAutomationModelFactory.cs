@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppComplianceAutomationModelFactory
     {
-        /// <summary> Initializes a new instance of ReportResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="AppComplianceAutomation.ReportResourceData"/> instance for mocking. </returns>
         public static ReportResourceData ReportResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReportProperties properties = null)
         {
-            return new ReportResourceData(id, name, resourceType, systemData, properties);
+            return new ReportResourceData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of ReportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportProperties"/>. </summary>
         /// <param name="id"> Report id in database. </param>
         /// <param name="status"> Report status. </param>
         /// <param name="tenantId"> Report's tenant id. </param>
@@ -52,20 +52,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             subscriptions ??= new List<string>();
             resources ??= new List<ResourceMetadata>();
 
-            return new ReportProperties(id, status, tenantId, reportName, offerGuid, timeZone, triggerOn, nextTriggerOn, lastTriggerOn, subscriptions?.ToList(), resources?.ToList(), complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365) : null, provisioningState);
+            return new ReportProperties(id, status, tenantId, reportName, offerGuid, timeZone, triggerOn, nextTriggerOn, lastTriggerOn, subscriptions?.ToList(), resources?.ToList(), complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365, new Dictionary<string, BinaryData>()) : null, provisioningState, default);
         }
 
-        /// <summary> Initializes a new instance of OverviewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OverviewStatus"/>. </summary>
         /// <param name="passedCount"> The count of all passed full automation control. </param>
         /// <param name="failedCount"> The count of all failed full automation control. </param>
         /// <param name="manualCount"> The count of all manual control. </param>
         /// <returns> A new <see cref="Models.OverviewStatus"/> instance for mocking. </returns>
         public static OverviewStatus OverviewStatus(int? passedCount = null, int? failedCount = null, int? manualCount = null)
         {
-            return new OverviewStatus(passedCount, failedCount, manualCount);
+            return new OverviewStatus(passedCount, failedCount, manualCount, default);
         }
 
-        /// <summary> Initializes a new instance of SnapshotResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="AppComplianceAutomation.SnapshotResourceData"/> instance for mocking. </returns>
         public static SnapshotResourceData SnapshotResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SnapshotProperties properties = null)
         {
-            return new SnapshotResourceData(id, name, resourceType, systemData, properties);
+            return new SnapshotResourceData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of SnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
         /// <param name="id"> Snapshot id in the database. </param>
         /// <param name="snapshotName"> Snapshot name. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             complianceResults ??= new List<ComplianceResult>();
 
-            return new SnapshotProperties(id, snapshotName, createdOn, provisioningState, reportProperties, reportSystemData, complianceResults?.ToList());
+            return new SnapshotProperties(id, snapshotName, createdOn, provisioningState, reportProperties, reportSystemData, complianceResults?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ComplianceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceResult"/>. </summary>
         /// <param name="complianceName"> The name of the compliance. e.g. "M365". </param>
         /// <param name="categories"> List of categories. </param>
         /// <returns> A new <see cref="Models.ComplianceResult"/> instance for mocking. </returns>
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             categories ??= new List<Category>();
 
-            return new ComplianceResult(complianceName, categories?.ToList());
+            return new ComplianceResult(complianceName, categories?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of Category. </summary>
+        /// <summary> Initializes a new instance of <see cref="Category"/>. </summary>
         /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
         /// <param name="categoryType"> The category type. </param>
         /// <param name="categoryStatus"> Category status. </param>
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             controlFamilies ??= new List<ControlFamily>();
 
-            return new Category(categoryName, categoryType, categoryStatus, controlFamilies?.ToList());
+            return new Category(categoryName, categoryType, categoryStatus, controlFamilies?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ControlFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlFamily"/>. </summary>
         /// <param name="familyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
         /// <param name="familyType"> The control family type. </param>
         /// <param name="familyStatus"> Control family status. </param>
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             controls ??= new List<Control>();
 
-            return new ControlFamily(familyName, familyType, familyStatus, controls?.ToList());
+            return new ControlFamily(familyName, familyType, familyStatus, controls?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of Control. </summary>
+        /// <summary> Initializes a new instance of <see cref="Control"/>. </summary>
         /// <param name="controlId"> The Id of the control. e.g. "Operational Security#10". </param>
         /// <param name="controlShortName"> The short name of the control. e.g. "Unsupported OS and Software.". </param>
         /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             assessments ??= new List<Assessment>();
 
-            return new Control(controlId, controlShortName, controlFullName, controlType, controlDescription, controlDescriptionHyperLink, controlStatus, assessments?.ToList());
+            return new Control(controlId, controlShortName, controlFullName, controlType, controlDescription, controlDescriptionHyperLink, controlStatus, assessments?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         /// <param name="name"> The name of the assessment. </param>
         /// <param name="severity"> The severity level of this assessment. </param>
         /// <param name="description"> The description of the assessment. </param>
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             resourceList ??= new List<AssessmentResource>();
 
-            return new Assessment(name, severity, description, remediation, isPass, policyId, resourceList?.ToList());
+            return new Assessment(name, severity, description, remediation, isPass, policyId, resourceList?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of AssessmentResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssessmentResource"/>. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="reason"> The reason for the N/A resource. </param>
@@ -171,10 +171,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.AssessmentResource"/> instance for mocking. </returns>
         public static AssessmentResource AssessmentResource(string resourceId = null, ResourceStatus? resourceStatus = null, string reason = null, string statusChangeDate = null)
         {
-            return new AssessmentResource(resourceId, resourceStatus, reason, statusChangeDate);
+            return new AssessmentResource(resourceId, resourceStatus, reason, statusChangeDate, default);
         }
 
-        /// <summary> Initializes a new instance of DownloadResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/>. </summary>
+        /// <param name="reportCreatorTenantId"> Tenant id. </param>
+        /// <param name="downloadType"> Indicates the download type. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <returns> A new <see cref="Models.SnapshotDownloadContent"/> instance for mocking. </returns>
+        public static SnapshotDownloadContent SnapshotDownloadContent(string reportCreatorTenantId = null, DownloadType downloadType = default, string offerGuid = null)
+        {
+            return new SnapshotDownloadContent(reportCreatorTenantId, downloadType, offerGuid, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DownloadResponse"/>. </summary>
         /// <param name="resourceList"> List of the reports. </param>
         /// <param name="complianceReport"> List of the compliance result. </param>
         /// <param name="compliancePdfReportSasUri"> compliance pdf report. </param>
@@ -185,10 +195,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             resourceList ??= new List<ResourceItem>();
             complianceReport ??= new List<ComplianceReportItem>();
 
-            return new DownloadResponse(resourceList?.ToList(), complianceReport?.ToList(), compliancePdfReportSasUri != null ? new DownloadResponseCompliancePdfReport(compliancePdfReportSasUri) : null, complianceDetailedPdfReportSasUri != null ? new DownloadResponseComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri) : null);
+            return new DownloadResponse(resourceList?.ToList(), complianceReport?.ToList(), compliancePdfReportSasUri != null ? new DownloadResponseCompliancePdfReport(compliancePdfReportSasUri, new Dictionary<string, BinaryData>()) : null, complianceDetailedPdfReportSasUri != null ? new DownloadResponseComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri, new Dictionary<string, BinaryData>()) : null, default);
         }
 
-        /// <summary> Initializes a new instance of ResourceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceItem"/>. </summary>
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
         /// <param name="resourceType"> The resource type of this resource. </param>
@@ -196,10 +206,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ResourceItem"/> instance for mocking. </returns>
         public static ResourceItem ResourceItem(string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null)
         {
-            return new ResourceItem(subscriptionId, resourceGroup, resourceType, resourceId);
+            return new ResourceItem(subscriptionId, resourceGroup, resourceType, resourceId, default);
         }
 
-        /// <summary> Initializes a new instance of ComplianceReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceReportItem"/>. </summary>
         /// <param name="categoryName"> The category name. </param>
         /// <param name="controlId"> The control Id - e.g. "1". </param>
         /// <param name="controlName"> The control name. </param>
@@ -216,7 +226,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ComplianceReportItem"/> instance for mocking. </returns>
         public static ComplianceReportItem ComplianceReportItem(string categoryName = null, string controlId = null, string controlName = null, ControlType? controlType = null, ComplianceState? complianceState = null, string policyId = null, string policyDisplayName = null, string policyDescription = null, string subscriptionId = null, string resourceGroup = null, string resourceType = null, string resourceId = null, string statusChangeDate = null)
         {
-            return new ComplianceReportItem(categoryName, controlId, controlName, controlType, complianceState, policyId, policyDisplayName, policyDescription, subscriptionId, resourceGroup, resourceType, resourceId, statusChangeDate);
+            return new ComplianceReportItem(categoryName, controlId, controlName, controlType, complianceState, policyId, policyDisplayName, policyDescription, subscriptionId, resourceGroup, resourceType, resourceId, statusChangeDate, default);
         }
     }
 }

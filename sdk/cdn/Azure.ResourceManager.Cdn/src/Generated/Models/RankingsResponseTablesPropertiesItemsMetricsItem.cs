@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
     public partial class RankingsResponseTablesPropertiesItemsMetricsItem
     {
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
         internal RankingsResponseTablesPropertiesItemsMetricsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsMetricsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesPropertiesItemsMetricsItem"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="value"></param>
         /// <param name="percentage"></param>
-        internal RankingsResponseTablesPropertiesItemsMetricsItem(string metric, long? value, float? percentage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RankingsResponseTablesPropertiesItemsMetricsItem(string metric, long? value, float? percentage, Dictionary<string, BinaryData> rawData)
         {
             Metric = metric;
             Value = value;
             Percentage = percentage;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the metric. </summary>

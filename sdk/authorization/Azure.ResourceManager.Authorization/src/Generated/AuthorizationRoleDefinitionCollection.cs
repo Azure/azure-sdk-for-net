@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AuthorizationRoleDefinitionResource(Client, AuthorizationRoleDefinitionData.DeserializeAuthorizationRoleDefinitionData(e)), _authorizationRoleDefinitionRoleDefinitionsClientDiagnostics, Pipeline, "AuthorizationRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

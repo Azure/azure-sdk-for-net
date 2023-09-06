@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
     public partial class MetadataFilter
     {
-        /// <summary> Initializes a new instance of MetadataFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
         public MetadataFilter()
         {
             Metadata = new ChangeTrackingList<MetadataRecord>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataFilter"/>. </summary>
+        /// <param name="metadata"></param>
+        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataFilter(IList<MetadataRecord> metadata, LogicalOperationKind? logicalOperation, Dictionary<string, BinaryData> rawData)
+        {
+            Metadata = metadata;
+            LogicalOperation = logicalOperation;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the metadata. </summary>

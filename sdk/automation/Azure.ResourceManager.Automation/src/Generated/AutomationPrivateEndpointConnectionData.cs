@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionData"/>. </summary>
         public AutomationPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +37,13 @@ namespace Azure.ResourceManager.Automation
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="groupIds"> Gets the groupIds. </param>
         /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
-        internal AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, AutomationPrivateLinkServiceConnectionStateProperty connectionState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, IList<string> groupIds, AutomationPrivateLinkServiceConnectionStateProperty connectionState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
+            _rawData = rawData;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>

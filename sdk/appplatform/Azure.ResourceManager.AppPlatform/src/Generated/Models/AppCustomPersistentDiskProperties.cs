@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -16,9 +17,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// Please note <see cref="AppCustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AppPlatformAzureFileVolume"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCustomPersistentDiskProperties))]
     public abstract partial class AppCustomPersistentDiskProperties
     {
-        /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppCustomPersistentDiskProperties"/>. </summary>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> is null. </exception>
         protected AppCustomPersistentDiskProperties(string mountPath)
@@ -29,17 +34,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
             MountOptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppCustomPersistentDiskProperties"/>. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
         /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
-        internal AppCustomPersistentDiskProperties(UnderlyingResourceType underlyingResourceType, string mountPath, bool? isReadOnly, IList<string> mountOptions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppCustomPersistentDiskProperties(UnderlyingResourceType underlyingResourceType, string mountPath, bool? isReadOnly, IList<string> mountOptions, Dictionary<string, BinaryData> rawData)
         {
             UnderlyingResourceType = underlyingResourceType;
             MountPath = mountPath;
             IsReadOnly = isReadOnly;
             MountOptions = mountOptions;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppCustomPersistentDiskProperties"/> for deserialization. </summary>
+        internal AppCustomPersistentDiskProperties()
+        {
         }
 
         /// <summary> The type of the underlying resource to mount as a persistent disk. </summary>
