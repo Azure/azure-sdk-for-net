@@ -85,9 +85,8 @@ $deprecatedPackages = (Get-CSVMetadata).Where({ $_.Support -eq 'deprecated' })
 
 foreach ($package in $deprecatedPackages) {
     $packageIdentity = $package.Package
-    # TODO: Ensure this works in Java
-    if (Test-Path "Function:$GetPackageIdentity") {
-        $packageIdentity = &$GetPackageIdentity $package
+    if (Test-Path "Function:$GetPackageIdentityFromCsvMetadata") {
+        $packageIdentity = &$GetPackageIdentityFromCsvMetadata $package
     }
 
     $packageInfoPreview = $packageInfoLatest = $null
