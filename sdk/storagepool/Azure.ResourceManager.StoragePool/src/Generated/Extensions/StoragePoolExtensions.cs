@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StoragePool.Mocking;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class to add extension methods to Azure.ResourceManager.StoragePool. </summary>
     public static partial class StoragePoolExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StoragePoolArmClientMockingExtension GetStoragePoolArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new StoragePoolArmClientMockingExtension(client);
+            });
+        }
+
+        private static StoragePoolResourceGroupMockingExtension GetStoragePoolResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StoragePoolResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StoragePoolSubscriptionMockingExtension GetStoragePoolSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StoragePoolSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DiskPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="DiskPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DiskPoolResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
         public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DiskPoolResource.ValidateResourceId(id);
-                return new DiskPoolResource(client, id);
-            }
-            );
+            return GetStoragePoolArmClientMockingExtension(client).GetDiskPoolResource(id);
         }
-        #endregion
 
-        #region DiskPoolIscsiTargetResource
         /// <summary>
         /// Gets an object representing a <see cref="DiskPoolIscsiTargetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DiskPoolIscsiTargetResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolIscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,21 +65,15 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource" /> object. </returns>
         public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DiskPoolIscsiTargetResource.ValidateResourceId(id);
-                return new DiskPoolIscsiTargetResource(client, id);
-            }
-            );
+            return GetStoragePoolArmClientMockingExtension(client).GetDiskPoolIscsiTargetResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of DiskPoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDiskPools();
+            return GetStoragePoolResourceGroupMockingExtension(resourceGroupResource).GetDiskPools();
         }
 
         /// <summary>
@@ -117,7 +97,7 @@ namespace Azure.ResourceManager.StoragePool
         [ForwardsClientCalls]
         public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDiskPools().GetAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetStoragePoolResourceGroupMockingExtension(resourceGroupResource).GetDiskPoolAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,7 +121,7 @@ namespace Azure.ResourceManager.StoragePool
         [ForwardsClientCalls]
         public static Response<DiskPoolResource> GetDiskPool(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDiskPools().Get(diskPoolName, cancellationToken);
+            return GetStoragePoolResourceGroupMockingExtension(resourceGroupResource).GetDiskPool(diskPoolName, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +142,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
+            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +163,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiskPools(cancellationToken);
+            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPools(cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +185,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
+            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -227,7 +207,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
+            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +229,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
+            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +251,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceSkus(location, cancellationToken);
+            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetResourceSkus(location, cancellationToken);
         }
     }
 }
