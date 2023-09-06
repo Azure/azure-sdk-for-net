@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Trino Coordinator. </summary>
     public partial class TrinoCoordinator
     {
-        /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         public TrinoCoordinator()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         /// <param name="highAvailabilityEnabled"> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </param>
         /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>
         /// <param name="suspend"> The flag that if suspend debug or not. </param>
-        internal TrinoCoordinator(bool? highAvailabilityEnabled, bool? isEnabled, int? port, bool? suspend)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoCoordinator(bool? highAvailabilityEnabled, bool? isEnabled, int? port, bool? suspend, Dictionary<string, BinaryData> rawData)
         {
             HighAvailabilityEnabled = highAvailabilityEnabled;
             IsEnabled = isEnabled;
             Port = port;
             Suspend = suspend;
+            _rawData = rawData;
         }
 
         /// <summary> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </summary>

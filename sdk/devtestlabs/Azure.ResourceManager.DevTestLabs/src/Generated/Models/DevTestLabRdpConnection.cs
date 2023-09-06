@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Represents a .rdp file. </summary>
     public partial class DevTestLabRdpConnection
     {
-        /// <summary> Initializes a new instance of DevTestLabRdpConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabRdpConnection"/>. </summary>
         internal DevTestLabRdpConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabRdpConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabRdpConnection"/>. </summary>
         /// <param name="contents"> The contents of the .rdp file. </param>
-        internal DevTestLabRdpConnection(string contents)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabRdpConnection(string contents, Dictionary<string, BinaryData> rawData)
         {
             Contents = contents;
+            _rawData = rawData;
         }
 
         /// <summary> The contents of the .rdp file. </summary>

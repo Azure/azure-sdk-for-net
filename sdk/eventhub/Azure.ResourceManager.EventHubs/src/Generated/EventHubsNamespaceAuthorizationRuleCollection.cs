@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsNamespaceAuthorizationRuleResource(Client, EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(e)), _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "EventHubsNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsNamespaceAuthorizationRuleResource(Client, EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(e)), _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "EventHubsNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsNamespaceAuthorizationRuleResource(Client, EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(e)), _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "EventHubsNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new EventHubsNamespaceAuthorizationRuleResource(Client, EventHubsAuthorizationRuleData.DeserializeEventHubsAuthorizationRuleData(e)), _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics, Pipeline, "EventHubsNamespaceAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

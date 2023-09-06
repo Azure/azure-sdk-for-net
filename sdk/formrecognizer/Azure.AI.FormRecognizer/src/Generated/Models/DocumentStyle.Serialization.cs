@@ -5,16 +5,89 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentStyle
+    public partial class DocumentStyle : IUtf8JsonSerializable, IModelJsonSerializable<DocumentStyle>
     {
-        internal static DocumentStyle DeserializeDocumentStyle(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DocumentStyle>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DocumentStyle>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentStyle>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsHandwritten))
+            {
+                writer.WritePropertyName("isHandwritten"u8);
+                writer.WriteBooleanValue(IsHandwritten.Value);
+            }
+            if (Optional.IsDefined(SimilarFontFamily))
+            {
+                writer.WritePropertyName("similarFontFamily"u8);
+                writer.WriteStringValue(SimilarFontFamily);
+            }
+            if (Optional.IsDefined(FontStyle))
+            {
+                writer.WritePropertyName("fontStyle"u8);
+                writer.WriteStringValue(FontStyle.Value.ToString());
+            }
+            if (Optional.IsDefined(FontWeight))
+            {
+                writer.WritePropertyName("fontWeight"u8);
+                writer.WriteStringValue(FontWeight.Value.ToString());
+            }
+            if (Optional.IsDefined(Color))
+            {
+                writer.WritePropertyName("color"u8);
+                writer.WriteStringValue(Color);
+            }
+            if (Optional.IsDefined(BackgroundColor))
+            {
+                writer.WritePropertyName("backgroundColor"u8);
+                writer.WriteStringValue(BackgroundColor);
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentSpan>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("confidence"u8);
+            writer.WriteNumberValue(Confidence);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DocumentStyle DeserializeDocumentStyle(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +100,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<string> backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isHandwritten"u8))
@@ -86,8 +160,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     confidence = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
+            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence, rawData);
+        }
+
+        DocumentStyle IModelJsonSerializable<DocumentStyle>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentStyle>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentStyle(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DocumentStyle>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentStyle>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DocumentStyle IModelSerializable<DocumentStyle>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DocumentStyle>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDocumentStyle(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DocumentStyle"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DocumentStyle"/> to convert. </param>
+        public static implicit operator RequestContent(DocumentStyle model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DocumentStyle"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DocumentStyle(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDocumentStyle(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

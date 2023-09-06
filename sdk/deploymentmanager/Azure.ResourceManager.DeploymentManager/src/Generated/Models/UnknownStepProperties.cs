@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> The UnknownStepProperties. </summary>
     internal partial class UnknownStepProperties : StepProperties
     {
-        /// <summary> Initializes a new instance of UnknownStepProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownStepProperties"/>. </summary>
         /// <param name="stepType"> The type of step. </param>
-        internal UnknownStepProperties(StepType stepType) : base(stepType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownStepProperties(StepType stepType, Dictionary<string, BinaryData> rawData) : base(stepType, rawData)
         {
             StepType = stepType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStepProperties"/> for deserialization. </summary>
+        internal UnknownStepProperties()
+        {
         }
     }
 }

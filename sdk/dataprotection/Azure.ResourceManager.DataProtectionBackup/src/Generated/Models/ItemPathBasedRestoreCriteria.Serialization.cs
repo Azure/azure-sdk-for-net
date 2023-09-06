@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ItemPathBasedRestoreCriteria : IUtf8JsonSerializable
+    public partial class ItemPathBasedRestoreCriteria : IUtf8JsonSerializable, IModelJsonSerializable<ItemPathBasedRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ItemPathBasedRestoreCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ItemPathBasedRestoreCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ItemPathBasedRestoreCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("itemPath"u8);
             writer.WriteStringValue(ItemPath);
@@ -31,7 +39,120 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ItemPathBasedRestoreCriteria DeserializeItemPathBasedRestoreCriteria(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string itemPath = default;
+            bool isPathRelativeToBackupItem = default;
+            Optional<IList<string>> subItemPathPrefix = default;
+            string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("itemPath"u8))
+                {
+                    itemPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isPathRelativeToBackupItem"u8))
+                {
+                    isPathRelativeToBackupItem = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("subItemPathPrefix"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    subItemPathPrefix = array;
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ItemPathBasedRestoreCriteria(objectType, itemPath, isPathRelativeToBackupItem, Optional.ToList(subItemPathPrefix), rawData);
+        }
+
+        ItemPathBasedRestoreCriteria IModelJsonSerializable<ItemPathBasedRestoreCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ItemPathBasedRestoreCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeItemPathBasedRestoreCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ItemPathBasedRestoreCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ItemPathBasedRestoreCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ItemPathBasedRestoreCriteria IModelSerializable<ItemPathBasedRestoreCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ItemPathBasedRestoreCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeItemPathBasedRestoreCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ItemPathBasedRestoreCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ItemPathBasedRestoreCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(ItemPathBasedRestoreCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ItemPathBasedRestoreCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ItemPathBasedRestoreCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeItemPathBasedRestoreCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

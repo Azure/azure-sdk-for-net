@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
-    public partial class PatientDocument : IUtf8JsonSerializable
+    public partial class PatientDocument : IUtf8JsonSerializable, IModelJsonSerializable<PatientDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PatientDocument>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PatientDocument>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -35,16 +43,139 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DocumentContent>)Content).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static PatientDocument DeserializePatientDocument(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DocumentType type = default;
+            Optional<ClinicalDocumentType> clinicalType = default;
+            string id = default;
+            Optional<string> language = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            DocumentContent content = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new DocumentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clinicalType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clinicalType = new ClinicalDocumentType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("language"u8))
+                {
+                    language = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("createdDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("content"u8))
+                {
+                    content = DocumentContent.DeserializeDocumentContent(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PatientDocument(type, Optional.ToNullable(clinicalType), id, language.Value, Optional.ToNullable(createdDateTime), content, rawData);
+        }
+
+        PatientDocument IModelJsonSerializable<PatientDocument>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePatientDocument(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PatientDocument>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PatientDocument IModelSerializable<PatientDocument>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePatientDocument(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PatientDocument"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PatientDocument"/> to convert. </param>
+        public static implicit operator RequestContent(PatientDocument model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PatientDocument"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PatientDocument(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePatientDocument(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

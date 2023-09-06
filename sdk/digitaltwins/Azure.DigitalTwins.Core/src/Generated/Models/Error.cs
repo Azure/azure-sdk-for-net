@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Error definition. </summary>
     internal partial class Error
     {
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         internal Error()
         {
             Details = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> Internal error details. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal Error(string code, string message, IReadOnlyList<Error> details, InnerError innererror)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Error(string code, string message, IReadOnlyList<Error> details, InnerError innererror, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
             Details = details;
             Innererror = innererror;
+            _rawData = rawData;
         }
 
         /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>

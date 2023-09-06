@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The network properties. </summary>
     public partial class HDInsightClusterNetworkProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterNetworkProperties"/>. </summary>
         public HDInsightClusterNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterNetworkProperties"/>. </summary>
         /// <param name="resourceProviderConnection"> The direction for the resource provider connection. </param>
         /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
-        internal HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterNetworkProperties(HDInsightResourceProviderConnection? resourceProviderConnection, HDInsightPrivateLinkState? privateLink, Dictionary<string, BinaryData> rawData)
         {
             ResourceProviderConnection = resourceProviderConnection;
             PrivateLink = privateLink;
+            _rawData = rawData;
         }
 
         /// <summary> The direction for the resource provider connection. </summary>

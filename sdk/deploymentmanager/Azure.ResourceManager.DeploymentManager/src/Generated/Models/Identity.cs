@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Identity for the resource. </summary>
     public partial class Identity
     {
-        /// <summary> Initializes a new instance of Identity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Identity"/>. </summary>
         /// <param name="identityType"> The identity type. </param>
         /// <param name="identityIds"> The list of identities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identityType"/> or <paramref name="identityIds"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             IdentityIds = identityIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of Identity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Identity"/>. </summary>
         /// <param name="identityType"> The identity type. </param>
         /// <param name="identityIds"> The list of identities. </param>
-        internal Identity(string identityType, IList<string> identityIds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Identity(string identityType, IList<string> identityIds, Dictionary<string, BinaryData> rawData)
         {
             IdentityType = identityType;
             IdentityIds = identityIds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Identity"/> for deserialization. </summary>
+        internal Identity()
+        {
         }
 
         /// <summary> The identity type. </summary>

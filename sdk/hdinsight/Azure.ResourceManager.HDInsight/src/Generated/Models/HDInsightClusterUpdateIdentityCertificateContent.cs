@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The update cluster identity certificate request parameters. </summary>
     public partial class HDInsightClusterUpdateIdentityCertificateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterUpdateIdentityCertificateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateIdentityCertificateContent"/>. </summary>
         public HDInsightClusterUpdateIdentityCertificateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateIdentityCertificateContent"/>. </summary>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="certificate"> The certificate in base64 encoded format. </param>
+        /// <param name="certificatePassword"> The password of the certificate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterUpdateIdentityCertificateContent(string applicationId, string certificate, string certificatePassword, Dictionary<string, BinaryData> rawData)
+        {
+            ApplicationId = applicationId;
+            Certificate = certificate;
+            CertificatePassword = certificatePassword;
+            _rawData = rawData;
         }
 
         /// <summary> The application id. </summary>

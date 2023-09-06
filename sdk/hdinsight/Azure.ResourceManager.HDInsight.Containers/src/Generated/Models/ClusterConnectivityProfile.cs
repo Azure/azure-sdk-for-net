@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster connectivity profile. </summary>
     public partial class ClusterConnectivityProfile
     {
-        /// <summary> Initializes a new instance of ClusterConnectivityProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterConnectivityProfile"/>. </summary>
         /// <param name="web"> Web connectivity endpoint details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="web"/> is null. </exception>
         internal ClusterConnectivityProfile(WebConnectivityEndpoint web)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Ssh = new ChangeTrackingList<SshConnectivityEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of ClusterConnectivityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterConnectivityProfile"/>. </summary>
         /// <param name="web"> Web connectivity endpoint details. </param>
         /// <param name="ssh"> List of SSH connectivity endpoints. </param>
-        internal ClusterConnectivityProfile(WebConnectivityEndpoint web, IReadOnlyList<SshConnectivityEndpoint> ssh)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterConnectivityProfile(WebConnectivityEndpoint web, IReadOnlyList<SshConnectivityEndpoint> ssh, Dictionary<string, BinaryData> rawData)
         {
             Web = web;
             Ssh = ssh;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterConnectivityProfile"/> for deserialization. </summary>
+        internal ClusterConnectivityProfile()
+        {
         }
 
         /// <summary> Web connectivity endpoint details. </summary>

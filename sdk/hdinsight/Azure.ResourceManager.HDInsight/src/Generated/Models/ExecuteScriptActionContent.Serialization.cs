@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ExecuteScriptActionContent : IUtf8JsonSerializable
+    public partial class ExecuteScriptActionContent : IUtf8JsonSerializable, IModelJsonSerializable<ExecuteScriptActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExecuteScriptActionContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExecuteScriptActionContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteScriptActionContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ScriptActions))
             {
@@ -21,13 +29,121 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<RuntimeScriptAction>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("persistOnSuccess"u8);
             writer.WriteBooleanValue(PersistOnSuccess);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ExecuteScriptActionContent DeserializeExecuteScriptActionContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<RuntimeScriptAction>> scriptActions = default;
+            bool persistOnSuccess = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("scriptActions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RuntimeScriptAction> array = new List<RuntimeScriptAction>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                    }
+                    scriptActions = array;
+                    continue;
+                }
+                if (property.NameEquals("persistOnSuccess"u8))
+                {
+                    persistOnSuccess = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ExecuteScriptActionContent(Optional.ToList(scriptActions), persistOnSuccess, rawData);
+        }
+
+        ExecuteScriptActionContent IModelJsonSerializable<ExecuteScriptActionContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteScriptActionContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteScriptActionContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExecuteScriptActionContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteScriptActionContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExecuteScriptActionContent IModelSerializable<ExecuteScriptActionContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExecuteScriptActionContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExecuteScriptActionContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExecuteScriptActionContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExecuteScriptActionContent"/> to convert. </param>
+        public static implicit operator RequestContent(ExecuteScriptActionContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExecuteScriptActionContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExecuteScriptActionContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExecuteScriptActionContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

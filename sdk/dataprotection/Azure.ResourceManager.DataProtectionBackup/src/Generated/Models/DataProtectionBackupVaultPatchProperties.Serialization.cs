@@ -5,32 +5,171 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupVaultPatchProperties : IUtf8JsonSerializable
+    public partial class DataProtectionBackupVaultPatchProperties : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupVaultPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupVaultPatchProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupVaultPatchProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupVaultPatchProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings);
+                if (MonitoringSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MonitoringSettings>)MonitoringSettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                if (SecuritySettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BackupVaultSecuritySettings>)SecuritySettings).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
-                writer.WriteObjectValue(FeatureSettings);
+                if (FeatureSettings is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FeatureSettings>)FeatureSettings).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static DataProtectionBackupVaultPatchProperties DeserializeDataProtectionBackupVaultPatchProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<MonitoringSettings> monitoringSettings = default;
+            Optional<BackupVaultSecuritySettings> securitySettings = default;
+            Optional<FeatureSettings> featureSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("monitoringSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("securitySettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("featureSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    featureSettings = FeatureSettings.DeserializeFeatureSettings(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new DataProtectionBackupVaultPatchProperties(monitoringSettings.Value, securitySettings.Value, featureSettings.Value, rawData);
+        }
+
+        DataProtectionBackupVaultPatchProperties IModelJsonSerializable<DataProtectionBackupVaultPatchProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupVaultPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupVaultPatchProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupVaultPatchProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupVaultPatchProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupVaultPatchProperties IModelSerializable<DataProtectionBackupVaultPatchProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupVaultPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupVaultPatchProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataProtectionBackupVaultPatchProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataProtectionBackupVaultPatchProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DataProtectionBackupVaultPatchProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataProtectionBackupVaultPatchProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataProtectionBackupVaultPatchProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupVaultPatchProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

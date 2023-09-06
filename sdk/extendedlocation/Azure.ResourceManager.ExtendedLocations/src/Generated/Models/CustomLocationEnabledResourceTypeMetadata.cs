@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> Metadata of the Resource Type. </summary>
     public partial class CustomLocationEnabledResourceTypeMetadata
     {
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypeMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomLocationEnabledResourceTypeMetadata"/>. </summary>
         public CustomLocationEnabledResourceTypeMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypeMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationEnabledResourceTypeMetadata"/>. </summary>
         /// <param name="apiVersion"> Api Version of Resource Type. </param>
         /// <param name="resourceProviderNamespace"> Resource Provider Namespace of Resource Type. </param>
         /// <param name="resourceType"> Resource Type. </param>
-        internal CustomLocationEnabledResourceTypeMetadata(string apiVersion, string resourceProviderNamespace, string resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomLocationEnabledResourceTypeMetadata(string apiVersion, string resourceProviderNamespace, string resourceType, Dictionary<string, BinaryData> rawData)
         {
             ApiVersion = apiVersion;
             ResourceProviderNamespace = resourceProviderNamespace;
             ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> Api Version of Resource Type. </summary>

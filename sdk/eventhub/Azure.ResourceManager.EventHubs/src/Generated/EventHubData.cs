@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubData"/>. </summary>
         public EventHubData()
         {
             PartitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="captureDescription"> Properties of capture description. </param>
         /// <param name="retentionDescription"> Event Hub retention settings. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PartitionIds = partitionIds;
             CreatedOn = createdOn;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.EventHubs
             CaptureDescription = captureDescription;
             RetentionDescription = retentionDescription;
             Location = location;
+            _rawData = rawData;
         }
 
         /// <summary> Current number of shards on the Event Hub. </summary>

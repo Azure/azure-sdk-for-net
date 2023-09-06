@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial class ClassifyDocumentRequest : IUtf8JsonSerializable
+    internal partial class ClassifyDocumentRequest : IUtf8JsonSerializable, IModelJsonSerializable<ClassifyDocumentRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClassifyDocumentRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClassifyDocumentRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifyDocumentRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UrlSource))
             {
@@ -25,7 +33,107 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 writer.WritePropertyName("base64Source"u8);
                 writer.WriteBase64StringValue(Base64Source, "D");
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ClassifyDocumentRequest DeserializeClassifyDocumentRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Uri> urlSource = default;
+            Optional<byte[]> base64Source = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("urlSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    urlSource = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("base64Source"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    base64Source = property.Value.GetBytesFromBase64("D");
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ClassifyDocumentRequest(urlSource.Value, base64Source.Value, rawData);
+        }
+
+        ClassifyDocumentRequest IModelJsonSerializable<ClassifyDocumentRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifyDocumentRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClassifyDocumentRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClassifyDocumentRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifyDocumentRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClassifyDocumentRequest IModelSerializable<ClassifyDocumentRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClassifyDocumentRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClassifyDocumentRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClassifyDocumentRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClassifyDocumentRequest"/> to convert. </param>
+        public static implicit operator RequestContent(ClassifyDocumentRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClassifyDocumentRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClassifyDocumentRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClassifyDocumentRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

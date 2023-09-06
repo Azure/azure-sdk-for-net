@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="AdvancedFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BoolEqualsAdvancedFilter"/>, <see cref="IsNotNullAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="NumberInAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/> and <see cref="StringNotInAdvancedFilter"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownAdvancedFilter))]
     public abstract partial class AdvancedFilter
     {
-        /// <summary> Initializes a new instance of AdvancedFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
         protected AdvancedFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of AdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key, Dictionary<string, BinaryData> rawData)
         {
             OperatorType = operatorType;
             Key = key;
+            _rawData = rawData;
         }
 
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>

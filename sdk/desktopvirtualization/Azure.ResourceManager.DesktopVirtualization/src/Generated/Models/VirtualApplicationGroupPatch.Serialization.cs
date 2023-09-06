@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class VirtualApplicationGroupPatch : IUtf8JsonSerializable
+    public partial class VirtualApplicationGroupPatch : IUtf8JsonSerializable, IModelJsonSerializable<VirtualApplicationGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualApplicationGroupPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualApplicationGroupPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplicationGroupPatch>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -41,11 +48,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualApplicationGroupPatch DeserializeVirtualApplicationGroupPatch(JsonElement element)
+        internal static VirtualApplicationGroupPatch DeserializeVirtualApplicationGroupPatch(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +78,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -119,8 +141,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), description.Value, friendlyName.Value);
+            return new VirtualApplicationGroupPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), description.Value, friendlyName.Value, rawData);
+        }
+
+        VirtualApplicationGroupPatch IModelJsonSerializable<VirtualApplicationGroupPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplicationGroupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualApplicationGroupPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualApplicationGroupPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplicationGroupPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualApplicationGroupPatch IModelSerializable<VirtualApplicationGroupPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualApplicationGroupPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualApplicationGroupPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualApplicationGroupPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualApplicationGroupPatch"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualApplicationGroupPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualApplicationGroupPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualApplicationGroupPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualApplicationGroupPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

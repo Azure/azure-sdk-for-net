@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Request body for resizing a virtual machine. </summary>
     public partial class DevTestLabVmResizeContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmResizeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResizeContent"/>. </summary>
         public DevTestLabVmResizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResizeContent"/>. </summary>
+        /// <param name="size"> Specifies the size of the virtual machine. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabVmResizeContent(string size, Dictionary<string, BinaryData> rawData)
+        {
+            Size = size;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies the size of the virtual machine. </summary>

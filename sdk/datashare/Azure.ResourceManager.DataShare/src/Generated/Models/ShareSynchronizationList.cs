@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get ShareSynchronization. </summary>
     internal partial class ShareSynchronizationList
     {
-        /// <summary> Initializes a new instance of ShareSynchronizationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronizationList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ShareSynchronizationList(IEnumerable<ShareSynchronization> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ShareSynchronizationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronizationList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal ShareSynchronizationList(string nextLink, IReadOnlyList<ShareSynchronization> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareSynchronizationList(string nextLink, IReadOnlyList<ShareSynchronization> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronizationList"/> for deserialization. </summary>
+        internal ShareSynchronizationList()
+        {
         }
 
         /// <summary> The Url of next result page. </summary>

@@ -6,18 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadWithUserDeleted event. </summary>
     public partial class AcsChatThreadWithUserDeletedEventData : AcsChatThreadEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatThreadWithUserDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadWithUserDeletedEventData"/>. </summary>
         internal AcsChatThreadWithUserDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatThreadWithUserDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadWithUserDeletedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -25,7 +26,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the thread. </param>
         /// <param name="deletedByCommunicationIdentifier"> The communication identifier of the user who deleted the thread. </param>
         /// <param name="deleteTime"> The deletion time of the thread. </param>
-        internal AcsChatThreadWithUserDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel deletedByCommunicationIdentifier, DateTimeOffset? deleteTime) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsChatThreadWithUserDeletedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel deletedByCommunicationIdentifier, DateTimeOffset? deleteTime, Dictionary<string, BinaryData> rawData) : base(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, rawData)
         {
             DeletedByCommunicationIdentifier = deletedByCommunicationIdentifier;
             DeleteTime = deleteTime;

@@ -322,7 +322,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpdatesRequest(search, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpdatesNextPageRequest(nextLink, search, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetUpdates", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProvidersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProvidersNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetProviders", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.IoT.DeviceUpdate
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.IoT.DeviceUpdate
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNamesRequest(provider, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNamesNextPageRequest(nextLink, provider, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetNames", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.IoT.DeviceUpdate
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Azure.IoT.DeviceUpdate
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(provider, name, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, provider, name, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace Azure.IoT.DeviceUpdate
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -557,7 +557,7 @@ namespace Azure.IoT.DeviceUpdate
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetFilesRequest(provider, name, version, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetFilesNextPageRequest(nextLink, provider, name, version, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetFiles", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -580,7 +580,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -603,7 +603,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary>

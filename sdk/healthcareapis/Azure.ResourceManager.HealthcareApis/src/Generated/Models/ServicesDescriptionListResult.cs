@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> A list of service description objects with a next link. </summary>
     internal partial class ServicesDescriptionListResult
     {
-        /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServicesDescriptionListResult"/>. </summary>
         internal ServicesDescriptionListResult()
         {
             Value = new ChangeTrackingList<HealthcareApisServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServicesDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicesDescriptionListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of service description objects. </param>
         /// <param name="value"> A list of service description objects. </param>
-        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<HealthcareApisServiceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicesDescriptionListResult(string nextLink, IReadOnlyList<HealthcareApisServiceData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of service description objects. </summary>

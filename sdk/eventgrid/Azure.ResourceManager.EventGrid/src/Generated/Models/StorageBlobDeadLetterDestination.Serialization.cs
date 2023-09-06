@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StorageBlobDeadLetterDestination : IUtf8JsonSerializable
+    public partial class StorageBlobDeadLetterDestination : IUtf8JsonSerializable, IModelJsonSerializable<StorageBlobDeadLetterDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageBlobDeadLetterDestination>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageBlobDeadLetterDestination>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobDeadLetterDestination>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStringValue(BlobContainerName);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageBlobDeadLetterDestination DeserializeStorageBlobDeadLetterDestination(JsonElement element)
+        internal static StorageBlobDeadLetterDestination DeserializeStorageBlobDeadLetterDestination(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeadLetterEndPointType endpointType = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> blobContainerName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -75,8 +98,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageBlobDeadLetterDestination(endpointType, resourceId.Value, blobContainerName.Value);
+            return new StorageBlobDeadLetterDestination(endpointType, resourceId.Value, blobContainerName.Value, rawData);
+        }
+
+        StorageBlobDeadLetterDestination IModelJsonSerializable<StorageBlobDeadLetterDestination>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobDeadLetterDestination>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageBlobDeadLetterDestination(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageBlobDeadLetterDestination>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobDeadLetterDestination>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageBlobDeadLetterDestination IModelSerializable<StorageBlobDeadLetterDestination>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageBlobDeadLetterDestination>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageBlobDeadLetterDestination(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageBlobDeadLetterDestination"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageBlobDeadLetterDestination"/> to convert. </param>
+        public static implicit operator RequestContent(StorageBlobDeadLetterDestination model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageBlobDeadLetterDestination"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageBlobDeadLetterDestination(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageBlobDeadLetterDestination(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

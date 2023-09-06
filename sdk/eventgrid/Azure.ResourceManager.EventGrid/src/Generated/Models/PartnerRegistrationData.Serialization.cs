@@ -8,16 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerRegistrationData : IUtf8JsonSerializable
+    public partial class PartnerRegistrationData : IUtf8JsonSerializable, IModelJsonSerializable<PartnerRegistrationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerRegistrationData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerRegistrationData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerRegistrationData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -40,11 +46,25 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PartnerRegistrationData DeserializePartnerRegistrationData(JsonElement element)
+        internal static PartnerRegistrationData DeserializePartnerRegistrationData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +77,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<PartnerRegistrationProvisioningState> provisioningState = default;
             Optional<Guid> partnerRegistrationImmutableId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -132,8 +153,61 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PartnerRegistrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(partnerRegistrationImmutableId));
+            return new PartnerRegistrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(partnerRegistrationImmutableId), rawData);
+        }
+
+        PartnerRegistrationData IModelJsonSerializable<PartnerRegistrationData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerRegistrationData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerRegistrationData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerRegistrationData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerRegistrationData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerRegistrationData IModelSerializable<PartnerRegistrationData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerRegistrationData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerRegistrationData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PartnerRegistrationData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PartnerRegistrationData"/> to convert. </param>
+        public static implicit operator RequestContent(PartnerRegistrationData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PartnerRegistrationData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PartnerRegistrationData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePartnerRegistrationData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

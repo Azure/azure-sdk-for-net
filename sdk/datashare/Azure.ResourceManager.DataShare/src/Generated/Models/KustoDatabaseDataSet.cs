@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A kusto database data set. </summary>
     public partial class KustoDatabaseDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of KustoDatabaseDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseDataSet"/>. </summary>
         /// <param name="kustoDatabaseResourceId"> Resource id of the kusto database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoDatabaseResourceId"/> is null. </exception>
         public KustoDatabaseDataSet(ResourceIdentifier kustoDatabaseResourceId)
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.KustoDatabase;
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,13 +37,19 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="kustoDatabaseResourceId"> Resource id of the kusto database. </param>
         /// <param name="location"> Location of the kusto cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the kusto database data set. </param>
-        internal KustoDatabaseDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, ResourceIdentifier kustoDatabaseResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoDatabaseDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, ResourceIdentifier kustoDatabaseResourceId, AzureLocation? location, DataShareProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             DataSetId = dataSetId;
             KustoDatabaseResourceId = kustoDatabaseResourceId;
             Location = location;
             ProvisioningState = provisioningState;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseDataSet"/> for deserialization. </summary>
+        internal KustoDatabaseDataSet()
+        {
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>

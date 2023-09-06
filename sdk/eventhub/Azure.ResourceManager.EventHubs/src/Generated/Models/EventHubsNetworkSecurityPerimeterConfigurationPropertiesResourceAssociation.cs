@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Information about resource association. </summary>
     public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
-        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name, EventHubsResourceAssociationAccessMode? accessMode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name, EventHubsResourceAssociationAccessMode? accessMode, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             AccessMode = accessMode;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the resource association. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class SparkMetastoreSpec : IUtf8JsonSerializable
+    public partial class SparkMetastoreSpec : IUtf8JsonSerializable, IModelJsonSerializable<SparkMetastoreSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkMetastoreSpec>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkMetastoreSpec>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkMetastoreSpec>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("dbServerHost"u8);
             writer.WriteStringValue(DBServerHost);
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("thriftUrl"u8);
                 writer.WriteStringValue(ThriftUriString);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SparkMetastoreSpec DeserializeSparkMetastoreSpec(JsonElement element)
+        internal static SparkMetastoreSpec DeserializeSparkMetastoreSpec(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string dbPasswordSecretName = default;
             string keyVaultId = default;
             Optional<string> thriftUrl = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbServerHost"u8))
@@ -77,8 +100,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     thriftUrl = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkMetastoreSpec(dbServerHost, dbName, dbUserName, dbPasswordSecretName, keyVaultId, thriftUrl.Value);
+            return new SparkMetastoreSpec(dbServerHost, dbName, dbUserName, dbPasswordSecretName, keyVaultId, thriftUrl.Value, rawData);
+        }
+
+        SparkMetastoreSpec IModelJsonSerializable<SparkMetastoreSpec>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkMetastoreSpec>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkMetastoreSpec(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkMetastoreSpec>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkMetastoreSpec>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkMetastoreSpec IModelSerializable<SparkMetastoreSpec>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkMetastoreSpec>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkMetastoreSpec(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkMetastoreSpec"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkMetastoreSpec"/> to convert. </param>
+        public static implicit operator RequestContent(SparkMetastoreSpec model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkMetastoreSpec"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkMetastoreSpec(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkMetastoreSpec(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

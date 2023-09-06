@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.CancerProfiling
 {
-    public partial class PatientInfo : IUtf8JsonSerializable
+    public partial class PatientInfo : IUtf8JsonSerializable, IModelJsonSerializable<PatientInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PatientInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PatientInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sex))
             {
@@ -31,19 +39,133 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in ClinicalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ClinicalCodedElement>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static PatientInfo DeserializePatientInfo(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PatientInfoSex> sex = default;
+            Optional<DateTimeOffset> birthDate = default;
+            Optional<IList<ClinicalCodedElement>> clinicalInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sex = new PatientInfoSex(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("birthDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    birthDate = property.Value.GetDateTimeOffset("D");
+                    continue;
+                }
+                if (property.NameEquals("clinicalInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ClinicalCodedElement> array = new List<ClinicalCodedElement>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item));
+                    }
+                    clinicalInfo = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new PatientInfo(Optional.ToNullable(sex), Optional.ToNullable(birthDate), Optional.ToList(clinicalInfo), rawData);
+        }
+
+        PatientInfo IModelJsonSerializable<PatientInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePatientInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PatientInfo>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PatientInfo IModelSerializable<PatientInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePatientInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PatientInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PatientInfo"/> to convert. </param>
+        public static implicit operator RequestContent(PatientInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PatientInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PatientInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePatientInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

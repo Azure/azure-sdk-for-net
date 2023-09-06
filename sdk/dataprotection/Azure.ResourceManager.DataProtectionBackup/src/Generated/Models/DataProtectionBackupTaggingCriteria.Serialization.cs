@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupTaggingCriteria : IUtf8JsonSerializable
+    public partial class DataProtectionBackupTaggingCriteria : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionBackupTaggingCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionBackupTaggingCriteria>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionBackupTaggingCriteria>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupTaggingCriteria>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Criteria))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Criteria)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DataProtectionBackupCriteria>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,12 +45,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("taggingPriority"u8);
             writer.WriteNumberValue(TaggingPriority);
             writer.WritePropertyName("tagInfo"u8);
-            writer.WriteObjectValue(TagInfo);
+            if (TagInfo is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<DataProtectionBackupRetentionTag>)TagInfo).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupTaggingCriteria DeserializeDataProtectionBackupTaggingCriteria(JsonElement element)
+        internal static DataProtectionBackupTaggingCriteria DeserializeDataProtectionBackupTaggingCriteria(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             bool isDefault = default;
             long taggingPriority = default;
             DataProtectionBackupRetentionTag tagInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("criteria"u8))
@@ -76,8 +112,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     tagInfo = DataProtectionBackupRetentionTag.DeserializeDataProtectionBackupRetentionTag(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataProtectionBackupTaggingCriteria(Optional.ToList(criteria), isDefault, taggingPriority, tagInfo);
+            return new DataProtectionBackupTaggingCriteria(Optional.ToList(criteria), isDefault, taggingPriority, tagInfo, rawData);
+        }
+
+        DataProtectionBackupTaggingCriteria IModelJsonSerializable<DataProtectionBackupTaggingCriteria>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupTaggingCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupTaggingCriteria(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionBackupTaggingCriteria>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupTaggingCriteria>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionBackupTaggingCriteria IModelSerializable<DataProtectionBackupTaggingCriteria>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionBackupTaggingCriteria>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupTaggingCriteria(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataProtectionBackupTaggingCriteria"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataProtectionBackupTaggingCriteria"/> to convert. </param>
+        public static implicit operator RequestContent(DataProtectionBackupTaggingCriteria model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataProtectionBackupTaggingCriteria"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataProtectionBackupTaggingCriteria(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataProtectionBackupTaggingCriteria(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

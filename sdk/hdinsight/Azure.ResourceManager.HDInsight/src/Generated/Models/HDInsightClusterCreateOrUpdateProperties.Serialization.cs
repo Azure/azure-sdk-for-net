@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterCreateOrUpdateProperties : IUtf8JsonSerializable
+    public partial class HDInsightClusterCreateOrUpdateProperties : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightClusterCreateOrUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightClusterCreateOrUpdateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightClusterCreateOrUpdateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterCreateOrUpdateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClusterVersion))
             {
@@ -33,37 +41,86 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClusterDefinition))
             {
                 writer.WritePropertyName("clusterDefinition"u8);
-                writer.WriteObjectValue(ClusterDefinition);
+                if (ClusterDefinition is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HDInsightClusterDefinition>)ClusterDefinition).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
-                writer.WriteObjectValue(KafkaRestProperties);
+                if (KafkaRestProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<KafkaRestProperties>)KafkaRestProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                if (SecurityProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HDInsightSecurityProfile>)SecurityProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                if (ComputeProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ComputeProfile>)ComputeProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                if (StorageProfile is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StorageProfile>)StorageProfile).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
-                writer.WriteObjectValue(DiskEncryptionProperties);
+                if (DiskEncryptionProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HDInsightDiskEncryptionProperties>)DiskEncryptionProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
-                writer.WriteObjectValue(EncryptionInTransitProperties);
+                if (EncryptionInTransitProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EncryptionInTransitProperties>)EncryptionInTransitProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(MinSupportedTlsVersion))
             {
@@ -73,12 +130,26 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
-                writer.WriteObjectValue(NetworkProperties);
+                if (NetworkProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HDInsightClusterNetworkProperties>)NetworkProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
-                writer.WriteObjectValue(ComputeIsolationProperties);
+                if (ComputeIsolationProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<HDInsightComputeIsolationProperties>)ComputeIsolationProperties).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
@@ -86,11 +157,235 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HDInsightPrivateLinkConfiguration>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static HDInsightClusterCreateOrUpdateProperties DeserializeHDInsightClusterCreateOrUpdateProperties(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> clusterVersion = default;
+            Optional<HDInsightOSType> osType = default;
+            Optional<HDInsightTier> tier = default;
+            Optional<HDInsightClusterDefinition> clusterDefinition = default;
+            Optional<KafkaRestProperties> kafkaRestProperties = default;
+            Optional<HDInsightSecurityProfile> securityProfile = default;
+            Optional<ComputeProfile> computeProfile = default;
+            Optional<StorageProfile> storageProfile = default;
+            Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
+            Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
+            Optional<string> minSupportedTlsVersion = default;
+            Optional<HDInsightClusterNetworkProperties> networkProperties = default;
+            Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
+            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("clusterVersion"u8))
+                {
+                    clusterVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("osType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osType = new HDInsightOSType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tier"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tier = new HDInsightTier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clusterDefinition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterDefinition = HDInsightClusterDefinition.DeserializeHDInsightClusterDefinition(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("kafkaRestProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kafkaRestProperties = KafkaRestProperties.DeserializeKafkaRestProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("securityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = HDInsightSecurityProfile.DeserializeHDInsightSecurityProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("computeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeProfile = ComputeProfile.DeserializeComputeProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("diskEncryptionProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionProperties = HDInsightDiskEncryptionProperties.DeserializeHDInsightDiskEncryptionProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("encryptionInTransitProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionInTransitProperties = EncryptionInTransitProperties.DeserializeEncryptionInTransitProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("minSupportedTlsVersion"u8))
+                {
+                    minSupportedTlsVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("networkProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkProperties = HDInsightClusterNetworkProperties.DeserializeHDInsightClusterNetworkProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("computeIsolationProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeIsolationProperties = HDInsightComputeIsolationProperties.DeserializeHDInsightComputeIsolationProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("privateLinkConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                    }
+                    privateLinkConfigurations = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new HDInsightClusterCreateOrUpdateProperties(clusterVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterDefinition.Value, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, storageProfile.Value, diskEncryptionProperties.Value, encryptionInTransitProperties.Value, minSupportedTlsVersion.Value, networkProperties.Value, computeIsolationProperties.Value, Optional.ToList(privateLinkConfigurations), rawData);
+        }
+
+        HDInsightClusterCreateOrUpdateProperties IModelJsonSerializable<HDInsightClusterCreateOrUpdateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterCreateOrUpdateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterCreateOrUpdateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightClusterCreateOrUpdateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterCreateOrUpdateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightClusterCreateOrUpdateProperties IModelSerializable<HDInsightClusterCreateOrUpdateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightClusterCreateOrUpdateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterCreateOrUpdateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightClusterCreateOrUpdateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightClusterCreateOrUpdateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightClusterCreateOrUpdateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightClusterCreateOrUpdateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightClusterCreateOrUpdateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightClusterCreateOrUpdateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

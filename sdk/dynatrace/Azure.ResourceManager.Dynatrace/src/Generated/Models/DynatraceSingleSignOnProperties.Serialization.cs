@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceSingleSignOnProperties : IUtf8JsonSerializable
+    public partial class DynatraceSingleSignOnProperties : IUtf8JsonSerializable, IModelJsonSerializable<DynatraceSingleSignOnProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynatraceSingleSignOnProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DynatraceSingleSignOnProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceSingleSignOnProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SingleSignOnState))
             {
@@ -42,11 +48,25 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DynatraceSingleSignOnProperties DeserializeDynatraceSingleSignOnProperties(JsonElement element)
+        internal static DynatraceSingleSignOnProperties DeserializeDynatraceSingleSignOnProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +76,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<Uri> singleSignOnUrl = default;
             Optional<IList<string>> aadDomains = default;
             Optional<DynatraceProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("singleSignOnState"u8))
@@ -108,8 +129,61 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     provisioningState = new DynatraceProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DynatraceSingleSignOnProperties(Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState));
+            return new DynatraceSingleSignOnProperties(Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        DynatraceSingleSignOnProperties IModelJsonSerializable<DynatraceSingleSignOnProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceSingleSignOnProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceSingleSignOnProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DynatraceSingleSignOnProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceSingleSignOnProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DynatraceSingleSignOnProperties IModelSerializable<DynatraceSingleSignOnProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DynatraceSingleSignOnProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDynatraceSingleSignOnProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DynatraceSingleSignOnProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DynatraceSingleSignOnProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DynatraceSingleSignOnProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DynatraceSingleSignOnProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DynatraceSingleSignOnProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDynatraceSingleSignOnProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Vault. </summary>
     public partial class DataProtectionBackupVaultProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageSettings"/> is null. </exception>
         public DataProtectionBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             StorageSettings = storageSettings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings, Dictionary<string, BinaryData> rawData)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -44,6 +48,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             StorageSettings = storageSettings;
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
             FeatureSettings = featureSettings;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupVaultProperties()
+        {
         }
 
         /// <summary> Monitoring Settings. </summary>

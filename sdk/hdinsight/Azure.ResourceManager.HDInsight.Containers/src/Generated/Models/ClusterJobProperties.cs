@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// Please note <see cref="ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FlinkJobProperties"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownClusterJobProperties))]
     public abstract partial class ClusterJobProperties
     {
-        /// <summary> Initializes a new instance of ClusterJobProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterJobProperties"/>. </summary>
         protected ClusterJobProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJobProperties"/>. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
-        internal ClusterJobProperties(ClusterJobType jobType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterJobProperties(ClusterJobType jobType, Dictionary<string, BinaryData> rawData)
         {
             JobType = jobType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of cluster job. </summary>

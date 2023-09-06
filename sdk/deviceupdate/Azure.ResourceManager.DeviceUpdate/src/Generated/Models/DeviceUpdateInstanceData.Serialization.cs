@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class DeviceUpdateInstanceData : IUtf8JsonSerializable
+    public partial class DeviceUpdateInstanceData : IUtf8JsonSerializable, IModelJsonSerializable<DeviceUpdateInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceUpdateInstanceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceUpdateInstanceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceUpdateInstanceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -39,7 +46,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<IotHubSettings>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,14 +65,35 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
-                writer.WriteObjectValue(DiagnosticStorageProperties);
+                if (DiagnosticStorageProperties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DiagnosticStorageProperties>)DiagnosticStorageProperties).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element)
+        internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +109,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<IList<IotHubSettings>> iotHubs = default;
             Optional<bool> enableDiagnostics = default;
             Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -177,8 +213,61 @@ namespace Azure.ResourceManager.DeviceUpdate
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
+            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, rawData);
+        }
+
+        DeviceUpdateInstanceData IModelJsonSerializable<DeviceUpdateInstanceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceUpdateInstanceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceUpdateInstanceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceUpdateInstanceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceUpdateInstanceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceUpdateInstanceData IModelSerializable<DeviceUpdateInstanceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceUpdateInstanceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceUpdateInstanceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceUpdateInstanceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceUpdateInstanceData"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceUpdateInstanceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceUpdateInstanceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceUpdateInstanceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceUpdateInstanceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class ElasticSanPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IModelJsonSerializable<ElasticSanPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ElasticSanPrivateLinkServiceConnectionState>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ElasticSanPrivateLinkServiceConnectionState>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticSanPrivateLinkServiceConnectionState>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ElasticSanPrivateLinkServiceConnectionState DeserializeElasticSanPrivateLinkServiceConnectionState(JsonElement element)
+        internal static ElasticSanPrivateLinkServiceConnectionState DeserializeElasticSanPrivateLinkServiceConnectionState(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Optional<ElasticSanPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     actionsRequired = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ElasticSanPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new ElasticSanPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, rawData);
+        }
+
+        ElasticSanPrivateLinkServiceConnectionState IModelJsonSerializable<ElasticSanPrivateLinkServiceConnectionState>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticSanPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticSanPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ElasticSanPrivateLinkServiceConnectionState>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticSanPrivateLinkServiceConnectionState>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ElasticSanPrivateLinkServiceConnectionState IModelSerializable<ElasticSanPrivateLinkServiceConnectionState>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ElasticSanPrivateLinkServiceConnectionState>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeElasticSanPrivateLinkServiceConnectionState(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ElasticSanPrivateLinkServiceConnectionState"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ElasticSanPrivateLinkServiceConnectionState"/> to convert. </param>
+        public static implicit operator RequestContent(ElasticSanPrivateLinkServiceConnectionState model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ElasticSanPrivateLinkServiceConnectionState"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ElasticSanPrivateLinkServiceConnectionState(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeElasticSanPrivateLinkServiceConnectionState(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

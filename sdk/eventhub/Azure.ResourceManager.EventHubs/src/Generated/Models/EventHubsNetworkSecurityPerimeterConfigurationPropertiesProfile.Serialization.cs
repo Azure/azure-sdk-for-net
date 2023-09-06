@@ -5,16 +5,70 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile : IUtf8JsonSerializable, IModelJsonSerializable<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>
     {
-        internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(AccessRulesVersion))
+            {
+                writer.WritePropertyName("accessRulesVersion"u8);
+                writer.WriteStringValue(AccessRulesVersion);
+            }
+            if (Optional.IsCollectionDefined(AccessRules))
+            {
+                writer.WritePropertyName("accessRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in AccessRules)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<EventHubsNspAccessRule>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<string> name = default;
             Optional<string> accessRulesVersion = default;
             Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +103,61 @@ namespace Azure.ResourceManager.EventHubs.Models
                     accessRules = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules));
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules), rawData);
+        }
+
+        EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile IModelJsonSerializable<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile IModelSerializable<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/> to convert. </param>
+        public static implicit operator RequestContent(EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MaintenanceWindowPatchProperties : IUtf8JsonSerializable
+    public partial class MaintenanceWindowPatchProperties : IUtf8JsonSerializable, IModelJsonSerializable<MaintenanceWindowPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MaintenanceWindowPatchProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MaintenanceWindowPatchProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceWindowPatchProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Hour))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceWindowPatchProperties DeserializeMaintenanceWindowPatchProperties(JsonElement element)
+        internal static MaintenanceWindowPatchProperties DeserializeMaintenanceWindowPatchProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> hour = default;
             Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hour"u8))
@@ -56,8 +79,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     dayOfWeek = property.Value.GetString().ToDesktopVirtualizationDayOfWeek();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenanceWindowPatchProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek));
+            return new MaintenanceWindowPatchProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek), rawData);
+        }
+
+        MaintenanceWindowPatchProperties IModelJsonSerializable<MaintenanceWindowPatchProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceWindowPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceWindowPatchProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenanceWindowPatchProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceWindowPatchProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenanceWindowPatchProperties IModelSerializable<MaintenanceWindowPatchProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceWindowPatchProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenanceWindowPatchProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MaintenanceWindowPatchProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MaintenanceWindowPatchProperties"/> to convert. </param>
+        public static implicit operator RequestContent(MaintenanceWindowPatchProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MaintenanceWindowPatchProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MaintenanceWindowPatchProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenanceWindowPatchProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

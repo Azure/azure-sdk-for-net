@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on forwarding rules within a DNS forwarding ruleset. </summary>
     internal partial class ForwardingRuleListResult
     {
-        /// <summary> Initializes a new instance of ForwardingRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForwardingRuleListResult"/>. </summary>
         internal ForwardingRuleListResult()
         {
             Value = new ChangeTrackingList<DnsForwardingRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ForwardingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingRuleListResult"/>. </summary>
         /// <param name="value"> Enumeration of the forwarding rules. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal ForwardingRuleListResult(IReadOnlyList<DnsForwardingRuleData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForwardingRuleListResult(IReadOnlyList<DnsForwardingRuleData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Enumeration of the forwarding rules. </summary>

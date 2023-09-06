@@ -15,7 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
     internal partial class DocumentResult
     {
-        /// <summary> Initializes a new instance of DocumentResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/>. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
@@ -31,19 +34,26 @@ namespace Azure.AI.FormRecognizer.Models
             Fields = fields;
         }
 
-        /// <summary> Initializes a new instance of DocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/>. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
         /// <param name="docTypeConfidence"> Predicted document type confidence. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
-        internal DocumentResult(string docType, Guid? modelId, IReadOnlyList<int> pageRange, float? docTypeConfidence, IReadOnlyDictionary<string, FieldValue_internal> fields)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentResult(string docType, Guid? modelId, IReadOnlyList<int> pageRange, float? docTypeConfidence, IReadOnlyDictionary<string, FieldValue_internal> fields, Dictionary<string, BinaryData> rawData)
         {
             DocType = docType;
             ModelId = modelId;
             PageRange = pageRange;
             DocTypeConfidence = docTypeConfidence;
             Fields = fields;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentResult"/> for deserialization. </summary>
+        internal DocumentResult()
+        {
         }
 
         /// <summary> Document type. </summary>

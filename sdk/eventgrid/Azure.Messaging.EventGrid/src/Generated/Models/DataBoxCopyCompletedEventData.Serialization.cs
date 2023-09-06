@@ -6,17 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(DataBoxCopyCompletedEventDataConverter))]
-    public partial class DataBoxCopyCompletedEventData
+    public partial class DataBoxCopyCompletedEventData : IUtf8JsonSerializable, IModelJsonSerializable<DataBoxCopyCompletedEventData>
     {
-        internal static DataBoxCopyCompletedEventData DeserializeDataBoxCopyCompletedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataBoxCopyCompletedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataBoxCopyCompletedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxCopyCompletedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (Optional.IsDefined(StageName))
+            {
+                writer.WritePropertyName("stageName"u8);
+                writer.WriteStringValue(StageName.Value.ToString());
+            }
+            if (Optional.IsDefined(StageTime))
+            {
+                writer.WritePropertyName("stageTime"u8);
+                writer.WriteStringValue(StageTime.Value, "O");
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DataBoxCopyCompletedEventData DeserializeDataBoxCopyCompletedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> serialNumber = default;
             Optional<DataBoxStageName> stageName = default;
             Optional<DateTimeOffset> stageTime = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -49,15 +92,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     stageTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DataBoxCopyCompletedEventData(serialNumber.Value, Optional.ToNullable(stageName), Optional.ToNullable(stageTime));
+            return new DataBoxCopyCompletedEventData(serialNumber.Value, Optional.ToNullable(stageName), Optional.ToNullable(stageTime), rawData);
+        }
+
+        DataBoxCopyCompletedEventData IModelJsonSerializable<DataBoxCopyCompletedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxCopyCompletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxCopyCompletedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataBoxCopyCompletedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxCopyCompletedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataBoxCopyCompletedEventData IModelSerializable<DataBoxCopyCompletedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataBoxCopyCompletedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataBoxCopyCompletedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DataBoxCopyCompletedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DataBoxCopyCompletedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(DataBoxCopyCompletedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DataBoxCopyCompletedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DataBoxCopyCompletedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDataBoxCopyCompletedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class DataBoxCopyCompletedEventDataConverter : JsonConverter<DataBoxCopyCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, DataBoxCopyCompletedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override DataBoxCopyCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

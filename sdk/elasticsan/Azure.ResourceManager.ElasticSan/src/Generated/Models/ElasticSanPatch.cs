@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Response for ElasticSan update request. </summary>
     public partial class ElasticSanPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
         public ElasticSanPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
+        /// <param name="tags"> Update tags. </param>
+        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
+        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            BaseSizeTiB = baseSizeTiB;
+            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
+            _rawData = rawData;
         }
 
         /// <summary> Update tags. </summary>

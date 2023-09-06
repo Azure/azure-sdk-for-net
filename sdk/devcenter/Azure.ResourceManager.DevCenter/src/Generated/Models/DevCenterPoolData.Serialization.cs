@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterPoolData : IUtf8JsonSerializable
+    public partial class DevCenterPoolData : IUtf8JsonSerializable, IModelJsonSerializable<DevCenterPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevCenterPoolData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevCenterPoolData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterPoolData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -56,14 +63,35 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect);
+                if (StopOnDisconnect is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<StopOnDisconnectConfiguration>)StopOnDisconnect).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevCenterPoolData DeserializeDevCenterPoolData(JsonElement element)
+        internal static DevCenterPoolData DeserializeDevCenterPoolData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +110,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<DevCenterHealthStatus> healthStatus = default;
             Optional<IReadOnlyList<DevCenterHealthStatusDetail>> healthStatusDetails = default;
             Optional<DevCenterProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -208,8 +237,61 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevCenterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), Optional.ToList(healthStatusDetails), Optional.ToNullable(provisioningState));
+            return new DevCenterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), Optional.ToList(healthStatusDetails), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        DevCenterPoolData IModelJsonSerializable<DevCenterPoolData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterPoolData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevCenterPoolData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterPoolData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevCenterPoolData IModelSerializable<DevCenterPoolData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterPoolData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevCenterPoolData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevCenterPoolData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevCenterPoolData"/> to convert. </param>
+        public static implicit operator RequestContent(DevCenterPoolData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevCenterPoolData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevCenterPoolData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevCenterPoolData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

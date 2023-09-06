@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing the style of the text line. </summary>
     internal partial class Style
     {
-        /// <summary> Initializes a new instance of Style. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Style"/>. </summary>
         /// <param name="name"> The text line style name, including handwriting and other. </param>
         /// <param name="confidence"> The confidence of text line style. </param>
         internal Style(TextStyleName name, float confidence)
         {
             Name = name;
             Confidence = confidence;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Style"/>. </summary>
+        /// <param name="name"> The text line style name, including handwriting and other. </param>
+        /// <param name="confidence"> The confidence of text line style. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Style(TextStyleName name, float confidence, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Confidence = confidence;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Style"/> for deserialization. </summary>
+        internal Style()
+        {
         }
 
         /// <summary> The text line style name, including handwriting and other. </summary>

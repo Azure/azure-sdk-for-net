@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The configuration that services will be excluded when creating cluster. </summary>
     public partial class ExcludedServicesConfig
     {
-        /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExcludedServicesConfig"/>. </summary>
         public ExcludedServicesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ExcludedServicesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcludedServicesConfig"/>. </summary>
         /// <param name="excludedServicesConfigId"> The config id of excluded services. </param>
         /// <param name="excludedServicesList"> The list of excluded services. </param>
-        internal ExcludedServicesConfig(string excludedServicesConfigId, string excludedServicesList)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExcludedServicesConfig(string excludedServicesConfigId, string excludedServicesList, Dictionary<string, BinaryData> rawData)
         {
             ExcludedServicesConfigId = excludedServicesConfigId;
             ExcludedServicesList = excludedServicesList;
+            _rawData = rawData;
         }
 
         /// <summary> The config id of excluded services. </summary>

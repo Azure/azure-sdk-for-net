@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownDeadLetterDestination))]
     public abstract partial class DeadLetterDestination
     {
-        /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
         protected DeadLetterDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
-        internal DeadLetterDestination(DeadLetterEndPointType endpointType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeadLetterDestination(DeadLetterEndPointType endpointType, Dictionary<string, BinaryData> rawData)
         {
             EndpointType = endpointType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the endpoint for the dead letter destination. </summary>

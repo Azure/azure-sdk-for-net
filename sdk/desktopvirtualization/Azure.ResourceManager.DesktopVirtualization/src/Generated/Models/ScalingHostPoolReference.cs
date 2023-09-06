@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Scaling plan reference to hostpool. </summary>
     public partial class ScalingHostPoolReference
     {
-        /// <summary> Initializes a new instance of ScalingHostPoolReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScalingHostPoolReference"/>. </summary>
         public ScalingHostPoolReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ScalingHostPoolReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingHostPoolReference"/>. </summary>
         /// <param name="hostPoolId"> Arm path of referenced hostpool. </param>
         /// <param name="isScalingPlanEnabled"> Is the scaling plan enabled for this hostpool. </param>
-        internal ScalingHostPoolReference(ResourceIdentifier hostPoolId, bool? isScalingPlanEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScalingHostPoolReference(ResourceIdentifier hostPoolId, bool? isScalingPlanEnabled, Dictionary<string, BinaryData> rawData)
         {
             HostPoolId = hostPoolId;
             IsScalingPlanEnabled = isScalingPlanEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> Arm path of referenced hostpool. </summary>

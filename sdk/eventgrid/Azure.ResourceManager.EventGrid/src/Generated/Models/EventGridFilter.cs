@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,20 +18,26 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// Please note <see cref="EventGridFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BoolEqualsFilter"/>, <see cref="IsNotNullFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="NumberInFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="StringNotEndsWithFilter"/> and <see cref="StringNotInFilter"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownFilter))]
     public abstract partial class EventGridFilter
     {
-        /// <summary> Initializes a new instance of EventGridFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridFilter"/>. </summary>
         protected EventGridFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        internal EventGridFilter(FilterOperatorType operatorType, string key)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridFilter(FilterOperatorType operatorType, string key, Dictionary<string, BinaryData> rawData)
         {
             OperatorType = operatorType;
             Key = key;
+            _rawData = rawData;
         }
 
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>

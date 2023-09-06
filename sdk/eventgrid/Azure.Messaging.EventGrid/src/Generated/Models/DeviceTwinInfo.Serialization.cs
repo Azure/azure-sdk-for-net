@@ -5,15 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class DeviceTwinInfo
+    public partial class DeviceTwinInfo : IUtf8JsonSerializable, IModelJsonSerializable<DeviceTwinInfo>
     {
-        internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceTwinInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceTwinInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceTwinInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType);
+            }
+            if (Optional.IsDefined(CloudToDeviceMessageCount))
+            {
+                writer.WritePropertyName("cloudToDeviceMessageCount"u8);
+                writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
+            }
+            if (Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("connectionState"u8);
+                writer.WriteStringValue(ConnectionState);
+            }
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
+            }
+            if (Optional.IsDefined(LastActivityTime))
+            {
+                writer.WritePropertyName("lastActivityTime"u8);
+                writer.WriteStringValue(LastActivityTime);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeviceTwinInfoProperties>)Properties).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(StatusUpdateTime))
+            {
+                writer.WritePropertyName("statusUpdateTime"u8);
+                writer.WriteStringValue(StatusUpdateTime);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(X509Thumbprint))
+            {
+                writer.WritePropertyName("x509Thumbprint"u8);
+                if (X509Thumbprint is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeviceTwinInfoX509Thumbprint>)X509Thumbprint).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +126,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> statusUpdateTime = default;
             Optional<float> version = default;
             Optional<DeviceTwinInfoX509Thumbprint> x509Thumbprint = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"u8))
@@ -102,8 +200,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     x509Thumbprint = DeviceTwinInfoX509Thumbprint.DeserializeDeviceTwinInfoX509Thumbprint(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value);
+            return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value, rawData);
+        }
+
+        DeviceTwinInfo IModelJsonSerializable<DeviceTwinInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceTwinInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceTwinInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceTwinInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceTwinInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceTwinInfo IModelSerializable<DeviceTwinInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceTwinInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceTwinInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceTwinInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceTwinInfo"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceTwinInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceTwinInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceTwinInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceTwinInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

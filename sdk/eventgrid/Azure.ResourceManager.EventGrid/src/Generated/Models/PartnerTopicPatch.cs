@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,24 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Partner Topic update. </summary>
     public partial class PartnerTopicPatch
     {
-        /// <summary> Initializes a new instance of PartnerTopicPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicPatch"/>. </summary>
         public PartnerTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicPatch"/>. </summary>
+        /// <param name="tags"> Tags of the Partner Topic resource. </param>
+        /// <param name="identity"> Identity information for the Partner Topic resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerTopicPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            _rawData = rawData;
         }
 
         /// <summary> Tags of the Partner Topic resource. </summary>

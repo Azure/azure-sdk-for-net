@@ -57,9 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(clusterJob);
-            request.Content = content;
+            request.Content = clusterJob;
             _userAgent.Apply(message);
             return message;
         }

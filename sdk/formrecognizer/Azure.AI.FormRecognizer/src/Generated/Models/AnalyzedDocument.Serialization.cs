@@ -5,16 +5,96 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class AnalyzedDocument
+    public partial class AnalyzedDocument : IUtf8JsonSerializable, IModelJsonSerializable<AnalyzedDocument>
     {
-        internal static AnalyzedDocument DeserializeAnalyzedDocument(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AnalyzedDocument>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AnalyzedDocument>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzedDocument>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("docType"u8);
+            writer.WriteStringValue(DocumentType);
+            if (Optional.IsCollectionDefined(BoundingRegions))
+            {
+                writer.WritePropertyName("boundingRegions"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundingRegions)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<BoundingRegion>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DocumentSpan>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Fields))
+            {
+                writer.WritePropertyName("fields"u8);
+                writer.WriteStartObject();
+                foreach (var item in Fields)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DocumentField>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("confidence"u8);
+            writer.WriteNumberValue(Confidence);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AnalyzedDocument DeserializeAnalyzedDocument(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +104,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             IReadOnlyList<DocumentSpan> spans = default;
             Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
             float confidence = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("docType"u8))
@@ -74,8 +155,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     confidence = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, Optional.ToDictionary(fields), confidence);
+            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, Optional.ToDictionary(fields), confidence, rawData);
+        }
+
+        AnalyzedDocument IModelJsonSerializable<AnalyzedDocument>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzedDocument>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzedDocument(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AnalyzedDocument>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzedDocument>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AnalyzedDocument IModelSerializable<AnalyzedDocument>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AnalyzedDocument>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAnalyzedDocument(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AnalyzedDocument"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AnalyzedDocument"/> to convert. </param>
+        public static implicit operator RequestContent(AnalyzedDocument model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AnalyzedDocument"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AnalyzedDocument(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAnalyzedDocument(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

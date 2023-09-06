@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class AttachedNetworkConnectionData : IUtf8JsonSerializable
+    public partial class AttachedNetworkConnectionData : IUtf8JsonSerializable, IModelJsonSerializable<AttachedNetworkConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AttachedNetworkConnectionData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AttachedNetworkConnectionData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AttachedNetworkConnectionData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -25,11 +33,25 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStringValue(NetworkConnectionId);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AttachedNetworkConnectionData DeserializeAttachedNetworkConnectionData(JsonElement element)
+        internal static AttachedNetworkConnectionData DeserializeAttachedNetworkConnectionData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +65,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<AzureLocation> networkConnectionLocation = default;
             Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
             Optional<DomainJoinType> domainJoinType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -126,8 +149,61 @@ namespace Azure.ResourceManager.DevCenter
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType));
+            return new AttachedNetworkConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), networkConnectionId.Value, Optional.ToNullable(networkConnectionLocation), Optional.ToNullable(healthCheckStatus), Optional.ToNullable(domainJoinType), rawData);
+        }
+
+        AttachedNetworkConnectionData IModelJsonSerializable<AttachedNetworkConnectionData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AttachedNetworkConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttachedNetworkConnectionData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AttachedNetworkConnectionData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AttachedNetworkConnectionData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AttachedNetworkConnectionData IModelSerializable<AttachedNetworkConnectionData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AttachedNetworkConnectionData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAttachedNetworkConnectionData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AttachedNetworkConnectionData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AttachedNetworkConnectionData"/> to convert. </param>
+        public static implicit operator RequestContent(AttachedNetworkConnectionData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AttachedNetworkConnectionData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AttachedNetworkConnectionData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAttachedNetworkConnectionData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

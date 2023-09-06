@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleRecurrence : IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleRecurrence : IUtf8JsonSerializable, IModelJsonSerializable<HDInsightAutoScaleRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HDInsightAutoScaleRecurrence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HDInsightAutoScaleRecurrence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightAutoScaleRecurrence>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeZone))
             {
@@ -27,21 +34,43 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Schedule)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HDInsightAutoScaleSchedule>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightAutoScaleRecurrence DeserializeHDInsightAutoScaleRecurrence(JsonElement element)
+        internal static HDInsightAutoScaleRecurrence DeserializeHDInsightAutoScaleRecurrence(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> timeZone = default;
             Optional<IList<HDInsightAutoScaleSchedule>> schedule = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -63,8 +92,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     schedule = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HDInsightAutoScaleRecurrence(timeZone.Value, Optional.ToList(schedule));
+            return new HDInsightAutoScaleRecurrence(timeZone.Value, Optional.ToList(schedule), rawData);
+        }
+
+        HDInsightAutoScaleRecurrence IModelJsonSerializable<HDInsightAutoScaleRecurrence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightAutoScaleRecurrence>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightAutoScaleRecurrence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HDInsightAutoScaleRecurrence>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightAutoScaleRecurrence>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HDInsightAutoScaleRecurrence IModelSerializable<HDInsightAutoScaleRecurrence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HDInsightAutoScaleRecurrence>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHDInsightAutoScaleRecurrence(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HDInsightAutoScaleRecurrence"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HDInsightAutoScaleRecurrence"/> to convert. </param>
+        public static implicit operator RequestContent(HDInsightAutoScaleRecurrence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HDInsightAutoScaleRecurrence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHDInsightAutoScaleRecurrence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

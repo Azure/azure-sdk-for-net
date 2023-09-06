@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterUsageName
+    public partial class DevCenterUsageName : IUtf8JsonSerializable, IModelJsonSerializable<DevCenterUsageName>
     {
-        internal static DevCenterUsageName DeserializeDevCenterUsageName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevCenterUsageName>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevCenterUsageName>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterUsageName>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LocalizedValue))
+            {
+                writer.WritePropertyName("localizedValue"u8);
+                writer.WriteStringValue(LocalizedValue);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DevCenterUsageName DeserializeDevCenterUsageName(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> localizedValue = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedValue"u8))
@@ -32,8 +71,61 @@ namespace Azure.ResourceManager.DevCenter.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevCenterUsageName(localizedValue.Value, value.Value);
+            return new DevCenterUsageName(localizedValue.Value, value.Value, rawData);
+        }
+
+        DevCenterUsageName IModelJsonSerializable<DevCenterUsageName>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterUsageName>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterUsageName(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevCenterUsageName>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterUsageName>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevCenterUsageName IModelSerializable<DevCenterUsageName>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevCenterUsageName>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevCenterUsageName(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevCenterUsageName"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevCenterUsageName"/> to convert. </param>
+        public static implicit operator RequestContent(DevCenterUsageName model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevCenterUsageName"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevCenterUsageName(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevCenterUsageName(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

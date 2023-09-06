@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,18 +15,23 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response from the List namespace operation. </summary>
     public partial class EventHubsNetworkRuleSetVirtualNetworkRules
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetVirtualNetworkRules"/>. </summary>
         public EventHubsNetworkRuleSetVirtualNetworkRules()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkRuleSetVirtualNetworkRules"/>. </summary>
         /// <param name="subnet"> Subnet properties. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
-        internal EventHubsNetworkRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint, Dictionary<string, BinaryData> rawData)
         {
             Subnet = subnet;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
+            _rawData = rawData;
         }
 
         /// <summary> Subnet properties. </summary>

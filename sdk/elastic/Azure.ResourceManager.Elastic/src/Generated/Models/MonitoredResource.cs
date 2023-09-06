@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> The properties of a resource currently being monitored by the Elastic monitor resource. </summary>
     public partial class MonitoredResource
     {
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoredResource"/>. </summary>
         internal MonitoredResource()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoredResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoredResource"/>. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingLogs"> Flag indicating the status of the resource for sending logs operation to Elastic. </param>
         /// <param name="reasonForLogsStatus"> Reason for why the resource is sending logs (or why it is not sending). </param>
-        internal MonitoredResource(string id, SendingLog? sendingLogs, string reasonForLogsStatus)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoredResource(string id, SendingLog? sendingLogs, string reasonForLogsStatus, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             SendingLogs = sendingLogs;
             ReasonForLogsStatus = reasonForLogsStatus;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM id of the resource. </summary>

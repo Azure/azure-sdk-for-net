@@ -6,17 +6,105 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsChatParticipantAddedToThreadWithUserEventDataConverter))]
-    public partial class AcsChatParticipantAddedToThreadWithUserEventData
+    public partial class AcsChatParticipantAddedToThreadWithUserEventData : IUtf8JsonSerializable, IModelJsonSerializable<AcsChatParticipantAddedToThreadWithUserEventData>
     {
-        internal static AcsChatParticipantAddedToThreadWithUserEventData DeserializeAcsChatParticipantAddedToThreadWithUserEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsChatParticipantAddedToThreadWithUserEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsChatParticipantAddedToThreadWithUserEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatParticipantAddedToThreadWithUserEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Time))
+            {
+                writer.WritePropertyName("time"u8);
+                writer.WriteStringValue(Time.Value, "O");
+            }
+            if (Optional.IsDefined(AddedByCommunicationIdentifier))
+            {
+                writer.WritePropertyName("addedByCommunicationIdentifier"u8);
+                if (AddedByCommunicationIdentifier is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommunicationIdentifierModel>)AddedByCommunicationIdentifier).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(ParticipantAdded))
+            {
+                writer.WritePropertyName("participantAdded"u8);
+                if (ParticipantAdded is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AcsChatThreadParticipantProperties>)ParticipantAdded).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(CreateTime))
+            {
+                writer.WritePropertyName("createTime"u8);
+                writer.WriteStringValue(CreateTime.Value, "O");
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(RecipientCommunicationIdentifier))
+            {
+                writer.WritePropertyName("recipientCommunicationIdentifier"u8);
+                if (RecipientCommunicationIdentifier is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommunicationIdentifierModel>)RecipientCommunicationIdentifier).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(TransactionId))
+            {
+                writer.WritePropertyName("transactionId"u8);
+                writer.WriteStringValue(TransactionId);
+            }
+            if (Optional.IsDefined(ThreadId))
+            {
+                writer.WritePropertyName("threadId"u8);
+                writer.WriteStringValue(ThreadId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsChatParticipantAddedToThreadWithUserEventData DeserializeAcsChatParticipantAddedToThreadWithUserEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +117,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -95,15 +184,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     threadId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsChatParticipantAddedToThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value);
+            return new AcsChatParticipantAddedToThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value, rawData);
+        }
+
+        AcsChatParticipantAddedToThreadWithUserEventData IModelJsonSerializable<AcsChatParticipantAddedToThreadWithUserEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatParticipantAddedToThreadWithUserEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsChatParticipantAddedToThreadWithUserEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsChatParticipantAddedToThreadWithUserEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatParticipantAddedToThreadWithUserEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsChatParticipantAddedToThreadWithUserEventData IModelSerializable<AcsChatParticipantAddedToThreadWithUserEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatParticipantAddedToThreadWithUserEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsChatParticipantAddedToThreadWithUserEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/> to convert. </param>
+        public static implicit operator RequestContent(AcsChatParticipantAddedToThreadWithUserEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsChatParticipantAddedToThreadWithUserEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsChatParticipantAddedToThreadWithUserEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AcsChatParticipantAddedToThreadWithUserEventDataConverter : JsonConverter<AcsChatParticipantAddedToThreadWithUserEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatParticipantAddedToThreadWithUserEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsChatParticipantAddedToThreadWithUserEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

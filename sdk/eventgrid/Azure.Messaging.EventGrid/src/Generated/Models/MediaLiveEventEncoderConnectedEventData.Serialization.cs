@@ -6,17 +6,44 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MediaLiveEventEncoderConnectedEventDataConverter))]
-    public partial class MediaLiveEventEncoderConnectedEventData
+    public partial class MediaLiveEventEncoderConnectedEventData : IUtf8JsonSerializable, IModelJsonSerializable<MediaLiveEventEncoderConnectedEventData>
     {
-        internal static MediaLiveEventEncoderConnectedEventData DeserializeMediaLiveEventEncoderConnectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaLiveEventEncoderConnectedEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaLiveEventEncoderConnectedEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveEventEncoderConnectedEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MediaLiveEventEncoderConnectedEventData DeserializeMediaLiveEventEncoderConnectedEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> streamId = default;
             Optional<string> encoderIp = default;
             Optional<string> encoderPort = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestUrl"u8))
@@ -47,15 +75,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     encoderPort = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaLiveEventEncoderConnectedEventData(ingestUrl.Value, streamId.Value, encoderIp.Value, encoderPort.Value);
+            return new MediaLiveEventEncoderConnectedEventData(ingestUrl.Value, streamId.Value, encoderIp.Value, encoderPort.Value, rawData);
+        }
+
+        MediaLiveEventEncoderConnectedEventData IModelJsonSerializable<MediaLiveEventEncoderConnectedEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveEventEncoderConnectedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveEventEncoderConnectedEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaLiveEventEncoderConnectedEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveEventEncoderConnectedEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaLiveEventEncoderConnectedEventData IModelSerializable<MediaLiveEventEncoderConnectedEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveEventEncoderConnectedEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaLiveEventEncoderConnectedEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaLiveEventEncoderConnectedEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaLiveEventEncoderConnectedEventData"/> to convert. </param>
+        public static implicit operator RequestContent(MediaLiveEventEncoderConnectedEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaLiveEventEncoderConnectedEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaLiveEventEncoderConnectedEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaLiveEventEncoderConnectedEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class MediaLiveEventEncoderConnectedEventDataConverter : JsonConverter<MediaLiveEventEncoderConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventEncoderConnectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MediaLiveEventEncoderConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

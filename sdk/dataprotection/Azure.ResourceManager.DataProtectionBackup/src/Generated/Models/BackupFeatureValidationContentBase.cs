@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -14,9 +17,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class BackupFeatureValidationContentBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationContentBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContentBase"/>. </summary>
         protected BackupFeatureValidationContentBase()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContentBase"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupFeatureValidationContentBase(string objectType, Dictionary<string, BinaryData> rawData)
+        {
+            ObjectType = objectType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

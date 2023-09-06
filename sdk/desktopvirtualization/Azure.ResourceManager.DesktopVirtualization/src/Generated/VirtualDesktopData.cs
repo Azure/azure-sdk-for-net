@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class VirtualDesktopData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopData"/>. </summary>
         public VirtualDesktopData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualDesktopData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +36,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="friendlyName"> Friendly name of Desktop. </param>
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> The icon a 64 bit string as a byte array. </param>
-        internal VirtualDesktopData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string description, string friendlyName, string iconHash, BinaryData iconContent) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualDesktopData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string description, string friendlyName, string iconHash, BinaryData iconContent, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             Description = description;
             FriendlyName = friendlyName;
             IconHash = iconHash;
             IconContent = iconContent;
+            _rawData = rawData;
         }
 
         /// <summary> ObjectId of Desktop. (internal use). </summary>

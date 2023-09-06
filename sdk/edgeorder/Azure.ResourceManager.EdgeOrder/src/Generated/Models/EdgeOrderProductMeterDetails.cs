@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary>
@@ -12,22 +16,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// Please note <see cref="EdgeOrderProductMeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownMeterDetails))]
     public abstract partial class EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
         protected EdgeOrderProductMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        internal EdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, Dictionary<string, BinaryData> rawData)
         {
             BillingType = billingType;
             Multiplier = multiplier;
             ChargingType = chargingType;
+            _rawData = rawData;
         }
 
         /// <summary> Represents billing type. </summary>

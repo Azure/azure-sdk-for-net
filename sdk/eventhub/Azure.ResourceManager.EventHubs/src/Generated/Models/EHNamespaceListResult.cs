@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response of the List Namespace operation. </summary>
     internal partial class EHNamespaceListResult
     {
-        /// <summary> Initializes a new instance of EHNamespaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EHNamespaceListResult"/>. </summary>
         internal EHNamespaceListResult()
         {
             Value = new ChangeTrackingList<EventHubsNamespaceData>();
         }
 
-        /// <summary> Initializes a new instance of EHNamespaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EHNamespaceListResult"/>. </summary>
         /// <param name="value"> Result of the List Namespace operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of namespaces. </param>
-        internal EHNamespaceListResult(IReadOnlyList<EventHubsNamespaceData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EHNamespaceListResult(IReadOnlyList<EventHubsNamespaceData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Result of the List Namespace operation. </summary>

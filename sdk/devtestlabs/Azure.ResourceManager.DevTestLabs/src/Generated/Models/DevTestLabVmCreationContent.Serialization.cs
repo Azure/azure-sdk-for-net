@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabVmCreationContent : IUtf8JsonSerializable
+    public partial class DevTestLabVmCreationContent : IUtf8JsonSerializable, IModelJsonSerializable<DevTestLabVmCreationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DevTestLabVmCreationContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DevTestLabVmCreationContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabVmCreationContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -43,7 +49,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(BulkCreationParameters))
             {
                 writer.WritePropertyName("bulkCreationParameters"u8);
-                writer.WriteObjectValue(BulkCreationParameters);
+                if (BulkCreationParameters is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<BulkCreationParameters>)BulkCreationParameters).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Notes))
             {
@@ -116,14 +129,28 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevTestLabArtifactInstallInfo>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                if (GalleryImageReference is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevTestLabGalleryImageReference>)GalleryImageReference).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(PlanId))
             {
@@ -133,7 +160,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                writer.WriteObjectValue(NetworkInterface);
+                if (NetworkInterface is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DevTestLabNetworkInterface>)NetworkInterface).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -161,7 +195,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevTestLabDataDiskProperties>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -171,16 +212,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in ScheduleParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<DevTestLabScheduleCreationParameter>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabVmCreationContent DeserializeDevTestLabVmCreationContent(JsonElement element)
+        internal static DevTestLabVmCreationContent DeserializeDevTestLabVmCreationContent(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -212,6 +274,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> environmentId = default;
             Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
             Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -437,8 +500,61 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters));
+            return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), rawData);
+        }
+
+        DevTestLabVmCreationContent IModelJsonSerializable<DevTestLabVmCreationContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabVmCreationContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabVmCreationContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DevTestLabVmCreationContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabVmCreationContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DevTestLabVmCreationContent IModelSerializable<DevTestLabVmCreationContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DevTestLabVmCreationContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDevTestLabVmCreationContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DevTestLabVmCreationContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DevTestLabVmCreationContent"/> to convert. </param>
+        public static implicit operator RequestContent(DevTestLabVmCreationContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DevTestLabVmCreationContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DevTestLabVmCreationContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDevTestLabVmCreationContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Update VM resource collection. </summary>
     public partial class VmCollectionUpdate
     {
-        /// <summary> Initializes a new instance of VmCollectionUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmCollectionUpdate"/>. </summary>
         public VmCollectionUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmCollectionUpdate"/>. </summary>
+        /// <param name="vmResourceId"> ARM id of the VM resource. </param>
+        /// <param name="operationName"> Operation to be performed for given VM. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmCollectionUpdate(string vmResourceId, OperationName? operationName, Dictionary<string, BinaryData> rawData)
+        {
+            VmResourceId = vmResourceId;
+            OperationName = operationName;
+            _rawData = rawData;
         }
 
         /// <summary> ARM id of the VM resource. </summary>

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Properties of the Dynatrace environment. </summary>
     public partial class DynatraceEnvironmentProperties
     {
-        /// <summary> Initializes a new instance of DynatraceEnvironmentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceEnvironmentProperties"/>. </summary>
         public DynatraceEnvironmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceEnvironmentProperties"/>. </summary>
         /// <param name="userId"> User id. </param>
         /// <param name="accountInfo"> Dynatrace Account Information. </param>
         /// <param name="environmentInfo"> Dynatrace Environment Information. </param>
         /// <param name="singleSignOnProperties"> The details of a Dynatrace single sign-on. </param>
-        internal DynatraceEnvironmentProperties(string userId, DynatraceAccountInfo accountInfo, DynatraceEnvironmentInfo environmentInfo, DynatraceSingleSignOnProperties singleSignOnProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceEnvironmentProperties(string userId, DynatraceAccountInfo accountInfo, DynatraceEnvironmentInfo environmentInfo, DynatraceSingleSignOnProperties singleSignOnProperties, Dictionary<string, BinaryData> rawData)
         {
             UserId = userId;
             AccountInfo = accountInfo;
             EnvironmentInfo = environmentInfo;
             SingleSignOnProperties = singleSignOnProperties;
+            _rawData = rawData;
         }
 
         /// <summary> User id. </summary>

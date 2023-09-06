@@ -9,15 +9,109 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsChatMessageEditedInThreadEventDataConverter))]
-    public partial class AcsChatMessageEditedInThreadEventData
+    public partial class AcsChatMessageEditedInThreadEventData : IUtf8JsonSerializable, IModelJsonSerializable<AcsChatMessageEditedInThreadEventData>
     {
-        internal static AcsChatMessageEditedInThreadEventData DeserializeAcsChatMessageEditedInThreadEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AcsChatMessageEditedInThreadEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AcsChatMessageEditedInThreadEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatMessageEditedInThreadEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MessageBody))
+            {
+                writer.WritePropertyName("messageBody"u8);
+                writer.WriteStringValue(MessageBody);
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EditTime))
+            {
+                writer.WritePropertyName("editTime"u8);
+                writer.WriteStringValue(EditTime.Value, "O");
+            }
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(SenderCommunicationIdentifier))
+            {
+                writer.WritePropertyName("senderCommunicationIdentifier"u8);
+                if (SenderCommunicationIdentifier is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CommunicationIdentifierModel>)SenderCommunicationIdentifier).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(SenderDisplayName))
+            {
+                writer.WritePropertyName("senderDisplayName"u8);
+                writer.WriteStringValue(SenderDisplayName);
+            }
+            if (Optional.IsDefined(ComposeTime))
+            {
+                writer.WritePropertyName("composeTime"u8);
+                writer.WriteStringValue(ComposeTime.Value, "O");
+            }
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(TransactionId))
+            {
+                writer.WritePropertyName("transactionId"u8);
+                writer.WriteStringValue(TransactionId);
+            }
+            if (Optional.IsDefined(ThreadId))
+            {
+                writer.WritePropertyName("threadId"u8);
+                writer.WriteStringValue(ThreadId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static AcsChatMessageEditedInThreadEventData DeserializeAcsChatMessageEditedInThreadEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<long> version = default;
             Optional<string> transactionId = default;
             Optional<string> threadId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageBody"u8))
@@ -115,15 +210,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     threadId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AcsChatMessageEditedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata), Optional.ToNullable(editTime));
+            return new AcsChatMessageEditedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), messageBody.Value, Optional.ToDictionary(metadata), Optional.ToNullable(editTime), rawData);
+        }
+
+        AcsChatMessageEditedInThreadEventData IModelJsonSerializable<AcsChatMessageEditedInThreadEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatMessageEditedInThreadEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsChatMessageEditedInThreadEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AcsChatMessageEditedInThreadEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatMessageEditedInThreadEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AcsChatMessageEditedInThreadEventData IModelSerializable<AcsChatMessageEditedInThreadEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AcsChatMessageEditedInThreadEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAcsChatMessageEditedInThreadEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AcsChatMessageEditedInThreadEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AcsChatMessageEditedInThreadEventData"/> to convert. </param>
+        public static implicit operator RequestContent(AcsChatMessageEditedInThreadEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AcsChatMessageEditedInThreadEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AcsChatMessageEditedInThreadEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAcsChatMessageEditedInThreadEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class AcsChatMessageEditedInThreadEventDataConverter : JsonConverter<AcsChatMessageEditedInThreadEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatMessageEditedInThreadEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsChatMessageEditedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

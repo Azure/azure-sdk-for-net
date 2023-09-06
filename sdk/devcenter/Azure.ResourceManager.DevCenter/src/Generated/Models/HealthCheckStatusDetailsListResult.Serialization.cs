@@ -5,23 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    internal partial class HealthCheckStatusDetailsListResult
+    internal partial class HealthCheckStatusDetailsListResult : IUtf8JsonSerializable, IModelJsonSerializable<HealthCheckStatusDetailsListResult>
     {
-        internal static HealthCheckStatusDetailsListResult DeserializeHealthCheckStatusDetailsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthCheckStatusDetailsListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthCheckStatusDetailsListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthCheckStatusDetailsListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static HealthCheckStatusDetailsListResult DeserializeHealthCheckStatusDetailsListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<HealthCheckStatusDetailData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +71,61 @@ namespace Azure.ResourceManager.DevCenter.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthCheckStatusDetailsListResult(Optional.ToList(value), nextLink.Value);
+            return new HealthCheckStatusDetailsListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        HealthCheckStatusDetailsListResult IModelJsonSerializable<HealthCheckStatusDetailsListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthCheckStatusDetailsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthCheckStatusDetailsListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthCheckStatusDetailsListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthCheckStatusDetailsListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthCheckStatusDetailsListResult IModelSerializable<HealthCheckStatusDetailsListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthCheckStatusDetailsListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthCheckStatusDetailsListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthCheckStatusDetailsListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthCheckStatusDetailsListResult"/> to convert. </param>
+        public static implicit operator RequestContent(HealthCheckStatusDetailsListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthCheckStatusDetailsListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthCheckStatusDetailsListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthCheckStatusDetailsListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

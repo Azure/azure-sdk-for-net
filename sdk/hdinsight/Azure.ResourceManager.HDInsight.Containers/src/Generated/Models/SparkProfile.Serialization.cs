@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class SparkProfile : IUtf8JsonSerializable
+    public partial class SparkProfile : IUtf8JsonSerializable, IModelJsonSerializable<SparkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SparkProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SparkProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SparkProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultStorageUriString))
             {
@@ -23,18 +31,46 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(MetastoreSpec))
             {
                 writer.WritePropertyName("metastoreSpec"u8);
-                writer.WriteObjectValue(MetastoreSpec);
+                if (MetastoreSpec is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SparkMetastoreSpec>)MetastoreSpec).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(UserPluginsSpec))
             {
                 writer.WritePropertyName("userPluginsSpec"u8);
-                writer.WriteObjectValue(UserPluginsSpec);
+                if (UserPluginsSpec is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SparkUserPluginListResult>)UserPluginsSpec).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SparkProfile DeserializeSparkProfile(JsonElement element)
+        internal static SparkProfile DeserializeSparkProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> defaultStorageUrl = default;
             Optional<SparkMetastoreSpec> metastoreSpec = default;
             Optional<SparkUserPluginListResult> userPluginsSpec = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultStorageUrl"u8))
@@ -67,8 +104,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     userPluginsSpec = SparkUserPluginListResult.DeserializeSparkUserPluginListResult(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SparkProfile(defaultStorageUrl.Value, metastoreSpec.Value, userPluginsSpec.Value);
+            return new SparkProfile(defaultStorageUrl.Value, metastoreSpec.Value, userPluginsSpec.Value, rawData);
+        }
+
+        SparkProfile IModelJsonSerializable<SparkProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSparkProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SparkProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SparkProfile IModelSerializable<SparkProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SparkProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSparkProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SparkProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SparkProfile"/> to convert. </param>
+        public static implicit operator RequestContent(SparkProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SparkProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SparkProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSparkProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

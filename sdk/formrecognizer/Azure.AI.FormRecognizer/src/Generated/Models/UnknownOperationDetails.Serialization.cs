@@ -6,98 +6,98 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class UnknownOperationDetails
+    internal partial class UnknownOperationDetails : IUtf8JsonSerializable, IModelJsonSerializable<OperationDetails>
     {
-        internal static UnknownOperationDetails DeserializeUnknownOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OperationDetails>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OperationDetails>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<OperationDetails>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (Optional.IsDefined(PercentCompleted))
             {
-                return null;
+                writer.WritePropertyName("percentCompleted"u8);
+                writer.WriteNumberValue(PercentCompleted.Value);
             }
-            string operationId = default;
-            DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
-            DateTimeOffset createdDateTime = default;
-            DateTimeOffset lastUpdatedDateTime = default;
-            DocumentOperationKind kind = "Unknown";
-            Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<JsonElement> error = default;
-            foreach (var property in element.EnumerateObject())
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedOn, "O");
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("resourceLocation"u8);
+            writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            if (Optional.IsDefined(ServiceVersion))
             {
-                if (property.NameEquals("operationId"u8))
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ServiceVersion);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    operationId = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
                 }
-                if (property.NameEquals("status"u8))
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(JsonError))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonError.WriteTo(writer);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
                 {
-                    status = property.Value.GetString().ToDocumentOperationStatus();
-                    continue;
-                }
-                if (property.NameEquals("percentCompleted"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    percentCompleted = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("createdDateTime"u8))
-                {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("lastUpdatedDateTime"u8))
-                {
-                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new DocumentOperationKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceLocation"u8))
-                {
-                    resourceLocation = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("apiVersion"u8))
-                {
-                    apiVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("error"u8))
-                {
-                    error = property.Value.Clone();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error);
+            writer.WriteEndObject();
+        }
+
+        internal static OperationDetails DeserializeUnknownOperationDetails(JsonElement element, ModelSerializerOptions options = default) => DeserializeOperationDetails(element, options);
+
+        OperationDetails IModelJsonSerializable<OperationDetails>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownOperationDetails(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OperationDetails>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationDetails>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OperationDetails IModelSerializable<OperationDetails>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OperationDetails>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOperationDetails(doc.RootElement, options);
         }
     }
 }

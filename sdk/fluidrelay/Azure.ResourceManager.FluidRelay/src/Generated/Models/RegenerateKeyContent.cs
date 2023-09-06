@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     /// <summary> Specifies which key should be generated. </summary>
     public partial class RegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> The key to regenerate. </param>
         public RegenerateKeyContent(FluidRelayKeyName keyName)
         {
             KeyName = keyName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> The key to regenerate. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegenerateKeyContent(FluidRelayKeyName keyName, Dictionary<string, BinaryData> rawData)
+        {
+            KeyName = keyName;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateKeyContent"/> for deserialization. </summary>
+        internal RegenerateKeyContent()
+        {
         }
 
         /// <summary> The key to regenerate. </summary>

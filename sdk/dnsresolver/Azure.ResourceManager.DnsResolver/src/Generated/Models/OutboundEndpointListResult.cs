@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on outbound endpoints for a DNS resolver. </summary>
     internal partial class OutboundEndpointListResult
     {
-        /// <summary> Initializes a new instance of OutboundEndpointListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointListResult"/>. </summary>
         internal OutboundEndpointListResult()
         {
             Value = new ChangeTrackingList<DnsResolverOutboundEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointListResult"/>. </summary>
         /// <param name="value"> Enumeration of the outbound endpoints for a DNS resolver. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal OutboundEndpointListResult(IReadOnlyList<DnsResolverOutboundEndpointData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutboundEndpointListResult(IReadOnlyList<DnsResolverOutboundEndpointData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Enumeration of the outbound endpoints for a DNS resolver. </summary>

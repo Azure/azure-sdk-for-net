@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Response body for evaluating a policy set. </summary>
     public partial class DevTestLabEvaluatePoliciesResult
     {
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePoliciesResult"/>. </summary>
         internal DevTestLabEvaluatePoliciesResult()
         {
             Results = new ChangeTrackingList<DevTestLabPolicySetResult>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabEvaluatePoliciesResult"/>. </summary>
         /// <param name="results"> Results of evaluating a policy set. </param>
-        internal DevTestLabEvaluatePoliciesResult(IReadOnlyList<DevTestLabPolicySetResult> results)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabEvaluatePoliciesResult(IReadOnlyList<DevTestLabPolicySetResult> results, Dictionary<string, BinaryData> rawData)
         {
             Results = results;
+            _rawData = rawData;
         }
 
         /// <summary> Results of evaluating a policy set. </summary>

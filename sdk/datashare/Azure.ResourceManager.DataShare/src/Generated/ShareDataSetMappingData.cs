@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -19,20 +21,25 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class ShareDataSetMappingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ShareDataSetMappingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetMappingData"/>. </summary>
         public ShareDataSetMappingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareDataSetMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareDataSetMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set mapping. </param>
-        internal ShareDataSetMappingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareDataSetMappingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetMappingKind kind, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _rawData = rawData;
         }
 
         /// <summary> Kind of data set mapping. </summary>

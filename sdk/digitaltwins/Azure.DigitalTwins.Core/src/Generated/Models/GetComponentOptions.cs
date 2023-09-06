@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     internal partial class GetComponentOptions
     {
-        /// <summary> Initializes a new instance of GetComponentOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetComponentOptions"/>. </summary>
         public GetComponentOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetComponentOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetComponentOptions(string traceParent, string traceState, Dictionary<string, BinaryData> rawData)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            _rawData = rawData;
         }
     }
 }

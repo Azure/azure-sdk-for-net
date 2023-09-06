@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema for details of a delivery attempt. </summary>
     public partial class AcsSmsDeliveryAttemptProperties
     {
-        /// <summary> Initializes a new instance of AcsSmsDeliveryAttemptProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryAttemptProperties"/>. </summary>
         internal AcsSmsDeliveryAttemptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsSmsDeliveryAttemptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryAttemptProperties"/>. </summary>
         /// <param name="timestamp"> TimeStamp when delivery was attempted. </param>
         /// <param name="segmentsSucceeded"> Number of segments that were successfully delivered. </param>
         /// <param name="segmentsFailed"> Number of segments whose delivery failed. </param>
-        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed, Dictionary<string, BinaryData> rawData)
         {
             Timestamp = timestamp;
             SegmentsSucceeded = segmentsSucceeded;
             SegmentsFailed = segmentsFailed;
+            _rawData = rawData;
         }
 
         /// <summary> TimeStamp when delivery was attempted. </summary>

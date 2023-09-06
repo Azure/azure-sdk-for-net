@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> Properties for a range of values. </summary>
     public partial class DevCenterResourceRange
     {
-        /// <summary> Initializes a new instance of DevCenterResourceRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterResourceRange"/>. </summary>
         internal DevCenterResourceRange()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterResourceRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterResourceRange"/>. </summary>
         /// <param name="min"> Minimum value. </param>
         /// <param name="max"> Maximum value. </param>
-        internal DevCenterResourceRange(int? min, int? max)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterResourceRange(int? min, int? max, Dictionary<string, BinaryData> rawData)
         {
             Min = min;
             Max = max;
+            _rawData = rawData;
         }
 
         /// <summary> Minimum value. </summary>

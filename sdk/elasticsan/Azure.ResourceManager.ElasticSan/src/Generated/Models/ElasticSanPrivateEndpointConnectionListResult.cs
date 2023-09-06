@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of private endpoint connections associated with SAN. </summary>
     internal partial class ElasticSanPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionListResult"/>. </summary>
         internal ElasticSanPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal ElasticSanPrivateEndpointConnectionListResult(IReadOnlyList<ElasticSanPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPrivateEndpointConnectionListResult(IReadOnlyList<ElasticSanPrivateEndpointConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

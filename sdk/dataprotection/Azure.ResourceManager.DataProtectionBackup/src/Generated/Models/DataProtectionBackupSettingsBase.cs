@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Please note <see cref="DataProtectionBackupSettingsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataProtectionBackupSettings"/>.
     /// </summary>
+    [AbstractTypeDeserializer(typeof(UnknownBackupParameters))]
     public abstract partial class DataProtectionBackupSettingsBase
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupSettingsBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettingsBase"/>. </summary>
         protected DataProtectionBackupSettingsBase()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupSettingsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettingsBase"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal DataProtectionBackupSettingsBase(string objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupSettingsBase(string objectType, Dictionary<string, BinaryData> rawData)
         {
             ObjectType = objectType;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

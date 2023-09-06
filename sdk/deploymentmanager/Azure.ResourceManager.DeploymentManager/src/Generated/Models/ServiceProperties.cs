@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> The properties of a service. </summary>
     public partial class ServiceProperties
     {
-        /// <summary> Initializes a new instance of ServiceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceProperties"/>. </summary>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.DeploymentManager.Models
 
             TargetLocation = targetLocation;
             TargetSubscriptionId = targetSubscriptionId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceProperties"/>. </summary>
+        /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
+        /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceProperties(string targetLocation, string targetSubscriptionId, Dictionary<string, BinaryData> rawData)
+        {
+            TargetLocation = targetLocation;
+            TargetSubscriptionId = targetSubscriptionId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceProperties"/> for deserialization. </summary>
+        internal ServiceProperties()
+        {
         }
 
         /// <summary> The Azure location to which the resources in the service belong to or should be deployed to. </summary>

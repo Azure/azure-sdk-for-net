@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmElasticSanModelFactory
     {
-        /// <summary> Initializes a new instance of ElasticSanSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformation"/>. </summary>
         /// <param name="name"> Sku Name. </param>
         /// <param name="tier"> Sku Tier. </param>
         /// <param name="resourceType"> The type of the resource. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             locationInfo ??= new List<ElasticSanSkuLocationInfo>();
             capabilities ??= new List<ElasticSanSkuCapability>();
 
-            return new ElasticSanSkuInformation(name, tier, resourceType, locations?.ToList(), locationInfo?.ToList(), capabilities?.ToList());
+            return new ElasticSanSkuInformation(name, tier, resourceType, locations?.ToList(), locationInfo?.ToList(), capabilities?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuLocationInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         /// <returns> A new <see cref="Models.ElasticSanSkuLocationInfo"/> instance for mocking. </returns>
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             zones ??= new List<string>();
 
-            return new ElasticSanSkuLocationInfo(location, zones?.ToList());
+            return new ElasticSanSkuLocationInfo(location, zones?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuCapability"/>. </summary>
         /// <param name="name"> The name of capability. </param>
         /// <param name="value"> A string value to indicate states of given capability. </param>
         /// <returns> A new <see cref="Models.ElasticSanSkuCapability"/> instance for mocking. </returns>
         public static ElasticSanSkuCapability ElasticSanSkuCapability(string name = null, string value = null)
         {
-            return new ElasticSanSkuCapability(name, value);
+            return new ElasticSanSkuCapability(name, value, default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             availabilityZones ??= new List<string>();
             privateEndpointConnections ??= new List<ElasticSanPrivateEndpointConnectionData>();
 
-            return new ElasticSanData(id, name, resourceType, systemData, tags, location, sku, availabilityZones?.ToList(), provisioningState, baseSizeTiB, extendedCapacitySizeTiB, totalVolumeSizeGiB, volumeGroupCount, totalIops, totalMbps, totalSizeTiB, privateEndpointConnections?.ToList());
+            return new ElasticSanData(id, name, resourceType, systemData, tags, location, sku, availabilityZones?.ToList(), provisioningState, baseSizeTiB, extendedCapacitySizeTiB, totalVolumeSizeGiB, volumeGroupCount, totalIops, totalMbps, totalSizeTiB, privateEndpointConnections?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             groupIds ??= new List<string>();
 
-            return new ElasticSanPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList());
+            return new ElasticSanPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -115,20 +115,20 @@ namespace Azure.ResourceManager.ElasticSan.Models
             virtualNetworkRules ??= new List<ElasticSanVirtualNetworkRule>();
             privateEndpointConnections ??= new List<ElasticSanPrivateEndpointConnectionData>();
 
-            return new ElasticSanVolumeGroupData(id, name, resourceType, systemData, provisioningState, protocolType, encryption, virtualNetworkRules != null ? new NetworkRuleSet(virtualNetworkRules?.ToList()) : null, privateEndpointConnections?.ToList());
+            return new ElasticSanVolumeGroupData(id, name, resourceType, systemData, provisioningState, protocolType, encryption, virtualNetworkRules != null ? new NetworkRuleSet(virtualNetworkRules?.ToList(), new Dictionary<string, BinaryData>()) : null, privateEndpointConnections?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVirtualNetworkRule"/>. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
         /// <returns> A new <see cref="Models.ElasticSanVirtualNetworkRule"/> instance for mocking. </returns>
         public static ElasticSanVirtualNetworkRule ElasticSanVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId = null, ElasticSanVirtualNetworkRuleAction? action = null, ElasticSanVirtualNetworkRuleState? state = null)
         {
-            return new ElasticSanVirtualNetworkRule(virtualNetworkResourceId, action, state);
+            return new ElasticSanVirtualNetworkRule(virtualNetworkResourceId, action, state, default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
         public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? volumeId = null, ElasticSanVolumeDataSourceInfo creationData = null, long sizeGiB = default, IscsiTargetInfo storageTarget = null)
         {
-            return new ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget);
+            return new ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, default);
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetInfo"/>. </summary>
         /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="targetPortalHostname"> iSCSI Target Portal Host Name. </param>
         /// <param name="targetPortalPort"> iSCSI Target Portal Port. </param>
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="Models.IscsiTargetInfo"/> instance for mocking. </returns>
         public static IscsiTargetInfo IscsiTargetInfo(string targetIqn = null, string targetPortalHostname = null, int? targetPortalPort = null, ElasticSanProvisioningState? provisioningState = null, ResourceOperationalStatus? status = null)
         {
-            return new IscsiTargetInfo(targetIqn, targetPortalHostname, targetPortalPort, provisioningState, status);
+            return new IscsiTargetInfo(targetIqn, targetPortalHostname, targetPortalPort, provisioningState, status, default);
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new ElasticSanPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new ElasticSanPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), default);
         }
     }
 }

@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesCertificateProperties : IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesCertificateProperties : IUtf8JsonSerializable, IModelJsonSerializable<DeviceProvisioningServicesCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceProvisioningServicesCertificateProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceProvisioningServicesCertificateProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceProvisioningServicesCertificateProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsVerified))
             {
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Certificate.ToString()).RootElement);
 #endif
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element)
+        internal static DeviceProvisioningServicesCertificateProperties DeserializeDeviceProvisioningServicesCertificateProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Optional<BinaryData> certificate = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -107,8 +129,61 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     updated = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
+            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated), rawData);
+        }
+
+        DeviceProvisioningServicesCertificateProperties IModelJsonSerializable<DeviceProvisioningServicesCertificateProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceProvisioningServicesCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceProvisioningServicesCertificateProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceProvisioningServicesCertificateProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceProvisioningServicesCertificateProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceProvisioningServicesCertificateProperties IModelSerializable<DeviceProvisioningServicesCertificateProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceProvisioningServicesCertificateProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceProvisioningServicesCertificateProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceProvisioningServicesCertificateProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceProvisioningServicesCertificateProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceProvisioningServicesCertificateProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceProvisioningServicesCertificateProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceProvisioningServicesCertificateProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

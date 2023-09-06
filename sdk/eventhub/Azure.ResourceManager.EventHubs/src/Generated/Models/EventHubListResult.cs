@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The result of the List EventHubs operation. </summary>
     internal partial class EventHubListResult
     {
-        /// <summary> Initializes a new instance of EventHubListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubListResult"/>. </summary>
         internal EventHubListResult()
         {
             Value = new ChangeTrackingList<EventHubData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubListResult"/>. </summary>
         /// <param name="value"> Result of the List EventHubs operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of EventHubs. </param>
-        internal EventHubListResult(IReadOnlyList<EventHubData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubListResult(IReadOnlyList<EventHubData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Result of the List EventHubs operation. </summary>

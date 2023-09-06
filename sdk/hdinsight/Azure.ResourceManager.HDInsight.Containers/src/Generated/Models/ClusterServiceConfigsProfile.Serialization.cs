@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterServiceConfigsProfile : IUtf8JsonSerializable
+    public partial class ClusterServiceConfigsProfile : IUtf8JsonSerializable, IModelJsonSerializable<ClusterServiceConfigsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClusterServiceConfigsProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClusterServiceConfigsProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterServiceConfigsProfile>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("serviceName"u8);
             writer.WriteStringValue(ServiceName);
@@ -22,20 +29,42 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartArray();
             foreach (var item in Configs)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClusterServiceConfig>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterServiceConfigsProfile DeserializeClusterServiceConfigsProfile(JsonElement element)
+        internal static ClusterServiceConfigsProfile DeserializeClusterServiceConfigsProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string serviceName = default;
             IList<ClusterServiceConfig> configs = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -53,8 +82,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     configs = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ClusterServiceConfigsProfile(serviceName, configs);
+            return new ClusterServiceConfigsProfile(serviceName, configs, rawData);
+        }
+
+        ClusterServiceConfigsProfile IModelJsonSerializable<ClusterServiceConfigsProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterServiceConfigsProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterServiceConfigsProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClusterServiceConfigsProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterServiceConfigsProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClusterServiceConfigsProfile IModelSerializable<ClusterServiceConfigsProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ClusterServiceConfigsProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClusterServiceConfigsProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClusterServiceConfigsProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClusterServiceConfigsProfile"/> to convert. </param>
+        public static implicit operator RequestContent(ClusterServiceConfigsProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClusterServiceConfigsProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClusterServiceConfigsProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClusterServiceConfigsProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

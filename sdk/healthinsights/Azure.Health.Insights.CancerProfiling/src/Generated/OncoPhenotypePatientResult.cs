@@ -15,6 +15,9 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> The results of the model's work for a single patient. </summary>
     public partial class OncoPhenotypePatientResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
@@ -31,10 +34,17 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <summary> Initializes a new instance of OncoPhenotypePatientResult. </summary>
         /// <param name="id"> The identifier given for the patient in the request. </param>
         /// <param name="inferences"> The model's inferences for the given patient. </param>
-        internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal OncoPhenotypePatientResult(string id, IReadOnlyList<OncoPhenotypeInference> inferences, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
             Inferences = inferences;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OncoPhenotypePatientResult"/> for deserialization. </summary>
+        internal OncoPhenotypePatientResult()
+        {
         }
 
         /// <summary> The identifier given for the patient in the request. </summary>

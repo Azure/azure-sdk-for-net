@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorBackend : IUtf8JsonSerializable
+    public partial class FrontDoorBackend : IUtf8JsonSerializable, IModelJsonSerializable<FrontDoorBackend>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FrontDoorBackend>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FrontDoorBackend>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorBackend>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Address))
             {
@@ -84,11 +92,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("backendHostHeader"u8);
                 writer.WriteStringValue(BackendHostHeader);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorBackend DeserializeFrontDoorBackend(JsonElement element)
+        internal static FrontDoorBackend DeserializeFrontDoorBackend(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,6 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<int> priority = default;
             Optional<int> weight = default;
             Optional<string> backendHostHeader = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -202,8 +225,61 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     backendHostHeader = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value);
+            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value, rawData);
+        }
+
+        FrontDoorBackend IModelJsonSerializable<FrontDoorBackend>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorBackend>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorBackend(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FrontDoorBackend>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorBackend>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FrontDoorBackend IModelSerializable<FrontDoorBackend>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FrontDoorBackend>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFrontDoorBackend(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FrontDoorBackend"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FrontDoorBackend"/> to convert. </param>
+        public static implicit operator RequestContent(FrontDoorBackend model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FrontDoorBackend"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FrontDoorBackend(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFrontDoorBackend(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

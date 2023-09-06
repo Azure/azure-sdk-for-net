@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a percentage cost threshold. </summary>
     internal partial class PercentageCostThresholdProperties
     {
-        /// <summary> Initializes a new instance of PercentageCostThresholdProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PercentageCostThresholdProperties"/>. </summary>
         public PercentageCostThresholdProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PercentageCostThresholdProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentageCostThresholdProperties"/>. </summary>
         /// <param name="thresholdValue"> The cost threshold value. </param>
-        internal PercentageCostThresholdProperties(double? thresholdValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PercentageCostThresholdProperties(double? thresholdValue, Dictionary<string, BinaryData> rawData)
         {
             ThresholdValue = thresholdValue;
+            _rawData = rawData;
         }
 
         /// <summary> The cost threshold value. </summary>

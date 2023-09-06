@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,5 +14,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> File list in Azure Blob Storage. </summary>
     public partial class BlobFileListContentSource
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobFileListContentSource"/>. </summary>
+        /// <param name="containerUri"> Azure Blob Storage container URL. </param>
+        /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents for training. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobFileListContentSource(Uri containerUri, string fileList, Dictionary<string, BinaryData> rawData)
+        {
+            ContainerUri = containerUri;
+            FileList = fileList;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobFileListContentSource"/> for deserialization. </summary>
+        internal BlobFileListContentSource()
+        {
+        }
     }
 }

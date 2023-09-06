@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> SKU parameters particular to a cluster instance. </summary>
     public partial class EventHubsClusterSku
     {
-        /// <summary> Initializes a new instance of EventHubsClusterSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public EventHubsClusterSku(EventHubsClusterSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of EventHubsClusterSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="capacity"> The quantity of Event Hubs Cluster Capacity Units contained in this cluster. </param>
-        internal EventHubsClusterSku(EventHubsClusterSkuName name, int? capacity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsClusterSku(EventHubsClusterSkuName name, int? capacity, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Capacity = capacity;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterSku"/> for deserialization. </summary>
+        internal EventHubsClusterSku()
+        {
         }
 
         /// <summary> Name of this SKU. </summary>

@@ -15,19 +15,24 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> The list of accounts. </summary>
     internal partial class GraphServicesAccountResourceList
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceList"/>. </summary>
         internal GraphServicesAccountResourceList()
         {
             Value = new ChangeTrackingList<GraphServicesAccountResourceData>();
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourceList"/>. </summary>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="value"> The list of recommendations. </param>
-        internal GraphServicesAccountResourceList(Uri nextLink, IReadOnlyList<GraphServicesAccountResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphServicesAccountResourceList(Uri nextLink, IReadOnlyList<GraphServicesAccountResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link to the next page of items. </summary>

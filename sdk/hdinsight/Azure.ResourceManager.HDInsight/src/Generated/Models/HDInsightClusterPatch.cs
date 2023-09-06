@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The PatchCluster request parameters. </summary>
     public partial class HDInsightClusterPatch
     {
-        /// <summary> Initializes a new instance of HDInsightClusterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
         public HDInsightClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterPatch(IDictionary<string, string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> The resource tags. </summary>

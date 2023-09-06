@@ -5,17 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class Models
+    internal partial class Models : IUtf8JsonSerializable, IModelJsonSerializable<Models>
     {
-        internal static Models DeserializeModels(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Models>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Models>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<Models>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                if (Summary is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ModelsSummary>)Summary).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsCollectionDefined(ModelList))
+            {
+                writer.WritePropertyName("modelList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ModelList)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CustomFormModelInfo>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static Models DeserializeModels(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<ModelsSummary> summary = default;
             Optional<IReadOnlyList<CustomFormModelInfo>> modelList = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -53,8 +115,61 @@ namespace Azure.AI.FormRecognizer.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value);
+            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value, rawData);
+        }
+
+        Models IModelJsonSerializable<Models>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Models>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeModels(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<Models>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Models>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        Models IModelSerializable<Models>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<Models>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeModels(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="Models"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="Models"/> to convert. </param>
+        public static implicit operator RequestContent(Models model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="Models"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator Models(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeModels(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

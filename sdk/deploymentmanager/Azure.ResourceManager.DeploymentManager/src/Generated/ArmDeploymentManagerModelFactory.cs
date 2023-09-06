@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDeploymentManagerModelFactory
     {
-        /// <summary> Initializes a new instance of ServiceTopologyResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTopologyResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceTopologyResourceData(id, name, resourceType, systemData, tags, location, artifactSourceId);
+            return new ServiceTopologyResourceData(id, name, resourceType, systemData, tags, location, artifactSourceId, default);
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,29 +48,19 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceResourceData(id, name, resourceType, systemData, tags, location, targetLocation, targetSubscriptionId);
+            return new ServiceResourceData(id, name, resourceType, systemData, tags, location, targetLocation, targetSubscriptionId, default);
         }
 
-        /// <summary> Initializes a new instance of ServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProperties"/>. </summary>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
         /// <returns> A new <see cref="Models.ServiceProperties"/> instance for mocking. </returns>
         public static ServiceProperties ServiceProperties(string targetLocation = null, string targetSubscriptionId = null)
         {
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
-            if (targetSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(targetSubscriptionId));
-            }
-
-            return new ServiceProperties(targetLocation, targetSubscriptionId);
+            return new ServiceProperties(targetLocation, targetSubscriptionId, default);
         }
 
-        /// <summary> Initializes a new instance of ServiceUnitResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -85,20 +75,20 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceUnitResourceData(id, name, resourceType, systemData, tags, location, targetResourceGroup, deploymentMode, artifacts);
+            return new ServiceUnitResourceData(id, name, resourceType, systemData, tags, location, targetResourceGroup, deploymentMode, artifacts, default);
         }
 
-        /// <summary> Initializes a new instance of ServiceUnitProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitProperties"/>. </summary>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <param name="artifacts"> The artifacts for the service unit. </param>
         /// <returns> A new <see cref="Models.ServiceUnitProperties"/> instance for mocking. </returns>
         public static ServiceUnitProperties ServiceUnitProperties(string targetResourceGroup = null, DeploymentMode deploymentMode = default, ServiceUnitArtifacts artifacts = null)
         {
-            return new ServiceUnitProperties(targetResourceGroup, deploymentMode, artifacts);
+            return new ServiceUnitProperties(targetResourceGroup, deploymentMode, artifacts, default);
         }
 
-        /// <summary> Initializes a new instance of StepResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -115,10 +105,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StepResourceData(id, name, resourceType, systemData, tags, location, properties);
+            return new StepResourceData(id, name, resourceType, systemData, tags, location, properties, default);
         }
 
-        /// <summary> Initializes a new instance of RolloutCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -136,10 +126,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             tags ??= new Dictionary<string, string>();
             stepGroups ??= new List<StepGroup>();
 
-            return new RolloutCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, buildVersion, artifactSourceId, targetServiceTopologyId, stepGroups?.ToList());
+            return new RolloutCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, identity, buildVersion, artifactSourceId, targetServiceTopologyId, stepGroups?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of RolloutData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -162,10 +152,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             stepGroups ??= new List<StepGroup>();
             services ??= new List<Service>();
 
-            return new RolloutData(id, name, resourceType, systemData, tags, location, identity, buildVersion, artifactSourceId, targetServiceTopologyId, stepGroups?.ToList(), status, totalRetryAttempts, operationInfo, services?.ToList());
+            return new RolloutData(id, name, resourceType, systemData, tags, location, identity, buildVersion, artifactSourceId, targetServiceTopologyId, stepGroups?.ToList(), status, totalRetryAttempts, operationInfo, services?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of RolloutOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutOperationInfo"/>. </summary>
         /// <param name="retryAttempt"> The ordinal count of the number of retry attempts on a rollout. 0 if no retries of the rollout have been performed. If the rollout is updated with a PUT, this count is reset to 0. </param>
         /// <param name="skipSucceededOnRetry"> True, if all steps that succeeded on the previous run/attempt were chosen to be skipped in this retry attempt. False, otherwise. </param>
         /// <param name="startOn"> The start time of the rollout in UTC. </param>
@@ -174,32 +164,23 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.RolloutOperationInfo"/> instance for mocking. </returns>
         public static RolloutOperationInfo RolloutOperationInfo(int? retryAttempt = null, bool? skipSucceededOnRetry = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ResponseError error = null)
         {
-            return new RolloutOperationInfo(retryAttempt, skipSucceededOnRetry, startOn, endOn, error);
+            return new RolloutOperationInfo(retryAttempt, skipSucceededOnRetry, startOn, endOn, error, default);
         }
 
-        /// <summary> Initializes a new instance of Service. </summary>
+        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
         /// <param name="targetLocation"> The Azure location to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="targetSubscriptionId"> The subscription to which the resources in the service belong to or should be deployed to. </param>
         /// <param name="name"> Name of the service. </param>
         /// <param name="serviceUnits"> The detailed information about the units that make up the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLocation"/> or <paramref name="targetSubscriptionId"/> is null. </exception>
         /// <returns> A new <see cref="Models.Service"/> instance for mocking. </returns>
         public static Service Service(string targetLocation = null, string targetSubscriptionId = null, string name = null, IEnumerable<ServiceUnit> serviceUnits = null)
         {
-            if (targetLocation == null)
-            {
-                throw new ArgumentNullException(nameof(targetLocation));
-            }
-            if (targetSubscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(targetSubscriptionId));
-            }
             serviceUnits ??= new List<ServiceUnit>();
 
-            return new Service(targetLocation, targetSubscriptionId, name, serviceUnits?.ToList());
+            return new Service(targetLocation, targetSubscriptionId, name, serviceUnits?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ServiceUnit. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnit"/>. </summary>
         /// <param name="targetResourceGroup"> The Azure Resource Group to which the resources in the service unit belong to or should be deployed to. </param>
         /// <param name="deploymentMode"> Describes the type of ARM deployment to be performed on the resource. </param>
         /// <param name="artifacts"> The artifacts for the service unit. </param>
@@ -210,10 +191,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             steps ??= new List<RolloutStep>();
 
-            return new ServiceUnit(targetResourceGroup, deploymentMode, artifacts, name, steps?.ToList());
+            return new ServiceUnit(targetResourceGroup, deploymentMode, artifacts, name, steps?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of RolloutStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="RolloutStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <param name="status"> Current state of the step. </param>
         /// <param name="stepGroup"> The step group the current step is part of. </param>
@@ -226,10 +207,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             resourceOperations ??= new List<ResourceOperation>();
             messages ??= new List<Message>();
 
-            return new RolloutStep(name, status, stepGroup, operationInfo, resourceOperations?.ToList(), messages?.ToList());
+            return new RolloutStep(name, status, stepGroup, operationInfo, resourceOperations?.ToList(), messages?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of StepOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepOperationInfo"/>. </summary>
         /// <param name="deploymentName"> The name of the ARM deployment initiated as part of the step. </param>
         /// <param name="correlationId"> Unique identifier to track the request for ARM-based resources. </param>
         /// <param name="startOn"> Start time of the action in UTC. </param>
@@ -239,10 +220,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.StepOperationInfo"/> instance for mocking. </returns>
         public static StepOperationInfo StepOperationInfo(string deploymentName = null, string correlationId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? lastUpdatedOn = null, ResponseError error = null)
         {
-            return new StepOperationInfo(deploymentName, correlationId, startOn, endOn, lastUpdatedOn, error);
+            return new StepOperationInfo(deploymentName, correlationId, startOn, endOn, lastUpdatedOn, error, default);
         }
 
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         /// <param name="resourceName"> Name of the resource as specified in the artifacts. For ARM resources, this is the name of the resource specified in the template. </param>
         /// <param name="operationId"> Unique identifier of the operation. For ARM resources, this is the operationId obtained from ARM service. </param>
         /// <param name="resourceType"> Type of the resource as specified in the artifacts. For ARM resources, this is the type of the resource specified in the template. </param>
@@ -252,19 +233,19 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.ResourceOperation"/> instance for mocking. </returns>
         public static ResourceOperation ResourceOperation(string resourceName = null, string operationId = null, string resourceType = null, string provisioningState = null, string statusMessage = null, string statusCode = null)
         {
-            return new ResourceOperation(resourceName, operationId, resourceType, provisioningState, statusMessage, statusCode);
+            return new ResourceOperation(resourceName, operationId, resourceType, provisioningState, statusMessage, statusCode, default);
         }
 
-        /// <summary> Initializes a new instance of Message. </summary>
+        /// <summary> Initializes a new instance of <see cref="Message"/>. </summary>
         /// <param name="timeStamp"> Time in UTC this message was provided. </param>
         /// <param name="messageValue"> The actual message text. </param>
         /// <returns> A new <see cref="Models.Message"/> instance for mocking. </returns>
         public static Message Message(DateTimeOffset? timeStamp = null, string messageValue = null)
         {
-            return new Message(timeStamp, messageValue);
+            return new Message(timeStamp, messageValue, default);
         }
 
-        /// <summary> Initializes a new instance of ArtifactSourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactSourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -283,7 +264,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArtifactSourceData(id, name, resourceType, systemData, tags, location, sourceType, artifactRoot, authentication);
+            return new ArtifactSourceData(id, name, resourceType, systemData, tags, location, sourceType, artifactRoot, authentication, default);
         }
     }
 }
