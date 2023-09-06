@@ -4,11 +4,10 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Azure.Core.Pipeline;
 
 #nullable enable
 
-namespace Azure.Core.Shared
+namespace Azure.Core.Pipeline
 {
     /// <summary>
     /// Internal policy that can be used to support georedundant fallbacks for Azure services. The policy maintains the current healthy host
