@@ -23,6 +23,9 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        internal Uri FunctionUri { get; set; }
+        /// <summary>
+        /// URL for custom azure function.
+        /// </summary>
+        public Uri FunctionUri { get; internal set; }
     }
 }
