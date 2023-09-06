@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             get => ActionsRequired;
             set
             {
-                ActionRequired = value;
+                ActionsRequired = value;
             }
         }
     }
