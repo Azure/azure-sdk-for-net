@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> The settings list result. </summary>
     public partial class GetSettingsResult
     {
-        /// <summary> Initializes a new instance of GetSettingsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
         internal GetSettingsResult()
         {
             Settings = new ChangeTrackingList<KeyVaultSetting>();
         }
 
-        /// <summary> Initializes a new instance of GetSettingsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
         /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
-        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> settings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> settings, Dictionary<string, BinaryData> rawData)
         {
             Settings = settings;
+            _rawData = rawData;
         }
 
         /// <summary> A response message containing a list of account settings with their associated value. </summary>

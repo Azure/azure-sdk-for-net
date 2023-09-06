@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -12,18 +14,19 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow trigger reference. </summary>
     public partial class LogicWorkflowTriggerReference : LogicResourceReference
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerReference"/>. </summary>
         public LogicWorkflowTriggerReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
         /// <param name="flowName"> The workflow name. </param>
         /// <param name="triggerName"> The workflow trigger name. </param>
-        internal LogicWorkflowTriggerReference(ResourceIdentifier id, string name, ResourceType? resourceType, string flowName, string triggerName) : base(id, name, resourceType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerReference(ResourceIdentifier id, string name, ResourceType? resourceType, string flowName, string triggerName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, rawData)
         {
             FlowName = flowName;
             TriggerName = triggerName;

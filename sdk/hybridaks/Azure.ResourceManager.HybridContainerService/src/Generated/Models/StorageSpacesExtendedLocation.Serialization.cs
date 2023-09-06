@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class StorageSpacesExtendedLocation : IUtf8JsonSerializable
+    public partial class StorageSpacesExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<StorageSpacesExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StorageSpacesExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StorageSpacesExtendedLocation>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesExtendedLocation>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageSpacesExtendedLocationType))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageSpacesExtendedLocation DeserializeStorageSpacesExtendedLocation(JsonElement element)
+        internal static StorageSpacesExtendedLocation DeserializeStorageSpacesExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> type = default;
             Optional<string> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StorageSpacesExtendedLocation(type.Value, name.Value);
+            return new StorageSpacesExtendedLocation(type.Value, name.Value, rawData);
+        }
+
+        StorageSpacesExtendedLocation IModelJsonSerializable<StorageSpacesExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesExtendedLocation>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageSpacesExtendedLocation(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StorageSpacesExtendedLocation>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesExtendedLocation>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StorageSpacesExtendedLocation IModelSerializable<StorageSpacesExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StorageSpacesExtendedLocation>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStorageSpacesExtendedLocation(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StorageSpacesExtendedLocation"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StorageSpacesExtendedLocation"/> to convert. </param>
+        public static implicit operator RequestContent(StorageSpacesExtendedLocation model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StorageSpacesExtendedLocation"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StorageSpacesExtendedLocation(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStorageSpacesExtendedLocation(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

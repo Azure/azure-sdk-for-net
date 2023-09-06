@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingLocatorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingLocatorResource(Client, StreamingLocatorData.DeserializeStreamingLocatorData(e)), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamingLocatorResource(Client, StreamingLocatorData.DeserializeStreamingLocatorData(e)), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingLocatorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingLocatorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingLocatorResource(Client, StreamingLocatorData.DeserializeStreamingLocatorData(e)), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamingLocatorResource(Client, StreamingLocatorData.DeserializeStreamingLocatorData(e)), _streamingLocatorClientDiagnostics, Pipeline, "StreamingLocatorCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

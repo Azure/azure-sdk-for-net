@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningOnlineDeploymentData : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineDeploymentData : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningOnlineDeploymentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningOnlineDeploymentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningOnlineDeploymentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -30,11 +37,25 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningOnlineDeploymentProperties>)Properties).Serialize(writer, options);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                if (Sku is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningSku>)Sku).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -49,11 +70,25 @@ namespace Azure.ResourceManager.MachineLearning
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningOnlineDeploymentData DeserializeMachineLearningOnlineDeploymentData(JsonElement element)
+        internal static MachineLearningOnlineDeploymentData DeserializeMachineLearningOnlineDeploymentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -142,8 +178,61 @@ namespace Azure.ResourceManager.MachineLearning
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningOnlineDeploymentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, properties, sku.Value);
+            return new MachineLearningOnlineDeploymentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, properties, sku.Value, rawData);
+        }
+
+        MachineLearningOnlineDeploymentData IModelJsonSerializable<MachineLearningOnlineDeploymentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOnlineDeploymentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningOnlineDeploymentData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningOnlineDeploymentData IModelSerializable<MachineLearningOnlineDeploymentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningOnlineDeploymentData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningOnlineDeploymentData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningOnlineDeploymentData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningOnlineDeploymentData"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningOnlineDeploymentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningOnlineDeploymentData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningOnlineDeploymentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningOnlineDeploymentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

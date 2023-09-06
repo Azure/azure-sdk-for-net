@@ -5,20 +5,49 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class PointOfInterestCategorySet
+    public partial class PointOfInterestCategorySet : IUtf8JsonSerializable, IModelJsonSerializable<PointOfInterestCategorySet>
     {
-        internal static PointOfInterestCategorySet DeserializePointOfInterestCategorySet(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PointOfInterestCategorySet>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PointOfInterestCategorySet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PointOfInterestCategorySet>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PointOfInterestCategorySet DeserializePointOfInterestCategorySet(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> id = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -30,8 +59,61 @@ namespace Azure.Maps.Search.Models
                     id = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PointOfInterestCategorySet(Optional.ToNullable(id));
+            return new PointOfInterestCategorySet(Optional.ToNullable(id), rawData);
+        }
+
+        PointOfInterestCategorySet IModelJsonSerializable<PointOfInterestCategorySet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PointOfInterestCategorySet>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePointOfInterestCategorySet(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PointOfInterestCategorySet>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PointOfInterestCategorySet>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PointOfInterestCategorySet IModelSerializable<PointOfInterestCategorySet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PointOfInterestCategorySet>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePointOfInterestCategorySet(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PointOfInterestCategorySet"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PointOfInterestCategorySet"/> to convert. </param>
+        public static implicit operator RequestContent(PointOfInterestCategorySet model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PointOfInterestCategorySet"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PointOfInterestCategorySet(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePointOfInterestCategorySet(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

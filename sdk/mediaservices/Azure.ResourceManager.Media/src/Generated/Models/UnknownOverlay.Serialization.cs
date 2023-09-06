@@ -8,13 +8,18 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownOverlay : IUtf8JsonSerializable
+    internal partial class UnknownOverlay : IUtf8JsonSerializable, IModelJsonSerializable<MediaOverlayBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaOverlayBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaOverlayBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaOverlayBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -45,81 +50,44 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownOverlay DeserializeUnknownOverlay(JsonElement element)
+        internal static MediaOverlayBase DeserializeUnknownOverlay(JsonElement element, ModelSerializerOptions options = default) => DeserializeMediaOverlayBase(element, options);
+
+        MediaOverlayBase IModelJsonSerializable<MediaOverlayBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inputLabel"u8))
-                {
-                    inputLabel = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("start"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    start = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("end"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    end = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("fadeInDuration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fadeInDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("fadeOutDuration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fadeOutDuration = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("audioGainLevel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    audioGainLevel = property.Value.GetDouble();
-                    continue;
-                }
-            }
-            return new UnknownOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
+            Core.ModelSerializerHelper.ValidateFormat<MediaOverlayBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownOverlay(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaOverlayBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaOverlayBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaOverlayBase IModelSerializable<MediaOverlayBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaOverlayBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaOverlayBase(doc.RootElement, options);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable
+    public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable, IModelJsonSerializable<UpdateDeviceAdministrativeStateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UpdateDeviceAdministrativeStateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UpdateDeviceAdministrativeStateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateDeviceAdministrativeStateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
@@ -35,7 +43,119 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static UpdateDeviceAdministrativeStateContent DeserializeUpdateDeviceAdministrativeStateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<NetworkDeviceAdministrativeState> state = default;
+            Optional<IList<ResourceIdentifier>> resourceIds = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new NetworkDeviceAdministrativeState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    resourceIds = array;
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new UpdateDeviceAdministrativeStateContent(Optional.ToList(resourceIds), Optional.ToNullable(state), rawData);
+        }
+
+        UpdateDeviceAdministrativeStateContent IModelJsonSerializable<UpdateDeviceAdministrativeStateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateDeviceAdministrativeStateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateDeviceAdministrativeStateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UpdateDeviceAdministrativeStateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateDeviceAdministrativeStateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UpdateDeviceAdministrativeStateContent IModelSerializable<UpdateDeviceAdministrativeStateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UpdateDeviceAdministrativeStateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUpdateDeviceAdministrativeStateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UpdateDeviceAdministrativeStateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UpdateDeviceAdministrativeStateContent"/> to convert. </param>
+        public static implicit operator RequestContent(UpdateDeviceAdministrativeStateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UpdateDeviceAdministrativeStateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UpdateDeviceAdministrativeStateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUpdateDeviceAdministrativeStateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

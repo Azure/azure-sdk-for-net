@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class KustoPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of KustoPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceListResult"/>. </summary>
         internal KustoPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<KustoPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal KustoPrivateLinkResourceListResult(IReadOnlyList<KustoPrivateLinkResourceData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPrivateLinkResourceListResult(IReadOnlyList<KustoPrivateLinkResourceData> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> Array of private link resources. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotCentral.Models
 {
     /// <summary> An object for an IP range that will be allowed access. </summary>
     public partial class IotCentralNetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSetIPRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralNetworkRuleSetIPRule"/>. </summary>
         public IotCentralNetworkRuleSetIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of IotCentralNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralNetworkRuleSetIPRule"/>. </summary>
         /// <param name="filterName"> The readable name of the IP rule. </param>
         /// <param name="ipMask"> The CIDR block defining the IP range. </param>
-        internal IotCentralNetworkRuleSetIPRule(string filterName, string ipMask)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralNetworkRuleSetIPRule(string filterName, string ipMask, Dictionary<string, BinaryData> rawData)
         {
             FilterName = filterName;
             IPMask = ipMask;
+            _rawData = rawData;
         }
 
         /// <summary> The readable name of the IP rule. </summary>

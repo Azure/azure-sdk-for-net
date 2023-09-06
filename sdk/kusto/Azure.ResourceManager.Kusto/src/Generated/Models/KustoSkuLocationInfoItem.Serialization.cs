@@ -5,16 +5,72 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoSkuLocationInfoItem
+    public partial class KustoSkuLocationInfoItem : IUtf8JsonSerializable, IModelJsonSerializable<KustoSkuLocationInfoItem>
     {
-        internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoSkuLocationInfoItem>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoSkuLocationInfoItem>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoSkuLocationInfoItem>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ZoneDetails))
+            {
+                writer.WritePropertyName("zoneDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ZoneDetails)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KustoResourceSkuZoneDetails>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +78,7 @@ namespace Azure.ResourceManager.Kusto.Models
             AzureLocation location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -57,8 +114,61 @@ namespace Azure.ResourceManager.Kusto.Models
                     zoneDetails = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones), Optional.ToList(zoneDetails));
+            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones), Optional.ToList(zoneDetails), rawData);
+        }
+
+        KustoSkuLocationInfoItem IModelJsonSerializable<KustoSkuLocationInfoItem>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoSkuLocationInfoItem>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoSkuLocationInfoItem(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoSkuLocationInfoItem>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoSkuLocationInfoItem>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoSkuLocationInfoItem IModelSerializable<KustoSkuLocationInfoItem>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoSkuLocationInfoItem>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoSkuLocationInfoItem(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoSkuLocationInfoItem"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoSkuLocationInfoItem"/> to convert. </param>
+        public static implicit operator RequestContent(KustoSkuLocationInfoItem model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoSkuLocationInfoItem"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoSkuLocationInfoItem(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoSkuLocationInfoItem(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

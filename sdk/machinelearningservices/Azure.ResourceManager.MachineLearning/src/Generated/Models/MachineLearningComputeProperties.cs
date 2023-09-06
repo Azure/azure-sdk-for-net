@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,15 +17,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningComputeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningAksCompute"/>, <see cref="AmlCompute"/>, <see cref="MachineLearningComputeInstance"/>, <see cref="MachineLearningDataFactoryCompute"/>, <see cref="MachineLearningDataLakeAnalytics"/>, <see cref="MachineLearningDatabricksCompute"/>, <see cref="MachineLearningHDInsightCompute"/>, <see cref="MachineLearningKubernetesCompute"/>, <see cref="MachineLearningSynapseSpark"/> and <see cref="MachineLearningVirtualMachineCompute"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCompute))]
     public abstract partial class MachineLearningComputeProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeProperties"/>. </summary>
         protected MachineLearningComputeProperties()
         {
             ProvisioningErrors = new ChangeTrackingList<MachineLearningError>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeProperties"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>
@@ -35,7 +40,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningErrors"> Errors during provisioning. </param>
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
-        internal MachineLearningComputeProperties(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeProperties(ComputeType computeType, string computeLocation, MachineLearningProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, ResourceIdentifier resourceId, IReadOnlyList<MachineLearningError> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, Dictionary<string, BinaryData> rawData)
         {
             ComputeType = computeType;
             ComputeLocation = computeLocation;
@@ -47,6 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ProvisioningErrors = provisioningErrors;
             IsAttachedCompute = isAttachedCompute;
             DisableLocalAuth = disableLocalAuth;
+            _rawData = rawData;
         }
 
         /// <summary> The type of compute. </summary>

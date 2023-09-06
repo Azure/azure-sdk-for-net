@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The LinuxProfilePropertiesSshPublicKeysItem. </summary>
     public partial class LinuxProfilePropertiesSshPublicKeysItem
     {
-        /// <summary> Initializes a new instance of LinuxProfilePropertiesSshPublicKeysItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinuxProfilePropertiesSshPublicKeysItem"/>. </summary>
         public LinuxProfilePropertiesSshPublicKeysItem()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxProfilePropertiesSshPublicKeysItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxProfilePropertiesSshPublicKeysItem"/>. </summary>
         /// <param name="keyData"> KeyData - Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
-        internal LinuxProfilePropertiesSshPublicKeysItem(string keyData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxProfilePropertiesSshPublicKeysItem(string keyData, Dictionary<string, BinaryData> rawData)
         {
             KeyData = keyData;
+            _rawData = rawData;
         }
 
         /// <summary> KeyData - Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </summary>

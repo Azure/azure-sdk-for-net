@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownJobOutput : IUtf8JsonSerializable
+    internal partial class UnknownJobOutput : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningJobOutput>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningJobOutput>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobOutput>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -29,36 +35,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobOutputType"u8);
             writer.WriteStringValue(JobOutputType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element)
+        internal static MachineLearningJobOutput DeserializeUnknownJobOutput(JsonElement element, ModelSerializerOptions options = default) => DeserializeMachineLearningJobOutput(element, options);
+
+        MachineLearningJobOutput IModelJsonSerializable<MachineLearningJobOutput>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Optional<string> description = default;
-            JobOutputType jobOutputType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("description"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("jobOutputType"u8))
-                {
-                    jobOutputType = new JobOutputType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownJobOutput(description.Value, jobOutputType);
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobOutput>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownJobOutput(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningJobOutput>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobOutput>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningJobOutput IModelSerializable<MachineLearningJobOutput>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobOutput>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningJobOutput(doc.RootElement, options);
         }
     }
 }

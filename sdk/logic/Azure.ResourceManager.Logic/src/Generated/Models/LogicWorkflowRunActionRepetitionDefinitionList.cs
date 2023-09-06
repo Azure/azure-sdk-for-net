@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A collection of workflow run action repetitions. </summary>
     internal partial class LogicWorkflowRunActionRepetitionDefinitionList
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionList"/>. </summary>
         internal LogicWorkflowRunActionRepetitionDefinitionList()
         {
             Value = new ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunActionRepetitionDefinitionList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="value"></param>
-        internal LogicWorkflowRunActionRepetitionDefinitionList(string nextLink, IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunActionRepetitionDefinitionList(string nextLink, IReadOnlyList<LogicWorkflowRunActionRepetitionDefinitionData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The link used to get the next page of recommendations. </summary>

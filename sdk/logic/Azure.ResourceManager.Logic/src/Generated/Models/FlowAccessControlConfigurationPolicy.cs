@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The access control configuration policy. </summary>
     public partial class FlowAccessControlConfigurationPolicy
     {
-        /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
             AllowedCallerIPAddresses = new ChangeTrackingList<FlowAccessControlIPAddressRange>();
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
         /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
-        internal FlowAccessControlConfigurationPolicy(IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowAccessControlConfigurationPolicy(IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies, Dictionary<string, BinaryData> rawData)
         {
             AllowedCallerIPAddresses = allowedCallerIPAddresses;
             OpenAuthenticationPolicies = openAuthenticationPolicies;
+            _rawData = rawData;
         }
 
         /// <summary> The allowed caller IP address ranges. </summary>

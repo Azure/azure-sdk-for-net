@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="ForecastingSeasonality"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownSeasonality))]
     public abstract partial class ForecastingSeasonality
     {
-        /// <summary> Initializes a new instance of ForecastingSeasonality. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastingSeasonality"/>. </summary>
         protected ForecastingSeasonality()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastingSeasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSeasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
-        internal ForecastingSeasonality(SeasonalityMode mode)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastingSeasonality(SeasonalityMode mode, Dictionary<string, BinaryData> rawData)
         {
             Mode = mode;
+            _rawData = rawData;
         }
 
         /// <summary> [Required] Seasonality mode. </summary>

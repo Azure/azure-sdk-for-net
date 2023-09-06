@@ -10,13 +10,91 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStoreOfferResult
+    public partial class PrivateStoreOfferResult : IUtf8JsonSerializable, IModelJsonSerializable<PrivateStoreOfferResult>
     {
-        internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PrivateStoreOfferResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PrivateStoreOfferResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreOfferResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
+            {
+                writer.WritePropertyName("specificPlanIdsLimitation"u8);
+                writer.WriteStartArray();
+                foreach (var item in SpecificPlanIdsLimitation)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
+            {
+                writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
+                writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
+            }
+            if (Optional.IsCollectionDefined(IconFileUris))
+            {
+                writer.WritePropertyName("iconFileUris"u8);
+                writer.WriteStartObject();
+                foreach (var item in IconFileUris)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value.AbsoluteUri);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PrivateStorePlan>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PrivateStoreOfferResult DeserializePrivateStoreOfferResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<bool> updateSuppressedDueIdempotence = default;
             Optional<IReadOnlyDictionary<string, Uri>> iconFileUris = default;
             Optional<IReadOnlyList<PrivateStorePlan>> plans = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueOfferId"u8))
@@ -143,8 +222,61 @@ namespace Azure.ResourceManager.Marketplace.Models
                     plans = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans));
+            return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans), rawData);
+        }
+
+        PrivateStoreOfferResult IModelJsonSerializable<PrivateStoreOfferResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreOfferResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateStoreOfferResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PrivateStoreOfferResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreOfferResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PrivateStoreOfferResult IModelSerializable<PrivateStoreOfferResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PrivateStoreOfferResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePrivateStoreOfferResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PrivateStoreOfferResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PrivateStoreOfferResult"/> to convert. </param>
+        public static implicit operator RequestContent(PrivateStoreOfferResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PrivateStoreOfferResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PrivateStoreOfferResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePrivateStoreOfferResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

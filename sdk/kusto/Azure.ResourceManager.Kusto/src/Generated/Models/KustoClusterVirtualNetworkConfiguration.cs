@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class that contains virtual network definition. </summary>
     public partial class KustoClusterVirtualNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
         /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.Kusto.Models
             SubnetId = subnetId;
             EnginePublicIPId = enginePublicIPId;
             DataManagementPublicIPId = dataManagementPublicIPId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
+        /// <param name="subnetId"> The subnet resource id. </param>
+        /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
+        /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId, Dictionary<string, BinaryData> rawData)
+        {
+            SubnetId = subnetId;
+            EnginePublicIPId = enginePublicIPId;
+            DataManagementPublicIPId = dataManagementPublicIPId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/> for deserialization. </summary>
+        internal KustoClusterVirtualNetworkConfiguration()
+        {
         }
 
         /// <summary> The subnet resource id. </summary>

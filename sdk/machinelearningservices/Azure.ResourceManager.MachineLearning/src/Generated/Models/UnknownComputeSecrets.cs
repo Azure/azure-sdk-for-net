@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownComputeSecrets. </summary>
     internal partial class UnknownComputeSecrets : MachineLearningComputeSecrets
     {
-        /// <summary> Initializes a new instance of UnknownComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
-        internal UnknownComputeSecrets(ComputeType computeType) : base(computeType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownComputeSecrets(ComputeType computeType, Dictionary<string, BinaryData> rawData) : base(computeType, rawData)
         {
             ComputeType = computeType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownComputeSecrets"/> for deserialization. </summary>
+        internal UnknownComputeSecrets()
+        {
         }
     }
 }

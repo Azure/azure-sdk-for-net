@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> The SKU of the Maps Account. </summary>
     public partial class MapsSku
     {
-        /// <summary> Initializes a new instance of MapsSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsSku"/>. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
         public MapsSku(MapsSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of MapsSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsSku"/>. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as S0). </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
-        internal MapsSku(MapsSkuName name, string tier)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsSku(MapsSkuName name, string tier, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Tier = tier;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsSku"/> for deserialization. </summary>
+        internal MapsSku()
+        {
         }
 
         /// <summary> The name of the SKU, in standard format (such as S0). </summary>

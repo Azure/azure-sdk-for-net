@@ -6,21 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceApplication
+    public partial class MachineLearningComputeInstanceApplication : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningComputeInstanceApplication>
     {
-        internal static MachineLearningComputeInstanceApplication DeserializeMachineLearningComputeInstanceApplication(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningComputeInstanceApplication>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningComputeInstanceApplication>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceApplication>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(EndpointUri))
+            {
+                writer.WritePropertyName("endpointUri"u8);
+                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MachineLearningComputeInstanceApplication DeserializeMachineLearningComputeInstanceApplication(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> displayName = default;
             Optional<Uri> endpointUri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -37,8 +75,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     endpointUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningComputeInstanceApplication(displayName.Value, endpointUri.Value);
+            return new MachineLearningComputeInstanceApplication(displayName.Value, endpointUri.Value, rawData);
+        }
+
+        MachineLearningComputeInstanceApplication IModelJsonSerializable<MachineLearningComputeInstanceApplication>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceApplication>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceApplication(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningComputeInstanceApplication>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceApplication>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningComputeInstanceApplication IModelSerializable<MachineLearningComputeInstanceApplication>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningComputeInstanceApplication>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningComputeInstanceApplication(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningComputeInstanceApplication"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningComputeInstanceApplication"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningComputeInstanceApplication model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningComputeInstanceApplication"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningComputeInstanceApplication(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningComputeInstanceApplication(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

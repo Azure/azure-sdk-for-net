@@ -5,23 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
-    internal partial class ManagedNetworkPeeringPolicyListResult
+    internal partial class ManagedNetworkPeeringPolicyListResult : IUtf8JsonSerializable, IModelJsonSerializable<ManagedNetworkPeeringPolicyListResult>
     {
-        internal static ManagedNetworkPeeringPolicyListResult DeserializeManagedNetworkPeeringPolicyListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ManagedNetworkPeeringPolicyListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ManagedNetworkPeeringPolicyListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkPeeringPolicyListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<ManagedNetworkPeeringPolicyData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ManagedNetworkPeeringPolicyListResult DeserializeManagedNetworkPeeringPolicyListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +93,61 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ManagedNetworkPeeringPolicyListResult(Optional.ToList(value), nextLink.Value);
+            return new ManagedNetworkPeeringPolicyListResult(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        ManagedNetworkPeeringPolicyListResult IModelJsonSerializable<ManagedNetworkPeeringPolicyListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkPeeringPolicyListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedNetworkPeeringPolicyListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ManagedNetworkPeeringPolicyListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkPeeringPolicyListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ManagedNetworkPeeringPolicyListResult IModelSerializable<ManagedNetworkPeeringPolicyListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ManagedNetworkPeeringPolicyListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeManagedNetworkPeeringPolicyListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ManagedNetworkPeeringPolicyListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ManagedNetworkPeeringPolicyListResult"/> to convert. </param>
+        public static implicit operator RequestContent(ManagedNetworkPeeringPolicyListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ManagedNetworkPeeringPolicyListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ManagedNetworkPeeringPolicyListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeManagedNetworkPeeringPolicyListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

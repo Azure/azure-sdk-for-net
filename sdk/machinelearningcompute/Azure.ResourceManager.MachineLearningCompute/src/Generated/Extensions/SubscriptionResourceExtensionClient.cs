@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalizationClusterRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationalizationClusterRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), OperationalizationClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOperationalizationClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), OperationalizationClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOperationalizationClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalizationClusterRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationalizationClusterRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), OperationalizationClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOperationalizationClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), OperationalizationClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetOperationalizationClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

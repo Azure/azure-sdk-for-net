@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerSchema : IUtf8JsonSerializable
+    public partial class SwaggerSchema : IUtf8JsonSerializable, IModelJsonSerializable<SwaggerSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SwaggerSchema>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SwaggerSchema>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerSchema>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Reference))
             {
@@ -35,7 +41,14 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue(Items);
+                if (Items is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerSchema>)Items).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -44,7 +57,14 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SwaggerSchema>)item.Value).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -83,7 +103,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<SwaggerSchema>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,12 +127,26 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Xml))
             {
                 writer.WritePropertyName("xml"u8);
-                writer.WriteObjectValue(Xml);
+                if (Xml is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerXml>)Xml).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(ExternalDocs))
             {
                 writer.WritePropertyName("externalDocs"u8);
-                writer.WriteObjectValue(ExternalDocs);
+                if (ExternalDocs is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerExternalDocumentation>)ExternalDocs).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Example))
             {
@@ -124,28 +165,70 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DynamicSchemaOld))
             {
                 writer.WritePropertyName("dynamicSchemaOld"u8);
-                writer.WriteObjectValue(DynamicSchemaOld);
+                if (DynamicSchemaOld is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerCustomDynamicSchema>)DynamicSchemaOld).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DynamicSchemaNew))
             {
                 writer.WritePropertyName("dynamicSchemaNew"u8);
-                writer.WriteObjectValue(DynamicSchemaNew);
+                if (DynamicSchemaNew is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerCustomDynamicProperties>)DynamicSchemaNew).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DynamicListNew))
             {
                 writer.WritePropertyName("dynamicListNew"u8);
-                writer.WriteObjectValue(DynamicListNew);
+                if (DynamicListNew is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerCustomDynamicList>)DynamicListNew).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(DynamicTree))
             {
                 writer.WritePropertyName("dynamicTree"u8);
-                writer.WriteObjectValue(DynamicTree);
+                if (DynamicTree is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<SwaggerCustomDynamicTree>)DynamicTree).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element)
+        internal static SwaggerSchema DeserializeSwaggerSchema(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,6 +253,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<SwaggerCustomDynamicProperties> dynamicSchemaNew = default;
             Optional<SwaggerCustomDynamicList> dynamicListNew = default;
             Optional<SwaggerCustomDynamicTree> dynamicTree = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ref"u8))
@@ -355,8 +439,61 @@ namespace Azure.ResourceManager.Logic.Models
                     dynamicTree = SwaggerCustomDynamicTree.DeserializeSwaggerCustomDynamicTree(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new SwaggerSchema(@ref.Value, Optional.ToNullable(type), title.Value, items.Value, Optional.ToDictionary(properties), additionalProperties.Value, Optional.ToList(required), Optional.ToNullable(maxProperties), Optional.ToNullable(minProperties), Optional.ToList(allOf), discriminator.Value, Optional.ToNullable(readOnly), xml.Value, externalDocs.Value, example.Value, Optional.ToNullable(notificationUrlExtension), dynamicSchemaOld.Value, dynamicSchemaNew.Value, dynamicListNew.Value, dynamicTree.Value);
+            return new SwaggerSchema(@ref.Value, Optional.ToNullable(type), title.Value, items.Value, Optional.ToDictionary(properties), additionalProperties.Value, Optional.ToList(required), Optional.ToNullable(maxProperties), Optional.ToNullable(minProperties), Optional.ToList(allOf), discriminator.Value, Optional.ToNullable(readOnly), xml.Value, externalDocs.Value, example.Value, Optional.ToNullable(notificationUrlExtension), dynamicSchemaOld.Value, dynamicSchemaNew.Value, dynamicListNew.Value, dynamicTree.Value, rawData);
+        }
+
+        SwaggerSchema IModelJsonSerializable<SwaggerSchema>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerSchema>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSwaggerSchema(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SwaggerSchema>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerSchema>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SwaggerSchema IModelSerializable<SwaggerSchema>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SwaggerSchema>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSwaggerSchema(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SwaggerSchema"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SwaggerSchema"/> to convert. </param>
+        public static implicit operator RequestContent(SwaggerSchema model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SwaggerSchema"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SwaggerSchema(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSwaggerSchema(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

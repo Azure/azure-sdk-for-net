@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSweepJobLimits : IUtf8JsonSerializable
+    public partial class MachineLearningSweepJobLimits : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningSweepJobLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningSweepJobLimits>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningSweepJobLimits>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSweepJobLimits>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
@@ -66,11 +73,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeout");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSweepJobLimits DeserializeMachineLearningSweepJobLimits(JsonElement element)
+        internal static MachineLearningSweepJobLimits DeserializeMachineLearningSweepJobLimits(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan?> trialTimeout = default;
             JobLimitsType jobLimitsType = default;
             Optional<TimeSpan?> timeout = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxConcurrentTrials"u8))
@@ -127,8 +149,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningSweepJobLimits(jobLimitsType, Optional.ToNullable(timeout), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTotalTrials), Optional.ToNullable(trialTimeout));
+            return new MachineLearningSweepJobLimits(jobLimitsType, Optional.ToNullable(timeout), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTotalTrials), Optional.ToNullable(trialTimeout), rawData);
+        }
+
+        MachineLearningSweepJobLimits IModelJsonSerializable<MachineLearningSweepJobLimits>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSweepJobLimits>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSweepJobLimits(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningSweepJobLimits>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSweepJobLimits>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningSweepJobLimits IModelSerializable<MachineLearningSweepJobLimits>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningSweepJobLimits>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningSweepJobLimits(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningSweepJobLimits"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningSweepJobLimits"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningSweepJobLimits model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningSweepJobLimits"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningSweepJobLimits(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningSweepJobLimits(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

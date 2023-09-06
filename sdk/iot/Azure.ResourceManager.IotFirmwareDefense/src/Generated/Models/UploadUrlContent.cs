@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for generating an upload URL. </summary>
     public partial class UploadUrlContent
     {
-        /// <summary> Initializes a new instance of UploadUrlContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="UploadUrlContent"/>. </summary>
         public UploadUrlContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadUrlContent"/>. </summary>
+        /// <param name="firmwareName"> A unique ID for the firmware to be uploaded. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadUrlContent(string firmwareName, Dictionary<string, BinaryData> rawData)
+        {
+            FirmwareName = firmwareName;
+            _rawData = rawData;
         }
 
         /// <summary> A unique ID for the firmware to be uploaded. </summary>

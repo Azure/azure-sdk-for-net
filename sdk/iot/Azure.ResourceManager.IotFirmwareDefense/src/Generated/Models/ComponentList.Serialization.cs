@@ -5,22 +5,55 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    internal partial class ComponentList
+    internal partial class ComponentList : IUtf8JsonSerializable, IModelJsonSerializable<ComponentList>
     {
-        internal static ComponentList DeserializeComponentList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComponentList>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ComponentList>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ComponentList>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ComponentList DeserializeComponentList(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<SbomComponent>> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +75,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ComponentList(Optional.ToList(value), nextLink.Value);
+            return new ComponentList(Optional.ToList(value), nextLink.Value, rawData);
+        }
+
+        ComponentList IModelJsonSerializable<ComponentList>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComponentList>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComponentList(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ComponentList>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComponentList>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ComponentList IModelSerializable<ComponentList>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ComponentList>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeComponentList(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ComponentList"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ComponentList"/> to convert. </param>
+        public static implicit operator RequestContent(ComponentList model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ComponentList"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ComponentList(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeComponentList(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

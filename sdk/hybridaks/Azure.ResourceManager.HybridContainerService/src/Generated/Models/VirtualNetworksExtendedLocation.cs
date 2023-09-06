@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The VirtualNetworksExtendedLocation. </summary>
     public partial class VirtualNetworksExtendedLocation
     {
-        /// <summary> Initializes a new instance of VirtualNetworksExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksExtendedLocation"/>. </summary>
         public VirtualNetworksExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksExtendedLocation"/>. </summary>
         /// <param name="virtualNetworksExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal VirtualNetworksExtendedLocation(string virtualNetworksExtendedLocationType, string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksExtendedLocation(string virtualNetworksExtendedLocationType, string name, Dictionary<string, BinaryData> rawData)
         {
             VirtualNetworksExtendedLocationType = virtualNetworksExtendedLocationType;
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> The extended location type. </summary>

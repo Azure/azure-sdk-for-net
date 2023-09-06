@@ -5,16 +5,125 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesObjectStatus
+    public partial class KubernetesObjectStatus : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesObjectStatus>
     {
-        internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesObjectStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesObjectStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesObjectStatus>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            if (Optional.IsDefined(ComplianceState))
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState.Value.ToString());
+            }
+            if (Optional.IsDefined(AppliedBy))
+            {
+                if (AppliedBy != null)
+                {
+                    writer.WritePropertyName("appliedBy"u8);
+                    if (AppliedBy is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<KubernetesObjectReference>)AppliedBy).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("appliedBy");
+                }
+            }
+            if (Optional.IsCollectionDefined(StatusConditions))
+            {
+                if (StatusConditions != null)
+                {
+                    writer.WritePropertyName("statusConditions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in StatusConditions)
+                    {
+                        if (item is null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IModelJsonSerializable<KubernetesObjectStatusCondition>)item).Serialize(writer, options);
+                        }
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("statusConditions");
+                }
+            }
+            if (Optional.IsDefined(HelmReleaseProperties))
+            {
+                if (HelmReleaseProperties != null)
+                {
+                    writer.WritePropertyName("helmReleaseProperties"u8);
+                    if (HelmReleaseProperties is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<HelmReleaseProperties>)HelmReleaseProperties).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("helmReleaseProperties");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +135,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<KubernetesObjectReference> appliedBy = default;
             Optional<IReadOnlyList<KubernetesObjectStatusCondition>> statusConditions = default;
             Optional<HelmReleaseProperties> helmReleaseProperties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,8 +197,61 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, Optional.ToList(statusConditions), helmReleaseProperties.Value);
+            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, Optional.ToList(statusConditions), helmReleaseProperties.Value, rawData);
+        }
+
+        KubernetesObjectStatus IModelJsonSerializable<KubernetesObjectStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesObjectStatus>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesObjectStatus(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesObjectStatus>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesObjectStatus>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesObjectStatus IModelSerializable<KubernetesObjectStatus>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesObjectStatus>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesObjectStatus(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesObjectStatus"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesObjectStatus"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesObjectStatus model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesObjectStatus"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesObjectStatus(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesObjectStatus(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

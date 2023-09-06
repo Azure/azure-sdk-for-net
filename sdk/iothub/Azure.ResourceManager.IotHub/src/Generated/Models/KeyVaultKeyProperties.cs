@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the KeyVault key. </summary>
     public partial class KeyVaultKeyProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultKeyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyProperties"/>. </summary>
         public KeyVaultKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyProperties"/>. </summary>
         /// <param name="keyIdentifier"> The identifier of the key. </param>
         /// <param name="identity"> Managed identity properties of KeyVault Key. </param>
-        internal KeyVaultKeyProperties(string keyIdentifier, ManagedIdentity identity)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultKeyProperties(string keyIdentifier, ManagedIdentity identity, Dictionary<string, BinaryData> rawData)
         {
             KeyIdentifier = keyIdentifier;
             Identity = identity;
+            _rawData = rawData;
         }
 
         /// <summary> The identifier of the key. </summary>

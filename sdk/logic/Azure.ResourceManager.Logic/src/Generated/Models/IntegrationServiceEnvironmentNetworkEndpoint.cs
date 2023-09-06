@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The network endpoint. </summary>
     public partial class IntegrationServiceEnvironmentNetworkEndpoint
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkEndpoint"/>. </summary>
         internal IntegrationServiceEnvironmentNetworkEndpoint()
         {
             Ports = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentNetworkEndpoint"/>. </summary>
         /// <param name="accessibility"> The accessibility state. </param>
         /// <param name="domainName"> The domain name. </param>
         /// <param name="ports"> The ports. </param>
-        internal IntegrationServiceEnvironmentNetworkEndpoint(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState? accessibility, string domainName, IReadOnlyList<string> ports)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentNetworkEndpoint(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState? accessibility, string domainName, IReadOnlyList<string> ports, Dictionary<string, BinaryData> rawData)
         {
             Accessibility = accessibility;
             DomainName = domainName;
             Ports = ports;
+            _rawData = rawData;
         }
 
         /// <summary> The accessibility state. </summary>

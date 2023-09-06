@@ -5,36 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksPropertiesInfraVnetProfile : IUtf8JsonSerializable
+    public partial class VirtualNetworksPropertiesInfraVnetProfile : IUtf8JsonSerializable, IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworksPropertiesInfraVnetProfile>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
-                writer.WriteObjectValue(Hci);
+                if (Hci is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileHci>)Hci).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(NetworkCloud))
             {
                 writer.WritePropertyName("networkCloud"u8);
-                writer.WriteObjectValue(NetworkCloud);
+                if (NetworkCloud is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud>)NetworkCloud).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Vmware))
             {
                 writer.WritePropertyName("vmware"u8);
-                writer.WriteObjectValue(Vmware);
+                if (Vmware is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfileVmware>)Vmware).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworksPropertiesInfraVnetProfile DeserializeVirtualNetworksPropertiesInfraVnetProfile(JsonElement element)
+        internal static VirtualNetworksPropertiesInfraVnetProfile DeserializeVirtualNetworksPropertiesInfraVnetProfile(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +85,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<VirtualNetworksPropertiesInfraVnetProfileHci> hci = default;
             Optional<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud> networkCloud = default;
             Optional<VirtualNetworksPropertiesInfraVnetProfileVmware> vmware = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hci"u8))
@@ -71,8 +115,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     vmware = VirtualNetworksPropertiesInfraVnetProfileVmware.DeserializeVirtualNetworksPropertiesInfraVnetProfileVmware(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VirtualNetworksPropertiesInfraVnetProfile(hci.Value, networkCloud.Value, vmware.Value);
+            return new VirtualNetworksPropertiesInfraVnetProfile(hci.Value, networkCloud.Value, vmware.Value, rawData);
+        }
+
+        VirtualNetworksPropertiesInfraVnetProfile IModelJsonSerializable<VirtualNetworksPropertiesInfraVnetProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworksPropertiesInfraVnetProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VirtualNetworksPropertiesInfraVnetProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworksPropertiesInfraVnetProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VirtualNetworksPropertiesInfraVnetProfile IModelSerializable<VirtualNetworksPropertiesInfraVnetProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VirtualNetworksPropertiesInfraVnetProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VirtualNetworksPropertiesInfraVnetProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VirtualNetworksPropertiesInfraVnetProfile"/> to convert. </param>
+        public static implicit operator RequestContent(VirtualNetworksPropertiesInfraVnetProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VirtualNetworksPropertiesInfraVnetProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VirtualNetworksPropertiesInfraVnetProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVirtualNetworksPropertiesInfraVnetProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

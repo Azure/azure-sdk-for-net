@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Base tracked resource type for all PATCH updates. </summary>
     public partial class LabServicesPatchBaseInfo
     {
-        /// <summary> Initializes a new instance of LabServicesPatchBaseInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesPatchBaseInfo"/>. </summary>
         public LabServicesPatchBaseInfo()
         {
             Tags = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesPatchBaseInfo"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabServicesPatchBaseInfo(IList<string> tags, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            _rawData = rawData;
         }
 
         /// <summary> Resource tags. </summary>

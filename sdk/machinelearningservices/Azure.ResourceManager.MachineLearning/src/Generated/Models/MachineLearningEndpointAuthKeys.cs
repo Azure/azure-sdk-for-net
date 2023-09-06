@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Keys for endpoint authentication. </summary>
     public partial class MachineLearningEndpointAuthKeys
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointAuthKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthKeys"/>. </summary>
         public MachineLearningEndpointAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthKeys"/>. </summary>
         /// <param name="primaryKey"> The primary key. </param>
         /// <param name="secondaryKey"> The secondary key. </param>
-        internal MachineLearningEndpointAuthKeys(string primaryKey, string secondaryKey)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEndpointAuthKeys(string primaryKey, string secondaryKey, Dictionary<string, BinaryData> rawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _rawData = rawData;
         }
 
         /// <summary> The primary key. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedServices;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The list of registration definitions. </summary>
     internal partial class ManagedServicesRegistrationListResult
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationListResult"/>. </summary>
         internal ManagedServicesRegistrationListResult()
         {
             Value = new ChangeTrackingList<ManagedServicesRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationListResult"/>. </summary>
         /// <param name="value"> The list of registration definitions. </param>
         /// <param name="nextLink"> The link to the next page of registration definitions. </param>
-        internal ManagedServicesRegistrationListResult(IReadOnlyList<ManagedServicesRegistrationData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesRegistrationListResult(IReadOnlyList<ManagedServicesRegistrationData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of registration definitions. </summary>

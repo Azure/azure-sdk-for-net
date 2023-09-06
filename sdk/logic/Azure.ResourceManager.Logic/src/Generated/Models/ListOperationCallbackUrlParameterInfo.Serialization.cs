@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class ListOperationCallbackUrlParameterInfo : IUtf8JsonSerializable
+    public partial class ListOperationCallbackUrlParameterInfo : IUtf8JsonSerializable, IModelJsonSerializable<ListOperationCallbackUrlParameterInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ListOperationCallbackUrlParameterInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ListOperationCallbackUrlParameterInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ListOperationCallbackUrlParameterInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NotAfter))
             {
@@ -25,7 +33,107 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ListOperationCallbackUrlParameterInfo DeserializeListOperationCallbackUrlParameterInfo(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DateTimeOffset> notAfter = default;
+            Optional<LogicKeyType> keyType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("notAfter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    notAfter = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("keyType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyType = new LogicKeyType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ListOperationCallbackUrlParameterInfo(Optional.ToNullable(notAfter), Optional.ToNullable(keyType), rawData);
+        }
+
+        ListOperationCallbackUrlParameterInfo IModelJsonSerializable<ListOperationCallbackUrlParameterInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListOperationCallbackUrlParameterInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeListOperationCallbackUrlParameterInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ListOperationCallbackUrlParameterInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListOperationCallbackUrlParameterInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ListOperationCallbackUrlParameterInfo IModelSerializable<ListOperationCallbackUrlParameterInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ListOperationCallbackUrlParameterInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeListOperationCallbackUrlParameterInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ListOperationCallbackUrlParameterInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ListOperationCallbackUrlParameterInfo"/> to convert. </param>
+        public static implicit operator RequestContent(ListOperationCallbackUrlParameterInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ListOperationCallbackUrlParameterInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ListOperationCallbackUrlParameterInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeListOperationCallbackUrlParameterInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

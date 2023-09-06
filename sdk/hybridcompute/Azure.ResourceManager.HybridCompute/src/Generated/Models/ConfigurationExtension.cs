@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes properties that can identify extensions. </summary>
     public partial class ConfigurationExtension
     {
-        /// <summary> Initializes a new instance of ConfigurationExtension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationExtension"/>. </summary>
         internal ConfigurationExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationExtension"/>. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
-        internal ConfigurationExtension(string publisher, string configurationExtensionType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationExtension(string publisher, string configurationExtensionType, Dictionary<string, BinaryData> rawData)
         {
             Publisher = publisher;
             ConfigurationExtensionType = configurationExtensionType;
+            _rawData = rawData;
         }
 
         /// <summary> Publisher of the extension. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Detailed result of testing a route. </summary>
     internal partial class IotHubTestRouteResultDetails
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         internal IotHubTestRouteResultDetails()
         {
             CompilationErrors = new ChangeTrackingList<RouteCompilationError>();
         }
 
-        /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         /// <param name="compilationErrors"> JSON-serialized list of route compilation errors. </param>
-        internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors, Dictionary<string, BinaryData> rawData)
         {
             CompilationErrors = compilationErrors;
+            _rawData = rawData;
         }
 
         /// <summary> JSON-serialized list of route compilation errors. </summary>

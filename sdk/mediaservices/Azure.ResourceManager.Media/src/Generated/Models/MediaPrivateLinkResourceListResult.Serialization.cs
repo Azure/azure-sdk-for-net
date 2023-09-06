@@ -5,22 +5,67 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class MediaPrivateLinkResourceListResult
+    internal partial class MediaPrivateLinkResourceListResult : IUtf8JsonSerializable, IModelJsonSerializable<MediaPrivateLinkResourceListResult>
     {
-        internal static MediaPrivateLinkResourceListResult DeserializeMediaPrivateLinkResourceListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaPrivateLinkResourceListResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaPrivateLinkResourceListResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaPrivateLinkResourceListResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MediaServicesPrivateLinkResourceData>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MediaPrivateLinkResourceListResult DeserializeMediaPrivateLinkResourceListResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MediaServicesPrivateLinkResourceData>> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,8 +82,61 @@ namespace Azure.ResourceManager.Media.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaPrivateLinkResourceListResult(Optional.ToList(value));
+            return new MediaPrivateLinkResourceListResult(Optional.ToList(value), rawData);
+        }
+
+        MediaPrivateLinkResourceListResult IModelJsonSerializable<MediaPrivateLinkResourceListResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaPrivateLinkResourceListResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaPrivateLinkResourceListResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaPrivateLinkResourceListResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaPrivateLinkResourceListResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaPrivateLinkResourceListResult IModelSerializable<MediaPrivateLinkResourceListResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaPrivateLinkResourceListResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaPrivateLinkResourceListResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaPrivateLinkResourceListResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaPrivateLinkResourceListResult"/> to convert. </param>
+        public static implicit operator RequestContent(MediaPrivateLinkResourceListResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaPrivateLinkResourceListResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaPrivateLinkResourceListResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaPrivateLinkResourceListResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

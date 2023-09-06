@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowEndpoints : IUtf8JsonSerializable
+    public partial class FlowEndpoints : IUtf8JsonSerializable, IModelJsonSerializable<FlowEndpoints>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FlowEndpoints>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FlowEndpoints>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FlowEndpoints>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(OutgoingIPAddresses))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FlowEndpointIPAddress>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,21 +46,43 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FlowEndpointIPAddress>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element)
+        internal static FlowEndpoints DeserializeFlowEndpoints(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
             Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outgoingIpAddresses"u8))
@@ -77,8 +113,61 @@ namespace Azure.ResourceManager.Logic.Models
                     accessEndpointIPAddresses = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FlowEndpoints(Optional.ToList(outgoingIPAddresses), Optional.ToList(accessEndpointIPAddresses));
+            return new FlowEndpoints(Optional.ToList(outgoingIPAddresses), Optional.ToList(accessEndpointIPAddresses), rawData);
+        }
+
+        FlowEndpoints IModelJsonSerializable<FlowEndpoints>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FlowEndpoints>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlowEndpoints(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FlowEndpoints>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FlowEndpoints>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FlowEndpoints IModelSerializable<FlowEndpoints>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FlowEndpoints>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFlowEndpoints(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FlowEndpoints"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FlowEndpoints"/> to convert. </param>
+        public static implicit operator RequestContent(FlowEndpoints model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FlowEndpoints"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FlowEndpoints(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFlowEndpoints(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

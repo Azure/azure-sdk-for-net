@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridComputeModelFactory
     {
-        /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             tags ??= new Dictionary<string, string>();
             resources ??= new List<HybridComputeMachineExtensionData>();
 
-            return new HybridComputeMachineData(id, name, resourceType, systemData, tags, location, properties, resources?.ToList(), identity);
+            return new HybridComputeMachineData(id, name, resourceType, systemData, tags, location, properties, resources?.ToList(), identity, default);
         }
 
-        /// <summary> Initializes a new instance of MachineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineProperties"/>. </summary>
         /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
         /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
         /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             errorDetails ??= new List<ResponseError>();
             detectedProperties ??= new Dictionary<string, string>();
 
-            return new MachineProperties(locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider) : null, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties);
+            return new MachineProperties(locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider, new Dictionary<string, BinaryData>()) : null, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties, default);
         }
 
-        /// <summary> Initializes a new instance of AgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentConfiguration"/>. </summary>
         /// <param name="proxyUri"> Specifies the URL of the proxy to be used. </param>
         /// <param name="incomingConnectionsPorts"> Specifies the list of ports that the agent will be able to listen on. </param>
         /// <param name="extensionsAllowList"> Array of extensions that are allowed to be installed or updated. </param>
@@ -90,29 +90,29 @@ namespace Azure.ResourceManager.HybridCompute.Models
             extensionsBlockList ??= new List<ConfigurationExtension>();
             proxyBypass ??= new List<string>();
 
-            return new AgentConfiguration(proxyUri, incomingConnectionsPorts?.ToList(), extensionsAllowList?.ToList(), extensionsBlockList?.ToList(), proxyBypass?.ToList(), extensionsEnabled, guestConfigurationEnabled, configMode);
+            return new AgentConfiguration(proxyUri, incomingConnectionsPorts?.ToList(), extensionsAllowList?.ToList(), extensionsBlockList?.ToList(), proxyBypass?.ToList(), extensionsEnabled, guestConfigurationEnabled, configMode, default);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationExtension"/>. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
         /// <returns> A new <see cref="Models.ConfigurationExtension"/> instance for mocking. </returns>
         public static ConfigurationExtension ConfigurationExtension(string publisher = null, string configurationExtensionType = null)
         {
-            return new ConfigurationExtension(publisher, configurationExtensionType);
+            return new ConfigurationExtension(publisher, configurationExtensionType, default);
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
         /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>
         /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
         public static OSProfile OSProfile(string computerName = null, OSProfileWindowsConfiguration windowsConfiguration = null, OSProfileLinuxConfiguration linuxConfiguration = null)
         {
-            return new OSProfile(computerName, windowsConfiguration, linuxConfiguration);
+            return new OSProfile(computerName, windowsConfiguration, linuxConfiguration, default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputeMachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HybridComputeMachineExtensionData(id, name, resourceType, systemData, tags, location, properties);
+            return new HybridComputeMachineExtensionData(id, name, resourceType, systemData, tags, location, properties, default);
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionProperties"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             settings ??= new Dictionary<string, BinaryData>();
             protectedSettings ??= new Dictionary<string, BinaryData>();
 
-            return new MachineExtensionProperties(forceUpdateTag, publisher, machineExtensionPropertiesType, typeHandlerVersion, enableAutomaticUpgrade, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView);
+            return new MachineExtensionProperties(forceUpdateTag, publisher, machineExtensionPropertiesType, typeHandlerVersion, enableAutomaticUpgrade, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView, default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HybridComputePrivateLinkScopeData(id, name, resourceType, systemData, tags, location, properties);
+            return new HybridComputePrivateLinkScopeData(id, name, resourceType, systemData, tags, location, properties, default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeProperties"/>. </summary>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionDataModel>();
 
-            return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections?.ToList());
+            return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionDataModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionDataModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
         public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnectionDataModel(id, name, resourceType, systemData, properties);
+            return new PrivateEndpointConnectionDataModel(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
@@ -199,20 +199,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             groupIds ??= new List<string>();
 
-            return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList());
+            return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
         /// <returns> A new <see cref="Models.HybridComputePrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
         public static HybridComputePrivateLinkServiceConnectionStateProperty HybridComputePrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null)
         {
-            return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired);
+            return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="HybridCompute.HybridComputePrivateLinkResourceData"/> instance for mocking. </returns>
         public static HybridComputePrivateLinkResourceData HybridComputePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridComputePrivateLinkResourceProperties properties = null)
         {
-            return new HybridComputePrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new HybridComputePrivateLinkResourceData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
@@ -234,10 +234,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new HybridComputePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new HybridComputePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="HybridCompute.HybridComputePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static HybridComputePrivateEndpointConnectionData HybridComputePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new HybridComputePrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
+            return new HybridComputePrivateEndpointConnectionData(id, name, resourceType, systemData, properties, default);
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopeValidationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeValidationDetails"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="connectionDetails"> List of Private Endpoint Connection details. </param>
@@ -258,10 +258,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             connectionDetails ??= new List<ConnectionDetail>();
 
-            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails?.ToList());
+            return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, connectionDetails?.ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of ConnectionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionDetail"/>. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <returns> A new <see cref="Models.ConnectionDetail"/> instance for mocking. </returns>
         public static ConnectionDetail ConnectionDetail(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
         {
-            return new ConnectionDetail(id, privateIPAddress, linkIdentifier, groupId, memberName);
+            return new ConnectionDetail(id, privateIPAddress, linkIdentifier, groupId, memberName, default);
         }
     }
 }

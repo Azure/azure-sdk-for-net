@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,20 @@ namespace Azure.Maps.Routing.Models
     /// <summary> A description of a part of a route, comprised of a list of points. Each additional waypoint provided in the request will result in an additional leg in the returned route. </summary>
     public partial class RouteLeg
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteLeg"/>. </summary>
+        /// <param name="summary"> Summary object for route section. </param>
+        /// <param name="points"> Points array. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteLeg(RouteLegSummary summary, IReadOnlyList<LatLongPair> points, Dictionary<string, BinaryData> rawData)
+        {
+            Summary = summary;
+            _Points = points;
+            _rawData = rawData;
+        }
+
         /// <summary> Summary object for route section. </summary>
         public RouteLegSummary Summary { get; }
     }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MultiBitrateFormat : IUtf8JsonSerializable
+    public partial class MultiBitrateFormat : IUtf8JsonSerializable, IModelJsonSerializable<MultiBitrateFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MultiBitrateFormat>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MultiBitrateFormat>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MultiBitrateFormat>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(OutputFiles))
             {
@@ -22,7 +29,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<MediaOutputFile>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -30,11 +44,25 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MultiBitrateFormat DeserializeMultiBitrateFormat(JsonElement element)
+        internal static MultiBitrateFormat DeserializeMultiBitrateFormat(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,9 +75,12 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.TransportStreamFormat": return TransportStreamFormat.DeserializeTransportStreamFormat(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = "#Microsoft.Media.MultiBitrateFormat";
             string filenamePattern = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputFiles"u8))
@@ -76,8 +107,61 @@ namespace Azure.ResourceManager.Media.Models
                     filenamePattern = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MultiBitrateFormat(odataType, filenamePattern, Optional.ToList(outputFiles));
+            return new MultiBitrateFormat(odataType, filenamePattern, Optional.ToList(outputFiles), rawData);
+        }
+
+        MultiBitrateFormat IModelJsonSerializable<MultiBitrateFormat>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MultiBitrateFormat>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMultiBitrateFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MultiBitrateFormat>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MultiBitrateFormat>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MultiBitrateFormat IModelSerializable<MultiBitrateFormat>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MultiBitrateFormat>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMultiBitrateFormat(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MultiBitrateFormat"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MultiBitrateFormat"/> to convert. </param>
+        public static implicit operator RequestContent(MultiBitrateFormat model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MultiBitrateFormat"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MultiBitrateFormat(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMultiBitrateFormat(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

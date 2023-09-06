@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventEncoding : IUtf8JsonSerializable
+    public partial class LiveEventEncoding : IUtf8JsonSerializable, IModelJsonSerializable<LiveEventEncoding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LiveEventEncoding>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LiveEventEncoding>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEncoding>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EncodingType))
             {
@@ -50,11 +57,25 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("keyFrameInterval");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LiveEventEncoding DeserializeLiveEventEncoding(JsonElement element)
+        internal static LiveEventEncoding DeserializeLiveEventEncoding(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +84,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> presetName = default;
             Optional<InputVideoStretchMode?> stretchMode = default;
             Optional<TimeSpan?> keyFrameInterval = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodingType"u8))
@@ -99,8 +121,61 @@ namespace Azure.ResourceManager.Media.Models
                     keyFrameInterval = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LiveEventEncoding(Optional.ToNullable(encodingType), presetName.Value, Optional.ToNullable(stretchMode), Optional.ToNullable(keyFrameInterval));
+            return new LiveEventEncoding(Optional.ToNullable(encodingType), presetName.Value, Optional.ToNullable(stretchMode), Optional.ToNullable(keyFrameInterval), rawData);
+        }
+
+        LiveEventEncoding IModelJsonSerializable<LiveEventEncoding>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEncoding>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLiveEventEncoding(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LiveEventEncoding>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEncoding>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LiveEventEncoding IModelSerializable<LiveEventEncoding>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEncoding>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLiveEventEncoding(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LiveEventEncoding"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LiveEventEncoding"/> to convert. </param>
+        public static implicit operator RequestContent(LiveEventEncoding model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LiveEventEncoding"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LiveEventEncoding(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLiveEventEncoding(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

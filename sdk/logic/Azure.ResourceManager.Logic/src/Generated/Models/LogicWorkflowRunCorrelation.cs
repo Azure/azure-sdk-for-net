@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The correlation properties. </summary>
     public partial class LogicWorkflowRunCorrelation
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunCorrelation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunCorrelation"/>. </summary>
         public LogicWorkflowRunCorrelation()
         {
             ClientKeywords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunCorrelation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunCorrelation"/>. </summary>
         /// <param name="clientTrackingId"> The client tracking identifier. </param>
         /// <param name="clientKeywords"> The client keywords. </param>
-        internal LogicWorkflowRunCorrelation(string clientTrackingId, IList<string> clientKeywords)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunCorrelation(string clientTrackingId, IList<string> clientKeywords, Dictionary<string, BinaryData> rawData)
         {
             ClientTrackingId = clientTrackingId;
             ClientKeywords = clientKeywords;
+            _rawData = rawData;
         }
 
         /// <summary> The client tracking identifier. </summary>

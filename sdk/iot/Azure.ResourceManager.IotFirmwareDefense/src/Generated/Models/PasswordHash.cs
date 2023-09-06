@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Password hash properties. </summary>
     public partial class PasswordHash
     {
-        /// <summary> Initializes a new instance of PasswordHash. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PasswordHash"/>. </summary>
         internal PasswordHash()
         {
         }
 
-        /// <summary> Initializes a new instance of PasswordHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="PasswordHash"/>. </summary>
         /// <param name="passwordHashId"> ID for password hash. </param>
         /// <param name="filePath"> File path of the password hash. </param>
         /// <param name="salt"> Salt of the password hash. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="context"> Context of password hash. </param>
         /// <param name="username"> User name of password hash. </param>
         /// <param name="algorithm"> Algorithm of the password hash. </param>
-        internal PasswordHash(string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PasswordHash(string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm, Dictionary<string, BinaryData> rawData)
         {
             PasswordHashId = passwordHashId;
             FilePath = filePath;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Context = context;
             Username = username;
             Algorithm = algorithm;
+            _rawData = rawData;
         }
 
         /// <summary> ID for password hash. </summary>

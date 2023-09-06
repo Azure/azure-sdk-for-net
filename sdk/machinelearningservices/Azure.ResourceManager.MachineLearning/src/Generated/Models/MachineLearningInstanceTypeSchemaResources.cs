@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Resource requests/limits for this instance type. </summary>
     public partial class MachineLearningInstanceTypeSchemaResources
     {
-        /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchemaResources. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInstanceTypeSchemaResources"/>. </summary>
         public MachineLearningInstanceTypeSchemaResources()
         {
             Requests = new ChangeTrackingDictionary<string, string>();
             Limits = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchemaResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningInstanceTypeSchemaResources"/>. </summary>
         /// <param name="requests"> Resource requests for this instance type. </param>
         /// <param name="limits"> Resource limits for this instance type. </param>
-        internal MachineLearningInstanceTypeSchemaResources(IDictionary<string, string> requests, IDictionary<string, string> limits)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningInstanceTypeSchemaResources(IDictionary<string, string> requests, IDictionary<string, string> limits, Dictionary<string, BinaryData> rawData)
         {
             Requests = requests;
             Limits = limits;
+            _rawData = rawData;
         }
 
         /// <summary> Resource requests for this instance type. </summary>

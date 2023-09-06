@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.Maps.Geolocation
@@ -12,5 +14,18 @@ namespace Azure.Maps.Geolocation
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
     public partial class CountryRegionResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CountryRegionResult"/>. </summary>
+        /// <param name="countryRegion"> The object containing the country/region information. </param>
+        /// <param name="ipAddress"> The IP Address of the request. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CountryRegionResult(CountryRegion countryRegion, IPAddress ipAddress, Dictionary<string, BinaryData> rawData)
+        {
+            CountryRegion = countryRegion;
+            IpAddress = ipAddress;
+            _rawData = rawData;
+        }
     }
 }

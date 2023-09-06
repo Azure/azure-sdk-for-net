@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify one track property condition. </summary>
     public partial class TrackPropertyCondition
     {
-        /// <summary> Initializes a new instance of TrackPropertyCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrackPropertyCondition"/>. </summary>
         /// <param name="property"> Track property type. </param>
         /// <param name="operation"> Track property condition operation. </param>
         public TrackPropertyCondition(TrackPropertyType property, TrackPropertyCompareOperation operation)
@@ -19,15 +25,22 @@ namespace Azure.ResourceManager.Media.Models
             Operation = operation;
         }
 
-        /// <summary> Initializes a new instance of TrackPropertyCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackPropertyCondition"/>. </summary>
         /// <param name="property"> Track property type. </param>
         /// <param name="operation"> Track property condition operation. </param>
         /// <param name="value"> Track property value. </param>
-        internal TrackPropertyCondition(TrackPropertyType property, TrackPropertyCompareOperation operation, string value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrackPropertyCondition(TrackPropertyType property, TrackPropertyCompareOperation operation, string value, Dictionary<string, BinaryData> rawData)
         {
             Property = property;
             Operation = operation;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrackPropertyCondition"/> for deserialization. </summary>
+        internal TrackPropertyCondition()
+        {
         }
 
         /// <summary> Track property type. </summary>

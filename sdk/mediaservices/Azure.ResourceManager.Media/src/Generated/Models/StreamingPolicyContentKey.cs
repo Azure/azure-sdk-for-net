@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to specify properties of content key. </summary>
     public partial class StreamingPolicyContentKey
     {
-        /// <summary> Initializes a new instance of StreamingPolicyContentKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyContentKey"/>. </summary>
         public StreamingPolicyContentKey()
         {
             Tracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPolicyContentKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPolicyContentKey"/>. </summary>
         /// <param name="label"> Label can be used to specify Content Key when creating a Streaming Locator. </param>
         /// <param name="policyName"> Policy used by Content Key. </param>
         /// <param name="tracks"> Tracks which use this content key. </param>
-        internal StreamingPolicyContentKey(string label, string policyName, IList<MediaTrackSelection> tracks)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingPolicyContentKey(string label, string policyName, IList<MediaTrackSelection> tracks, Dictionary<string, BinaryData> rawData)
         {
             Label = label;
             PolicyName = policyName;
             Tracks = tracks;
+            _rawData = rawData;
         }
 
         /// <summary> Label can be used to specify Content Key when creating a Streaming Locator. </summary>

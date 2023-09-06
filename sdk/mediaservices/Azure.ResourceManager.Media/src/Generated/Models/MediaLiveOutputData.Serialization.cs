@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaLiveOutputData : IUtf8JsonSerializable
+    public partial class MediaLiveOutputData : IUtf8JsonSerializable, IModelJsonSerializable<MediaLiveOutputData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaLiveOutputData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaLiveOutputData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveOutputData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
-                writer.WriteObjectValue(Hls);
+                if (Hls is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<Hls>)Hls).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(OutputSnapTime))
             {
@@ -63,11 +77,25 @@ namespace Azure.ResourceManager.Media
                 writer.WriteNumberValue(OutputSnapTime.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaLiveOutputData DeserializeMediaLiveOutputData(JsonElement element)
+        internal static MediaLiveOutputData DeserializeMediaLiveOutputData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +115,7 @@ namespace Azure.ResourceManager.Media
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> provisioningState = default;
             Optional<LiveOutputResourceState> resourceState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -209,8 +238,61 @@ namespace Azure.ResourceManager.Media
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaLiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Optional.ToNullable(archiveWindowLength), Optional.ToNullable(rewindWindowLength), manifestName.Value, hls.Value, Optional.ToNullable(outputSnapTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), provisioningState.Value, Optional.ToNullable(resourceState));
+            return new MediaLiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Optional.ToNullable(archiveWindowLength), Optional.ToNullable(rewindWindowLength), manifestName.Value, hls.Value, Optional.ToNullable(outputSnapTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), provisioningState.Value, Optional.ToNullable(resourceState), rawData);
+        }
+
+        MediaLiveOutputData IModelJsonSerializable<MediaLiveOutputData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveOutputData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaLiveOutputData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaLiveOutputData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveOutputData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaLiveOutputData IModelSerializable<MediaLiveOutputData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaLiveOutputData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaLiveOutputData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaLiveOutputData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaLiveOutputData"/> to convert. </param>
+        public static implicit operator RequestContent(MediaLiveOutputData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaLiveOutputData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaLiveOutputData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaLiveOutputData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

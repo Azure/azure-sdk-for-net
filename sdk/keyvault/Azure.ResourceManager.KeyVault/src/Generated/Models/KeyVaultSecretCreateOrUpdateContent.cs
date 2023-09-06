@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for creating or updating a secret. </summary>
     public partial class KeyVaultSecretCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of KeyVaultSecretCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public KeyVaultSecretCreateOrUpdateContent(SecretProperties properties)
@@ -23,6 +26,22 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> The tags that will be assigned to the secret. </param>
+        /// <param name="properties"> Properties of the secret. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags, SecretProperties properties, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            Properties = properties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/> for deserialization. </summary>
+        internal KeyVaultSecretCreateOrUpdateContent()
+        {
         }
 
         /// <summary> The tags that will be assigned to the secret. </summary>

@@ -5,21 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Routing.Models
 {
-    public partial class EffectiveSetting
+    public partial class EffectiveSetting : IUtf8JsonSerializable, IModelJsonSerializable<EffectiveSetting>
     {
-        internal static EffectiveSetting DeserializeEffectiveSetting(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<EffectiveSetting>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<EffectiveSetting>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveSetting>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static EffectiveSetting DeserializeEffectiveSetting(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> key = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -32,8 +61,61 @@ namespace Azure.Maps.Routing.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new EffectiveSetting(key.Value, value.Value);
+            return new EffectiveSetting(key.Value, value.Value, rawData);
+        }
+
+        EffectiveSetting IModelJsonSerializable<EffectiveSetting>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveSetting>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveSetting(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<EffectiveSetting>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveSetting>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        EffectiveSetting IModelSerializable<EffectiveSetting>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<EffectiveSetting>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeEffectiveSetting(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="EffectiveSetting"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="EffectiveSetting"/> to convert. </param>
+        public static implicit operator RequestContent(EffectiveSetting model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="EffectiveSetting"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator EffectiveSetting(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEffectiveSetting(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

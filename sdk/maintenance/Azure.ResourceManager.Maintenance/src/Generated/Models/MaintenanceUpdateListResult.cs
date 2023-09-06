@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Response for Updates list. </summary>
     internal partial class MaintenanceUpdateListResult
     {
-        /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdateListResult"/>. </summary>
         internal MaintenanceUpdateListResult()
         {
             Value = new ChangeTrackingList<MaintenanceUpdate>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdateListResult"/>. </summary>
         /// <param name="value"> The pending updates. </param>
-        internal MaintenanceUpdateListResult(IReadOnlyList<MaintenanceUpdate> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceUpdateListResult(IReadOnlyList<MaintenanceUpdate> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The pending updates. </summary>

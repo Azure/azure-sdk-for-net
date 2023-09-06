@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The deleted SAS definition item containing metadata about the deleted SAS definition. </summary>
     public partial class DeletedSasDefinitionItem : SasDefinitionItem
     {
-        /// <summary> Initializes a new instance of DeletedSasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSasDefinitionItem"/>. </summary>
         internal DeletedSasDefinitionItem()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSasDefinitionItem"/>. </summary>
         /// <param name="id"> The storage SAS identifier. </param>
         /// <param name="secretId"> The storage account SAS definition secret id. </param>
         /// <param name="attributes"> The SAS definition management attributes. </param>
@@ -26,7 +26,8 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="recoveryId"> The url of the recovery object, used to identify and recover the deleted SAS definition. </param>
         /// <param name="scheduledPurgeDate"> The time when the SAS definition is scheduled to be purged, in UTC. </param>
         /// <param name="deletedDate"> The time when the SAS definition was deleted, in UTC. </param>
-        internal DeletedSasDefinitionItem(string id, string secretId, SasDefinitionAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate) : base(id, secretId, attributes, tags)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedSasDefinitionItem(string id, string secretId, SasDefinitionAttributes attributes, IReadOnlyDictionary<string, string> tags, string recoveryId, DateTimeOffset? scheduledPurgeDate, DateTimeOffset? deletedDate, Dictionary<string, BinaryData> rawData) : base(id, secretId, attributes, tags, rawData)
         {
             RecoveryId = recoveryId;
             ScheduledPurgeDate = scheduledPurgeDate;

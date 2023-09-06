@@ -5,16 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class IotCentralAppTemplate
+    public partial class IotCentralAppTemplate : IUtf8JsonSerializable, IModelJsonSerializable<IotCentralAppTemplate>
     {
-        internal static IotCentralAppTemplate DeserializeIotCentralAppTemplate(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotCentralAppTemplate>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotCentralAppTemplate>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralAppTemplate>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IotCentralAppTemplate DeserializeIotCentralAppTemplate(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +54,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<string> description = default;
             Optional<string> industry = default;
             Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifestId"u8))
@@ -82,8 +110,61 @@ namespace Azure.ResourceManager.IotCentral.Models
                     locations = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, Optional.ToList(locations));
+            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, Optional.ToList(locations), rawData);
+        }
+
+        IotCentralAppTemplate IModelJsonSerializable<IotCentralAppTemplate>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralAppTemplate>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotCentralAppTemplate(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotCentralAppTemplate>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralAppTemplate>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotCentralAppTemplate IModelSerializable<IotCentralAppTemplate>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotCentralAppTemplate>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotCentralAppTemplate(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotCentralAppTemplate"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotCentralAppTemplate"/> to convert. </param>
+        public static implicit operator RequestContent(IotCentralAppTemplate model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotCentralAppTemplate"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotCentralAppTemplate(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotCentralAppTemplate(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoManagedPrivateEndpointData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoManagedPrivateEndpointData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointData"/>. </summary>
         public KustoManagedPrivateEndpointData()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoManagedPrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="groupId"> The groupId in which the managed private endpoint is created. </param>
         /// <param name="requestMessage"> The user request message. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoManagedPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, string groupId, string requestMessage, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoManagedPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, string groupId, string requestMessage, KustoProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData)
         {
             PrivateLinkResourceId = privateLinkResourceId;
             PrivateLinkResourceRegion = privateLinkResourceRegion;
             GroupId = groupId;
             RequestMessage = requestMessage;
             ProvisioningState = provisioningState;
+            _rawData = rawData;
         }
 
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is created. </summary>

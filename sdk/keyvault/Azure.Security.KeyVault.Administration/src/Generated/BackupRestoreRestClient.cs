@@ -50,9 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             if (azureStorageBlobContainerUri != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(azureStorageBlobContainerUri);
-                request.Content = content;
+                request.Content = azureStorageBlobContainerUri;
             }
             return message;
         }
@@ -199,9 +197,7 @@ namespace Azure.Security.KeyVault.Administration
             if (restoreBlobDetails != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(restoreBlobDetails);
-                request.Content = content;
+                request.Content = restoreBlobDetails;
             }
             return message;
         }
@@ -350,9 +346,7 @@ namespace Azure.Security.KeyVault.Administration
             if (restoreBlobDetails != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(restoreBlobDetails);
-                request.Content = content;
+                request.Content = restoreBlobDetails;
             }
             return message;
         }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TrackPropertyCondition : IUtf8JsonSerializable
+    public partial class TrackPropertyCondition : IUtf8JsonSerializable, IModelJsonSerializable<TrackPropertyCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrackPropertyCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrackPropertyCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrackPropertyCondition>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("property"u8);
             writer.WriteStringValue(Property.ToString());
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrackPropertyCondition DeserializeTrackPropertyCondition(JsonElement element)
+        internal static TrackPropertyCondition DeserializeTrackPropertyCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             TrackPropertyType property = default;
             TrackPropertyCompareOperation operation = default;
             Optional<string> value = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))
@@ -53,8 +76,61 @@ namespace Azure.ResourceManager.Media.Models
                     value = property0.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrackPropertyCondition(property, operation, value.Value);
+            return new TrackPropertyCondition(property, operation, value.Value, rawData);
+        }
+
+        TrackPropertyCondition IModelJsonSerializable<TrackPropertyCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackPropertyCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrackPropertyCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrackPropertyCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackPropertyCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrackPropertyCondition IModelSerializable<TrackPropertyCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrackPropertyCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrackPropertyCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrackPropertyCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrackPropertyCondition"/> to convert. </param>
+        public static implicit operator RequestContent(TrackPropertyCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrackPropertyCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrackPropertyCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrackPropertyCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

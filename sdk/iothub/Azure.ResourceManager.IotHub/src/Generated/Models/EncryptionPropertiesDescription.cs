@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The encryption properties for the IoT hub. </summary>
     public partial class EncryptionPropertiesDescription
     {
-        /// <summary> Initializes a new instance of EncryptionPropertiesDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionPropertiesDescription"/>. </summary>
         public EncryptionPropertiesDescription()
         {
             KeyVaultProperties = new ChangeTrackingList<KeyVaultKeyProperties>();
         }
 
-        /// <summary> Initializes a new instance of EncryptionPropertiesDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionPropertiesDescription"/>. </summary>
         /// <param name="keySource"> The source of the key. </param>
         /// <param name="keyVaultProperties"> The properties of the KeyVault key. </param>
-        internal EncryptionPropertiesDescription(string keySource, IList<KeyVaultKeyProperties> keyVaultProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionPropertiesDescription(string keySource, IList<KeyVaultKeyProperties> keyVaultProperties, Dictionary<string, BinaryData> rawData)
         {
             KeySource = keySource;
             KeyVaultProperties = keyVaultProperties;
+            _rawData = rawData;
         }
 
         /// <summary> The source of the key. </summary>

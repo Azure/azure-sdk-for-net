@@ -6,15 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The parameters to the list SAS request. </summary>
     public partial class MediaAssetStorageContainerSasContent
     {
-        /// <summary> Initializes a new instance of MediaAssetStorageContainerSasContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStorageContainerSasContent"/>. </summary>
         public MediaAssetStorageContainerSasContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStorageContainerSasContent"/>. </summary>
+        /// <param name="permissions"> The permissions to set on the SAS URL. </param>
+        /// <param name="expireOn"> The SAS URL expiration time.  This must be less than 24 hours from the current time. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaAssetStorageContainerSasContent(MediaAssetContainerPermission? permissions, DateTimeOffset? expireOn, Dictionary<string, BinaryData> rawData)
+        {
+            Permissions = permissions;
+            ExpireOn = expireOn;
+            _rawData = rawData;
         }
 
         /// <summary> The permissions to set on the SAS URL. </summary>

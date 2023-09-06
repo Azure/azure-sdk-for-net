@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting task in AutoML Table vertical. </summary>
     public partial class MachineLearningForecasting : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of MachineLearningForecasting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public MachineLearningForecasting(MachineLearningTableJobInput trainingData) : base(trainingData)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.Forecasting;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningForecasting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="targetColumnName">
         /// Target column name: This is prediction values column.
@@ -58,7 +58,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Applied when validation dataset is not provided.
         /// </param>
         /// <param name="weightColumnName"> The name of the sample weight column. Automated ML supports a weighted column as an input, causing rows in the data to be weighted up or down. </param>
-        internal MachineLearningForecasting(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ForecastingSettings forecastingSettings, ForecastingPrimaryMetric? primaryMetric, ForecastingTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningForecasting(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ForecastingSettings forecastingSettings, ForecastingPrimaryMetric? primaryMetric, ForecastingTrainingSettings trainingSettings, IList<string> cvSplitColumnNames, TableVerticalFeaturizationSettings featurizationSettings, TableVerticalLimitSettings limitSettings, NCrossValidations nCrossValidations, MachineLearningTableJobInput testData, double? testDataSize, MachineLearningTableJobInput validationData, double? validationDataSize, string weightColumnName, Dictionary<string, BinaryData> rawData) : base(logVerbosity, targetColumnName, taskType, trainingData, rawData)
         {
             ForecastingSettings = forecastingSettings;
             PrimaryMetric = primaryMetric;
@@ -73,6 +74,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ValidationDataSize = validationDataSize;
             WeightColumnName = weightColumnName;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningForecasting"/> for deserialization. </summary>
+        internal MachineLearningForecasting()
+        {
         }
 
         /// <summary> Forecasting task specific inputs. </summary>

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningCustomModelJobOutput"/>, <see cref="MachineLearningFlowModelJobOutput"/>, <see cref="MachineLearningTableJobOutput"/>, <see cref="MachineLearningTritonModelJobOutput"/>, <see cref="MachineLearningUriFileJobOutput"/> and <see cref="MachineLearningUriFolderJobOutput"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownJobOutput))]
     public abstract partial class MachineLearningJobOutput
     {
-        /// <summary> Initializes a new instance of MachineLearningJobOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobOutput"/>. </summary>
         protected MachineLearningJobOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
-        internal MachineLearningJobOutput(string description, JobOutputType jobOutputType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobOutput(string description, JobOutputType jobOutputType, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
             JobOutputType = jobOutputType;
+            _rawData = rawData;
         }
 
         /// <summary> Description for the output. </summary>

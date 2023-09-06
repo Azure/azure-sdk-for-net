@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDatastoreCredentials))]
     public abstract partial class MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCredentials"/>. </summary>
         protected MachineLearningDatastoreCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        internal MachineLearningDatastoreCredentials(CredentialsType credentialsType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDatastoreCredentials(CredentialsType credentialsType, Dictionary<string, BinaryData> rawData)
         {
             CredentialsType = credentialsType;
+            _rawData = rawData;
         }
 
         /// <summary> [Required] Credential type used to authentication with storage. </summary>

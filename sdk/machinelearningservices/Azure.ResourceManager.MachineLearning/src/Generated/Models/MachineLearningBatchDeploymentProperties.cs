@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Batch inference settings per deployment. </summary>
     public partial class MachineLearningBatchDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         public MachineLearningBatchDeploymentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
@@ -54,7 +55,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// </param>
-        internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings, Dictionary<string, BinaryData> rawData) : base(codeConfiguration, description, environmentId, environmentVariables, properties, rawData)
         {
             Compute = compute;
             ErrorThreshold = errorThreshold;

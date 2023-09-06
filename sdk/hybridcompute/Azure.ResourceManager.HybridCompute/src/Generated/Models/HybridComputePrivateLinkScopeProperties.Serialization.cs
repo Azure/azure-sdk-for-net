@@ -5,27 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputePrivateLinkScopeProperties : IUtf8JsonSerializable
+    public partial class HybridComputePrivateLinkScopeProperties : IUtf8JsonSerializable, IModelJsonSerializable<HybridComputePrivateLinkScopeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HybridComputePrivateLinkScopeProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HybridComputePrivateLinkScopeProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopeProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputePrivateLinkScopeProperties DeserializeHybridComputePrivateLinkScopeProperties(JsonElement element)
+        internal static HybridComputePrivateLinkScopeProperties DeserializeHybridComputePrivateLinkScopeProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +55,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> provisioningState = default;
             Optional<string> privateLinkScopeId = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionDataModel>> privateEndpointConnections = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -69,8 +91,61 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, Optional.ToList(privateEndpointConnections));
+            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, Optional.ToList(privateEndpointConnections), rawData);
+        }
+
+        HybridComputePrivateLinkScopeProperties IModelJsonSerializable<HybridComputePrivateLinkScopeProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopeProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputePrivateLinkScopeProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HybridComputePrivateLinkScopeProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopeProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HybridComputePrivateLinkScopeProperties IModelSerializable<HybridComputePrivateLinkScopeProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HybridComputePrivateLinkScopeProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHybridComputePrivateLinkScopeProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HybridComputePrivateLinkScopeProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HybridComputePrivateLinkScopeProperties"/> to convert. </param>
+        public static implicit operator RequestContent(HybridComputePrivateLinkScopeProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HybridComputePrivateLinkScopeProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HybridComputePrivateLinkScopeProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHybridComputePrivateLinkScopeProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

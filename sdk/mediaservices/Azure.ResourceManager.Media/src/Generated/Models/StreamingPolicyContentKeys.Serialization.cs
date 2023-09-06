@@ -5,21 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyContentKeys : IUtf8JsonSerializable
+    public partial class StreamingPolicyContentKeys : IUtf8JsonSerializable, IModelJsonSerializable<StreamingPolicyContentKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<StreamingPolicyContentKeys>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<StreamingPolicyContentKeys>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingPolicyContentKeys>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
-                writer.WriteObjectValue(DefaultKey);
+                if (DefaultKey is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<EncryptionSchemeDefaultKey>)DefaultKey).Serialize(writer, options);
+                }
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
@@ -27,21 +41,43 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<StreamingPolicyContentKey>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StreamingPolicyContentKeys DeserializeStreamingPolicyContentKeys(JsonElement element)
+        internal static StreamingPolicyContentKeys DeserializeStreamingPolicyContentKeys(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<EncryptionSchemeDefaultKey> defaultKey = default;
             Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultKey"u8))
@@ -67,8 +103,61 @@ namespace Azure.ResourceManager.Media.Models
                     keyToTrackMappings = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new StreamingPolicyContentKeys(defaultKey.Value, Optional.ToList(keyToTrackMappings));
+            return new StreamingPolicyContentKeys(defaultKey.Value, Optional.ToList(keyToTrackMappings), rawData);
+        }
+
+        StreamingPolicyContentKeys IModelJsonSerializable<StreamingPolicyContentKeys>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingPolicyContentKeys>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingPolicyContentKeys(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<StreamingPolicyContentKeys>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingPolicyContentKeys>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        StreamingPolicyContentKeys IModelSerializable<StreamingPolicyContentKeys>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<StreamingPolicyContentKeys>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeStreamingPolicyContentKeys(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="StreamingPolicyContentKeys"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="StreamingPolicyContentKeys"/> to convert. </param>
+        public static implicit operator RequestContent(StreamingPolicyContentKeys model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="StreamingPolicyContentKeys"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator StreamingPolicyContentKeys(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeStreamingPolicyContentKeys(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

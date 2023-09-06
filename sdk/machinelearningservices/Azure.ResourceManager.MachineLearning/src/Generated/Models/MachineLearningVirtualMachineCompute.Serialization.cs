@@ -8,19 +8,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVirtualMachineCompute : IUtf8JsonSerializable
+    public partial class MachineLearningVirtualMachineCompute : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningVirtualMachineCompute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningVirtualMachineCompute>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningVirtualMachineCompute>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVirtualMachineCompute>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                if (Properties is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<MachineLearningVirtualMachineProperties>)Properties).Serialize(writer, options);
+                }
             }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
@@ -58,11 +71,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningVirtualMachineCompute DeserializeMachineLearningVirtualMachineCompute(JsonElement element)
+        internal static MachineLearningVirtualMachineCompute DeserializeMachineLearningVirtualMachineCompute(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -179,8 +207,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningVirtualMachineCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), properties.Value);
+            return new MachineLearningVirtualMachineCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), properties.Value, rawData);
+        }
+
+        MachineLearningVirtualMachineCompute IModelJsonSerializable<MachineLearningVirtualMachineCompute>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVirtualMachineCompute>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningVirtualMachineCompute(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningVirtualMachineCompute>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVirtualMachineCompute>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningVirtualMachineCompute IModelSerializable<MachineLearningVirtualMachineCompute>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningVirtualMachineCompute>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningVirtualMachineCompute(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningVirtualMachineCompute"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningVirtualMachineCompute"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningVirtualMachineCompute model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningVirtualMachineCompute"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningVirtualMachineCompute(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningVirtualMachineCompute(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

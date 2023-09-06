@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPMatchCondition : IUtf8JsonSerializable
+    public partial class IPMatchCondition : IUtf8JsonSerializable, IModelJsonSerializable<IPMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IPMatchCondition>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IPMatchCondition>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IPMatchCondition>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceDestinationType))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPMatchCondition DeserializeIPMatchCondition(JsonElement element)
+        internal static IPMatchCondition DeserializeIPMatchCondition(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IPMatchConditionPrefixType> prefixType = default;
             Optional<IList<string>> ipPrefixValues = default;
             Optional<IList<string>> ipGroupNames = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -107,8 +129,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipGroupNames = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), Optional.ToList(ipPrefixValues), Optional.ToList(ipGroupNames));
+            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), Optional.ToList(ipPrefixValues), Optional.ToList(ipGroupNames), rawData);
+        }
+
+        IPMatchCondition IModelJsonSerializable<IPMatchCondition>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPMatchCondition>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPMatchCondition(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IPMatchCondition>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPMatchCondition>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IPMatchCondition IModelSerializable<IPMatchCondition>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IPMatchCondition>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIPMatchCondition(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IPMatchCondition"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IPMatchCondition"/> to convert. </param>
+        public static implicit operator RequestContent(IPMatchCondition model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IPMatchCondition"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IPMatchCondition(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIPMatchCondition(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

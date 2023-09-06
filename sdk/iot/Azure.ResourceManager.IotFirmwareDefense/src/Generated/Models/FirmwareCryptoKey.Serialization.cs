@@ -5,16 +5,139 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoKey
+    public partial class FirmwareCryptoKey : IUtf8JsonSerializable, IModelJsonSerializable<FirmwareCryptoKey>
     {
-        internal static FirmwareCryptoKey DeserializeFirmwareCryptoKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FirmwareCryptoKey>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FirmwareCryptoKey>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FirmwareCryptoKey>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FirmwareCryptoKeyId))
+            {
+                if (FirmwareCryptoKeyId != null)
+                {
+                    writer.WritePropertyName("cryptoKeyId"u8);
+                    writer.WriteStringValue(FirmwareCryptoKeyId);
+                }
+                else
+                {
+                    writer.WriteNull("cryptoKeyId");
+                }
+            }
+            if (Optional.IsDefined(KeyType))
+            {
+                if (KeyType != null)
+                {
+                    writer.WritePropertyName("keyType"u8);
+                    writer.WriteStringValue(KeyType);
+                }
+                else
+                {
+                    writer.WriteNull("keyType");
+                }
+            }
+            if (Optional.IsDefined(KeySize))
+            {
+                if (KeySize != null)
+                {
+                    writer.WritePropertyName("keySize"u8);
+                    writer.WriteNumberValue(KeySize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("keySize");
+                }
+            }
+            if (Optional.IsDefined(KeyAlgorithm))
+            {
+                if (KeyAlgorithm != null)
+                {
+                    writer.WritePropertyName("keyAlgorithm"u8);
+                    writer.WriteStringValue(KeyAlgorithm);
+                }
+                else
+                {
+                    writer.WriteNull("keyAlgorithm");
+                }
+            }
+            if (Optional.IsCollectionDefined(Usage))
+            {
+                if (Usage != null)
+                {
+                    writer.WritePropertyName("usage"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Usage)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("usage");
+                }
+            }
+            if (Optional.IsDefined(PairedKey))
+            {
+                if (PairedKey != null)
+                {
+                    writer.WritePropertyName("pairedKey"u8);
+                    if (PairedKey is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<PairedKey>)PairedKey).Serialize(writer, options);
+                    }
+                }
+                else
+                {
+                    writer.WriteNull("pairedKey");
+                }
+            }
+            if (Optional.IsDefined(IsShortKeySize))
+            {
+                if (IsShortKeySize != null)
+                {
+                    writer.WritePropertyName("isShortKeySize"u8);
+                    writer.WriteStringValue(IsShortKeySize.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isShortKeySize");
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FirmwareCryptoKey DeserializeFirmwareCryptoKey(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +150,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<IReadOnlyList<string>> filePaths = default;
             Optional<PairedKey> pairedKey = default;
             Optional<IsShortKeySize?> isShortKeySize = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cryptoKeyId"u8))
@@ -117,8 +241,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     isShortKeySize = new IsShortKeySize(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize));
+            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize), rawData);
+        }
+
+        FirmwareCryptoKey IModelJsonSerializable<FirmwareCryptoKey>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirmwareCryptoKey>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirmwareCryptoKey(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FirmwareCryptoKey>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirmwareCryptoKey>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FirmwareCryptoKey IModelSerializable<FirmwareCryptoKey>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FirmwareCryptoKey>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFirmwareCryptoKey(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FirmwareCryptoKey"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FirmwareCryptoKey"/> to convert. </param>
+        public static implicit operator RequestContent(FirmwareCryptoKey model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FirmwareCryptoKey"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FirmwareCryptoKey(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFirmwareCryptoKey(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

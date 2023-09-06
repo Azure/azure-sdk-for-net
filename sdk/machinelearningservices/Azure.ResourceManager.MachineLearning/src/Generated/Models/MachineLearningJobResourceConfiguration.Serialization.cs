@@ -8,14 +8,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningJobResourceConfiguration : IUtf8JsonSerializable
+    public partial class MachineLearningJobResourceConfiguration : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningJobResourceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningJobResourceConfiguration>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningJobResourceConfiguration>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobResourceConfiguration>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DockerArgs))
             {
@@ -78,11 +84,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningJobResourceConfiguration DeserializeMachineLearningJobResourceConfiguration(JsonElement element)
+        internal static MachineLearningJobResourceConfiguration DeserializeMachineLearningJobResourceConfiguration(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> instanceCount = default;
             Optional<string> instanceType = default;
             Optional<IDictionary<string, BinaryData>> properties = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dockerArgs"u8))
@@ -150,8 +171,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToDictionary(properties), dockerArgs.Value, shmSize.Value);
+            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToDictionary(properties), dockerArgs.Value, shmSize.Value, rawData);
+        }
+
+        MachineLearningJobResourceConfiguration IModelJsonSerializable<MachineLearningJobResourceConfiguration>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobResourceConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningJobResourceConfiguration(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningJobResourceConfiguration>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobResourceConfiguration>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningJobResourceConfiguration IModelSerializable<MachineLearningJobResourceConfiguration>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningJobResourceConfiguration>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningJobResourceConfiguration(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningJobResourceConfiguration"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningJobResourceConfiguration"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningJobResourceConfiguration model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningJobResourceConfiguration"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningJobResourceConfiguration(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningJobResourceConfiguration(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventTranscription : IUtf8JsonSerializable
+    public partial class LiveEventTranscription : IUtf8JsonSerializable, IModelJsonSerializable<LiveEventTranscription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LiveEventTranscription>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LiveEventTranscription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventTranscription>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))
             {
@@ -27,20 +34,48 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputTrackSelection)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LiveEventInputTrackSelection>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
-                writer.WriteObjectValue(OutputTranscriptionTrack);
+                if (OutputTranscriptionTrack is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<LiveEventOutputTranscriptionTrack>)OutputTranscriptionTrack).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static LiveEventTranscription DeserializeLiveEventTranscription(JsonElement element)
+        internal static LiveEventTranscription DeserializeLiveEventTranscription(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +83,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> language = default;
             Optional<IList<LiveEventInputTrackSelection>> inputTrackSelection = default;
             Optional<LiveEventOutputTranscriptionTrack> outputTranscriptionTrack = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -78,8 +114,61 @@ namespace Azure.ResourceManager.Media.Models
                     outputTranscriptionTrack = LiveEventOutputTranscriptionTrack.DeserializeLiveEventOutputTranscriptionTrack(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LiveEventTranscription(language.Value, Optional.ToList(inputTrackSelection), outputTranscriptionTrack.Value);
+            return new LiveEventTranscription(language.Value, Optional.ToList(inputTrackSelection), outputTranscriptionTrack.Value, rawData);
+        }
+
+        LiveEventTranscription IModelJsonSerializable<LiveEventTranscription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventTranscription>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLiveEventTranscription(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LiveEventTranscription>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventTranscription>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LiveEventTranscription IModelSerializable<LiveEventTranscription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventTranscription>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLiveEventTranscription(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LiveEventTranscription"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LiveEventTranscription"/> to convert. </param>
+        public static implicit operator RequestContent(LiveEventTranscription model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LiveEventTranscription"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LiveEventTranscription(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLiveEventTranscription(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

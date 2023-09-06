@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class ExportDevicesContent : IUtf8JsonSerializable
+    public partial class ExportDevicesContent : IUtf8JsonSerializable, IModelJsonSerializable<ExportDevicesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExportDevicesContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExportDevicesContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDevicesContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("exportBlobContainerUri"u8);
             writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
@@ -32,7 +40,14 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                if (Identity is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ManagedIdentity>)Identity).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(IncludeConfigurations))
             {
@@ -44,7 +59,141 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static ExportDevicesContent DeserializeExportDevicesContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri exportBlobContainerUri = default;
+            bool excludeKeys = default;
+            Optional<string> exportBlobName = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
+            Optional<ManagedIdentity> identity = default;
+            Optional<bool> includeConfigurations = default;
+            Optional<string> configurationsBlobName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("exportBlobContainerUri"u8))
+                {
+                    exportBlobContainerUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("excludeKeys"u8))
+                {
+                    excludeKeys = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("exportBlobName"u8))
+                {
+                    exportBlobName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authenticationType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("includeConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeConfigurations = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("configurationsBlobName"u8))
+                {
+                    configurationsBlobName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ExportDevicesContent(exportBlobContainerUri, excludeKeys, exportBlobName.Value, Optional.ToNullable(authenticationType), identity.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value, rawData);
+        }
+
+        ExportDevicesContent IModelJsonSerializable<ExportDevicesContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDevicesContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportDevicesContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExportDevicesContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDevicesContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExportDevicesContent IModelSerializable<ExportDevicesContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExportDevicesContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExportDevicesContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExportDevicesContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExportDevicesContent"/> to convert. </param>
+        public static implicit operator RequestContent(ExportDevicesContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExportDevicesContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExportDevicesContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExportDevicesContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class PurgeMessageQueueResult
+    public partial class PurgeMessageQueueResult : IUtf8JsonSerializable, IModelJsonSerializable<PurgeMessageQueueResult>
     {
-        internal static PurgeMessageQueueResult DeserializePurgeMessageQueueResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PurgeMessageQueueResult>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PurgeMessageQueueResult>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PurgeMessageQueueResult>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TotalMessagesPurged))
+            {
+                writer.WritePropertyName("totalMessagesPurged"u8);
+                writer.WriteNumberValue(TotalMessagesPurged.Value);
+            }
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(ModuleId))
+            {
+                writer.WritePropertyName("moduleId"u8);
+                writer.WriteStringValue(ModuleId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PurgeMessageQueueResult DeserializePurgeMessageQueueResult(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<int> totalMessagesPurged = default;
             Optional<string> deviceId = default;
             Optional<string> moduleId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalMessagesPurged"u8))
@@ -42,8 +86,61 @@ namespace Azure.IoT.Hub.Service.Models
                     moduleId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PurgeMessageQueueResult(Optional.ToNullable(totalMessagesPurged), deviceId.Value, moduleId.Value);
+            return new PurgeMessageQueueResult(Optional.ToNullable(totalMessagesPurged), deviceId.Value, moduleId.Value, rawData);
+        }
+
+        PurgeMessageQueueResult IModelJsonSerializable<PurgeMessageQueueResult>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PurgeMessageQueueResult>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePurgeMessageQueueResult(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PurgeMessageQueueResult>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PurgeMessageQueueResult>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PurgeMessageQueueResult IModelSerializable<PurgeMessageQueueResult>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PurgeMessageQueueResult>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePurgeMessageQueueResult(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PurgeMessageQueueResult"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PurgeMessageQueueResult"/> to convert. </param>
+        public static implicit operator RequestContent(PurgeMessageQueueResult model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PurgeMessageQueueResult"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PurgeMessageQueueResult(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePurgeMessageQueueResult(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

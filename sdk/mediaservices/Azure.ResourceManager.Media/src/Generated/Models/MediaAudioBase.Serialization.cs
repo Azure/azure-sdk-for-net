@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAudioBase : IUtf8JsonSerializable
+    public partial class MediaAudioBase : IUtf8JsonSerializable, IModelJsonSerializable<MediaAudioBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaAudioBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaAudioBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaAudioBase>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Channels))
             {
@@ -37,11 +45,25 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaAudioBase DeserializeMediaAudioBase(JsonElement element)
+        internal static MediaAudioBase DeserializeMediaAudioBase(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,11 +76,14 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.DDAudio": return DDAudio.DeserializeDDAudio(element);
                 }
             }
+
+            // Unknown type found so we will deserialize the base properties only
             Optional<int> channels = default;
             Optional<int> samplingRate = default;
             Optional<int> bitrate = default;
             string odataType = "#Microsoft.Media.Audio";
             Optional<string> label = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channels"u8))
@@ -98,8 +123,61 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MediaAudioBase(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            return new MediaAudioBase(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate), rawData);
+        }
+
+        MediaAudioBase IModelJsonSerializable<MediaAudioBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaAudioBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaAudioBase(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaAudioBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaAudioBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaAudioBase IModelSerializable<MediaAudioBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaAudioBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaAudioBase(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MediaAudioBase"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MediaAudioBase"/> to convert. </param>
+        public static implicit operator RequestContent(MediaAudioBase model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MediaAudioBase"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MediaAudioBase(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMediaAudioBase(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

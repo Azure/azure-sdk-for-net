@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The name of the brand for the POI being returned. </summary>
     public partial class BrandName
     {
-        /// <summary> Initializes a new instance of BrandName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="BrandName"/>. </summary>
         internal BrandName()
         {
         }
 
-        /// <summary> Initializes a new instance of BrandName. </summary>
+        /// <summary> Initializes a new instance of <see cref="BrandName"/>. </summary>
         /// <param name="name"> Name of the brand. </param>
-        internal BrandName(string name)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BrandName(string name, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
+            _rawData = rawData;
         }
 
         /// <summary> Name of the brand. </summary>

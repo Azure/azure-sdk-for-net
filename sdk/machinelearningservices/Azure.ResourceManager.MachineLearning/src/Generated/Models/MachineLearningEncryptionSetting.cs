@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEncryptionSetting. </summary>
     public partial class MachineLearningEncryptionSetting
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVaultProperties = keyVaultProperties;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <param name="identity"> The identity that will be used to access the key vault for encryption at rest. </param>
         /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
-        internal MachineLearningEncryptionSetting(MachineLearningEncryptionStatus status, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEncryptionSetting(MachineLearningEncryptionStatus status, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, Dictionary<string, BinaryData> rawData)
         {
             Status = status;
             Identity = identity;
             KeyVaultProperties = keyVaultProperties;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/> for deserialization. </summary>
+        internal MachineLearningEncryptionSetting()
+        {
         }
 
         /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>

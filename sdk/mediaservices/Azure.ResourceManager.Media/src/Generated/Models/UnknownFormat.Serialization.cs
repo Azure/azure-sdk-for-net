@@ -5,45 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownFormat : IUtf8JsonSerializable
+    internal partial class UnknownFormat : IUtf8JsonSerializable, IModelJsonSerializable<MediaFormatBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MediaFormatBase>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MediaFormatBase>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MediaFormatBase>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("filenamePattern"u8);
             writer.WriteStringValue(FilenamePattern);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownFormat DeserializeUnknownFormat(JsonElement element)
+        internal static MediaFormatBase DeserializeUnknownFormat(JsonElement element, ModelSerializerOptions options = default) => DeserializeMediaFormatBase(element, options);
+
+        MediaFormatBase IModelJsonSerializable<MediaFormatBase>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string odataType = "Unknown";
-            string filenamePattern = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@odata.type"u8))
-                {
-                    odataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("filenamePattern"u8))
-                {
-                    filenamePattern = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownFormat(odataType, filenamePattern);
+            Core.ModelSerializerHelper.ValidateFormat<MediaFormatBase>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownFormat(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MediaFormatBase>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaFormatBase>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MediaFormatBase IModelSerializable<MediaFormatBase>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MediaFormatBase>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMediaFormatBase(doc.RootElement, options);
         }
     }
 }

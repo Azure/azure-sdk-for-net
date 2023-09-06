@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HttpProxyConfig : IUtf8JsonSerializable
+    public partial class HttpProxyConfig : IUtf8JsonSerializable, IModelJsonSerializable<HttpProxyConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HttpProxyConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HttpProxyConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HttpProxyConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Password))
             {
@@ -51,11 +58,25 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HttpProxyConfig DeserializeHttpProxyConfig(JsonElement element)
+        internal static HttpProxyConfig DeserializeHttpProxyConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<IList<string>> noProxy = default;
             Optional<string> trustedCa = default;
             Optional<string> username = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("password"u8))
@@ -107,8 +129,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     username = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value, username.Value, password.Value);
+            return new HttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value, username.Value, password.Value, rawData);
+        }
+
+        HttpProxyConfig IModelJsonSerializable<HttpProxyConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HttpProxyConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHttpProxyConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HttpProxyConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HttpProxyConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HttpProxyConfig IModelSerializable<HttpProxyConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HttpProxyConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHttpProxyConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HttpProxyConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HttpProxyConfig"/> to convert. </param>
+        public static implicit operator RequestContent(HttpProxyConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HttpProxyConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HttpProxyConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHttpProxyConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

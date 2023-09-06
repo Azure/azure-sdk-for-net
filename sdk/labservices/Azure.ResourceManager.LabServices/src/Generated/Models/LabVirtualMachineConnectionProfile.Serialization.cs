@@ -6,16 +6,43 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineConnectionProfile
+    public partial class LabVirtualMachineConnectionProfile : IUtf8JsonSerializable, IModelJsonSerializable<LabVirtualMachineConnectionProfile>
     {
-        internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LabVirtualMachineConnectionProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LabVirtualMachineConnectionProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineConnectionProfile>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +54,7 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<Uri> rdpInBrowserUrl = default;
             Optional<string> adminUsername = default;
             Optional<string> nonAdminUsername = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIpAddress"u8))
@@ -76,8 +104,61 @@ namespace Azure.ResourceManager.LabServices.Models
                     nonAdminUsername = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LabVirtualMachineConnectionProfile(privateIPAddress.Value, sshAuthority.Value, sshInBrowserUrl.Value, rdpAuthority.Value, rdpInBrowserUrl.Value, adminUsername.Value, nonAdminUsername.Value);
+            return new LabVirtualMachineConnectionProfile(privateIPAddress.Value, sshAuthority.Value, sshInBrowserUrl.Value, rdpAuthority.Value, rdpInBrowserUrl.Value, adminUsername.Value, nonAdminUsername.Value, rawData);
+        }
+
+        LabVirtualMachineConnectionProfile IModelJsonSerializable<LabVirtualMachineConnectionProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineConnectionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabVirtualMachineConnectionProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LabVirtualMachineConnectionProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineConnectionProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LabVirtualMachineConnectionProfile IModelSerializable<LabVirtualMachineConnectionProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LabVirtualMachineConnectionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLabVirtualMachineConnectionProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LabVirtualMachineConnectionProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LabVirtualMachineConnectionProfile"/> to convert. </param>
+        public static implicit operator RequestContent(LabVirtualMachineConnectionProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LabVirtualMachineConnectionProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LabVirtualMachineConnectionProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLabVirtualMachineConnectionProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

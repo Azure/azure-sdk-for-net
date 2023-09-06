@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The result returned from a check name availability request. </summary>
     public partial class KustoNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoNameAvailabilityResult"/>. </summary>
         internal KustoNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="name"> The name that was checked. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
         /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
-        internal KustoNameAvailabilityResult(bool? nameAvailable, string name, string message, KustoNameUnavailableReason? reason)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoNameAvailabilityResult(bool? nameAvailable, string name, string message, KustoNameUnavailableReason? reason, Dictionary<string, BinaryData> rawData)
         {
             NameAvailable = nameAvailable;
             Name = name;
             Message = message;
             Reason = reason;
+            _rawData = rawData;
         }
 
         /// <summary> Specifies a Boolean value that indicates if the name is available. </summary>

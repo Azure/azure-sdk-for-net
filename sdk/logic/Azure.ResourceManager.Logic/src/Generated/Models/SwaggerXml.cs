@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Swagger XML. </summary>
     public partial class SwaggerXml
     {
-        /// <summary> Initializes a new instance of SwaggerXml. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         public SwaggerXml()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerXml. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerXml"/>. </summary>
         /// <param name="name"> The xml element or attribute name. </param>
         /// <param name="namespace"> The xml namespace. </param>
         /// <param name="prefix"> The name prefix. </param>
         /// <param name="isAttribute"> Indicates whether the property should be an attribute instead of an element. </param>
         /// <param name="isWrapped"> Indicates whether the array elements are wrapped in a container element. </param>
         /// <param name="extensions"> The vendor extensions. </param>
-        internal SwaggerXml(string name, string @namespace, string prefix, bool? isAttribute, bool? isWrapped, IDictionary<string, BinaryData> extensions)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerXml(string name, string @namespace, string prefix, bool? isAttribute, bool? isWrapped, IDictionary<string, BinaryData> extensions, Dictionary<string, BinaryData> rawData)
         {
             Name = name;
             Namespace = @namespace;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             IsAttribute = isAttribute;
             IsWrapped = isWrapped;
             Extensions = extensions;
+            _rawData = rawData;
         }
 
         /// <summary> The xml element or attribute name. </summary>

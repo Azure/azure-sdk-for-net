@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    internal partial class KubernetesClusterProperties : IUtf8JsonSerializable
+    internal partial class KubernetesClusterProperties : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesClusterProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesClusterProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                if (ServicePrincipal is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ServicePrincipalProperties>)ServicePrincipal).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesClusterProperties DeserializeKubernetesClusterProperties(JsonElement element)
+        internal static KubernetesClusterProperties DeserializeKubernetesClusterProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ServicePrincipalProperties> servicePrincipal = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("servicePrincipal"u8))
@@ -41,8 +71,61 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KubernetesClusterProperties(servicePrincipal.Value);
+            return new KubernetesClusterProperties(servicePrincipal.Value, rawData);
+        }
+
+        KubernetesClusterProperties IModelJsonSerializable<KubernetesClusterProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesClusterProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesClusterProperties IModelSerializable<KubernetesClusterProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesClusterProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesClusterProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesClusterProperties"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesClusterProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesClusterProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesClusterProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesClusterProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

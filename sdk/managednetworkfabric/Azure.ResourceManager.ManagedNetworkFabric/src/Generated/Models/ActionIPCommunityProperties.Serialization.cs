@@ -5,36 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ActionIPCommunityProperties : IUtf8JsonSerializable
+    public partial class ActionIPCommunityProperties : IUtf8JsonSerializable, IModelJsonSerializable<ActionIPCommunityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ActionIPCommunityProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ActionIPCommunityProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ActionIPCommunityProperties>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                if (Delete is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IPCommunityIdList>)Delete).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set);
+                if (Set is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IPCommunityIdList>)Set).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                if (Add is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IPCommunityIdList>)Add).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ActionIPCommunityProperties DeserializeActionIPCommunityProperties(JsonElement element)
+        internal static ActionIPCommunityProperties DeserializeActionIPCommunityProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +85,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IPCommunityIdList> delete = default;
             Optional<IPCommunityIdList> @set = default;
             Optional<IPCommunityIdList> @add = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delete"u8))
@@ -71,8 +115,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ActionIPCommunityProperties(@add.Value, delete.Value, @set.Value);
+            return new ActionIPCommunityProperties(@add.Value, delete.Value, @set.Value, rawData);
+        }
+
+        ActionIPCommunityProperties IModelJsonSerializable<ActionIPCommunityProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActionIPCommunityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeActionIPCommunityProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ActionIPCommunityProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActionIPCommunityProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ActionIPCommunityProperties IModelSerializable<ActionIPCommunityProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ActionIPCommunityProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeActionIPCommunityProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ActionIPCommunityProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ActionIPCommunityProperties"/> to convert. </param>
+        public static implicit operator RequestContent(ActionIPCommunityProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ActionIPCommunityProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ActionIPCommunityProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeActionIPCommunityProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

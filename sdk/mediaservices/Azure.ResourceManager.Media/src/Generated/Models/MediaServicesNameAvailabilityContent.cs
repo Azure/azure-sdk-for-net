@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The input to the check name availability request. </summary>
     public partial class MediaServicesNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MediaServicesNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesNameAvailabilityContent"/>. </summary>
         public MediaServicesNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The account name. </param>
+        /// <param name="resourceType"> The account type. For a Media Services account, this should be 'MediaServices'. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaServicesNameAvailabilityContent(string name, string resourceType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> The account name. </summary>

@@ -5,19 +5,113 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubFailoverContent : IUtf8JsonSerializable
+    public partial class IotHubFailoverContent : IUtf8JsonSerializable, IModelJsonSerializable<IotHubFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IotHubFailoverContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IotHubFailoverContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubFailoverContent>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("failoverRegion"u8);
             writer.WriteStringValue(FailoverRegion);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static IotHubFailoverContent DeserializeIotHubFailoverContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string failoverRegion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("failoverRegion"u8))
+                {
+                    failoverRegion = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new IotHubFailoverContent(failoverRegion, rawData);
+        }
+
+        IotHubFailoverContent IModelJsonSerializable<IotHubFailoverContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubFailoverContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IotHubFailoverContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubFailoverContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IotHubFailoverContent IModelSerializable<IotHubFailoverContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<IotHubFailoverContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIotHubFailoverContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IotHubFailoverContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IotHubFailoverContent"/> to convert. </param>
+        public static implicit operator RequestContent(IotHubFailoverContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IotHubFailoverContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IotHubFailoverContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIotHubFailoverContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

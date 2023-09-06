@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The list of schedules to be applied on the computes. </summary>
     internal partial class ComputeSchedules
     {
-        /// <summary> Initializes a new instance of ComputeSchedules. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedules"/>. </summary>
         internal ComputeSchedules()
         {
             ComputeStartStop = new ChangeTrackingList<MachineLearningComputeStartStopSchedule>();
         }
 
-        /// <summary> Initializes a new instance of ComputeSchedules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedules"/>. </summary>
         /// <param name="computeStartStop"> The list of compute start stop schedules to be applied. </param>
-        internal ComputeSchedules(IReadOnlyList<MachineLearningComputeStartStopSchedule> computeStartStop)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeSchedules(IReadOnlyList<MachineLearningComputeStartStopSchedule> computeStartStop, Dictionary<string, BinaryData> rawData)
         {
             ComputeStartStop = computeStartStop;
+            _rawData = rawData;
         }
 
         /// <summary> The list of compute start stop schedules to be applied. </summary>

@@ -5,16 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class TrialMatcherInferenceEvidence
+    public partial class TrialMatcherInferenceEvidence : IUtf8JsonSerializable, IModelJsonSerializable<TrialMatcherInferenceEvidence>
     {
-        internal static TrialMatcherInferenceEvidence DeserializeTrialMatcherInferenceEvidence(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrialMatcherInferenceEvidence>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrialMatcherInferenceEvidence>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EligibilityCriteriaEvidence))
+            {
+                writer.WritePropertyName("eligibilityCriteriaEvidence"u8);
+                writer.WriteStringValue(EligibilityCriteriaEvidence);
+            }
+            if (Optional.IsDefined(PatientDataEvidence))
+            {
+                writer.WritePropertyName("patientDataEvidence"u8);
+                if (PatientDataEvidence is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClinicalNoteEvidence>)PatientDataEvidence).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(PatientInfoEvidence))
+            {
+                writer.WritePropertyName("patientInfoEvidence"u8);
+                if (PatientInfoEvidence is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<ClinicalCodedElement>)PatientInfoEvidence).Serialize(writer, options);
+                }
+            }
+            if (Optional.IsDefined(Importance))
+            {
+                writer.WritePropertyName("importance"u8);
+                writer.WriteNumberValue(Importance.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static TrialMatcherInferenceEvidence DeserializeTrialMatcherInferenceEvidence(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +84,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
             Optional<float> importance = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eligibilityCriteriaEvidence"u8))
@@ -57,16 +119,61 @@ namespace Azure.Health.Insights.ClinicalMatching
                     importance = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance));
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), rawData);
         }
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrialMatcherInferenceEvidence FromResponse(Response response)
+        TrialMatcherInferenceEvidence IModelJsonSerializable<TrialMatcherInferenceEvidence>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrialMatcherInferenceEvidence(document.RootElement);
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrialMatcherInferenceEvidence(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrialMatcherInferenceEvidence>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrialMatcherInferenceEvidence IModelSerializable<TrialMatcherInferenceEvidence>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrialMatcherInferenceEvidence(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrialMatcherInferenceEvidence"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrialMatcherInferenceEvidence"/> to convert. </param>
+        public static implicit operator RequestContent(TrialMatcherInferenceEvidence model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrialMatcherInferenceEvidence"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrialMatcherInferenceEvidence(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrialMatcherInferenceEvidence(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

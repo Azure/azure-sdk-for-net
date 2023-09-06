@@ -6,15 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventEndpoint : IUtf8JsonSerializable
+    public partial class LiveEventEndpoint : IUtf8JsonSerializable, IModelJsonSerializable<LiveEventEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LiveEventEndpoint>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LiveEventEndpoint>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEndpoint>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
@@ -26,17 +33,32 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LiveEventEndpoint DeserializeLiveEventEndpoint(JsonElement element)
+        internal static LiveEventEndpoint DeserializeLiveEventEndpoint(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> protocol = default;
             Optional<Uri> uri = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -53,8 +75,61 @@ namespace Azure.ResourceManager.Media.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LiveEventEndpoint(protocol.Value, uri.Value);
+            return new LiveEventEndpoint(protocol.Value, uri.Value, rawData);
+        }
+
+        LiveEventEndpoint IModelJsonSerializable<LiveEventEndpoint>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLiveEventEndpoint(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LiveEventEndpoint>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEndpoint>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LiveEventEndpoint IModelSerializable<LiveEventEndpoint>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LiveEventEndpoint>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLiveEventEndpoint(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LiveEventEndpoint"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LiveEventEndpoint"/> to convert. </param>
+        public static implicit operator RequestContent(LiveEventEndpoint model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LiveEventEndpoint"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LiveEventEndpoint(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLiveEventEndpoint(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

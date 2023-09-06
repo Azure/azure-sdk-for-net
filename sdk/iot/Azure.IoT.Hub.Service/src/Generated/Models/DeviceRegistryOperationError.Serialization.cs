@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class DeviceRegistryOperationError
+    public partial class DeviceRegistryOperationError : IUtf8JsonSerializable, IModelJsonSerializable<DeviceRegistryOperationError>
     {
-        internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DeviceRegistryOperationError>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DeviceRegistryOperationError>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceRegistryOperationError>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DeviceId))
+            {
+                writer.WritePropertyName("deviceId"u8);
+                writer.WriteStringValue(DeviceId);
+            }
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode.Value.ToString());
+            }
+            if (Optional.IsDefined(ErrorStatus))
+            {
+                writer.WritePropertyName("errorStatus"u8);
+                writer.WriteStringValue(ErrorStatus);
+            }
+            if (Optional.IsDefined(ModuleId))
+            {
+                writer.WritePropertyName("moduleId"u8);
+                writer.WriteStringValue(ModuleId);
+            }
+            if (Optional.IsDefined(Operation))
+            {
+                writer.WritePropertyName("operation"u8);
+                writer.WriteStringValue(Operation);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +76,7 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<string> errorStatus = default;
             Optional<string> moduleId = default;
             Optional<string> operation = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -54,8 +108,61 @@ namespace Azure.IoT.Hub.Service.Models
                     operation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DeviceRegistryOperationError(deviceId.Value, Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value);
+            return new DeviceRegistryOperationError(deviceId.Value, Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value, rawData);
+        }
+
+        DeviceRegistryOperationError IModelJsonSerializable<DeviceRegistryOperationError>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceRegistryOperationError>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceRegistryOperationError(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DeviceRegistryOperationError>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceRegistryOperationError>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DeviceRegistryOperationError IModelSerializable<DeviceRegistryOperationError>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DeviceRegistryOperationError>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDeviceRegistryOperationError(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DeviceRegistryOperationError"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DeviceRegistryOperationError"/> to convert. </param>
+        public static implicit operator RequestContent(DeviceRegistryOperationError model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DeviceRegistryOperationError"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DeviceRegistryOperationError(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDeviceRegistryOperationError(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceLinuxPatchSettings : IUtf8JsonSerializable
+    public partial class MaintenanceLinuxPatchSettings : IUtf8JsonSerializable, IModelJsonSerializable<MaintenanceLinuxPatchSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MaintenanceLinuxPatchSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MaintenanceLinuxPatchSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceLinuxPatchSettings>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
             {
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceLinuxPatchSettings DeserializeMaintenanceLinuxPatchSettings(JsonElement element)
+        internal static MaintenanceLinuxPatchSettings DeserializeMaintenanceLinuxPatchSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +79,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<IList<string>> packageNameMasksToExclude = default;
             Optional<IList<string>> packageNameMasksToInclude = default;
             Optional<IList<string>> classificationsToInclude = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageNameMasksToExclude"u8))
@@ -102,8 +124,61 @@ namespace Azure.ResourceManager.Maintenance.Models
                     classificationsToInclude = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MaintenanceLinuxPatchSettings(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude));
+            return new MaintenanceLinuxPatchSettings(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude), rawData);
+        }
+
+        MaintenanceLinuxPatchSettings IModelJsonSerializable<MaintenanceLinuxPatchSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceLinuxPatchSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceLinuxPatchSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MaintenanceLinuxPatchSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceLinuxPatchSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MaintenanceLinuxPatchSettings IModelSerializable<MaintenanceLinuxPatchSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MaintenanceLinuxPatchSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMaintenanceLinuxPatchSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MaintenanceLinuxPatchSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MaintenanceLinuxPatchSettings"/> to convert. </param>
+        public static implicit operator RequestContent(MaintenanceLinuxPatchSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MaintenanceLinuxPatchSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMaintenanceLinuxPatchSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,16 +5,60 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class OrchestratorVersionProfile
+    public partial class OrchestratorVersionProfile : IUtf8JsonSerializable, IModelJsonSerializable<OrchestratorVersionProfile>
     {
-        internal static OrchestratorVersionProfile DeserializeOrchestratorVersionProfile(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<OrchestratorVersionProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<OrchestratorVersionProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorVersionProfile>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Upgrades))
+            {
+                writer.WritePropertyName("upgrades"u8);
+                writer.WriteStartArray();
+                foreach (var item in Upgrades)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<OrchestratorProfile>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static OrchestratorVersionProfile DeserializeOrchestratorVersionProfile(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> orchestratorType = default;
             Optional<string> orchestratorVersion = default;
             Optional<IReadOnlyList<OrchestratorProfile>> upgrades = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isPreview"u8))
@@ -68,8 +113,61 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     upgrades = array;
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new OrchestratorVersionProfile(Optional.ToNullable(isPreview), Optional.ToNullable(@default), orchestratorType.Value, orchestratorVersion.Value, Optional.ToList(upgrades));
+            return new OrchestratorVersionProfile(Optional.ToNullable(isPreview), Optional.ToNullable(@default), orchestratorType.Value, orchestratorVersion.Value, Optional.ToList(upgrades), rawData);
+        }
+
+        OrchestratorVersionProfile IModelJsonSerializable<OrchestratorVersionProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorVersionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeOrchestratorVersionProfile(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<OrchestratorVersionProfile>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorVersionProfile>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        OrchestratorVersionProfile IModelSerializable<OrchestratorVersionProfile>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<OrchestratorVersionProfile>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeOrchestratorVersionProfile(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="OrchestratorVersionProfile"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="OrchestratorVersionProfile"/> to convert. </param>
+        public static implicit operator RequestContent(OrchestratorVersionProfile model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="OrchestratorVersionProfile"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator OrchestratorVersionProfile(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeOrchestratorVersionProfile(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

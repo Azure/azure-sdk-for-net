@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The DiagnoseVirtualNetworkResult. </summary>
     public partial class DiagnoseVirtualNetworkResult
     {
-        /// <summary> Initializes a new instance of DiagnoseVirtualNetworkResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnoseVirtualNetworkResult"/>. </summary>
         internal DiagnoseVirtualNetworkResult()
         {
             Findings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiagnoseVirtualNetworkResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnoseVirtualNetworkResult"/>. </summary>
         /// <param name="findings"> The list of network connectivity diagnostic finding. </param>
-        internal DiagnoseVirtualNetworkResult(IReadOnlyList<string> findings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnoseVirtualNetworkResult(IReadOnlyList<string> findings, Dictionary<string, BinaryData> rawData)
         {
             Findings = findings;
+            _rawData = rawData;
         }
 
         /// <summary> The list of network connectivity diagnostic finding. </summary>

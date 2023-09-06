@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The CollectionsList. </summary>
     internal partial class CollectionsList
     {
-        /// <summary> Initializes a new instance of CollectionsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsList"/>. </summary>
         internal CollectionsList()
         {
             Value = new ChangeTrackingList<PrivateStoreCollectionInfoData>();
         }
 
-        /// <summary> Initializes a new instance of CollectionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
-        internal CollectionsList(IReadOnlyList<PrivateStoreCollectionInfoData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsList(IReadOnlyList<PrivateStoreCollectionInfoData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2AcknowledgementConnectionSettings : IUtf8JsonSerializable
+    public partial class AS2AcknowledgementConnectionSettings : IUtf8JsonSerializable, IModelJsonSerializable<AS2AcknowledgementConnectionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AS2AcknowledgementConnectionSettings>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AS2AcknowledgementConnectionSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AS2AcknowledgementConnectionSettings>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("ignoreCertificateNameMismatch"u8);
             writer.WriteBooleanValue(IgnoreCertificateNameMismatch);
@@ -23,11 +31,25 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(KeepHttpConnectionAlive);
             writer.WritePropertyName("unfoldHttpHeaders"u8);
             writer.WriteBooleanValue(UnfoldHttpHeaders);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AS2AcknowledgementConnectionSettings DeserializeAS2AcknowledgementConnectionSettings(JsonElement element)
+        internal static AS2AcknowledgementConnectionSettings DeserializeAS2AcknowledgementConnectionSettings(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool supportHttpStatusCodeContinue = default;
             bool keepHttpConnectionAlive = default;
             bool unfoldHttpHeaders = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ignoreCertificateNameMismatch"u8))
@@ -58,8 +81,61 @@ namespace Azure.ResourceManager.Logic.Models
                     unfoldHttpHeaders = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new AS2AcknowledgementConnectionSettings(ignoreCertificateNameMismatch, supportHttpStatusCodeContinue, keepHttpConnectionAlive, unfoldHttpHeaders);
+            return new AS2AcknowledgementConnectionSettings(ignoreCertificateNameMismatch, supportHttpStatusCodeContinue, keepHttpConnectionAlive, unfoldHttpHeaders, rawData);
+        }
+
+        AS2AcknowledgementConnectionSettings IModelJsonSerializable<AS2AcknowledgementConnectionSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2AcknowledgementConnectionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2AcknowledgementConnectionSettings(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AS2AcknowledgementConnectionSettings>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2AcknowledgementConnectionSettings>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AS2AcknowledgementConnectionSettings IModelSerializable<AS2AcknowledgementConnectionSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AS2AcknowledgementConnectionSettings>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAS2AcknowledgementConnectionSettings(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="AS2AcknowledgementConnectionSettings"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="AS2AcknowledgementConnectionSettings"/> to convert. </param>
+        public static implicit operator RequestContent(AS2AcknowledgementConnectionSettings model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="AS2AcknowledgementConnectionSettings"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator AS2AcknowledgementConnectionSettings(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeAS2AcknowledgementConnectionSettings(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

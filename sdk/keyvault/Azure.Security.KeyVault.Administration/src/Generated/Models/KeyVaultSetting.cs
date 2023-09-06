@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
@@ -13,6 +14,27 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> The Setting. </summary>
     public partial class KeyVaultSetting
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSetting"/>. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="content"> The value of the pool setting. </param>
+        /// <param name="settingType"> The type specifier of the value. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSetting(string name, string content, KeyVaultSettingType? settingType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            Content = content;
+            SettingType = settingType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSetting"/> for deserialization. </summary>
+        internal KeyVaultSetting()
+        {
+        }
+
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Json-serialized array of User subscription quota response. </summary>
     internal partial class IotHubUserSubscriptionQuotaListResult
     {
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuotaListResult"/>. </summary>
         internal IotHubUserSubscriptionQuotaListResult()
         {
             Value = new ChangeTrackingList<IotHubUserSubscriptionQuota>();
         }
 
-        /// <summary> Initializes a new instance of IotHubUserSubscriptionQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuotaListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal IotHubUserSubscriptionQuotaListResult(IReadOnlyList<IotHubUserSubscriptionQuota> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubUserSubscriptionQuotaListResult(IReadOnlyList<IotHubUserSubscriptionQuota> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the value. </summary>

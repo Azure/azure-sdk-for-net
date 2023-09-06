@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment managed api deployment parameters. </summary>
     internal partial class IntegrationServiceEnvironmentManagedApiDeploymentParameters
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiDeploymentParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiDeploymentParameters"/>. </summary>
         public IntegrationServiceEnvironmentManagedApiDeploymentParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiDeploymentParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentManagedApiDeploymentParameters"/>. </summary>
         /// <param name="contentLinkDefinition"> The integration service environment managed api content link for deployment. </param>
-        internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(LogicContentLink contentLinkDefinition)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(LogicContentLink contentLinkDefinition, Dictionary<string, BinaryData> rawData)
         {
             ContentLinkDefinition = contentLinkDefinition;
+            _rawData = rawData;
         }
 
         /// <summary> The integration service environment managed api content link for deployment. </summary>

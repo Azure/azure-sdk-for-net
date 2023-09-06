@@ -6,17 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoScriptData : IUtf8JsonSerializable
+    public partial class KustoScriptData : IUtf8JsonSerializable, IModelJsonSerializable<KustoScriptData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KustoScriptData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KustoScriptData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KustoScriptData>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -46,11 +53,25 @@ namespace Azure.ResourceManager.Kusto
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoScriptData DeserializeKustoScriptData(JsonElement element)
+        internal static KustoScriptData DeserializeKustoScriptData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +86,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<string> forceUpdateTag = default;
             Optional<bool> continueOnErrors = default;
             Optional<KustoProvisioningState> provisioningState = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -145,8 +167,61 @@ namespace Azure.ResourceManager.Kusto
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new KustoScriptData(id, name, type, systemData.Value, scriptUrl.Value, scriptUrlSasToken.Value, scriptContent.Value, forceUpdateTag.Value, Optional.ToNullable(continueOnErrors), Optional.ToNullable(provisioningState));
+            return new KustoScriptData(id, name, type, systemData.Value, scriptUrl.Value, scriptUrlSasToken.Value, scriptContent.Value, forceUpdateTag.Value, Optional.ToNullable(continueOnErrors), Optional.ToNullable(provisioningState), rawData);
+        }
+
+        KustoScriptData IModelJsonSerializable<KustoScriptData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoScriptData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoScriptData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KustoScriptData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoScriptData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KustoScriptData IModelSerializable<KustoScriptData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KustoScriptData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKustoScriptData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KustoScriptData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KustoScriptData"/> to convert. </param>
+        public static implicit operator RequestContent(KustoScriptData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KustoScriptData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KustoScriptData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKustoScriptData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

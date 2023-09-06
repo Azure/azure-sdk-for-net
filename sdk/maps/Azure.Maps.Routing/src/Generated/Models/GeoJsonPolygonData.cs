@@ -15,7 +15,10 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The GeoJsonPolygonData. </summary>
     internal partial class GeoJsonPolygonData
     {
-        /// <summary> Initializes a new instance of GeoJsonPolygonData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonPolygonData(IEnumerable<IList<IList<double>>> coordinates)
@@ -23,6 +26,20 @@ namespace Azure.Maps.Routing.Models
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/>. </summary>
+        /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonPolygonData(IList<IList<IList<double>>> coordinates, Dictionary<string, BinaryData> rawData)
+        {
+            Coordinates = coordinates;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygonData"/> for deserialization. </summary>
+        internal GeoJsonPolygonData()
+        {
         }
 
         /// <summary> Coordinates for the `GeoJson Polygon` geometry type. </summary>

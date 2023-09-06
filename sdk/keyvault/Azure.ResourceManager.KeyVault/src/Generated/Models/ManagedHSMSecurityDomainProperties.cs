@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The security domain properties of the managed hsm. </summary>
     public partial class ManagedHSMSecurityDomainProperties
     {
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         internal ManagedHSMSecurityDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHSMSecurityDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHSMSecurityDomainProperties"/>. </summary>
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
-        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus, string activationStatusMessage, Dictionary<string, BinaryData> rawData)
         {
             ActivationStatus = activationStatus;
             ActivationStatusMessage = activationStatusMessage;
+            _rawData = rawData;
         }
 
         /// <summary> Activation Status. </summary>

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningJobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/> and <see cref="MachineLearningUriFolderJobInput"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownJobInput))]
     public abstract partial class MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningJobInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         protected MachineLearningJobInput()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        internal MachineLearningJobInput(string description, JobInputType jobInputType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningJobInput(string description, JobInputType jobInputType, Dictionary<string, BinaryData> rawData)
         {
             Description = description;
             JobInputType = jobInputType;
+            _rawData = rawData;
         }
 
         /// <summary> Description for the input. </summary>

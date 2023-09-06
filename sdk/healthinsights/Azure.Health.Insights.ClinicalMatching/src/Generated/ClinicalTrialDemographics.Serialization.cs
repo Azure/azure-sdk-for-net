@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class ClinicalTrialDemographics : IUtf8JsonSerializable
+    public partial class ClinicalTrialDemographics : IUtf8JsonSerializable, IModelJsonSerializable<ClinicalTrialDemographics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ClinicalTrialDemographics>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ClinicalTrialDemographics>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AcceptedSex))
             {
@@ -23,17 +31,116 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(AcceptedAgeRange))
             {
                 writer.WritePropertyName("acceptedAgeRange"u8);
-                writer.WriteObjectValue(AcceptedAgeRange);
+                if (AcceptedAgeRange is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<AcceptedAgeRange>)AcceptedAgeRange).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal static ClinicalTrialDemographics DeserializeClinicalTrialDemographics(JsonElement element, ModelSerializerOptions options = default)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ClinicalTrialAcceptedSex> acceptedSex = default;
+            Optional<AcceptedAgeRange> acceptedAgeRange = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("acceptedSex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    acceptedSex = new ClinicalTrialAcceptedSex(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("acceptedAgeRange"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    acceptedAgeRange = AcceptedAgeRange.DeserializeAcceptedAgeRange(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new ClinicalTrialDemographics(Optional.ToNullable(acceptedSex), acceptedAgeRange.Value, rawData);
+        }
+
+        ClinicalTrialDemographics IModelJsonSerializable<ClinicalTrialDemographics>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeClinicalTrialDemographics(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ClinicalTrialDemographics>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ClinicalTrialDemographics IModelSerializable<ClinicalTrialDemographics>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeClinicalTrialDemographics(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ClinicalTrialDemographics"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ClinicalTrialDemographics"/> to convert. </param>
+        public static implicit operator RequestContent(ClinicalTrialDemographics model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ClinicalTrialDemographics"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ClinicalTrialDemographics(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeClinicalTrialDemographics(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

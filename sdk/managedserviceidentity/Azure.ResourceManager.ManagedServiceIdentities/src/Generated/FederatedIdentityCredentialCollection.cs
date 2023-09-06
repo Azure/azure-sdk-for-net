@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _federatedIdentityCredentialRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _federatedIdentityCredentialRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

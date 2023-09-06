@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    public partial class ScopeAssignmentData : IUtf8JsonSerializable
+    public partial class ScopeAssignmentData : IUtf8JsonSerializable, IModelJsonSerializable<ScopeAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScopeAssignmentData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScopeAssignmentData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeAssignmentData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -31,11 +38,25 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WriteStringValue(AssignedManagedNetwork);
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScopeAssignmentData DeserializeScopeAssignmentData(JsonElement element)
+        internal static ScopeAssignmentData DeserializeScopeAssignmentData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             Optional<ProvisioningState> provisioningState = default;
             Optional<ETag> etag = default;
             Optional<string> assignedManagedNetwork = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -118,8 +140,61 @@ namespace Azure.ResourceManager.ManagedNetwork
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScopeAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), assignedManagedNetwork.Value, Optional.ToNullable(location));
+            return new ScopeAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), assignedManagedNetwork.Value, Optional.ToNullable(location), rawData);
+        }
+
+        ScopeAssignmentData IModelJsonSerializable<ScopeAssignmentData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeAssignmentData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScopeAssignmentData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScopeAssignmentData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeAssignmentData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScopeAssignmentData IModelSerializable<ScopeAssignmentData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScopeAssignmentData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScopeAssignmentData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScopeAssignmentData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScopeAssignmentData"/> to convert. </param>
+        public static implicit operator RequestContent(ScopeAssignmentData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScopeAssignmentData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScopeAssignmentData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScopeAssignmentData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

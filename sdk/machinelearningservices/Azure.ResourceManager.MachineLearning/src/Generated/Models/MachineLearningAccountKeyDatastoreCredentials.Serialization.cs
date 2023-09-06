@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAccountKeyDatastoreCredentials : IUtf8JsonSerializable
+    public partial class MachineLearningAccountKeyDatastoreCredentials : IUtf8JsonSerializable, IModelJsonSerializable<MachineLearningAccountKeyDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MachineLearningAccountKeyDatastoreCredentials>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MachineLearningAccountKeyDatastoreCredentials>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAccountKeyDatastoreCredentials>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            if (Secrets is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<MachineLearningAccountKeyDatastoreSecrets>)Secrets).Serialize(writer, options);
+            }
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAccountKeyDatastoreCredentials DeserializeMachineLearningAccountKeyDatastoreCredentials(JsonElement element)
+        internal static MachineLearningAccountKeyDatastoreCredentials DeserializeMachineLearningAccountKeyDatastoreCredentials(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MachineLearningAccountKeyDatastoreSecrets secrets = default;
             CredentialsType credentialsType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     credentialsType = new CredentialsType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MachineLearningAccountKeyDatastoreCredentials(credentialsType, secrets);
+            return new MachineLearningAccountKeyDatastoreCredentials(credentialsType, secrets, rawData);
+        }
+
+        MachineLearningAccountKeyDatastoreCredentials IModelJsonSerializable<MachineLearningAccountKeyDatastoreCredentials>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAccountKeyDatastoreCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAccountKeyDatastoreCredentials(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MachineLearningAccountKeyDatastoreCredentials>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAccountKeyDatastoreCredentials>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MachineLearningAccountKeyDatastoreCredentials IModelSerializable<MachineLearningAccountKeyDatastoreCredentials>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MachineLearningAccountKeyDatastoreCredentials>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMachineLearningAccountKeyDatastoreCredentials(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MachineLearningAccountKeyDatastoreCredentials"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MachineLearningAccountKeyDatastoreCredentials"/> to convert. </param>
+        public static implicit operator RequestContent(MachineLearningAccountKeyDatastoreCredentials model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MachineLearningAccountKeyDatastoreCredentials"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MachineLearningAccountKeyDatastoreCredentials(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMachineLearningAccountKeyDatastoreCredentials(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

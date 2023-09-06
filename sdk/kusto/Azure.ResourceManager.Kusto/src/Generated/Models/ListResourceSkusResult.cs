@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> List of available SKUs for a Kusto Cluster. </summary>
     internal partial class ListResourceSkusResult
     {
-        /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListResourceSkusResult"/>. </summary>
         internal ListResourceSkusResult()
         {
             Value = new ChangeTrackingList<KustoAvailableSkuDetails>();
         }
 
-        /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListResourceSkusResult"/>. </summary>
         /// <param name="value"> The collection of available SKUs for an existing resource. </param>
-        internal ListResourceSkusResult(IReadOnlyList<KustoAvailableSkuDetails> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListResourceSkusResult(IReadOnlyList<KustoAvailableSkuDetails> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The collection of available SKUs for an existing resource. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Information about updates available for system services in a cluster. </summary>
     public partial class CheckSystemServicesUpdatesAvailableResponse
     {
-        /// <summary> Initializes a new instance of CheckSystemServicesUpdatesAvailableResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckSystemServicesUpdatesAvailableResponse"/>. </summary>
         internal CheckSystemServicesUpdatesAvailableResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckSystemServicesUpdatesAvailableResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckSystemServicesUpdatesAvailableResponse"/>. </summary>
         /// <param name="updatesAvailable"> Yes if updates are available for the system services, No if not. </param>
-        internal CheckSystemServicesUpdatesAvailableResponse(UpdatesAvailable? updatesAvailable)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckSystemServicesUpdatesAvailableResponse(UpdatesAvailable? updatesAvailable, Dictionary<string, BinaryData> rawData)
         {
             UpdatesAvailable = updatesAvailable;
+            _rawData = rawData;
         }
 
         /// <summary> Yes if updates are available for the system services, No if not. </summary>

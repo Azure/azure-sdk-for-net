@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaAssetAssetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaAssetResource(Client, MediaAssetData.DeserializeMediaAssetData(e)), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaAssetResource(Client, MediaAssetData.DeserializeMediaAssetData(e)), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaAssetAssetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaAssetResource(Client, MediaAssetData.DeserializeMediaAssetData(e)), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaAssetResource(Client, MediaAssetData.DeserializeMediaAssetData(e)), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

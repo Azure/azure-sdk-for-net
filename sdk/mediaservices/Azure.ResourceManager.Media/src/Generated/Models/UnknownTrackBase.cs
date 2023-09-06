@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownTrackBase. </summary>
     internal partial class UnknownTrackBase : MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of UnknownTrackBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTrackBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownTrackBase(string odataType) : base(odataType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTrackBase(string odataType, Dictionary<string, BinaryData> rawData) : base(odataType, rawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTrackBase"/> for deserialization. </summary>
+        internal UnknownTrackBase()
+        {
         }
     }
 }

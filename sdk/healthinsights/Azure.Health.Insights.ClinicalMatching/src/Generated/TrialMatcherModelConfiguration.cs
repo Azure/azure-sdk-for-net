@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,6 +14,9 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Configuration affecting the Trial Matcher model's inference. </summary>
     public partial class TrialMatcherModelConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
         /// <summary> Initializes a new instance of TrialMatcherModelConfiguration. </summary>
         /// <param name="clinicalTrials">
         /// The clinical trials that the patient(s) should be matched to. &lt;br /&gt;The trial
@@ -37,11 +41,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// filters to known clinical trial registries. In case both are given, the
         /// resulting trial set is a union of the two sets.
         /// </param>
-        internal TrialMatcherModelConfiguration(bool? verbose, bool? includeEvidence, ClinicalTrials clinicalTrials)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherModelConfiguration(bool? verbose, bool? includeEvidence, ClinicalTrials clinicalTrials, Dictionary<string, BinaryData> rawData)
         {
             Verbose = verbose;
             IncludeEvidence = includeEvidence;
             ClinicalTrials = clinicalTrials;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherModelConfiguration"/> for deserialization. </summary>
+        internal TrialMatcherModelConfiguration()
+        {
         }
 
         /// <summary> An indication whether the model should produce verbose output. </summary>

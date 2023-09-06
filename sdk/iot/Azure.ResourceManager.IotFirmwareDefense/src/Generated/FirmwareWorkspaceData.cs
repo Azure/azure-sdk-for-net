@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// </summary>
     public partial class FirmwareWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FirmwareWorkspaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FirmwareWorkspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal FirmwareWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareWorkspaceData"/> for deserialization. </summary>
+        internal FirmwareWorkspaceData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

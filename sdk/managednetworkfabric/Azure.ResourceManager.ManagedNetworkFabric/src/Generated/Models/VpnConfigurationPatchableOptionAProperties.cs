@@ -5,17 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties. </summary>
     public partial class VpnConfigurationPatchableOptionAProperties : OptionAProperties
     {
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
         public VpnConfigurationPatchableOptionAProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
@@ -24,7 +27,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal VpnConfigurationPatchableOptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(mtu, vlanId, peerAsn, bfdConfiguration)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnConfigurationPatchableOptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, Dictionary<string, BinaryData> rawData) : base(mtu, vlanId, peerAsn, bfdConfiguration, rawData)
         {
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             PrimaryIPv6Prefix = primaryIPv6Prefix;

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Additional features specs like Arc Agent Onboarding. </summary>
     internal partial class ProvisionedClustersCommonPropertiesFeatures
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesFeatures. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesFeatures"/>. </summary>
         public ProvisionedClustersCommonPropertiesFeatures()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersCommonPropertiesFeatures"/>. </summary>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
-        internal ProvisionedClustersCommonPropertiesFeatures(ArcAgentProfile arcAgentProfile)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClustersCommonPropertiesFeatures(ArcAgentProfile arcAgentProfile, Dictionary<string, BinaryData> rawData)
         {
             ArcAgentProfile = arcAgentProfile;
+            _rawData = rawData;
         }
 
         /// <summary> Arc agentry configuration for the provisioned cluster. </summary>

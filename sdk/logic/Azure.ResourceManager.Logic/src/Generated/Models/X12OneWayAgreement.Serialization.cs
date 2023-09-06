@@ -5,27 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12OneWayAgreement : IUtf8JsonSerializable
+    public partial class X12OneWayAgreement : IUtf8JsonSerializable, IModelJsonSerializable<X12OneWayAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<X12OneWayAgreement>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<X12OneWayAgreement>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<X12OneWayAgreement>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("senderBusinessIdentity"u8);
-            writer.WriteObjectValue(SenderBusinessIdentity);
+            if (SenderBusinessIdentity is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountBusinessIdentity>)SenderBusinessIdentity).Serialize(writer, options);
+            }
             writer.WritePropertyName("receiverBusinessIdentity"u8);
-            writer.WriteObjectValue(ReceiverBusinessIdentity);
+            if (ReceiverBusinessIdentity is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<IntegrationAccountBusinessIdentity>)ReceiverBusinessIdentity).Serialize(writer, options);
+            }
             writer.WritePropertyName("protocolSettings"u8);
-            writer.WriteObjectValue(ProtocolSettings);
+            if (ProtocolSettings is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<X12ProtocolSettings>)ProtocolSettings).Serialize(writer, options);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12OneWayAgreement DeserializeX12OneWayAgreement(JsonElement element)
+        internal static X12OneWayAgreement DeserializeX12OneWayAgreement(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationAccountBusinessIdentity senderBusinessIdentity = default;
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             X12ProtocolSettings protocolSettings = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("senderBusinessIdentity"u8))
@@ -50,8 +94,61 @@ namespace Azure.ResourceManager.Logic.Models
                     protocolSettings = X12ProtocolSettings.DeserializeX12ProtocolSettings(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new X12OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings);
+            return new X12OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings, rawData);
+        }
+
+        X12OneWayAgreement IModelJsonSerializable<X12OneWayAgreement>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12OneWayAgreement>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12OneWayAgreement(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<X12OneWayAgreement>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12OneWayAgreement>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        X12OneWayAgreement IModelSerializable<X12OneWayAgreement>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<X12OneWayAgreement>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeX12OneWayAgreement(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="X12OneWayAgreement"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="X12OneWayAgreement"/> to convert. </param>
+        public static implicit operator RequestContent(X12OneWayAgreement model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="X12OneWayAgreement"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator X12OneWayAgreement(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeX12OneWayAgreement(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

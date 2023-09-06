@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful Search Polygon call. </summary>
     public partial class PolygonResult
     {
-        /// <summary> Initializes a new instance of PolygonResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolygonResult"/>. </summary>
         internal PolygonResult()
         {
             Polygons = new ChangeTrackingList<PolygonObject>();
         }
 
-        /// <summary> Initializes a new instance of PolygonResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolygonResult"/>. </summary>
         /// <param name="polygons"> Results array. </param>
-        internal PolygonResult(IReadOnlyList<PolygonObject> polygons)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolygonResult(IReadOnlyList<PolygonObject> polygons, Dictionary<string, BinaryData> rawData)
         {
             Polygons = polygons;
+            _rawData = rawData;
         }
 
         /// <summary> Results array. </summary>

@@ -6,17 +6,92 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.ManagementPartner.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementPartner
 {
-    public partial class PartnerResponseData
+    public partial class PartnerResponseData : IUtf8JsonSerializable, IModelJsonSerializable<PartnerResponseData>
     {
-        internal static PartnerResponseData DeserializePartnerResponseData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<PartnerResponseData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<PartnerResponseData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerResponseData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteNumberValue(ETag.Value);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PartnerId))
+            {
+                writer.WritePropertyName("partnerId"u8);
+                writer.WriteStringValue(PartnerId);
+            }
+            if (Optional.IsDefined(PartnerName))
+            {
+                writer.WritePropertyName("partnerName"u8);
+                writer.WriteStringValue(PartnerName);
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedTime"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PartnerResponseData DeserializePartnerResponseData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +109,7 @@ namespace Azure.ResourceManager.ManagementPartner
             Optional<DateTimeOffset> updatedTime = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<ManagementPartnerState> state = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -141,8 +217,61 @@ namespace Azure.ResourceManager.ManagementPartner
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new PartnerResponseData(id, name, type, systemData.Value, Optional.ToNullable(etag), partnerId.Value, partnerName.Value, Optional.ToNullable(tenantId), objectId.Value, Optional.ToNullable(version), Optional.ToNullable(updatedTime), Optional.ToNullable(createdTime), Optional.ToNullable(state));
+            return new PartnerResponseData(id, name, type, systemData.Value, Optional.ToNullable(etag), partnerId.Value, partnerName.Value, Optional.ToNullable(tenantId), objectId.Value, Optional.ToNullable(version), Optional.ToNullable(updatedTime), Optional.ToNullable(createdTime), Optional.ToNullable(state), rawData);
+        }
+
+        PartnerResponseData IModelJsonSerializable<PartnerResponseData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerResponseData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerResponseData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<PartnerResponseData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerResponseData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        PartnerResponseData IModelSerializable<PartnerResponseData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<PartnerResponseData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializePartnerResponseData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="PartnerResponseData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="PartnerResponseData"/> to convert. </param>
+        public static implicit operator RequestContent(PartnerResponseData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="PartnerResponseData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator PartnerResponseData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializePartnerResponseData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

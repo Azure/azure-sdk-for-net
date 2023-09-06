@@ -5,18 +5,25 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    public partial class LoadTestingResourceData : IUtf8JsonSerializable
+    public partial class LoadTestingResourceData : IUtf8JsonSerializable, IModelJsonSerializable<LoadTestingResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<LoadTestingResourceData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<LoadTestingResourceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourceData>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -49,7 +56,14 @@ namespace Azure.ResourceManager.LoadTesting
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption);
+                    if (Encryption is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<LoadTestingCmkEncryptionProperties>)Encryption).Serialize(writer, options);
+                    }
                 }
                 else
                 {
@@ -57,11 +71,25 @@ namespace Azure.ResourceManager.LoadTesting
                 }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadTestingResourceData DeserializeLoadTestingResourceData(JsonElement element)
+        internal static LoadTestingResourceData DeserializeLoadTestingResourceData(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +105,7 @@ namespace Azure.ResourceManager.LoadTesting
             Optional<LoadTestingProvisioningState> provisioningState = default;
             Optional<string> dataPlaneUri = default;
             Optional<LoadTestingCmkEncryptionProperties> encryption = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -173,8 +202,61 @@ namespace Azure.ResourceManager.LoadTesting
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new LoadTestingResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value);
+            return new LoadTestingResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, description.Value, Optional.ToNullable(provisioningState), dataPlaneUri.Value, encryption.Value, rawData);
+        }
+
+        LoadTestingResourceData IModelJsonSerializable<LoadTestingResourceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadTestingResourceData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<LoadTestingResourceData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourceData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        LoadTestingResourceData IModelSerializable<LoadTestingResourceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<LoadTestingResourceData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeLoadTestingResourceData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="LoadTestingResourceData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="LoadTestingResourceData"/> to convert. </param>
+        public static implicit operator RequestContent(LoadTestingResourceData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="LoadTestingResourceData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator LoadTestingResourceData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeLoadTestingResourceData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

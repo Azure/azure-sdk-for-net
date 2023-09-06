@@ -5,22 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class SearchInsideGeometryRequest : IUtf8JsonSerializable
+    internal partial class SearchInsideGeometryRequest : IUtf8JsonSerializable, IModelJsonSerializable<SearchInsideGeometryRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SearchInsideGeometryRequest>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<SearchInsideGeometryRequest>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInsideGeometryRequest>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Geometry))
             {
                 writer.WritePropertyName("geometry"u8);
-                writer.WriteObjectValue(Geometry);
+                if (Geometry is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<GeoJsonObject>)Geometry).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
+        }
+
+        internal static SearchInsideGeometryRequest DeserializeSearchInsideGeometryRequest(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<GeoJsonObject> geometry = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("geometry"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    geometry = GeoJsonObject.DeserializeGeoJsonObject(property.Value);
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new SearchInsideGeometryRequest(geometry.Value, rawData);
+        }
+
+        SearchInsideGeometryRequest IModelJsonSerializable<SearchInsideGeometryRequest>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInsideGeometryRequest>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchInsideGeometryRequest(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<SearchInsideGeometryRequest>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInsideGeometryRequest>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        SearchInsideGeometryRequest IModelSerializable<SearchInsideGeometryRequest>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<SearchInsideGeometryRequest>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSearchInsideGeometryRequest(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="SearchInsideGeometryRequest"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="SearchInsideGeometryRequest"/> to convert. </param>
+        public static implicit operator RequestContent(SearchInsideGeometryRequest model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="SearchInsideGeometryRequest"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator SearchInsideGeometryRequest(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeSearchInsideGeometryRequest(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

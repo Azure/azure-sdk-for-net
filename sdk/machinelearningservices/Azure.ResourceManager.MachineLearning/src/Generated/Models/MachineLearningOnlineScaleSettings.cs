@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -12,18 +16,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownOnlineScaleSettings))]
     public abstract partial class MachineLearningOnlineScaleSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningOnlineScaleSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineScaleSettings"/>. </summary>
         protected MachineLearningOnlineScaleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningOnlineScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineScaleSettings"/>. </summary>
         /// <param name="scaleType"> [Required] Type of deployment scaling algorithm. </param>
-        internal MachineLearningOnlineScaleSettings(ScaleType scaleType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningOnlineScaleSettings(ScaleType scaleType, Dictionary<string, BinaryData> rawData)
         {
             ScaleType = scaleType;
+            _rawData = rawData;
         }
 
         /// <summary> [Required] Type of deployment scaling algorithm. </summary>

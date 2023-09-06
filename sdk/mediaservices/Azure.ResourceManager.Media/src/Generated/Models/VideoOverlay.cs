@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes the properties of a video overlay. </summary>
     public partial class VideoOverlay : MediaOverlayBase
     {
-        /// <summary> Initializes a new instance of VideoOverlay. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoOverlay"/>. </summary>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
         public VideoOverlay(string inputLabel) : base(inputLabel)
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.VideoOverlay";
         }
 
-        /// <summary> Initializes a new instance of VideoOverlay. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoOverlay"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <param name="start"> The start position, with reference to the input video, at which the overlay starts. The value should be in ISO 8601 format. For example, PT05S to start the overlay at 5 seconds into the input video. If not specified the overlay starts from the beginning of the input video. </param>
@@ -34,12 +35,18 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="position"> The location in the input video where the overlay is applied. </param>
         /// <param name="opacity"> The opacity of the overlay. This is a value in the range [0 - 1.0]. Default is 1.0 which mean the overlay is opaque. </param>
         /// <param name="cropRectangle"> An optional rectangular window used to crop the overlay image or video. </param>
-        internal VideoOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, RectangularWindow position, double? opacity, RectangularWindow cropRectangle) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal VideoOverlay(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel, RectangularWindow position, double? opacity, RectangularWindow cropRectangle, Dictionary<string, BinaryData> rawData) : base(odataType, inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel, rawData)
         {
             Position = position;
             Opacity = opacity;
             CropRectangle = cropRectangle;
             OdataType = odataType ?? "#Microsoft.Media.VideoOverlay";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VideoOverlay"/> for deserialization. </summary>
+        internal VideoOverlay()
+        {
         }
 
         /// <summary> The location in the input video where the overlay is applied. </summary>

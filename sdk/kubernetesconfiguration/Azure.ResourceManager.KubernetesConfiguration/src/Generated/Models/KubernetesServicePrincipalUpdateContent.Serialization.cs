@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesServicePrincipalUpdateContent : IUtf8JsonSerializable
+    public partial class KubernetesServicePrincipalUpdateContent : IUtf8JsonSerializable, IModelJsonSerializable<KubernetesServicePrincipalUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<KubernetesServicePrincipalUpdateContent>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<KubernetesServicePrincipalUpdateContent>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesServicePrincipalUpdateContent>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -80,7 +88,152 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static KubernetesServicePrincipalUpdateContent DeserializeKubernetesServicePrincipalUpdateContent(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid?> clientId = default;
+            Optional<Guid?> tenantId = default;
+            Optional<string> clientSecret = default;
+            Optional<string> clientCertificate = default;
+            Optional<string> clientCertificatePassword = default;
+            Optional<bool> clientCertificateSendChain = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("clientId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        clientId = null;
+                        continue;
+                    }
+                    clientId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tenantId = null;
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("clientSecret"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        clientSecret = null;
+                        continue;
+                    }
+                    clientSecret = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientCertificate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        clientCertificate = null;
+                        continue;
+                    }
+                    clientCertificate = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientCertificatePassword"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        clientCertificatePassword = null;
+                        continue;
+                    }
+                    clientCertificatePassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("clientCertificateSendChain"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientCertificateSendChain = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new KubernetesServicePrincipalUpdateContent(Optional.ToNullable(clientId), Optional.ToNullable(tenantId), clientSecret.Value, clientCertificate.Value, clientCertificatePassword.Value, Optional.ToNullable(clientCertificateSendChain), rawData);
+        }
+
+        KubernetesServicePrincipalUpdateContent IModelJsonSerializable<KubernetesServicePrincipalUpdateContent>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesServicePrincipalUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesServicePrincipalUpdateContent(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<KubernetesServicePrincipalUpdateContent>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesServicePrincipalUpdateContent>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        KubernetesServicePrincipalUpdateContent IModelSerializable<KubernetesServicePrincipalUpdateContent>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<KubernetesServicePrincipalUpdateContent>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeKubernetesServicePrincipalUpdateContent(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="KubernetesServicePrincipalUpdateContent"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="KubernetesServicePrincipalUpdateContent"/> to convert. </param>
+        public static implicit operator RequestContent(KubernetesServicePrincipalUpdateContent model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="KubernetesServicePrincipalUpdateContent"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator KubernetesServicePrincipalUpdateContent(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeKubernetesServicePrincipalUpdateContent(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

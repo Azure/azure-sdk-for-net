@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database principals operation response. </summary>
     internal partial class FollowerDatabaseListResult
     {
-        /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FollowerDatabaseListResult"/>. </summary>
         internal FollowerDatabaseListResult()
         {
             Value = new ChangeTrackingList<KustoFollowerDatabaseDefinition>();
         }
 
-        /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FollowerDatabaseListResult"/>. </summary>
         /// <param name="value"> The list of follower database result. </param>
-        internal FollowerDatabaseListResult(IReadOnlyList<KustoFollowerDatabaseDefinition> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FollowerDatabaseListResult(IReadOnlyList<KustoFollowerDatabaseDefinition> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The list of follower database result. </summary>

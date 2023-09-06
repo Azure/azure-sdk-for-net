@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -12,20 +16,26 @@ namespace Azure.ResourceManager.Media.Models
     /// Please note <see cref="MediaCodecBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AacAudio"/>, <see cref="MediaAudioBase"/>, <see cref="CodecCopyAudio"/>, <see cref="CodecCopyVideo"/>, <see cref="DDAudio"/>, <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="MediaImageBase"/>, <see cref="JpgImage"/>, <see cref="PngImage"/> and <see cref="MediaVideoBase"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownCodec))]
     public abstract partial class MediaCodecBase
     {
-        /// <summary> Initializes a new instance of MediaCodecBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaCodecBase"/>. </summary>
         protected MediaCodecBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaCodecBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaCodecBase"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
-        internal MediaCodecBase(string odataType, string label)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaCodecBase(string odataType, string label, Dictionary<string, BinaryData> rawData)
         {
             OdataType = odataType;
             Label = label;
+            _rawData = rawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

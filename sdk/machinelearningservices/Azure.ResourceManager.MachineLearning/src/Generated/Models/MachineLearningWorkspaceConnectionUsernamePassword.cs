@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceConnectionUsernamePassword. </summary>
     public partial class MachineLearningWorkspaceConnectionUsernamePassword
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionUsernamePassword"/>. </summary>
         public MachineLearningWorkspaceConnectionUsernamePassword()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionUsernamePassword. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionUsernamePassword"/>. </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        internal MachineLearningWorkspaceConnectionUsernamePassword(string username, string password)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceConnectionUsernamePassword(string username, string password, Dictionary<string, BinaryData> rawData)
         {
             Username = username;
             Password = password;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the username. </summary>

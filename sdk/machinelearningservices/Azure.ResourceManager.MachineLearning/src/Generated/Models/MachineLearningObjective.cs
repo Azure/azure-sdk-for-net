@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Optimization objective. </summary>
     public partial class MachineLearningObjective
     {
-        /// <summary> Initializes a new instance of MachineLearningObjective. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/>. </summary>
         /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             Goal = goal;
             PrimaryMetric = primaryMetric;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/>. </summary>
+        /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
+        /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningObjective(MachineLearningGoal goal, string primaryMetric, Dictionary<string, BinaryData> rawData)
+        {
+            Goal = goal;
+            PrimaryMetric = primaryMetric;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/> for deserialization. </summary>
+        internal MachineLearningObjective()
+        {
         }
 
         /// <summary> [Required] Defines supported metric goals for hyperparameter tuning. </summary>
