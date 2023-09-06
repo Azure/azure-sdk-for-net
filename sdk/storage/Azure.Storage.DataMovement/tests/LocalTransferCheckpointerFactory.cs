@@ -43,8 +43,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption _testDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption _testPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType _testRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal static readonly DataTransferStatus _testJobStatus = new DataTransferStatusInternal(DataTransferStatus.TransferState.Queued, false, false);
-        internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatusInternal(DataTransferStatus.TransferState.Queued, false, false);
+        internal static readonly DataTransferStatus _testJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
 
         private string _checkpointerPath;
 

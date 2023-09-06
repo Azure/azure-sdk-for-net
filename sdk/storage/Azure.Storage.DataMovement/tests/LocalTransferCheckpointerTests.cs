@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class LocalTransferCheckpointerTests : DataMovementTestBase
     {
-        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Completed, false, false);
+        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
 
         public LocalTransferCheckpointerTests(bool async)
             : base(async, null)

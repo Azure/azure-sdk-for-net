@@ -834,7 +834,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // AtomicJobStatus.State
             byte atomicJobStatusByte = reader.ReadByte();
-            DataTransferStatus.TransferState jobStatusState = (DataTransferStatus.TransferState)atomicJobStatusByte;
+            DataTransferState jobStatusState = (DataTransferState)atomicJobStatusByte;
 
             // AtomicJobStatus.HasFailedItems
             bool jobStatusHasFailed = Convert.ToBoolean(reader.ReadByte());
@@ -844,7 +844,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // AtomicPartStatus.State
             byte atomicPartStatusByte = reader.ReadByte();
-            DataTransferStatus.TransferState partStatusState = (DataTransferStatus.TransferState)atomicPartStatusByte;
+            DataTransferState partStatusState = (DataTransferState)atomicPartStatusByte;
 
             // AtomicPartStatus.HasFailedItems
             bool partStatusHasFailed = Convert.ToBoolean(reader.ReadByte());

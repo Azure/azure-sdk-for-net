@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
-            _dataTransfer.TransferStatus.OnTransferStateChange(DataTransferStatus.TransferState.Queued);
+            _dataTransfer.TransferStatus.TrySetTransferStateChange(DataTransferState.Queued);
             _errorMode = errorHandling;
             _checkpointer = checkPointer;
             _creationPreference = creationPreference;
@@ -268,7 +268,7 @@ namespace Azure.Storage.DataMovement
         {
             if (!_dataTransfer._state.CancellationTokenSource.IsCancellationRequested)
             {
-                await OnJobStateChangedAsync(DataTransferStatus.TransferState.Stopping).ConfigureAwait(false);
+                await OnJobStateChangedAsync(DataTransferState.Stopping).ConfigureAwait(false);
                 _dataTransfer._state.TriggerCancellation();
             }
         }
@@ -313,17 +313,17 @@ namespace Azure.Storage.DataMovement
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
             DataTransferStatus jobPartStatus = args.TransferStatus;
-            DataTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
+            DataTransferState jobState = _dataTransfer._state.GetTransferStatus().State;
 
             // Keep track of paused, failed, and skipped which we will use to determine final job status
             // Since this is each Job Part coming in, the state of skipped or failed is mutually exclusive.
-            if (jobPartStatus.State == DataTransferStatus.TransferState.Paused)
+            if (jobPartStatus.State == DataTransferState.Paused)
             {
                 _jobPartPaused = true;
             }
             else if (jobPartStatus.HasFailedItems)
             {
-                if (_dataTransfer._state.TryOnFailedItemsState())
+                if (_dataTransfer._state.TrySetFailedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -331,7 +331,7 @@ namespace Azure.Storage.DataMovement
             }
             else if (jobPartStatus.HasSkippedItems)
             {
-                if (_dataTransfer._state.TryOnSkippedItemsState())
+                if (_dataTransfer._state.TrySetSkippedItemsState())
                 {
                     await SetCheckpointerStatus().ConfigureAwait(false);
                     await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -341,19 +341,19 @@ namespace Azure.Storage.DataMovement
             // Cancel the entire job if one job part fails and StopOnFailure is set
             if (_errorMode == DataTransferErrorMode.StopOnAnyFailure &&
                 jobPartStatus.HasFailedItems &&
-                jobStatus.State != DataTransferStatus.TransferState.Stopping &&
-                jobStatus.State != DataTransferStatus.TransferState.Completed)
+                jobState != DataTransferState.Stopping &&
+                jobState != DataTransferState.Completed)
             {
                 await TriggerJobCancellationAsync().ConfigureAwait(false);
-                jobStatus = _dataTransfer._state.GetTransferStatus();
+                jobState = _dataTransfer._state.GetTransferStatus().State;
             }
 
-            if ((jobPartStatus.State == DataTransferStatus.TransferState.Paused ||
-                 jobPartStatus.State == DataTransferStatus.TransferState.Completed)
-                && (jobStatus.State == DataTransferStatus.TransferState.Queued ||
-                    jobStatus.State == DataTransferStatus.TransferState.InProgress ||
-                    jobStatus.State == DataTransferStatus.TransferState.Pausing ||
-                    jobStatus.State == DataTransferStatus.TransferState.Stopping))
+            if ((jobPartStatus.State == DataTransferState.Paused ||
+                 jobPartStatus.State == DataTransferState.Completed)
+                && (jobState == DataTransferState.Queued ||
+                    jobState == DataTransferState.InProgress ||
+                    jobState == DataTransferState.Pausing ||
+                    jobState == DataTransferState.Stopping))
             {
                 Interlocked.Decrement(ref _pendingJobParts);
 
@@ -364,13 +364,13 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        public async Task OnJobStateChangedAsync(DataTransferStatus.TransferState state)
+        public async Task OnJobStateChangedAsync(DataTransferState state)
         {
             if (_dataTransfer._state.TrySetTransferState(state))
             {
                 // If we are in a final state, dispose the JobPartEvent handlers
-                if (state == DataTransferStatus.TransferState.Completed ||
-                    state == DataTransferStatus.TransferState.Paused)
+                if (state == DataTransferState.Completed ||
+                    state == DataTransferState.Paused)
                 {
                     DisposeHandlers();
                 }
@@ -407,17 +407,17 @@ namespace Azure.Storage.DataMovement
         {
             // If there were no job parts enumerated and we haven't already aborted/completed the job.
             if (_jobParts.Count == 0 &&
-                _dataTransfer.TransferStatus.State != DataTransferStatus.TransferState.Paused &&
-                _dataTransfer.TransferStatus.State != DataTransferStatus.TransferState.Completed)
+                _dataTransfer.TransferStatus.State != DataTransferState.Paused &&
+                _dataTransfer.TransferStatus.State != DataTransferState.Completed)
             {
-                if (_dataTransfer.TransferStatus.State == DataTransferStatus.TransferState.Pausing)
+                if (_dataTransfer.TransferStatus.State == DataTransferState.Pausing)
                 {
                     // If we paused before we were able to list, set the status properly.
-                    await OnJobStateChangedAsync(DataTransferStatus.TransferState.Paused).ConfigureAwait(false);
+                    await OnJobStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
                 }
                 else
                 {
-                    await OnJobStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                    await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
             }
             await CheckAndUpdateStatusAsync().ConfigureAwait(false);
@@ -429,13 +429,13 @@ namespace Azure.Storage.DataMovement
             // This is in the case that we weren't able to begin listing any job parts yet.
             if (_jobParts.Count == 0)
             {
-                if (_dataTransfer.TransferStatus.State == DataTransferStatus.TransferState.Pausing)
+                if (_dataTransfer.TransferStatus.State == DataTransferState.Pausing)
                 {
-                    await OnJobStateChangedAsync(DataTransferStatus.TransferState.Paused).ConfigureAwait(false);
+                    await OnJobStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
                 }
-                else if (_dataTransfer.TransferStatus.State == DataTransferStatus.TransferState.Stopping)
+                else if (_dataTransfer.TransferStatus.State == DataTransferState.Stopping)
                 {
-                    await OnJobStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                    await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
                 return;
             }
@@ -445,11 +445,11 @@ namespace Azure.Storage.DataMovement
             {
                 if (_jobPartPaused)
                 {
-                    await OnJobStateChangedAsync(DataTransferStatus.TransferState.Paused).ConfigureAwait(false);
+                    await OnJobStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
                 }
                 else
                 {
-                    await OnJobStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                    await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
             }
         }
@@ -460,7 +460,7 @@ namespace Azure.Storage.DataMovement
 
             // Job parts can come from resuming a transfer and therefore may already be complete
             DataTransferStatus status = jobPart.JobPartStatus;
-            if (status.State != DataTransferStatus.TransferState.Completed)
+            if (status.State != DataTransferState.Completed)
             {
                 Interlocked.Increment(ref _pendingJobParts);
             }

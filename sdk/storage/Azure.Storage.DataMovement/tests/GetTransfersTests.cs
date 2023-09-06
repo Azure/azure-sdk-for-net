@@ -14,13 +14,13 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public class GetTransfersTests
     {
-        private static DataTransferStatus QueuedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Queued, false, false);
-        private static DataTransferStatus InProgressStatus => new DataTransferStatus(DataTransferStatus.TransferState.InProgress, false, false);
-        private static DataTransferStatus PausedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Paused, false, false);
-        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Completed, false, false);
-        private static DataTransferStatus FailedCompletedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Completed, true, false);
-        private static DataTransferStatus SkippedCompletedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Completed, true, false);
-        private static DataTransferStatus FailedSkippedCompletedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Completed, true, false);
+        private static DataTransferStatus QueuedStatus => new DataTransferStatus(DataTransferState.Queued, false, false);
+        private static DataTransferStatus InProgressStatus => new DataTransferStatus(DataTransferState.InProgress, false, false);
+        private static DataTransferStatus PausedStatus => new DataTransferStatus(DataTransferState.Paused, false, false);
+        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
+        private static DataTransferStatus FailedCompletedStatus => new DataTransferStatus(DataTransferState.Completed, true, false);
+        private static DataTransferStatus SkippedCompletedStatus => new DataTransferStatus(DataTransferState.Completed, true, false);
+        private static DataTransferStatus FailedSkippedCompletedStatus => new DataTransferStatus(DataTransferState.Completed, true, false);
 
         private TransferManagerOptions GetDefaultManagerOptions(string checkpointerPath) =>
             new TransferManagerOptions()
@@ -91,13 +91,13 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(DataTransferStatus.TransferState.Queued, false, false)]
-        [TestCase(DataTransferStatus.TransferState.InProgress, false, false)]
-        [TestCase(DataTransferStatus.TransferState.Paused, false, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, false, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, true, false)]
+        [TestCase(DataTransferState.Queued, false, false)]
+        [TestCase(DataTransferState.InProgress, false, false)]
+        [TestCase(DataTransferState.Paused, false, false)]
+        [TestCase(DataTransferState.Completed, false, false)]
+        [TestCase(DataTransferState.Completed, true, false)]
         public async Task GetTransfers_Filtered(
-            DataTransferStatus.TransferState state,
+            DataTransferState state,
             bool hasFailedItems,
             bool hasSkippedItems)
         {
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager = factory.BuildTransferManager(storedTransfers);
 
             // Act - With a transfer status not in the above stored transfers
-            DataTransferStatus[] statuses = new DataTransferStatus[] { new DataTransferStatus(DataTransferStatus.TransferState.Stopping, true, false) };
+            DataTransferStatus[] statuses = new DataTransferStatus[] { new DataTransferStatus(DataTransferState.Stopping, true, false) };
             IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert

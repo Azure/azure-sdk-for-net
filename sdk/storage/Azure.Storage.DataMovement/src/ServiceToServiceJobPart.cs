@@ -128,7 +128,7 @@ namespace Azure.Storage.DataMovement
 
         public override async Task ProcessPartToChunkAsync()
         {
-            await OnTransferStateChangedAsync(DataTransferStatus.TransferState.InProgress).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             // Attempt to get the length, it's possible the file could
             // not be accessible (or does not exist).
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 ReportBytesWritten(completeLength);
-                await OnTransferStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
@@ -307,7 +307,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Set completion status to completed
-                await OnTransferStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

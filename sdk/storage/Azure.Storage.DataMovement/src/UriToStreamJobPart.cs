@@ -147,7 +147,7 @@ namespace Azure.Storage.DataMovement
         {
             // we can default the length to 0 because we know the destination is local and
             // does not require a length to be created.
-            await OnTransferStateChangedAsync(DataTransferStatus.TransferState.InProgress).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             try
             {
@@ -340,7 +340,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Update the transfer status
-                await OnTransferStateChangedAsync(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

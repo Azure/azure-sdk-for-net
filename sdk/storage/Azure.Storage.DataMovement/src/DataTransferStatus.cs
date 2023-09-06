@@ -13,69 +13,17 @@ namespace Azure.Storage.DataMovement
     public class DataTransferStatus : IEquatable<DataTransferStatus>
     {
         private object _stateLock = new object();
-        private object _hasSkippedLock = new object();
-        private object _hasFailedLock = new object();
-
-        /// <summary>
-        /// Defines the types of the state a transfer can have.
-        /// </summary>
-        public enum TransferState
-        {
-            /// <summary>
-            /// Default value.
-            /// </summary>
-            None = 0,
-
-            /// <summary>
-            /// The transfer has been queued up but has not yet started.
-            /// </summary>
-            Queued = 1,
-
-            /// <summary>
-            /// The transfer has started, but has not yet completed.
-            /// </summary>
-            InProgress = 2,
-
-            /// <summary>
-            /// The transfer has started and is in the process of being paused.
-            ///
-            /// Transfer can be stopped if  <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>
-            /// or <see cref="DataTransfer.PauseAsync(CancellationToken)"/> is called.
-            /// </summary>
-            Pausing = 3,
-
-            /// <summary>
-            /// The transfer has started and is in the process of being stopped.
-            ///
-            /// Transfer can be stopped if <see cref="DataTransferErrorMode.StopOnAnyFailure"/> is
-            /// enabled in the <see cref="TransferManagerOptions.ErrorHandling"/>.
-            /// </summary>
-            Stopping = 4,
-
-            /// <summary>
-            /// The transfer has been paused. When transfer is paused
-            /// (e.g. see <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>)
-            /// during the transfer, this will be the value.
-            /// </summary>
-            Paused = 5,
-
-            /// <summary>
-            /// The transfer has come to a completed state. If the transfer has started and
-            /// has fully stopped will also come to this state.
-            /// </summary>
-            Completed = 6
-        }
 
         /// <summary>
         /// Defines the state of the transfer.
         /// </summary>
-        public TransferState State { get; internal set; }
+        public DataTransferState State { get; internal set; }
 
         /// <summary>
         /// Represents if the transfer has completed successfully without any failure or skipped items.
         /// </summary>
         public bool HasCompletedSuccessfully =>
-            (State == TransferState.Completed) &&
+            (State == DataTransferState.Completed) &&
             !HasFailedItems &&
             !HasSkippedItems;
 
@@ -99,11 +47,11 @@ namespace Azure.Storage.DataMovement
         public bool HasSkippedItems { get; internal set; }
 
         /// <summary>
-        /// Constructor to set the initial state to <see cref="TransferState.Queued"/> with no failures or skipped items.
+        /// Constructor to set the initial state to <see cref="DataTransferState.Queued"/> with no failures or skipped items.
         /// </summary>
         protected internal DataTransferStatus()
         {
-            State = TransferState.Queued;
+            State = DataTransferState.Queued;
             HasFailedItems = false;
             HasSkippedItems = false;
         }
@@ -111,15 +59,15 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructor to have a custom state, failure state, and skipped state.
         /// </summary>
-        protected internal DataTransferStatus(TransferState state, bool hasFailureItems, bool hasSkippedItems)
+        protected internal DataTransferStatus(DataTransferState state, bool hasFailureItems, bool hasSkippedItems)
         {
             State = state;
             HasFailedItems = hasFailureItems;
             HasSkippedItems = hasSkippedItems;
         }
 
-        internal bool IsCompletedWithFailedItems => State.Equals(TransferState.Completed) && HasFailedItems;
-        internal bool IsCompletedWithSkippedItems => State.Equals(TransferState.Completed) && HasSkippedItems;
+        internal bool IsCompletedWithFailedItems => State.Equals(DataTransferState.Completed) && HasFailedItems;
+        internal bool IsCompletedWithSkippedItems => State.Equals(DataTransferState.Completed) && HasSkippedItems;
 
         /// <summary>
         /// Accordingly update the <see cref="HasFailedItems"/> to true. If already set to true, nothing will happen.
@@ -127,15 +75,12 @@ namespace Azure.Storage.DataMovement
         /// This should only be triggered when a failed item has been seen.
         /// </summary>
         /// <returns>True if <see cref="HasFailedItems"/> was updated. False otherwise.</returns>
-        internal bool OnFailedItem()
+        internal bool TrySetFailedItem()
         {
-            lock (_hasFailedLock)
+            if (!HasFailedItems)
             {
-                if (!HasFailedItems)
-                {
-                    HasFailedItems = true;
-                    return true;
-                }
+                HasFailedItems = true;
+                return true;
             }
             return false;
         }
@@ -146,15 +91,12 @@ namespace Azure.Storage.DataMovement
         /// This should only be triggered when a skipped item has been seen.
         /// </summary>
         /// /// <returns>True if <see cref="HasSkippedItems"/> was updated. False otherwise.</returns>
-        internal bool OnSkippedItem()
+        internal bool TrySetSkippedItem()
         {
-            lock (_hasSkippedLock)
+            if (!HasSkippedItems)
             {
-                if (!HasSkippedItems)
-                {
-                    HasSkippedItems = true;
-                    return true;
-                }
+                HasSkippedItems = true;
+                return true;
             }
             return false;
         }
@@ -166,11 +108,11 @@ namespace Azure.Storage.DataMovement
         /// This should only be triggered when the state updates.
         /// </summary>
         /// <returns>True if <see cref="State"/> was updated. False otherwise.</returns>
-        internal bool OnTransferStateChange(TransferState state)
+        internal bool TrySetTransferStateChange(DataTransferState state)
         {
             lock (_stateLock)
             {
-                if (state != TransferState.None &&
+                if (state != DataTransferState.None &&
                     State != state)
                 {
                     State = state;

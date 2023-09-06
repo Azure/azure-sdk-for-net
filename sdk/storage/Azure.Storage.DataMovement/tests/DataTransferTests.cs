@@ -12,9 +12,9 @@ namespace Azure.Storage.DataMovement.Tests
     public class DataTransferTests
     {
         private static string GetNewTransferId() => Guid.NewGuid().ToString();
-        private static DataTransferStatus QueuedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Queued, false, false);
-        private static DataTransferStatus InProgressStatus => new DataTransferStatus(DataTransferStatus.TransferState.InProgress, false, false);
-        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferStatus.TransferState.Completed, false, false);
+        private static DataTransferStatus QueuedStatus => new DataTransferStatus(DataTransferState.Queued, false, false);
+        private static DataTransferStatus InProgressStatus => new DataTransferStatus(DataTransferState.InProgress, false, false);
+        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
 
         [Test]
         public void Ctor_Default()
@@ -33,14 +33,14 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(DataTransferStatus.TransferState.None, false)]
-        [TestCase(DataTransferStatus.TransferState.Queued, false)]
-        [TestCase(DataTransferStatus.TransferState.InProgress, false)]
-        [TestCase(DataTransferStatus.TransferState.Pausing, false)]
-        [TestCase(DataTransferStatus.TransferState.Paused, false)]
-        [TestCase(DataTransferStatus.TransferState.Stopping, false)]
-        [TestCase(DataTransferStatus.TransferState.Stopping, true)]
-        public void HasCompleted_False(DataTransferStatus.TransferState status, bool hasFailedItems)
+        [TestCase(DataTransferState.None, false)]
+        [TestCase(DataTransferState.Queued, false)]
+        [TestCase(DataTransferState.InProgress, false)]
+        [TestCase(DataTransferState.Pausing, false)]
+        [TestCase(DataTransferState.Paused, false)]
+        [TestCase(DataTransferState.Stopping, false)]
+        [TestCase(DataTransferState.Stopping, true)]
+        public void HasCompleted_False(DataTransferState status, bool hasFailedItems)
         {
             // Arrange
             string transferId = GetNewTransferId();
@@ -59,12 +59,12 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(DataTransferStatus.TransferState.Completed, false, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, false, true)]
-        [TestCase(DataTransferStatus.TransferState.Completed, true, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, true, true)]
+        [TestCase(DataTransferState.Completed, false, false)]
+        [TestCase(DataTransferState.Completed, false, true)]
+        [TestCase(DataTransferState.Completed, true, false)]
+        [TestCase(DataTransferState.Completed, true, true)]
         public void HasCompleted_True(
-            DataTransferStatus.TransferState state,
+            DataTransferState state,
             bool hasFailedItems,
             bool hasSkippedItems)
         {
@@ -175,28 +175,28 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             Task pauseTask = transfer.PauseAsync();
 
-            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus.State);
+            Assert.AreEqual(DataTransferState.Pausing, transfer.TransferStatus.State);
 
             // Assert
-            if (!transfer._state.TrySetTransferState(DataTransferStatus.TransferState.Paused))
+            if (!transfer._state.TrySetTransferState(DataTransferState.Paused))
             {
                 Assert.Fail("Unable to set the transfer status internally to the DataTransfer.");
             }
 
             await pauseTask;
 
-            Assert.AreEqual(DataTransferStatus.TransferState.Paused, transfer.TransferStatus.State);
+            Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
         [Test]
-        [TestCase(DataTransferStatus.TransferState.Paused, false, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, false, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, false, true)]
-        [TestCase(DataTransferStatus.TransferState.Completed, true, false)]
-        [TestCase(DataTransferStatus.TransferState.Completed, true, true)]
+        [TestCase(DataTransferState.Paused, false, false)]
+        [TestCase(DataTransferState.Completed, false, false)]
+        [TestCase(DataTransferState.Completed, false, true)]
+        [TestCase(DataTransferState.Completed, true, false)]
+        [TestCase(DataTransferState.Completed, true, true)]
         public async Task TryPauseAsync_AlreadyPaused(
-            DataTransferStatus.TransferState state,
+            DataTransferState state,
             bool hasFailedItems,
             bool hasSkippedItems)
         {
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 Assert.AreEqual(exception.Message, "The operation was canceled.");
             }
-            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus.State);
+            Assert.AreEqual(DataTransferState.Pausing, transfer.TransferStatus.State);
             Assert.IsFalse(transfer.HasCompleted);
         }
     }

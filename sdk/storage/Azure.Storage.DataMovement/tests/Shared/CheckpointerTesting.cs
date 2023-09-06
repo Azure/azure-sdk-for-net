@@ -52,8 +52,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption DefaultDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption DefaultPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType DefaultRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatusInternal(DataTransferStatus.TransferState.Queued, false, false);
-        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatusInternal(DataTransferStatus.TransferState.Queued, false, false);
+        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
+        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatusInternal(DataTransferState.Queued, false, false);
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
             string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
