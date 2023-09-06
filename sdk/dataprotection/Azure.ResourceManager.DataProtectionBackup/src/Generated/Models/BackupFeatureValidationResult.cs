@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,18 +14,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Feature Validation Response. </summary>
     public partial class BackupFeatureValidationResult : BackupFeatureValidationResultBase
     {
-        /// <summary> Initializes a new instance of BackupFeatureValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
         internal BackupFeatureValidationResult()
         {
             Features = new ChangeTrackingList<BackupSupportedFeature>();
             ObjectType = "FeatureValidationResponse";
         }
 
-        /// <summary> Initializes a new instance of BackupFeatureValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResult"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="featureType"> backup support feature type. </param>
         /// <param name="features"> Response features. </param>
-        internal BackupFeatureValidationResult(string objectType, BackupSupportedFeatureType? featureType, IReadOnlyList<BackupSupportedFeature> features) : base(objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupFeatureValidationResult(string objectType, BackupSupportedFeatureType? featureType, IReadOnlyList<BackupSupportedFeature> features, Dictionary<string, BinaryData> rawData) : base(objectType, rawData)
         {
             FeatureType = featureType;
             Features = features;

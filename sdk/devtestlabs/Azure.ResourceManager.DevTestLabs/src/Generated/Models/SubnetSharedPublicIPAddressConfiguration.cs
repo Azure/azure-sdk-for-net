@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Configuration for public IP address sharing. </summary>
     internal partial class SubnetSharedPublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIPAddressConfiguration"/>. </summary>
         public SubnetSharedPublicIPAddressConfiguration()
         {
             AllowedPorts = new ChangeTrackingList<DevTestLabPort>();
         }
 
-        /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetSharedPublicIPAddressConfiguration"/>. </summary>
         /// <param name="allowedPorts"> Backend ports that virtual machines on this subnet are allowed to expose. </param>
-        internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubnetSharedPublicIPAddressConfiguration(IList<DevTestLabPort> allowedPorts, Dictionary<string, BinaryData> rawData)
         {
             AllowedPorts = allowedPorts;
+            _rawData = rawData;
         }
 
         /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>

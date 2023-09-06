@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -13,18 +14,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a user's secret store. </summary>
     public partial class DevTestLabUserSecretStore
     {
-        /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserSecretStore"/>. </summary>
         public DevTestLabUserSecretStore()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabUserSecretStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabUserSecretStore"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the user's Key vault. </param>
         /// <param name="keyVaultId"> The ID of the user's Key vault. </param>
-        internal DevTestLabUserSecretStore(Uri keyVaultUri, ResourceIdentifier keyVaultId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabUserSecretStore(Uri keyVaultUri, ResourceIdentifier keyVaultId, Dictionary<string, BinaryData> rawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyVaultId = keyVaultId;
+            _rawData = rawData;
         }
 
         /// <summary> The URI of the user's Key vault. </summary>

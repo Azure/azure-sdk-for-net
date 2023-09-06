@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
@@ -12,9 +13,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The updatable properties of the TagRule. </summary>
     public partial class DynatraceTagRulePatch
     {
-        /// <summary> Initializes a new instance of DynatraceTagRulePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
         public DynatraceTagRulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRulePatch"/>. </summary>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceTagRulePatch(DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, Dictionary<string, BinaryData> rawData)
+        {
+            LogRules = logRules;
+            MetricRules = metricRules;
+            _rawData = rawData;
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>

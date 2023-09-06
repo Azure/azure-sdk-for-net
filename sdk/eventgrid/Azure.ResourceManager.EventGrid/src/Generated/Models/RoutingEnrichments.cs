@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The RoutingEnrichments. </summary>
     public partial class RoutingEnrichments
     {
-        /// <summary> Initializes a new instance of RoutingEnrichments. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingEnrichments"/>. </summary>
         public RoutingEnrichments()
         {
             Static = new ChangeTrackingList<StaticRoutingEnrichment>();
             Dynamic = new ChangeTrackingList<DynamicRoutingEnrichment>();
         }
 
-        /// <summary> Initializes a new instance of RoutingEnrichments. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingEnrichments"/>. </summary>
         /// <param name="static"></param>
         /// <param name="dynamic"></param>
-        internal RoutingEnrichments(IList<StaticRoutingEnrichment> @static, IList<DynamicRoutingEnrichment> @dynamic)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingEnrichments(IList<StaticRoutingEnrichment> @static, IList<DynamicRoutingEnrichment> @dynamic, Dictionary<string, BinaryData> rawData)
         {
             Static = @static;
             Dynamic = @dynamic;
+            _rawData = rawData;
         }
 
         /// <summary> Gets the static. </summary>

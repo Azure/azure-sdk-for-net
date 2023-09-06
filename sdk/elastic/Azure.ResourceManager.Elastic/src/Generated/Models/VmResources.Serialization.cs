@@ -5,20 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class VmResources
+    public partial class VmResources : IUtf8JsonSerializable, IModelJsonSerializable<VmResources>
     {
-        internal static VmResources DeserializeVmResources(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<VmResources>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<VmResources>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<VmResources>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(VmResourceId))
+            {
+                writer.WritePropertyName("vmResourceId"u8);
+                writer.WriteStringValue(VmResourceId);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static VmResources DeserializeVmResources(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> vmResourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmResourceId"u8))
@@ -26,8 +60,61 @@ namespace Azure.ResourceManager.Elastic.Models
                     vmResourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new VmResources(vmResourceId.Value);
+            return new VmResources(vmResourceId.Value, rawData);
+        }
+
+        VmResources IModelJsonSerializable<VmResources>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmResources>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmResources(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<VmResources>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmResources>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        VmResources IModelSerializable<VmResources>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<VmResources>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeVmResources(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="VmResources"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="VmResources"/> to convert. </param>
+        public static implicit operator RequestContent(VmResources model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="VmResources"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator VmResources(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeVmResources(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

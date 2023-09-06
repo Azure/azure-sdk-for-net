@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ArmTemplateList
     {
-        /// <summary> Initializes a new instance of ArmTemplateList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateList"/>. </summary>
         internal ArmTemplateList()
         {
             Value = new ChangeTrackingList<DevTestLabArmTemplateData>();
         }
 
-        /// <summary> Initializes a new instance of ArmTemplateList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal ArmTemplateList(IReadOnlyList<DevTestLabArmTemplateData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmTemplateList(IReadOnlyList<DevTestLabArmTemplateData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Results of the list operation. </summary>

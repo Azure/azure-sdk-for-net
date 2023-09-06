@@ -5,31 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class WaitStepProperties : IUtf8JsonSerializable
+    public partial class WaitStepProperties : IUtf8JsonSerializable, IModelJsonSerializable<WaitStepProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WaitStepProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<WaitStepProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<WaitStepProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("attributes"u8);
-            writer.WriteObjectValue(Attributes);
+            if (Attributes is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                ((IModelJsonSerializable<WaitStepAttributes>)Attributes).Serialize(writer, options);
+            }
             writer.WritePropertyName("stepType"u8);
             writer.WriteStringValue(StepType.ToSerialString());
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WaitStepProperties DeserializeWaitStepProperties(JsonElement element)
+        internal static WaitStepProperties DeserializeWaitStepProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             WaitStepAttributes attributes = default;
             StepType stepType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attributes"u8))
@@ -42,8 +72,61 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     stepType = property.Value.GetString().ToStepType();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new WaitStepProperties(stepType, attributes);
+            return new WaitStepProperties(stepType, attributes, rawData);
+        }
+
+        WaitStepProperties IModelJsonSerializable<WaitStepProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WaitStepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWaitStepProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<WaitStepProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WaitStepProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        WaitStepProperties IModelSerializable<WaitStepProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<WaitStepProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeWaitStepProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="WaitStepProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="WaitStepProperties"/> to convert. </param>
+        public static implicit operator RequestContent(WaitStepProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="WaitStepProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator WaitStepProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeWaitStepProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

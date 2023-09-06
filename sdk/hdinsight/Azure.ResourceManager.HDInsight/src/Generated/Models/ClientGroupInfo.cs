@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The information of AAD security group. </summary>
     public partial class ClientGroupInfo
     {
-        /// <summary> Initializes a new instance of ClientGroupInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientGroupInfo"/>. </summary>
         public ClientGroupInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientGroupInfo"/>. </summary>
         /// <param name="groupName"> The AAD security group name. </param>
         /// <param name="groupId"> The AAD security group id. </param>
-        internal ClientGroupInfo(string groupName, string groupId)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientGroupInfo(string groupName, string groupId, Dictionary<string, BinaryData> rawData)
         {
             GroupName = groupName;
             GroupId = groupId;
+            _rawData = rawData;
         }
 
         /// <summary> The AAD security group name. </summary>

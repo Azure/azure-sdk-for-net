@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     /// <summary> All encryption configuration for a resource. </summary>
     internal partial class EncryptionProperties
     {
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         public EncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
-        internal EncryptionProperties(CmkEncryptionProperties customerManagedKeyEncryption)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionProperties(CmkEncryptionProperties customerManagedKeyEncryption, Dictionary<string, BinaryData> rawData)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
+            _rawData = rawData;
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>

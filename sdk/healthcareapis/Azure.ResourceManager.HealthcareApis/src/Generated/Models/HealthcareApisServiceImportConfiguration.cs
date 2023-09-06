@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Import operation configuration information. </summary>
     public partial class HealthcareApisServiceImportConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceImportConfiguration"/>. </summary>
         public HealthcareApisServiceImportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceImportConfiguration"/>. </summary>
         /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
         /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
         /// <param name="isEnabled"> If the import operation is enabled. </param>
-        internal HealthcareApisServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled, Dictionary<string, BinaryData> rawData)
         {
             IntegrationDataStore = integrationDataStore;
             IsInitialImportMode = isInitialImportMode;
             IsEnabled = isEnabled;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the default integration storage account. </summary>

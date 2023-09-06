@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> The UnknownAuthentication. </summary>
     internal partial class UnknownAuthentication : Authentication
     {
-        /// <summary> Initializes a new instance of UnknownAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthentication"/>. </summary>
         /// <param name="authenticationType"> The authentication type. </param>
-        internal UnknownAuthentication(string authenticationType) : base(authenticationType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAuthentication(string authenticationType, Dictionary<string, BinaryData> rawData) : base(authenticationType, rawData)
         {
             AuthenticationType = authenticationType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthentication"/> for deserialization. </summary>
+        internal UnknownAuthentication()
+        {
         }
     }
 }

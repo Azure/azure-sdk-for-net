@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,24 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the System Topic update. </summary>
     public partial class SystemTopicPatch
     {
-        /// <summary> Initializes a new instance of SystemTopicPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemTopicPatch"/>. </summary>
         public SystemTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemTopicPatch"/>. </summary>
+        /// <param name="tags"> Tags of the system topic. </param>
+        /// <param name="identity"> Resource identity information. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemTopicPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            _rawData = rawData;
         }
 
         /// <summary> Tags of the system topic. </summary>

@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.DataBox.OrderCompleted event. </summary>
     public partial class DataBoxOrderCompletedEventData
     {
-        /// <summary> Initializes a new instance of DataBoxOrderCompletedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxOrderCompletedEventData"/>. </summary>
         internal DataBoxOrderCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxOrderCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxOrderCompletedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
         /// <param name="stageTime"> The time at which the stage happened. </param>
-        internal DataBoxOrderCompletedEventData(string serialNumber, DataBoxStageName? stageName, DateTimeOffset? stageTime)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxOrderCompletedEventData(string serialNumber, DataBoxStageName? stageName, DateTimeOffset? stageTime, Dictionary<string, BinaryData> rawData)
         {
             SerialNumber = serialNumber;
             StageName = stageName;
             StageTime = stageTime;
+            _rawData = rawData;
         }
 
         /// <summary> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </summary>

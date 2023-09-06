@@ -6,31 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class BlobFileListContentSource : IUtf8JsonSerializable
+    public partial class BlobFileListContentSource : IUtf8JsonSerializable, IModelJsonSerializable<BlobFileListContentSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BlobFileListContentSource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<BlobFileListContentSource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<BlobFileListContentSource>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
             writer.WriteStringValue(ContainerUri.AbsoluteUri);
             writer.WritePropertyName("fileList"u8);
             writer.WriteStringValue(FileList);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobFileListContentSource DeserializeBlobFileListContentSource(JsonElement element)
+        internal static BlobFileListContentSource DeserializeBlobFileListContentSource(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri containerUrl = default;
             string fileList = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerUrl"u8))
@@ -43,8 +65,61 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     fileList = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new BlobFileListContentSource(containerUrl, fileList);
+            return new BlobFileListContentSource(containerUrl, fileList, rawData);
+        }
+
+        BlobFileListContentSource IModelJsonSerializable<BlobFileListContentSource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobFileListContentSource>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobFileListContentSource(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<BlobFileListContentSource>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobFileListContentSource>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        BlobFileListContentSource IModelSerializable<BlobFileListContentSource>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<BlobFileListContentSource>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeBlobFileListContentSource(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="BlobFileListContentSource"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="BlobFileListContentSource"/> to convert. </param>
+        public static implicit operator RequestContent(BlobFileListContentSource model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="BlobFileListContentSource"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator BlobFileListContentSource(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBlobFileListContentSource(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

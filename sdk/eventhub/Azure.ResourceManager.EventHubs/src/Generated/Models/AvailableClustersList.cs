@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response of the List Available Clusters operation. </summary>
     internal partial class AvailableClustersList
     {
-        /// <summary> Initializes a new instance of AvailableClustersList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableClustersList"/>. </summary>
         internal AvailableClustersList()
         {
             Value = new ChangeTrackingList<AvailableCluster>();
         }
 
-        /// <summary> Initializes a new instance of AvailableClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableClustersList"/>. </summary>
         /// <param name="value"> The count of readily available and pre-provisioned Event Hubs Clusters per region. </param>
-        internal AvailableClustersList(IReadOnlyList<AvailableCluster> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableClustersList(IReadOnlyList<AvailableCluster> value, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
+            _rawData = rawData;
         }
 
         /// <summary> The count of readily available and pre-provisioned Event Hubs Clusters per region. </summary>

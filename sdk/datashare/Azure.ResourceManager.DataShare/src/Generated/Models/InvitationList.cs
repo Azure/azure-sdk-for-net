@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> List response for get InvitationList. </summary>
     internal partial class InvitationList
     {
-        /// <summary> Initializes a new instance of InvitationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="InvitationList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InvitationList(IEnumerable<DataShareInvitationData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of InvitationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InvitationList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal InvitationList(string nextLink, IReadOnlyList<DataShareInvitationData> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal InvitationList(string nextLink, IReadOnlyList<DataShareInvitationData> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InvitationList"/> for deserialization. </summary>
+        internal InvitationList()
+        {
         }
 
         /// <summary> The Url of next result page. </summary>

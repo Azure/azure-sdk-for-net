@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of SessionHost definitions. </summary>
     internal partial class SessionHostList
     {
-        /// <summary> Initializes a new instance of SessionHostList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SessionHostList"/>. </summary>
         internal SessionHostList()
         {
             Value = new ChangeTrackingList<SessionHostData>();
         }
 
-        /// <summary> Initializes a new instance of SessionHostList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostList"/>. </summary>
         /// <param name="value"> List of SessionHost definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal SessionHostList(IReadOnlyList<SessionHostData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionHostList(IReadOnlyList<SessionHostData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of SessionHost definitions. </summary>

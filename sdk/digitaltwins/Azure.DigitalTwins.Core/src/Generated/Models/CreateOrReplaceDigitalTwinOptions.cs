@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     internal partial class CreateOrReplaceDigitalTwinOptions
     {
-        /// <summary> Initializes a new instance of CreateOrReplaceDigitalTwinOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateOrReplaceDigitalTwinOptions"/>. </summary>
         public CreateOrReplaceDigitalTwinOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateOrReplaceDigitalTwinOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="ifNoneMatch"> Only perform the operation if the entity does not already exist. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateOrReplaceDigitalTwinOptions(string traceParent, string traceState, string ifNoneMatch, Dictionary<string, BinaryData> rawData)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            IfNoneMatch = ifNoneMatch;
+            _rawData = rawData;
         }
     }
 }

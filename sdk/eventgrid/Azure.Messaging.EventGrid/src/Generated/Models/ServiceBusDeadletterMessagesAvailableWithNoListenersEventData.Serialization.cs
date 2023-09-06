@@ -6,17 +6,74 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter))]
-    public partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventData
+    public partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventData : IUtf8JsonSerializable, IModelJsonSerializable<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>
     {
-        internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NamespaceName))
+            {
+                writer.WritePropertyName("namespaceName"u8);
+                writer.WriteStringValue(NamespaceName);
+            }
+            if (Optional.IsDefined(RequestUri))
+            {
+                writer.WritePropertyName("requestUri"u8);
+                writer.WriteStringValue(RequestUri);
+            }
+            if (Optional.IsDefined(EntityType))
+            {
+                writer.WritePropertyName("entityType"u8);
+                writer.WriteStringValue(EntityType);
+            }
+            if (Optional.IsDefined(QueueName))
+            {
+                writer.WritePropertyName("queueName"u8);
+                writer.WriteStringValue(QueueName);
+            }
+            if (Optional.IsDefined(TopicName))
+            {
+                writer.WritePropertyName("topicName"u8);
+                writer.WriteStringValue(TopicName);
+            }
+            if (Optional.IsDefined(SubscriptionName))
+            {
+                writer.WritePropertyName("subscriptionName"u8);
+                writer.WriteStringValue(SubscriptionName);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ServiceBusDeadletterMessagesAvailableWithNoListenersEventData DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +84,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> queueName = default;
             Optional<string> topicName = default;
             Optional<string> subscriptionName = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("namespaceName"u8))
@@ -59,15 +117,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     subscriptionName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+            return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value, rawData);
+        }
+
+        ServiceBusDeadletterMessagesAvailableWithNoListenersEventData IModelJsonSerializable<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ServiceBusDeadletterMessagesAvailableWithNoListenersEventData IModelSerializable<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ServiceBusDeadletterMessagesAvailableWithNoListenersEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ServiceBusDeadletterMessagesAvailableWithNoListenersEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>
         {
             public override void Write(Utf8JsonWriter writer, ServiceBusDeadletterMessagesAvailableWithNoListenersEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ServiceBusDeadletterMessagesAvailableWithNoListenersEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

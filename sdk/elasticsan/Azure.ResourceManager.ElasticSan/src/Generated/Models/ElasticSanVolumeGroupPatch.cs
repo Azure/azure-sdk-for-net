@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -12,9 +13,25 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Volume Group request. </summary>
     public partial class ElasticSanVolumeGroupPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupPatch"/>. </summary>
         public ElasticSanVolumeGroupPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupPatch"/>. </summary>
+        /// <param name="protocolType"> Type of storage target. </param>
+        /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeGroupPatch(StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, Dictionary<string, BinaryData> rawData)
+        {
+            ProtocolType = protocolType;
+            Encryption = encryption;
+            NetworkAcls = networkAcls;
+            _rawData = rawData;
         }
 
         /// <summary> Type of storage target. </summary>

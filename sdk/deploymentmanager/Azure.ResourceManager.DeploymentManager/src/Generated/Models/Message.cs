@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> Supplementary contextual messages during a rollout. </summary>
     public partial class Message
     {
-        /// <summary> Initializes a new instance of Message. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="Message"/>. </summary>
         internal Message()
         {
         }
 
-        /// <summary> Initializes a new instance of Message. </summary>
+        /// <summary> Initializes a new instance of <see cref="Message"/>. </summary>
         /// <param name="timeStamp"> Time in UTC this message was provided. </param>
         /// <param name="messageValue"> The actual message text. </param>
-        internal Message(DateTimeOffset? timeStamp, string messageValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal Message(DateTimeOffset? timeStamp, string messageValue, Dictionary<string, BinaryData> rawData)
         {
             TimeStamp = timeStamp;
             MessageValue = messageValue;
+            _rawData = rawData;
         }
 
         /// <summary> Time in UTC this message was provided. </summary>

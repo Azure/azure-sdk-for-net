@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Monitoring Settings. </summary>
     internal partial class MonitoringSettings
     {
-        /// <summary> Initializes a new instance of MonitoringSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringSettings"/>. </summary>
         public MonitoringSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringSettings"/>. </summary>
         /// <param name="azureMonitorAlertSettings"> Settings for Azure Monitor based alerts. </param>
-        internal MonitoringSettings(AzureMonitorAlertSettings azureMonitorAlertSettings)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringSettings(AzureMonitorAlertSettings azureMonitorAlertSettings, Dictionary<string, BinaryData> rawData)
         {
             AzureMonitorAlertSettings = azureMonitorAlertSettings;
+            _rawData = rawData;
         }
 
         /// <summary> Settings for Azure Monitor based alerts. </summary>

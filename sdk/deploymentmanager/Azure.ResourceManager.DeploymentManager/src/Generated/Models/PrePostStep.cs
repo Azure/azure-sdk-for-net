@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
     /// <summary> The properties that define a step. </summary>
     public partial class PrePostStep
     {
-        /// <summary> Initializes a new instance of PrePostStep. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrePostStep"/>. </summary>
         /// <param name="stepId"> The resource Id of the step to be run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stepId"/> is null. </exception>
         public PrePostStep(string stepId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Argument.AssertNotNull(stepId, nameof(stepId));
 
             StepId = stepId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrePostStep"/>. </summary>
+        /// <param name="stepId"> The resource Id of the step to be run. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrePostStep(string stepId, Dictionary<string, BinaryData> rawData)
+        {
+            StepId = stepId;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrePostStep"/> for deserialization. </summary>
+        internal PrePostStep()
+        {
         }
 
         /// <summary> The resource Id of the step to be run. </summary>

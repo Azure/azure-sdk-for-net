@@ -5,15 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class RegionalQuotaCapability
+    public partial class RegionalQuotaCapability : IUtf8JsonSerializable, IModelJsonSerializable<RegionalQuotaCapability>
     {
-        internal static RegionalQuotaCapability DeserializeRegionalQuotaCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RegionalQuotaCapability>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RegionalQuotaCapability>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalQuotaCapability>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("regionName"u8);
+                writer.WriteStringValue(Region.Value);
+            }
+            if (Optional.IsDefined(CoresUsed))
+            {
+                writer.WritePropertyName("coresUsed"u8);
+                writer.WriteNumberValue(CoresUsed.Value);
+            }
+            if (Optional.IsDefined(CoresAvailable))
+            {
+                writer.WritePropertyName("coresAvailable"u8);
+                writer.WriteNumberValue(CoresAvailable.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static RegionalQuotaCapability DeserializeRegionalQuotaCapability(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<AzureLocation> regionName = default;
             Optional<long> coresUsed = default;
             Optional<long> coresAvailable = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionName"u8))
@@ -50,8 +94,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     coresAvailable = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable));
+            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable), rawData);
+        }
+
+        RegionalQuotaCapability IModelJsonSerializable<RegionalQuotaCapability>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalQuotaCapability>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionalQuotaCapability(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RegionalQuotaCapability>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalQuotaCapability>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RegionalQuotaCapability IModelSerializable<RegionalQuotaCapability>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RegionalQuotaCapability>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRegionalQuotaCapability(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RegionalQuotaCapability"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RegionalQuotaCapability"/> to convert. </param>
+        public static implicit operator RequestContent(RegionalQuotaCapability model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RegionalQuotaCapability"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RegionalQuotaCapability(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRegionalQuotaCapability(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

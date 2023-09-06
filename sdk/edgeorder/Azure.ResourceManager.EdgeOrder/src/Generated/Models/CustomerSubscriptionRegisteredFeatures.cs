@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Represents subscription registered features. </summary>
     public partial class CustomerSubscriptionRegisteredFeatures
     {
-        /// <summary> Initializes a new instance of CustomerSubscriptionRegisteredFeatures. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionRegisteredFeatures"/>. </summary>
         public CustomerSubscriptionRegisteredFeatures()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionRegisteredFeatures"/>. </summary>
+        /// <param name="name"> Name of subscription registered feature. </param>
+        /// <param name="state"> State of subscription registered feature. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomerSubscriptionRegisteredFeatures(string name, string state, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            State = state;
+            _rawData = rawData;
         }
 
         /// <summary> Name of subscription registered feature. </summary>

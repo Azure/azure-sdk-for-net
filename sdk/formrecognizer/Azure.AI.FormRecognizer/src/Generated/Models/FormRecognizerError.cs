@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> The ErrorInformation. </summary>
     public partial class FormRecognizerError
     {
-        /// <summary> Initializes a new instance of FormRecognizerError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FormRecognizerError"/>. </summary>
         /// <param name="errorCode"></param>
         /// <param name="message"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorCode"/> or <paramref name="message"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.AI.FormRecognizer.Models
 
             ErrorCode = errorCode;
             Message = message;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FormRecognizerError"/>. </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="message"></param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FormRecognizerError(string errorCode, string message, Dictionary<string, BinaryData> rawData)
+        {
+            ErrorCode = errorCode;
+            Message = message;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FormRecognizerError"/> for deserialization. </summary>
+        internal FormRecognizerError()
+        {
         }
     }
 }

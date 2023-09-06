@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MsixPackageDependencies : IUtf8JsonSerializable
+    public partial class MsixPackageDependencies : IUtf8JsonSerializable, IModelJsonSerializable<MsixPackageDependencies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<MsixPackageDependencies>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<MsixPackageDependencies>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageDependencies>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DependencyName))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MsixPackageDependencies DeserializeMsixPackageDependencies(JsonElement element)
+        internal static MsixPackageDependencies DeserializeMsixPackageDependencies(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<string> dependencyName = default;
             Optional<string> publisher = default;
             Optional<string> minVersion = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dependencyName"u8))
@@ -59,8 +82,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     minVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new MsixPackageDependencies(dependencyName.Value, publisher.Value, minVersion.Value);
+            return new MsixPackageDependencies(dependencyName.Value, publisher.Value, minVersion.Value, rawData);
+        }
+
+        MsixPackageDependencies IModelJsonSerializable<MsixPackageDependencies>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageDependencies>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeMsixPackageDependencies(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<MsixPackageDependencies>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageDependencies>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        MsixPackageDependencies IModelSerializable<MsixPackageDependencies>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<MsixPackageDependencies>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeMsixPackageDependencies(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="MsixPackageDependencies"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="MsixPackageDependencies"/> to convert. </param>
+        public static implicit operator RequestContent(MsixPackageDependencies model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="MsixPackageDependencies"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator MsixPackageDependencies(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeMsixPackageDependencies(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

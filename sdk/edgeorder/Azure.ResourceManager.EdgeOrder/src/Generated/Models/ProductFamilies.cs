@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> The list of product families. </summary>
     internal partial class ProductFamilies
     {
-        /// <summary> Initializes a new instance of ProductFamilies. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductFamilies"/>. </summary>
         internal ProductFamilies()
         {
             Value = new ChangeTrackingList<ProductFamily>();
         }
 
-        /// <summary> Initializes a new instance of ProductFamilies. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamilies"/>. </summary>
         /// <param name="value"> List of product families. </param>
         /// <param name="nextLink"> Link for the next set of product families. </param>
-        internal ProductFamilies(IReadOnlyList<ProductFamily> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductFamilies(IReadOnlyList<ProductFamily> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> List of product families. </summary>

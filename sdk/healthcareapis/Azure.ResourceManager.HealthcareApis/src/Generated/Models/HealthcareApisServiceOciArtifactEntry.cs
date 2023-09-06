@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> An Open Container Initiative (OCI) artifact. </summary>
     public partial class HealthcareApisServiceOciArtifactEntry
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceOciArtifactEntry. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceOciArtifactEntry"/>. </summary>
         public HealthcareApisServiceOciArtifactEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceOciArtifactEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceOciArtifactEntry"/>. </summary>
         /// <param name="loginServer"> The Azure Container Registry login server. </param>
         /// <param name="imageName"> The artifact name. </param>
         /// <param name="digest"> The artifact digest. </param>
-        internal HealthcareApisServiceOciArtifactEntry(string loginServer, string imageName, string digest)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisServiceOciArtifactEntry(string loginServer, string imageName, string digest, Dictionary<string, BinaryData> rawData)
         {
             LoginServer = loginServer;
             ImageName = imageName;
             Digest = digest;
+            _rawData = rawData;
         }
 
         /// <summary> The Azure Container Registry login server. </summary>

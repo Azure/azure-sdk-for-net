@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> NumberGreaterThanOrEquals Advanced Filter. </summary>
     public partial class NumberGreaterThanOrEqualsAdvancedFilter : AdvancedFilter
     {
-        /// <summary> Initializes a new instance of NumberGreaterThanOrEqualsAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>. </summary>
         public NumberGreaterThanOrEqualsAdvancedFilter()
         {
             OperatorType = AdvancedFilterOperatorType.NumberGreaterThanOrEquals;
         }
 
-        /// <summary> Initializes a new instance of NumberGreaterThanOrEqualsAdvancedFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         /// <param name="value"> The filter value. </param>
-        internal NumberGreaterThanOrEqualsAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, double? value) : base(operatorType, key)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal NumberGreaterThanOrEqualsAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, double? value, Dictionary<string, BinaryData> rawData) : base(operatorType, key, rawData)
         {
             Value = value;
             OperatorType = operatorType;

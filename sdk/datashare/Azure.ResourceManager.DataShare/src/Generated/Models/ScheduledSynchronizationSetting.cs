@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A type of synchronization setting based on schedule. </summary>
     public partial class ScheduledSynchronizationSetting : DataShareSynchronizationSettingData
     {
-        /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledSynchronizationSetting"/>. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
         public ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizeOn)
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = SynchronizationSettingKind.ScheduleBased;
         }
 
-        /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledSynchronizationSetting"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
         /// <param name="userName"> Name of the user who created the synchronization setting. </param>
-        internal ScheduledSynchronizationSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynchronizationSettingKind kind, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizeOn, string userName) : base(id, name, resourceType, systemData, kind)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledSynchronizationSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynchronizationSettingKind kind, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizeOn, string userName, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, kind, rawData)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -44,6 +46,11 @@ namespace Azure.ResourceManager.DataShare.Models
             SynchronizeOn = synchronizeOn;
             UserName = userName;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledSynchronizationSetting"/> for deserialization. </summary>
+        internal ScheduledSynchronizationSetting()
+        {
         }
 
         /// <summary> Time at which the synchronization setting was created. </summary>

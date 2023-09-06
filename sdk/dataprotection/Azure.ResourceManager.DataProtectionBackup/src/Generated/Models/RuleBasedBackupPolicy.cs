@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Rule based backup policy. </summary>
     public partial class RuleBasedBackupPolicy : DataProtectionBackupPolicyPropertiesBase
     {
-        /// <summary> Initializes a new instance of RuleBasedBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="policyRules">
         /// Policy rule dictionary that contains rules for each backuptype i.e Full/Incremental/Logs etc
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "BackupPolicy";
         }
 
-        /// <summary> Initializes a new instance of RuleBasedBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
         /// <param name="policyRules">
@@ -40,10 +40,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Please note <see cref="DataProtectionBasePolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataProtectionBackupRule"/> and <see cref="DataProtectionRetentionRule"/>.
         /// </param>
-        internal RuleBasedBackupPolicy(IList<string> dataSourceTypes, string objectType, IList<DataProtectionBasePolicyRule> policyRules) : base(dataSourceTypes, objectType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal RuleBasedBackupPolicy(IList<string> dataSourceTypes, string objectType, IList<DataProtectionBasePolicyRule> policyRules, Dictionary<string, BinaryData> rawData) : base(dataSourceTypes, objectType, rawData)
         {
             PolicyRules = policyRules;
             ObjectType = objectType ?? "BackupPolicy";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/> for deserialization. </summary>
+        internal RuleBasedBackupPolicy()
+        {
         }
 
         /// <summary>

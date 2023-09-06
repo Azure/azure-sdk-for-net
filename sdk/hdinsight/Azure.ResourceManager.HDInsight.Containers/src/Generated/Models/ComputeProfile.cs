@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The compute profile. </summary>
     internal partial class ComputeProfile
     {
-        /// <summary> Initializes a new instance of ComputeProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> is null. </exception>
         public ComputeProfile(IEnumerable<ClusterComputeNodeProfile> nodes)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Nodes = nodes.ToList();
         }
 
-        /// <summary> Initializes a new instance of ComputeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="nodes"> The nodes definitions. </param>
-        internal ComputeProfile(IList<ClusterComputeNodeProfile> nodes)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeProfile(IList<ClusterComputeNodeProfile> nodes, Dictionary<string, BinaryData> rawData)
         {
             Nodes = nodes;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/> for deserialization. </summary>
+        internal ComputeProfile()
+        {
         }
 
         /// <summary> The nodes definitions. </summary>

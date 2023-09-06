@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core.Serialization;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -12,22 +16,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Please note <see cref="DataStoreSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="OperationalDataStoreSettings"/>.
     /// </summary>
+    [DeserializationProxy(typeof(UnknownDataStoreParameters))]
     public abstract partial class DataStoreSettings
     {
-        /// <summary> Initializes a new instance of DataStoreSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         protected DataStoreSettings(DataStoreType dataStoreType)
         {
             DataStoreType = dataStoreType;
         }
 
-        /// <summary> Initializes a new instance of DataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
-        internal DataStoreSettings(string objectType, DataStoreType dataStoreType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataStoreSettings(string objectType, DataStoreType dataStoreType, Dictionary<string, BinaryData> rawData)
         {
             ObjectType = objectType;
             DataStoreType = dataStoreType;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/> for deserialization. </summary>
+        internal DataStoreSettings()
+        {
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

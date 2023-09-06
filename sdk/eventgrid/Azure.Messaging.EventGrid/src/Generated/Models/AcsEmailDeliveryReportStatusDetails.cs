@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Detailed information about the status if any. </summary>
     public partial class AcsEmailDeliveryReportStatusDetails
     {
-        /// <summary> Initializes a new instance of AcsEmailDeliveryReportStatusDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportStatusDetails"/>. </summary>
         internal AcsEmailDeliveryReportStatusDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsEmailDeliveryReportStatusDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportStatusDetails"/>. </summary>
         /// <param name="statusMessage"> Detailed status message. </param>
-        internal AcsEmailDeliveryReportStatusDetails(string statusMessage)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsEmailDeliveryReportStatusDetails(string statusMessage, Dictionary<string, BinaryData> rawData)
         {
             StatusMessage = statusMessage;
+            _rawData = rawData;
         }
 
         /// <summary> Detailed status message. </summary>

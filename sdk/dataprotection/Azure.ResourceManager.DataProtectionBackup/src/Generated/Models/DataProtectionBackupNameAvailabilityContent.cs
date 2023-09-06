@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> CheckNameAvailability Request. </summary>
     public partial class DataProtectionBackupNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityContent"/>. </summary>
         public DataProtectionBackupNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name for which availability needs to be checked. </param>
+        /// <param name="resourceType"> Describes the Resource type: Microsoft.DataProtection/BackupVaults. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupNameAvailabilityContent(string name, ResourceType? resourceType, Dictionary<string, BinaryData> rawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _rawData = rawData;
         }
 
         /// <summary> Resource name for which availability needs to be checked. </summary>

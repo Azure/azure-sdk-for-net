@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
     public partial class StorageLifecyclePolicyActionSummaryDetail
     {
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyActionSummaryDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         internal StorageLifecyclePolicyActionSummaryDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyActionSummaryDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         /// <param name="totalObjectsCount"> Total number of objects to be acted on by this action. </param>
         /// <param name="successCount"> Number of success operations of this action. </param>
         /// <param name="errorList"> Error messages of this action if any. </param>
-        internal StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount, long? successCount, string errorList)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount, long? successCount, string errorList, Dictionary<string, BinaryData> rawData)
         {
             TotalObjectsCount = totalObjectsCount;
             SuccessCount = successCount;
             ErrorList = errorList;
+            _rawData = rawData;
         }
 
         /// <summary> Total number of objects to be acted on by this action. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> A TXT record. </summary>
     public partial class DnsTxtRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsTxtRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsTxtRecordInfo"/>. </summary>
         public DnsTxtRecordInfo()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DnsTxtRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsTxtRecordInfo"/>. </summary>
         /// <param name="values"> The text value of this TXT record. </param>
-        internal DnsTxtRecordInfo(IList<string> values)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsTxtRecordInfo(IList<string> values, Dictionary<string, BinaryData> rawData)
         {
             Values = values;
+            _rawData = rawData;
         }
 
         /// <summary> The text value of this TXT record. </summary>

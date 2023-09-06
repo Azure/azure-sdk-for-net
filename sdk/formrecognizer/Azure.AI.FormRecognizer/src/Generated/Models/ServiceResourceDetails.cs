@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> General information regarding the current resource. </summary>
     internal partial class ServiceResourceDetails
     {
-        /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
         internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels)
@@ -23,13 +27,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             CustomDocumentModels = customDocumentModels;
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
-        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels, ResourceQuotaDetails customNeuralDocumentModelBuilds)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels, ResourceQuotaDetails customNeuralDocumentModelBuilds, Dictionary<string, BinaryData> rawData)
         {
             CustomDocumentModels = customDocumentModels;
             CustomNeuralDocumentModelBuilds = customNeuralDocumentModelBuilds;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceDetails"/> for deserialization. </summary>
+        internal ServiceResourceDetails()
+        {
         }
 
         /// <summary> Details regarding custom document models. </summary>

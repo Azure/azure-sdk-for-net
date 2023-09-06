@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A consumer side list of source dataSets. </summary>
     internal partial class ConsumerSourceDataSetList
     {
-        /// <summary> Initializes a new instance of ConsumerSourceDataSetList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSetList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConsumerSourceDataSetList(IEnumerable<ConsumerSourceDataSet> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConsumerSourceDataSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSetList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal ConsumerSourceDataSetList(string nextLink, IReadOnlyList<ConsumerSourceDataSet> value)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumerSourceDataSetList(string nextLink, IReadOnlyList<ConsumerSourceDataSet> value, Dictionary<string, BinaryData> rawData)
         {
             NextLink = nextLink;
             Value = value;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSetList"/> for deserialization. </summary>
+        internal ConsumerSourceDataSetList()
+        {
         }
 
         /// <summary> The Url of next result page. </summary>

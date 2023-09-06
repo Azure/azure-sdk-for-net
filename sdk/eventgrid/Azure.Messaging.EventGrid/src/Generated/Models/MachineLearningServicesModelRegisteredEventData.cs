@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelRegistered event. </summary>
     public partial class MachineLearningServicesModelRegisteredEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesModelRegisteredEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
         internal MachineLearningServicesModelRegisteredEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesModelRegisteredEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelRegisteredEventData"/>. </summary>
         /// <param name="modelName"> The name of the model that was registered. </param>
         /// <param name="modelVersion"> The version of the model that was registered. </param>
         /// <param name="modelTags"> The tags of the model that was registered. </param>
         /// <param name="modelProperties"> The properties of the model that was registered. </param>
-        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, object modelTags, object modelProperties)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesModelRegisteredEventData(string modelName, string modelVersion, object modelTags, object modelProperties, Dictionary<string, BinaryData> rawData)
         {
             ModelName = modelName;
             ModelVersion = modelVersion;
             ModelTags = modelTags;
             ModelProperties = modelProperties;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the model that was registered. </summary>

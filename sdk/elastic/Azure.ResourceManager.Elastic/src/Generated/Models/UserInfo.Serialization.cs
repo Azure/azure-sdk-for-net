@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class UserInfo : IUtf8JsonSerializable
+    public partial class UserInfo : IUtf8JsonSerializable, IModelJsonSerializable<UserInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UserInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<UserInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<UserInfo>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstName))
             {
@@ -38,13 +46,34 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
-                writer.WriteObjectValue(CompanyInfo);
+                if (CompanyInfo is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<CompanyInfo>)CompanyInfo).Serialize(writer, options);
+                }
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static UserInfo DeserializeUserInfo(JsonElement element)
+        internal static UserInfo DeserializeUserInfo(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +83,7 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<string> companyName = default;
             Optional<string> emailAddress = default;
             Optional<CompanyInfo> companyInfo = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))
@@ -85,8 +115,61 @@ namespace Azure.ResourceManager.Elastic.Models
                     companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value);
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new UserInfo(firstName.Value, lastName.Value, companyName.Value, emailAddress.Value, companyInfo.Value);
+            return new UserInfo(firstName.Value, lastName.Value, companyName.Value, emailAddress.Value, companyInfo.Value, rawData);
+        }
+
+        UserInfo IModelJsonSerializable<UserInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<UserInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        UserInfo IModelSerializable<UserInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<UserInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeUserInfo(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="UserInfo"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="UserInfo"/> to convert. </param>
+        public static implicit operator RequestContent(UserInfo model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="UserInfo"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator UserInfo(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeUserInfo(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

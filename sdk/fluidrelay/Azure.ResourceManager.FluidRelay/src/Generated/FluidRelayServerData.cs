@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.FluidRelay
     /// </summary>
     public partial class FluidRelayServerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FluidRelayServerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FluidRelayServerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of FluidRelayServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// <param name="provisioningState"> Provision states for FluidRelay RP. </param>
         /// <param name="encryption"> All encryption configuration for a resource. </param>
         /// <param name="storageSku"> Sku of the storage associated with the resource. </param>
-        internal FluidRelayServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? frsTenantId, FluidRelayEndpoints fluidRelayEndpoints, FluidRelayProvisioningState? provisioningState, Models.EncryptionProperties encryption, FluidRelayStorageSku? storageSku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FluidRelayServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? frsTenantId, FluidRelayEndpoints fluidRelayEndpoints, FluidRelayProvisioningState? provisioningState, Models.EncryptionProperties encryption, FluidRelayStorageSku? storageSku, Dictionary<string, BinaryData> rawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             FrsTenantId = frsTenantId;
@@ -46,6 +50,12 @@ namespace Azure.ResourceManager.FluidRelay
             ProvisioningState = provisioningState;
             Encryption = encryption;
             StorageSku = storageSku;
+            _rawData = rawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerData"/> for deserialization. </summary>
+        internal FluidRelayServerData()
+        {
         }
 
         /// <summary> The type of identity used for the resource. </summary>

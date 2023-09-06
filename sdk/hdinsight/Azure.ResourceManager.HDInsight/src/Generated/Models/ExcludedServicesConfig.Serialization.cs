@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ExcludedServicesConfig : IUtf8JsonSerializable
+    public partial class ExcludedServicesConfig : IUtf8JsonSerializable, IModelJsonSerializable<ExcludedServicesConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ExcludedServicesConfig>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ExcludedServicesConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ExcludedServicesConfig>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExcludedServicesConfigId))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("excludedServicesList"u8);
                 writer.WriteStringValue(ExcludedServicesList);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExcludedServicesConfig DeserializeExcludedServicesConfig(JsonElement element)
+        internal static ExcludedServicesConfig DeserializeExcludedServicesConfig(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> excludedServicesConfigId = default;
             Optional<string> excludedServicesList = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("excludedServicesConfigId"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.HDInsight.Models
                     excludedServicesList = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ExcludedServicesConfig(excludedServicesConfigId.Value, excludedServicesList.Value);
+            return new ExcludedServicesConfig(excludedServicesConfigId.Value, excludedServicesList.Value, rawData);
+        }
+
+        ExcludedServicesConfig IModelJsonSerializable<ExcludedServicesConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExcludedServicesConfig>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeExcludedServicesConfig(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ExcludedServicesConfig>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExcludedServicesConfig>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ExcludedServicesConfig IModelSerializable<ExcludedServicesConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ExcludedServicesConfig>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeExcludedServicesConfig(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ExcludedServicesConfig"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ExcludedServicesConfig"/> to convert. </param>
+        public static implicit operator RequestContent(ExcludedServicesConfig model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ExcludedServicesConfig"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ExcludedServicesConfig(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeExcludedServicesConfig(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

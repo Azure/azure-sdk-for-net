@@ -5,31 +5,54 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingActionTime : IUtf8JsonSerializable
+    public partial class ScalingActionTime : IUtf8JsonSerializable, IModelJsonSerializable<ScalingActionTime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ScalingActionTime>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ScalingActionTime>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ScalingActionTime>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("hour"u8);
             writer.WriteNumberValue(Hour);
             writer.WritePropertyName("minute"u8);
             writer.WriteNumberValue(Minute);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalingActionTime DeserializeScalingActionTime(JsonElement element)
+        internal static ScalingActionTime DeserializeScalingActionTime(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int hour = default;
             int minute = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hour"u8))
@@ -42,8 +65,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     minute = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ScalingActionTime(hour, minute);
+            return new ScalingActionTime(hour, minute, rawData);
+        }
+
+        ScalingActionTime IModelJsonSerializable<ScalingActionTime>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScalingActionTime>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingActionTime(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ScalingActionTime>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScalingActionTime>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ScalingActionTime IModelSerializable<ScalingActionTime>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ScalingActionTime>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeScalingActionTime(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ScalingActionTime"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ScalingActionTime"/> to convert. </param>
+        public static implicit operator RequestContent(ScalingActionTime model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ScalingActionTime"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ScalingActionTime(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeScalingActionTime(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

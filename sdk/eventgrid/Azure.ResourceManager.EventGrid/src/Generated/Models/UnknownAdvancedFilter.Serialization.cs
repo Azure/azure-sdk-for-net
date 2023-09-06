@@ -5,15 +5,21 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownAdvancedFilter : IUtf8JsonSerializable
+    internal partial class UnknownAdvancedFilter : IUtf8JsonSerializable, IModelJsonSerializable<AdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AdvancedFilter>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<AdvancedFilter>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<AdvancedFilter>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
@@ -22,31 +28,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownAdvancedFilter DeserializeUnknownAdvancedFilter(JsonElement element)
+        internal static AdvancedFilter DeserializeUnknownAdvancedFilter(JsonElement element, ModelSerializerOptions options = default) => DeserializeAdvancedFilter(element, options);
+
+        AdvancedFilter IModelJsonSerializable<AdvancedFilter>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            AdvancedFilterOperatorType operatorType = "Unknown";
-            Optional<string> key = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("operatorType"u8))
-                {
-                    operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("key"u8))
-                {
-                    key = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownAdvancedFilter(operatorType, key.Value);
+            Core.ModelSerializerHelper.ValidateFormat<AdvancedFilter>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownAdvancedFilter(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<AdvancedFilter>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdvancedFilter>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        AdvancedFilter IModelSerializable<AdvancedFilter>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<AdvancedFilter>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeAdvancedFilter(doc.RootElement, options);
         }
     }
 }

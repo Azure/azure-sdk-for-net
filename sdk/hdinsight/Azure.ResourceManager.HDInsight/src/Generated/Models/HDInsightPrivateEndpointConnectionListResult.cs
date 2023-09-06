@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The list private endpoint connections response. </summary>
     internal partial class HDInsightPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionListResult"/>. </summary>
         internal HDInsightPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of private endpoint connections. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal HDInsightPrivateEndpointConnectionListResult(IReadOnlyList<HDInsightPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightPrivateEndpointConnectionListResult(IReadOnlyList<HDInsightPrivateEndpointConnectionData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> The list of private endpoint connections. </summary>

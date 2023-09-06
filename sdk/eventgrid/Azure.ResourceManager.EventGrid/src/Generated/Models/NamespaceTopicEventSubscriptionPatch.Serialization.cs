@@ -5,22 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NamespaceTopicEventSubscriptionPatch : IUtf8JsonSerializable
+    public partial class NamespaceTopicEventSubscriptionPatch : IUtf8JsonSerializable, IModelJsonSerializable<NamespaceTopicEventSubscriptionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<NamespaceTopicEventSubscriptionPatch>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<NamespaceTopicEventSubscriptionPatch>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceTopicEventSubscriptionPatch>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration);
+                if (DeliveryConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DeliveryConfiguration>)DeliveryConfiguration).Serialize(writer, options);
+                }
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -30,10 +45,139 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration);
+                if (FiltersConfiguration is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<FiltersConfiguration>)FiltersConfiguration).Serialize(writer, options);
+                }
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static NamespaceTopicEventSubscriptionPatch DeserializeNamespaceTopicEventSubscriptionPatch(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DeliveryConfiguration> deliveryConfiguration = default;
+            Optional<DeliverySchema> eventDeliverySchema = default;
+            Optional<FiltersConfiguration> filtersConfiguration = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("deliveryConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deliveryConfiguration = DeliveryConfiguration.DeserializeDeliveryConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("eventDeliverySchema"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eventDeliverySchema = new DeliverySchema(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("filtersConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            filtersConfiguration = FiltersConfiguration.DeserializeFiltersConfiguration(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value, rawData);
+        }
+
+        NamespaceTopicEventSubscriptionPatch IModelJsonSerializable<NamespaceTopicEventSubscriptionPatch>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceTopicEventSubscriptionPatch>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeNamespaceTopicEventSubscriptionPatch(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<NamespaceTopicEventSubscriptionPatch>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceTopicEventSubscriptionPatch>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        NamespaceTopicEventSubscriptionPatch IModelSerializable<NamespaceTopicEventSubscriptionPatch>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<NamespaceTopicEventSubscriptionPatch>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeNamespaceTopicEventSubscriptionPatch(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="NamespaceTopicEventSubscriptionPatch"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="NamespaceTopicEventSubscriptionPatch"/> to convert. </param>
+        public static implicit operator RequestContent(NamespaceTopicEventSubscriptionPatch model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="NamespaceTopicEventSubscriptionPatch"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator NamespaceTopicEventSubscriptionPatch(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeNamespaceTopicEventSubscriptionPatch(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

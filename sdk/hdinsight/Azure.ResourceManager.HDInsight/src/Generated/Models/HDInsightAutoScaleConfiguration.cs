@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfiguration"/>. </summary>
         public HDInsightAutoScaleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleConfiguration"/>. </summary>
         /// <param name="capacity"> Parameters for load-based autoscale. </param>
         /// <param name="recurrence"> Parameters for schedule-based autoscale. </param>
-        internal HDInsightAutoScaleConfiguration(HDInsightAutoScaleCapacity capacity, HDInsightAutoScaleRecurrence recurrence)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAutoScaleConfiguration(HDInsightAutoScaleCapacity capacity, HDInsightAutoScaleRecurrence recurrence, Dictionary<string, BinaryData> rawData)
         {
             Capacity = capacity;
             Recurrence = recurrence;
+            _rawData = rawData;
         }
 
         /// <summary> Parameters for load-based autoscale. </summary>

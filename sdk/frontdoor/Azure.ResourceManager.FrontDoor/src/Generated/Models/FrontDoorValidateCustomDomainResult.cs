@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Output of custom domain validation. </summary>
     public partial class FrontDoorValidateCustomDomainResult
     {
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainResult"/>. </summary>
         internal FrontDoorValidateCustomDomainResult()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainResult"/>. </summary>
         /// <param name="isCustomDomainValidated"> Indicates whether the custom domain is valid or not. </param>
         /// <param name="reason"> The reason why the custom domain is not valid. </param>
         /// <param name="message"> Error message describing why the custom domain is not valid. </param>
-        internal FrontDoorValidateCustomDomainResult(bool? isCustomDomainValidated, string reason, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorValidateCustomDomainResult(bool? isCustomDomainValidated, string reason, string message, Dictionary<string, BinaryData> rawData)
         {
             IsCustomDomainValidated = isCustomDomainValidated;
             Reason = reason;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates whether the custom domain is valid or not. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The quota properties for the cluster. </summary>
     internal partial class QuotaInfo
     {
-        /// <summary> Initializes a new instance of QuotaInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaInfo"/>. </summary>
         public QuotaInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaInfo"/>. </summary>
         /// <param name="coresUsed"> The cores used by the cluster. </param>
-        internal QuotaInfo(int? coresUsed)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaInfo(int? coresUsed, Dictionary<string, BinaryData> rawData)
         {
             CoresUsed = coresUsed;
+            _rawData = rawData;
         }
 
         /// <summary> The cores used by the cluster. </summary>

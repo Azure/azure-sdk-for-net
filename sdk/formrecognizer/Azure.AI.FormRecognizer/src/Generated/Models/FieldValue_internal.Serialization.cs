@@ -8,14 +8,152 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class FieldValue_internal
+    internal partial class FieldValue_internal : IUtf8JsonSerializable, IModelJsonSerializable<FieldValue_internal>
     {
-        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<FieldValue_internal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<FieldValue_internal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<FieldValue_internal>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToSerialString());
+            if (Optional.IsDefined(ValueString))
+            {
+                writer.WritePropertyName("valueString"u8);
+                writer.WriteStringValue(ValueString);
+            }
+            if (Optional.IsDefined(ValueDate))
+            {
+                writer.WritePropertyName("valueDate"u8);
+                writer.WriteStringValue(ValueDate.Value, "D");
+            }
+            if (Optional.IsDefined(ValueTime))
+            {
+                writer.WritePropertyName("valueTime"u8);
+                writer.WriteStringValue(ValueTime.Value, "T");
+            }
+            if (Optional.IsDefined(ValuePhoneNumber))
+            {
+                writer.WritePropertyName("valuePhoneNumber"u8);
+                writer.WriteStringValue(ValuePhoneNumber);
+            }
+            if (Optional.IsDefined(ValueNumber))
+            {
+                writer.WritePropertyName("valueNumber"u8);
+                writer.WriteNumberValue(ValueNumber.Value);
+            }
+            if (Optional.IsDefined(ValueInteger))
+            {
+                writer.WritePropertyName("valueInteger"u8);
+                writer.WriteNumberValue(ValueInteger.Value);
+            }
+            if (Optional.IsCollectionDefined(ValueArray))
+            {
+                writer.WritePropertyName("valueArray"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValueArray)
+                {
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FieldValue_internal>)item).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ValueObject))
+            {
+                writer.WritePropertyName("valueObject"u8);
+                writer.WriteStartObject();
+                foreach (var item in ValueObject)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<FieldValue_internal>)item.Value).Serialize(writer, options);
+                    }
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ValueSelectionMark))
+            {
+                writer.WritePropertyName("valueSelectionMark"u8);
+                writer.WriteStringValue(ValueSelectionMark.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ValueCountryRegion))
+            {
+                writer.WritePropertyName("valueCountryRegion"u8);
+                writer.WriteStringValue(ValueCountryRegion);
+            }
+            if (Optional.IsDefined(Text))
+            {
+                writer.WritePropertyName("text"u8);
+                writer.WriteStringValue(Text);
+            }
+            if (Optional.IsCollectionDefined(BoundingBox))
+            {
+                writer.WritePropertyName("boundingBox"u8);
+                writer.WriteStartArray();
+                foreach (var item in BoundingBox)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Confidence))
+            {
+                writer.WritePropertyName("confidence"u8);
+                writer.WriteNumberValue(Confidence.Value);
+            }
+            if (Optional.IsCollectionDefined(Elements))
+            {
+                writer.WritePropertyName("elements"u8);
+                writer.WriteStartArray();
+                foreach (var item in Elements)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Page))
+            {
+                writer.WritePropertyName("page"u8);
+                writer.WriteNumberValue(Page.Value);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static FieldValue_internal DeserializeFieldValue_internal(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +174,7 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<float> confidence = default;
             Optional<IReadOnlyList<string>> elements = default;
             Optional<int> page = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -182,8 +321,61 @@ namespace Azure.AI.FormRecognizer.Models
                     page = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page), rawData);
+        }
+
+        FieldValue_internal IModelJsonSerializable<FieldValue_internal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldValue_internal>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeFieldValue_internal(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<FieldValue_internal>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldValue_internal>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        FieldValue_internal IModelSerializable<FieldValue_internal>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<FieldValue_internal>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeFieldValue_internal(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="FieldValue_internal"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="FieldValue_internal"/> to convert. </param>
+        public static implicit operator RequestContent(FieldValue_internal model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="FieldValue_internal"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator FieldValue_internal(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeFieldValue_internal(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

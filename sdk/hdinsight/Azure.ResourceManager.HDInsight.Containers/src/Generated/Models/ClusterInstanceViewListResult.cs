@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The instance view of a HDInsight Cluster. </summary>
     internal partial class ClusterInstanceViewListResult
     {
-        /// <summary> Initializes a new instance of ClusterInstanceViewListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewListResult"/>. </summary>
         internal ClusterInstanceViewListResult()
         {
             Value = new ChangeTrackingList<ClusterInstanceViewResult>();
         }
 
-        /// <summary> Initializes a new instance of ClusterInstanceViewListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewListResult"/>. </summary>
         /// <param name="value"> Cluster instance view array. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ClusterInstanceViewListResult(IReadOnlyList<ClusterInstanceViewResult> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterInstanceViewListResult(IReadOnlyList<ClusterInstanceViewResult> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Cluster instance view array. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The details about the localizable name of a type of usage. </summary>
     public partial class HDInsightLocalizedName
     {
-        /// <summary> Initializes a new instance of HDInsightLocalizedName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightLocalizedName"/>. </summary>
         internal HDInsightLocalizedName()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightLocalizedName. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLocalizedName"/>. </summary>
         /// <param name="value"> The name of the used resource. </param>
         /// <param name="localizedValue"> The localized name of the used resource. </param>
-        internal HDInsightLocalizedName(string value, string localizedValue)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightLocalizedName(string value, string localizedValue, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _rawData = rawData;
         }
 
         /// <summary> The name of the used resource. </summary>

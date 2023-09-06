@@ -5,17 +5,24 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class CustomLocationEnabledResourceType : IUtf8JsonSerializable
+    public partial class CustomLocationEnabledResourceType : IUtf8JsonSerializable, IModelJsonSerializable<CustomLocationEnabledResourceType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CustomLocationEnabledResourceType>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<CustomLocationEnabledResourceType>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLocationEnabledResourceType>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -35,16 +42,37 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WriteStartArray();
                 foreach (var item in TypesMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IModelJsonSerializable<CustomLocationEnabledResourceTypeMetadata>)item).Serialize(writer, options);
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomLocationEnabledResourceType DeserializeCustomLocationEnabledResourceType(JsonElement element)
+        internal static CustomLocationEnabledResourceType DeserializeCustomLocationEnabledResourceType(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +84,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             Optional<ResourceIdentifier> clusterExtensionId = default;
             Optional<string> extensionType = default;
             Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,8 +151,61 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     }
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata));
+            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata), rawData);
+        }
+
+        CustomLocationEnabledResourceType IModelJsonSerializable<CustomLocationEnabledResourceType>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLocationEnabledResourceType>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomLocationEnabledResourceType(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<CustomLocationEnabledResourceType>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLocationEnabledResourceType>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        CustomLocationEnabledResourceType IModelSerializable<CustomLocationEnabledResourceType>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<CustomLocationEnabledResourceType>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeCustomLocationEnabledResourceType(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="CustomLocationEnabledResourceType"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="CustomLocationEnabledResourceType"/> to convert. </param>
+        public static implicit operator RequestContent(CustomLocationEnabledResourceType model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="CustomLocationEnabledResourceType"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator CustomLocationEnabledResourceType(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeCustomLocationEnabledResourceType(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class TrinoUserPlugin : IUtf8JsonSerializable
+    public partial class TrinoUserPlugin : IUtf8JsonSerializable, IModelJsonSerializable<TrinoUserPlugin>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<TrinoUserPlugin>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<TrinoUserPlugin>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<TrinoUserPlugin>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -30,11 +38,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrinoUserPlugin DeserializeTrinoUserPlugin(JsonElement element)
+        internal static TrinoUserPlugin DeserializeTrinoUserPlugin(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<bool> enabled = default;
             Optional<string> name = default;
             Optional<string> path = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -63,8 +86,61 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new TrinoUserPlugin(Optional.ToNullable(enabled), name.Value, path.Value);
+            return new TrinoUserPlugin(Optional.ToNullable(enabled), name.Value, path.Value, rawData);
+        }
+
+        TrinoUserPlugin IModelJsonSerializable<TrinoUserPlugin>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrinoUserPlugin>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrinoUserPlugin(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<TrinoUserPlugin>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrinoUserPlugin>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        TrinoUserPlugin IModelSerializable<TrinoUserPlugin>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<TrinoUserPlugin>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeTrinoUserPlugin(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="TrinoUserPlugin"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="TrinoUserPlugin"/> to convert. </param>
+        public static implicit operator RequestContent(TrinoUserPlugin model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="TrinoUserPlugin"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator TrinoUserPlugin(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTrinoUserPlugin(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

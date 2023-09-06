@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class QuerySpecification : IUtf8JsonSerializable
+    internal partial class QuerySpecification : IUtf8JsonSerializable, IModelJsonSerializable<QuerySpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<QuerySpecification>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<QuerySpecification>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<QuerySpecification>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -25,7 +33,99 @@ namespace Azure.DigitalTwins.Core
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        internal static QuerySpecification DeserializeQuerySpecification(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> query = default;
+            Optional<string> continuationToken = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("query"u8))
+                {
+                    query = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("continuationToken"u8))
+                {
+                    continuationToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
+            }
+            return new QuerySpecification(query.Value, continuationToken.Value, rawData);
+        }
+
+        QuerySpecification IModelJsonSerializable<QuerySpecification>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<QuerySpecification>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuerySpecification(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<QuerySpecification>.Serialize(ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<QuerySpecification>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        QuerySpecification IModelSerializable<QuerySpecification>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<QuerySpecification>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeQuerySpecification(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="QuerySpecification"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="QuerySpecification"/> to convert. </param>
+        public static implicit operator RequestContent(QuerySpecification model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="QuerySpecification"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator QuerySpecification(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeQuerySpecification(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

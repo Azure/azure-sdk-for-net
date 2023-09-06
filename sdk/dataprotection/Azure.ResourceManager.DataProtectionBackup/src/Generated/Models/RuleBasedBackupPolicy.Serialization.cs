@@ -5,22 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RuleBasedBackupPolicy : IUtf8JsonSerializable
+    public partial class RuleBasedBackupPolicy : IUtf8JsonSerializable, IModelJsonSerializable<RuleBasedBackupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RuleBasedBackupPolicy>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RuleBasedBackupPolicy>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<RuleBasedBackupPolicy>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("policyRules"u8);
             writer.WriteStartArray();
             foreach (var item in PolicyRules)
             {
-                writer.WriteObjectValue(item);
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<DataProtectionBasePolicyRule>)item).Serialize(writer, options);
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceTypes"u8);
@@ -32,11 +46,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleBasedBackupPolicy DeserializeRuleBasedBackupPolicy(JsonElement element)
+        internal static RuleBasedBackupPolicy DeserializeRuleBasedBackupPolicy(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<DataProtectionBasePolicyRule> policyRules = default;
             IList<string> datasourceTypes = default;
             string objectType = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyRules"u8))
@@ -71,8 +100,61 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new RuleBasedBackupPolicy(datasourceTypes, objectType, policyRules);
+            return new RuleBasedBackupPolicy(datasourceTypes, objectType, policyRules, rawData);
+        }
+
+        RuleBasedBackupPolicy IModelJsonSerializable<RuleBasedBackupPolicy>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleBasedBackupPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleBasedBackupPolicy(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<RuleBasedBackupPolicy>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleBasedBackupPolicy>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        RuleBasedBackupPolicy IModelSerializable<RuleBasedBackupPolicy>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<RuleBasedBackupPolicy>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeRuleBasedBackupPolicy(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="RuleBasedBackupPolicy"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="RuleBasedBackupPolicy"/> to convert. </param>
+        public static implicit operator RequestContent(RuleBasedBackupPolicy model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="RuleBasedBackupPolicy"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator RuleBasedBackupPolicy(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRuleBasedBackupPolicy(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

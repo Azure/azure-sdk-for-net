@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> The check availability result. </summary>
     public partial class CheckNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
         internal CheckNameAvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, Dictionary<string, BinaryData> rawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>

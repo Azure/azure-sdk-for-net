@@ -6,17 +6,99 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(ResourceWriteSuccessEventDataConverter))]
-    public partial class ResourceWriteSuccessEventData
+    public partial class ResourceWriteSuccessEventData : IUtf8JsonSerializable, IModelJsonSerializable<ResourceWriteSuccessEventData>
     {
-        internal static ResourceWriteSuccessEventData DeserializeResourceWriteSuccessEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceWriteSuccessEventData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<ResourceWriteSuccessEventData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceWriteSuccessEventData>(this, options.Format);
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (Optional.IsDefined(ResourceProvider))
+            {
+                writer.WritePropertyName("resourceProvider"u8);
+                writer.WriteStringValue(ResourceProvider);
+            }
+            if (Optional.IsDefined(ResourceUri))
+            {
+                writer.WritePropertyName("resourceUri"u8);
+                writer.WriteStringValue(ResourceUri);
+            }
+            if (Optional.IsDefined(OperationName))
+            {
+                writer.WritePropertyName("operationName"u8);
+                writer.WriteStringValue(OperationName);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(AuthorizationJson))
+            {
+                writer.WritePropertyName("authorization"u8);
+                AuthorizationJson.WriteTo(writer);
+            }
+            if (Optional.IsDefined(ClaimsJson))
+            {
+                writer.WritePropertyName("claims"u8);
+                ClaimsJson.WriteTo(writer);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (Optional.IsDefined(HttpRequestJson))
+            {
+                writer.WritePropertyName("httpRequest"u8);
+                HttpRequestJson.WriteTo(writer);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ResourceWriteSuccessEventData DeserializeResourceWriteSuccessEventData(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +114,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<JsonElement> claims = default;
             Optional<string> correlationId = default;
             Optional<JsonElement> httpRequest = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -89,15 +172,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     httpRequest = property.Value.Clone();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new ResourceWriteSuccessEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization, claims, correlationId.Value, httpRequest);
+            return new ResourceWriteSuccessEventData(tenantId.Value, subscriptionId.Value, resourceGroup.Value, resourceProvider.Value, resourceUri.Value, operationName.Value, status.Value, authorization, claims, correlationId.Value, httpRequest, rawData);
+        }
+
+        ResourceWriteSuccessEventData IModelJsonSerializable<ResourceWriteSuccessEventData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceWriteSuccessEventData>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceWriteSuccessEventData(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<ResourceWriteSuccessEventData>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceWriteSuccessEventData>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        ResourceWriteSuccessEventData IModelSerializable<ResourceWriteSuccessEventData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<ResourceWriteSuccessEventData>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeResourceWriteSuccessEventData(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="ResourceWriteSuccessEventData"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="ResourceWriteSuccessEventData"/> to convert. </param>
+        public static implicit operator RequestContent(ResourceWriteSuccessEventData model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="ResourceWriteSuccessEventData"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator ResourceWriteSuccessEventData(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeResourceWriteSuccessEventData(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         internal partial class ResourceWriteSuccessEventDataConverter : JsonConverter<ResourceWriteSuccessEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceWriteSuccessEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override ResourceWriteSuccessEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

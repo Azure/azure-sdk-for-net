@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Settings for Azure Monitor based alerts. </summary>
     internal partial class AzureMonitorAlertSettings
     {
-        /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         public AzureMonitorAlertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorAlertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         /// <param name="alertSettingsForAllJobFailures"></param>
-        internal AzureMonitorAlertSettings(AzureMonitorAlertsState? alertSettingsForAllJobFailures)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMonitorAlertSettings(AzureMonitorAlertsState? alertSettingsForAllJobFailures, Dictionary<string, BinaryData> rawData)
         {
             AlertSettingsForAllJobFailures = alertSettingsForAllJobFailures;
+            _rawData = rawData;
         }
 
         /// <summary> Gets or sets the alert settings for all job failures. </summary>

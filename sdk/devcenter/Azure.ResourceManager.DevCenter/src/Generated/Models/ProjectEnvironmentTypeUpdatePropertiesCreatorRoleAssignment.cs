@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The role definition assigned to the environment creator on backing resources. </summary>
     internal partial class ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment
     {
-        /// <summary> Initializes a new instance of ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/>. </summary>
         public ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment()
         {
             Roles = new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
         }
 
-        /// <summary> Initializes a new instance of ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment"/>. </summary>
         /// <param name="roles"> A map of roles to assign to the environment creator. </param>
-        internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(IDictionary<string, DevCenterEnvironmentRole> roles)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(IDictionary<string, DevCenterEnvironmentRole> roles, Dictionary<string, BinaryData> rawData)
         {
             Roles = roles;
+            _rawData = rawData;
         }
 
         /// <summary> A map of roles to assign to the environment creator. </summary>

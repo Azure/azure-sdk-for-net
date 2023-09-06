@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties to attach new disk to the Virtual Machine. </summary>
     public partial class AttachNewDataDiskDetails
     {
-        /// <summary> Initializes a new instance of AttachNewDataDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachNewDataDiskDetails"/>. </summary>
         public AttachNewDataDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AttachNewDataDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachNewDataDiskDetails"/>. </summary>
         /// <param name="diskSizeGiB"> Size of the disk to be attached in Gibibytes. </param>
         /// <param name="diskName"> The name of the disk to be attached. </param>
         /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
-        internal AttachNewDataDiskDetails(int? diskSizeGiB, string diskName, DevTestLabStorageType? diskType)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachNewDataDiskDetails(int? diskSizeGiB, string diskName, DevTestLabStorageType? diskType, Dictionary<string, BinaryData> rawData)
         {
             DiskSizeGiB = diskSizeGiB;
             DiskName = diskName;
             DiskType = diskType;
+            _rawData = rawData;
         }
 
         /// <summary> Size of the disk to be attached in Gibibytes. </summary>

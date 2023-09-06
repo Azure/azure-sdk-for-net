@@ -5,22 +5,69 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class IncomingRelationshipCollection
+    internal partial class IncomingRelationshipCollection : IUtf8JsonSerializable, IModelJsonSerializable<IncomingRelationshipCollection>
     {
-        internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<IncomingRelationshipCollection>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<IncomingRelationshipCollection>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<IncomingRelationshipCollection>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                if (item is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IModelJsonSerializable<IncomingRelationship>)item).Serialize(writer, options);
+                }
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static IncomingRelationshipCollection DeserializeIncomingRelationshipCollection(JsonElement element, ModelSerializerOptions options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<IncomingRelationship> value = default;
             Optional<string> nextLink = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,8 +85,61 @@ namespace Azure.DigitalTwins.Core
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new IncomingRelationshipCollection(value, nextLink.Value);
+            return new IncomingRelationshipCollection(value, nextLink.Value, rawData);
+        }
+
+        IncomingRelationshipCollection IModelJsonSerializable<IncomingRelationshipCollection>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<IncomingRelationshipCollection>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeIncomingRelationshipCollection(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<IncomingRelationshipCollection>.Serialize(ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<IncomingRelationshipCollection>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        IncomingRelationshipCollection IModelSerializable<IncomingRelationshipCollection>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Azure.Core.ModelSerializerHelper.ValidateFormat<IncomingRelationshipCollection>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeIncomingRelationshipCollection(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="IncomingRelationshipCollection"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="IncomingRelationshipCollection"/> to convert. </param>
+        public static implicit operator RequestContent(IncomingRelationshipCollection model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="IncomingRelationshipCollection"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator IncomingRelationshipCollection(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeIncomingRelationshipCollection(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

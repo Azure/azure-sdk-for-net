@@ -14,26 +14,31 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> SSO details from the Dynatrace partner. </summary>
     public partial class DynatraceSsoDetailsResult
     {
-        /// <summary> Initializes a new instance of DynatraceSsoDetailsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsResult"/>. </summary>
         internal DynatraceSsoDetailsResult()
         {
             AadDomains = new ChangeTrackingList<string>();
             AdminUsers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DynatraceSsoDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsResult"/>. </summary>
         /// <param name="isSsoEnabled"> Whether the SSO is enabled for this resource or not. </param>
         /// <param name="metadataUri"> URL for Azure AD metadata. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
         /// <param name="aadDomains"> array of Aad(azure active directory) domains. </param>
         /// <param name="adminUsers"> Array of admin user emails. </param>
-        internal DynatraceSsoDetailsResult(DynatraceSsoStatus? isSsoEnabled, Uri metadataUri, Uri singleSignOnUri, IReadOnlyList<string> aadDomains, IReadOnlyList<string> adminUsers)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceSsoDetailsResult(DynatraceSsoStatus? isSsoEnabled, Uri metadataUri, Uri singleSignOnUri, IReadOnlyList<string> aadDomains, IReadOnlyList<string> adminUsers, Dictionary<string, BinaryData> rawData)
         {
             IsSsoEnabled = isSsoEnabled;
             MetadataUri = metadataUri;
             SingleSignOnUri = singleSignOnUri;
             AadDomains = aadDomains;
             AdminUsers = adminUsers;
+            _rawData = rawData;
         }
 
         /// <summary> Whether the SSO is enabled for this resource or not. </summary>

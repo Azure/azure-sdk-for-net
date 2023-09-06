@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The result of the List SchemaGroup operation. </summary>
     internal partial class SchemaGroupListResult
     {
-        /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/>. </summary>
         internal SchemaGroupListResult()
         {
             Value = new ChangeTrackingList<EventHubsSchemaGroupData>();
         }
 
-        /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupListResult"/>. </summary>
         /// <param name="value"> Result of the List SchemaGroups operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Schema Groups. </param>
-        internal SchemaGroupListResult(IReadOnlyList<EventHubsSchemaGroupData> value, string nextLink)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaGroupListResult(IReadOnlyList<EventHubsSchemaGroupData> value, string nextLink, Dictionary<string, BinaryData> rawData)
         {
             Value = value;
             NextLink = nextLink;
+            _rawData = rawData;
         }
 
         /// <summary> Result of the List SchemaGroups operation. </summary>

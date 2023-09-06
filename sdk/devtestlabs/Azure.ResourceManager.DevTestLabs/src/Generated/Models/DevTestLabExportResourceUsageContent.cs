@@ -6,15 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The parameters of the export operation. </summary>
     public partial class DevTestLabExportResourceUsageContent
     {
-        /// <summary> Initializes a new instance of DevTestLabExportResourceUsageContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabExportResourceUsageContent"/>. </summary>
         public DevTestLabExportResourceUsageContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabExportResourceUsageContent"/>. </summary>
+        /// <param name="blobStorageAbsoluteSasUri"> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </param>
+        /// <param name="usageStartOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabExportResourceUsageContent(Uri blobStorageAbsoluteSasUri, DateTimeOffset? usageStartOn, Dictionary<string, BinaryData> rawData)
+        {
+            BlobStorageAbsoluteSasUri = blobStorageAbsoluteSasUri;
+            UsageStartOn = usageStartOn;
+            _rawData = rawData;
         }
 
         /// <summary> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </summary>

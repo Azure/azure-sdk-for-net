@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the partner configuration update. </summary>
     public partial class PartnerConfigurationPatch
     {
-        /// <summary> Initializes a new instance of PartnerConfigurationPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationPatch"/>. </summary>
         public PartnerConfigurationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerConfigurationPatch"/>. </summary>
+        /// <param name="tags"> Tags of the partner configuration resource. </param>
+        /// <param name="defaultMaximumExpirationTimeInDays"> The default time used to validate the maximum expiration time for each authorized partners in days. Allowed values ar between 1 and 365 days. </param>
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerConfigurationPatch(IDictionary<string, string> tags, int? defaultMaximumExpirationTimeInDays, Dictionary<string, BinaryData> rawData)
+        {
+            Tags = tags;
+            DefaultMaximumExpirationTimeInDays = defaultMaximumExpirationTimeInDays;
+            _rawData = rawData;
         }
 
         /// <summary> Tags of the partner configuration resource. </summary>

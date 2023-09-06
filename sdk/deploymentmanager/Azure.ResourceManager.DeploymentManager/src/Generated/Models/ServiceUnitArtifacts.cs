@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     /// <summary> Defines the artifacts of a service unit. </summary>
     public partial class ServiceUnitArtifacts
     {
-        /// <summary> Initializes a new instance of ServiceUnitArtifacts. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitArtifacts"/>. </summary>
         public ServiceUnitArtifacts()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceUnitArtifacts. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceUnitArtifacts"/>. </summary>
         /// <param name="templateUri"> The full URI of the ARM template file with the SAS token. </param>
         /// <param name="parametersUri"> The full URI of the ARM parameters file with the SAS token. </param>
         /// <param name="templateArtifactSourceRelativePath"> The path to the ARM template file relative to the artifact source. </param>
         /// <param name="parametersArtifactSourceRelativePath"> The path to the ARM parameters file relative to the artifact source. </param>
-        internal ServiceUnitArtifacts(Uri templateUri, Uri parametersUri, string templateArtifactSourceRelativePath, string parametersArtifactSourceRelativePath)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceUnitArtifacts(Uri templateUri, Uri parametersUri, string templateArtifactSourceRelativePath, string parametersArtifactSourceRelativePath, Dictionary<string, BinaryData> rawData)
         {
             TemplateUri = templateUri;
             ParametersUri = parametersUri;
             TemplateArtifactSourceRelativePath = templateArtifactSourceRelativePath;
             ParametersArtifactSourceRelativePath = parametersArtifactSourceRelativePath;
+            _rawData = rawData;
         }
 
         /// <summary> The full URI of the ARM template file with the SAS token. </summary>

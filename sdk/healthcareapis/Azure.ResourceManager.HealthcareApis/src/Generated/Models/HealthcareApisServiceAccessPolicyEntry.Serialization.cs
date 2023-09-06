@@ -5,28 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceAccessPolicyEntry : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceAccessPolicyEntry : IUtf8JsonSerializable, IModelJsonSerializable<HealthcareApisServiceAccessPolicyEntry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<HealthcareApisServiceAccessPolicyEntry>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<HealthcareApisServiceAccessPolicyEntry>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceAccessPolicyEntry>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthcareApisServiceAccessPolicyEntry DeserializeHealthcareApisServiceAccessPolicyEntry(JsonElement element)
+        internal static HealthcareApisServiceAccessPolicyEntry DeserializeHealthcareApisServiceAccessPolicyEntry(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string objectId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"u8))
@@ -34,8 +57,61 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     objectId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new HealthcareApisServiceAccessPolicyEntry(objectId);
+            return new HealthcareApisServiceAccessPolicyEntry(objectId, rawData);
+        }
+
+        HealthcareApisServiceAccessPolicyEntry IModelJsonSerializable<HealthcareApisServiceAccessPolicyEntry>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceAccessPolicyEntry>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthcareApisServiceAccessPolicyEntry(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<HealthcareApisServiceAccessPolicyEntry>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceAccessPolicyEntry>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        HealthcareApisServiceAccessPolicyEntry IModelSerializable<HealthcareApisServiceAccessPolicyEntry>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<HealthcareApisServiceAccessPolicyEntry>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeHealthcareApisServiceAccessPolicyEntry(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="HealthcareApisServiceAccessPolicyEntry"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="HealthcareApisServiceAccessPolicyEntry"/> to convert. </param>
+        public static implicit operator RequestContent(HealthcareApisServiceAccessPolicyEntry model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="HealthcareApisServiceAccessPolicyEntry"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator HealthcareApisServiceAccessPolicyEntry(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeHealthcareApisServiceAccessPolicyEntry(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Image for the product. </summary>
     public partial class EdgeOrderProductImageInformation
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductImageInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductImageInformation"/>. </summary>
         internal EdgeOrderProductImageInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductImageInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductImageInformation"/>. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
-        internal EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType, Uri imageUri)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType, Uri imageUri, Dictionary<string, BinaryData> rawData)
         {
             ImageType = imageType;
             ImageUri = imageUri;
+            _rawData = rawData;
         }
 
         /// <summary> Type of the image. </summary>

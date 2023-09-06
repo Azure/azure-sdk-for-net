@@ -5,29 +5,62 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class UnknownOperationExtendedInfo
+    internal partial class UnknownOperationExtendedInfo : IUtf8JsonSerializable, IModelJsonSerializable<DataProtectionOperationExtendedInfo>
     {
-        internal static UnknownOperationExtendedInfo DeserializeUnknownOperationExtendedInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DataProtectionOperationExtendedInfo>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DataProtectionOperationExtendedInfo>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionOperationExtendedInfo>(this, options.Format);
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("objectType"u8);
+            writer.WriteStringValue(ObjectType);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
             {
-                return null;
-            }
-            string objectType = "Unknown";
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("objectType"u8))
+                foreach (var property in _rawData)
                 {
-                    objectType = property.Value.GetString();
-                    continue;
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
                 }
             }
-            return new UnknownOperationExtendedInfo(objectType);
+            writer.WriteEndObject();
+        }
+
+        internal static DataProtectionOperationExtendedInfo DeserializeUnknownOperationExtendedInfo(JsonElement element, ModelSerializerOptions options = default) => DeserializeDataProtectionOperationExtendedInfo(element, options);
+
+        DataProtectionOperationExtendedInfo IModelJsonSerializable<DataProtectionOperationExtendedInfo>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionOperationExtendedInfo>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownOperationExtendedInfo(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DataProtectionOperationExtendedInfo>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionOperationExtendedInfo>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DataProtectionOperationExtendedInfo IModelSerializable<DataProtectionOperationExtendedInfo>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DataProtectionOperationExtendedInfo>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDataProtectionOperationExtendedInfo(doc.RootElement, options);
         }
     }
 }

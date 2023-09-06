@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> Elastic Resource Properties. </summary>
     public partial class ElasticProperties
     {
-        /// <summary> Initializes a new instance of ElasticProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticProperties"/>. </summary>
         public ElasticProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticProperties"/>. </summary>
         /// <param name="elasticCloudUser"> Details of the user's elastic account. </param>
         /// <param name="elasticCloudDeployment"> Details of the elastic cloud deployment. </param>
-        internal ElasticProperties(ElasticCloudUser elasticCloudUser, ElasticCloudDeployment elasticCloudDeployment)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticProperties(ElasticCloudUser elasticCloudUser, ElasticCloudDeployment elasticCloudDeployment, Dictionary<string, BinaryData> rawData)
         {
             ElasticCloudUser = elasticCloudUser;
             ElasticCloudDeployment = elasticCloudDeployment;
+            _rawData = rawData;
         }
 
         /// <summary> Details of the user's elastic account. </summary>

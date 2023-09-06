@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class DiagnosticStorageProperties : IUtf8JsonSerializable
+    public partial class DiagnosticStorageProperties : IUtf8JsonSerializable, IModelJsonSerializable<DiagnosticStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DiagnosticStorageProperties>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<DiagnosticStorageProperties>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<DiagnosticStorageProperties>(this, options.Format);
+
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
@@ -24,11 +32,25 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticStorageProperties DeserializeDiagnosticStorageProperties(JsonElement element)
+        internal static DiagnosticStorageProperties DeserializeDiagnosticStorageProperties(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +58,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             AuthenticationType authenticationType = default;
             Optional<string> connectionString = default;
             string resourceId = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"u8))
@@ -53,8 +76,61 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     resourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new DiagnosticStorageProperties(authenticationType, connectionString.Value, resourceId);
+            return new DiagnosticStorageProperties(authenticationType, connectionString.Value, resourceId, rawData);
+        }
+
+        DiagnosticStorageProperties IModelJsonSerializable<DiagnosticStorageProperties>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiagnosticStorageProperties>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnosticStorageProperties(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<DiagnosticStorageProperties>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiagnosticStorageProperties>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        DiagnosticStorageProperties IModelSerializable<DiagnosticStorageProperties>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<DiagnosticStorageProperties>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeDiagnosticStorageProperties(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="DiagnosticStorageProperties"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="DiagnosticStorageProperties"/> to convert. </param>
+        public static implicit operator RequestContent(DiagnosticStorageProperties model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="DiagnosticStorageProperties"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator DiagnosticStorageProperties(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeDiagnosticStorageProperties(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

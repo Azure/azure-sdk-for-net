@@ -5,15 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class JsonFieldWithDefault : IUtf8JsonSerializable
+    public partial class JsonFieldWithDefault : IUtf8JsonSerializable, IModelJsonSerializable<JsonFieldWithDefault>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonFieldWithDefault>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<JsonFieldWithDefault>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFieldWithDefault>(this, options.Format);
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceField))
             {
@@ -25,17 +33,32 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
+            if (_rawData is not null && options.Format == ModelSerializerFormat.Json)
+            {
+                foreach (var property in _rawData)
+                {
+                    writer.WritePropertyName(property.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(property.Value);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(property.Value.ToString()).RootElement);
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JsonFieldWithDefault DeserializeJsonFieldWithDefault(JsonElement element)
+        internal static JsonFieldWithDefault DeserializeJsonFieldWithDefault(JsonElement element, ModelSerializerOptions options = default)
         {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> sourceField = default;
             Optional<string> defaultValue = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceField"u8))
@@ -48,8 +71,61 @@ namespace Azure.ResourceManager.EventGrid.Models
                     defaultValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    continue;
+                }
             }
-            return new JsonFieldWithDefault(sourceField.Value, defaultValue.Value);
+            return new JsonFieldWithDefault(sourceField.Value, defaultValue.Value, rawData);
+        }
+
+        JsonFieldWithDefault IModelJsonSerializable<JsonFieldWithDefault>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFieldWithDefault>(this, options.Format);
+
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonFieldWithDefault(doc.RootElement, options);
+        }
+
+        BinaryData IModelSerializable<JsonFieldWithDefault>.Serialize(ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFieldWithDefault>(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        JsonFieldWithDefault IModelSerializable<JsonFieldWithDefault>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            Core.ModelSerializerHelper.ValidateFormat<JsonFieldWithDefault>(this, options.Format);
+
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeJsonFieldWithDefault(doc.RootElement, options);
+        }
+
+        /// <summary> Converts a <see cref="JsonFieldWithDefault"/> into a <see cref="RequestContent"/>. </summary>
+        /// <param name="model"> The <see cref="JsonFieldWithDefault"/> to convert. </param>
+        public static implicit operator RequestContent(JsonFieldWithDefault model)
+        {
+            if (model is null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        /// <summary> Converts a <see cref="Response"/> into a <see cref="JsonFieldWithDefault"/>. </summary>
+        /// <param name="response"> The <see cref="Response"/> to convert. </param>
+        public static explicit operator JsonFieldWithDefault(Response response)
+        {
+            if (response is null)
+            {
+                return null;
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
+            return DeserializeJsonFieldWithDefault(doc.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

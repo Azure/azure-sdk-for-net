@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.LifecyclePolicyCompleted event. </summary>
     public partial class StorageLifecyclePolicyCompletedEventData
     {
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyCompletedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         internal StorageLifecyclePolicyCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageLifecyclePolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleTime"> The time the policy task was scheduled. </param>
         /// <param name="deleteSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToCoolSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
         /// <param name="tierToArchiveSummary"> Execution statistics of a specific policy action in a Blob Management cycle. </param>
-        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary, Dictionary<string, BinaryData> rawData)
         {
             ScheduleTime = scheduleTime;
             DeleteSummary = deleteSummary;
             TierToCoolSummary = tierToCoolSummary;
             TierToArchiveSummary = tierToArchiveSummary;
+            _rawData = rawData;
         }
 
         /// <summary> The time the policy task was scheduled. </summary>

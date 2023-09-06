@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Details of JobOutput errors. </summary>
     public partial class MediaJobErrorDetail
     {
-        /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private Dictionary<string, BinaryData> _rawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobErrorDetail"/>. </summary>
         internal MediaJobErrorDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobErrorDetail"/>. </summary>
         /// <param name="code"> Code describing the error detail. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
-        internal MediaJobErrorDetail(string code, string message)
+        /// <param name="rawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobErrorDetail(string code, string message, Dictionary<string, BinaryData> rawData)
         {
             Code = code;
             Message = message;
+            _rawData = rawData;
         }
 
         /// <summary> Code describing the error detail. </summary>
