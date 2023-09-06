@@ -276,9 +276,14 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
           # For 429 rate-limiting try to pause if possible
           if ($allowRetry -and $responsePresent -and $statusCode -eq 429) {
 
-            $retryAfterPresent = $_.Exception.Headers.psobject.Properties.name -contains "RetryAfter"
-            $retryAfterDeltaPresent = $false
+            $headersPresent = $_.Exception.psobject.Properties.name -contains "Headers"
 
+            $retryAfterPresent = $false
+            if ($headersPresent) {
+              $retryAfterPresent = $_.Exception.Headers.psobject.Properties.name -contains "RetryAfter"
+            }
+
+            $retryAfterDeltaPresent = $false
             if ($retryAfterPresent) {
               $retryAfterDeltaPresent = $_.Exception.Headers.RetryAfter.psobject.Properties.name -contains "Delta"
             }
